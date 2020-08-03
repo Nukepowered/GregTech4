@@ -71,7 +71,7 @@ public class GT_ConnectionHandler implements IConnectionHandler {
 		} catch(Throwable e) {e.printStackTrace(GT_Log.err);}*/
 		String tString = "List of banished Players";
 		if (aUserName.equalsIgnoreCase("corysmart") || aUserName.equalsIgnoreCase("mdiyo") || aUserName.equalsIgnoreCase("swag10air")) {
-			GT_Mod.drawMessage();
+//			GT_Mod.drawMessage();
 		}
 	}
 }

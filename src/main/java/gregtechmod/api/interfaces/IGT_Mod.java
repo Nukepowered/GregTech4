@@ -1,7 +1,7 @@
 package gregtechmod.api.interfaces;
 
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.network.packet.Packet;
+import net.minecraft.network.Packet;
 
 /**
  * Interface used by the Mods Main Class to reference to internals.
@@ -23,9 +23,4 @@ public interface IGT_Mod {
 	 * This means that Client specific Basefiles are definitely existing! Not if the World is actually client side or not!
 	 */
 	public boolean isClientSide();
-	
-	/**
-	 * This means that Bukkit specific Basefiles are definitely existing! Not if the World is actually bukkit server or not!
-	 */
-	public boolean isBukkitSide();
 }
