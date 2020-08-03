@@ -1,0 +1,19 @@
+Just a Note for myself to remember how to Colorize Machines
+
+Iron -> Bronze
+GIMP Colorize  30, 100, -40
+
+Bronze -> Steel
+GIMP Colorize 240,  10, -30
+
+Bronze -> Brass
+GIMP Colorize  40, 100,   0
+
+Brass -> Electrum
+GIMP Colorize  50,  60,  30
+
+Steel -> Tungstensteel
+GIMP Colorize 220,  50, -40
+
+Brass -> Platinum
+GIMP Colorize  40,  70,  60
