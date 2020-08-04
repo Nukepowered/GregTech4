@@ -475,28 +475,28 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
         	if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);
         }
         
-//        
-//        GT_Log.out.println("GT_Mod: Adding Scrap with a Weight of " + tScrapChance + " to the Scrapbox Drops.");
-//        GT_ModHandler.addScrapboxDrop(tScrapChance, GT_ModHandler.getIC2Item("scrap", 1));
-//        
-//		if (isClientSide()) {
-//	        GT_Log.out.println("GT_Mod: Register BlockRenderer");
-//		    new GT_Block_Renderer();
-//	        GT_Log.out.println("GT_Mod: Downloading Cape List.");
-//		    try {new Thread(new Runnable() {@Override public void run() {try {
-//				Scanner tScanner = new Scanner(new URL("https://dl.dropbox.com/u/88825306/CapeList.txt").openStream());
-//				while (tScanner.hasNextLine()) {
-//				    String tName = tScanner.nextLine();
-//				    if (!GT_Mod.mGregTechCapeList.contains(tName.toLowerCase())) GT_Mod.mGregTechCapeList.add(tName.toLowerCase());
-//				}
-//			} catch(Throwable e) {}}}).start();} catch(Throwable e) {}
-//	        GT_Log.out.println("GT_Mod: Downloading News.");
-//		    try {new Thread(new Runnable() {@Override public void run() {try {
-//				Scanner tScanner = new Scanner(new URL("https://dl.dropboxusercontent.com/u/88825306/Message.txt").openStream());
-//			    while (tScanner.hasNextLine()) sMessage += tScanner.nextLine() + " ";
-//			} catch(Throwable e) {}}}).start();} catch(Throwable e) {}
-//		}
-//    	
+        
+        GT_Log.log.info("GT_Mod: Adding Scrap with a Weight of " + tScrapChance + " to the Scrapbox Drops.");
+        GT_ModHandler.addScrapboxDrop(tScrapChance, GT_ModHandler.getIC2Item("scrap", 1));
+        
+		if (isClientSide()) {
+	        GT_Log.log.info("GT_Mod: Register BlockRenderer");
+		    new GT_Block_Renderer();
+	        GT_Log.log.info("GT_Mod: Downloading Cape List.");
+		    try {new Thread(new Runnable() {@Override public void run() {try {
+				Scanner tScanner = new Scanner(new URL("https://dl.dropbox.com/u/88825306/CapeList.txt").openStream());
+				while (tScanner.hasNextLine()) {
+				    String tName = tScanner.nextLine();
+				    if (!GT_Mod.mGregTechCapeList.contains(tName.toLowerCase())) GT_Mod.mGregTechCapeList.add(tName.toLowerCase());
+				}
+			} catch(Throwable e) {}}}).start();} catch(Throwable e) {}
+	        GT_Log.log.info("GT_Mod: Downloading News.");
+		    try {new Thread(new Runnable() {@Override public void run() {try {
+				Scanner tScanner = new Scanner(new URL("https://dl.dropboxusercontent.com/u/88825306/Message.txt").openStream());
+			    while (tScanner.hasNextLine()) sMessage += tScanner.nextLine() + " ";
+			} catch(Throwable e) {}}}).start();} catch(Throwable e) {}
+		}
+    	
 //        GregTech_API.sPreloadFinished = true;
 //        GT_Log.out.println("GT_Mod: Preload-Phase finished!");
 //    	for (Runnable tRunnable : GregTech_API.sAfterGTPreload) {

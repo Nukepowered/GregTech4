@@ -3,7 +3,7 @@ package gregtechmod.common;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
-import net.minecraft.item.Item;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.IFuelHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -17,8 +17,8 @@ public class GT_FuelHandler implements IFuelHandler {
 	@Override
 	public int getBurnTime(ItemStack aFuel) {
 		if (aFuel == null) return 0;
-		if (GT_Utility.areStacksEqual(aFuel, new ItemStack(Item.sign, 1)))				return   600;
-		if (GT_Utility.areStacksEqual(aFuel, new ItemStack(Item.doorWood, 1)))			return  1800;
+		if (GT_Utility.areStacksEqual(aFuel, new ItemStack(Items.sign, 1)))				return   600;
+		if (GT_Utility.areStacksEqual(aFuel, new ItemStack(Items.wooden_door, 1)))		return  1800;
 		if (GT_OreDictUnificator.isItemStackInstanceOf(aFuel, "dustWood"))				return   100;
 		if (GT_OreDictUnificator.isItemStackInstanceOf(aFuel, "dustSmallWood"))			return    25;
 		if (GT_OreDictUnificator.isItemStackInstanceOf(aFuel, "dustTinyWood"))			return    11;
