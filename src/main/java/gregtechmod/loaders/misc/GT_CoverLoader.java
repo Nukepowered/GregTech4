@@ -6,9 +6,9 @@ import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.common.blocks.GT_BlockMetaID_Machine;
 import gregtechmod.common.items.GT_MetaItem_Component;
 import gregtechmod.common.items.GT_MetaItem_Material;
-import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 
 public class GT_CoverLoader implements Runnable {
 	@Override
@@ -43,10 +43,10 @@ public class GT_CoverLoader implements Runnable {
 		GregTech_API.registerCover(GT_MetaItem_Component.instance.getStack(87, 1), GT_BlockMetaID_Machine.mIcons[269]);
 		
 		try {
-			GregTech_API.registerCover(GT_MetaItem_Material.instance.getStack(60, 1), Block.planks.getIcon(0, 0));
-			GregTech_API.registerCover(GT_MetaItem_Material.instance.getStack(61, 1), Block.planks.getIcon(0, 1));
-			GregTech_API.registerCover(GT_MetaItem_Material.instance.getStack(62, 1), Block.planks.getIcon(0, 2));
-			GregTech_API.registerCover(GT_MetaItem_Material.instance.getStack(63, 1), Block.planks.getIcon(0, 3));
+			GregTech_API.registerCover(GT_MetaItem_Material.instance.getStack(60, 1), Blocks.planks.getIcon(0, 0));
+			GregTech_API.registerCover(GT_MetaItem_Material.instance.getStack(61, 1), Blocks.planks.getIcon(0, 1));
+			GregTech_API.registerCover(GT_MetaItem_Material.instance.getStack(62, 1), Blocks.planks.getIcon(0, 2));
+			GregTech_API.registerCover(GT_MetaItem_Material.instance.getStack(63, 1), Blocks.planks.getIcon(0, 3));
 		} catch (Throwable e) {
 			GregTech_API.registerCover(GT_MetaItem_Material.instance.getStack(60, 1), "");
 			GregTech_API.registerCover(GT_MetaItem_Material.instance.getStack(61, 1), "");
@@ -56,9 +56,9 @@ public class GT_CoverLoader implements Runnable {
 		
 		for (byte i = 0; i < 16; i++) {
 			if (GregTech_API.gregtechmod.isClientSide()) {
-				GregTech_API.registerCover(new ItemStack(Block.carpet /** Carpet */, 1, i), Block.cloth.getIcon(0, i));
+				GregTech_API.registerCover(new ItemStack(Blocks.carpet /** Carpet */, 1, i), Blocks.carpet.getIcon(0, i));
 			} else {
-				GregTech_API.registerCover(new ItemStack(Block.carpet /** Carpet */, 1, i), (Icon)null);
+				GregTech_API.registerCover(new ItemStack(Blocks.carpet /** Carpet */, 1, i), (IIcon)null);
 			}
 		}
 		
