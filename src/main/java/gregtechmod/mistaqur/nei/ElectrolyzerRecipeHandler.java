@@ -48,7 +48,7 @@ public class ElectrolyzerRecipeHandler extends GT_RecipeHandler {
 		guis.add(GT_GUIContainer_Electrolyzer.class);
 		transferRects2.add(new RecipeTransferRect(new Rectangle(74-5, 33-11, 30, 10), getRecipeId(), new Object[0]));
 		RecipeTransferRectHandler.registerRectsToGuis(guis, transferRects2);
-		} catch(Throwable e) {e.printStackTrace(GT_Log.out);}
+		} catch(Throwable e) {GT_Log.log.catching(e);}
 	}
 	
 	@Override

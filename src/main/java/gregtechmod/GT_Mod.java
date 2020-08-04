@@ -21,6 +21,7 @@ import gregtechmod.common.blocks.GT_BlockMetaID_Block;
 import gregtechmod.common.covers.GT_Cover_Generic;
 import gregtechmod.common.covers.GT_Cover_None;
 import gregtechmod.common.covers.GT_Cover_Redstone;
+import gregtechmod.common.items.GT_MetaBlock_Item;
 import gregtechmod.common.render.GT_Block_Renderer;
 import gregtechmod.loaders.misc.GT_CoverLoader;
 import gregtechmod.loaders.misc.GT_TooEasyModeLoader;
@@ -59,6 +60,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 /**
  * @author Gregorius Techneticies
@@ -220,7 +222,7 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     	sUnificatorRC			= GT_Config.sConfigFileStandard.get("unificatortargets", "Railcraft"		, false).getBoolean(false);
     	sUnificatorTE			= GT_Config.sConfigFileStandard.get("unificatortargets", "ThermalExpansion"	, false).getBoolean(false);
     	sUnificatorFR			= GT_Config.sConfigFileStandard.get("unificatortargets", "Forestry"			, false).getBoolean(false);
-//    	
+    	
     	sItemDespawnTime		= GT_Config.sConfigFileStandard.get("general", "ItemDespawnTime"			, 6000 ).getInt(6000);
     	sIncreaseDungeonLoot	= GT_Config.sConfigFileStandard.get("general", "IncreaseDungeonLoot"		, true ).getBoolean(true);
     	sAxeWhenAdventure		= GT_Config.sConfigFileStandard.get("general", "AdventureModeStartingAxe"	, true ).getBoolean(true);
@@ -443,22 +445,22 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     
     @EventHandler
     public void load(FMLInitializationEvent aEvent) {
-//    	if (mDoNotInit) return;
-//    	
-//    	for (Runnable tRunnable : GregTech_API.sBeforeGTLoad) {
-//    		try {
-//    			tRunnable.run();
-//    		} catch(Throwable e) {
-//    			e.printStackTrace(GT_Log.err);
-//    		}
-//    	}
-//    	
+    	if (mDoNotInit) return;
+    	
+    	for (Runnable tRunnable : GregTech_API.sBeforeGTLoad) {
+    		try {
+    			tRunnable.run();
+    		} catch(Throwable e) {
+    			GT_Log.log.catching(e);
+    		}
+    	}
+    	
 //    	checkVersions();
-//        GT_Log.out.println("GT_Mod: Beginning Load-Phase.");
-//    	GregTech_API.sLoadStarted = true;
-//    	
-//        GT_Log.out.println("GT_Mod: Adding Blocks.");
-//		GameRegistry.registerBlock(GregTech_API.sBlockList[0] = new GT_BlockMetaID_Block	(sBlockIDs[0]), GT_MetaBlock_Item.class		, "GT_Block"						, GregTech_API.MOD_ID);
+        GT_Log.log.info("GT_Mod: Beginning Load-Phase.");
+    	GregTech_API.sLoadStarted = true;
+    	
+    	GT_Log.log.info("GT_Mod: Adding Blocks.");
+		GameRegistry.registerBlock(GregTech_API.sBlockList[0] = new GT_BlockMetaID_Block(), GT_MetaBlock_Item.class		, "GT_Block");
 //		GameRegistry.registerBlock(GregTech_API.sBlockList[1] = new GT_BlockMetaID_Machine	(sBlockIDs[1]), GT_MetaMachine_Item.class	, GT_LanguageManager.mNameList1[0]	, GregTech_API.MOD_ID);
 //		GameRegistry.registerBlock(GregTech_API.sBlockList[2] = new GT_BlockMetaID_Ore		(sBlockIDs[2]), GT_MetaOre_Item.class		, GT_LanguageManager.mNameList2[0]	, GregTech_API.MOD_ID);
 //		GameRegistry.registerBlock(GregTech_API.sBlockList[4] = new GT_BlockMetaID_Block2	(sBlockIDs[4]), GT_MetaBlock2_Item.class	, GT_LanguageManager.mNameList3[0]	, GregTech_API.MOD_ID);
@@ -1186,13 +1188,11 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     
 	@Override
 	public boolean isServerSide() {
-//		return gregtechproxy.isServerSide();
-		return false;
+		return gregtechproxy.isServerSide();
 	}
 	
 	@Override
 	public boolean isClientSide() {
-//		return gregtechproxy.isClientSide();
-		return false;
+		return gregtechproxy.isClientSide();
 	}
 }

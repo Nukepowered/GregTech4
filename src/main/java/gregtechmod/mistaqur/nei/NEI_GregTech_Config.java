@@ -44,7 +44,7 @@ public class NEI_GregTech_Config implements IConfigureNEI {
     		codechicken.nei.api.API.registerGuiOverlay(GT_GUIContainer_BronzeWorkbench.class, "crafting", 57, 22);
     		codechicken.nei.api.API.registerGuiOverlayHandler(GT_GUIContainer_BronzeWorkbench.class, new codechicken.nei.recipe.DefaultOverlayHandler(57, 22), "crafting");
         } catch(Throwable e) {
-        	if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);
+        	if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);
         }
         sIsAdded = true;
 	}

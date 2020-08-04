@@ -53,7 +53,7 @@ public class CentrifugeRecipeHandler extends GT_RecipeHandler {
 		transferRects2.add(new RecipeTransferRect(new Rectangle(97-5, 34-11, 12, 18), getRecipeId(), new Object[0]));
 		transferRects2.add(new RecipeTransferRect(new Rectangle(79-5, 52-11, 18, 12), getRecipeId(), new Object[0]));
 		RecipeTransferRectHandler.registerRectsToGuis(guis, transferRects2);
-		} catch(Throwable e) {e.printStackTrace(GT_Log.out);}
+		} catch(Throwable e) {GT_Log.log.catching(e);}
 	}
 	
 	@Override
