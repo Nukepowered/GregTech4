@@ -5,12 +5,13 @@ import gregtechmod.api.util.GT_LanguageManager;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class GT_MetaBlock_Item extends ItemBlock {
-    public GT_MetaBlock_Item(int par1) {
+    public GT_MetaBlock_Item(Block par1) {
         super(par1);
         setMaxDamage(0);
         setHasSubtypes(true);
@@ -23,8 +24,9 @@ public class GT_MetaBlock_Item extends ItemBlock {
         return par1;
     }
     
+	@SuppressWarnings("unchecked")
 	@Override
-    public void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean par4) {
+    public void addInformation(ItemStack aStack, EntityPlayer aPlayer, @SuppressWarnings("rawtypes") List aList, boolean par4) {
 		aList.add("Mobs can't spawn on this Block");
     }
 
