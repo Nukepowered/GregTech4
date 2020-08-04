@@ -129,7 +129,7 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 /**
  * @author Gregorius Techneticies
  */
-@Mod(modid = "gregtech_addon", name="GregTech-Addon", version="MC162", useMetadata=false, dependencies="required-after:IC2; after:UndergroundBiomes; after:factorization; after:Railcraft; after:ThermalExpansion; after:ThermalExpansion|Transport; after:ThermalExpansion|Energy; after:ThermalExpansion|Factory; after:XyCraft; after:MetallurgyCore; after:MetallurgyBase; after:MetallurgyEnder; after:MetallurgyFantasy; after:MetallurgyNether; after:MetallurgyPrecious; after:MetallurgyUtility; after:BuildCraft|Silicon; after:BuildCraft|Core; after:BuildCraft|Transport; after:BuildCraft|Factory; after:BuildCraft|Energy; after:BuildCraft|Builders; after:LiquidUU; after:TwilightForest; after:Forestry; after:RedPowerCore; after:RedPowerBase; after:RedPowerMachine; after:RedPowerCompat; after:RedPowerWiring; after:RedPowerLogic; after:RedPowerLighting; after:RedPowerWorld; after:RedPowerControl; after:Tubestuff; after:ICBM; after:Mekanism; after:MekanismGenerators; after:MekanismTools; after:ThaumicTinkerer; after:LiquidXP; after:MineFactoryReloaded; after:TConstruct; after:factorization.misc; after:AtomicScience; after:MFFS; after:ICBM|Contraption; after:ICBM|Explosion; after:ICBM|Sentry; after:mmmPowersuits;")
+@Mod(modid = "gregtech_addon", name="GregTech-Addon", version="MC1710", useMetadata=false, dependencies="required-after:IC2; after:UndergroundBiomes; after:factorization; after:Railcraft; after:ThermalExpansion; after:ThermalExpansion|Transport; after:ThermalExpansion|Energy; after:ThermalExpansion|Factory; after:XyCraft; after:MetallurgyCore; after:MetallurgyBase; after:MetallurgyEnder; after:MetallurgyFantasy; after:MetallurgyNether; after:MetallurgyPrecious; after:MetallurgyUtility; after:BuildCraft|Silicon; after:BuildCraft|Core; after:BuildCraft|Transport; after:BuildCraft|Factory; after:BuildCraft|Energy; after:BuildCraft|Builders; after:LiquidUU; after:TwilightForest; after:Forestry; after:RedPowerCore; after:RedPowerBase; after:RedPowerMachine; after:RedPowerCompat; after:RedPowerWiring; after:RedPowerLogic; after:RedPowerLighting; after:RedPowerWorld; after:RedPowerControl; after:Tubestuff; after:ICBM; after:Mekanism; after:MekanismGenerators; after:MekanismTools; after:ThaumicTinkerer; after:LiquidXP; after:MineFactoryReloaded; after:TConstruct; after:factorization.misc; after:AtomicScience; after:MFFS; after:ICBM|Contraption; after:ICBM|Explosion; after:ICBM|Sentry; after:mmmPowersuits;")
 // @NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = {GregTech_API.GENERIC_CHANNEL, GregTech_API.SOUND_PACKET_CHANNEL, GregTech_API.TILEENTITY_PACKET_CHANNEL/*, "EB", "RC", "XT|TradeSel", "mystcraft", "fz.bounce", "TwilightForest", "mmmPowerSuits", "tfmagicmap", "FOR", "BC", "TC", "TCF", "NuclearControl", "TConstruct", "BasicComponents", "RecipeRemover", "IronChest", "MFFS", "ICBM", "CoFH", "SC2", "ICBM|C", "ICBM|E", "InventoryTweaks", "BIN", "tfmazemap", "BCLP"/**/}, packetHandler = GT_PacketHandler.class, connectionHandler = GT_ConnectionHandler.class)
 public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     @Instance
@@ -184,10 +184,10 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     
     public GT_Mod() {
 //    	checkVersions();
-//    	if (GregTech_API.isGregTechLoaded()) throw new GT_ItsNotMyFaultException("Why did you install my Addon twice? Remove the second gregtechmod.zip out of your mods-Folder, you need only one of them.");
-//		GregTech_API.gregtechmod = this;
-//		GregTech_API.sRecipeAdder = this;
-//		GregTech_API.sDummyWorld = new GT_DummyWorld();
+    	if (GregTech_API.isGregTechLoaded()) throw new GT_ItsNotMyFaultException("Why did you install my Addon twice? Remove the second gregtechmod.zip out of your mods-Folder, you need only one of them.");
+		GregTech_API.gregtechmod = this;
+		GregTech_API.sRecipeAdder = this;
+		GregTech_API.sDummyWorld = new GT_DummyWorld();
 //		GregTech_API.sGTCoverload.add(new GT_CoverLoader());
 //        GT_OreDictHandler.instance.registerHandler();
 //    	new GT_Cover_None();

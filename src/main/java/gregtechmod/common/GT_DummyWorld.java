@@ -4,6 +4,7 @@ import java.io.File;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.profiler.Profiler;
@@ -24,7 +25,7 @@ public class GT_DummyWorld extends World {
 	public ItemStack mLastSetBlock = null;
 	
 	public GT_DummyWorld(ISaveHandler par1iSaveHandler, String par2Str, WorldProvider par3WorldProvider, WorldSettings par4WorldSettings, Profiler par5Profiler) {
-		super(par1iSaveHandler, par2Str, par4WorldSettings, par3WorldProvider, par5Profiler, null);
+		super(par1iSaveHandler, par2Str, par4WorldSettings, par3WorldProvider, par5Profiler);
 		rand = mRandom;
 	}
 	
@@ -40,6 +41,7 @@ public class GT_DummyWorld extends World {
 			@Override public void flush() {}
 			@Override public void checkSessionLock() throws MinecraftException {}
 			@Override public String getWorldDirectoryName() {return null;}
+			@Override public File getWorldDirectory() {return null;}
 		},
 		"DUMMY_DIMENSION",
 		new WorldProvider() {
@@ -61,8 +63,8 @@ public class GT_DummyWorld extends World {
 	}
 	
 	@Override
-	public boolean setBlock(int aX, int aY, int aZ, int aID, int aMeta, int aFlags) {
-		mLastSetBlock = new ItemStack(aID, 1, aMeta);
+	public boolean setBlock(int aX, int aY, int aZ, Block block, int aMeta, int aFlags) {
+		mLastSetBlock = new ItemStack(block, 1, aMeta);
 		return true;
 	}
 	
@@ -78,9 +80,9 @@ public class GT_DummyWorld extends World {
 	}
 	
 	@Override
-	public int getBlockId(int aX, int aY, int aZ) {
-		if (aX >= 16 && aZ >= 16 && aX < 32 && aZ < 32) return aY == 64?Block.grass.blockID:0;
-		return 0;
+	public Block getBlock(int aX, int aY, int aZ) {
+		if (aX >= 16 && aZ >= 16 && aX < 32 && aZ < 32) return aY == 64 ? Blocks.grass : Blocks.air;
+		return Blocks.air;
 	}
 	
 	@Override
@@ -92,6 +94,20 @@ public class GT_DummyWorld extends World {
 	public boolean canBlockSeeTheSky(int aX, int aY, int aZ) {
 		if (aX >= 16 && aZ >= 16 && aX < 32 && aZ < 32) return aY > 64;
 		return true;
+	}
+
+	@Override
+	protected int func_152379_p() {
+		/* Looks like, this is neede to get render distance
+		 * 
+		 * Next implementation on WorldServer
+		 * protected int func_152379_p() 
+		 * { 
+		 *    return this.mcServer.getConfigurationManager().getViewDistance();
+		 * }
+		 */
+		
+		return 0;
 	}
 	
 }

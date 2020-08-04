@@ -4,12 +4,12 @@ import gregtechmod.api.util.GT_Config;
 
 import java.util.ArrayList;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fluids.IFluidTank;
 import cpw.mods.fml.relauncher.Side;
@@ -275,7 +275,7 @@ public interface IMetaTileEntity extends ISidedInventory, IFluidTank, IFluidHand
 	 * @param aActive if the Machine is currently active (use this instead of calling mBaseMetaTileEntity.mActive!!!)
 	 * @param aRedstone if the Machine is currently outputting a RedstoneSignal (use this instead of calling mBaseMetaTileEntity.mRedstone!!!)
 	 */
-	public Icon getTextureIcon(byte aSide, byte aFacing, boolean aActive, boolean aRedstone);
+	public IIcon getTextureIcon(byte aSide, byte aFacing, boolean aActive, boolean aRedstone);
 	
 	/**
 	 * Register Icons here. This gets called when the Icons get initialized by the Base Block
@@ -283,7 +283,7 @@ public interface IMetaTileEntity extends ISidedInventory, IFluidTank, IFluidHand
 	 * @param aBlockIconRegister The Block Icon Register
 	 */
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister aBlockIconRegister);
+	public void registerIcons(IIconRegister aBlockIconRegister);
 	
 	/**
 	 * Gets the Output for the comparator on the given Side

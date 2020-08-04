@@ -706,7 +706,7 @@ public class GT_Utility {
 	
 	public static int stackToInt(ItemStack aStack) {
 		if (aStack == null) return 0;
-		return aStack.itemID | (aStack.getItemDamage()<<16);
+		return Item.getIdFromItem(aStack.getItem()) | (aStack.getItemDamage() << 16);
 	}
 	
 	public static ItemStack intToStack(int aStack) {

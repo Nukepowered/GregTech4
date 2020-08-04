@@ -2,7 +2,7 @@ package gregtechmod.api.interfaces;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.IFluidHandler;
 
 /**
@@ -103,5 +103,5 @@ public interface IGregTechTileEntity extends IGearEnergyTileEntity, ICoverable, 
 	public boolean onRightclick(EntityPlayer aPlayer, byte aSide, float par1, float par2, float par3);
 	
 	public int getTextureIndex(byte aSide, byte aMeta);
-	public Icon getTextureIcon(byte aSide, byte aMeta);
+	public IIcon getTextureIcon(byte aSide, byte aMeta);
 }
