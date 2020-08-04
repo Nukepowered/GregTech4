@@ -22,24 +22,35 @@ group= "gregtechmod"
 archivesBaseName = "gregtech_addon"
 
 minecraft {
-    version = "1.7.10-10.13.4.1614-1.7.10"
+    version = "${mc_ver}-${forge_ver}-${mc_ver}"
     runDir = "eclipse"
 }
 
+repositories {
+	maven {
+		url = "http://maven.ic2.player.to/"
+	}
+	maven {
+		name = "ChickenBones maven"
+		url = "http://chickenbones.net/maven/"
+	}
+	maven {
+		name = "forge"
+        url = "http://files.minecraftforge.net/maven"
+	}
+	maven {
+		name = "cil"
+		url = "https://maven.cil.li/"
+	}
+}
+
+
 dependencies {
-    // you may put jars on which you depend on in ./libs
-    // or you may define them like so..
-    //compile "some.group:artifact:version:classifier"
-    //compile "some.group:artifact:version"
-      
-    // real examples
-    //compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
-    //compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
-
-    // for more info...
-    // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
-    // http://www.gradle.org/docs/current/userguide/dependency_management.html
-
+	compile "codechicken:CodeChickenCore:${mc_ver}-${ccc_version}:dev"
+	compile "codechicken:NotEnoughItems:${mc_ver}-${nei_version}:dev"
+	compile "codechicken:CodeChickenLib:${mc_ver}-${ccl_version}:dev"
+	compile "net.sengir.forestry:forestry_${mc_ver}:${forestry_ver}:dev"
+	compile "net.industrial-craft:industrialcraft-2:${ic2_ver}-experimental:dev"
 }
 
 processResources
