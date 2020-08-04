@@ -1,8 +1,10 @@
 package gregtechmod.api.util;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.Property;
+
+
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 
 public class GT_Config {
 	public static volatile int VERSION = 404;

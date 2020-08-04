@@ -1,8 +1,9 @@
 package gregtechmod.api.util;
 
-import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.Property;
+
 import cpw.mods.fml.common.registry.LanguageRegistry;
+import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.common.config.Property;
 
 public class GT_LanguageManager {
 	public static volatile int VERSION = 404;
@@ -24,6 +25,7 @@ public class GT_LanguageManager {
     public static String[] mRegionalNameList4		= {"Black Granite", "Black Granite Cobblestone", "Mossy Black Granite Cobblestone", "Black Granite Bricks", "Cracked Black Granite Bricks", "Mossy Black Granite Bricks", "Chiseled Black Granite", "Smooth Black Granite", "Red Granite", "Red Granite Cobblestone", "Mossy Red Granite Cobblestone", "Red Granite Bricks", "Cracked Red Granite Bricks", "Mossy Red Granite Bricks", "Chiseled Red Granite", "Smooth Red Granite"};
 	public static String[] mRegionalNameListItem	= {"GT_MetaItem_00", "GT_MetaItem_01", "GT_MetaItem_02", "GT_MetaItem_03", "GT_MetaItem_04", "GT_MetaItem_05", "GT_MetaItem_06", "GT_MetaItem_07", "GT_MetaItem_08", "GT_MetaItem_09", "GT_MetaItem_10", "GT_MetaItem_11", "GT_MetaItem_12", "GT_MetaItem_13", "GT_MetaItem_14", "GT_MetaItem_15", "GregTech Sensor Card", "GregTech Sensor Kit", "Ultimate Cheat Armor", "", "", "", "", "", "", "", "", "", "", "", "Iron Mortar", "Flint Mortar", "Sonictron", "Destructopack", "60k Helium Coolant Cell", "180k Helium Coolant Cell", "360k Helium Coolant Cell", "Lapotronic Energy Orb", "Cloaking Device", "Bronze Jack Hammer", "Iridium Neutron Reflector", "Steel Jack Hammer", "Diamond Jack Hammer", "Data Orb", "Light Helmet", "Lapotron Pack", "Rock Cutter", "Tesla Staff", "Thorium Cell", "Double Thorium Cell", "Quad Thorium Cell", "Plutonium Cell", "Double Plutonium Cell", "Quad Plutonium Cell", "Lithium Reactor Cell", "Debug Scanner", "Lithium-Battery", "Lithium-Battery", "Lithium-Batpack", "Personal Force Field Generator", "60k NaK Coolantcell", "180k NaK Coolantcell", "360k NaK Coolantcell", "Portable Scanner", "Crowbar", "Screwdriver", "Steel Wrench", "Iron Wrench", "Tungstensteel Wrench", "Bronze Wrench", "Electric Wrench", "Advanced Wrench", "Rubber Hammer", "Iron Hammer", "Bronze Hammer", "Steel Hammer", "Tungstensteel Hammer", "Electric Soldering Iron", "Soldering Tin", "Soldering Lead", "Bronze Turbine Rotor", "Steel Turbine Rotor", "Magnalium Turbine Rotor", "Tungstensteel Turbine Rotor", "Carbon Turbine Rotor", "Lava Filter", "Iron File", "Bronze File", "Steel File", "Tungstensteel File", "Bug Spray", "Freezing Spray", "Hardening Spray", "Construction Spray", "Pepper Spray", "Hydration Spray", "Spray Can (Black)", "Spray Can (Red)", "Spray Can (Green)", "Spray Can (Brown)", "Spray Can (Blue)", "Spray Can (Purple)", "Spray Can (Cyan)", "Spray Can (Light Gray)", "Spray Can (Gray)", "Spray Can (Pink)", "Spray Can (Lime)", "Spray Can (Yellow)", "Spray Can (Light Blue)", "Spray Can (Magenta)", "Spray Can (Orange)", "Spray Can (White)", "Empty Electric Wrench", "Empty Advanced Wrench", "Empty Soldering Iron", "Iron Saw", "Bronze Saw", "Steel Saw", "Tungstensteel Saw", "Electric Saw", "Advanced Saw", "Empty Electric Saw", "Empty Advanced Saw", "Advanced Drill", "Flint Sword", "Flint Pickaxe", "Flint Shovel", "Flint Axe", "Flint Hoe", "Steel Sword", "Steel Pickaxe", "Steel Shovel", "Steel Axe", "Steel Hoe", "Tungstensteel Sword", "Tungstensteel Pickaxe", "Tungstensteel Shovel", "Tungstensteel Axe", "Tungstensteel Hoe"};
     
+	@SuppressWarnings("deprecation")
 	public static String addStringLocalization(String aKey, String aValue) {
 		Property tProperty = sLangFile.get("LanguageFile", aKey, aValue);
 		if (sLangFile.get("EnableLangFile", "UseThisFileAsLanguageFile", false).getBoolean(false)) aValue = tProperty.getString();
