@@ -32,6 +32,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.Item;
@@ -40,16 +42,21 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S07PacketRespawn;
+import net.minecraft.network.play.server.S1DPacketEntityEffect;
+import net.minecraft.network.play.server.S3FPacketCustomPayload;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
 import net.minecraftforge.fluids.FluidStack;
@@ -60,7 +67,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 
-import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 
 /**
  * NEVER INCLUDE THIS FILE IN YOUR MOD!!!
@@ -218,9 +225,9 @@ public class GT_Utility {
                 }
             }
             
-            if (tPotionHashmap != null) return ((HashMap)tPotionHashmap.get(aPlayer)).get(Integer.valueOf(aPotionIndex)) != null;
+            if (tPotionHashmap != null) return ((HashMap<?, ?>)tPotionHashmap.get(aPlayer)).get(Integer.valueOf(aPotionIndex)) != null;
         } catch (Throwable e) {
-        	if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);
+        	if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);
         }
     	return false;
     }
@@ -246,9 +253,9 @@ public class GT_Utility {
                 }
             }
 
-            if (tPotionHashmap != null) ((HashMap)tPotionHashmap.get(aPlayer)).remove(Integer.valueOf(aPotionIndex));
+            if (tPotionHashmap != null) ((HashMap<?, ?>)tPotionHashmap.get(aPlayer)).remove(Integer.valueOf(aPotionIndex));
         } catch (Throwable e) {
-        	if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);
+        	if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);
         }
     }
 	
@@ -267,11 +274,12 @@ public class GT_Utility {
 					}
 				}
 			}
-		} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+		} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 		return false;
 	}
 	
 	public static ItemStack suckOneItemStackAt(World aWorld, int aX, int aY, int aZ, int aL, int aH, int aW) {
+		@SuppressWarnings("unchecked")
 		ArrayList<EntityItem> tList = (ArrayList<EntityItem>)aWorld.getEntitiesWithinAABB(EntityItem.class, AxisAlignedBB.getBoundingBox(aX, aY, aZ, aX+aL, aY+aH, aZ+aW));
 		if (tList.size()>0) {
 			aWorld.removeEntity(tList.get(0));
@@ -290,7 +298,7 @@ public class GT_Utility {
 	
 	public static void sendChatToPlayer(EntityPlayer aPlayer, String aChatMessage) {
 		if (aPlayer != null && aPlayer instanceof EntityPlayerMP && aChatMessage != null) {
-			aPlayer.addChatMessage(aChatMessage);
+			aPlayer.addChatMessage(new ChatComponentText(aChatMessage));
 		}
 	}
 	
@@ -400,9 +408,10 @@ public class GT_Utility {
 					tAmount = moveOneItemStack(tTileEntity1.adjacentChestZNeg, aTileEntity2, aGrabFrom, aPutTo, aFilter, aInvertFilter, aMaxTargetStackSize, aMinTargetStackSize, aMaxMoveAtOnce, aMinMoveAtOnce, false);
 				} else if (tTileEntity1.adjacentChestXPos != null) {
 					tAmount = moveOneItemStack(tTileEntity1.adjacentChestXPos, aTileEntity2, aGrabFrom, aPutTo, aFilter, aInvertFilter, aMaxTargetStackSize, aMinTargetStackSize, aMaxMoveAtOnce, aMinMoveAtOnce, false);
-				} else if (tTileEntity1.adjacentChestZPosition != null) {
-					tAmount = moveOneItemStack(tTileEntity1.adjacentChestZPosition, aTileEntity2, aGrabFrom, aPutTo, aFilter, aInvertFilter, aMaxTargetStackSize, aMinTargetStackSize, aMaxMoveAtOnce, aMinMoveAtOnce, false);
 				}
+//				} else if (tTileEntity1.adjacentChestZPosition != null) {
+//					tAmount = moveOneItemStack(tTileEntity1.adjacentChestZPosition, aTileEntity2, aGrabFrom, aPutTo, aFilter, aInvertFilter, aMaxTargetStackSize, aMinTargetStackSize, aMaxMoveAtOnce, aMinMoveAtOnce, false);
+//				} // TODO
 				if (tAmount != 0) return tAmount;
 			}
 		}
@@ -416,9 +425,10 @@ public class GT_Utility {
 					tAmount = moveOneItemStack(aTileEntity1, tTileEntity2.adjacentChestZNeg, aGrabFrom, aPutTo, aFilter, aInvertFilter, aMaxTargetStackSize, aMinTargetStackSize, aMaxMoveAtOnce, aMinMoveAtOnce, false);
 				} else if (tTileEntity2.adjacentChestXPos != null) {
 					tAmount = moveOneItemStack(aTileEntity1, tTileEntity2.adjacentChestXPos, aGrabFrom, aPutTo, aFilter, aInvertFilter, aMaxTargetStackSize, aMinTargetStackSize, aMaxMoveAtOnce, aMinMoveAtOnce, false);
-				} else if (tTileEntity2.adjacentChestZPosition != null) {
-					tAmount = moveOneItemStack(aTileEntity1, tTileEntity2.adjacentChestZPosition, aGrabFrom, aPutTo, aFilter, aInvertFilter, aMaxTargetStackSize, aMinTargetStackSize, aMaxMoveAtOnce, aMinMoveAtOnce, false);
 				}
+//				} else if (tTileEntity2.adjacentChestZPosition != null) {
+//					tAmount = moveOneItemStack(aTileEntity1, tTileEntity2.adjacentChestZPosition, aGrabFrom, aPutTo, aFilter, aInvertFilter, aMaxTargetStackSize, aMinTargetStackSize, aMaxMoveAtOnce, aMinMoveAtOnce, false);
+//				} // TODO
 				if (tAmount != 0) return tAmount;
 			}
 		}
@@ -541,10 +551,11 @@ public class GT_Utility {
 		return null;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static ItemStack getContainerItem(ItemStack aStack) {
 		if (aStack == null || aStack.getItem() == null) return null;
 		
-		if (aStack.getItem().hasContainerItem()) return aStack.getItem().getContainerItemStack(aStack);
+		if (aStack.getItem().hasContainerItem()) return aStack.getItem().getContainerItem(aStack);
 		
 		if (areStacksEqual(aStack, GT_ModHandler.getEmptyCell(1))) return null;
 		
@@ -560,7 +571,8 @@ public class GT_Utility {
 		return null;
 	}
 	
-	public static boolean removeSimpleIC2MachineRecipe(ItemStack aInput, Map aRecipeList, ItemStack aOutput) {
+	@SuppressWarnings("unchecked")
+	public static boolean removeSimpleIC2MachineRecipe(ItemStack aInput, Map<?, ?> aRecipeList, ItemStack aOutput) {
 		if ((aInput == null && aOutput == null) || aRecipeList == null) return false;
 		try {
 			for (Map.Entry<Object, Object> tEntry : ((Map<Object, Object>)aRecipeList).entrySet()) {
@@ -595,7 +607,7 @@ public class GT_Utility {
 		return false;
 	}
 	
-	public static boolean addSimpleIC2MachineRecipe(ItemStack aInput, Map aRecipeList, ItemStack aOutput) {
+	public static boolean addSimpleIC2MachineRecipe(ItemStack aInput, Map<Object, Object> aRecipeList, ItemStack aOutput) {
 		if (aInput == null || aOutput == null || aRecipeList == null) return false;
 		aRecipeList.put(callConstructor("ic2.api.recipe.RecipeInputItemStack", 0, copy(aInput), false, copy(aInput)), callConstructor("ic2.api.recipe.RecipeOutput", 0, callConstructor("ic2.api.recipe.RecipeOutput", 1, copy(aOutput), false, null, new ItemStack[] {copy(aOutput)}), false, null, new ItemStack[] {copy(aOutput)}));
 		return true;
@@ -606,24 +618,24 @@ public class GT_Utility {
 	public static ItemStack getWrittenBook(String aTitle, String aAuthor, String[] aPages) {
 		if (aTitle == null || aAuthor == null || aPages == null || aPages.length <= 0 || aTitle.equals("") || aAuthor.equals("")) return null;
 		sBookCount++;
-		ItemStack rStack = new ItemStack(Item.writtenBook, 1);
+		ItemStack rStack = new ItemStack(Items.written_book, 1);
         NBTTagCompound tNBT = new NBTTagCompound();
         tNBT.setString("title", GT_LanguageManager.addStringLocalization("Book." + aTitle + ".Name", aTitle));
         tNBT.setString("author", aAuthor);
-        NBTTagList tNBTList = new NBTTagList("pages");
+        NBTTagList tNBTList = new NBTTagList();
         for (byte i = 0; i < aPages.length; i++) {
         	aPages[i] = GT_LanguageManager.addStringLocalization("Book." + aTitle + ".Page" + ((i<10)?"0"+i:i), aPages[i]);
 	        if (i < 48) {
 	        	if (aPages[i].length() < 256)
-	        		tNBTList.appendTag(new NBTTagString("PAGE " + i, aPages[i]));
+	        		tNBTList.appendTag(new NBTTagString(aPages[i]));
 	        	else
-	        		GT_Log.err.println("WARNING: String for written Book too long! -> " + aPages[i]);
+	        		GT_Log.log.warn("WARNING: String for written Book too long! -> " + aPages[i]);
 	        } else {
-        		GT_Log.err.println("WARNING: Too much Pages for written Book! -> " + aTitle);
+        		GT_Log.log.warn("WARNING: Too much Pages for written Book! -> " + aTitle);
 	        	break;
 	        }
         }
-		tNBTList.appendTag(new NBTTagString("FINAL PAGE", "Credits to " + aAuthor + " for writing this Book. This was Book Nr. " + sBookCount + " at its creation. Gotta get 'em all!"));
+		tNBTList.appendTag(new NBTTagString("Credits to " + aAuthor + " for writing this Book. This was Book Nr. " + sBookCount + " at its creation. Gotta get 'em all!"));
         tNBT.setTag("pages", tNBTList);
         rStack.setTagCompound(tNBT);
         GregTech_API.sBookList.put(aTitle, rStack);
@@ -660,11 +672,6 @@ public class GT_Utility {
 	
 	public static boolean sendSoundToPlayers(World aWorld, String aSoundName, float aSoundStrength, float aSoundModulation, int aX, int aY, int aZ) {
 		if (aSoundName == null || aSoundName.equals("") || aWorld == null || aWorld.isRemote) return false;
-		
-		Packet250CustomPayload tPacket = new Packet250CustomPayload();
-		tPacket.channel = GregTech_API.SOUND_PACKET_CHANNEL;
-        tPacket.isChunkDataPacket = false;
-        
         ByteArrayDataOutput tOut = ByteStreams.newDataOutput();
 
         tOut.writeInt(aX);
@@ -675,9 +682,7 @@ public class GT_Utility {
         tOut.writeFloat(aSoundStrength);
         tOut.writeFloat(aSoundModulation < 0 ? (1.0F + (aWorld.rand.nextFloat() - aWorld.rand.nextFloat()) * 0.2F) * 0.7F : aSoundModulation);
         
-        tPacket.data = tOut.toByteArray();
-        tPacket.length = tPacket.data.length;
-        
+		S3FPacketCustomPayload tPacket = new S3FPacketCustomPayload(GregTech_API.SOUND_PACKET_CHANNEL, tOut.toByteArray());
         sendPacketToAllPlayersInRange(aWorld, tPacket, aX, aZ);
         
 		return true;
@@ -690,8 +695,8 @@ public class GT_Utility {
 				if (GregTech_API.gregtechmod.allowPacketToBeSent(aPacket, tPlayer)) {
 					Chunk tChunk = aWorld.getChunkFromBlockCoords(aX, aZ);
 					if (tPlayer.getServerForPlayer().getPlayerManager().isPlayerWatchingChunk(tPlayer, tChunk.xPosition, tChunk.zPosition)) {
-						if (GregTech_API.DEBUG_MODE) GT_Log.out.println("sent Packet to " + tPlayer.username);
-						tPlayer.playerNetServerHandler.sendPacketToPlayer(aPacket);
+						if (GregTech_API.DEBUG_MODE) GT_Log.log.debug("sent Packet to " + tPlayer.getDisplayName());
+						tPlayer.playerNetServerHandler.sendPacket(aPacket);
 					}
 	        	}
         	} else {
@@ -707,7 +712,7 @@ public class GT_Utility {
 	
 	public static ItemStack intToStack(int aStack) {
 		int tID = aStack&(~0>>>16), tMeta = aStack>>>16;
-		if (tID > 0 && tID < Item.itemsList.length && Item.itemsList[tID] != null) return new ItemStack(tID, 1, tMeta);
+		if (tID > 0 && Item.itemRegistry.containsId(tID)) return new ItemStack(Item.getItemById(tID), 1, tMeta);
 		return null;
 	}
 	
@@ -727,19 +732,12 @@ public class GT_Utility {
 		return aList.contains(stackToInt(tStack)) || aList.contains(stackToInt(aStack));
 	}
 	
-	public static boolean isAirBlock(World aWorld, int aX, int aY, int aZ) {
-		int tID = aWorld.getBlockId(aX, aY, aZ);
-		if (tID > 0 && tID < Block.blocksList.length && Block.blocksList[tID] != null) {
-			return Block.blocksList[tID].isAirBlock(aWorld, aX, aY, aZ);
-		}
-		return true;
-	}
-	
 	public static boolean hasBlockHitBox(World aWorld, int aX, int aY, int aZ) {
-		int tID = aWorld.getBlockId(aX, aY, aZ);
-		if (tID < Block.blocksList.length && Block.blocksList[tID] != null) {
-			return Block.blocksList[tID].getCollisionBoundingBoxFromPool(aWorld, aX, aY, aZ) != null;
+		Block bl = aWorld.getBlock(aX, aY, aZ);
+		if (bl != Blocks.air) {
+			return bl.getCollisionBoundingBoxFromPool(aWorld, aX, aY, aZ) != null;
 		}
+		
 		return false;
 	}
 	
@@ -791,7 +789,7 @@ public class GT_Utility {
 				rStack.getItem().onUpdate(rStack, GregTech_API.sDummyWorld, null, 0, false);
 			}
 		} catch(Throwable e) {
-			e.printStackTrace(GT_Log.err);
+			GT_Log.log.catching(e);
 		}
 		return GT_OreDictUnificator.get(true, rStack);
 	}
@@ -799,7 +797,7 @@ public class GT_Utility {
 	/**
 	 * Why the fuck do neither Java nor Guava have a Function to do this?
 	 */
-    public static <K, V extends Comparable> LinkedHashMap<K,V> sortMapByValuesAcending(Map<K,V> aMap) {
+    public static <K, V extends Comparable<V>> LinkedHashMap<K,V> sortMapByValuesAcending(Map<K,V> aMap) {
         List<Map.Entry<K,V>> tEntrySet = new LinkedList<Map.Entry<K,V>>(aMap.entrySet());
         Collections.sort(tEntrySet, new Comparator<Map.Entry<K,V>>() {@Override public int compare(Entry<K, V> aValue1, Entry<K, V> aValue2) {return aValue1.getValue().compareTo(aValue2.getValue());}});
         LinkedHashMap<K,V> rMap = new LinkedHashMap<K,V>();
@@ -810,7 +808,7 @@ public class GT_Utility {
 	/**
 	 * Why the fuck do neither Java nor Guava have a Function to do this?
 	 */
-    public static <K, V extends Comparable> LinkedHashMap<K,V> sortMapByValuesDescending(Map<K,V> aMap) {
+    public static <K, V extends Comparable<V>> LinkedHashMap<K,V> sortMapByValuesDescending(Map<K,V> aMap) {
         List<Map.Entry<K,V>> tEntrySet = new LinkedList<Map.Entry<K,V>>(aMap.entrySet());
         Collections.sort(tEntrySet, new Comparator<Map.Entry<K,V>>() {@Override public int compare(Entry<K, V> aValue1, Entry<K, V> aValue2) {return -aValue1.getValue().compareTo(aValue2.getValue());}});
         LinkedHashMap<K,V> rMap = new LinkedHashMap<K,V>();
@@ -823,11 +821,14 @@ public class GT_Utility {
 	 * Used for my Teleporter.
 	 */
 	public static boolean isRealDimension(int aDimensionID) {
+		Class<?> provider = null;
 		try {
-			if (DimensionManager.getProvider(aDimensionID) instanceof com.xcompwiz.mystcraft.world.WorldProviderMyst) return true;
+			provider = Class.forName("com.xcompwiz.mystcraft.world.WorldProviderMyst");
+			if (provider.isAssignableFrom(DimensionManager.getProvider(aDimensionID).getClass())) return true;
 		} catch (Throwable e) {}
 		try {
-			if (DimensionManager.getProvider(aDimensionID) instanceof twilightforest.world.WorldProviderTwilightForest) return true;
+			provider = Class.forName("twilightforest.world.WorldProviderTwilightForest");
+			if (provider.isAssignableFrom(DimensionManager.getProvider(aDimensionID).getClass())) return true;
 		} catch (Throwable e) {}
 		return GregTech_API.sDimensionalList.contains(aDimensionID);
 	}
@@ -840,8 +841,9 @@ public class GT_Utility {
 			
 			if (aEntity instanceof EntityPlayerMP) {
 				EntityPlayerMP aPlayer = (EntityPlayerMP)aEntity;
+				int fromDim = aPlayer.dimension;
 		        aPlayer.dimension = aDimension;
-		        aPlayer.playerNetServerHandler.sendPacketToPlayer(new Packet9Respawn(aPlayer.dimension, (byte)aPlayer.worldObj.difficultySetting, tTargetWorld.getWorldInfo().getTerrainType(), tTargetWorld.getHeight(), aPlayer.theItemInWorldManager.getGameType()));
+		        aPlayer.playerNetServerHandler.sendPacket(new S07PacketRespawn(aDimension, aPlayer.worldObj.difficultySetting, tTargetWorld.getWorldInfo().getTerrainType(), aPlayer.theItemInWorldManager.getGameType()));
 		        tOriginalWorld.removePlayerEntityDangerously(aPlayer);
 		        aPlayer.isDead = false;
 		        aPlayer.setWorld(tTargetWorld);
@@ -850,13 +852,13 @@ public class GT_Utility {
 		        aPlayer.theItemInWorldManager.setWorld(tTargetWorld);
 		        MinecraftServer.getServer().getConfigurationManager().updateTimeAndWeatherForPlayer(aPlayer, tTargetWorld);
 		        MinecraftServer.getServer().getConfigurationManager().syncPlayerInventory(aPlayer);
-		        Iterator tIterator = aPlayer.getActivePotionEffects().iterator();
+		        Iterator<?> tIterator = aPlayer.getActivePotionEffects().iterator();
 		        while (tIterator.hasNext()) {
 		            PotionEffect potioneffect = (PotionEffect)tIterator.next();
-		            aPlayer.playerNetServerHandler.sendPacketToPlayer(new Packet41EntityEffect(aPlayer.entityId, potioneffect));
+		            aPlayer.playerNetServerHandler.sendPacket(new S1DPacketEntityEffect(aPlayer.getEntityId(), potioneffect));
 		        }
 		        aPlayer.playerNetServerHandler.setPlayerLocation(aX+0.5, aY+0.5, aZ+0.5, aPlayer.rotationYaw, aPlayer.rotationPitch);
-		        GameRegistry.onPlayerChangedDimension(aPlayer);
+		        MinecraftForge.EVENT_BUS.post(new PlayerEvent.PlayerChangedDimensionEvent(aPlayer, fromDim, aDimension)); // GameRegistry.onPlayerChangedDimension(aPlayer);  FIXME need an event handler for changind dimension
 			} else {
 				aEntity.setPosition(aX+0.5, aY+0.5, aZ+0.5);
 				aEntity.worldObj.removeEntity(aEntity);
@@ -889,25 +891,26 @@ public class GT_Utility {
 		return false;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static synchronized int getCoordinateScan(ArrayList<String> aList, EntityPlayer aPlayer, World aWorld, int aScanLevel, int aX, int aY, int aZ, int aSide, float aClickX, float aClickY, float aClickZ) {
 		if (aList == null) return 0;
 		
 		ArrayList<String> tList = new ArrayList<String>();
 		int rEUAmount = 0;
 		
-		TileEntity tTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
+		TileEntity tTileEntity = aWorld.getTileEntity(aX, aY, aZ);
 	    
-	    Block tBlock = Block.blocksList[aWorld.getBlockId(aX, aY, aZ)];
+	    Block tBlock = aWorld.getBlock(aX, aY, aZ);
 	    
     	tList.add("-----");
 	    try {
 		    if (tTileEntity != null && tTileEntity instanceof IInventory)
-		    	tList.add("Name: " + ((IInventory)tTileEntity).getInvName() + "  ID: " + tBlock.blockID + "  MetaData: " + aWorld.getBlockMetadata(aX, aY, aZ));
+		    	tList.add("Name: " + ((IInventory)tTileEntity).getInventoryName() + "  ID: " + Block.getIdFromBlock(tBlock) + "  MetaData: " + aWorld.getBlockMetadata(aX, aY, aZ));
 		    else
-		    	tList.add("Name: " + tBlock.getUnlocalizedName() + "  ID: " + tBlock.blockID + "  MetaData: " + aWorld.getBlockMetadata(aX, aY, aZ));
+		    	tList.add("Name: " + tBlock.getUnlocalizedName() + "  ID: " + Block.getIdFromBlock(tBlock) + "  MetaData: " + aWorld.getBlockMetadata(aX, aY, aZ));
 		    
 		    tList.add("Hardness: " + tBlock.getBlockHardness(aWorld, aX, aY, aZ) + "  Blast Resistance: " + tBlock.getExplosionResistance(aPlayer, aWorld, aX, aY, aZ, aPlayer.posX, aPlayer.posY, aPlayer.posZ));
-		} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+		} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 	    if (tTileEntity != null) {
 			try {if (tTileEntity instanceof IFluidHandler) {
 				rEUAmount+=500;
@@ -915,63 +918,63 @@ public class GT_Utility {
 			    if (tTanks != null) for (byte i = 0; i < tTanks.length; i++) {
 			    	tList.add("Tank " + i + ": " + (tTanks[i].fluid==null?0:tTanks[i].fluid.amount) + " / " + tTanks[i].capacity + " " + (tTanks[i].fluid==null?"":GT_Utility.capitalizeString(tTanks[i].fluid.getFluid().getUnlocalizedName().replaceFirst("fluid.", ""))));
 			    }
-			}} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+			}} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 			try {if (tTileEntity instanceof ic2.api.reactor.IReactorChamber) {
 				rEUAmount+=500;
 			    tTileEntity = (TileEntity)(((ic2.api.reactor.IReactorChamber)tTileEntity).getReactor());
-			}} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+			}} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 			try {if (tTileEntity instanceof ic2.api.reactor.IReactor) {
 				rEUAmount+=500;
 				tList.add("Heat: " + ((ic2.api.reactor.IReactor)tTileEntity).getHeat() + "/" + ((ic2.api.reactor.IReactor)tTileEntity).getMaxHeat()
 						+ "  HEM: " + ((ic2.api.reactor.IReactor)tTileEntity).getHeatEffectModifier() + "  Base EU Output: "/* + ((ic2.api.reactor.IReactor)tTileEntity).getOutput()*/);
-			}} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+			}} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 			try {if (tTileEntity instanceof ic2.api.tile.IWrenchable) {
 				rEUAmount+=100;
 		        tList.add("Facing: " + ((ic2.api.tile.IWrenchable)tTileEntity).getFacing() + " / Chance: " + (((ic2.api.tile.IWrenchable)tTileEntity).getWrenchDropRate()*100) + "%");
 			    tList.add(((ic2.api.tile.IWrenchable)tTileEntity).wrenchCanRemove(aPlayer)?"You can remove this with a Wrench":"You can NOT remove this with a Wrench");
-			}} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+			}} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 			try {if (tTileEntity instanceof ic2.api.energy.tile.IEnergyTile) {
 				rEUAmount+=200;
 			    //aList.add(((ic2.api.energy.tile.IEnergyTile)tTileEntity).isAddedToEnergyNet()?"Added to E-net":"Not added to E-net! Bug?");
-			}} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+			}} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 			try {if (tTileEntity instanceof ic2.api.energy.tile.IEnergySink) {
 				rEUAmount+=400;
 		        //aList.add("Demanded Energy: " + ((ic2.api.energy.tile.IEnergySink)tTileEntity).demandsEnergy());
-		        tList.add("Max Safe Input: " + ((ic2.api.energy.tile.IEnergySink)tTileEntity).getMaxSafeInput());
-		    }} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+		        tList.add("Sink Tier: " + ((ic2.api.energy.tile.IEnergySink)tTileEntity).getSinkTier());
+		    }} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 			try {if (tTileEntity instanceof ic2.api.energy.tile.IEnergySource) {
 				rEUAmount+=400;
 		        //aList.add("Max Energy Output: " + ((ic2.api.energy.tile.IEnergySource)tTileEntity).getMaxEnergyOutput());
-		    }} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+		    }} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 			try {if (tTileEntity instanceof ic2.api.energy.tile.IEnergyConductor) {
 				rEUAmount+=200;
 		        tList.add("Conduction Loss: " + ((ic2.api.energy.tile.IEnergyConductor)tTileEntity).getConductionLoss());
-		    }} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+		    }} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 			try {if (tTileEntity instanceof ic2.api.tile.IEnergyStorage) {
 				rEUAmount+=200;
 		        tList.add("Contained Energy: " + ((ic2.api.tile.IEnergyStorage)tTileEntity).getStored() + " of " + ((ic2.api.tile.IEnergyStorage)tTileEntity).getCapacity());
 		        //aList.add(((ic2.api.tile.IEnergyStorage)tTileEntity).isTeleporterCompatible(ic2.api.Direction.YP)?"Teleporter Compatible":"Not Teleporter Compatible");
-			}} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+			}} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 			try {if (tTileEntity instanceof IUpgradableMachine) {
 				rEUAmount+=500;
 		    	int tValue = 0;
 		    	if (0 < (tValue = ((IUpgradableMachine)tTileEntity).getOverclockerUpgradeCount())) tList.add(tValue	+ " Overclocker Upgrades");
 		    	if (0 < (tValue = ((IUpgradableMachine)tTileEntity).getTransformerUpgradeCount())) tList.add(tValue	+ " Transformer Upgrades");
 		    	if (0 < (tValue = ((IUpgradableMachine)tTileEntity).getUpgradeStorageVolume()   )) tList.add(tValue	+ " Upgraded EU Capacity");
-		    }} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+		    }} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 			try {if (tTileEntity instanceof IMachineProgress) {
 				rEUAmount+=400;
 		    	int tValue = 0;
 		    	if (0 < (tValue = ((IMachineProgress)tTileEntity).getMaxProgress())) tList.add("Progress: " + tValue + " / " + ((IMachineProgress)tTileEntity).getProgress());
-		    }} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+		    }} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 			try {if (tTileEntity instanceof ICoverable) {
 				rEUAmount+=300;
 		    	String tString = ((ICoverable)tTileEntity).getCoverBehaviorAtSide((byte)aSide).getDescription((byte)aSide, ((ICoverable)tTileEntity).getCoverIDAtSide((byte)aSide), ((ICoverable)tTileEntity).getCoverDataAtSide((byte)aSide), (ICoverable)tTileEntity);
 		    	if (tString != null && !tString.equals("")) tList.add(tString);
-		    }} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+		    }} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 			try {if (tTileEntity instanceof IGregTechTileEntity) {
 		    	tList.add("Owned by: " + ((IGregTechTileEntity)tTileEntity).getOwnerName());
-		    }} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+		    }} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 			try {if (tTileEntity instanceof ic2.api.crops.ICropTile) {
 				if (((ic2.api.crops.ICropTile)tTileEntity).getScanLevel() < 4) {
 					rEUAmount+=10000;
@@ -1000,13 +1003,13 @@ public class GT_Utility {
 			        tList.add("Attributes:" + tString.replaceFirst(",", ""));
 			        tList.add("Discovered by: " + ic2.api.crops.Crops.instance.getCropList()[((ic2.api.crops.ICropTile)tTileEntity).getID()].discoveredBy());
 				}
-			}} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+			}} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
     	}
 	    try {if (tBlock instanceof IDebugableBlock) {
 	    	rEUAmount+=500;
 	        ArrayList<String> temp = ((IDebugableBlock)tBlock).getDebugInfo(aPlayer, aX, aY, aZ, 3);
 	        if (temp != null) tList.addAll(temp);
-	    }} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+	    }} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 	    
 	    GT_ScannerEvent tEvent = new GT_ScannerEvent(aWorld, aPlayer, aX, aY, aZ, (byte)aSide, aScanLevel, tBlock, tTileEntity, tList, aClickX, aClickY, aClickZ);
 	    tEvent.mEUCost = rEUAmount;

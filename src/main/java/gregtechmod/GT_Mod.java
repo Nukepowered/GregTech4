@@ -136,8 +136,8 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     @Instance
     public static GT_Mod instance;
     
-//    @SidedProxy(clientSide = "gregtechmod.common.GT_Client", serverSide = "gregtechmod.common.GT_Server")
-//    public static GT_Proxy gregtechproxy;
+    @SidedProxy(clientSide = "gregtechmod.common.GT_Client", serverSide = "gregtechmod.common.GT_Server")
+    public static GT_Proxy gregtechproxy;
     
 	public static volatile int VERSION = 404;
 	
