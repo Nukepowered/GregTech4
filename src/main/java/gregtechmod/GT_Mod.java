@@ -1,94 +1,37 @@
 package gregtechmod;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.enums.Element;
-import gregtechmod.api.enums.GT_ConfigCategories;
-import gregtechmod.api.enums.GT_ToolDictNames;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IGT_Mod;
 import gregtechmod.api.interfaces.IGT_RecipeAdder;
-import gregtechmod.api.interfaces.IMetaTileEntity;
 import gregtechmod.api.items.GT_Tool_Item;
-import gregtechmod.api.metatileentity.BaseMetaPipeEntity;
-import gregtechmod.api.metatileentity.BaseMetaTileEntity;
-import gregtechmod.api.metatileentity.MetaPipeEntity;
-import gregtechmod.api.metatileentity.MetaTileEntity;
-import gregtechmod.api.util.GT_CircuitryBehavior;
 import gregtechmod.api.util.GT_Config;
-import gregtechmod.api.util.GT_CoverBehavior;
 import gregtechmod.api.util.GT_ItsNotMyFaultException;
 import gregtechmod.api.util.GT_LanguageManager;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
-import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Recipe;
-import gregtechmod.api.util.GT_RecipeRegistrator;
 import gregtechmod.api.util.GT_Utility;
-import gregtechmod.common.GT_ComputercubeDescription;
-import gregtechmod.common.GT_ConnectionHandler;
 import gregtechmod.common.GT_DummyWorld;
-import gregtechmod.common.GT_GUIHandler;
 import gregtechmod.common.GT_OreDictHandler;
-import gregtechmod.common.GT_PacketHandler;
 import gregtechmod.common.GT_Proxy;
-import gregtechmod.common.GT_TickHandler;
 import gregtechmod.common.GT_Worldgenerator;
 import gregtechmod.common.blocks.GT_BlockMetaID_Block;
-import gregtechmod.common.blocks.GT_BlockMetaID_Block2;
-import gregtechmod.common.blocks.GT_BlockMetaID_Machine;
-import gregtechmod.common.blocks.GT_BlockMetaID_Ore;
-import gregtechmod.common.blocks.GT_BlockMetaID_Stone1;
-import gregtechmod.common.blocks.GT_Block_LightSource;
 import gregtechmod.common.covers.GT_Cover_Generic;
 import gregtechmod.common.covers.GT_Cover_None;
 import gregtechmod.common.covers.GT_Cover_Redstone;
-import gregtechmod.common.items.GT_MetaBlock2_Item;
-import gregtechmod.common.items.GT_MetaBlock_Item;
-import gregtechmod.common.items.GT_MetaMachine_Item;
-import gregtechmod.common.items.GT_MetaOre_Item;
-import gregtechmod.common.items.GT_MetaStone1_Item;
 import gregtechmod.common.render.GT_Block_Renderer;
-import gregtechmod.common.tileentities.GT_TileEntity_ComputerCube;
-import gregtechmod.common.tileentities.GT_TileEntity_LightSource;
-import gregtechmod.common.tileentities.GT_TileEntity_PlayerDetector;
-import gregtechmod.common.tileentities.GT_TileEntity_Sonictron;
-import gregtechmod.common.tileentities.GT_TileEntity_Superconductor;
-import gregtechmod.loaders.load.GT_CircuitBehaviorLoad;
-import gregtechmod.loaders.load.GT_DictRegistratorPostItem;
-import gregtechmod.loaders.load.GT_DictRegistratorPreItem;
-import gregtechmod.loaders.load.GT_ItemLoader;
-import gregtechmod.loaders.load.GT_MetaTileEntityLoader;
 import gregtechmod.loaders.misc.GT_CoverLoader;
 import gregtechmod.loaders.misc.GT_TooEasyModeLoader;
-import gregtechmod.loaders.postload.GT_BlockResistanceLoader;
-import gregtechmod.loaders.postload.GT_BookAndLootLoader;
-import gregtechmod.loaders.postload.GT_CoverBehaviorLoader;
-import gregtechmod.loaders.postload.GT_CraftingRecipeLoader;
-import gregtechmod.loaders.postload.GT_CropLoader;
-import gregtechmod.loaders.postload.GT_ItemIterator;
-import gregtechmod.loaders.postload.GT_ItemMaxStacksizeLoader;
-import gregtechmod.loaders.postload.GT_LiquidAndFuelLoader;
-import gregtechmod.loaders.postload.GT_MachineRecipeLoader;
-import gregtechmod.loaders.postload.GT_MinableRegistrator;
-import gregtechmod.loaders.postload.GT_RecyclerBlacklistLoader;
-import gregtechmod.loaders.postload.GT_RecyclingRecipeLoader;
-import gregtechmod.loaders.postload.GT_ScrapboxDropLoader;
-import gregtechmod.loaders.postload.GT_SeedFlowerIterator;
-import gregtechmod.loaders.postload.GT_SonictronLoader;
-import gregtechmod.loaders.postload.GT_UUMRecipeLoader;
-import gregtechmod.loaders.postload.GT_Worldgenloader;
 import gregtechmod.loaders.preload.GT_InitHardCodedCapeList;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.PrintStream;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
@@ -96,22 +39,15 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.shader.TesselatorVertexState;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.storage.SaveHandler;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.oredict.OreDictionary;
-import net.minecraftforge.oredict.ShapedOreRecipe;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -123,9 +59,6 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.LanguageRegistry;
 
 /**
  * @author Gregorius Techneticies
@@ -162,26 +95,26 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 //    	checkVersions();
     }
     
-    private static final void checkVersions() {
-    	if (   VERSION != GregTech_API			.VERSION
-            || VERSION != BaseMetaTileEntity	.VERSION
-            || VERSION != BaseMetaPipeEntity	.VERSION
-            || VERSION != MetaTileEntity		.VERSION
-            || VERSION != MetaPipeEntity		.VERSION
-    	    || VERSION != GT_CircuitryBehavior	.VERSION
-    	    || VERSION != GT_CoverBehavior		.VERSION
-    		|| VERSION != GT_Config				.VERSION
-    		|| VERSION != GT_LanguageManager	.VERSION
-    		|| VERSION != GT_ModHandler			.VERSION
-    		|| VERSION != GT_OreDictUnificator	.VERSION
-    		|| VERSION != GT_Recipe				.VERSION
-    		|| VERSION != GT_Utility			.VERSION
-    	    || VERSION != GT_RecipeRegistrator	.VERSION
-    		|| VERSION != Element				.VERSION
-    		|| VERSION != Materials				.VERSION
-    		|| VERSION != OrePrefixes			.VERSION)
-    		throw new GT_ItsNotMyFaultException("One of your Mods included GregTech-API Files inside it's download, mention this to the Mod Author, who does this bad thing, and tell him/her to use reflection. I have added a Version check, to prevent Authors from breaking my Mod that way.");
-    }
+//    private static final void checkVersions() { // Will uncomment in the end
+//    	if (   VERSION != GregTech_API			.VERSION
+//            || VERSION != BaseMetaTileEntity	.VERSION
+//            || VERSION != BaseMetaPipeEntity	.VERSION
+//            || VERSION != MetaTileEntity		.VERSION
+//            || VERSION != MetaPipeEntity		.VERSION
+//    	    || VERSION != GT_CircuitryBehavior	.VERSION
+//    	    || VERSION != GT_CoverBehavior		.VERSION
+//    		|| VERSION != GT_Config				.VERSION
+//    		|| VERSION != GT_LanguageManager	.VERSION
+//    		|| VERSION != GT_ModHandler			.VERSION
+//    		|| VERSION != GT_OreDictUnificator	.VERSION
+//    		|| VERSION != GT_Recipe				.VERSION
+//    		|| VERSION != GT_Utility			.VERSION
+//    	    || VERSION != GT_RecipeRegistrator	.VERSION
+//    		|| VERSION != Element				.VERSION
+//    		|| VERSION != Materials				.VERSION
+//    		|| VERSION != OrePrefixes			.VERSION)
+//    		throw new GT_ItsNotMyFaultException("One of your Mods included GregTech-API Files inside it's download, mention this to the Mod Author, who does this bad thing, and tell him/her to use reflection. I have added a Version check, to prevent Authors from breaking my Mod that way.");
+//    }
     
     public GT_Mod() {
 //    	checkVersions();
@@ -497,15 +430,15 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 			} catch(Throwable e) {}}}).start();} catch(Throwable e) {}
 		}
     	
-//        GregTech_API.sPreloadFinished = true;
-//        GT_Log.out.println("GT_Mod: Preload-Phase finished!");
-//    	for (Runnable tRunnable : GregTech_API.sAfterGTPreload) {
-//    		try {
-//    			tRunnable.run();
-//    		} catch(Throwable e) {
-//    			e.printStackTrace(GT_Log.err);
-//    		}
-//    	}
+        GregTech_API.sPreloadFinished = true;
+        GT_Log.log.info("GT_Mod: Preload-Phase finished!");
+    	for (Runnable tRunnable : GregTech_API.sAfterGTPreload) {
+    		try {
+    			tRunnable.run();
+    		} catch(Throwable e) {
+    			GT_Log.log.catching(e);
+    		}
+    	}
     }
     
     @EventHandler
@@ -1237,11 +1170,12 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 	            File tDirectory = getSaveDirectory();
 	            if (tDirectory != null) {
 			        NBTTagCompound tNBT = CompressedStreamTools.readCompressed(new FileInputStream(new File(tDirectory, "GT_IDSU_Energyvalues.dat")));
-//			        NBTTagList tList = tNBT.getTagList("Energy"); // TODO: PIZDEC
-//				    for (int i = 0; i < tList.tagCount(); i++) {
-//			            NBTTagCompound tTag = (NBTTagCompound)tList.tagAt(i);
-//			            GregTech_API.sIDSUList.put(tTag.getInteger("Hash"), tTag.getInteger("EU"));
-//			        }
+			        NBTTagList tList = tNBT.getTagList("Energy", 10);
+			        
+				    for (int i = 0; i < tList.tagCount(); i++) {
+			            NBTTagCompound tTag = (NBTTagCompound)tList.getCompoundTagAt(i);
+			            GregTech_API.sIDSUList.put(tTag.getInteger("Hash"), tTag.getInteger("EU"));
+			        }
 	        	}
 			} catch (Throwable e) {
                	if (!(e instanceof java.io.FileNotFoundException))
