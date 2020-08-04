@@ -2,12 +2,13 @@ package gregtechmod.common;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.util.GT_Log;
+import net.minecraft.client.audio.SoundPoolEntry;
 
 public class GT_SoundAdder {
 	public GT_SoundAdder() {
 		net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(this);
 	}
-	
+	@SuppressWarnings("deprecation")
 	@net.minecraftforge.event.ForgeSubscribe
     public void onSound(net.minecraftforge.client.event.sound.SoundLoadEvent event) {
 		try {
@@ -48,7 +49,7 @@ public class GT_SoundAdder {
 	        event.manager.soundPoolSounds.addSound(GregTech_API.IC2_MOD_ID + ":" + "tools/Treetap" + ".ogg");
 	        event.manager.soundPoolSounds.addSound(GregTech_API.IC2_MOD_ID + ":" + "tools/Wrench" + ".ogg");
 		} catch(Throwable e) {
-			e.printStackTrace(GT_Log.err);
+			GT_Log.log.catching(e);
 		}
     }
 }

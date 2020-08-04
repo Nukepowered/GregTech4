@@ -84,7 +84,7 @@ public class GT_Renderer extends RenderPlayer {
 	            GL11.glPopMatrix();
 	        }
 	    } catch (Throwable e) {
-	    	if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);
+	    	if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);
 	    }
 	}
 }
