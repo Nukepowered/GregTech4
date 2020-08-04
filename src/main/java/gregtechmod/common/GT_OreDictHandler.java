@@ -21,17 +21,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import cpw.mods.fml.common.Mod.EventHandler;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.OreDictionary.OreRegisterEvent;
 
 public class GT_OreDictHandler {
 	public static final GT_OreDictHandler instance = new GT_OreDictHandler();
 	
 	private final List<net.minecraftforge.oredict.OreDictionary.OreRegisterEvent> mEvents = new ArrayList<net.minecraftforge.oredict.OreDictionary.OreRegisterEvent>();
 	private final List<String> mIgnoredNames = Arrays.asList("meteoriteCoal", "hambone", "slimeball", "record", "blockCobble", "itemBacon", "itemJetpackAccelerator", "itemLazurite", "itemIridium", "itemTear", "itemClaw", "itemFertilizer", "itemTar", "itemSlimeball", "itemCoke", "itemBeeswax", "itemBeeQueen", "itemForcicium", "itemForcillium", "itemRoyalJelly", "itemHoneydew", "itemHoney", "itemPollen", "itemReedTypha", "itemSulfuricAcid", "itemPotash", "itemCompressedCarbon", "compressedCarbon", "itemBitumen", "itemBioFuel", "itemCokeSugar", "itemCokeCactus", "itemCharcoalSugar", "itemCharcoalCactus", "itemSludge", "itemEnrichedAlloy", "itemQuicksilver", "itemMercury", "itemOsmium", "itemUltimateCircuit", "itemEnergizedStar", "itemAntimatterMolecule", "itemAntimatterGlob", "itemCoal", "pressOreProcessor", "crusherOreProcessor", "grinderOreProcessor", "itemBoat", "blockRubber", "blockHoney", "blockHoneydew", "blockPeat", "blockRadioactive", "blockSlime", "blockCocoa", "blockSugarCane", "blockLeather", "blockClayBrick", "solarPanelHV", "itemHerbalMedicineCake", "itemCakeSponge", "itemFishandPumpkinCakeSponge", "itemSoulCleaver", "itemInstantCake", "itemWhippingCream", "itemGlisteningWhippingCream", "itemCleaver", "itemHerbalMedicineWhippingCream", "itemStrangeWhippingCream", "itemBlazeCleaver", "itemBakedCakeSponge", "itemMagmaCake", "itemGlisteningCake", "itemOgreCleaver", "itemFishandPumpkinCake", "itemMagmaWhippingCream", "universalCable", "cableRedNet", "stoneBowl", "crafterWood", "taintedSoil", "oreNaturalAluminum", "oreNaturalAluminium", "ganysNetherGlowBox", "brickXyEngineering", "breederUranium", "infiniteBattery", "eliteBattery", "advancedBattery", "wireMill", "itemMultimeter", "chunkLazurite", "itemRecord", "aluminumNatural", "aluminiumNatural", "naturalAluminum", "naturalAluminium", "antimatterMilligram", "antimatterGram", "strangeMatter", "batteryBox", "coalGenerator", "electricFurnace", "bronzeTube", "ironTube", "netherTube", "obbyTube", "unfinishedTank", "valvePart", "aquaRegia", "leatherSeal", "leatherSlimeSeal", "enrichedUranium", "batteryInfinite", "itemSuperconductor", "camoPaste", "CAMO_PASTE");
-	private final List<String> mValidPrefixes = Arrays.asList("cell", "crafting", "ore", "oreNether", "oreEnd", "netherOre", "endOre", "stone", "pulp", "dust", "dustSmall", "nugget", "ingot", "gem", "log", "tree", "flower", "item", "wax", "brick", "plank", "sand", "glass", "dye", "slab", "stair", "stick", "clump", "paper", "book", "seed", "material", "storage", "tool", "crop", "list", "lumar", "plasma_", "molecule_");
+//	private final List<String> mValidPrefixes = Arrays.asList("cell", "crafting", "ore", "oreNether", "oreEnd", "netherOre", "endOre", "stone", "pulp", "dust", "dustSmall", "nugget", "ingot", "gem", "log", "tree", "flower", "item", "wax", "brick", "plank", "sand", "glass", "dye", "slab", "stair", "stick", "clump", "paper", "book", "seed", "material", "storage", "tool", "crop", "list", "lumar", "plasma_", "molecule_");
 	private final List<String> mIgnoredPrefixes = Arrays.asList("mffs", "projred", "ganys");
 	private final List<String> mInvalidNames = Arrays.asList("10kEUStore", "blueDye", "MonazitOre", "quartzCrystal", "whiteLuminiteCrystal", "darkStoneIngot", "invisiumIngot", "demoniteOrb", "enderGem", "starconiumGem", "osmoniumIngot", "tapaziteGem", "zectiumIngot", "foolsRubyGem", "rubyGem", "meteoriteGem", "adamiteShard", "sapphireGem", "copperIngot", "ironStick", "goldStick", "diamondStick", "reinforcedStick", "draconicStick", "emeraldStick", "copperStick", "tinStick", "silverStick", "bronzeStick", "steelStick", "leadStick", "manyullynStick", "arditeStick", "cobaltStick", "aluminiumStick", "alumiteStick", "oilsandsOre", "superconductorWire", "sulfuricAcid", "conveyorBelt", "ironWire", "aluminumWire", "aluminiumWire", "silverWire", "tinWire", "dustSiliconSmall", "HSLA", "itemAntimatterTinyPile", "itemOsmiridiumAlloy", "itemOsmiridiumPlate", "AluminumOre", "plateHeavyT2", "blockWool", "alloyPlateEnergizedHardened", "gasWood", "alloyPlateEnergized", "SilverOre", "LeadOre", "TinOre", "CopperOre", "silverOre", "leadOre", "tinOre", "copperOre", "bauxiteOre", "HSLivingmetalIngot", "oilMoving", "oilStill", "oilBucket", "petroleumOre", "dieselFuel", "diamondNugget", "planks", "wood", "stick", "sticks", "naquadah", "obsidianRod", "stoneRod", "thaumiumRod", "steelRod", "netherrackRod", "woodRod", "ironRod", "cactusRod", "flintRod", "copperRod", "cobaltRod", "alumiteRod", "blueslimeRod", "arditeRod", "manyullynRod", "bronzeRod", "boneRod", "slimeRod");
 	
@@ -49,14 +55,14 @@ public class GT_OreDictHandler {
 	
 	private boolean mActivated = false;
 	
-	@net.minecraftforge.event.ForgeSubscribe
-    public void registerOre(net.minecraftforge.oredict.OreDictionary.OreRegisterEvent aEvent) {
+	@EventHandler
+    public void registerOre(OreRegisterEvent aEvent) {
 		if (GT_Mod.mDoNotInit || aEvent == null || aEvent.Ore == null || aEvent.Ore.getItem() == null || aEvent.Name == null || aEvent.Name.equals("") || mIgnoredNames.contains(aEvent.Name)) return;
 		
 		try {
 		
 		if (aEvent.Ore.stackSize != 1) {
-			System.err.println("\nWARNING: '" + aEvent.Name + "' is either being misused by another Mod or has been wrongly registered, as the stackSize of the Event-Stack is not 1!!!");
+			GT_Log.log.warn("\nWARNING: '" + aEvent.Name + "' is either being misused by another Mod or has been wrongly registered, as the stackSize of the Event-Stack is not 1!!!");
 		}
 		
 		aEvent.Ore.stackSize = 1;
@@ -72,7 +78,7 @@ public class GT_OreDictHandler {
 		if (aEvent.Name.equals("cobblestone"))	{GT_OreDictUnificator.registerOre("stoneCobble", aEvent.Ore); return;}
     	
 		if (mActivated) {
-			System.err.println("\nWARNING: " + aMod + " attempted to register " + aEvent.Name + " very late at the OreDictionary! Some Functionality may not work as expected! Sometimes registration in Postload is required, but you should always register OreDictionary Items in the Load Phase whenever possible.");
+			GT_Log.log.warn("\nWARNING: " + aMod + " attempted to register " + aEvent.Name + " very late at the OreDictionary! Some Functionality may not work as expected! Sometimes registration in Postload is required, but you should always register OreDictionary Items in the Load Phase whenever possible.");
 		}
 		
 		if (aEvent.Name.contains(":") || aEvent.Name.contains(".") || aEvent.Name.contains("$")) return;
@@ -87,54 +93,54 @@ public class GT_OreDictHandler {
     	if (aEvent.Name.equals("itemCopperWire"))		{GT_OreDictUnificator.registerOre("craftingWireCopper"		, aEvent.Ore); return;}
     	
 		if (mInvalidNames.contains(aEvent.Name)) {
-			System.err.println("\nWARNING: '" + aEvent.Name + "' is an invalid OreDictionary Name. The Name doesn't fit to the Type of Item and/or doesn't follow a proper OreDictionary Convention. If you are the Owner of the Mod who adds this Item, please do the following: ");
+			GT_Log.log.warn("\nWARNING: '" + aEvent.Name + "' is an invalid OreDictionary Name. The Name doesn't fit to the Type of Item and/or doesn't follow a proper OreDictionary Convention. If you are the Owner of the Mod who adds this Item, please do the following: ");
 			if (aEvent.Name.equals("oilsandsOre")) {
-				System.err.println("Please change it to 'sandOil'");
+				GT_Log.log.error("Please change it to 'sandOil'");
 				GT_OreDictUnificator.registerOre("sandOil", aEvent.Ore);
 			} else if (aEvent.Name.equals("10kEUStore")) {
-				System.err.println("Use 'crafting10kEUStore', you forgot to add the prefix");
+				GT_Log.log.error("Use 'crafting10kEUStore', you forgot to add the prefix");
 			} else if (aEvent.Name.equals("sulfuricAcid")) {
-				System.err.println("Please use 'bottleSulfuricAcid' instead, since it is likely a vanilla bottle containing the Material 'SulfuricAcid'");
+				GT_Log.log.error("Please use 'bottleSulfuricAcid' instead, since it is likely a vanilla bottle containing the Material 'SulfuricAcid'");
 			} else if (aEvent.Name.equals("stick")) {
-				System.err.println("Use 'stickWood' instead, it is already registered in vanilla-forge");
+				GT_Log.log.error("Use 'stickWood' instead, it is already registered in vanilla-forge");
 			} else if (aEvent.Name.equals("wood")) {
-				System.err.println("Use 'logWood' instead, it is already registered in vanilla-forge");
+				GT_Log.log.error("Use 'logWood' instead, it is already registered in vanilla-forge");
 			} else if (aEvent.Name.equals("plank")) {
-				System.err.println("Use 'plankWood' instead, it is already registered in vanilla-forge");
+				GT_Log.log.error("Use 'plankWood' instead, it is already registered in vanilla-forge");
 			} else if (aEvent.Name.endsWith("Ingot")) {
-				System.err.println("Put the 'Ingot' in the beginning of the Name to get 'ingot" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Ingot", "")) + "'");
+				GT_Log.log.error("Put the 'Ingot' in the beginning of the Name to get 'ingot" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Ingot", "")) + "'");
 			} else if (aEvent.Name.endsWith("Crystal")) {
-				System.err.println("Put the 'Crystal' in the beginning of the Name to get 'crystal" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Crystal", "")) + "'");
+				GT_Log.log.error("Put the 'Crystal' in the beginning of the Name to get 'crystal" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Crystal", "")) + "'");
 			} else if (aEvent.Name.endsWith("Shard")) {
-				System.err.println("Put the 'Shard' in the beginning of the Name to get 'shard" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Shard", "")) + "'");
+				GT_Log.log.error("Put the 'Shard' in the beginning of the Name to get 'shard" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Shard", "")) + "'");
 			} else if (aEvent.Name.endsWith("Rod")) {
-				System.err.println("Put the 'Rod' in the beginning of the Name to get 'rod" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Rod", "")) + "'");
+				GT_Log.log.error("Put the 'Rod' in the beginning of the Name to get 'rod" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Rod", "")) + "'");
 			} else if (aEvent.Name.endsWith("Orb")) {
-				System.err.println("Put the 'Orb' in the beginning of the Name to get 'orb" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Irb", "")) + "'");
+				GT_Log.log.error("Put the 'Orb' in the beginning of the Name to get 'orb" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Irb", "")) + "'");
 			} else if (aEvent.Name.endsWith("Gem")) {
-				System.err.println("Put the 'Gem' in the beginning of the Name to get 'gem" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Gem", "")) + "'");
+				GT_Log.log.error("Put the 'Gem' in the beginning of the Name to get 'gem" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Gem", "")) + "'");
 			} else if (aEvent.Name.endsWith("Stick")) {
-				System.err.println("Put the 'Stick' in the beginning of the Name to get 'stick" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Stick", "")) + "'");
+				GT_Log.log.error("Put the 'Stick' in the beginning of the Name to get 'stick" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Stick", "")) + "'");
 			} else if (aEvent.Name.endsWith("Ore")) {
-				System.err.println("Put the 'Ore' in the beginning of the Name to get 'ore" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Ore", "")) + "'");
+				GT_Log.log.error("Put the 'Ore' in the beginning of the Name to get 'ore" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Ore", "")) + "'");
 			} else if (aEvent.Name.endsWith("Dye")) {
-				System.err.println("Put the 'Dye' in the beginning of the Name to get 'dye" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Dye", "")) + "'");
+				GT_Log.log.error("Put the 'Dye' in the beginning of the Name to get 'dye" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Dye", "")) + "'");
 			} else if (aEvent.Name.endsWith("Wire")) {
-				System.err.println("Put the 'Wire' in the beginning of the Name to get 'wire" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Wire", "")) + "'");
+				GT_Log.log.error("Put the 'Wire' in the beginning of the Name to get 'wire" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Wire", "")) + "'");
 			} else if (aEvent.Name.endsWith("Nugget")) {
-				System.err.println("Put the 'Nugget' in the beginning of the Name to get 'nugget" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Nugget", "")) + "'");
+				GT_Log.log.error("Put the 'Nugget' in the beginning of the Name to get 'nugget" + GT_Utility.capitalizeString(aEvent.Name.replaceFirst("Nugget", "")) + "'");
 			} else {
-				System.err.println("I don't know exactly what to suggest about this Name, please consult me personally at GregTech.");
+				GT_Log.log.error("I don't know exactly what to suggest about this Name, please consult me personally at GregTech.");
 			}
-			System.err.println("Private Prefixes could also be a solution if the first Suggestion doesn't apply. In that case the suggestion for the name is '" + aMod + ":" + aEvent.Name + "' don't forget to insert the ':' inbetween the Mod ID and OreDict Name, that is the most important part.");
-			System.err.println("If you are not the Owner then report it to the Owner of the Mod, which the Item belongs to.");
+			GT_Log.log.error("Private Prefixes could also be a solution if the first Suggestion doesn't apply. In that case the suggestion for the name is '" + aMod + ":" + aEvent.Name + "' don't forget to insert the ':' inbetween the Mod ID and OreDict Name, that is the most important part.");
+			GT_Log.log.error("If you are not the Owner then report it to the Owner of the Mod, which the Item belongs to.");
 			return;
 		}
 		
 		if (aEvent.Name.contains(" ")) {
-			System.err.println("\nWARNING: '" + aEvent.Name + "' is an invalid OreDictionary Name, as it contains spaces! Register it without spaces to fix that.");
+			GT_Log.log.warn("\nWARNING: '" + aEvent.Name + "' is an invalid OreDictionary Name, as it contains spaces! Register it without spaces to fix that.");
 			GT_OreDictUnificator.registerOre(aEvent.Name.replaceAll(" ", ""), GT_Utility.copy(aEvent.Ore));
-			aEvent.Ore.setItemName("Invalid OreDictionary Tag");
+			aEvent.Ore.setStackDisplayName("Invalid OreDictionary Tag");
 			return;
 		}
 		
@@ -142,11 +148,11 @@ public class GT_OreDictHandler {
 		
 		if (aPrefix == null) {
 	    	if (aEvent.Name.toLowerCase().equals(aEvent.Name)) {
-	    		System.err.println("Improperly registered Ore: " + aEvent.Name + " !!!Improperly registered Ore detected!!! This Object does not follow any OreDictionary Convention, as it is lowercased!!! Please report this to its Modauthor for a fix. If nothing proper is found, a good suggestion for its Name would be '" + aMod + ":" + aEvent.Name + "' don't forget to insert the ':' inbetween the Mod ID and OreDict Name, that is the most important part.");
+	    		GT_Log.log.error("Improperly registered Ore: " + aEvent.Name + " !!!Improperly registered Ore detected!!! This Object does not follow any OreDictionary Convention, as it is lowercased!!! Please report this to its Modauthor for a fix. If nothing proper is found, a good suggestion for its Name would be '" + aMod + ":" + aEvent.Name + "' don't forget to insert the ':' inbetween the Mod ID and OreDict Name, that is the most important part.");
 	    		return;
 	    	}
 	    	if (GT_Utility.sUpperCasedCharacters.contains(aEvent.Name.charAt(0))) {
-	    		System.err.println("Improperly registered Ore: " + aEvent.Name + " !!!Improperly registered Ore detected!!! This Object does not follow any OreDictionary Convention, because it starts with an uppercased Letter. Please report this to its Modauthor for a fix. If nothing proper is found, a good suggestion for its Name would be '" + aMod + ":" + aEvent.Name + "' don't forget to insert the ':' inbetween the Mod ID and OreDict Name, that is the most important part.");
+	    		GT_Log.log.error("Improperly registered Ore: " + aEvent.Name + " !!!Improperly registered Ore detected!!! This Object does not follow any OreDictionary Convention, because it starts with an uppercased Letter. Please report this to its Modauthor for a fix. If nothing proper is found, a good suggestion for its Name would be '" + aMod + ":" + aEvent.Name + "' don't forget to insert the ':' inbetween the Mod ID and OreDict Name, that is the most important part.");
 	    		return;
 	    	}
 		} else {
@@ -247,19 +253,20 @@ public class GT_OreDictHandler {
 					    	    	}
 			    				}
 			    				break;
+			    			default:
 			    			}
 			    		} catch(Throwable e) {
-			    			if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);
+			    			if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);
 			    		}
 			    		/**------------------------------------------------------------------------*/
 			    	} else {
-			    		System.out.println("Material Name: " + aEvent.Name + " !!!Unknown Material detected!!! Please report to GregTech Intergalactical for additional compatiblity. This is not an Error, it's just an Information.");
+			    		GT_Log.log.warn("Material Name: " + aEvent.Name + " !!!Unknown Material detected!!! Please report to GregTech Intergalactical for additional compatiblity. This is not an Error, it's just an Information.");
 			    		return;
 			    	}
 				}
 			} else if (!aPrefix.mIsSelfReferencing) {
-				System.err.println("\nWARNING: '" + aEvent.Name + "' is an OreDictionary Name which may cause Problems, please use another one.");
-				System.err.println("Private Prefixes are a solution. Please use '" + aMod + ":" + aEvent.Name + "' don't forget to insert the ':' inbetween the Mod ID and OreDict Name, that is the most important part.");
+				GT_Log.log.error("\nWARNING: '" + aEvent.Name + "' is an OreDictionary Name which may cause Problems, please use another one.");
+				GT_Log.log.error("Private Prefixes are a solution. Please use '" + aMod + ":" + aEvent.Name + "' don't forget to insert the ':' inbetween the Mod ID and OreDict Name, that is the most important part.");
 				return;
 			}
 			
@@ -293,12 +300,13 @@ public class GT_OreDictHandler {
 			case wood:
 				if (tName.equals("Rubber"))				GT_OreDictUnificator.registerOre("logRubber"					, aEvent.Ore);
 				break;
+			default:
 			}
 			
 			if (aPrefix != aPrefix.mPrefixInto) {
 				String tNewName = aEvent.Name.replaceFirst(aPrefix.toString(), aPrefix.mPrefixInto.toString());
 				GT_OreDictUnificator.registerOre(tNewName, aEvent.Ore);
-				if (!GT_OreDictUnificator.isRegisteringOres()) System.out.println("Auto-Re-Registered Ore from '" + aEvent.Name + "' to '" + tNewName + "', because of the depricated Prefix.");
+				if (!GT_OreDictUnificator.isRegisteringOres()) GT_Log.log.warn("Auto-Re-Registered Ore from '" + aEvent.Name + "' to '" + tNewName + "', because of the depricated Prefix.");
 				return;
 			}
 		}
@@ -310,7 +318,7 @@ public class GT_OreDictHandler {
 		}
 		
 		} catch(Throwable e) {
-			e.printStackTrace(GT_Log.err);
+			GT_Log.log.catching(e);
 		}
     }
 	
@@ -318,8 +326,8 @@ public class GT_OreDictHandler {
 	 * Gets called during the PreLoad-Phase
 	 */
     public void registerHandler() {
-    	net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(this);
-        for (String tOreName : net.minecraftforge.oredict.OreDictionary.getOreNames()) for (ItemStack tOreStack : net.minecraftforge.oredict.OreDictionary.getOres(tOreName)) registerOre(new net.minecraftforge.oredict.OreDictionary.OreRegisterEvent(tOreName, tOreStack));
+    	MinecraftForge.EVENT_BUS.register(this);
+        for (String tOreName : OreDictionary.getOreNames()) for (ItemStack tOreStack : OreDictionary.getOres(tOreName)) registerOre(new OreRegisterEvent(tOreName, tOreStack));
 	}
     
 	/**
@@ -327,29 +335,30 @@ public class GT_OreDictHandler {
 	 */
     public void activateHandler() {
     	mActivated = true;
-		for (net.minecraftforge.oredict.OreDictionary.OreRegisterEvent tEvent : mEvents) {
+		for (OreRegisterEvent tEvent : mEvents) {
 	    	OrePrefixes tPrefix = OrePrefixes.getPrefix(tEvent.Name);
 			if (tPrefix != null && tPrefix.mIsUnificatable) {
 				GT_OreDictUnificator.add(tEvent.Name, tEvent.Ore);
 			}
 		}
-		for (net.minecraftforge.oredict.OreDictionary.OreRegisterEvent tEvent : mEvents) try {
+		for (OreRegisterEvent tEvent : mEvents) try {
 			registerRecipes(tEvent);
 		} catch(Throwable e) {
-			e.printStackTrace(GT_Log.err);
+			GT_Log.log.catching(e);
 		}
 		mEvents.clear();
     }
     
-    public void registerRecipes(net.minecraftforge.oredict.OreDictionary.OreRegisterEvent aEvent) {
+    @SuppressWarnings("deprecation")
+	public void registerRecipes(OreRegisterEvent aEvent) {
     	if (aEvent.Ore == null || aEvent.Ore.getItem() == null) return;
     	
     	if (GregTech_API.SECONDARY_DEBUG_MODE) {
-    		GT_Log.out.println("OreDictRegistration: " + aEvent.Name + " -> ID: " + aEvent.Ore.getItem() + ", Meta: " + aEvent.Ore.getItemDamage());
+    		GT_Log.log.debug("OreDictRegistration: " + aEvent.Name + " -> ID: " + aEvent.Ore.getItem() + ", Meta: " + aEvent.Ore.getItemDamage());
     	}
     	
 		if (aEvent.Ore.stackSize != 1) {
-			System.err.println("\nWARNING: '" + aEvent.Name + "' is either being misused by another Mod or has been wrongly registered, as the stackSize of the Event-Stack is not 1.");
+			GT_Log.log.warn("\nWARNING: '" + aEvent.Name + "' is either being misused by another Mod or has been wrongly registered, as the stackSize of the Event-Stack is not 1.");
 		}
 		
     	aEvent.Ore.stackSize = 1;
@@ -395,7 +404,7 @@ public class GT_OreDictHandler {
 	    		switch (aMaterial) {
 	    		case _NULL: break;
 	    		case Sand:
-	    			GT_ModHandler.addPulverisationRecipe(GT_Utility.copy(1, aStack), new ItemStack(Block.sand, 1, 0), null, 10, false);
+	    			GT_ModHandler.addPulverisationRecipe(GT_Utility.copy(1, aStack), new ItemStack(Blocks.sand, 1, 0), null, 10, false);
 	            	break;
 	    		case Endstone:
 	    		    GT_ModHandler.addPulverisationRecipe(GT_Utility.copy(1, aStack), GT_OreDictUnificator.get(OrePrefixes.dustImpure, aMaterial, 1), GT_OreDictUnificator.get(OrePrefixes.dust, aMaterial, 1), 10, false);
@@ -404,7 +413,10 @@ public class GT_OreDictHandler {
 	    		    GT_ModHandler.addPulverisationRecipe(GT_Utility.copy(1, aStack), GT_OreDictUnificator.get(OrePrefixes.dustImpure, aMaterial, 1), GT_OreDictUnificator.get(OrePrefixes.dust, aMaterial, 1), 10, false);
 	                break;
 	    		case Obsidian:
-	    			if (aItem instanceof ItemBlock) Block.blocksList[((ItemBlock)aItem).getBlockID()].setResistance(20.0F);
+	    			if (aItem instanceof ItemBlock) {
+//	    				Block.blocksList[((ItemBlock)aItem).getBlockID()].setResistance(20.0F);
+	    				Block.getBlockFromItem(aItem).setResistance(20.0F);
+	    			}
 	        		GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_ModHandler.getIC2Item("compressedCoalBall", 8), GT_Utility.copy(1, aStack), GT_ModHandler.getIC2Item("coalChunk", 1), 400, 4);
 	        		GT_ModHandler.addPulverisationRecipe(GT_Utility.copy(1, aStack), GT_ModHandler.getRCItem("cube.crushed.obsidian", 1, GT_OreDictUnificator.get(OrePrefixes.dust, aMaterial, 1)), GT_OreDictUnificator.get(OrePrefixes.dust, aMaterial, 1), 10, true);
 	        		break;
@@ -418,7 +430,7 @@ public class GT_OreDictHandler {
 	    			GT_ModHandler.addPulverisationRecipe(GT_Utility.copy(1, aStack), GT_OreDictUnificator.get(OrePrefixes.dustImpure, aMaterial, 1), GT_OreDictUnificator.get(OrePrefixes.dust, aMaterial, 1), 10, false);
 	            	break;
 	    		case Flint:
-	    			GT_ModHandler.addPulverisationRecipe(GT_Utility.copy(1, aStack), GT_OreDictUnificator.get(OrePrefixes.dustImpure, aMaterial, 2), new ItemStack(Item.flint, 1), 50, false);
+	    			GT_ModHandler.addPulverisationRecipe(GT_Utility.copy(1, aStack), GT_OreDictUnificator.get(OrePrefixes.dustImpure, aMaterial, 2), new ItemStack(Items.flint, 1), 50, false);
 	            	break;
 	    		case GraniteBlack:
 	    			for (ItemStack tIteratedStack : GT_OreDictUnificator.getOres("plateAlloyAdvanced")) GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copy(1, tIteratedStack), GT_Utility.copy(8, aStack), GT_ModHandler.getIC2Item("reinforcedStone", 8), 400, 4);
@@ -428,14 +440,17 @@ public class GT_OreDictHandler {
 	    			for (ItemStack tIteratedStack : GT_OreDictUnificator.getOres("plateAlloyAdvanced")) GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copy(1, tIteratedStack), GT_Utility.copy(8, aStack), GT_ModHandler.getIC2Item("reinforcedStone", 8), 400, 4);
 	            	GT_ModHandler.addPulverisationRecipe(GT_Utility.copy(1, aStack), GT_OreDictUnificator.get(OrePrefixes.dustImpure, aMaterial, 1), GT_OreDictUnificator.get(OrePrefixes.dustSmall, Materials.Uranium, 1), 1, false);
 	            	break;
+				default:
+					break;
 	    		}
 	    	case stoneCobble:
-	        	if (aPrefix == OrePrefixes.stoneCobble) GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copy(1, aStack), GT_OreDictUnificator.get(OrePrefixes.stick, Materials.Wood, 1), new ItemStack(Block.lever, 1), 400, 1);
+	        	if (aPrefix == OrePrefixes.stoneCobble) GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copy(1, aStack), GT_OreDictUnificator.get(OrePrefixes.stick, Materials.Wood, 1), new ItemStack(Blocks.lever, 1), 400, 1);
 	    	case stoneBricks: case stoneChiseled: case stoneCracked: case stoneMossyBricks: case stoneMossy: case stoneSmooth:
 	    		if (aItem instanceof ItemBlock) {
 	        		if (aItem.getItemStackLimit() > GT_Mod.sBlockStackSize) aItem.setMaxStackSize(GT_Mod.sBlockStackSize);
-	        		Block tBlock = Block.blocksList[((ItemBlock)aItem).getBlockID()];
-	        		int tHarvestLevel = net.minecraftforge.common.MinecraftForge.getBlockHarvestLevel(tBlock, aMeta>=0||aMeta<16?aMeta:0, "pickaxe");
+//	        		Block tBlock = Block.blocksList[((ItemBlock)aItem).getBlockID()];
+	        		Block tBlock = Block.getBlockFromItem(aItem);
+	        		int tHarvestLevel = tBlock.getHarvestLevel(aMeta >= 0 || aMeta < 16 ? aMeta : 0);
 	        		if (tHarvestLevel <= 3) GregTech_API.sRecipeAdder.addJackHammerMinableBlock(tBlock, tHarvestLevel >= 3);
 	        	}
 	    		break;
@@ -563,10 +578,10 @@ public class GT_OreDictHandler {
 	    		    GT_ModHandler.addCompressionRecipe(GT_Utility.copy(8, aStack), GT_MetaItem_Material.instance.getStack(15, 1));
 	    			break;
 	    		case Wheat:
-		    		GT_ModHandler.addSmeltingRecipe(GT_Utility.copy(1, aStack), new ItemStack(Item.bread, 1, 0));
+		    		GT_ModHandler.addSmeltingRecipe(GT_Utility.copy(1, aStack), new ItemStack(Items.bread, 1, 0));
 		    		break;
 	    		case Mercury:
-		    		System.err.println("Quicksilver Dust?, To melt that, you don't even need a Furnace...");
+	    			GT_Log.log.error("Quicksilver Dust?, To melt that, you don't even need a Furnace...");
 	    			break;
 	    		case Tetrahedrite:
 			    	GT_ModHandler.addDustToIngotSmeltingRecipe(GT_Utility.copy(1, aStack), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Copper, 1));
@@ -585,6 +600,8 @@ public class GT_OreDictHandler {
 			    	break;
 	    		case GarnetRed: case GarnetYellow: case Amber:
 			    	GregTech_API.sRecipeAdder.addImplosionRecipe(GT_Utility.copy(4, aStack), 16, GT_OreDictUnificator.get(OrePrefixes.gem, aMaterial, 3), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 8));
+			    	break;
+			    default:
 			    	break;
 	    		}
 		    	break;
@@ -668,8 +685,8 @@ public class GT_OreDictHandler {
 	    		}
 	    		
 	        	if ((GT_ModHandler.mBCStoneGear != null && null != (tStack = GT_ModHandler.getRecipeOutput(new ItemStack[] {null, GT_Utility.copy(1, aStack), null, GT_Utility.copy(1, aStack), GT_ModHandler.mBCStoneGear, GT_Utility.copy(1, aStack), null, GT_Utility.copy(1, aStack), null})))
-	        		|| null != (tStack = GT_ModHandler.getRecipeOutput(new ItemStack[] {null, GT_Utility.copy(1, aStack), null, GT_Utility.copy(1, aStack), new ItemStack(Item.ingotIron, 1), GT_Utility.copy(1, aStack), null, GT_Utility.copy(1, aStack), null}))
-	        		|| null != (tStack = GT_ModHandler.getRecipeOutput(new ItemStack[] {null, GT_Utility.copy(1, aStack), null, GT_Utility.copy(1, aStack), new ItemStack(Block.cobblestone, 1), GT_Utility.copy(1, aStack), null, GT_Utility.copy(1, aStack), null}))) {
+	        		|| null != (tStack = GT_ModHandler.getRecipeOutput(new ItemStack[] {null, GT_Utility.copy(1, aStack), null, GT_Utility.copy(1, aStack), new ItemStack(Items.iron_ingot, 1), GT_Utility.copy(1, aStack), null, GT_Utility.copy(1, aStack), null}))
+	        		|| null != (tStack = GT_ModHandler.getRecipeOutput(new ItemStack[] {null, GT_Utility.copy(1, aStack), null, GT_Utility.copy(1, aStack), new ItemStack(Blocks.cobblestone, 1), GT_Utility.copy(1, aStack), null, GT_Utility.copy(1, aStack), null}))) {
 	        		
 	        		GregTech_API.sRecipeAdder.addCNCRecipe(GT_Utility.copy(4, aStack), tStack, 800, 1);
 	        		
@@ -681,7 +698,7 @@ public class GT_OreDictHandler {
 	        	}
 	        	
 	        	if (aMaterial == Materials.Mercury) {
-	        		System.err.println("Quicksilver Ingots?, Don't tell me there is an Armor made of that highly toxic and very likely to be melting Material!"); 
+	        		GT_Log.log.warn("Quicksilver Ingots?, Don't tell me there is an Armor made of that highly toxic and very likely to be melting Material!"); 
 	        	}
 	    		break;
 	    	case ingotDouble:
@@ -724,7 +741,7 @@ public class GT_OreDictHandler {
 	    		}
 	    		
 	        	if (aItem instanceof ItemBlock && GT_Mod.sBlockStackSize < aItem.getItemStackLimit()) aItem.setMaxStackSize(GT_Mod.sBlockStackSize);
-	    		if (aEvent.Name.equalsIgnoreCase("blockQuicksilver")) System.err.println("'blockQuickSilver'?, In which Ice Desert can you actually place this as a solid Block?");
+	    		if (aEvent.Name.equalsIgnoreCase("blockQuicksilver")) GT_Log.log.warn("'blockQuickSilver'?, In which Ice Desert can you actually place this as a solid Block?");
 	        	else if (aEvent.Name.equals("blockIron")) GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_ModHandler.getIC2Item("compressedCoalBall", 8), GT_Utility.copy(1, aStack), GT_ModHandler.getIC2Item("coalChunk", 1), 400, 4);
 	    		break;
 	    	case gem:
@@ -744,7 +761,7 @@ public class GT_OreDictHandler {
 		    		GT_ModHandler.addPulverisationRecipe(GT_Utility.copy(1, aStack), GT_ModHandler.getIC2Item("fertilizer", 2), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Phosphorus, 1), 50, false);
 		    	}
 		    	else if (aMaterial == Materials.Coal || aMaterial == Materials.Charcoal) {
-		    		if (GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.disabledrecipes, "torchesFromCoal", false)) GT_ModHandler.removeRecipe(new ItemStack[] {GT_Utility.copy(1, aStack), null, null, new ItemStack(Item.stick, 1, 0), null, null, null, null, null});
+		    		if (GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.disabledrecipes, "torchesFromCoal", false)) GT_ModHandler.removeRecipe(new ItemStack[] {GT_Utility.copy(1, aStack), null, null, new ItemStack(Items.stick, 1, 0), null, null, null, null, null});
 		        }
 	    		break;
 	    	case nugget:
@@ -784,7 +801,7 @@ public class GT_OreDictHandler {
 	    			GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_ModHandler.getIC2Item("generator", 1), GT_Utility.copy(4, aStack), GT_ModHandler.getIC2Item("windMill", 1), 6400, 8);
 		    	}
 	    		else if (aEvent.Name.equals("plateAlloyAdvanced")) {
-		    		GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copy(2, aStack), new ItemStack(Block.glass, 7, 0), GT_ModHandler.getIC2Item("reinforcedGlass", 7), 400, 4);
+		    		GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copy(2, aStack), new ItemStack(Blocks.glass, 7, 0), GT_ModHandler.getIC2Item("reinforcedGlass", 7), 400, 4);
 		    	}
 	    		else if (aEvent.Name.equals("plateAlloyIridium")) {
 	    			
@@ -802,7 +819,7 @@ public class GT_OreDictHandler {
 	    	case stick:
 	    		GregTech_API.sRecipeAdder.addCutterRecipe(GT_Utility.copy(1, aStack), GT_OreDictUnificator.get(OrePrefixes.bolt, aMaterial, 4), Math.max(aMaterial.getMass() * 2, 1), 4);
 			    if (!GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.disabledrecipes, "torchesFromCoal", false)) {
-		    		GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copy(1, aStack), new ItemStack(Item.coal, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), new ItemStack(Block.torchWood, 4), 400, 1);
+		    		GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copy(1, aStack), new ItemStack(Items.coal, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), new ItemStack(Blocks.torch, 4), 400, 1);
 		    	}
 	    		break;
 		    case oreNether:
@@ -837,8 +854,8 @@ public class GT_OreDictHandler {
 	    			GT_ModHandler.addPulverisationRecipe(GT_Utility.copy(1, aStack), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Wood, 1), null, 0, false);
 	    		    GregTech_API.sRecipeAdder.addLatheRecipe(GT_Utility.copy(1, aStack), GT_OreDictUnificator.get(OrePrefixes.stick, Materials.Wood, 2), null, 10, 8);
 	    		    GregTech_API.sRecipeAdder.addCNCRecipe(GT_Utility.copy(2, aStack), GT_ModHandler.mBCWoodGear, 800, 1);
-	    		    GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copy(8, aStack), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Redstone, 1), new ItemStack(Block.music, 1), 800, 1);
-	    	    	GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_OreDictUnificator.get(OrePrefixes.gem, Materials.Diamond, 1), GT_Utility.copy(8, aStack), new ItemStack(Block.jukebox, 1), 1600, 1);
+	    		    GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copy(8, aStack), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Redstone, 1), new ItemStack(Blocks.noteblock, 1), 800, 1);
+	    	    	GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_OreDictUnificator.get(OrePrefixes.gem, Materials.Diamond, 1), GT_Utility.copy(8, aStack), new ItemStack(Blocks.jukebox, 1), 1600, 1);
 	    	    	//TODO: GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_ModHandler.getIC2Item("industrialDiamond", 1), GT_Utility.copy(8, aStack), new ItemStack(Block.jukebox, 1), 1600, 1);
 	    	    }
 	    		break;
@@ -849,11 +866,11 @@ public class GT_OreDictHandler {
 	        		GT_ModHandler.addSawmillRecipe(GT_Utility.copy(1, aStack), GT_ModHandler.getIC2Item("resin", 1), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Wood, 16));
 	        		GT_ModHandler.addExtractionRecipe(GT_Utility.copy(1, aStack), GT_ModHandler.getIC2Item("rubber", 1));
 	    	    }
-		        if (GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.disabledrecipes, "wood2charcoalsmelting", false) && GT_Utility.areStacksEqual(GT_ModHandler.getSmeltingOutput(GT_Utility.copy(1, aStack), false, null), new ItemStack(Item.coal, 1, 1))) GT_ModHandler.removeFurnaceSmelting(GT_Utility.copy(1, aStack), null);
+		        if (GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.disabledrecipes, "wood2charcoalsmelting", false) && GT_Utility.areStacksEqual(GT_ModHandler.getSmeltingOutput(GT_Utility.copy(1, aStack), false, null), new ItemStack(Items.coal, 1, 1))) GT_ModHandler.removeFurnaceSmelting(GT_Utility.copy(1, aStack), null);
 		        if (aItem instanceof ItemBlock && GT_Mod.sWoodStackSize < aItem.getItemStackLimit()) aItem.setMaxStackSize(GT_Mod.sWoodStackSize);
 		        if (aMeta == GregTech_API.ITEM_WILDCARD_DAMAGE) {
 			    	for (int i = 0; i < 16; i++) {
-				        if (GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.disabledrecipes, "wood2charcoalsmelting", false) && GT_Utility.areStacksEqual(GT_ModHandler.getSmeltingOutput(new ItemStack(aItem, 1, i), false, null), new ItemStack(Item.coal, 1, 1))) GT_ModHandler.removeFurnaceSmelting(new ItemStack(aItem, 1, i), null);
+				        if (GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.disabledrecipes, "wood2charcoalsmelting", false) && GT_Utility.areStacksEqual(GT_ModHandler.getSmeltingOutput(new ItemStack(aItem, 1, i), false, null), new ItemStack(Items.coal, 1, 1))) GT_ModHandler.removeFurnaceSmelting(new ItemStack(aItem, 1, i), null);
 				    	tStack = GT_ModHandler.getRecipeOutput(new ItemStack[] {new ItemStack(aItem, 1, i)});
 				    	if (tStack != null) {
 				    		ItemStack tPlanks = GT_Utility.copy(tStack);
@@ -882,7 +899,7 @@ public class GT_OreDictHandler {
 			    if (aEvent.Name.startsWith("slabWood")) {
 			    	if (aItem instanceof ItemBlock && GT_Mod.sPlankStackSize < aItem.getItemStackLimit()) aItem.setMaxStackSize(GT_Mod.sPlankStackSize);
 				    GT_ModHandler.addPulverisationRecipe(GT_Utility.copy(1, aStack), GT_OreDictUnificator.get(OrePrefixes.dustSmall, Materials.Wood, 2), null, 0, false);
-				    GregTech_API.sRecipeAdder.addCannerRecipe(GT_ModHandler.getRCItem("fluid.creosote.bucket", 1), GT_Utility.copy(3, aStack), GT_ModHandler.getRCItem("part.tie.wood", 1), new ItemStack(Item.bucketEmpty, 1), 200, 4);
+				    GregTech_API.sRecipeAdder.addCannerRecipe(GT_ModHandler.getRCItem("fluid.creosote.bucket", 1), GT_Utility.copy(3, aStack), GT_ModHandler.getRCItem("part.tie.wood", 1), new ItemStack(Items.bucket, 1), 200, 4);
 				    GregTech_API.sRecipeAdder.addCannerRecipe(GT_ModHandler.getRCItem("fluid.creosote.cell", 1), GT_Utility.copy(3, aStack), GT_ModHandler.getRCItem("part.tie.wood", 1), GT_ModHandler.getEmptyCell(1), 200, 4);
 				}
 	    		break;
@@ -898,12 +915,12 @@ public class GT_OreDictHandler {
 	    	case sand:
 	    		if (aEvent.Name.equals("sandCracked")) {
 			    	if (aItem instanceof ItemBlock) {
-			    		if (aItem.getItemStackLimit() > GT_Mod.sBlockStackSize) aItem.setMaxStackSize(GT_Mod.sBlockStackSize);
-						GregTech_API.sRecipeAdder.addJackHammerMinableBlock(Block.blocksList[((ItemBlock)aItem).getBlockID()], false);
+			    		if (aItem.getItemStackLimit() > GT_Mod.sBlockStackSize) aItem.setMaxStackSize(GT_Mod.sBlockStackSize);				
+			    		GregTech_API.sRecipeAdder.addJackHammerMinableBlock(Block.getBlockFromItem(aItem), false);
 			    	}
-			    	GregTech_API.sRecipeAdder.addCentrifugeRecipe(GT_Utility.copy(16, aStack), -1, GT_ModHandler.getFuelCan(25000), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Saltpeter, 8), null, new ItemStack(Block.sand, 10), 2500);
+			    	GregTech_API.sRecipeAdder.addCentrifugeRecipe(GT_Utility.copy(16, aStack), -1, GT_ModHandler.getFuelCan(25000), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Saltpeter, 8), null, new ItemStack(Blocks.sand, 10), 2500);
 	    		} else if (aEvent.Name.equals("sandOil")) {
-	    		    GregTech_API.sRecipeAdder.addCentrifugeRecipe(GT_Utility.copy(2, aStack), 1, GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Oil, 1), new ItemStack(Block.sand, 1, 0), null, null, 1000);
+	    		    GregTech_API.sRecipeAdder.addCentrifugeRecipe(GT_Utility.copy(2, aStack), 1, GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Oil, 1), new ItemStack(Blocks.sand, 1, 0), null, null, 1000);
 	    		}
 	    		break;
 	    	case crafting:
@@ -914,8 +931,8 @@ public class GT_OreDictHandler {
 		    		GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copy(1, aStack), GT_OreDictUnificator.get(OrePrefixes.plate, Materials.Iron, 1), GT_MetaItem_Component.instance.getStack(30, 1), 800, 16);
 		    		GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copy(1, aStack), GT_OreDictUnificator.get(OrePrefixes.plate, Materials.Aluminium, 1), GT_MetaItem_Component.instance.getStack(87, 1), 800, 16);
 		    	} else if (aEvent.Name.equals("craftingRawMachineTier01")) {
-			    	GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copy(1, aStack), new ItemStack(Block.music, 4, GregTech_API.ITEM_WILDCARD_DAMAGE), new ItemStack(GregTech_API.sBlockList[1], 1, 66), 800, 1);
-		    		GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copy(1, aStack), new ItemStack(Block.stoneButton, 16, GregTech_API.ITEM_WILDCARD_DAMAGE), new ItemStack(GregTech_API.sBlockList[1], 1, 67), 800, 1);
+			    	GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copy(1, aStack), new ItemStack(Blocks.noteblock, 4, GregTech_API.ITEM_WILDCARD_DAMAGE), new ItemStack(GregTech_API.sBlockList[1], 1, 66), 800, 1);
+		    		GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copy(1, aStack), new ItemStack(Blocks.stone_button, 16, GregTech_API.ITEM_WILDCARD_DAMAGE), new ItemStack(GregTech_API.sBlockList[1], 1, 67), 800, 1);
 		    		GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copy(1, aStack), GT_MetaItem_Component.instance.getStack(22, 1), new ItemStack(GregTech_API.sBlockList[1], 1, 79), 1600, 2);
 		    		GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copy(1, aStack), GT_MetaItem_Component.instance.getStack( 7, 1), GT_ModHandler.getIC2Item("solarPanel", 1), 1600, 2);
 		    	} else if (aEvent.Name.equals("craftingGearTier02")) {
@@ -930,7 +947,7 @@ public class GT_OreDictHandler {
 		    		GregTech_API.sRecipeAdder.addCannerRecipe(GT_ModHandler.getWaterCell(16), GT_Utility.copy(1, aStack), GregTech_API.getGregTechItem(95, 1, 0), GT_ModHandler.getEmptyCell(16), 1600, 2);
 		    		GregTech_API.sRecipeAdder.addCannerRecipe(GT_ModHandler.getIC2Item("constructionFoamPellet", 16), GT_Utility.copy(1, aStack), GregTech_API.getGregTechItem(93, 1, 0), null, 1600, 2);
 		    		GregTech_API.sRecipeAdder.addCannerRecipe(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.ConstructionFoam, 40), GT_Utility.copy(1, aStack), GregTech_API.getGregTechItem(93, 1, 0), GT_ModHandler.getEmptyCell(40), 1600, 2);
-		    		GregTech_API.sRecipeAdder.addCannerRecipe(new ItemStack(Block.sand, 16, 0), GT_Utility.copy(1, aStack), GregTech_API.getGregTechItem(92, 1, 0), null, 1600, 2);
+		    		GregTech_API.sRecipeAdder.addCannerRecipe(new ItemStack(Blocks.sand, 16, 0), GT_Utility.copy(1, aStack), GregTech_API.getGregTechItem(92, 1, 0), null, 1600, 2);
 		    	    GregTech_API.sRecipeAdder.addCannerRecipe(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Nitrogen, 16), GT_Utility.copy(1, aStack), GregTech_API.getGregTechItem(91, 1, 0), GT_ModHandler.getEmptyCell(16), 1600, 2);
 		    		
 		    		for (Dyes tDye : Dyes.values()) if (tDye != Dyes._NULL) {
@@ -974,20 +991,20 @@ public class GT_OreDictHandler {
 	    	    	GT_ModHandler.addPulverisationRecipe(GT_Utility.copy(1, aStack), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Uranium, 1), null, 0, false);
 	    	    }
 	    	    else {
-	    	    	System.out.println("Item Name: " + aEvent.Name + " !!!Unknown Item detected!!! Please report to GregTech Intergalactical for additional compatiblity. This is not an Error, it's just an Information.");
+	    	    	GT_Log.log.warn("Item Name: " + aEvent.Name + " !!!Unknown Item detected!!! Please report to GregTech Intergalactical for additional compatiblity. This is not an Error, it's just an Information.");
 	    	    }
 	    		break;
 	    	default:
 	    		break;
 	    	}
     	} else {
-    		System.out.println("Thingy Name: " + aEvent.Name + " !!!Unknown 'Thingy' detected!!! This Object seems to probably not follow a valid OreDictionary Convention, or I missed a Convention. Please report to GregTech Intergalactical for additional compatiblity. This is not an Error, it's just an Information.");
+    		GT_Log.log.warn("Thingy Name: " + aEvent.Name + " !!!Unknown 'Thingy' detected!!! This Object seems to probably not follow a valid OreDictionary Convention, or I missed a Convention. Please report to GregTech Intergalactical for additional compatiblity. This is not an Error, it's just an Information.");
     	}
     }
     
 	private static boolean registerStandardOreRecipes(Materials aMaterial, ItemStack aOreStack, int aMultiplier) {
 		if (aOreStack == null || aMaterial == null) return false;
-		GT_ModHandler.addValuableOre(aOreStack.itemID, aOreStack.getItemDamage(), aMaterial.mOreValue);
+		GT_ModHandler.addValuableOre(aOreStack.copy(), aMaterial.mOreValue);
 		Materials tMaterial = aMaterial.mOreReplacement, tPrimaryByMaterial = null, tSecondaryByMaterial = null;
 		aMultiplier = Math.max(1, aMultiplier);
 		aOreStack = GT_Utility.copy(aOreStack);
@@ -996,7 +1013,7 @@ public class GT_OreDictHandler {
 		ItemStack
 		tIngot = GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial.mDirectSmelting, 1),
 		tGem = GT_OreDictUnificator.get(OrePrefixes.gem, tMaterial, 1),
-		tTiny = GT_OreDictUnificator.get(OrePrefixes.dustTiny, tMaterial, GT_OreDictUnificator.get(OrePrefixes.nugget, tMaterial, 1), 1),
+//		tTiny = GT_OreDictUnificator.get(OrePrefixes.dustTiny, tMaterial, GT_OreDictUnificator.get(OrePrefixes.nugget, tMaterial, 1), 1),
 		tSmall = GT_OreDictUnificator.get(OrePrefixes.dustSmall, tMaterial, 1),
 		tDust = GT_OreDictUnificator.get(OrePrefixes.dust, tMaterial, tGem, 1),
 		tCleaned = GT_OreDictUnificator.get(OrePrefixes.crushedPurified, tMaterial, tDust, 1),
@@ -1034,7 +1051,7 @@ public class GT_OreDictHandler {
 			if (aMaterial.mBlastFurnaceRequired || aMaterial.mDirectSmelting.mBlastFurnaceRequired) {
 				GT_ModHandler.removeFurnaceSmelting(aOreStack, null);
 			} else {
-				GT_ModHandler.addInductionSmelterRecipe(aOreStack, new ItemStack(Block.sand, 1), GT_Utility.mul(aMultiplier * (aMaterial.contains(SubTag.INDUCTIONSMELTING_LOW_OUTPUT)?1:2) * aMaterial.mSmeltingMultiplier, tIngot), GT_ModHandler.getTEItem("slagRich", 1), 300, 10 * aMultiplier);
+				GT_ModHandler.addInductionSmelterRecipe(aOreStack, new ItemStack(Blocks.sand, 1), GT_Utility.mul(aMultiplier * (aMaterial.contains(SubTag.INDUCTIONSMELTING_LOW_OUTPUT)?1:2) * aMaterial.mSmeltingMultiplier, tIngot), GT_ModHandler.getTEItem("slagRich", 1), 300, 10 * aMultiplier);
 				GT_ModHandler.addInductionSmelterRecipe(aOreStack, GT_ModHandler.getTEItem("slagRich", 1), GT_Utility.mul(aMultiplier * (aMaterial.contains(SubTag.INDUCTIONSMELTING_LOW_OUTPUT)?2:3) * aMaterial.mSmeltingMultiplier, tIngot), GT_ModHandler.getTEItem("slag", 1), 300, 95);
 				GT_ModHandler.addSmeltingRecipe(aOreStack, tIngot);
 			}

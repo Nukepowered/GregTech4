@@ -188,11 +188,11 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 		GregTech_API.gregtechmod = this;
 		GregTech_API.sRecipeAdder = this;
 		GregTech_API.sDummyWorld = new GT_DummyWorld();
-//		GregTech_API.sGTCoverload.add(new GT_CoverLoader());
-//        GT_OreDictHandler.instance.registerHandler();
-//    	new GT_Cover_None();
-//		new GT_Cover_Generic();
-//		new GT_Cover_Redstone();
+		GregTech_API.sGTCoverload.add(new GT_CoverLoader());
+        GT_OreDictHandler.instance.registerHandler();
+    	new GT_Cover_None();
+		new GT_Cover_Generic();
+		new GT_Cover_Redstone();
     }
     
     @EventHandler

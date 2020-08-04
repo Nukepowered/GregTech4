@@ -39,10 +39,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.Packet250CustomPayload;
-import net.minecraft.network.packet.Packet41EntityEffect;
-import net.minecraft.network.packet.Packet9Respawn;
+import net.minecraft.network.Packet;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
@@ -52,7 +49,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraftforge.common.DimensionManager;
-import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
@@ -105,7 +101,7 @@ public class GT_Utility {
 		return rField;
 	}
 	
-	public static Field getField(Class aObject, String aField) {
+	public static Field getField(Class<?> aObject, String aField) {
 		Field rField = null;
 		try {
 			rField = aObject.getDeclaredField(aField);
@@ -114,7 +110,7 @@ public class GT_Utility {
 		return rField;
 	}
 	
-	public static Method getMethod(Class aObject, String aMethod, Class<?>... aParameterTypes) {
+	public static Method getMethod(Class<?> aObject, String aMethod, Class<?>... aParameterTypes) {
 		Method rMethod = null;
 		try {
 			rMethod = aObject.getMethod(aMethod, aParameterTypes);
@@ -134,22 +130,22 @@ public class GT_Utility {
 
 	public static Field getField(Object aObject, String aField, boolean aPrivate, boolean aLogErrors) {
 		try {
-			Field tField = (aObject instanceof Class)?((Class)aObject).getDeclaredField(aField):(aObject instanceof String)?Class.forName((String)aObject).getDeclaredField(aField):aObject.getClass().getDeclaredField(aField);
+			Field tField = (aObject instanceof Class) ? ((Class<?>)aObject).getDeclaredField(aField) : (aObject instanceof String) ? Class.forName((String)aObject).getDeclaredField(aField) : aObject.getClass().getDeclaredField(aField);
 			if (aPrivate) tField.setAccessible(true);
 			return tField;
 		} catch (Throwable e) {
-			if (aLogErrors) e.printStackTrace(GT_Log.err);
+			if (aLogErrors) GT_Log.log.catching(e);
 		}
 		return null;
 	}
 	
 	public static Object getFieldContent(Object aObject, String aField, boolean aPrivate, boolean aLogErrors) {
 		try {
-			Field tField = (aObject instanceof Class)?((Class)aObject).getDeclaredField(aField):(aObject instanceof String)?Class.forName((String)aObject).getDeclaredField(aField):aObject.getClass().getDeclaredField(aField);
+			Field tField = (aObject instanceof Class) ? ((Class<?>)aObject).getDeclaredField(aField) : (aObject instanceof String) ? Class.forName((String)aObject).getDeclaredField(aField) : aObject.getClass().getDeclaredField(aField);
 			if (aPrivate) tField.setAccessible(true);
 			return tField.get(aObject instanceof Class || aObject instanceof String ? null : aObject);
 		} catch (Throwable e) {
-			if (aLogErrors) e.printStackTrace(GT_Log.err);
+			if (aLogErrors) GT_Log.log.catching(e);
 		}
 		return null;
 	}
@@ -167,7 +163,7 @@ public class GT_Utility {
 			Class<?>[] tParameterTypes = new Class<?>[aParameters.length];
 			for (byte i = 0; i < aParameters.length; i++) {
 				if (aParameters[i] instanceof Class) {
-					tParameterTypes[i] = (Class)aParameters[i];
+					tParameterTypes[i] = (Class<?>) aParameters[i];
 					aParameters[i] = null;
 				} else {
 					tParameterTypes[i] = aParameters[i].getClass();
@@ -183,11 +179,11 @@ public class GT_Utility {
 				}
 			}
 			
-			Method tMethod = (aObject instanceof Class)?((Class)aObject).getMethod(aMethod, tParameterTypes):aObject.getClass().getMethod(aMethod, tParameterTypes);
+			Method tMethod = (aObject instanceof Class) ? ((Class<?>) aObject).getMethod(aMethod, tParameterTypes) : aObject.getClass().getMethod(aMethod, tParameterTypes);
 			if (aPrivate) tMethod.setAccessible(true);
 			return tMethod.invoke(aObject, aParameters);
 		} catch (Throwable e) {
-			if (aLogErrors) e.printStackTrace(GT_Log.err);
+			if (aLogErrors) GT_Log.log.catching(e);
 		}
 		return null;
 	}
@@ -196,7 +192,7 @@ public class GT_Utility {
 		try {
 			return Class.forName(aClass).getConstructors()[aConstructorIndex].newInstance(aParameters);
 		} catch (Throwable e) {
-			if (aLogErrors) e.printStackTrace(GT_Log.err);
+			if (aLogErrors) GT_Log.log.catching(e);
 		}
 		return aReplacementObject;
 	}
