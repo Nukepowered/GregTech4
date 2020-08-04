@@ -109,6 +109,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.storage.SaveHandler;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import cpw.mods.fml.common.Loader;
@@ -195,25 +196,26 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 		new GT_Cover_Redstone();
     }
     
-    @EventHandler
+    @SuppressWarnings("rawtypes")
+	@EventHandler
     public void preload(FMLPreInitializationEvent aEvent) {
 //    	checkVersions();
-//    	for (Runnable tRunnable : GregTech_API.sBeforeGTPreload) {
-//    		try {
-//    			tRunnable.run();
-//    		} catch(Throwable e) {
-//    			e.printStackTrace(GT_Log.err);
-//    		}
-//    	}
-//    	File tFile = new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "GregTech.cfg");
-//    	Configuration tConfig1 = new Configuration(tFile);
-//    	tConfig1.load();
-//    	tFile = new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "BlockItemIDs.cfg");
-//    	Configuration tConfig2 = new Configuration(tFile);
-//    	tConfig2.load();
-//    	tFile = new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "DynamicConfig.cfg");
-//    	Configuration tConfig3 = new Configuration(tFile);
-//    	tConfig3.load();
+    	for (Runnable tRunnable : GregTech_API.sBeforeGTPreload) {
+    		try {
+    			tRunnable.run();
+    		} catch(Throwable e) {
+    			GT_Log.log.catching(e);
+    		}
+    	}
+    	File tFile = new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "GregTech.cfg");
+    	Configuration tConfig1 = new Configuration(tFile);
+    	tConfig1.load();
+    	tFile = new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "BlockItemIDs.cfg");
+    	Configuration tConfig2 = new Configuration(tFile);
+    	tConfig2.load();
+    	tFile = new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "DynamicConfig.cfg");
+    	Configuration tConfig3 = new Configuration(tFile);
+    	tConfig3.load();
 //    	GT_Log.mLogFile = new File(aEvent.getModConfigurationDirectory().getParentFile(), "GregTech.log");
 //    	if (GT_Log.mLogFile.exists()) {
 //    		mAlreadyPlayed = true;
@@ -221,84 +223,84 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 //    			GT_Log.out = GT_Log.err = new PrintStream(GT_Log.mLogFile);
 //    		} catch (FileNotFoundException e) {
 //        		GT_Log.out = System.out;
-//        		GT_Log.err = System.err;
+//        		GT_Log.log = System.err;
 //    		}
 //    	}
 //    	
-//    	mDoNotInit = (!tFile.getAbsolutePath().toLowerCase().contains("voltz")) && (tFile.getAbsolutePath().toLowerCase().contains(".technic") || tFile.getAbsolutePath().toLowerCase().contains("tekkit"));
-//    	if (mDoNotInit) {
-//            GT_Log.out.println("GT_Mod: Detected Technic Launcher.");
-//            GT_Log.out.println("GT_Mod: Errored.");
-//    		/**
-//    		 * Hello Tekkit user. I'm well aware that you decompiled my Addon to get it into Tekkit.
-//    		 * However, I will not change this Code, even though I know about that.
-//    		 * Why? Because it's to prevent Kakermix from adding it, without being kind enough to just ask, and not to prevent Tekkit Users from playing.
-//    		 * If he would ask me, then I will remove this barrier in future Versions of this Addon.
-//    		 * Don't try to make me think you are him. I already got PMs by People, who were obviously not him.
-//    		 */
-//    		System.err.println("*"); System.err.println("*"); System.err.println("*");
-//    		System.err.println("Hello, Gregorius Techneticies here,");
-//    		System.err.println("I see you most likely use Tekkit, but this Mod won't load, until Kakermix asks me PERSONALLY for the inclusion of my Mod. So bug HIM for it.");
-//    		System.err.println("PS. I could have exploded your Worlds, but i didn't for Publicityreasons.");
-//    		System.err.println("PPS. This Addon is Part of the FTB-Pack. It's even easier to use than Tekkit");
-//    		System.err.println("PPPS. There has been already so many Discoussions about me detecting Tekkit more or less precicely or even ACCIDENTLY on non-Tekkit Users, and NO YOU WON'T GET ME TO 'JUST' REMOVE THIS, GO LIVE WITH IT OR FIX IT YOURSELF!");
-//    		System.err.println("*"); System.err.println("*"); System.err.println("*");
-//    		tConfig1.get("Switching this won't help", "Tekkitsupport", false);
-//    		tConfig1.save();
-//        	return;
-//    	}
+    	mDoNotInit = (!tFile.getAbsolutePath().toLowerCase().contains("voltz")) && (tFile.getAbsolutePath().toLowerCase().contains(".technic") || tFile.getAbsolutePath().toLowerCase().contains("tekkit"));
+    	if (mDoNotInit) {
+            GT_Log.log.warn("GT_Mod: Detected Technic Launcher.");
+            GT_Log.log.warn("GT_Mod: Errored.");
+    		/**
+    		 * Hello Tekkit user. I'm well aware that you decompiled my Addon to get it into Tekkit.
+    		 * However, I will not change this Code, even though I know about that.
+    		 * Why? Because it's to prevent Kakermix from adding it, without being kind enough to just ask, and not to prevent Tekkit Users from playing.
+    		 * If he would ask me, then I will remove this barrier in future Versions of this Addon.
+    		 * Don't try to make me think you are him. I already got PMs by People, who were obviously not him.
+    		 */
+    		GT_Log.log.error("*"); GT_Log.log.error("*"); GT_Log.log.error("*");
+    		GT_Log.log.error("Hello, Gregorius Techneticies here,");
+    		GT_Log.log.error("I see you most likely use Tekkit, but this Mod won't load, until Kakermix asks me PERSONALLY for the inclusion of my Mod. So bug HIM for it.");
+    		GT_Log.log.error("PS. I could have exploded your Worlds, but i didn't for Publicityreasons.");
+    		GT_Log.log.error("PPS. This Addon is Part of the FTB-Pack. It's even easier to use than Tekkit");
+    		GT_Log.log.error("PPPS. There has been already so many Discoussions about me detecting Tekkit more or less precicely or even ACCIDENTLY on non-Tekkit Users, and NO YOU WON'T GET ME TO 'JUST' REMOVE THIS, GO LIVE WITH IT OR FIX IT YOURSELF!");
+    		GT_Log.log.error("*"); GT_Log.log.error("*"); GT_Log.log.error("*");
+    		tConfig1.get("Switching this won't help", "Tekkitsupport", false);
+    		tConfig1.save();
+        	return;
+    	}
+    	
+    	if (Loader.isModLoaded("TConstruct")) sTinkersWarning = new Configuration(new File(aEvent.getModConfigurationDirectory(), "TinkersWorkshop.txt")).get("difficulty changes", "Enable Auto-Smelt and Fortune interaction", true).getBoolean(true);
+    	
+    	GT_Log.log.info("GT_Mod: Preload-Phase started!");
+    	GregTech_API.sPreloadStarted = true;
+    	
+    	new GT_InitHardCodedCapeList().run();
+    	
+    	GT_Log.log.info("GT_Mod: Creating Config Object.");
+    	GregTech_API.sConfiguration = new GT_Config(tConfig1, tConfig2, tConfig3);
+    	
+    	GT_Log.log.info("GT_Mod: Setting Configs");
+    	if (GT_Config.sConfigFileStandard.get("general", "TooEasyMode", false).getBoolean(false)) GregTech_API.sAfterGTPostload.add(new GT_TooEasyModeLoader());
+    	GregTech_API.DEBUG_MODE							= GT_Config.sConfigFileStandard.get("general", "Debug", false).getBoolean(false);
+    	GregTech_API.SECONDARY_DEBUG_MODE				= GT_Config.sConfigFileStandard.get("general", "Debug2", false).getBoolean(false);
+    	
+    	if (GT_Config.sConfigFileStandard.get("general", "disable_STDOUT", false).getBoolean(false)) System.out.close();
+    	if (GT_Config.sConfigFileStandard.get("general", "disable_STDERR", false).getBoolean(false)) System.err.close();
+    	
+    	GregTech_API.UE_ENERGY_COMPATIBILITY			= GT_Config.sConfigFileStandard.get("compatibility", "UniversalElectricity.Energy"	, true ).getBoolean(true);
+    	GregTech_API.IC_ENERGY_COMPATIBILITY			= GT_Config.sConfigFileStandard.get("compatibility", "Industrialcraft.Energy"		, true ).getBoolean(true);
+    	GregTech_API.BC_ENERGY_COMPATIBILITY			= GT_Config.sConfigFileStandard.get("compatibility", "Buildcraft.Energy"			, true ).getBoolean(true);
+    	
+    	GregTech_API.sMachineExplosions					= GT_Config.sConfigFileStandard.get("machines", "machines_explosion_damage"			, true ).getBoolean(false);
+    	GregTech_API.sMachineFlammable					= GT_Config.sConfigFileStandard.get("machines", "machines_flammable"				, true ).getBoolean(false);
+    	GregTech_API.sMachineFireExplosions				= GT_Config.sConfigFileStandard.get("machines", "fire_causes_explosions"			, true ).getBoolean(false);
+    	GregTech_API.sMachineNonWrenchExplosions		= GT_Config.sConfigFileStandard.get("machines", "explosions_on_nonwrenching"		, true ).getBoolean(false);
+    	GregTech_API.sMachineWireFire					= GT_Config.sConfigFileStandard.get("machines", "wirefire_on_explosion"				, true ).getBoolean(false);
+    	GregTech_API.sMachineRainExplosions				= GT_Config.sConfigFileStandard.get("machines", "rain_causes_explosions"			, true ).getBoolean(false);
+    	GregTech_API.sMachineThunderExplosions			= GT_Config.sConfigFileStandard.get("machines", "lightning_causes_explosions"		, true ).getBoolean(false);
+    	GregTech_API.sConstantEnergy					= GT_Config.sConfigFileStandard.get("machines", "constant_need_of_energy"			, true ).getBoolean(false);
+    	GregTech_API.sColoredGUI						= GT_Config.sConfigFileStandard.get("machines", "colored_guis_when_painted"			, true ).getBoolean(false);
+    	
+    	sUnificatorTC			= GT_Config.sConfigFileStandard.get("unificatortargets", "Thaumcraft"		, true ).getBoolean(false);
+    	sUnificatorRP			= GT_Config.sConfigFileStandard.get("unificatortargets", "Redpower"			, true ).getBoolean(false);
+    	sUnificatorRC			= GT_Config.sConfigFileStandard.get("unificatortargets", "Railcraft"		, false).getBoolean(false);
+    	sUnificatorTE			= GT_Config.sConfigFileStandard.get("unificatortargets", "ThermalExpansion"	, false).getBoolean(false);
+    	sUnificatorFR			= GT_Config.sConfigFileStandard.get("unificatortargets", "Forestry"			, false).getBoolean(false);
 //    	
-//    	if (Loader.isModLoaded("TConstruct")) sTinkersWarning = new Configuration(new File(aEvent.getModConfigurationDirectory(), "TinkersWorkshop.txt")).get("difficulty changes", "Enable Auto-Smelt and Fortune interaction", true).getBoolean(true);
-//    	
-//        GT_Log.out.println("GT_Mod: Preload-Phase started!");
-//    	GregTech_API.sPreloadStarted = true;
-//    	
-//    	new GT_InitHardCodedCapeList().run();
-//    	
-//        GT_Log.out.println("GT_Mod: Creating Config Object.");
-//    	GregTech_API.sConfiguration = new GT_Config(tConfig1, tConfig2, tConfig3);
-//    	
-//    	GT_Log.out.println("GT_Mod: Setting Configs");
-//    	if (GT_Config.sConfigFileStandard.get("general", "TooEasyMode", false).getBoolean(false)) GregTech_API.sAfterGTPostload.add(new GT_TooEasyModeLoader());
-//    	GregTech_API.DEBUG_MODE							= GT_Config.sConfigFileStandard.get("general", "Debug", false).getBoolean(false);
-//    	GregTech_API.SECONDARY_DEBUG_MODE				= GT_Config.sConfigFileStandard.get("general", "Debug2", false).getBoolean(false);
-//    	
-//    	if (GT_Config.sConfigFileStandard.get("general", "disable_STDOUT", false).getBoolean(false)) System.out.close();
-//    	if (GT_Config.sConfigFileStandard.get("general", "disable_STDERR", false).getBoolean(false)) System.err.close();
-//    	
-//    	GregTech_API.UE_ENERGY_COMPATIBILITY			= GT_Config.sConfigFileStandard.get("compatibility", "UniversalElectricity.Energy"	, true ).getBoolean(true);
-//    	GregTech_API.IC_ENERGY_COMPATIBILITY			= GT_Config.sConfigFileStandard.get("compatibility", "Industrialcraft.Energy"		, true ).getBoolean(true);
-//    	GregTech_API.BC_ENERGY_COMPATIBILITY			= GT_Config.sConfigFileStandard.get("compatibility", "Buildcraft.Energy"			, true ).getBoolean(true);
-//    	
-//    	GregTech_API.sMachineExplosions					= GT_Config.sConfigFileStandard.get("machines", "machines_explosion_damage"			, true ).getBoolean(false);
-//    	GregTech_API.sMachineFlammable					= GT_Config.sConfigFileStandard.get("machines", "machines_flammable"				, true ).getBoolean(false);
-//    	GregTech_API.sMachineFireExplosions				= GT_Config.sConfigFileStandard.get("machines", "fire_causes_explosions"			, true ).getBoolean(false);
-//    	GregTech_API.sMachineNonWrenchExplosions		= GT_Config.sConfigFileStandard.get("machines", "explosions_on_nonwrenching"		, true ).getBoolean(false);
-//    	GregTech_API.sMachineWireFire					= GT_Config.sConfigFileStandard.get("machines", "wirefire_on_explosion"				, true ).getBoolean(false);
-//    	GregTech_API.sMachineRainExplosions				= GT_Config.sConfigFileStandard.get("machines", "rain_causes_explosions"			, true ).getBoolean(false);
-//    	GregTech_API.sMachineThunderExplosions			= GT_Config.sConfigFileStandard.get("machines", "lightning_causes_explosions"		, true ).getBoolean(false);
-//    	GregTech_API.sConstantEnergy					= GT_Config.sConfigFileStandard.get("machines", "constant_need_of_energy"			, true ).getBoolean(false);
-//    	GregTech_API.sColoredGUI						= GT_Config.sConfigFileStandard.get("machines", "colored_guis_when_painted"			, true ).getBoolean(false);
-//    	
-//    	sUnificatorTC			= GT_Config.sConfigFileStandard.get("unificatortargets", "Thaumcraft"		, true ).getBoolean(false);
-//    	sUnificatorRP			= GT_Config.sConfigFileStandard.get("unificatortargets", "Redpower"			, true ).getBoolean(false);
-//    	sUnificatorRC			= GT_Config.sConfigFileStandard.get("unificatortargets", "Railcraft"		, false).getBoolean(false);
-//    	sUnificatorTE			= GT_Config.sConfigFileStandard.get("unificatortargets", "ThermalExpansion"	, false).getBoolean(false);
-//    	sUnificatorFR			= GT_Config.sConfigFileStandard.get("unificatortargets", "Forestry"			, false).getBoolean(false);
-//    	
-//    	sItemDespawnTime		= GT_Config.sConfigFileStandard.get("general", "ItemDespawnTime"			, 6000 ).getInt(6000);
-//    	sIncreaseDungeonLoot	= GT_Config.sConfigFileStandard.get("general", "IncreaseDungeonLoot"		, true ).getBoolean(true);
-//    	sAxeWhenAdventure		= GT_Config.sConfigFileStandard.get("general", "AdventureModeStartingAxe"	, true ).getBoolean(true);
-//    	sSurvivalIntoAdventure	= GT_Config.sConfigFileStandard.get("general", "forceAdventureMode"			, false).getBoolean(false);
-//    	sHungerEffect			= GT_Config.sConfigFileStandard.get("general", "AFK_Hunger"					, false).getBoolean(false);
-//    	sHardRock				= GT_Config.sConfigFileStandard.get("general", "harderstone"				, false).getBoolean(false);
-//    	sInvisibleOres			= GT_Config.sConfigFileStandard.get("general", "hiddenores"					, true ).getBoolean(true);
-//    	sInventoryUnification	= GT_Config.sConfigFileStandard.get("general", "InventoryUnification"		, true ).getBoolean(true);
-//    	sNerfedWoodPlank		= GT_Config.sConfigFileStandard.get("general", "WoodNeedsSawForCrafting"	, true ).getBoolean(true);
-//    	sNerfedWoodenTools		= GT_Config.sConfigFileStandard.get("general", "smallerWoodToolDurability"	, true ).getBoolean(true);
-//    	sNerfedStoneTools		= GT_Config.sConfigFileStandard.get("general", "smallerStoneToolDurability"	, true ).getBoolean(true);
-//    	//sPatchLightUpdateLag	= GT_Config.sConfigFileStandard.get("general", "patchingLightUpdateLag"		, true ).getBoolean(true);
-//    	float tScrapChance		= GT_Config.sConfigFileStandard.get("general", "weightForScrapFromScrapboxing", 200).getInt(200);
+    	sItemDespawnTime		= GT_Config.sConfigFileStandard.get("general", "ItemDespawnTime"			, 6000 ).getInt(6000);
+    	sIncreaseDungeonLoot	= GT_Config.sConfigFileStandard.get("general", "IncreaseDungeonLoot"		, true ).getBoolean(true);
+    	sAxeWhenAdventure		= GT_Config.sConfigFileStandard.get("general", "AdventureModeStartingAxe"	, true ).getBoolean(true);
+    	sSurvivalIntoAdventure	= GT_Config.sConfigFileStandard.get("general", "forceAdventureMode"			, false).getBoolean(false);
+    	sHungerEffect			= GT_Config.sConfigFileStandard.get("general", "AFK_Hunger"					, false).getBoolean(false);
+    	sHardRock				= GT_Config.sConfigFileStandard.get("general", "harderstone"				, false).getBoolean(false);
+    	sInvisibleOres			= GT_Config.sConfigFileStandard.get("general", "hiddenores"					, true ).getBoolean(true);
+    	sInventoryUnification	= GT_Config.sConfigFileStandard.get("general", "InventoryUnification"		, true ).getBoolean(true);
+    	sNerfedWoodPlank		= GT_Config.sConfigFileStandard.get("general", "WoodNeedsSawForCrafting"	, true ).getBoolean(true);
+    	sNerfedWoodenTools		= GT_Config.sConfigFileStandard.get("general", "smallerWoodToolDurability"	, true ).getBoolean(true);
+    	sNerfedStoneTools		= GT_Config.sConfigFileStandard.get("general", "smallerStoneToolDurability"	, true ).getBoolean(true);
+    	//sPatchLightUpdateLag	= GT_Config.sConfigFileStandard.get("general", "patchingLightUpdateLag"		, true ).getBoolean(true);
+    	float tScrapChance		= GT_Config.sConfigFileStandard.get("general", "weightForScrapFromScrapboxing", 200).getInt(200);
 //        
 //    	sBlockIDs[ 0] = GT_Config.sConfigFileIDs.getBlock("Block"					,  sBlockIDs[ 0]).getInt();
 //    	sBlockIDs[ 1] = GT_Config.sConfigFileIDs.getBlock("Machine"					,  sBlockIDs[ 1]).getInt();
@@ -430,49 +432,49 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 //    	sItemIDs[136] = GT_Config.sConfigFileIDs.getItem("TungstenSteel_Shovel"		, 21136).getInt();
 //    	sItemIDs[137] = GT_Config.sConfigFileIDs.getItem("TungstenSteel_Axe"		, 21137).getInt();
 //    	sItemIDs[138] = GT_Config.sConfigFileIDs.getItem("TungstenSteel_Hoe"		, 21138).getInt();
-//    	
-//    	mOnline = GT_Config.sConfigFileStandard.get("general", "online", true).getBoolean(false);
-//    	GT_BlockMetaID_Block.mConnectedMachineTextures = GT_Config.sConfigFileStandard.get("general", "ConnectedMachineCasingTextures", true).getBoolean(false);
-//    	
-//    	GregTech_API.sTinCellCountPer4Ingots = Math.min(64, Math.max(1, GT_Config.sConfigFileStandard.get("features", "TincellsPer4Tin", 4).getInt()));
-//		
-//    	sUpgradeCount													= Math.min(64, Math.max( 1, GT_Config.sConfigFileStandard.get("features", "UpgradeStacksize"		,  4).getInt()));
-//    	sOreStackSize													= Math.min(64, Math.max(16, GT_Config.sConfigFileStandard.get("features", "MaxOreStackSize"			, 64).getInt()));
-//    	sWoodStackSize													= Math.min(64, Math.max(16, GT_Config.sConfigFileStandard.get("features", "MaxLogStackSize"			, 64).getInt()));
-//    	sPlankStackSize													= Math.min(64, Math.max(16, GT_Config.sConfigFileStandard.get("features", "MaxPlankStackSize"		, 64).getInt()));
-//    	sBlockStackSize													= Math.min(64, Math.max(16, GT_Config.sConfigFileStandard.get("features", "MaxOtherBlockStackSize"	, 64).getInt()));
-//    	
-//    	sBarrelItemCount												= Math.max(193, GT_Config.sConfigFileStandard.get("features", "DigitalChestMaxItemCount", 32768).getInt());
-//    	sQuantumItemCount												= Math.max(sBarrelItemCount, GT_Config.sConfigFileStandard.get("features", "QuantumChestMaxItemCount", 2000000000).getInt());
-//    	
-//    	GregTech_API.sTinCellCountPer4Ingots = Math.min(64, Math.max(1, GregTech_API.sTinCellCountPer4Ingots));
-//    	
-//    	GT_Worldgenerator.sAsteroids			= GregTech_API.sConfiguration.addAdvConfig("worldgen.end", "EnderAsteroids"	, true );
-//    	GT_Worldgenerator.sGeneratedOres[ 9]	= GregTech_API.sConfiguration.addAdvConfig("worldgen.end", "Tungstateore"	, true );
-//    	GT_Worldgenerator.sGeneratedOres[10]	= GregTech_API.sConfiguration.addAdvConfig("worldgen.end", "Cooperiteore"	, true );
-//    	GT_Worldgenerator.sGeneratedOres[11]	= GregTech_API.sConfiguration.addAdvConfig("worldgen.end", "Olivineore"		, true );
-//    	GT_Worldgenerator.sGeneratedOres[12]	= GregTech_API.sConfiguration.addAdvConfig("worldgen.end", "Sodaliteore"	, true );
-//    	
-//    	GT_Config.system = (Calendar.getInstance().get(2) + 1 == 4 && Calendar.getInstance().get(5) >= 1 && Calendar.getInstance().get(5) <= 2);
-//    	
-//    	Materials.init(GregTech_API.sConfiguration);
-//    	
-//    	GT_Log.out.println("GT_Mod: Saving Configs");
-//    	GT_Config.sConfigFileStandard.save();
-//    	GT_Config.sConfigFileIDs.save();
-//    	
-//        GT_Log.out.println("GT_Mod: Generating Lang-File");
-//    	GT_LanguageManager.sLangFile = new Configuration(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "GregTech.lang"));
-//    	GT_LanguageManager.sLangFile.load();
-//    	
-//        GT_Log.out.println("GT_Mod: Removing all original Scrapbox Drops.");
-//        try {
-//        	GT_Utility.getField("ic2.core.item.ItemScrapbox$Drop", "topChance", true, true).set(null, 0);
-//        	((List)GT_Utility.getFieldContent(GT_Utility.getFieldContent("ic2.api.recipe.Recipes", "scrapboxDrops", true, true), "drops", true, true)).clear();
-//        } catch(Throwable e) {
-//        	if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);
-//        }
-//        
+    	
+    	mOnline = GT_Config.sConfigFileStandard.get("general", "online", true).getBoolean(false);
+    	GT_BlockMetaID_Block.mConnectedMachineTextures = GT_Config.sConfigFileStandard.get("general", "ConnectedMachineCasingTextures", true).getBoolean(false);
+    	
+    	GregTech_API.sTinCellCountPer4Ingots = Math.min(64, Math.max(1, GT_Config.sConfigFileStandard.get("features", "TincellsPer4Tin", 4).getInt()));
+		
+    	sUpgradeCount													= Math.min(64, Math.max( 1, GT_Config.sConfigFileStandard.get("features", "UpgradeStacksize"		,  4).getInt()));
+    	sOreStackSize													= Math.min(64, Math.max(16, GT_Config.sConfigFileStandard.get("features", "MaxOreStackSize"			, 64).getInt()));
+    	sWoodStackSize													= Math.min(64, Math.max(16, GT_Config.sConfigFileStandard.get("features", "MaxLogStackSize"			, 64).getInt()));
+    	sPlankStackSize													= Math.min(64, Math.max(16, GT_Config.sConfigFileStandard.get("features", "MaxPlankStackSize"		, 64).getInt()));
+    	sBlockStackSize													= Math.min(64, Math.max(16, GT_Config.sConfigFileStandard.get("features", "MaxOtherBlockStackSize"	, 64).getInt()));
+    	
+    	sBarrelItemCount												= Math.max(193, GT_Config.sConfigFileStandard.get("features", "DigitalChestMaxItemCount", 32768).getInt());
+    	sQuantumItemCount												= Math.max(sBarrelItemCount, GT_Config.sConfigFileStandard.get("features", "QuantumChestMaxItemCount", 2000000000).getInt());
+    	
+    	GregTech_API.sTinCellCountPer4Ingots = Math.min(64, Math.max(1, GregTech_API.sTinCellCountPer4Ingots));
+    	
+    	GT_Worldgenerator.sAsteroids			= GregTech_API.sConfiguration.addAdvConfig("worldgen.end", "EnderAsteroids"	, true );
+    	GT_Worldgenerator.sGeneratedOres[ 9]	= GregTech_API.sConfiguration.addAdvConfig("worldgen.end", "Tungstateore"	, true );
+    	GT_Worldgenerator.sGeneratedOres[10]	= GregTech_API.sConfiguration.addAdvConfig("worldgen.end", "Cooperiteore"	, true );
+    	GT_Worldgenerator.sGeneratedOres[11]	= GregTech_API.sConfiguration.addAdvConfig("worldgen.end", "Olivineore"		, true );
+    	GT_Worldgenerator.sGeneratedOres[12]	= GregTech_API.sConfiguration.addAdvConfig("worldgen.end", "Sodaliteore"	, true );
+    	
+    	GT_Config.system = (Calendar.getInstance().get(2) + 1 == 4 && Calendar.getInstance().get(5) >= 1 && Calendar.getInstance().get(5) <= 2);
+    	
+    	Materials.init(GregTech_API.sConfiguration);
+    	
+    	GT_Log.log.info("GT_Mod: Saving Configs");
+    	GT_Config.sConfigFileStandard.save();
+    	GT_Config.sConfigFileIDs.save();
+    	
+    	GT_Log.log.info("GT_Mod: Generating Lang-File");
+    	GT_LanguageManager.sLangFile = new Configuration(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "GregTech.lang"));
+    	GT_LanguageManager.sLangFile.load();
+    	
+    	GT_Log.log.info("GT_Mod: Removing all original Scrapbox Drops.");
+        try {
+        	GT_Utility.getField("ic2.core.item.ItemScrapbox$Drop", "topChance", true, true).set(null, 0);
+        	((List)GT_Utility.getFieldContent(GT_Utility.getFieldContent("ic2.api.recipe.Recipes", "scrapboxDrops", true, true), "drops", true, true)).clear();
+        } catch(Throwable e) {
+        	if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);
+        }
+        
 //        
 //        GT_Log.out.println("GT_Mod: Adding Scrap with a Weight of " + tScrapChance + " to the Scrapbox Drops.");
 //        GT_ModHandler.addScrapboxDrop(tScrapChance, GT_ModHandler.getIC2Item("scrap", 1));
