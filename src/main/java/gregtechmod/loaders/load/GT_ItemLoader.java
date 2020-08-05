@@ -47,24 +47,25 @@ import gregtechmod.common.items.GT_Vanilla_Pickaxe;
 import gregtechmod.common.items.GT_Vanilla_Shovel;
 import gregtechmod.common.items.GT_Vanilla_Sword;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.ItemStack;
 
 public class GT_ItemLoader implements Runnable {
 	@Override
 	public void run() {
-        GT_Log.out.println("GT_Mod: Register Armor Textures.");
+        GT_Log.log.info("GT_Mod: Register Armor Textures.");
 		int tArmorID1 = GT_Mod.gregtechproxy.addArmor("lapotronpack"), tArmorID2 = GT_Mod.gregtechproxy.addArmor("lithiumbatpack"), tArmorID3 = GT_Mod.gregtechproxy.addArmor("cloakingdevice");
 		
-        GT_Log.out.println("GT_Mod: Register Meta-ID Items.");
-		GregTech_API.sItemList[ 0] = new GT_MetaItem_Material	(GT_Mod.sItemIDs[  0], "GT_Materials");
-		GregTech_API.sItemList[ 1] = new GT_MetaItem_Dust		(GT_Mod.sItemIDs[  1], "GT_Dusts");
-		GregTech_API.sItemList[ 2] = new GT_MetaItem_Cell		(GT_Mod.sItemIDs[  2], "GT_Cells");
-		GregTech_API.sItemList[ 3] = new GT_MetaItem_Component	(GT_Mod.sItemIDs[  3], "GT_Components");
-		GregTech_API.sItemList[ 4] = new GT_MetaItem_SmallDust	(GT_Mod.sItemIDs[  4], "GT_SmallDusts");
-		GregTech_API.sItemList[ 5] = new GT_MetaItem_Nugget		(GT_Mod.sItemIDs[  5], "GT_Nuggets");
-		GregTech_API.sItemList[ 6] = new GT_MetaItem_DirtyDust	(GT_Mod.sItemIDs[  6], "GT_DirtyDusts");
-		GregTech_API.sItemList[ 7] = new GT_MetaItem_TinyDust	(GT_Mod.sItemIDs[  7], "GT_TinyDusts");
+        GT_Log.log.info("GT_Mod: Register Meta-ID Items.");
+		GregTech_API.sItemList[ 0] = new GT_MetaItem_Material	("GT_Materials");
+		GregTech_API.sItemList[ 1] = new GT_MetaItem_Dust		("GT_Dusts");
+		GregTech_API.sItemList[ 2] = new GT_MetaItem_Cell		("GT_Cells");
+		GregTech_API.sItemList[ 3] = new GT_MetaItem_Component	("GT_Components");
+		GregTech_API.sItemList[ 4] = new GT_MetaItem_SmallDust	("GT_SmallDusts");
+		GregTech_API.sItemList[ 5] = new GT_MetaItem_Nugget		("GT_Nuggets");
+		GregTech_API.sItemList[ 6] = new GT_MetaItem_DirtyDust	("GT_DirtyDusts");
+		GregTech_API.sItemList[ 7] = new GT_MetaItem_TinyDust	("GT_TinyDusts");
 		
-        GT_Log.out.println("GT_Mod: Adding All Sub-Items with their OreDict and LiquidDict Entries.");
+        GT_Log.log.info("GT_Mod: Adding All Sub-Items with their OreDict and LiquidDict Entries.");
 		GT_MetaItem_Material.addItem(  0, "Copper Credit"			, null, "0.125 Credits", false);
 		GT_MetaItem_Material.addItem(  1, "Silver Credit"			, null, "8 Credits", false);
 		GT_MetaItem_Material.addItem(  2, "Gold Credit"				, null, "64 Credits", false);
@@ -488,144 +489,144 @@ public class GT_ItemLoader implements Runnable {
 		GT_MetaItem_Component.addItem(102, "Stainless Steel Gear"		, "gearStainlessSteel"			, "A Stainless Steel Gear");
 		GT_OreDictUnificator.registerOre("craftingGearTier02"			, GT_MetaItem_Component.instance.getUnunifiedStack(102, 1));
 		
-        GT_Log.out.println("GT_Mod: Register Regular Items.");
+        GT_Log.log.info("GT_Mod: Register Regular Items.");
         
-        GregTech_API.sItemList[ 15] = new GT_FluidDisplayItem							(GT_Mod.sItemIDs[ 15], GT_LanguageManager.mNameListItem[ 15]);
+        GregTech_API.sItemList[ 15] = new GT_FluidDisplayItem							(GT_LanguageManager.mNameListItem[ 15]);
 		try {
 		Class.forName("shedar.mods.ic2.nuclearcontrol.api.IRemoteSensor");
-		GregTech_API.sItemList[ 16] = new GT_SensorCard_Item							(GT_Mod.sItemIDs[ 16], GT_LanguageManager.mNameListItem[ 16]);
-		GregTech_API.sItemList[ 17] = new GT_SensorKit_Item								(GT_Mod.sItemIDs[ 17], GT_LanguageManager.mNameListItem[ 17]);
+		GregTech_API.sItemList[ 16] = new GT_SensorCard_Item							(GT_LanguageManager.mNameListItem[ 16]);
+		GregTech_API.sItemList[ 17] = new GT_SensorKit_Item								(GT_LanguageManager.mNameListItem[ 17]);
 		} catch (Throwable e) {
-	    GregTech_API.sItemList[ 16] = new GT_Generic_Item								(GT_Mod.sItemIDs[ 16], GT_LanguageManager.mNameListItem[ 16], "Nuclear Control not installed", false);
-		GregTech_API.sItemList[ 17] = new GT_Generic_Item								(GT_Mod.sItemIDs[ 17], GT_LanguageManager.mNameListItem[ 17], "Nuclear Control not installed", false);
+	    GregTech_API.sItemList[ 16] = new GT_Generic_Item								(GT_LanguageManager.mNameListItem[ 16], "Nuclear Control not installed", false);
+		GregTech_API.sItemList[ 17] = new GT_Generic_Item								(GT_LanguageManager.mNameListItem[ 17], "Nuclear Control not installed", false);
         }
 		
-        GregTech_API.sItemList[ 18] = GregTech_API.constructElectricArmorItem			(GT_Mod.sItemIDs[ 18], GT_LanguageManager.mNameListItem[ 18], 1000000000, Integer.MAX_VALUE, 1, 10, -1, 100.0D, true, 1, tArmorID1);
+        GregTech_API.sItemList[ 18] = GregTech_API.constructElectricArmorItem			(GT_LanguageManager.mNameListItem[ 18], 1000000000, Integer.MAX_VALUE, 1, 10, -1, 100.0D, true, 1, tArmorID1);
 		
-		GregTech_API.sItemList[ 30] = new GT_Mortar_Item								(GT_Mod.sItemIDs[ 30], GT_LanguageManager.mNameListItem[ 30],       64, GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1));
-		GregTech_API.sItemList[ 31] = new GT_Generic_Item								(GT_Mod.sItemIDs[ 31], GT_LanguageManager.mNameListItem[ 31], "Used to turn Ingots into Dust");
-		GregTech_API.sItemList[ 32] = new GT_Sonictron_Item								(GT_Mod.sItemIDs[ 32], GT_LanguageManager.mNameListItem[ 32]);
-		GregTech_API.sItemList[ 33] = new GT_Destructopack_Item							(GT_Mod.sItemIDs[ 33], GT_LanguageManager.mNameListItem[ 33]);
-		GregTech_API.sItemList[ 34] = GregTech_API.constructCoolantCellItem				(GT_Mod.sItemIDs[ 34], GT_LanguageManager.mNameListItem[ 34],    60000, 1);
-		GregTech_API.sItemList[ 35] = GregTech_API.constructCoolantCellItem				(GT_Mod.sItemIDs[ 35], GT_LanguageManager.mNameListItem[ 35],   180000, 3);
-		GregTech_API.sItemList[ 36] = GregTech_API.constructCoolantCellItem				(GT_Mod.sItemIDs[ 36], GT_LanguageManager.mNameListItem[ 36],   360000, 6);
-		GregTech_API.sItemList[ 37] = GregTech_API.constructElectricEnergyStorageItem	(GT_Mod.sItemIDs[ 37], GT_LanguageManager.mNameListItem[ 37],100000000, 8192, 5, 37, 37);
-		GregTech_API.sItemList[ 38] = GregTech_API.constructElectricArmorItem			(GT_Mod.sItemIDs[ 38], GT_LanguageManager.mNameListItem[ 38],100000000, 8192, 5,  0,   512, 0.0D, false, 1, tArmorID3);
-		GregTech_API.sItemList[ 39] = GregTech_API.constructElectricDrillItem			(GT_Mod.sItemIDs[ 39], GT_LanguageManager.mNameListItem[ 39],       10, 0, 2,  7.5F,  50, -1).setElectricTier(1).setBlockBreakSound(GregTech_API.sSoundList.get(107)).setEntityHitSound(GregTech_API.sSoundList.get(107));
-		try {GregTech_API.sItemList[ 40] = new GT_NeutronReflector_Item					(GT_Mod.sItemIDs[ 40], GT_LanguageManager.mNameListItem[ 40],        0);																		} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
-		GregTech_API.sItemList[ 41] = GregTech_API.constructElectricDrillItem			(GT_Mod.sItemIDs[ 41], GT_LanguageManager.mNameListItem[ 41],       10, 0, 2, 15.0F, 100, -1).setElectricTier(1).setBlockBreakSound(GregTech_API.sSoundList.get(107)).setEntityHitSound(GregTech_API.sSoundList.get(107));
-		GregTech_API.sItemList[ 42] = GregTech_API.constructElectricDrillItem			(GT_Mod.sItemIDs[ 42], GT_LanguageManager.mNameListItem[ 42],      100, 0, 3, 45.0F, 250, -1).setElectricTier(2).setBlockBreakSound(GregTech_API.sSoundList.get(107)).setEntityHitSound(GregTech_API.sSoundList.get(107));
-		GregTech_API.sItemList[ 43] = new GT_Dataorb_Item								(GT_Mod.sItemIDs[ 43], GT_LanguageManager.mNameListItem[ 43]);
-		GregTech_API.sItemList[ 44] = GregTech_API.constructElectricArmorItem			(GT_Mod.sItemIDs[ 44], GT_LanguageManager.mNameListItem[ 44],    10000,   32, 1,  0, 16|32, 0.0D, false, 0, tArmorID1);
-		GregTech_API.sItemList[ 45] = GregTech_API.constructElectricArmorItem			(GT_Mod.sItemIDs[ 45], GT_LanguageManager.mNameListItem[ 45],100000000, 8192, 5,  0,     0, 0.0D,  true, 1, tArmorID1);
-		GregTech_API.sItemList[ 46] = GregTech_API.constructElectricDrillItem			(GT_Mod.sItemIDs[ 46], GT_LanguageManager.mNameListItem[ 46],       10, 0, 5, 3.0F, 1000, -1).setElectricTier(1).addToMaterialList(Material.anvil).addToMaterialList(Material.iron).addToMaterialList(Material.rock).setPrimaryToolClass("pickaxe").setSilkyness(3);
-		try {GregTech_API.sItemList[ 47] = new GT_Teslastaff_Item						(GT_Mod.sItemIDs[ 47], GT_LanguageManager.mNameListItem[ 47]);																					} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
-		GregTech_API.sItemList[ 48] = GregTech_API.constructRadioactiveCellItem			(GT_Mod.sItemIDs[ 48], GT_LanguageManager.mNameListItem[ 48],    25000, 1, -5, null);
-		GregTech_API.sItemList[ 49] = GregTech_API.constructRadioactiveCellItem			(GT_Mod.sItemIDs[ 49], GT_LanguageManager.mNameListItem[ 49],    25000, 2, -5, null);
-		GregTech_API.sItemList[ 50] = GregTech_API.constructRadioactiveCellItem			(GT_Mod.sItemIDs[ 50], GT_LanguageManager.mNameListItem[ 50],    25000, 4, -5, null);
-		GregTech_API.sItemList[ 51] = GregTech_API.constructRadioactiveCellItem			(GT_Mod.sItemIDs[ 51], GT_LanguageManager.mNameListItem[ 51],    20000, 1,  2, GT_ModHandler.getIC2Item("nearDepletedUraniumCell", 4));
-		GregTech_API.sItemList[ 52] = GregTech_API.constructRadioactiveCellItem			(GT_Mod.sItemIDs[ 52], GT_LanguageManager.mNameListItem[ 52],    20000, 2,  2, GT_ModHandler.getIC2Item("nearDepletedUraniumCell", 4));
-		GregTech_API.sItemList[ 53] = GregTech_API.constructRadioactiveCellItem			(GT_Mod.sItemIDs[ 53], GT_LanguageManager.mNameListItem[ 53],    20000, 4,  2, GT_ModHandler.getIC2Item("nearDepletedUraniumCell", 4));
-	  //GregTech_API.sItemList[ 54] = GregTech_API.constructRadioactiveCellItem			(GT_Mod.sItemIDs[ 54], GT_LanguageManager.mNameListItem[ 54],      200, 1,  0, GT_MetaItem_Cell.instance.getUnunifiedStack(2, 1));
-		try {GregTech_API.sItemList[ 55] = new GT_Debug_Item							(GT_Mod.sItemIDs[ 55], GT_LanguageManager.mNameListItem[ 55]);																					} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
-		GregTech_API.sItemList[ 56] = GregTech_API.constructElectricEnergyStorageItem	(GT_Mod.sItemIDs[ 56], GT_LanguageManager.mNameListItem[ 56],   100000,  128, 1, 56, 57).setMaxStackSize(16).setMaxDamage(0);
-		GregTech_API.sItemList[ 57] = GregTech_API.constructElectricEnergyStorageItem	(GT_Mod.sItemIDs[ 57], GT_LanguageManager.mNameListItem[ 57],   100000,  128, 1, 56, 57);
-		GregTech_API.sItemList[ 58] = GregTech_API.constructElectricArmorItem			(GT_Mod.sItemIDs[ 58], GT_LanguageManager.mNameListItem[ 58],   600000,  128, 1,  0,  0, 0.0D,  true, 1, tArmorID2);
-	  //try {GregTech_API.sItemList[ 59] = Shield																																														} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
-		GregTech_API.sItemList[ 60] = GregTech_API.constructCoolantCellItem				(GT_Mod.sItemIDs[ 60], GT_LanguageManager.mNameListItem[ 60],    60000, 1);
-		GregTech_API.sItemList[ 61] = GregTech_API.constructCoolantCellItem				(GT_Mod.sItemIDs[ 61], GT_LanguageManager.mNameListItem[ 61],   180000, 3);
-		GregTech_API.sItemList[ 62] = GregTech_API.constructCoolantCellItem				(GT_Mod.sItemIDs[ 62], GT_LanguageManager.mNameListItem[ 62],   360000, 6);
-		try {GregTech_API.sItemList[ 63] = new GT_Scanner_Item							(GT_Mod.sItemIDs[ 63], GT_LanguageManager.mNameListItem[ 63]);																					} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
-		GregTech_API.sItemList[ 64] = GregTech_API.constructCrowbarItem					(GT_Mod.sItemIDs[ 64], GT_LanguageManager.mNameListItem[ 64],  256,  6);
-		GregTech_API.sItemList[ 65] = new GT_Screwdriver_Item							(GT_Mod.sItemIDs[ 65], GT_LanguageManager.mNameListItem[ 65],  256,  4, -1);
-		GregTech_API.sItemList[ 66] = GregTech_API.constructWrenchItem					(GT_Mod.sItemIDs[ 66], GT_LanguageManager.mNameListItem[ 66], 1280,  8, -1);
-		GregTech_API.sItemList[ 67] = GregTech_API.constructWrenchItem					(GT_Mod.sItemIDs[ 67], GT_LanguageManager.mNameListItem[ 67],  128,  4, -1);
-		GregTech_API.sItemList[ 68] = GregTech_API.constructWrenchItem					(GT_Mod.sItemIDs[ 68], GT_LanguageManager.mNameListItem[ 68], 5120, 10, -1);
-		GregTech_API.sItemList[ 69] = GregTech_API.constructWrenchItem					(GT_Mod.sItemIDs[ 69], GT_LanguageManager.mNameListItem[ 69],  256,  6, -1);
-		GregTech_API.sItemList[ 70] = GregTech_API.constructElectricWrenchItem			(GT_Mod.sItemIDs[ 70], GT_LanguageManager.mNameListItem[ 70],   16,  0, 112);
-		GregTech_API.sItemList[ 71] = GregTech_API.constructElectricWrenchItem			(GT_Mod.sItemIDs[ 71], GT_LanguageManager.mNameListItem[ 71],  128,  0, 113);
-		GregTech_API.sItemList[ 72] = new GT_SoftHammer_Item							(GT_Mod.sItemIDs[ 72], GT_LanguageManager.mNameListItem[ 72],  128,  4);
-		GregTech_API.sItemList[ 73] = GregTech_API.constructHardHammerItem				(GT_Mod.sItemIDs[ 73], GT_LanguageManager.mNameListItem[ 73],  128,  4);
-		GregTech_API.sItemList[ 74] = GregTech_API.constructHardHammerItem				(GT_Mod.sItemIDs[ 74], GT_LanguageManager.mNameListItem[ 74],  256,  6);
-		GregTech_API.sItemList[ 75] = GregTech_API.constructHardHammerItem				(GT_Mod.sItemIDs[ 75], GT_LanguageManager.mNameListItem[ 75], 1280,  8);
-		GregTech_API.sItemList[ 76] = GregTech_API.constructHardHammerItem				(GT_Mod.sItemIDs[ 76], GT_LanguageManager.mNameListItem[ 76], 5120, 10);
-		GregTech_API.sItemList[ 77] = GregTech_API.constructElectricSolderingToolItem	(GT_Mod.sItemIDs[ 77], GT_LanguageManager.mNameListItem[ 77],   10,  0, 114);
-		GregTech_API.sItemList[ 78] = new GT_SolderingMetal_Item						(GT_Mod.sItemIDs[ 78], GT_LanguageManager.mNameListItem[ 78],   50,  0);
-		GregTech_API.sItemList[ 79] = new GT_SolderingMetal_Item						(GT_Mod.sItemIDs[ 79], GT_LanguageManager.mNameListItem[ 79],   10,  0);
-		GregTech_API.sItemList[ 80] = new GT_Durable_Item								(GT_Mod.sItemIDs[ 80], GT_LanguageManager.mNameListItem[ 80], "Turbine Efficiency:  60%"			, 15000);
-		GregTech_API.sItemList[ 81] = new GT_Durable_Item								(GT_Mod.sItemIDs[ 81], GT_LanguageManager.mNameListItem[ 81], "Turbine Efficiency:  80%"			, 10000);
-		GregTech_API.sItemList[ 82] = new GT_Durable_Item								(GT_Mod.sItemIDs[ 82], GT_LanguageManager.mNameListItem[ 82], "Turbine Efficiency: 100%"			, 10000);
-		GregTech_API.sItemList[ 83] = new GT_Durable_Item								(GT_Mod.sItemIDs[ 83], GT_LanguageManager.mNameListItem[ 83], "Turbine Efficiency:  90%"			, 30000);
-		GregTech_API.sItemList[ 84] = new GT_Durable_Item								(GT_Mod.sItemIDs[ 84], GT_LanguageManager.mNameListItem[ 84], "Turbine Efficiency: 125%"			,  2500);
-		GregTech_API.sItemList[ 85] = new GT_Durable_Item								(GT_Mod.sItemIDs[ 85], GT_LanguageManager.mNameListItem[ 85], "Filters Lava in Thermal Boilers"	,   100);
-		GregTech_API.sItemList[ 86] = new GT_File_Item									(GT_Mod.sItemIDs[ 86], GT_LanguageManager.mNameListItem[ 86],  128, 2);
-		GregTech_API.sItemList[ 87] = new GT_File_Item									(GT_Mod.sItemIDs[ 87], GT_LanguageManager.mNameListItem[ 87],  256, 3);
-		GregTech_API.sItemList[ 88] = new GT_File_Item									(GT_Mod.sItemIDs[ 88], GT_LanguageManager.mNameListItem[ 88], 1280, 3);
-		GregTech_API.sItemList[ 89] = new GT_File_Item									(GT_Mod.sItemIDs[ 89], GT_LanguageManager.mNameListItem[ 89], 5120, 4);
-		GregTech_API.sItemList[ 90] = new GT_Spray_Bug_Item								(GT_Mod.sItemIDs[ 90], GT_LanguageManager.mNameListItem[ 90],  128, 2);
-		GregTech_API.sItemList[ 91] = new GT_Spray_Ice_Item								(GT_Mod.sItemIDs[ 91], GT_LanguageManager.mNameListItem[ 91],  512, 4);
-		GregTech_API.sItemList[ 92] = new GT_Spray_Hardener_Item						(GT_Mod.sItemIDs[ 92], GT_LanguageManager.mNameListItem[ 92],  256, 0);
-		GregTech_API.sItemList[ 93] = new GT_Spray_Foam_Item							(GT_Mod.sItemIDs[ 93], GT_LanguageManager.mNameListItem[ 93],  400, 0);
-		GregTech_API.sItemList[ 94] = new GT_Spray_Pepper_Item							(GT_Mod.sItemIDs[ 94], GT_LanguageManager.mNameListItem[ 94],  128, 2);
-		GregTech_API.sItemList[ 95] = new GT_Spray_Hydration_Item						(GT_Mod.sItemIDs[ 95], GT_LanguageManager.mNameListItem[ 95], 2560, 0);
-		GregTech_API.sItemList[ 96] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[ 96], GT_LanguageManager.mNameListItem[ 96], 2048, 0, (byte) 0);
-		GregTech_API.sItemList[ 97] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[ 97], GT_LanguageManager.mNameListItem[ 97], 2048, 0, (byte) 1);
-		GregTech_API.sItemList[ 98] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[ 98], GT_LanguageManager.mNameListItem[ 98], 2048, 0, (byte) 2);
-		GregTech_API.sItemList[ 99] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[ 99], GT_LanguageManager.mNameListItem[ 99], 2048, 0, (byte) 3);
-		GregTech_API.sItemList[100] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[100], GT_LanguageManager.mNameListItem[100], 2048, 0, (byte) 4);
-		GregTech_API.sItemList[101] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[101], GT_LanguageManager.mNameListItem[101], 2048, 0, (byte) 5);
-		GregTech_API.sItemList[102] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[102], GT_LanguageManager.mNameListItem[102], 2048, 0, (byte) 6);
-		GregTech_API.sItemList[103] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[103], GT_LanguageManager.mNameListItem[103], 2048, 0, (byte) 7);
-		GregTech_API.sItemList[104] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[104], GT_LanguageManager.mNameListItem[104], 2048, 0, (byte) 8);
-		GregTech_API.sItemList[105] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[105], GT_LanguageManager.mNameListItem[105], 2048, 0, (byte) 9);
-		GregTech_API.sItemList[106] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[106], GT_LanguageManager.mNameListItem[106], 2048, 0, (byte)10);
-		GregTech_API.sItemList[107] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[107], GT_LanguageManager.mNameListItem[107], 2048, 0, (byte)11);
-		GregTech_API.sItemList[108] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[108], GT_LanguageManager.mNameListItem[108], 2048, 0, (byte)12);
-		GregTech_API.sItemList[109] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[109], GT_LanguageManager.mNameListItem[109], 2048, 0, (byte)13);
-		GregTech_API.sItemList[110] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[110], GT_LanguageManager.mNameListItem[110], 2048, 0, (byte)14);
-		GregTech_API.sItemList[111] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[111], GT_LanguageManager.mNameListItem[111], 2048, 0, (byte)15);
-		GregTech_API.sItemList[112] = GregTech_API.constructEmptyElectricToolItem		(GT_Mod.sItemIDs[112], GT_LanguageManager.mNameListItem[112],   16, 70);
-		GregTech_API.sItemList[113] = GregTech_API.constructEmptyElectricToolItem		(GT_Mod.sItemIDs[113], GT_LanguageManager.mNameListItem[113],  128, 71);
-		GregTech_API.sItemList[114] = GregTech_API.constructEmptyElectricToolItem		(GT_Mod.sItemIDs[114], GT_LanguageManager.mNameListItem[114],   10, 77);
-		GregTech_API.sItemList[115] = new GT_Saw_Item									(GT_Mod.sItemIDs[115], GT_LanguageManager.mNameListItem[115],  128, 2, 2, 3.0F, 0, -1);
-		GregTech_API.sItemList[116] = new GT_Saw_Item									(GT_Mod.sItemIDs[116], GT_LanguageManager.mNameListItem[116],  256, 3, 2, 4.0F, 0, -1);
-		GregTech_API.sItemList[117] = new GT_Saw_Item									(GT_Mod.sItemIDs[117], GT_LanguageManager.mNameListItem[117], 1280, 4, 3, 6.0F, 0, -1);
-		GregTech_API.sItemList[118] = new GT_Saw_Item									(GT_Mod.sItemIDs[118], GT_LanguageManager.mNameListItem[118], 5120, 5, 4, 8.0F, 0, -1);
-		GregTech_API.sItemList[119] = GregTech_API.constructElectricSawItem				(GT_Mod.sItemIDs[119], GT_LanguageManager.mNameListItem[119],   16, 9, 3,10.0F, 100, 121).setCraftingSound(GregTech_API.sSoundList.get(104)).setBreakingSound(GregTech_API.sSoundList.get(104)).setBlockBreakSound(GregTech_API.sSoundList.get(104)).setEntityHitSound(GregTech_API.sSoundList.get(105));
-		GregTech_API.sItemList[120] = GregTech_API.constructElectricSawItem				(GT_Mod.sItemIDs[120], GT_LanguageManager.mNameListItem[120],  128,12, 4,12.0F, 200, 122).setCraftingSound(GregTech_API.sSoundList.get(104)).setBreakingSound(GregTech_API.sSoundList.get(104)).setBlockBreakSound(GregTech_API.sSoundList.get(104)).setEntityHitSound(GregTech_API.sSoundList.get(105));
-		GregTech_API.sItemList[121] = GregTech_API.constructEmptyElectricToolItem		(GT_Mod.sItemIDs[121], GT_LanguageManager.mNameListItem[121],   10, 119);
-		GregTech_API.sItemList[122] = GregTech_API.constructEmptyElectricToolItem		(GT_Mod.sItemIDs[122], GT_LanguageManager.mNameListItem[122],   10, 120);
-		GregTech_API.sItemList[123] = GregTech_API.constructElectricDrillItem			(GT_Mod.sItemIDs[123], GT_LanguageManager.mNameListItem[123],  128, 8, 5,35.0F, 250, -1).addToMaterialList(Material.anvil).addToMaterialList(Material.iron).addToMaterialList(Material.rock).setPrimaryToolClass("pickaxe").setSecondaryToolClass("shovel").setBlockBreakSound(GregTech_API.sSoundList.get(106)).setEntityHitSound(GregTech_API.sSoundList.get(106));
-		GregTech_API.sItemList[124] = new GT_Vanilla_Sword								(GT_Mod.sItemIDs[124], GT_LanguageManager.mNameListItem[124], "Flint"			, 1,  5, GT_Mod.sNerfedStoneTools?128:256	,  4.0F, 1.0F);
-		GregTech_API.sItemList[125] = new GT_Vanilla_Pickaxe							(GT_Mod.sItemIDs[125], GT_LanguageManager.mNameListItem[125], "Flint"			, 1,  5, GT_Mod.sNerfedStoneTools?128:256	,  4.0F, 1.0F);
-		GregTech_API.sItemList[126] = new GT_Vanilla_Shovel								(GT_Mod.sItemIDs[126], GT_LanguageManager.mNameListItem[126], "Flint"			, 1,  5, GT_Mod.sNerfedStoneTools?128:256	,  4.0F, 1.0F);
-		GregTech_API.sItemList[127] = new GT_Vanilla_Axe								(GT_Mod.sItemIDs[127], GT_LanguageManager.mNameListItem[127], "Flint"			, 1,  5, GT_Mod.sNerfedStoneTools?128:256	,  4.0F, 1.0F);
-		GregTech_API.sItemList[128] = new GT_Vanilla_Hoe								(GT_Mod.sItemIDs[128], GT_LanguageManager.mNameListItem[128], "Flint"			, 1,  5, GT_Mod.sNerfedStoneTools?128:256	,  4.0F, 1.0F);
-		GregTech_API.sItemList[129] = new GT_Vanilla_Sword								(GT_Mod.sItemIDs[129], GT_LanguageManager.mNameListItem[129], "Steel"			, 2, 14, 1280								,  8.0F, 2.0F);
-		GregTech_API.sItemList[130] = new GT_Vanilla_Pickaxe							(GT_Mod.sItemIDs[130], GT_LanguageManager.mNameListItem[130], "Steel"			, 2, 14, 1280								,  8.0F, 2.0F);
-		GregTech_API.sItemList[131] = new GT_Vanilla_Shovel								(GT_Mod.sItemIDs[131], GT_LanguageManager.mNameListItem[131], "Steel"			, 2, 14, 1280								,  8.0F, 2.0F);
-		GregTech_API.sItemList[132] = new GT_Vanilla_Axe								(GT_Mod.sItemIDs[132], GT_LanguageManager.mNameListItem[132], "Steel"			, 2, 14, 1280								,  8.0F, 2.0F);
-		GregTech_API.sItemList[133] = new GT_Vanilla_Hoe								(GT_Mod.sItemIDs[133], GT_LanguageManager.mNameListItem[133], "Steel"			, 2, 14, 1280								,  8.0F, 2.0F);
-		GregTech_API.sItemList[134] = new GT_Vanilla_Sword								(GT_Mod.sItemIDs[134], GT_LanguageManager.mNameListItem[134], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
-		GregTech_API.sItemList[135] = new GT_Vanilla_Pickaxe							(GT_Mod.sItemIDs[135], GT_LanguageManager.mNameListItem[135], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
-		GregTech_API.sItemList[136] = new GT_Vanilla_Shovel								(GT_Mod.sItemIDs[136], GT_LanguageManager.mNameListItem[136], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
-		GregTech_API.sItemList[137] = new GT_Vanilla_Axe								(GT_Mod.sItemIDs[137], GT_LanguageManager.mNameListItem[137], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
-		GregTech_API.sItemList[138] = new GT_Vanilla_Hoe								(GT_Mod.sItemIDs[138], GT_LanguageManager.mNameListItem[138], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
+		GregTech_API.sItemList[ 30] = new GT_Mortar_Item								(GT_LanguageManager.mNameListItem[ 30],       64, GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1));
+		GregTech_API.sItemList[ 31] = new GT_Generic_Item								(GT_LanguageManager.mNameListItem[ 31], "Used to turn Ingots into Dust");
+		GregTech_API.sItemList[ 32] = new GT_Sonictron_Item								(GT_LanguageManager.mNameListItem[ 32]);
+		GregTech_API.sItemList[ 33] = new GT_Destructopack_Item							(GT_LanguageManager.mNameListItem[ 33]);
+//		GregTech_API.sItemList[ 34] = GregTech_API.constructCoolantCellItem				(GT_LanguageManager.mNameListItem[ 34],    60000, 1);
+//		GregTech_API.sItemList[ 35] = GregTech_API.constructCoolantCellItem				(GT_Mod.sItemIDs[ 35], GT_LanguageManager.mNameListItem[ 35],   180000, 3);
+//		GregTech_API.sItemList[ 36] = GregTech_API.constructCoolantCellItem				(GT_Mod.sItemIDs[ 36], GT_LanguageManager.mNameListItem[ 36],   360000, 6);
+//		GregTech_API.sItemList[ 37] = GregTech_API.constructElectricEnergyStorageItem	(GT_Mod.sItemIDs[ 37], GT_LanguageManager.mNameListItem[ 37],100000000, 8192, 5, 37, 37);
+//		GregTech_API.sItemList[ 38] = GregTech_API.constructElectricArmorItem			(GT_Mod.sItemIDs[ 38], GT_LanguageManager.mNameListItem[ 38],100000000, 8192, 5,  0,   512, 0.0D, false, 1, tArmorID3);
+//		GregTech_API.sItemList[ 39] = GregTech_API.constructElectricDrillItem			(GT_Mod.sItemIDs[ 39], GT_LanguageManager.mNameListItem[ 39],       10, 0, 2,  7.5F,  50, -1).setElectricTier(1).setBlockBreakSound(GregTech_API.sSoundList.get(107)).setEntityHitSound(GregTech_API.sSoundList.get(107));
+//		try {GregTech_API.sItemList[ 40] = new GT_NeutronReflector_Item					(GT_Mod.sItemIDs[ 40], GT_LanguageManager.mNameListItem[ 40],        0);																		} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
+//		GregTech_API.sItemList[ 41] = GregTech_API.constructElectricDrillItem			(GT_Mod.sItemIDs[ 41], GT_LanguageManager.mNameListItem[ 41],       10, 0, 2, 15.0F, 100, -1).setElectricTier(1).setBlockBreakSound(GregTech_API.sSoundList.get(107)).setEntityHitSound(GregTech_API.sSoundList.get(107));
+//		GregTech_API.sItemList[ 42] = GregTech_API.constructElectricDrillItem			(GT_Mod.sItemIDs[ 42], GT_LanguageManager.mNameListItem[ 42],      100, 0, 3, 45.0F, 250, -1).setElectricTier(2).setBlockBreakSound(GregTech_API.sSoundList.get(107)).setEntityHitSound(GregTech_API.sSoundList.get(107));
+//		GregTech_API.sItemList[ 43] = new GT_Dataorb_Item								(GT_Mod.sItemIDs[ 43], GT_LanguageManager.mNameListItem[ 43]);
+//		GregTech_API.sItemList[ 44] = GregTech_API.constructElectricArmorItem			(GT_Mod.sItemIDs[ 44], GT_LanguageManager.mNameListItem[ 44],    10000,   32, 1,  0, 16|32, 0.0D, false, 0, tArmorID1);
+//		GregTech_API.sItemList[ 45] = GregTech_API.constructElectricArmorItem			(GT_Mod.sItemIDs[ 45], GT_LanguageManager.mNameListItem[ 45],100000000, 8192, 5,  0,     0, 0.0D,  true, 1, tArmorID1);
+//		GregTech_API.sItemList[ 46] = GregTech_API.constructElectricDrillItem			(GT_Mod.sItemIDs[ 46], GT_LanguageManager.mNameListItem[ 46],       10, 0, 5, 3.0F, 1000, -1).setElectricTier(1).addToMaterialList(Material.anvil).addToMaterialList(Material.iron).addToMaterialList(Material.rock).setPrimaryToolClass("pickaxe").setSilkyness(3);
+//		try {GregTech_API.sItemList[ 47] = new GT_Teslastaff_Item						(GT_Mod.sItemIDs[ 47], GT_LanguageManager.mNameListItem[ 47]);																					} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
+//		GregTech_API.sItemList[ 48] = GregTech_API.constructRadioactiveCellItem			(GT_Mod.sItemIDs[ 48], GT_LanguageManager.mNameListItem[ 48],    25000, 1, -5, null);
+//		GregTech_API.sItemList[ 49] = GregTech_API.constructRadioactiveCellItem			(GT_Mod.sItemIDs[ 49], GT_LanguageManager.mNameListItem[ 49],    25000, 2, -5, null);
+//		GregTech_API.sItemList[ 50] = GregTech_API.constructRadioactiveCellItem			(GT_Mod.sItemIDs[ 50], GT_LanguageManager.mNameListItem[ 50],    25000, 4, -5, null);
+//		GregTech_API.sItemList[ 51] = GregTech_API.constructRadioactiveCellItem			(GT_Mod.sItemIDs[ 51], GT_LanguageManager.mNameListItem[ 51],    20000, 1,  2, GT_ModHandler.getIC2Item("nearDepletedUraniumCell", 4));
+//		GregTech_API.sItemList[ 52] = GregTech_API.constructRadioactiveCellItem			(GT_Mod.sItemIDs[ 52], GT_LanguageManager.mNameListItem[ 52],    20000, 2,  2, GT_ModHandler.getIC2Item("nearDepletedUraniumCell", 4));
+//		GregTech_API.sItemList[ 53] = GregTech_API.constructRadioactiveCellItem			(GT_Mod.sItemIDs[ 53], GT_LanguageManager.mNameListItem[ 53],    20000, 4,  2, GT_ModHandler.getIC2Item("nearDepletedUraniumCell", 4));
+//	  //GregTech_API.sItemList[ 54] = GregTech_API.constructRadioactiveCellItem			(GT_Mod.sItemIDs[ 54], GT_LanguageManager.mNameListItem[ 54],      200, 1,  0, GT_MetaItem_Cell.instance.getUnunifiedStack(2, 1));
+//		try {GregTech_API.sItemList[ 55] = new GT_Debug_Item							(GT_Mod.sItemIDs[ 55], GT_LanguageManager.mNameListItem[ 55]);																					} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
+//		GregTech_API.sItemList[ 56] = GregTech_API.constructElectricEnergyStorageItem	(GT_Mod.sItemIDs[ 56], GT_LanguageManager.mNameListItem[ 56],   100000,  128, 1, 56, 57).setMaxStackSize(16).setMaxDamage(0);
+//		GregTech_API.sItemList[ 57] = GregTech_API.constructElectricEnergyStorageItem	(GT_Mod.sItemIDs[ 57], GT_LanguageManager.mNameListItem[ 57],   100000,  128, 1, 56, 57);
+//		GregTech_API.sItemList[ 58] = GregTech_API.constructElectricArmorItem			(GT_Mod.sItemIDs[ 58], GT_LanguageManager.mNameListItem[ 58],   600000,  128, 1,  0,  0, 0.0D,  true, 1, tArmorID2);
+//	  //try {GregTech_API.sItemList[ 59] = Shield																																														} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+//		GregTech_API.sItemList[ 60] = GregTech_API.constructCoolantCellItem				(GT_Mod.sItemIDs[ 60], GT_LanguageManager.mNameListItem[ 60],    60000, 1);
+//		GregTech_API.sItemList[ 61] = GregTech_API.constructCoolantCellItem				(GT_Mod.sItemIDs[ 61], GT_LanguageManager.mNameListItem[ 61],   180000, 3);
+//		GregTech_API.sItemList[ 62] = GregTech_API.constructCoolantCellItem				(GT_Mod.sItemIDs[ 62], GT_LanguageManager.mNameListItem[ 62],   360000, 6);
+//		try {GregTech_API.sItemList[ 63] = new GT_Scanner_Item							(GT_Mod.sItemIDs[ 63], GT_LanguageManager.mNameListItem[ 63]);																					} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
+//		GregTech_API.sItemList[ 64] = GregTech_API.constructCrowbarItem					(GT_Mod.sItemIDs[ 64], GT_LanguageManager.mNameListItem[ 64],  256,  6);
+//		GregTech_API.sItemList[ 65] = new GT_Screwdriver_Item							(GT_Mod.sItemIDs[ 65], GT_LanguageManager.mNameListItem[ 65],  256,  4, -1);
+//		GregTech_API.sItemList[ 66] = GregTech_API.constructWrenchItem					(GT_Mod.sItemIDs[ 66], GT_LanguageManager.mNameListItem[ 66], 1280,  8, -1);
+//		GregTech_API.sItemList[ 67] = GregTech_API.constructWrenchItem					(GT_Mod.sItemIDs[ 67], GT_LanguageManager.mNameListItem[ 67],  128,  4, -1);
+//		GregTech_API.sItemList[ 68] = GregTech_API.constructWrenchItem					(GT_Mod.sItemIDs[ 68], GT_LanguageManager.mNameListItem[ 68], 5120, 10, -1);
+//		GregTech_API.sItemList[ 69] = GregTech_API.constructWrenchItem					(GT_Mod.sItemIDs[ 69], GT_LanguageManager.mNameListItem[ 69],  256,  6, -1);
+//		GregTech_API.sItemList[ 70] = GregTech_API.constructElectricWrenchItem			(GT_Mod.sItemIDs[ 70], GT_LanguageManager.mNameListItem[ 70],   16,  0, 112);
+//		GregTech_API.sItemList[ 71] = GregTech_API.constructElectricWrenchItem			(GT_Mod.sItemIDs[ 71], GT_LanguageManager.mNameListItem[ 71],  128,  0, 113);
+//		GregTech_API.sItemList[ 72] = new GT_SoftHammer_Item							(GT_Mod.sItemIDs[ 72], GT_LanguageManager.mNameListItem[ 72],  128,  4);
+//		GregTech_API.sItemList[ 73] = GregTech_API.constructHardHammerItem				(GT_Mod.sItemIDs[ 73], GT_LanguageManager.mNameListItem[ 73],  128,  4);
+//		GregTech_API.sItemList[ 74] = GregTech_API.constructHardHammerItem				(GT_Mod.sItemIDs[ 74], GT_LanguageManager.mNameListItem[ 74],  256,  6);
+//		GregTech_API.sItemList[ 75] = GregTech_API.constructHardHammerItem				(GT_Mod.sItemIDs[ 75], GT_LanguageManager.mNameListItem[ 75], 1280,  8);
+//		GregTech_API.sItemList[ 76] = GregTech_API.constructHardHammerItem				(GT_Mod.sItemIDs[ 76], GT_LanguageManager.mNameListItem[ 76], 5120, 10);
+//		GregTech_API.sItemList[ 77] = GregTech_API.constructElectricSolderingToolItem	(GT_Mod.sItemIDs[ 77], GT_LanguageManager.mNameListItem[ 77],   10,  0, 114);
+//		GregTech_API.sItemList[ 78] = new GT_SolderingMetal_Item						(GT_Mod.sItemIDs[ 78], GT_LanguageManager.mNameListItem[ 78],   50,  0);
+//		GregTech_API.sItemList[ 79] = new GT_SolderingMetal_Item						(GT_Mod.sItemIDs[ 79], GT_LanguageManager.mNameListItem[ 79],   10,  0);
+//		GregTech_API.sItemList[ 80] = new GT_Durable_Item								(GT_Mod.sItemIDs[ 80], GT_LanguageManager.mNameListItem[ 80], "Turbine Efficiency:  60%"			, 15000);
+//		GregTech_API.sItemList[ 81] = new GT_Durable_Item								(GT_Mod.sItemIDs[ 81], GT_LanguageManager.mNameListItem[ 81], "Turbine Efficiency:  80%"			, 10000);
+//		GregTech_API.sItemList[ 82] = new GT_Durable_Item								(GT_Mod.sItemIDs[ 82], GT_LanguageManager.mNameListItem[ 82], "Turbine Efficiency: 100%"			, 10000);
+//		GregTech_API.sItemList[ 83] = new GT_Durable_Item								(GT_Mod.sItemIDs[ 83], GT_LanguageManager.mNameListItem[ 83], "Turbine Efficiency:  90%"			, 30000);
+//		GregTech_API.sItemList[ 84] = new GT_Durable_Item								(GT_Mod.sItemIDs[ 84], GT_LanguageManager.mNameListItem[ 84], "Turbine Efficiency: 125%"			,  2500);
+//		GregTech_API.sItemList[ 85] = new GT_Durable_Item								(GT_Mod.sItemIDs[ 85], GT_LanguageManager.mNameListItem[ 85], "Filters Lava in Thermal Boilers"	,   100);
+//		GregTech_API.sItemList[ 86] = new GT_File_Item									(GT_Mod.sItemIDs[ 86], GT_LanguageManager.mNameListItem[ 86],  128, 2);
+//		GregTech_API.sItemList[ 87] = new GT_File_Item									(GT_Mod.sItemIDs[ 87], GT_LanguageManager.mNameListItem[ 87],  256, 3);
+//		GregTech_API.sItemList[ 88] = new GT_File_Item									(GT_Mod.sItemIDs[ 88], GT_LanguageManager.mNameListItem[ 88], 1280, 3);
+//		GregTech_API.sItemList[ 89] = new GT_File_Item									(GT_Mod.sItemIDs[ 89], GT_LanguageManager.mNameListItem[ 89], 5120, 4);
+//		GregTech_API.sItemList[ 90] = new GT_Spray_Bug_Item								(GT_Mod.sItemIDs[ 90], GT_LanguageManager.mNameListItem[ 90],  128, 2);
+//		GregTech_API.sItemList[ 91] = new GT_Spray_Ice_Item								(GT_Mod.sItemIDs[ 91], GT_LanguageManager.mNameListItem[ 91],  512, 4);
+//		GregTech_API.sItemList[ 92] = new GT_Spray_Hardener_Item						(GT_Mod.sItemIDs[ 92], GT_LanguageManager.mNameListItem[ 92],  256, 0);
+//		GregTech_API.sItemList[ 93] = new GT_Spray_Foam_Item							(GT_Mod.sItemIDs[ 93], GT_LanguageManager.mNameListItem[ 93],  400, 0);
+//		GregTech_API.sItemList[ 94] = new GT_Spray_Pepper_Item							(GT_Mod.sItemIDs[ 94], GT_LanguageManager.mNameListItem[ 94],  128, 2);
+//		GregTech_API.sItemList[ 95] = new GT_Spray_Hydration_Item						(GT_Mod.sItemIDs[ 95], GT_LanguageManager.mNameListItem[ 95], 2560, 0);
+//		GregTech_API.sItemList[ 96] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[ 96], GT_LanguageManager.mNameListItem[ 96], 2048, 0, (byte) 0);
+//		GregTech_API.sItemList[ 97] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[ 97], GT_LanguageManager.mNameListItem[ 97], 2048, 0, (byte) 1);
+//		GregTech_API.sItemList[ 98] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[ 98], GT_LanguageManager.mNameListItem[ 98], 2048, 0, (byte) 2);
+//		GregTech_API.sItemList[ 99] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[ 99], GT_LanguageManager.mNameListItem[ 99], 2048, 0, (byte) 3);
+//		GregTech_API.sItemList[100] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[100], GT_LanguageManager.mNameListItem[100], 2048, 0, (byte) 4);
+//		GregTech_API.sItemList[101] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[101], GT_LanguageManager.mNameListItem[101], 2048, 0, (byte) 5);
+//		GregTech_API.sItemList[102] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[102], GT_LanguageManager.mNameListItem[102], 2048, 0, (byte) 6);
+//		GregTech_API.sItemList[103] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[103], GT_LanguageManager.mNameListItem[103], 2048, 0, (byte) 7);
+//		GregTech_API.sItemList[104] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[104], GT_LanguageManager.mNameListItem[104], 2048, 0, (byte) 8);
+//		GregTech_API.sItemList[105] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[105], GT_LanguageManager.mNameListItem[105], 2048, 0, (byte) 9);
+//		GregTech_API.sItemList[106] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[106], GT_LanguageManager.mNameListItem[106], 2048, 0, (byte)10);
+//		GregTech_API.sItemList[107] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[107], GT_LanguageManager.mNameListItem[107], 2048, 0, (byte)11);
+//		GregTech_API.sItemList[108] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[108], GT_LanguageManager.mNameListItem[108], 2048, 0, (byte)12);
+//		GregTech_API.sItemList[109] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[109], GT_LanguageManager.mNameListItem[109], 2048, 0, (byte)13);
+//		GregTech_API.sItemList[110] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[110], GT_LanguageManager.mNameListItem[110], 2048, 0, (byte)14);
+//		GregTech_API.sItemList[111] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[111], GT_LanguageManager.mNameListItem[111], 2048, 0, (byte)15);
+//		GregTech_API.sItemList[112] = GregTech_API.constructEmptyElectricToolItem		(GT_Mod.sItemIDs[112], GT_LanguageManager.mNameListItem[112],   16, 70);
+//		GregTech_API.sItemList[113] = GregTech_API.constructEmptyElectricToolItem		(GT_Mod.sItemIDs[113], GT_LanguageManager.mNameListItem[113],  128, 71);
+//		GregTech_API.sItemList[114] = GregTech_API.constructEmptyElectricToolItem		(GT_Mod.sItemIDs[114], GT_LanguageManager.mNameListItem[114],   10, 77);
+//		GregTech_API.sItemList[115] = new GT_Saw_Item									(GT_Mod.sItemIDs[115], GT_LanguageManager.mNameListItem[115],  128, 2, 2, 3.0F, 0, -1);
+//		GregTech_API.sItemList[116] = new GT_Saw_Item									(GT_Mod.sItemIDs[116], GT_LanguageManager.mNameListItem[116],  256, 3, 2, 4.0F, 0, -1);
+//		GregTech_API.sItemList[117] = new GT_Saw_Item									(GT_Mod.sItemIDs[117], GT_LanguageManager.mNameListItem[117], 1280, 4, 3, 6.0F, 0, -1);
+//		GregTech_API.sItemList[118] = new GT_Saw_Item									(GT_Mod.sItemIDs[118], GT_LanguageManager.mNameListItem[118], 5120, 5, 4, 8.0F, 0, -1);
+//		GregTech_API.sItemList[119] = GregTech_API.constructElectricSawItem				(GT_Mod.sItemIDs[119], GT_LanguageManager.mNameListItem[119],   16, 9, 3,10.0F, 100, 121).setCraftingSound(GregTech_API.sSoundList.get(104)).setBreakingSound(GregTech_API.sSoundList.get(104)).setBlockBreakSound(GregTech_API.sSoundList.get(104)).setEntityHitSound(GregTech_API.sSoundList.get(105));
+//		GregTech_API.sItemList[120] = GregTech_API.constructElectricSawItem				(GT_Mod.sItemIDs[120], GT_LanguageManager.mNameListItem[120],  128,12, 4,12.0F, 200, 122).setCraftingSound(GregTech_API.sSoundList.get(104)).setBreakingSound(GregTech_API.sSoundList.get(104)).setBlockBreakSound(GregTech_API.sSoundList.get(104)).setEntityHitSound(GregTech_API.sSoundList.get(105));
+//		GregTech_API.sItemList[121] = GregTech_API.constructEmptyElectricToolItem		(GT_Mod.sItemIDs[121], GT_LanguageManager.mNameListItem[121],   10, 119);
+//		GregTech_API.sItemList[122] = GregTech_API.constructEmptyElectricToolItem		(GT_Mod.sItemIDs[122], GT_LanguageManager.mNameListItem[122],   10, 120);
+//		GregTech_API.sItemList[123] = GregTech_API.constructElectricDrillItem			(GT_Mod.sItemIDs[123], GT_LanguageManager.mNameListItem[123],  128, 8, 5,35.0F, 250, -1).addToMaterialList(Material.anvil).addToMaterialList(Material.iron).addToMaterialList(Material.rock).setPrimaryToolClass("pickaxe").setSecondaryToolClass("shovel").setBlockBreakSound(GregTech_API.sSoundList.get(106)).setEntityHitSound(GregTech_API.sSoundList.get(106));
+//		GregTech_API.sItemList[124] = new GT_Vanilla_Sword								(GT_Mod.sItemIDs[124], GT_LanguageManager.mNameListItem[124], "Flint"			, 1,  5, GT_Mod.sNerfedStoneTools?128:256	,  4.0F, 1.0F);
+//		GregTech_API.sItemList[125] = new GT_Vanilla_Pickaxe							(GT_Mod.sItemIDs[125], GT_LanguageManager.mNameListItem[125], "Flint"			, 1,  5, GT_Mod.sNerfedStoneTools?128:256	,  4.0F, 1.0F);
+//		GregTech_API.sItemList[126] = new GT_Vanilla_Shovel								(GT_Mod.sItemIDs[126], GT_LanguageManager.mNameListItem[126], "Flint"			, 1,  5, GT_Mod.sNerfedStoneTools?128:256	,  4.0F, 1.0F);
+//		GregTech_API.sItemList[127] = new GT_Vanilla_Axe								(GT_Mod.sItemIDs[127], GT_LanguageManager.mNameListItem[127], "Flint"			, 1,  5, GT_Mod.sNerfedStoneTools?128:256	,  4.0F, 1.0F);
+//		GregTech_API.sItemList[128] = new GT_Vanilla_Hoe								(GT_Mod.sItemIDs[128], GT_LanguageManager.mNameListItem[128], "Flint"			, 1,  5, GT_Mod.sNerfedStoneTools?128:256	,  4.0F, 1.0F);
+//		GregTech_API.sItemList[129] = new GT_Vanilla_Sword								(GT_Mod.sItemIDs[129], GT_LanguageManager.mNameListItem[129], "Steel"			, 2, 14, 1280								,  8.0F, 2.0F);
+//		GregTech_API.sItemList[130] = new GT_Vanilla_Pickaxe							(GT_Mod.sItemIDs[130], GT_LanguageManager.mNameListItem[130], "Steel"			, 2, 14, 1280								,  8.0F, 2.0F);
+//		GregTech_API.sItemList[131] = new GT_Vanilla_Shovel								(GT_Mod.sItemIDs[131], GT_LanguageManager.mNameListItem[131], "Steel"			, 2, 14, 1280								,  8.0F, 2.0F);
+//		GregTech_API.sItemList[132] = new GT_Vanilla_Axe								(GT_Mod.sItemIDs[132], GT_LanguageManager.mNameListItem[132], "Steel"			, 2, 14, 1280								,  8.0F, 2.0F);
+//		GregTech_API.sItemList[133] = new GT_Vanilla_Hoe								(GT_Mod.sItemIDs[133], GT_LanguageManager.mNameListItem[133], "Steel"			, 2, 14, 1280								,  8.0F, 2.0F);
+//		GregTech_API.sItemList[134] = new GT_Vanilla_Sword								(GT_Mod.sItemIDs[134], GT_LanguageManager.mNameListItem[134], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
+//		GregTech_API.sItemList[135] = new GT_Vanilla_Pickaxe							(GT_Mod.sItemIDs[135], GT_LanguageManager.mNameListItem[135], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
+//		GregTech_API.sItemList[136] = new GT_Vanilla_Shovel								(GT_Mod.sItemIDs[136], GT_LanguageManager.mNameListItem[136], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
+//		GregTech_API.sItemList[137] = new GT_Vanilla_Axe								(GT_Mod.sItemIDs[137], GT_LanguageManager.mNameListItem[137], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
+//		GregTech_API.sItemList[138] = new GT_Vanilla_Hoe								(GT_Mod.sItemIDs[138], GT_LanguageManager.mNameListItem[138], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
 		
-        GT_Log.out.println("GT_Mod: Hiding certain Items from NEI.");
+        GT_Log.log.info("GT_Mod: Hiding certain Items from NEI.");
 		try {
 		Class.forName("codechicken.nei.api.API");
-		codechicken.nei.api.API.hideItem(GregTech_API.sBlockList[3].blockID);
-		codechicken.nei.api.API.hideItem(GregTech_API.sItemList[ 4].itemID);
-		codechicken.nei.api.API.hideItem(GregTech_API.sItemList[ 7].itemID);
-		codechicken.nei.api.API.hideItem(GregTech_API.sItemList[15].itemID);
-		codechicken.nei.api.API.hideItem(GregTech_API.sItemList[16].itemID);
-		codechicken.nei.api.API.hideItem(GT_ModHandler.getIC2Item("wrench", 1).itemID);
-		codechicken.nei.api.API.hideItem(GT_ModHandler.getIC2Item("electricWrench", 1).itemID);
-		codechicken.nei.api.API.hideItem(GT_ModHandler.getIC2Item("chainsaw", 1).itemID);
-		} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+		codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sBlockList[3]));
+		codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[ 4]));
+		codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[ 7]));
+		codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[15]));
+		codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[16]));
+		codechicken.nei.api.API.hideItem(GT_ModHandler.getIC2Item("wrench", 1));
+		codechicken.nei.api.API.hideItem(GT_ModHandler.getIC2Item("electricWrench", 1));
+		codechicken.nei.api.API.hideItem(GT_ModHandler.getIC2Item("chainsaw", 1));
+		} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 		
-        GT_Log.out.println("GT_Mod: Register regular Item Names.");
+        GT_Log.log.info("GT_Mod: Register regular Item Names.");
 		for (int i = 16; i < GregTech_API.sItemList.length; i++) {
 			if (GregTech_API.sItemList[i] != null) {
 				GT_LanguageManager.addStringLocalization(GregTech_API.sItemList[i].getUnlocalizedName() + ".name", GT_LanguageManager.mRegionalNameListItem[i]);

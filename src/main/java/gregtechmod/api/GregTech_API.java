@@ -314,14 +314,14 @@ public class GregTech_API {
 	/**
 	 * Creates a new Coolant Cell Item for your Nuclear Reactor
 	 */
-	public static Item constructCoolantCellItem(int aID, String aName, int aMaxStore, int aCellCount) {
+	public static Item constructCoolantCellItem(String aName, int aMaxStore, int aCellCount) {
 		try {
-			return (Item)Class.forName("gregtechmod.api.items.GT_CoolantCellIC_Item").getConstructors()[0].newInstance(aID, aName, aMaxStore, aCellCount);
+			return (Item)Class.forName("gregtechmod.api.items.GT_CoolantCellIC_Item").getConstructors()[0].newInstance(aName, aMaxStore, aCellCount);
 		} catch(Throwable e) {}
 		try {
-			return (Item)Class.forName("gregtechmod.api.items.GT_CoolantCell_Item").getConstructors()[0].newInstance(aID, aName, aMaxStore, aCellCount);
+			return (Item)Class.forName("gregtechmod.api.items.GT_CoolantCell_Item").getConstructors()[0].newInstance(aName, aMaxStore, aCellCount);
 		} catch(Throwable e) {}
-		return new gregtechmod.api.items.GT_Generic_Item(aID, aName, "Doesn't work as intended, this is a Bug", false);
+		return new gregtechmod.api.items.GT_Generic_Item(aName, "Doesn't work as intended, this is a Bug", false);
 	}
 	
 	/**
@@ -331,132 +331,132 @@ public class GregTech_API {
      * @param aPower power in EU per pulse (Uranium == 5) will be at least 1 in any case
      * @param aDepleted the Depletedcell-Item of this Cell (amount will get multiplied by Cellcount for Double-/Quadcells)
      */
-	public static Item constructRadioactiveCellItem(int aID, String aName, int aMaxDelay, int aCellcount, int aPulseRate, ItemStack aDepleted) {
+	public static Item constructRadioactiveCellItem(String aName, int aMaxDelay, int aCellcount, int aPulseRate, ItemStack aDepleted) {
 		try {
-			return (Item)Class.forName("gregtechmod.api.items.GT_RadioactiveCellIC_Item").getConstructors()[0].newInstance(aID, aName, aMaxDelay, aCellcount, aPulseRate, aDepleted);
+			return (Item)Class.forName("gregtechmod.api.items.GT_RadioactiveCellIC_Item").getConstructors()[0].newInstance(aName, aMaxDelay, aCellcount, aPulseRate, aDepleted);
 		} catch(Throwable e) {}
 		try {
-			return (Item)Class.forName("gregtechmod.api.items.GT_RadioactiveCell_Item").getConstructors()[0].newInstance(aID, aName, aMaxDelay, aCellcount, aPulseRate, aDepleted);
+			return (Item)Class.forName("gregtechmod.api.items.GT_RadioactiveCell_Item").getConstructors()[0].newInstance(aName, aMaxDelay, aCellcount, aPulseRate, aDepleted);
 		} catch(Throwable e) {}
-		return new gregtechmod.api.items.GT_Generic_Item(aID, aName, "Doesn't work as intended, this is a Bug", false);
+		return new gregtechmod.api.items.GT_Generic_Item(aName, "Doesn't work as intended, this is a Bug", false);
 	}
 	
 	/**
 	 * Creates a new Energy Armor Item
 	 */
-	public static Item constructElectricArmorItem(int aID, String aName, int aCharge, int aTransfer, int aTier, int aDamageEnergyCost, int aSpecials, double aArmorAbsorbtionPercentage, boolean aChargeProvider, int aType, int aArmorIndex) {
+	public static Item constructElectricArmorItem(String aName, int aCharge, int aTransfer, int aTier, int aDamageEnergyCost, int aSpecials, double aArmorAbsorbtionPercentage, boolean aChargeProvider, int aType, int aArmorIndex) {
 		try {
-			return (Item)Class.forName("gregtechmod.api.items.GT_EnergyArmorIC_Item").getConstructors()[0].newInstance(aID, aName, aCharge, aTransfer, aTier, aDamageEnergyCost, aSpecials, aArmorAbsorbtionPercentage, aChargeProvider, aType, aArmorIndex);
+			return (Item)Class.forName("gregtechmod.api.items.GT_EnergyArmorIC_Item").getConstructors()[0].newInstance(aName, aCharge, aTransfer, aTier, aDamageEnergyCost, aSpecials, aArmorAbsorbtionPercentage, aChargeProvider, aType, aArmorIndex);
 		} catch(Throwable e) {}
 		try {
-			return (Item)Class.forName("gregtechmod.api.items.GT_EnergyArmor_Item").getConstructors()[0].newInstance(aID, aName, aCharge, aTransfer, aTier, aDamageEnergyCost, aSpecials, aArmorAbsorbtionPercentage, aChargeProvider, aType, aArmorIndex);
+			return (Item)Class.forName("gregtechmod.api.items.GT_EnergyArmor_Item").getConstructors()[0].newInstance(aName, aCharge, aTransfer, aTier, aDamageEnergyCost, aSpecials, aArmorAbsorbtionPercentage, aChargeProvider, aType, aArmorIndex);
 		} catch(Throwable e) {}
-		return new gregtechmod.api.items.GT_Generic_Item(aID, aName, "Doesn't work as intended, this is a Bug", false);
+		return new gregtechmod.api.items.GT_Generic_Item(aName, "Doesn't work as intended, this is a Bug", false);
 	}
 	
 	/**
 	 * Creates a new Energy Battery Item
 	 */
-	public static Item constructElectricEnergyStorageItem(int aID, String aName, int aCharge, int aTransfer, int aTier, int aEmptyID, int aFullID) {
+	public static Item constructElectricEnergyStorageItem(String aName, int aCharge, int aTransfer, int aTier, int aEmptyID, int aFullID) {
 		try {
-			return (Item)Class.forName("gregtechmod.api.items.GT_EnergyStoreIC_Item").getConstructors()[0].newInstance(aID, aName, aCharge, aTransfer, aTier, aEmptyID, aFullID);
+			return (Item)Class.forName("gregtechmod.api.items.GT_EnergyStoreIC_Item").getConstructors()[0].newInstance(aName, aCharge, aTransfer, aTier, aEmptyID, aFullID);
 		} catch(Throwable e) {}
 		try {
-			return (Item)Class.forName("gregtechmod.api.items.GT_EnergyStore_Item").getConstructors()[0].newInstance(aID, aName, aCharge, aTransfer, aTier, aEmptyID, aFullID);
+			return (Item)Class.forName("gregtechmod.api.items.GT_EnergyStore_Item").getConstructors()[0].newInstance(aName, aCharge, aTransfer, aTier, aEmptyID, aFullID);
 		} catch(Throwable e) {}
-		return new gregtechmod.api.items.GT_Generic_Item(aID, aName, "Doesn't work as intended, this is a Bug", false);
+		return new gregtechmod.api.items.GT_Generic_Item(aName, "Doesn't work as intended, this is a Bug", false);
 	}
 	
 	/**
 	 * Creates a new Hard Hammer Item
 	 */
-	public static GT_Tool_Item constructHardHammerItem(int aID, String aName, int aMaxDamage, int aEntityDamage) {
+	public static GT_Tool_Item constructHardHammerItem(String aName, int aMaxDamage, int aEntityDamage) {
 		try {
-			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_HardHammerMFR_Item").getConstructors()[0].newInstance(aID, aName, aMaxDamage, aEntityDamage);
+			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_HardHammerMFR_Item").getConstructors()[0].newInstance(aName, aMaxDamage, aEntityDamage);
 		} catch(Throwable e) {}
 		try {
-			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_HardHammer_Item").getConstructors()[0].newInstance(aID, aName, aMaxDamage, aEntityDamage);
+			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_HardHammer_Item").getConstructors()[0].newInstance(aName, aMaxDamage, aEntityDamage);
 		} catch(Throwable e) {}
-		return new gregtechmod.api.items.GT_Tool_Item(aID, aName, "Doesn't work as intended, this is a Bug", aMaxDamage, aEntityDamage);
+		return new gregtechmod.api.items.GT_Tool_Item(aName, "Doesn't work as intended, this is a Bug", aMaxDamage, aEntityDamage);
 	}
 	
 	/**
 	 * Creates a new Crowbar Item
 	 */
-	public static GT_Tool_Item constructCrowbarItem(int aID, String aName, int aMaxDamage, int aEntityDamage) {
+	public static GT_Tool_Item constructCrowbarItem(String aName, int aMaxDamage, int aEntityDamage) {
 		try {
-			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_CrowbarRC_Item").getConstructors()[0].newInstance(aID, aName, aMaxDamage, aEntityDamage);
+			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_CrowbarRC_Item").getConstructors()[0].newInstance(aName, aMaxDamage, aEntityDamage);
 		} catch(Throwable e) {}
 		try {
-			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_Crowbar_Item").getConstructors()[0].newInstance(aID, aName, aMaxDamage, aEntityDamage);
+			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_Crowbar_Item").getConstructors()[0].newInstance(aName, aMaxDamage, aEntityDamage);
 		} catch(Throwable e) {}
-		return new gregtechmod.api.items.GT_Tool_Item(aID, aName, "Doesn't work as intended, this is a Bug", aMaxDamage, aEntityDamage);
+		return new gregtechmod.api.items.GT_Tool_Item(aName, "Doesn't work as intended, this is a Bug", aMaxDamage, aEntityDamage);
 	}
 	
 	/**
 	 * Creates a new Wrench Item
 	 */
-	public static GT_Tool_Item constructWrenchItem(int aID, String aName, int aMaxDamage, int aEntityDamage, int aDisChargedGTID) {
+	public static GT_Tool_Item constructWrenchItem(String aName, int aMaxDamage, int aEntityDamage, int aDisChargedGTID) {
 		try {
-			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_WrenchBC_Item").getConstructors()[0].newInstance(aID, aName, aMaxDamage, aEntityDamage, aDisChargedGTID);
+			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_WrenchBC_Item").getConstructors()[0].newInstance(aName, aMaxDamage, aEntityDamage, aDisChargedGTID);
 		} catch(Throwable e) {}
 		try {
-			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_Wrench_Item").getConstructors()[0].newInstance(aID, aName, aMaxDamage, aEntityDamage, aDisChargedGTID);
+			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_Wrench_Item").getConstructors()[0].newInstance(aName, aMaxDamage, aEntityDamage, aDisChargedGTID);
 		} catch(Throwable e) {}
-		return new gregtechmod.api.items.GT_Tool_Item(aID, aName, "Doesn't work as intended, this is a Bug", aMaxDamage, aEntityDamage);
+		return new gregtechmod.api.items.GT_Tool_Item(aName, "Doesn't work as intended, this is a Bug", aMaxDamage, aEntityDamage);
 	}
 
 	/**
 	 * Creates a new electric Wrench Item
 	 */
-	public static GT_Tool_Item constructElectricWrenchItem(int aID, String aName, int aMaxDamage, int aEntityDamage, int aDisChargedGTID) {
+	public static GT_Tool_Item constructElectricWrenchItem(String aName, int aMaxDamage, int aEntityDamage, int aDisChargedGTID) {
 		try {
-			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_WrenchICBC_Item").getConstructors()[0].newInstance(aID, aName, aMaxDamage, aEntityDamage, aDisChargedGTID);
+			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_WrenchICBC_Item").getConstructors()[0].newInstance(aName, aMaxDamage, aEntityDamage, aDisChargedGTID);
 		} catch(Throwable e) {}
 		try {
-			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_WrenchIC_Item").getConstructors()[0].newInstance(aID, aName, aMaxDamage, aEntityDamage, aDisChargedGTID);
+			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_WrenchIC_Item").getConstructors()[0].newInstance(aName, aMaxDamage, aEntityDamage, aDisChargedGTID);
 		} catch(Throwable e) {}
-		return new gregtechmod.api.items.GT_Tool_Item(aID, aName, "Doesn't work as intended, this is a Bug", aMaxDamage, aEntityDamage);
+		return new gregtechmod.api.items.GT_Tool_Item(aName, "Doesn't work as intended, this is a Bug", aMaxDamage, aEntityDamage);
 	}
 
 	/**
 	 * Creates a new electric Saw Item
 	 */
-	public static GT_Tool_Item constructElectricSawItem(int aID, String aName, int aMaxDamage, int aEntityDamage, int aToolQuality, float aToolStrength, int aEnergyConsumptionPerBlockBreak, int aDisChargedGTID) {
+	public static GT_Tool_Item constructElectricSawItem(String aName, int aMaxDamage, int aEntityDamage, int aToolQuality, float aToolStrength, int aEnergyConsumptionPerBlockBreak, int aDisChargedGTID) {
 		try {
-			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_SawIC_Item").getConstructors()[0].newInstance(aID, aName, aMaxDamage, aEntityDamage, aToolQuality, aToolStrength, aEnergyConsumptionPerBlockBreak, aDisChargedGTID);
+			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_SawIC_Item").getConstructors()[0].newInstance(aName, aMaxDamage, aEntityDamage, aToolQuality, aToolStrength, aEnergyConsumptionPerBlockBreak, aDisChargedGTID);
 		} catch(Throwable e) {}
-		return new gregtechmod.api.items.GT_Tool_Item(aID, aName, "Doesn't work as intended, this is a Bug", aMaxDamage, aEntityDamage);
+		return new gregtechmod.api.items.GT_Tool_Item(aName, "Doesn't work as intended, this is a Bug", aMaxDamage, aEntityDamage);
 	}
 	
 	/**
 	 * Creates a new electric Drill Item
 	 */
-	public static GT_Tool_Item constructElectricDrillItem(int aID, String aName, int aMaxDamage, int aEntityDamage, int aToolQuality, float aToolStrength, int aEnergyConsumptionPerBlockBreak, int aDisChargedGTID) {
+	public static GT_Tool_Item constructElectricDrillItem(String aName, int aMaxDamage, int aEntityDamage, int aToolQuality, float aToolStrength, int aEnergyConsumptionPerBlockBreak, int aDisChargedGTID) {
 		try {
-			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_DrillIC_Item").getConstructors()[0].newInstance(aID, aName, aMaxDamage, aEntityDamage, aToolQuality, aToolStrength, aEnergyConsumptionPerBlockBreak, aDisChargedGTID);
+			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_DrillIC_Item").getConstructors()[0].newInstance(aName, aMaxDamage, aEntityDamage, aToolQuality, aToolStrength, aEnergyConsumptionPerBlockBreak, aDisChargedGTID);
 		} catch(Throwable e) {}
-		return new gregtechmod.api.items.GT_Tool_Item(aID, aName, "Doesn't work as intended, this is a Bug", aMaxDamage, aEntityDamage);
+		return new gregtechmod.api.items.GT_Tool_Item(aName, "Doesn't work as intended, this is a Bug", aMaxDamage, aEntityDamage);
 	}
 	
 	/**
 	 * Creates a new electric Soldering Tool
 	 */
-	public static GT_Tool_Item constructElectricSolderingToolItem(int aID, String aName, int aMaxDamage, int aEntityDamage, int aDisChargedGTID) {
+	public static GT_Tool_Item constructElectricSolderingToolItem(String aName, int aMaxDamage, int aEntityDamage, int aDisChargedGTID) {
 		try {
-			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_SolderingToolIC_Item").getConstructors()[0].newInstance(aID, aName, aMaxDamage, aEntityDamage, aDisChargedGTID);
+			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_SolderingToolIC_Item").getConstructors()[0].newInstance(aName, aMaxDamage, aEntityDamage, aDisChargedGTID);
 		} catch(Throwable e) {}
-		return new gregtechmod.api.items.GT_Tool_Item(aID, aName, "Doesn't work as intended, this is a Bug", aMaxDamage, aEntityDamage);
+		return new gregtechmod.api.items.GT_Tool_Item(aName, "Doesn't work as intended, this is a Bug", aMaxDamage, aEntityDamage);
 	}
 	
 	/**
 	 * Creates a new empty electric Tool
 	 */
-	public static GT_Tool_Item constructEmptyElectricToolItem(int aID, String aName, int aMaxDamage, int aChargedGTID) {
+	public static GT_Tool_Item constructEmptyElectricToolItem(String aName, int aMaxDamage, int aChargedGTID) {
 		try {
-			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_EmptyToolIC_Item").getConstructors()[0].newInstance(aID, aName, aMaxDamage, aChargedGTID);
+			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_EmptyToolIC_Item").getConstructors()[0].newInstance(aName, aMaxDamage, aChargedGTID);
 		} catch(Throwable e) {}
-		return new gregtechmod.api.items.GT_Tool_Item(aID, aName, "Doesn't work as intended, this is a Bug", aMaxDamage, 0);
+		return new gregtechmod.api.items.GT_Tool_Item(aName, "Doesn't work as intended, this is a Bug", aMaxDamage, 0);
 	}
 	
 	private static Class<?> sBaseMetaTileEntityClass = null;

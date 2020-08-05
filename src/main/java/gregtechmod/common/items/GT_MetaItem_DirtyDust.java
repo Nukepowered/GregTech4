@@ -11,8 +11,8 @@ public class GT_MetaItem_DirtyDust extends GT_MetaItem_Abstract {
 
 	public static GT_MetaItem_Abstract instance;
 	
-	public GT_MetaItem_DirtyDust(int aID, String aName) {
-		super(aID, aName);
+	public GT_MetaItem_DirtyDust(String aName) {
+		super(aName);
 		instance = this;
 	}
 	
@@ -20,6 +20,7 @@ public class GT_MetaItem_DirtyDust extends GT_MetaItem_Abstract {
 		return instance.mStackList;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static ItemStack addItem(int aMeta, String aName, Materials aMaterial, boolean aGlow) {
 		GT_LanguageManager.addStringLocalization(instance.getUnlocalizedName() + "." + aMeta + ".name", "Dirty Pile of " + aName);
 		

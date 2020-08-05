@@ -13,8 +13,8 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 
 public class GT_Sonictron_Item extends GT_Generic_Item {
-	public GT_Sonictron_Item(int par1, String aName) {
-		super(par1, aName, null);
+	public GT_Sonictron_Item(String aName) {
+		super(aName, null);
 		setMaxStackSize(1);
 		setNoRepair();
 	}

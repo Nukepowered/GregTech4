@@ -11,8 +11,8 @@ public class GT_MetaItem_TinyDust extends GT_MetaItem_Abstract {
 
 	public static GT_MetaItem_Abstract instance;
 	
-	public GT_MetaItem_TinyDust(int aID, String aName) {
-		super(aID, aName);
+	public GT_MetaItem_TinyDust(String aName) {
+		super(aName);
 		instance = this;
 	}
 	

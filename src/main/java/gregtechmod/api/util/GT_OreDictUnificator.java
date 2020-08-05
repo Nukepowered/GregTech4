@@ -26,7 +26,7 @@ public class GT_OreDictUnificator {
 	
 	private static final HashMap<String, ItemStack> sName2OreMap = new HashMap<String, ItemStack>();
 	private static final HashMap<Integer, String> sItemhash2NameMap = new HashMap<Integer, String>();
-	private static final HashMap<Integer, Materials> sItemhash2MaterialMap = new HashMap<Integer, Materials>();
+//	private static final HashMap<Integer, Materials> sItemhash2MaterialMap = new HashMap<Integer, Materials>();
 	private static final ArrayList<Integer> sBlackList = new ArrayList<Integer>();
 	
 	private static int isRegisteringOre = 0;
@@ -102,7 +102,7 @@ public class GT_OreDictUnificator {
 	
 	public static ItemStack get(String aOreDictName, ItemStack aReplacement, int aAmount, boolean aMentionPossibleTypos, boolean aNoInvalidAmounts) {
 		if (aNoInvalidAmounts && aAmount < 1) return null;
-		if (!sName2OreMap.containsKey(aOreDictName) && aMentionPossibleTypos) GT_Log.err.println("Unknown Key for Unification, Typo? " + aOreDictName);
+		if (!sName2OreMap.containsKey(aOreDictName) && aMentionPossibleTypos) GT_Log.log.error("Unknown Key for Unification, Typo? " + aOreDictName);
 		return GT_Utility.copy(aAmount, sName2OreMap.get(aOreDictName), aReplacement);
 	}
 	
@@ -113,7 +113,7 @@ public class GT_OreDictUnificator {
 	public static ItemStack setStack(boolean aUseBlackList, ItemStack aOreStack) {
 		if (aOreStack == null) return null;
 		ItemStack tStack = get(true, aOreStack);
-		aOreStack.itemID = tStack.itemID;
+		aOreStack.func_150996_a(tStack.getItem());
 		aOreStack.setItemDamage(tStack.getItemDamage());
 		return aOreStack;
 	}

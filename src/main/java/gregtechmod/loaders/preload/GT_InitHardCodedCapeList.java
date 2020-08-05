@@ -3,6 +3,7 @@ package gregtechmod.loaders.preload;
 import gregtechmod.GT_Mod;
 
 public class GT_InitHardCodedCapeList implements Runnable {
+	@SuppressWarnings("static-access")
 	@Override
 	public void run() {
 		GT_Mod.instance.mGregTechCapeList.add("bsaa".toLowerCase());

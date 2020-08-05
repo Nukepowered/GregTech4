@@ -30,8 +30,8 @@ public class GT_SensorCard_Item extends GT_Generic_Item implements IRemoteSensor
 
     public static final UUID CARD_TYPE = new UUID(0, 41);
     
-	public GT_SensorCard_Item(int aID, String aName) {
-		super(aID, aName, "Insert into Display Panel");
+	public GT_SensorCard_Item(String aName) {
+		super(aName, "Insert into Display Panel");
 		setMaxStackSize(1);
 	}
 	
@@ -43,6 +43,7 @@ public class GT_SensorCard_Item extends GT_Generic_Item implements IRemoteSensor
 		return null;
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
 		super.addAdditionalToolTips(aList, aStack);

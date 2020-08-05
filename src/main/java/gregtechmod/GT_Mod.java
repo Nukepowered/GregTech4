@@ -32,6 +32,8 @@ import gregtechmod.common.items.GT_MetaMachine_Item;
 import gregtechmod.common.items.GT_MetaOre_Item;
 import gregtechmod.common.items.GT_MetaStone1_Item;
 import gregtechmod.common.render.GT_Block_Renderer;
+import gregtechmod.loaders.load.GT_DictRegistratorPreItem;
+import gregtechmod.loaders.load.GT_ItemLoader;
 import gregtechmod.loaders.misc.GT_CoverLoader;
 import gregtechmod.loaders.misc.GT_TooEasyModeLoader;
 import gregtechmod.loaders.preload.GT_InitHardCodedCapeList;
@@ -477,12 +479,12 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 		GameRegistry.registerBlock(GregTech_API.sBlockList[3] = new GT_Block_LightSource  (), ItemBlock.class			, "GT_TransparentTileEntity"	  );
 		GameRegistry.registerBlock(GregTech_API.sBlockList[5] = new GT_BlockMetaID_Stone1 (), GT_MetaStone1_Item.class	, GT_LanguageManager.mNameList4[0]);
 		
-//		LanguageRegistry.addName(GregTech_API.sBlockList[0], GT_LanguageManager.mRegionalNameList0[0]);
+//		LanguageRegistry.addName(GregTech_API.sBlockList[0], GT_LanguageManager.mRegionalNameList0[0]); // FIXME localization
 //		LanguageRegistry.addName(GregTech_API.sBlockList[1], GT_LanguageManager.mRegionalNameList1[0]);
 //		LanguageRegistry.addName(GregTech_API.sBlockList[2], GT_LanguageManager.mRegionalNameList2[0]);
 //		LanguageRegistry.addName(GregTech_API.sBlockList[4], GT_LanguageManager.mRegionalNameList3[0]);
 //		LanguageRegistry.addName(GregTech_API.sBlockList[5], GT_LanguageManager.mRegionalNameList4[0]);
-//		
+		
 //		for (int i=0;i<16;i++) {
 //			GT_LanguageManager.addStringLocalization("tile.BlockMetaID_Block."		+ GT_LanguageManager.mNameList0[i] + ".name", GT_LanguageManager.mRegionalNameList0[i]);
 //			GT_LanguageManager.addStringLocalization("tile.BlockMetaID_Machine."	+ GT_LanguageManager.mNameList1[i] + ".name", GT_LanguageManager.mRegionalNameList1[i]);
@@ -512,8 +514,8 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 //		}
 //		
 //		new GT_MetaTileEntityLoader().run();
-//		new GT_DictRegistratorPreItem().run();
-//		new GT_ItemLoader().run();
+		new GT_DictRegistratorPreItem().run();
+		new GT_ItemLoader().run();
 //		new GT_DictRegistratorPostItem().run();
 //		new GT_CircuitBehaviorLoad().run();
 //		
@@ -525,35 +527,35 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 //    	} catch(Throwable e) {
 //    		e.printStackTrace(GT_Log.err);
 //    	}
-//    	
-//    	GregTech_API.sLoadFinished = true;
-//        GT_Log.out.println("GT_Mod: Load-Phase finished!");
-//    	for (Runnable tRunnable : GregTech_API.sAfterGTLoad) {
-//    		try {
-//    			tRunnable.run();
-//    		} catch(Throwable e) {
-//    			e.printStackTrace(GT_Log.err);
-//    		}
-//    	}
+    	
+    	GregTech_API.sLoadFinished = true;
+        GT_Log.log.info("GT_Mod: Load-Phase finished!");
+    	for (Runnable tRunnable : GregTech_API.sAfterGTLoad) {
+    		try {
+    			tRunnable.run();
+    		} catch(Throwable e) {
+    			GT_Log.log.catching(e);
+    		}
+    	}
 	}
 	
     @EventHandler
     public void postload(FMLPostInitializationEvent aEvent) {
-//    	if (mDoNotInit) return;
-//    	
-//    	for (Runnable tRunnable : GregTech_API.sBeforeGTPostload) {
-//    		try {
-//    			tRunnable.run();
-//    		} catch(Throwable e) {
-//    			e.printStackTrace(GT_Log.err);
-//    		}
-//    	}
-//    	
+    	if (mDoNotInit) return;
+    	
+    	for (Runnable tRunnable : GregTech_API.sBeforeGTPostload) {
+    		try {
+    			tRunnable.run();
+    		} catch(Throwable e) {
+    			GT_Log.log.catching(e);
+    		}
+    	}
+    	
 //    	checkVersions();
-//    	
-//        GT_Log.out.println("GT_Mod: Beginning PostLoad-Phase.");
-//    	GregTech_API.sPostloadStarted = true;
-//        
+    	
+        GT_Log.log.info("GT_Mod: Beginning PostLoad-Phase.");
+    	GregTech_API.sPostloadStarted = true;
+        
 //        GT_Log.out.println("GT_Mod: Checking if Items got overloaded.");
 //		for (int i = 0; i < GregTech_API.sItemList.length; i++) {
 //			if (GregTech_API.sItemList[i] != null && Item.itemsList[GregTech_API.sItemList[i].itemID] != GregTech_API.sItemList[i]) {
@@ -767,25 +769,25 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 //	        	e.printStackTrace(GT_Log.err);
 //	        }
 //        }
-//        
-//    	for (Runnable tRunnable : GregTech_API.sAfterGTPostload) {
-//    		try {
-//    			tRunnable.run();
-//    		} catch(Throwable e) {
-//    			e.printStackTrace(GT_Log.err);
-//    		}
-//    	}
-//    	
-//        GT_Log.out.println("GT_Mod: Loading finished, deallocating temporary Init Variables.");
-//    	sItemIDs = null;
-//    	sBlockIDs = null;
-//    	
-//    	GregTech_API.sBeforeGTPreload = null;
-//    	GregTech_API.sAfterGTPreload = null;
-//    	GregTech_API.sBeforeGTLoad = null;
-//    	GregTech_API.sAfterGTLoad = null;
-//    	GregTech_API.sBeforeGTPostload = null;
-//    	GregTech_API.sAfterGTPostload = null;
+        
+    	for (Runnable tRunnable : GregTech_API.sAfterGTPostload) {
+    		try {
+    			tRunnable.run();
+    		} catch(Throwable e) {
+    			GT_Log.log.catching(e);
+    		}
+    	}
+    	
+    	GT_Log.log.info("GT_Mod: Loading finished, deallocating temporary Init Variables.");
+    	sItemIDs = null;
+    	sBlockIDs = null;
+    	
+    	GregTech_API.sBeforeGTPreload = null;
+    	GregTech_API.sAfterGTPreload = null;
+    	GregTech_API.sBeforeGTLoad = null;
+    	GregTech_API.sAfterGTLoad = null;
+    	GregTech_API.sBeforeGTPostload = null;
+    	GregTech_API.sAfterGTPostload = null;
     }
     /*
     @EventHandler

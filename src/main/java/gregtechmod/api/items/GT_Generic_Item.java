@@ -1,17 +1,18 @@
 package gregtechmod.api.items;
 
 import gregtechmod.api.GregTech_API;
+import gregtechmod.api.util.GT_Config;
 import gregtechmod.api.util.GT_LanguageManager;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 
 import java.util.List;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -20,16 +21,16 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class GT_Generic_Item extends Item {
 	
-	public Icon mIcon;
+	public IIcon mIcon;
 	
 	private final String mTooltip;
 	
-	public GT_Generic_Item(int aID, String aName, String aTooltip) {
-		this(aID, aName, aTooltip, true);
+	public GT_Generic_Item(String aName, String aTooltip) {
+		this(aName, aTooltip, true);
 	}
 	
-	public GT_Generic_Item(int aID, String aName, String aTooltip, boolean aTranslateToolTip) {
-		super(aID);
+	public GT_Generic_Item(String aName, String aTooltip, boolean aTranslateToolTip) {
+		super();
 		setUnlocalizedName(aName);
 		setCreativeTab(GregTech_API.TAB_GREGTECH);
 		mTooltip = aTooltip == null || aTooltip.equals("") ? "" : aTranslateToolTip ? GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_main", aTooltip) : aTooltip;
@@ -42,12 +43,12 @@ public class GT_Generic_Item extends Item {
 	
 	@Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister aIconRegister) {
-		mIcon = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_ITEM + (GregTech_API.sConfiguration.system?"troll":getUnlocalizedName()));
+    public void registerIcons(IIconRegister aIconRegister) {
+		mIcon = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_ITEM + (GT_Config.system ? "troll" : getUnlocalizedName()));
     }
 	
 	@Override
-    public Icon getIconFromDamage(int par1) {
+    public IIcon getIconFromDamage(int par1) {
         return mIcon;
     }
 	
@@ -55,6 +56,7 @@ public class GT_Generic_Item extends Item {
 		return 0;
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
     public final void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean aF3_H) {
 		if (getMaxDamage() > 0 && !getHasSubtypes()) aList.add((aStack.getMaxDamage() - aStack.getItemDamage()) + " / " + aStack.getMaxDamage());
@@ -63,6 +65,7 @@ public class GT_Generic_Item extends Item {
 	    addAdditionalToolTips(aList, aStack);
 	}
 	
+	@SuppressWarnings("rawtypes")
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
 		
 	}

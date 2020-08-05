@@ -46,16 +46,16 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	private String mToolClass1, mToolClass2, mToolClass3, mCraftingSound, mBreakingSound, mBlockBreakSound, mEntityHitSound;
 	private float mCraftingSoundStrength = 1, mBreakingSoundStrength = 1, mBlockBreakSoundStrength = 1, mEntityHitSoundStrength = 1;
 	
-	public GT_Tool_Item(int aID, String aName, String aTooltip, int aMaxDamage, int aEntityDamage) {
-		this(aID, aName, aTooltip, aMaxDamage, aEntityDamage, -1, -1);
+	public GT_Tool_Item(String aName, String aTooltip, int aMaxDamage, int aEntityDamage) {
+		this(aName, aTooltip, aMaxDamage, aEntityDamage, -1, -1);
 	}
 	
-	public GT_Tool_Item(int aID, String aName, String aTooltip, int aMaxDamage, int aEntityDamage, int aChargedGTID, int aDisChargedGTID) {
-		this(aID, aName, aTooltip, aMaxDamage, aEntityDamage, aChargedGTID, aDisChargedGTID, 0, 0.0F);
+	public GT_Tool_Item(String aName, String aTooltip, int aMaxDamage, int aEntityDamage, int aChargedGTID, int aDisChargedGTID) {
+		this(aName, aTooltip, aMaxDamage, aEntityDamage, aChargedGTID, aDisChargedGTID, 0, 0.0F);
 	}
 	
-	public GT_Tool_Item(int aID, String aName, String aTooltip, int aMaxDamage, int aEntityDamage, int aChargedGTID, int aDisChargedGTID, int aToolQuality, float aToolStrength) {
-		super(aID, aName, aTooltip, aTooltip != null && !aTooltip.equals("Doesn't work as intended, this is a Bug"));
+	public GT_Tool_Item(String aName, String aTooltip, int aMaxDamage, int aEntityDamage, int aChargedGTID, int aDisChargedGTID, int aToolQuality, float aToolStrength) {
+		super(aName, aTooltip, aTooltip != null && !aTooltip.equals("Doesn't work as intended, this is a Bug"));
 		mEntityDamage = aEntityDamage;
 		mDisChargedGTID = aDisChargedGTID;
 		mChargedGTID = aChargedGTID;

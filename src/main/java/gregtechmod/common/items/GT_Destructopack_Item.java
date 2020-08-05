@@ -8,8 +8,8 @@ import net.minecraft.world.World;
 
 public class GT_Destructopack_Item extends GT_Generic_Item {
 	
-	public GT_Destructopack_Item(int aID, String aName) {
-		super(aID, aName, "Mobile Trash Bin");
+	public GT_Destructopack_Item(String aName) {
+		super(aName, "Mobile Trash Bin");
 		setMaxStackSize(1);
 		setNoRepair();
 	}

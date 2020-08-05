@@ -6,28 +6,29 @@ import gregtechmod.api.util.GT_Utility;
 
 import java.util.List;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_FluidDisplayItem extends GT_Generic_Item {
-	public GT_FluidDisplayItem(int aID, String aName) {
-		super(aID, aName, null);
+	public GT_FluidDisplayItem(String aName) {
+		super(aName, null);
 	}
 	
 	@Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister aIconRegister) {
+    public void registerIcons(IIconRegister aIconRegister) {
 		
     }
 	
 	@Override
-    public Icon getIconFromDamage(int aMeta) {
+    public IIcon getIconFromDamage(int aMeta) {
     	Fluid tFluid = FluidRegistry.getFluid(aMeta);
     	if (tFluid != null) {
     		return tFluid.getStillIcon();
@@ -56,10 +57,8 @@ public class GT_FluidDisplayItem extends GT_Generic_Item {
         return getUnlocalizedName(aStack);
     }
 	
-	@Override
-    public String getItemDisplayName(ItemStack aStack) {
-        return getUnlocalizedName(aStack);
-    }
-	
-	@Override @SideOnly(Side.CLIENT) public void getSubItems(int var1, CreativeTabs aTab, List aList) {}
+	@SuppressWarnings("rawtypes")
+	@SideOnly(Side.CLIENT)
+	@Override 
+	public void getSubItems(Item var1, CreativeTabs aTab, List aList) {}
 }

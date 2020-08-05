@@ -8,18 +8,18 @@ import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class GT_CreativeTab extends CreativeTabs {
-
+	public static ItemStack icon;
+	
 	@SuppressWarnings("deprecation")
 	public GT_CreativeTab() {
 		super("GregTech");
-		LanguageRegistry.instance().addStringLocalization("itemGroup.GregTech", "GregTech Intergalactical");
+		LanguageRegistry.instance().addStringLocalization("itemGroup.GregTech", "GregTech Intergalactical"); // FIXME: LANG
 	}
 	
 	@Override
     public ItemStack getIconItemStack() {
-		ItemStack rStack = GregTech_API.getGregTechItem(55, 1, 0);
-		if (rStack == null) rStack = new ItemStack(Blocks.iron_block, 1);
-        return rStack;
+		
+		return icon != null ? icon = GregTech_API.getGregTechItem(55, 1, 0) : new ItemStack(Blocks.iron_block, 1);
     }
 
 	@Override

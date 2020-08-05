@@ -8,8 +8,8 @@ public class GT_MetaItem_Component extends GT_MetaItem_Abstract {
 
 	public static GT_MetaItem_Abstract instance;
 	
-	public GT_MetaItem_Component(int aID, String aName) {
-		super(aID, aName);
+	public GT_MetaItem_Component(String aName) {
+		super(aName);
 		instance = this;
 	}
 	
