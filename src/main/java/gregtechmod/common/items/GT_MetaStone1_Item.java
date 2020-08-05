@@ -5,12 +5,13 @@ import gregtechmod.api.util.GT_LanguageManager;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class GT_MetaStone1_Item extends ItemBlock {
-    public GT_MetaStone1_Item(int par1) {
+    public GT_MetaStone1_Item(Block par1) {
         super(par1);
         setMaxDamage(0);
         setHasSubtypes(true);
@@ -23,6 +24,7 @@ public class GT_MetaStone1_Item extends ItemBlock {
         return par1;
     }
     
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
     public void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean par4) {
 		if (aStack.getItemDamage() % 8 > 2) aList.add("Mobs can't spawn on this Block");
