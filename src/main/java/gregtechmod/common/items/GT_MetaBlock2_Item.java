@@ -9,6 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.StatCollector;
 
 public class GT_MetaBlock2_Item extends ItemBlock {
     public GT_MetaBlock2_Item(Block par1) {
@@ -27,7 +28,7 @@ public class GT_MetaBlock2_Item extends ItemBlock {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
     public void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean par4) {
-		aList.add("Mobs can't spawn on this Block"); // FIXME: lang
+		aList.add(StatCollector.translateToLocal("block.deny_mobs_spawn.tooltip"));
     }
 	
 	@Override
