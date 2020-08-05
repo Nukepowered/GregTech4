@@ -15,7 +15,7 @@ public class GT_Vanilla_Tool extends ItemTool {
     protected final int mHarvestLevel, mEnchantability;
     protected final String mMaterialName;
     
-	public GT_Vanilla_Tool(int aID, String aUnlocalizedName, String aMaterialName, int aHarvestLevel, int aEnchantability, int aMaxDamage, float aEfficiency, float aEntityDamage, Set<Block> aBlockList) {
+	public GT_Vanilla_Tool(String aUnlocalizedName, String aMaterialName, int aHarvestLevel, int aEnchantability, int aMaxDamage, float aEfficiency, float aEntityDamage, Set<Block> aBlockList) {
 		super(0.0F, ToolMaterial.STONE, aBlockList);
 		mHarvestLevel = aHarvestLevel;
 		mEnchantability = aEnchantability;

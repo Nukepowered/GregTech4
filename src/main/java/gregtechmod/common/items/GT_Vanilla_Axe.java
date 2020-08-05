@@ -4,15 +4,15 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
 
 public class GT_Vanilla_Axe extends GT_Vanilla_Tool {
-	public GT_Vanilla_Axe(int aID, String aUnlocalizedName, String aMaterialName, int aHarvestLevel, int aEnchantability, int aMaxDamage, float aEfficiency, float aEntityDamage) {
-		super(aID, aUnlocalizedName, aMaterialName, aHarvestLevel, aEnchantability, aMaxDamage, aEfficiency, aEntityDamage+3.0F, ItemAxe.blocksEffectiveAgainst);
-		MinecraftForge.setToolClass(this, "axe", mHarvestLevel);
+	@SuppressWarnings("unchecked")
+	public GT_Vanilla_Axe(String aUnlocalizedName, String aMaterialName, int aHarvestLevel, int aEnchantability, int aMaxDamage, float aEfficiency, float aEntityDamage) {
+		super(aUnlocalizedName, aMaterialName, aHarvestLevel, aEnchantability, aMaxDamage, aEfficiency, aEntityDamage+3.0F, ItemAxe.field_150917_c);
+		setHarvestLevel("axe", mHarvestLevel);
 	}
 	
     public float getStrVsBlock(ItemStack aStack, Block aBlock) {
-        return aBlock != null && (aBlock.blockMaterial == Material.wood || aBlock.blockMaterial == Material.plants || aBlock.blockMaterial == Material.vine) ? this.efficiencyOnProperMaterial : super.getStrVsBlock(aStack, aBlock);
+        return aBlock != null && (aBlock.getMaterial() == Material.wood || aBlock.getMaterial() == Material.plants || aBlock.getMaterial() == Material.vine) ? this.efficiencyOnProperMaterial : super.func_150893_a(aStack, aBlock);
     }
 }

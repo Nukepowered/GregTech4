@@ -520,7 +520,7 @@ public class GT_ItemLoader implements Runnable {
 		GregTech_API.sItemList[ 44] = GregTech_API.constructElectricArmorItem			(GT_LanguageManager.mNameListItem[ 44],    10000,   32, 1,  0, 16|32, 0.0D, false, 0, tArmorID1);
 		GregTech_API.sItemList[ 45] = GregTech_API.constructElectricArmorItem			(GT_LanguageManager.mNameListItem[ 45],100000000, 8192, 5,  0,     0, 0.0D,  true, 1, tArmorID1);
 		GregTech_API.sItemList[ 46] = GregTech_API.constructElectricDrillItem			(GT_LanguageManager.mNameListItem[ 46],       10, 0, 5, 3.0F, 1000, -1).setElectricTier(1).addToMaterialList(Material.anvil).addToMaterialList(Material.iron).addToMaterialList(Material.rock).setPrimaryToolClass("pickaxe").setSilkyness(3);
-//		try {GregTech_API.sItemList[ 47] = new GT_Teslastaff_Item						(GT_LanguageManager.mNameListItem[ 47]);																					} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
+		try {GregTech_API.sItemList[ 47] = new GT_Teslastaff_Item						(GT_LanguageManager.mNameListItem[ 47]);																					} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 		GregTech_API.sItemList[ 48] = GregTech_API.constructRadioactiveCellItem			(GT_LanguageManager.mNameListItem[ 48],    25000, 1, -5, null);
 		GregTech_API.sItemList[ 49] = GregTech_API.constructRadioactiveCellItem			(GT_LanguageManager.mNameListItem[ 49],    25000, 2, -5, null);
 		GregTech_API.sItemList[ 50] = GregTech_API.constructRadioactiveCellItem			(GT_LanguageManager.mNameListItem[ 50],    25000, 4, -5, null);
@@ -598,20 +598,20 @@ public class GT_ItemLoader implements Runnable {
 		GregTech_API.sItemList[122] = GregTech_API.constructEmptyElectricToolItem		(GT_LanguageManager.mNameListItem[122],   10, 120);
 		GregTech_API.sItemList[123] = GregTech_API.constructElectricDrillItem			(GT_LanguageManager.mNameListItem[123],  128, 8, 5,35.0F, 250, -1).addToMaterialList(Material.anvil).addToMaterialList(Material.iron).addToMaterialList(Material.rock).setPrimaryToolClass("pickaxe").setSecondaryToolClass("shovel").setBlockBreakSound(GregTech_API.sSoundList.get(106)).setEntityHitSound(GregTech_API.sSoundList.get(106));
 		GregTech_API.sItemList[124] = new GT_Vanilla_Sword								(GT_LanguageManager.mNameListItem[124], "Flint"			, 1,  5, GT_Mod.sNerfedStoneTools ? 128 : 256	,  4.0F, 1.0F);
-		GregTech_API.sItemList[125] = new GT_Vanilla_Pickaxe							(GT_LanguageManager.mNameListItem[125], "Flint"			, 1,  5, GT_Mod.sNerfedStoneTools?128:256	,  4.0F, 1.0F);
-//		GregTech_API.sItemList[126] = new GT_Vanilla_Shovel								(GT_Mod.sItemIDs[126], GT_LanguageManager.mNameListItem[126], "Flint"			, 1,  5, GT_Mod.sNerfedStoneTools?128:256	,  4.0F, 1.0F);
-//		GregTech_API.sItemList[127] = new GT_Vanilla_Axe								(GT_Mod.sItemIDs[127], GT_LanguageManager.mNameListItem[127], "Flint"			, 1,  5, GT_Mod.sNerfedStoneTools?128:256	,  4.0F, 1.0F);
-//		GregTech_API.sItemList[128] = new GT_Vanilla_Hoe								(GT_Mod.sItemIDs[128], GT_LanguageManager.mNameListItem[128], "Flint"			, 1,  5, GT_Mod.sNerfedStoneTools?128:256	,  4.0F, 1.0F);
-//		GregTech_API.sItemList[129] = new GT_Vanilla_Sword								(GT_Mod.sItemIDs[129], GT_LanguageManager.mNameListItem[129], "Steel"			, 2, 14, 1280								,  8.0F, 2.0F);
-//		GregTech_API.sItemList[130] = new GT_Vanilla_Pickaxe							(GT_Mod.sItemIDs[130], GT_LanguageManager.mNameListItem[130], "Steel"			, 2, 14, 1280								,  8.0F, 2.0F);
-//		GregTech_API.sItemList[131] = new GT_Vanilla_Shovel								(GT_Mod.sItemIDs[131], GT_LanguageManager.mNameListItem[131], "Steel"			, 2, 14, 1280								,  8.0F, 2.0F);
-//		GregTech_API.sItemList[132] = new GT_Vanilla_Axe								(GT_Mod.sItemIDs[132], GT_LanguageManager.mNameListItem[132], "Steel"			, 2, 14, 1280								,  8.0F, 2.0F);
-//		GregTech_API.sItemList[133] = new GT_Vanilla_Hoe								(GT_Mod.sItemIDs[133], GT_LanguageManager.mNameListItem[133], "Steel"			, 2, 14, 1280								,  8.0F, 2.0F);
-//		GregTech_API.sItemList[134] = new GT_Vanilla_Sword								(GT_Mod.sItemIDs[134], GT_LanguageManager.mNameListItem[134], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
-//		GregTech_API.sItemList[135] = new GT_Vanilla_Pickaxe							(GT_Mod.sItemIDs[135], GT_LanguageManager.mNameListItem[135], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
-//		GregTech_API.sItemList[136] = new GT_Vanilla_Shovel								(GT_Mod.sItemIDs[136], GT_LanguageManager.mNameListItem[136], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
-//		GregTech_API.sItemList[137] = new GT_Vanilla_Axe								(GT_Mod.sItemIDs[137], GT_LanguageManager.mNameListItem[137], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
-//		GregTech_API.sItemList[138] = new GT_Vanilla_Hoe								(GT_Mod.sItemIDs[138], GT_LanguageManager.mNameListItem[138], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
+		GregTech_API.sItemList[125] = new GT_Vanilla_Pickaxe							(GT_LanguageManager.mNameListItem[125], "Flint"			, 1,  5, GT_Mod.sNerfedStoneTools? 128 : 256	,  4.0F, 1.0F);
+		GregTech_API.sItemList[126] = new GT_Vanilla_Shovel								(GT_LanguageManager.mNameListItem[126], "Flint"			, 1,  5, GT_Mod.sNerfedStoneTools?128:256	,  4.0F, 1.0F);
+		GregTech_API.sItemList[127] = new GT_Vanilla_Axe								(GT_LanguageManager.mNameListItem[127], "Flint"			, 1,  5, GT_Mod.sNerfedStoneTools?128:256	,  4.0F, 1.0F);
+		GregTech_API.sItemList[128] = new GT_Vanilla_Hoe								(GT_LanguageManager.mNameListItem[128], "Flint"			, 1,  5, GT_Mod.sNerfedStoneTools?128:256	,  4.0F, 1.0F);
+		GregTech_API.sItemList[129] = new GT_Vanilla_Sword								(GT_LanguageManager.mNameListItem[129], "Steel"			, 2, 14, 1280								,  8.0F, 2.0F);
+		GregTech_API.sItemList[130] = new GT_Vanilla_Pickaxe							(GT_LanguageManager.mNameListItem[130], "Steel"			, 2, 14, 1280								,  8.0F, 2.0F);
+		GregTech_API.sItemList[131] = new GT_Vanilla_Shovel								(GT_LanguageManager.mNameListItem[131], "Steel"			, 2, 14, 1280								,  8.0F, 2.0F);
+		GregTech_API.sItemList[132] = new GT_Vanilla_Axe								(GT_LanguageManager.mNameListItem[132], "Steel"			, 2, 14, 1280								,  8.0F, 2.0F);
+		GregTech_API.sItemList[133] = new GT_Vanilla_Hoe								(GT_LanguageManager.mNameListItem[133], "Steel"			, 2, 14, 1280								,  8.0F, 2.0F);
+		GregTech_API.sItemList[134] = new GT_Vanilla_Sword								(GT_LanguageManager.mNameListItem[134], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
+		GregTech_API.sItemList[135] = new GT_Vanilla_Pickaxe							(GT_LanguageManager.mNameListItem[135], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
+		GregTech_API.sItemList[136] = new GT_Vanilla_Shovel								(GT_LanguageManager.mNameListItem[136], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
+		GregTech_API.sItemList[137] = new GT_Vanilla_Axe								(GT_LanguageManager.mNameListItem[137], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
+		GregTech_API.sItemList[138] = new GT_Vanilla_Hoe								(GT_LanguageManager.mNameListItem[138], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
 		
         GT_Log.log.info("GT_Mod: Hiding certain Items from NEI.");
 		try {
