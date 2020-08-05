@@ -55,7 +55,7 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	}
 	
 	public GT_Tool_Item(String aName, String aTooltip, int aMaxDamage, int aEntityDamage, int aChargedGTID, int aDisChargedGTID, int aToolQuality, float aToolStrength) {
-		super(aName, aTooltip, aTooltip != null && !aTooltip.equals("Doesn't work as intended, this is a Bug"));
+		super(aName, aTooltip);
 		mEntityDamage = aEntityDamage;
 		mDisChargedGTID = aDisChargedGTID;
 		mChargedGTID = aChargedGTID;

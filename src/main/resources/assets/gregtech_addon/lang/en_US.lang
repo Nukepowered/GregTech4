@@ -906,5 +906,8 @@ item.Teslastaff.name=Tesla Staff
 item.Thoriumcell.name=Thorium Cell
 item.Ultimate_Cheat_Armor.name=Ultimate Cheat Armor
 
-itemGroup.GregTech=GregTech Intergalactical
+item.electric.tier.tooltip=Tier: %s
+item.bug.tooltip=Doesn't work as intended, this is a Bug
+
+itemGroup.gregtech=GregTech Intergalactical
 block.deny_mobs_spawn.tooltip=Mobs can't spawn on this block

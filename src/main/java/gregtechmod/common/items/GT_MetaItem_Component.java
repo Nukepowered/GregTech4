@@ -1,6 +1,5 @@
 package gregtechmod.common.items;
 
-import gregtechmod.api.util.GT_LanguageManager;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import net.minecraft.item.ItemStack;
 
@@ -18,9 +17,7 @@ public class GT_MetaItem_Component extends GT_MetaItem_Abstract {
 	}
 	
 	public static ItemStack addItem(int aMeta, String aName, String aMaterial, String aToolTip) {
-		GT_LanguageManager.addStringLocalization(instance.getUnlocalizedName() + "." + aMeta + ".name", aName);
-		
-		instance.mToolTipList[aMeta] = GT_LanguageManager.addStringLocalization(instance.getUnlocalizedName() + "." + aMeta + ".tooltip", aToolTip);
+		instance.mToolTipList[aMeta] = instance.getUnlocalizedName() + "." + aMeta + ".tooltip";
 		
 		instance.mStackList[aMeta] = new ItemStack(instance, 1, aMeta);
 		if (aMaterial != null && !aMaterial.equals("")) {

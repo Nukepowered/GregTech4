@@ -500,8 +500,8 @@ public class GT_ItemLoader implements Runnable {
 		GregTech_API.sItemList[ 16] = new GT_SensorCard_Item							(GT_LanguageManager.mNameListItem[ 16]);
 		GregTech_API.sItemList[ 17] = new GT_SensorKit_Item								(GT_LanguageManager.mNameListItem[ 17]);
 		} catch (Throwable e) {
-	    GregTech_API.sItemList[ 16] = new GT_Generic_Item								(GT_LanguageManager.mNameListItem[ 16], "Nuclear Control not installed", false);
-		GregTech_API.sItemList[ 17] = new GT_Generic_Item								(GT_LanguageManager.mNameListItem[ 17], "Nuclear Control not installed", false);
+	    GregTech_API.sItemList[ 16] = new GT_Generic_Item								(GT_LanguageManager.mNameListItem[ 16], "Nuclear Control not installed");
+		GregTech_API.sItemList[ 17] = new GT_Generic_Item								(GT_LanguageManager.mNameListItem[ 17], "Nuclear Control not installed");
         }
 		
         GregTech_API.sItemList[ 18] = GregTech_API.constructElectricArmorItem			(GT_LanguageManager.mNameListItem[ 18], 1000000000, Integer.MAX_VALUE, 1, 10, -1, 100.0D, true, 1, tArmorID1);
