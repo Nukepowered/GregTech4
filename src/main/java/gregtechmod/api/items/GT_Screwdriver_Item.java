@@ -10,6 +10,7 @@ import gregtechmod.api.util.GT_Utility;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.monster.EntityCaveSpider;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,8 +37,8 @@ public class GT_Screwdriver_Item extends GT_Tool_Item {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void addAdditionalToolTips(@SuppressWarnings("rawtypes") List aList, ItemStack aStack) {
-		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_1", "Can switch the Design of certain Blocks"));
-		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_2", "Can rotate Repeaters and Comparators"));
+		aList.add(I18n.format("item.GT_Screwdriver.tooltip_1"));
+		aList.add(I18n.format("item.GT_Screwdriver.tooltip_2"));
 	}
 	
 	@Override

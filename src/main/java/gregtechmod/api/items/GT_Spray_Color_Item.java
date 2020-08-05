@@ -9,6 +9,7 @@ import gregtechmod.api.util.GT_Utility;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -19,7 +20,7 @@ public class GT_Spray_Color_Item extends GT_Tool_Item {
 	public byte mColorMeta = 0;
 	
 	public GT_Spray_Color_Item(String aName, int aMaxDamage, int aEntityDamage, byte aColorMeta) {
-		super(aName, "To give the World more Color", aMaxDamage, aEntityDamage);
+		super(aName, null, aMaxDamage, aEntityDamage);
 		GT_OreDictUnificator.registerOre(Dyes.get(mColorMeta = aColorMeta), new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		setCraftingSound(GregTech_API.sSoundList.get(102));
 		setBreakingSound(GregTech_API.sSoundList.get(102));
@@ -30,8 +31,9 @@ public class GT_Spray_Color_Item extends GT_Tool_Item {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
-		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_3", "Enough for dying " + getMaxDamage() + " Blocks in World " + Dyes.get(mColorMeta).mName.toLowerCase()));
-		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_2", "Enough for crafting " + (getMaxDamage()/getDamagePerContainerItemCraft()) + " times"));
+		aList.add(I18n.format("item.GT_Spray_Color_Item.tooltip_1"));
+		aList.add(I18n.format("item.GT_Spray_Color_Item.tooltip_3", getMaxDamage(), Dyes.get(mColorMeta).mName.toLowerCase()));
+		aList.add(I18n.format("item.GT_Spray_Color_Item.tooltip_2", getMaxDamage() / getDamagePerContainerItemCraft()));
 	}
 	
 	@Override

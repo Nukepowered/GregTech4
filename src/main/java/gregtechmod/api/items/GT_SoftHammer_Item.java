@@ -10,6 +10,7 @@ import gregtechmod.api.util.GT_Utility;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -37,9 +38,9 @@ public class GT_SoftHammer_Item extends GT_Tool_Item {
 	@Override
 	public void addAdditionalToolTips(@SuppressWarnings("rawtypes") List aList, ItemStack aStack) {
 		super.addAdditionalToolTips(aList, aStack);
-		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_1", "Can enable/disable Machines"));
-		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_2", "Can rotate some Blocks as well"));
-		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_4", "Can switch Redstone Lamps and Booster Tracks"));
+		aList.add(I18n.format("item.GT_Hammer_Rubber.tooltip_1"));
+		aList.add(I18n.format("item.GT_Hammer_Rubber.tooltip_2"));
+		aList.add(I18n.format("item.GT_Hammer_Rubber.tooltip_4"));
 	}
 	
 	@Override

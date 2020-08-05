@@ -7,6 +7,7 @@ import gregtechmod.api.util.GT_OreDictUnificator;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,8 +29,8 @@ public class GT_Spray_Pepper_Item extends GT_Tool_Item {
 	@SuppressWarnings("unchecked")
 	@Override
 	public void addAdditionalToolTips(@SuppressWarnings("rawtypes") List aList, ItemStack aStack) {
-		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_1", "especially Pedobears, Care Bears,"));
-		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_2", "Confession Bears and Bear Grylls"));
+		aList.add(I18n.format("item.GT_Spray_Pepper.tooltip_1",getUnlocalizedName()));
+		aList.add(I18n.format("item.GT_Spray_Pepper.tooltip_2",getUnlocalizedName()));
 	}
 	
 	@Override

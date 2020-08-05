@@ -7,6 +7,7 @@ import gregtechmod.api.util.GT_Utility;
 
 import java.util.List;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -64,9 +65,10 @@ public class GT_CrowbarRC_Item extends GT_Crowbar_Item implements mods.railcraft
 		GT_ModHandler.damageOrDechargeItem(aCrowbar, 5, 5000, aPlayer);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public void addAdditionalToolTips(List aList, ItemStack aStack) {
+	public void addAdditionalToolTips(@SuppressWarnings("rawtypes") List aList, ItemStack aStack) {
 		super.addAdditionalToolTips(aList, aStack);
-		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_rc", "Works as Railcraft Crowbar too"));
+		aList.add(I18n.format("item.GT_Crowbar.tooltip_rc"));
 	}
 }

@@ -5,6 +5,7 @@ import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.util.GT_LanguageManager;
 import gregtechmod.api.util.GT_OreDictUnificator;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 
 public class GT_MetaItem_Nugget extends GT_MetaItem_Abstract {
