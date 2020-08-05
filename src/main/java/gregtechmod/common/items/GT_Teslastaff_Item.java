@@ -8,11 +8,11 @@ import ic2.api.item.IElectricItem;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumToolMaterial;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.util.DamageSource;
@@ -22,8 +22,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class GT_Teslastaff_Item extends ItemTool implements IElectricItem {
 	public int mCharge, mTransfer, mTier;
 	
-    public GT_Teslastaff_Item(int aID, String aName) {
-        super(aID, 0, EnumToolMaterial.GOLD, new Block[0]);
+    public GT_Teslastaff_Item(String aName) {
+        super(0, ToolMaterial.GOLD, new Block[0]);
 		setCreativeTab(GregTech_API.TAB_GREGTECH);
 		setMaxStackSize(1);
 		setMaxDamage(100);
@@ -36,18 +36,19 @@ public class GT_Teslastaff_Item extends ItemTool implements IElectricItem {
 
 	@Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister par1IconRegister) {
+    public void registerIcons(IIconRegister par1IconRegister) {
         this.itemIcon = par1IconRegister.registerIcon(GregTech_API.TEXTURE_PATH_ITEM + getUnlocalizedName());
     }
     
+	@SuppressWarnings("unchecked")
 	@Override
-    public void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean aF3_H) {
+    public void addInformation(ItemStack aStack, EntityPlayer aPlayer, @SuppressWarnings("rawtypes") List aList, boolean aF3_H) {
 		aList.add("No warranty!");
     }
 	
     @Override
     public boolean hitEntity(ItemStack aStack, EntityLivingBase aTarget, EntityLivingBase aPlayer) {
-        if (aTarget instanceof EntityPlayer && aPlayer instanceof EntityPlayer && ElectricItem.canUse(aStack, 9000000)) {
+        if (aTarget instanceof EntityPlayer && aPlayer instanceof EntityPlayer && ElectricItem.manager.canUse(aStack, 9000000)) {
             EntityPlayer tTarget = (EntityPlayer)aTarget, tPlayer = (EntityPlayer)aPlayer;
             GT_ModHandler.useElectricItem(aStack, 9000000, tPlayer);
             for (int i = 0; i < 4; i++) {
@@ -63,10 +64,11 @@ public class GT_Teslastaff_Item extends ItemTool implements IElectricItem {
         return true;
     }
     
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(int var1, CreativeTabs var2, List var3) {
+    @SuppressWarnings("unchecked")
+	@SideOnly(Side.CLIENT)
+    public void getSubItems(int var1, CreativeTabs var2, @SuppressWarnings("rawtypes") List var3) {
         ItemStack tCharged = new ItemStack(this, 1), tUncharged = new ItemStack(this, 1, getMaxDamage());
-        ElectricItem.charge(tCharged, Integer.MAX_VALUE, Integer.MAX_VALUE, true, false);
+        ElectricItem.manager.charge(tCharged, Integer.MAX_VALUE, Integer.MAX_VALUE, true, false);
         var3.add(tCharged);
         var3.add(tUncharged);
     }
@@ -102,17 +104,7 @@ public class GT_Teslastaff_Item extends ItemTool implements IElectricItem {
 	}
 	
 	@Override
-	public int getChargedItemId(ItemStack aStack) {
-		return itemID;
-	}
-	
-	@Override
-	public int getEmptyItemId(ItemStack aStack) {
-		return itemID;
-	}
-	
-	@Override
-	public int getMaxCharge(ItemStack aStack) {
+	public double getMaxCharge(ItemStack aStack) {
 		return mCharge;
 	}
 	
@@ -122,7 +114,17 @@ public class GT_Teslastaff_Item extends ItemTool implements IElectricItem {
 	}
 	
 	@Override
-	public int getTransferLimit(ItemStack aStack) {
+	public double getTransferLimit(ItemStack aStack) {
 		return mTransfer;
+	}
+
+	@Override
+	public Item getChargedItem(ItemStack itemStack) {
+		return new ItemStack(this, 1).getItem();
+	}
+
+	@Override
+	public Item getEmptyItem(ItemStack itemStack) {
+		return new ItemStack(this, 1, getMaxDamage()).getItem();
 	}
 }

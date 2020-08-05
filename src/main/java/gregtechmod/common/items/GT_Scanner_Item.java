@@ -12,6 +12,7 @@ import java.util.List;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
@@ -19,8 +20,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_Scanner_Item extends GT_Generic_Item implements IElectricItem {
 	
-    public GT_Scanner_Item(int aID, String aName) {
-		super(aID, aName, "Tricorder");
+    public GT_Scanner_Item(String aName) {
+		super(aName, "Tricorder");
 		setMaxStackSize(1);
 		setMaxDamage(100);
 		setNoRepair();
@@ -30,10 +31,11 @@ public class GT_Scanner_Item extends GT_Generic_Item implements IElectricItem {
         return true;
     }
     
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(int var1, CreativeTabs var2, List var3) {
+    @SuppressWarnings("unchecked")
+	@SideOnly(Side.CLIENT)
+    public void getSubItems(int var1, CreativeTabs var2, @SuppressWarnings("rawtypes") List var3) {
         ItemStack tCharged = new ItemStack(this, 1), tUncharged = new ItemStack(this, 1, getMaxDamage());
-        GT_ModHandler.chargeElectricItem(tCharged, getMaxCharge(tCharged), Integer.MAX_VALUE, true, false);
+        GT_ModHandler.chargeElectricItem(tCharged, Integer.MAX_VALUE, 1, true, false);
         var3.add(tCharged);
     }
     
@@ -41,19 +43,9 @@ public class GT_Scanner_Item extends GT_Generic_Item implements IElectricItem {
 	public boolean canProvideEnergy(ItemStack aStack) {
 		return false;
 	}
-	
+
 	@Override
-	public int getChargedItemId(ItemStack aStack) {
-		return itemID;
-	}
-	
-	@Override
-	public int getEmptyItemId(ItemStack aStack) {
-		return itemID;
-	}
-	
-	@Override
-	public int getMaxCharge(ItemStack aStack) {
+	public double getMaxCharge(ItemStack aStack) {
 		return 100000;
 	}
 	
@@ -63,7 +55,7 @@ public class GT_Scanner_Item extends GT_Generic_Item implements IElectricItem {
 	}
 	
 	@Override
-	public int getTransferLimit(ItemStack aStack) {
+	public double getTransferLimit(ItemStack aStack) {
 		return 100;
 	}
 	
@@ -80,5 +72,15 @@ public class GT_Scanner_Item extends GT_Generic_Item implements IElectricItem {
 	        return true;
 	    }
         return false;
+	}
+
+	@Override
+	public Item getChargedItem(ItemStack itemStack) {
+		return new ItemStack(this, 1).getItem();
+	}
+
+	@Override
+	public Item getEmptyItem(ItemStack itemStack) {
+		return new ItemStack(this, 1, getMaxDamage()).getItem();
 	}
 }

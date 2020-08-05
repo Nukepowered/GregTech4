@@ -13,13 +13,14 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.monster.EntityCaveSpider;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class GT_Screwdriver_Item extends GT_Tool_Item {
-	public GT_Screwdriver_Item(int aID, String aName, int aMaxDamage, int aEntityDamage, int aDischargedGTID) {
-		super(aID, aName, "To screw Covers on Machines", aMaxDamage, aEntityDamage, -1, aDischargedGTID);
+	public GT_Screwdriver_Item(String aName, int aMaxDamage, int aEntityDamage, int aDischargedGTID) {
+		super(aName, "To screw Covers on Machines", aMaxDamage, aEntityDamage, -1, aDischargedGTID);
 		GregTech_API.registerScrewdriver(new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		GT_OreDictUnificator.registerOre(GT_ToolDictNames.craftingToolScrewdriver, new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		addToEffectiveList(EntityCaveSpider.class.getName());
@@ -32,8 +33,9 @@ public class GT_Screwdriver_Item extends GT_Tool_Item {
 		setBreakingSound(GregTech_API.sSoundList.get(100));
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public void addAdditionalToolTips(List aList, ItemStack aStack) {
+	public void addAdditionalToolTips(@SuppressWarnings("rawtypes") List aList, ItemStack aStack) {
 		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_1", "Can switch the Design of certain Blocks"));
 		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_2", "Can rotate Repeaters and Comparators"));
 	}
@@ -44,19 +46,19 @@ public class GT_Screwdriver_Item extends GT_Tool_Item {
     	if (aWorld.isRemote) {
     		return false;
     	}
-    	Block aBlock = Block.blocksList[aWorld.getBlockId(aX, aY, aZ)];
+    	Block aBlock = aWorld.getBlock(aX, aY, aZ);
     	if (aBlock == null) return false;
     	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
-    	TileEntity aTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
+    	TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ);
     	
-    	if (aBlock == Block.redstoneRepeaterIdle || aBlock == Block.redstoneRepeaterActive) {
+    	if (aBlock == Blocks.unpowered_repeater || aBlock == Blocks.powered_repeater) {
 			if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
 				aWorld.setBlockMetadataWithNotify(aX, aY, aZ, (aMeta / 4) * 4  + (((aMeta%4) + 1) % 4), 3);
 				GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(100), 1.0F, -1, aX, aY, aZ);
 			}
     		return true;
     	}
-    	if (aBlock == Block.redstoneComparatorIdle || aBlock == Block.redstoneComparatorActive) {
+    	if (aBlock == Blocks.unpowered_comparator || aBlock == Blocks.powered_comparator) {
 			if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
 				aWorld.setBlockMetadataWithNotify(aX, aY, aZ, (aMeta / 4) * 4  + (((aMeta%4) + 1) % 4), 3);
 				GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(100), 1.0F, -1, aX, aY, aZ);

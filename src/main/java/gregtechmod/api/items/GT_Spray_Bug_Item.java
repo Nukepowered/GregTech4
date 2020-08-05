@@ -17,8 +17,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class GT_Spray_Bug_Item extends GT_Tool_Item {
-	public GT_Spray_Bug_Item(int aID, String aName, int aMaxDamage, int aEntityDamage) {
-		super(aID, aName, "A very 'buggy' Spray", aMaxDamage, aEntityDamage);
+	public GT_Spray_Bug_Item(String aName, int aMaxDamage, int aEntityDamage) {
+		super(aName, "A very 'buggy' Spray", aMaxDamage, aEntityDamage);
 		addToEffectiveList(EntityCaveSpider.class.getName());
 		addToEffectiveList(EntitySpider.class.getName());
 		addToEffectiveList("EntityTFHedgeSpider");
@@ -52,10 +52,10 @@ public class GT_Spray_Bug_Item extends GT_Tool_Item {
 		if (aWorld.isRemote) {
     		return false;
     	}
-    	Block aBlock = Block.blocksList[aWorld.getBlockId(aX, aY, aZ)];
+    	Block aBlock = aWorld.getBlock(aX, aY, aZ);
     	if (aBlock == null) return false;
     	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
-    	TileEntity aTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
+    	TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ);
     	
     	try {
     		if (aTileEntity instanceof ic2.api.crops.ICropTile) {

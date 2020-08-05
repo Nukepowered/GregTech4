@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
  */
 public class GT_Durable_Item extends GT_Generic_Item {
 	
-	public GT_Durable_Item(int aID, String aName, String aTooltip, int aMaxDamage) {
-		super(aID, aName, aTooltip);
+	public GT_Durable_Item(String aName, String aTooltip, int aMaxDamage) {
+		super(aName, aTooltip);
 		setMaxDamage(aMaxDamage);
 		setMaxStackSize(1);
 	}

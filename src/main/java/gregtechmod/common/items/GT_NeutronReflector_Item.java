@@ -7,21 +7,21 @@ import net.minecraft.item.ItemStack;
 
 public class GT_NeutronReflector_Item extends GT_Generic_Item implements IReactorComponent {
 	
-    public GT_NeutronReflector_Item(int aID, String aName, int aMaxDamage) {
-        super(aID, aName, null);
+    public GT_NeutronReflector_Item(String aName, int aMaxDamage) {
+        super(aName, null);
         setMaxStackSize(64);
     	setMaxDamage(aMaxDamage);
     }
     
 	@Override
-	public void processChamber(IReactor aReactor, ItemStack aStack, int x, int y) {
+	public void processChamber(IReactor aReactor, ItemStack aStack, int x, int y, boolean heatrun) {
 		return;
 	}
 	
 	@Override
-	public boolean acceptUraniumPulse(IReactor aReactor, ItemStack aStack, ItemStack pulsingStack, int x, int y, int pulseX, int pulseY) {
+	public boolean acceptUraniumPulse(IReactor aReactor, ItemStack aStack, ItemStack pulsingStack, int x, int y, int pulseX, int pulseY, boolean heatrun) {
 		if (aStack.stackSize > 1) return false;
-		((IReactorComponent)pulsingStack.getItem()).acceptUraniumPulse(aReactor, pulsingStack, aStack, pulseX, pulseY, x, y);
+		((IReactorComponent)pulsingStack.getItem()).acceptUraniumPulse(aReactor, pulsingStack, aStack, pulseX, pulseY, x, y, heatrun);
 		if (getMaxDamage() > 0)
 			if (aStack.getItemDamage() + 1 >= getMaxDamage())
 				aReactor.setItemAt(x, y, null);
@@ -53,13 +53,5 @@ public class GT_NeutronReflector_Item extends GT_Generic_Item implements IReacto
 	@Override
     public int alterHeat(IReactor aReactor, ItemStack aStack, int x, int y, int aHeat) {
         return aHeat;
-    }
-	
-    private void setHeatForStack(ItemStack aStack, int aHeat) {
-    	
-    }
-    
-    private int getHeatOfStack(ItemStack aStack) {
-    	return 0;
     }
 }

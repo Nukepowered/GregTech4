@@ -14,8 +14,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class GT_Dataorb_Item extends GT_Generic_Item {
-	public GT_Dataorb_Item(int aID, String aName) {
-		super(aID, aName, null);
+	public GT_Dataorb_Item(String aName) {
+		super(aName, null);
 		setNoRepair();
 	}
 	
@@ -26,7 +26,7 @@ public class GT_Dataorb_Item extends GT_Generic_Item {
 	@Override
 	public boolean onItemUseFirst(ItemStack aStack, EntityPlayer aPlayer, World aWorld, int aX, int aY, int aZ, int aSide, float var8, float var9, float var10) {
 		if (aStack.stackSize > 1 || aWorld.isRemote) return false;
-    	TileEntity tTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
+    	TileEntity tTileEntity = aWorld.getTileEntity(aX, aY, aZ);
     	if (tTileEntity == null) return false;
     	if (tTileEntity instanceof GT_TileEntity_Sonictron) {
 	    	GT_TileEntity_Sonictron tSonictron = (GT_TileEntity_Sonictron)tTileEntity;
@@ -48,8 +48,9 @@ public class GT_Dataorb_Item extends GT_Generic_Item {
         return false;
     }
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public void addAdditionalToolTips(List aList, ItemStack aStack) {
+	public void addAdditionalToolTips(@SuppressWarnings("rawtypes") List aList, ItemStack aStack) {
 		super.addAdditionalToolTips(aList, aStack);
 		if (!getDataTitle(aStack).equals("")) {
 			aList.add(getDataTitle(aStack));
@@ -97,9 +98,9 @@ public class GT_Dataorb_Item extends GT_Generic_Item {
     	NBTTagCompound tNBT = aStack.getTagCompound();
     	if (tNBT == null) return tInventory;
     	
-    	NBTTagList tNBT_ItemList = tNBT.getTagList("Inventory");
+    	NBTTagList tNBT_ItemList = tNBT.getTagList("Inventory", 0);
         for (int i = 0; i < tNBT_ItemList.tagCount(); i++) {
-            NBTTagCompound tag = (NBTTagCompound) tNBT_ItemList.tagAt(i);
+            NBTTagCompound tag = (NBTTagCompound) tNBT_ItemList.getCompoundTagAt(i);
             byte slot = tag.getByte("Slot");
             if (slot >= 0 && slot < tInventory.length) {
                 tInventory[slot] = GT_Utility.loadItem(tag);
