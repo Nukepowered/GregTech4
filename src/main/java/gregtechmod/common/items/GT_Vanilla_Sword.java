@@ -4,11 +4,8 @@ import gregtechmod.api.util.GT_OreDictUnificator;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.item.EnumToolMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import net.minecraftforge.common.MinecraftForge;
-
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
@@ -17,8 +14,8 @@ public class GT_Vanilla_Sword extends ItemSword {
     protected final String mMaterialName;
     protected final float efficiencyOnProperMaterial, damageVsEntity;
     
-	public GT_Vanilla_Sword(int aID, String aUnlocalizedName, String aMaterialName, int aHarvestLevel, int aEnchantability, int aMaxDamage, float aEfficiency, float aEntityDamage) {
-		super(aID, EnumToolMaterial.STONE);
+	public GT_Vanilla_Sword(String aUnlocalizedName, String aMaterialName, int aHarvestLevel, int aEnchantability, int aMaxDamage, float aEfficiency, float aEntityDamage) {
+		super(ToolMaterial.STONE);
 		mHarvestLevel = aHarvestLevel;
 		mEnchantability = aEnchantability;
 		efficiencyOnProperMaterial = aEfficiency;
@@ -29,11 +26,11 @@ public class GT_Vanilla_Sword extends ItemSword {
 		setTextureName(aUnlocalizedName);
 		setMaxDamage(aMaxDamage);
 		setMaxStackSize(1);
-		MinecraftForge.setToolClass(this, "sword", mHarvestLevel);
+		setHarvestLevel("sword", mHarvestLevel);
 	}
 	
     @Override
-    public float func_82803_g() {
+    public float func_150931_i() {
         return damageVsEntity - 4.0F;
     }
     
@@ -49,7 +46,8 @@ public class GT_Vanilla_Sword extends ItemSword {
         return GT_OreDictUnificator.isItemStackInstanceOf(aStack2, "ingot" + mMaterialName) || GT_OreDictUnificator.isItemStackInstanceOf(aStack2, "gem" + mMaterialName);
     }
     
-    public Multimap getItemAttributeModifiers() {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public Multimap getItemAttributeModifiers() {
         Multimap multimap = HashMultimap.create();
         multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Weapon modifier", (double)this.damageVsEntity, 0));
         return multimap;

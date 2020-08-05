@@ -48,6 +48,11 @@ repositories {
 	}
 }
 
+jar {
+	manifest {
+		attributes 'FMLAT': 'gregtech_at.cfg'
+	}
+}
 
 dependencies {
 	compile "codechicken:CodeChickenCore:${mc_ver}-${ccc_version}:dev"
