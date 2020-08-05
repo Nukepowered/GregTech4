@@ -12,8 +12,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class GT_SolderingTool_Item extends GT_Tool_Item {
-	public GT_SolderingTool_Item(int aID, String aName, int aMaxDamage, int aEntityDamage, int aDischargedGTID) {
-		super(aID, aName, "To repair and construct Circuitry", aMaxDamage, aEntityDamage, -1, aDischargedGTID);
+	public GT_SolderingTool_Item(String aName, int aMaxDamage, int aEntityDamage, int aDischargedGTID) {
+		super(aName, "To repair and construct Circuitry", aMaxDamage, aEntityDamage, -1, aDischargedGTID); // FIXME: LANG
 		GT_OreDictUnificator.registerOre(GT_ToolDictNames.craftingToolSolderingIron, new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		GregTech_API.registerSolderingTool(new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		setCraftingSound(GregTech_API.sSoundList.get(103));
@@ -21,10 +21,11 @@ public class GT_SolderingTool_Item extends GT_Tool_Item {
 		setEntityHitSound(GregTech_API.sSoundList.get(103));
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
-		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_1", "Sets the Strength of outputted Redstone"));
-		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_2", "Needs Soldering Metal in Inventory!"));
+		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_1", "Sets the Strength of outputted Redstone")); // FIXME: LANG
+		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_2", "Needs Soldering Metal in Inventory!")); // FIXME: LANG
 	}
 	
 	@Override

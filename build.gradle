@@ -65,6 +65,7 @@ dependencies {
 	compile files("libs/ThermalExpansion-[1.7.10]4.1.5-248-dev.jar")
 	compile files("libs/ThermalFoundation-[1.7.10]1.2.6-118-dev.jar")
 	compile files("libs/Railcraft_1.7.10-9.12.2.1-dev.jar")
+	compile files("libs/MineFactoryReloaded-[1.7.10]2.8.1-174-dev.jar")
 }
 
 processResources

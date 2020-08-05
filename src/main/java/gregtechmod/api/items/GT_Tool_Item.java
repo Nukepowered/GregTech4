@@ -213,7 +213,11 @@ public class GT_Tool_Item extends GT_Generic_Item {
 		}
 	}
 	
-	public ItemStack getEmptyItem(ItemStack aStack) {
+	public Item getEmptyItem(ItemStack aStack) {
+		return null;
+	}
+	
+	public Item getChargedItem(ItemStack itemStack) {
 		return null;
 	}
 	
@@ -278,7 +282,7 @@ public class GT_Tool_Item extends GT_Generic_Item {
 		aStack = GT_Utility.copy(aStack);
 		if (aStack.getItemDamage() > aStack.getMaxDamage()) {
 			GT_Utility.doSoundAtClient(mBreakingSound, mBreakingSoundStrength);
-			ItemStack tStack = getEmptyItem(aStack);
+			ItemStack tStack = new ItemStack(getEmptyItem(aStack));
 			if (tStack != null) return tStack;
 		} else {
 			GT_Utility.doSoundAtClient(mCraftingSound, mCraftingSoundStrength);
@@ -409,7 +413,7 @@ public class GT_Tool_Item extends GT_Generic_Item {
 		return false;
 	}
 	
-	public final int getMaxCharge(ItemStack aStack) {
+	public final double getMaxCharge(ItemStack aStack) {
 		return getMaxDamage() * 1000;
 	}
 	
@@ -418,7 +422,7 @@ public class GT_Tool_Item extends GT_Generic_Item {
 		return mTier;
 	}
 	
-	public final int getTransferLimit(ItemStack aStack) {
-		return (int)(Math.pow(2, mTier) * 128);
+	public final double getTransferLimit(ItemStack aStack) {
+		return Math.pow(2, mTier) * 128;
 	}
 }

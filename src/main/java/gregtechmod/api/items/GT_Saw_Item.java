@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 
 public class GT_Saw_Item extends GT_Tool_Item {
 	public GT_Saw_Item(String aName, int aMaxDamage, int aEntityDamage, int aToolQuality, float aToolStrength, int aEnergyConsumptionPerBlockBreak, int aDisChargedGTID) {
-		super(aName, "For sawing Logs into Planks", aMaxDamage, aEntityDamage, -1, aDisChargedGTID, aToolQuality, aToolStrength);
+		super(aName, "For sawing Logs into Planks", aMaxDamage, aEntityDamage, -1, aDisChargedGTID, aToolQuality, aToolStrength); // FIXME lang
 		//GregTech_API.registerSaw(new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		GT_OreDictUnificator.registerOre(GT_ToolDictNames.craftingToolSaw, new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		addToBlockList(GT_ModHandler.getIC2Item("rubberLeaves", 1));

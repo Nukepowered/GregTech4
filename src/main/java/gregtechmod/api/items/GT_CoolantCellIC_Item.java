@@ -5,17 +5,17 @@ import ic2.api.reactor.IReactorComponent;
 import net.minecraft.item.ItemStack;
 
 public class GT_CoolantCellIC_Item extends GT_CoolantCell_Item implements IReactorComponent {
-    public GT_CoolantCellIC_Item(int aID, String aName, int aMaxStore, int aCellCount) {
-        super(aID, aName, aMaxStore, aCellCount);
+    public GT_CoolantCellIC_Item(String aName, int aMaxStore, int aCellCount) {
+        super(aName, aMaxStore, aCellCount);
     }
     
 	@Override
-	public void processChamber(IReactor aReactor, ItemStack aStack, int x, int y) {
+	public void processChamber(IReactor aReactor, ItemStack aStack, int x, int y, boolean heatrun) {
 		return;
 	}
 	
 	@Override
-	public boolean acceptUraniumPulse(IReactor aReactor, ItemStack aStack, ItemStack pulsingStack, int youX, int youY, int pulseX, int pulseY) {
+	public boolean acceptUraniumPulse(IReactor aReactor, ItemStack aStack, ItemStack pulsingStack, int youX, int youY, int pulseX, int pulseY, boolean heatrun) {
 		return false;
 	}
 	

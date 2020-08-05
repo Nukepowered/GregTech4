@@ -11,8 +11,8 @@ import net.minecraft.nbt.NBTTagCompound;
 public class GT_CoolantCell_Item extends GT_Generic_Item implements ICapsuleCellContainer {
     protected int heatStorage, mCellCount;
 	
-    public GT_CoolantCell_Item(int aID, String aName, int aMaxStore, int aCellCount) {
-        super(aID, aName, null);
+    public GT_CoolantCell_Item(String aName, int aMaxStore, int aCellCount) {
+        super(aName, null);
         setMaxStackSize(1);
         setMaxDamage(100);
         setNoRepair();
@@ -44,7 +44,7 @@ public class GT_CoolantCell_Item extends GT_Generic_Item implements ICapsuleCell
 	@Override
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
 		super.addAdditionalToolTips(aList, aStack);
-		aList.add("Stored Heat: " + getHeatOfStack(aStack));
+		aList.add("Stored Heat: " + getHeatOfStack(aStack)); // FIXME: lang
 	}
 	
     protected int getHeatOfStack(ItemStack aStack) {
