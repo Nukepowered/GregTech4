@@ -5,9 +5,9 @@ import gregtechmod.api.util.GT_ModHandler;
 import ic2.api.item.ElectricItem;
 import ic2.api.item.IElectricItem;
 
+import java.util.Collections;
 import java.util.List;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -23,7 +23,7 @@ public class GT_Teslastaff_Item extends ItemTool implements IElectricItem {
 	public int mCharge, mTransfer, mTier;
 	
     public GT_Teslastaff_Item(String aName) {
-        super(0, ToolMaterial.GOLD, new Block[0]);
+        super(0, ToolMaterial.GOLD, Collections.emptySet());
 		setCreativeTab(GregTech_API.TAB_GREGTECH);
 		setMaxStackSize(1);
 		setMaxDamage(100);

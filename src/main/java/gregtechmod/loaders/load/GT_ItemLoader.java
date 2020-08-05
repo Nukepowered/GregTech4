@@ -520,7 +520,7 @@ public class GT_ItemLoader implements Runnable {
 		GregTech_API.sItemList[ 44] = GregTech_API.constructElectricArmorItem			(GT_LanguageManager.mNameListItem[ 44],    10000,   32, 1,  0, 16|32, 0.0D, false, 0, tArmorID1);
 		GregTech_API.sItemList[ 45] = GregTech_API.constructElectricArmorItem			(GT_LanguageManager.mNameListItem[ 45],100000000, 8192, 5,  0,     0, 0.0D,  true, 1, tArmorID1);
 		GregTech_API.sItemList[ 46] = GregTech_API.constructElectricDrillItem			(GT_LanguageManager.mNameListItem[ 46],       10, 0, 5, 3.0F, 1000, -1).setElectricTier(1).addToMaterialList(Material.anvil).addToMaterialList(Material.iron).addToMaterialList(Material.rock).setPrimaryToolClass("pickaxe").setSilkyness(3);
-//		try {GregTech_API.sItemList[ 47] = new GT_Teslastaff_Item						(GT_LanguageManager.mNameListItem[ 47]);																					} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
+		try {GregTech_API.sItemList[ 47] = new GT_Teslastaff_Item						(GT_LanguageManager.mNameListItem[ 47]);																					} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 		GregTech_API.sItemList[ 48] = GregTech_API.constructRadioactiveCellItem			(GT_LanguageManager.mNameListItem[ 48],    25000, 1, -5, null);
 		GregTech_API.sItemList[ 49] = GregTech_API.constructRadioactiveCellItem			(GT_LanguageManager.mNameListItem[ 49],    25000, 2, -5, null);
 		GregTech_API.sItemList[ 50] = GregTech_API.constructRadioactiveCellItem			(GT_LanguageManager.mNameListItem[ 50],    25000, 4, -5, null);
@@ -538,7 +538,7 @@ public class GT_ItemLoader implements Runnable {
 		GregTech_API.sItemList[ 62] = GregTech_API.constructCoolantCellItem				(GT_LanguageManager.mNameListItem[ 62],   360000, 6);
 		try {GregTech_API.sItemList[ 63] = new GT_Scanner_Item							(GT_LanguageManager.mNameListItem[ 63]);																					} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 		GregTech_API.sItemList[ 64] = GregTech_API.constructCrowbarItem					(GT_LanguageManager.mNameListItem[ 64],  256,  6);
-//		GregTech_API.sItemList[ 65] = new GT_Screwdriver_Item							(GT_LanguageManager.mNameListItem[ 65],  256,  4, -1);
+		GregTech_API.sItemList[ 65] = new GT_Screwdriver_Item							(GT_LanguageManager.mNameListItem[ 65],  256,  4, -1);
 		GregTech_API.sItemList[ 66] = GregTech_API.constructWrenchItem					(GT_LanguageManager.mNameListItem[ 66], 1280,  8, -1);
 		GregTech_API.sItemList[ 67] = GregTech_API.constructWrenchItem					(GT_LanguageManager.mNameListItem[ 67],  128,  4, -1);
 		GregTech_API.sItemList[ 68] = GregTech_API.constructWrenchItem					(GT_LanguageManager.mNameListItem[ 68], 5120, 10, -1);
@@ -574,7 +574,7 @@ public class GT_ItemLoader implements Runnable {
 //		GregTech_API.sItemList[ 98] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[ 98], GT_LanguageManager.mNameListItem[ 98], 2048, 0, (byte) 2);
 //		GregTech_API.sItemList[ 99] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[ 99], GT_LanguageManager.mNameListItem[ 99], 2048, 0, (byte) 3);
 //		GregTech_API.sItemList[100] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[100], GT_LanguageManager.mNameListItem[100], 2048, 0, (byte) 4);
-//		GregTech_API.sItemList[101] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[101], GT_LanguageManager.mNameListItem[101], 2048, 0, (byte) 5);
+		GregTech_API.sItemList[101] = new GT_Spray_Color_Item							(GT_LanguageManager.mNameListItem[101], 2048, 0, (byte) 5);
 //		GregTech_API.sItemList[102] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[102], GT_LanguageManager.mNameListItem[102], 2048, 0, (byte) 6);
 //		GregTech_API.sItemList[103] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[103], GT_LanguageManager.mNameListItem[103], 2048, 0, (byte) 7);
 //		GregTech_API.sItemList[104] = new GT_Spray_Color_Item							(GT_Mod.sItemIDs[104], GT_LanguageManager.mNameListItem[104], 2048, 0, (byte) 8);

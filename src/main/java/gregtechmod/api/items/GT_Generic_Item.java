@@ -65,8 +65,5 @@ public class GT_Generic_Item extends Item {
 	    addAdditionalToolTips(aList, aStack);
 	}
 	
-	@SuppressWarnings("rawtypes")
-	public void addAdditionalToolTips(List aList, ItemStack aStack) {
-		
-	}
+	public void addAdditionalToolTips(List<String> aList, ItemStack aStack) {}
 }

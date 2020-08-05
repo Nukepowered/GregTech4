@@ -6,21 +6,20 @@ import gregtechmod.api.util.GT_LanguageManager;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
-
 import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class GT_Spray_Color_Item extends GT_Tool_Item {
 	public byte mColorMeta = 0;
 	
-	public GT_Spray_Color_Item(int aID, String aName, int aMaxDamage, int aEntityDamage, byte aColorMeta) {
-		super(aID, aName, "To give the World more Color", aMaxDamage, aEntityDamage);
+	public GT_Spray_Color_Item(String aName, int aMaxDamage, int aEntityDamage, byte aColorMeta) {
+		super(aName, "To give the World more Color", aMaxDamage, aEntityDamage);
 		GT_OreDictUnificator.registerOre(Dyes.get(mColorMeta = aColorMeta), new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		setCraftingSound(GregTech_API.sSoundList.get(102));
 		setBreakingSound(GregTech_API.sSoundList.get(102));
@@ -28,6 +27,7 @@ public class GT_Spray_Color_Item extends GT_Tool_Item {
 		setUsageAmounts(32, 3, 1);
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
 		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_3", "Enough for dying " + getMaxDamage() + " Blocks in World " + Dyes.get(mColorMeta).mName.toLowerCase()));
@@ -45,17 +45,15 @@ public class GT_Spray_Color_Item extends GT_Tool_Item {
 		if (aWorld.isRemote) {
     		return false;
     	}
-    	Block aBlock = Block.blocksList[aWorld.getBlockId(aX, aY, aZ)];
+    	Block aBlock = aWorld.getBlock(aX, aY, aZ);
     	if (aBlock == null) return false;
     	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
-    	TileEntity aTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
-    	
-    	if (aBlock == Block.carpet || aBlock == Block.hardenedClay || aBlock == Block.stainedClay || GT_Utility.areStacksEqual(new ItemStack(aBlock, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_ModHandler.getTEItem("rockwool", 1))) {
-    		if (aMeta == (~mColorMeta & 15) && aBlock != Block.hardenedClay) return false;
+    	if (aBlock == Blocks.carpet || aBlock == Blocks.hardened_clay || aBlock == Blocks.stained_hardened_clay || GT_Utility.areStacksEqual(new ItemStack(aBlock, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_ModHandler.getTEItem("rockwool", 1))) {
+    		if (aMeta == (~mColorMeta & 15) && aBlock != Blocks.hardened_clay) return false;
 			if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
 				GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(102), 1.0F, -1, aX, aY, aZ);
-	    		if (aBlock == Block.hardenedClay)
-					aWorld.setBlock(aX, aY, aZ, Block.stainedClay.blockID, ~mColorMeta & 15, 3);
+	    		if (aBlock == Blocks.hardened_clay)
+					aWorld.setBlock(aX, aY, aZ, Blocks.stained_hardened_clay, ~mColorMeta & 15, 3);
 				else
 					aWorld.setBlockMetadataWithNotify(aX, aY, aZ, ~mColorMeta & 15, 3);
 			}
