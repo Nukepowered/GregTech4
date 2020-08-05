@@ -11,13 +11,12 @@ import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class GT_Spray_Ice_Item extends GT_Tool_Item {
 	public GT_Spray_Ice_Item( String aName, int aMaxDamage, int aEntityDamage) {
@@ -59,7 +58,7 @@ public class GT_Spray_Ice_Item extends GT_Tool_Item {
     	aX += ForgeDirection.getOrientation(aSide).offsetX;
     	aY += ForgeDirection.getOrientation(aSide).offsetY;
     	aZ += ForgeDirection.getOrientation(aSide).offsetZ;
-    	Block aBlock = aWorld.getBlock(aX, aY, aZ)];
+    	Block aBlock = aWorld.getBlock(aX, aY, aZ);
     	if (aBlock == null) return false;
     	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
     	TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ);
@@ -67,7 +66,7 @@ public class GT_Spray_Ice_Item extends GT_Tool_Item {
     	if (aBlock == Blocks.water || aBlock == Blocks.flowing_water) {
     		if (aMeta == 0 && GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
     			GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(102), 1.0F, -1, aX, aY, aZ);
-        		aWorld.setBlock(aX, aY, aZ, Block.ice.blockID, 0, 3);
+        		aWorld.setBlock(aX, aY, aZ, Blocks.ice, 0, 3);
     			return true;
     		}
     		return false;

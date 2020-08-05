@@ -14,8 +14,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class GT_Spray_Hardener_Item extends GT_Tool_Item {
-	public GT_Spray_Hardener_Item(int aID, String aName, int aMaxDamage, int aEntityDamage) {
-		super(aID, aName, "Construction Foam Hardener", aMaxDamage, aEntityDamage);
+	public GT_Spray_Hardener_Item(String aName, int aMaxDamage, int aEntityDamage) {
+		super(aName, "Construction Foam Hardener", aMaxDamage, aEntityDamage);
 		setCraftingSound(GregTech_API.sSoundList.get(102));
 		setBreakingSound(GregTech_API.sSoundList.get(102));
 		setEntityHitSound(GregTech_API.sSoundList.get(102));
@@ -33,10 +33,10 @@ public class GT_Spray_Hardener_Item extends GT_Tool_Item {
 		if (aWorld.isRemote) {
     		return false;
     	}
-    	Block aBlock = Block.blocksList[aWorld.getBlockId(aX, aY, aZ)];
+    	Block aBlock = aWorld.getBlock(aX, aY, aZ);
     	if (aBlock == null) return false;
     	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
-    	TileEntity aTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
+    	TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ);
     	
     	try {
     		if (GT_Utility.getClassName(aTileEntity).startsWith("TileEntityCable")) {
@@ -50,14 +50,14 @@ public class GT_Spray_Hardener_Item extends GT_Tool_Item {
     			return false;
     		}
     	} catch(Throwable e) {
-    		if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);
+    		if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);;
     	}
     	
     	ItemStack tStack1 = GT_ModHandler.getIC2Item("constructionFoam", 1), tStack2 = GT_ModHandler.getIC2Item("constructionFoamWall", 1);
     	if (tStack1 != null && tStack1.isItemEqual(new ItemStack(aBlock)) && tStack2 != null && tStack2.getItem() != null && tStack2.getItem() instanceof ItemBlock) {
     		if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
     			GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(102), 1.0F, -1, aX, aY, aZ);
-        		aWorld.setBlock(aX, aY, aZ, ((ItemBlock)tStack2.getItem()).getBlockID(), 7, 3);
+        		aWorld.setBlock(aX, aY, aZ, Block.getBlockFromItem(tStack2.getItem()), 7, 3);
     		}
     		return true;
     	}

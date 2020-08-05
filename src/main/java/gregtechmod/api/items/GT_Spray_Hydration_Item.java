@@ -11,8 +11,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class GT_Spray_Hydration_Item extends GT_Tool_Item {
-	public GT_Spray_Hydration_Item(int aID, String aName, int aMaxDamage, int aEntityDamage) {
-		super(aID, aName, "To hydrate Crops and similar", aMaxDamage, aEntityDamage);
+	public GT_Spray_Hydration_Item(String aName, int aMaxDamage, int aEntityDamage) {
+		super(aName, "To hydrate Crops and similar", aMaxDamage, aEntityDamage);
 		setCraftingSound(GregTech_API.sSoundList.get(102));
 		setBreakingSound(GregTech_API.sSoundList.get(102));
 		setEntityHitSound(GregTech_API.sSoundList.get(102));
@@ -30,10 +30,10 @@ public class GT_Spray_Hydration_Item extends GT_Tool_Item {
 		if (aWorld.isRemote) {
     		return false;
     	}
-    	Block aBlock = Block.blocksList[aWorld.getBlockId(aX, aY, aZ)];
+    	Block aBlock = aWorld.getBlock(aX, aY, aZ);
     	if (aBlock == null) return false;
     	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
-    	TileEntity aTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
+    	TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ);
     	
     	try {
     		if (aTileEntity instanceof ic2.api.crops.ICropTile) {

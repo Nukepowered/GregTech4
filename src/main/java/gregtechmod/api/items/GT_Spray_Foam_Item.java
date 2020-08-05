@@ -16,11 +16,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class GT_Spray_Foam_Item extends GT_Tool_Item {
-	public GT_Spray_Foam_Item(int aID, String aName, int aMaxDamage, int aEntityDamage) {
-		super(aID, aName, "Precision Spray", aMaxDamage, aEntityDamage);
+	public GT_Spray_Foam_Item(String aName, int aMaxDamage, int aEntityDamage) {
+		super(aName, "Precision Spray", aMaxDamage, aEntityDamage);
 		setCraftingSound(GregTech_API.sSoundList.get(102));
 		setBreakingSound(GregTech_API.sSoundList.get(102));
 		setEntityHitSound(GregTech_API.sSoundList.get(102));
@@ -41,8 +41,9 @@ public class GT_Spray_Foam_Item extends GT_Tool_Item {
         }
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
-	public void addAdditionalToolTips(List aList, ItemStack aStack) {
+	public void addAdditionalToolTips(@SuppressWarnings("rawtypes") List aList, ItemStack aStack) {
 		super.addAdditionalToolTips(aList, aStack);
         switch (getMode(aStack)) {
         case 0: aList.add("Single Block Mode"); break;
@@ -64,10 +65,10 @@ public class GT_Spray_Foam_Item extends GT_Tool_Item {
 		if (aWorld.isRemote) {
     		return false;
     	}
-    	Block aBlock = Block.blocksList[aWorld.getBlockId(aX, aY, aZ)];
+    	Block aBlock = aWorld.getBlock(aX, aY, aZ);
     	if (aBlock == null) return false;
     	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
-    	TileEntity aTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
+    	TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ);
     	
     	try {
     		if (GT_Utility.getClassName(aTileEntity).startsWith("TileEntityCable")) {
@@ -81,7 +82,7 @@ public class GT_Spray_Foam_Item extends GT_Tool_Item {
     			return false;
     		}
     	} catch(Throwable e) {
-    		if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);
+    		if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);;
     	}
     	
     	if (aTileEntity instanceof BaseMetaPipeEntity && (((BaseMetaPipeEntity)aTileEntity).mConnections & -64) == 0) {
@@ -114,17 +115,17 @@ public class GT_Spray_Foam_Item extends GT_Tool_Item {
             }
     		switch (getMode(aStack)) {
     		case 0:
-    			if (GT_Utility.isAirBlock(aWorld, aX, aY, aZ) && GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
+    			if (aWorld.isAirBlock(aX, aY, aZ) && GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
     				GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(102), 1.0F, -1, aX, aY, aZ);
-    	    		aWorld.setBlock(aX, aY, aZ, ((ItemBlock)tStack.getItem()).getBlockID(), tStack.getItemDamage(), 3);
+    	    		aWorld.setBlock(aX, aY, aZ, Block.getBlockFromItem(tStack.getItem()), tStack.getItemDamage(), 3);
     	    		return true;
     			}
     			break;
     		case 1:
 	            for (byte i = 0; i < 4; i++) {
-	    			if (GT_Utility.isAirBlock(aWorld, aX, aY, aZ) && GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
+	    			if (aWorld.isAirBlock(aX, aY, aZ) && GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
 	    				GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(102), 1.0F, -1, aX, aY, aZ);
-	    	    		aWorld.setBlock(aX, aY, aZ, ((ItemBlock)tStack.getItem()).getBlockID(), tStack.getItemDamage(), 3);
+	    	    		aWorld.setBlock(aX, aY, aZ, Block.getBlockFromItem(tStack.getItem()), tStack.getItemDamage(), 3);
 	    			} else {
 	    	    		if (i == 0) return false; else break;
 	    			}
@@ -144,10 +145,10 @@ public class GT_Spray_Foam_Item extends GT_Tool_Item {
 	            aZ -= (tZFactor ? 1 : 0);
 	            
 	            for (byte i = 0; i < 3; i++) for (byte j = 0; j < 3; j++) {
-			    	if (GT_Utility.isAirBlock(aWorld, aX + (tXFactor?i:0), aY + (!tXFactor&&tYFactor?i:0) + (!tZFactor&&tYFactor?j:0), aZ + (tZFactor?j:0))) {
+			    	if (aWorld.isAirBlock(aX + (tXFactor?i:0), aY + (!tXFactor&&tYFactor?i:0) + (!tZFactor&&tYFactor?j:0), aZ + (tZFactor?j:0))) {
 			    		if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
 			    			GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(102), 1.0F, -1, aX, aY, aZ);
-			        		aWorld.setBlock(aX + (tXFactor?i:0), aY + (!tXFactor&&tYFactor?i:0) + (!tZFactor&&tYFactor?j:0), aZ + (tZFactor?j:0), ((ItemBlock)tStack.getItem()).getBlockID(), tStack.getItemDamage(), 3);
+			        		aWorld.setBlock(aX + (tXFactor?i:0), aY + (!tXFactor&&tYFactor?i:0) + (!tZFactor&&tYFactor?j:0), aZ + (tZFactor?j:0), Block.getBlockFromItem(tStack.getItem()), tStack.getItemDamage(), 3);
 			    			temp = true;
 			    		} else {
 			    			break;
