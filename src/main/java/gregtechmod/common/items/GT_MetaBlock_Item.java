@@ -16,7 +16,7 @@ public class GT_MetaBlock_Item extends ItemBlock {
         super(par1);
         setMaxDamage(0);
         setHasSubtypes(true);
-        setUnlocalizedName("GT_Block"); // FIXME not correct name
+        setUnlocalizedName("GT_Block");
         setCreativeTab(GregTech_API.TAB_GREGTECH);
     }
     

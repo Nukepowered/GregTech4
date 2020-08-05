@@ -214,11 +214,11 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	}
 	
 	public Item getEmptyItem(ItemStack aStack) {
-		return null;
+		return this;
 	}
 	
 	public Item getChargedItem(ItemStack itemStack) {
-		return null;
+		return this;
 	}
 	
 	@Override

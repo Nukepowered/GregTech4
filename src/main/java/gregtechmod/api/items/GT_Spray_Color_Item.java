@@ -2,7 +2,6 @@ package gregtechmod.api.items;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.Dyes;
-import gregtechmod.api.util.GT_LanguageManager;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
@@ -12,6 +11,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -37,8 +37,8 @@ public class GT_Spray_Color_Item extends GT_Tool_Item {
 	}
 	
 	@Override
-	public ItemStack getEmptyItem(ItemStack aStack) {
-		return GT_OreDictUnificator.getFirstOre("craftingSprayCan", 1);
+	public Item getEmptyItem(ItemStack aStack) {
+		return GT_OreDictUnificator.getFirstOre("craftingSprayCan", 1).getItem();
 	}
 	
 	@Override

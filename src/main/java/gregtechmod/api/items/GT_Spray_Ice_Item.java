@@ -11,10 +11,10 @@ import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -45,8 +45,8 @@ public class GT_Spray_Ice_Item extends GT_Tool_Item {
 	}
 	
 	@Override
-	public ItemStack getEmptyItem(ItemStack aStack) {
-		return GT_OreDictUnificator.getFirstOre("craftingSprayCan", 1);
+	public Item getEmptyItem(ItemStack aStack) {
+		return GT_OreDictUnificator.getFirstOre("craftingSprayCan", 1).getItem();
 	}
 	
 	@Override
@@ -61,7 +61,6 @@ public class GT_Spray_Ice_Item extends GT_Tool_Item {
     	Block aBlock = aWorld.getBlock(aX, aY, aZ);
     	if (aBlock == null) return false;
     	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
-    	TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ);
     	
     	if (aBlock == Blocks.water || aBlock == Blocks.flowing_water) {
     		if (aMeta == 0 && GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {

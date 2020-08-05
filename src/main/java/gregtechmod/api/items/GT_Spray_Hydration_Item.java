@@ -6,6 +6,7 @@ import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -20,8 +21,8 @@ public class GT_Spray_Hydration_Item extends GT_Tool_Item {
 	}
 	
 	@Override
-	public ItemStack getEmptyItem(ItemStack aStack) {
-		return GT_OreDictUnificator.getFirstOre("craftingSprayCan", 1);
+	public Item getEmptyItem(ItemStack aStack) {
+		return GT_OreDictUnificator.getFirstOre("craftingSprayCan", 1).getItem();
 	}
 	
 	@Override
@@ -32,7 +33,6 @@ public class GT_Spray_Hydration_Item extends GT_Tool_Item {
     	}
     	Block aBlock = aWorld.getBlock(aX, aY, aZ);
     	if (aBlock == null) return false;
-    	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
     	TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ);
     	
     	try {

@@ -2,7 +2,6 @@ package gregtechmod.api.items;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_ToolDictNames;
-import gregtechmod.api.util.GT_LanguageManager;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
@@ -11,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -21,7 +21,7 @@ import net.minecraftforge.fluids.IFluidBlock;
 
 public class GT_HardHammer_Item extends GT_Tool_Item {
 	public GT_HardHammer_Item(String aName, int aMaxDamage, int aEntityDamage) {
-		super(aName, "To give a Machine a hard whack", aMaxDamage, aEntityDamage); // FIXME: lang
+		super(aName, "item.GT_Hammer.tooltip", aMaxDamage, aEntityDamage);
 		GregTech_API.registerHardHammer(new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		GT_OreDictUnificator.registerOre(GT_ToolDictNames.craftingToolHardHammer, new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		addToEffectiveList(EntityIronGolem.class.getName());
@@ -50,10 +50,10 @@ public class GT_HardHammer_Item extends GT_Tool_Item {
 	@Override
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
 		super.addAdditionalToolTips(aList, aStack);
-		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_1", "Used to craft Plates from Ingots")); // FIXME LANG!!!
-		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_2", "Can rotate some Blocks as well"));
-		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_3", "Also used to toggle general Machine states"));
-		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_4", "Usable as Prospectors Hammer"));
+		aList.add(I18n.format("item.GT_Hammer.tooltip_1"));
+		aList.add(I18n.format("item.GT_Hammer.tooltip_2"));
+		aList.add(I18n.format("item.GT_Hammer.tooltip_3"));
+		aList.add(I18n.format("item.GT_Hammer.tooltip_4"));
 	}
 	
 	@Override
@@ -114,19 +114,19 @@ public class GT_HardHammer_Item extends GT_Tool_Item {
 	            	
 			    	tBlock = aWorld.getBlock(tX, tY, tZ);
 		    		if (tBlock == Blocks.lava || tBlock == Blocks.flowing_lava) {
-		    			GT_Utility.sendChatToPlayer(aPlayer, "There is Lava behind this Rock."); // FIXME LANG!!!
+		    			GT_Utility.sendTrChatToPlayer(aPlayer, "item.GT_Hammer.tip_1");
 				    	break;
 		    		}
 		    		if (tBlock == Blocks.water || tBlock == Blocks.flowing_water || (tBlock != Blocks.air && tBlock != null && tBlock instanceof IFluidBlock)) {
-		    			GT_Utility.sendChatToPlayer(aPlayer, "There is a Liquid behind this Rock."); // FIXME LANG!!!
+		    			GT_Utility.sendTrChatToPlayer(aPlayer, "item.GT_Hammer.tip_2");
 				    	break;
 			    	}
 		    		if (tBlock == Blocks.monster_egg || !GT_Utility.hasBlockHitBox(aWorld, tX, tY, tZ)) {
-		    			GT_Utility.sendChatToPlayer(aPlayer, "There is an Air Pocket behind this Rock."); // FIXME LANG!!!
+		    			GT_Utility.sendTrChatToPlayer(aPlayer, "item.GT_Hammer.tip_3");
 				    	break;
 		    		}
 		    		if (tBlock != aBlock) {
-		    			if (i < 4) GT_Utility.sendChatToPlayer(aPlayer, "Material is changing behind this Rock."); // FIXME LANG!!!
+		    			if (i < 4) GT_Utility.sendTrChatToPlayer(aPlayer, "item.GT_Hammer.tip_4");
 				    	break;
 		    		}
 		    	}
@@ -140,12 +140,12 @@ public class GT_HardHammer_Item extends GT_Tool_Item {
 			    	tMetaID = aWorld.getBlockMetadata(tX, tY, tZ);
 			    	tString = GT_OreDictUnificator.getAssociation(new ItemStack(tBlock, 1, tMetaID));
 			    	if (tString != null && tString.startsWith("ore")) {
-					    GT_Utility.sendChatToPlayer(aPlayer, "Found traces of " + GT_Utility.capitalizeString(tString.replaceFirst("ore", "")) + " Ore.");
+					    GT_Utility.sendTrChatToPlayer(aPlayer, "item.GT_Hammer.tip_5", GT_Utility.capitalizeString(tString.replaceFirst("ore", "")));
 						GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(1), 1.0F, -1, aX, aY, aZ);
 			    		return true;
 			    	}
 			    }
-			    GT_Utility.sendChatToPlayer(aPlayer, "No Ores found.");
+			    GT_Utility.sendTrChatToPlayer(aPlayer, "item.GT_Hammer.tip_6");
 			}
     		return true;
 	    }

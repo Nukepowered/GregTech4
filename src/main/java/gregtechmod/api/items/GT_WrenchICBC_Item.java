@@ -1,17 +1,17 @@
 package gregtechmod.api.items;
 
-import gregtechmod.api.util.GT_LanguageManager;
 import gregtechmod.api.util.GT_ModHandler;
 
 import java.util.List;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import buildcraft.api.tools.IToolWrench;
 
 public class GT_WrenchICBC_Item extends GT_WrenchIC_Item implements IToolWrench {
-	public GT_WrenchICBC_Item(int aID, String aName, int aMaxDamage, int aEntityDamage, int aDischargedGTID) {
-		super(aID, aName, aMaxDamage, aEntityDamage, aDischargedGTID);
+	public GT_WrenchICBC_Item(String aName, int aMaxDamage, int aEntityDamage, int aDischargedGTID) {
+		super(aName, aMaxDamage, aEntityDamage, aDischargedGTID);
 	}
 	
 	@Override
@@ -24,9 +24,10 @@ public class GT_WrenchICBC_Item extends GT_WrenchIC_Item implements IToolWrench 
 		GT_ModHandler.damageOrDechargeItem(aPlayer.inventory.getCurrentItem(), 1, 1000, aPlayer);
 	}
 	
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
 		super.addAdditionalToolTips(aList, aStack);
-		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_bc", "Works as Buildcraft Wrench too"));
+		aList.add(I18n.format("item.GT_Wrech.tooltip_bc"));
 	}
 }

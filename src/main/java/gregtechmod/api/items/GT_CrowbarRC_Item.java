@@ -1,7 +1,6 @@
 package gregtechmod.api.items;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.util.GT_LanguageManager;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 
@@ -23,8 +22,8 @@ import net.minecraft.item.ItemStack;
  * Achievement get: Defused the legal Stuff of an Interface instead of asking CJ :P
  */
 public class GT_CrowbarRC_Item extends GT_Crowbar_Item implements mods.railcraft.api.core.items.IToolCrowbar {
-	public GT_CrowbarRC_Item(int aID, String aName, int aMaxDamage, int aEntityDamage) {
-		super(aID, aName, aMaxDamage, aEntityDamage);
+	public GT_CrowbarRC_Item(String aName, int aMaxDamage, int aEntityDamage) {
+		super(aName, aMaxDamage, aEntityDamage);
 	}
 	
 	@Override

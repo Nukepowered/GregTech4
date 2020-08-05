@@ -5,6 +5,7 @@ import gregtechmod.api.interfaces.ICapsuleCellContainer;
 
 import java.util.List;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -41,10 +42,11 @@ public class GT_CoolantCell_Item extends GT_Generic_Item implements ICapsuleCell
         }
     }
     
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
 		super.addAdditionalToolTips(aList, aStack);
-		aList.add("Stored Heat: " + getHeatOfStack(aStack)); // FIXME: lang
+		aList.add(I18n.format("item.coolant.stored.tooltip", getHeatOfStack(aStack)));
 	}
 	
     protected int getHeatOfStack(ItemStack aStack) {

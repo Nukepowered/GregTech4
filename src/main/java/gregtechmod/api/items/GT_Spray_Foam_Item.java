@@ -11,6 +11,7 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -28,8 +29,8 @@ public class GT_Spray_Foam_Item extends GT_Tool_Item {
 	}
 	
 	@Override
-	public ItemStack getEmptyItem(ItemStack aStack) {
-		return GT_OreDictUnificator.getFirstOre("craftingSprayCan", 1);
+	public Item getEmptyItem(ItemStack aStack) {
+		return GT_OreDictUnificator.getFirstOre("craftingSprayCan", 1).getItem();
 	}
 	
 	public void switchMode(ItemStack aStack, EntityPlayer aPlayer) {
@@ -67,7 +68,6 @@ public class GT_Spray_Foam_Item extends GT_Tool_Item {
     	}
     	Block aBlock = aWorld.getBlock(aX, aY, aZ);
     	if (aBlock == null) return false;
-    	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
     	TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ);
     	
     	try {
