@@ -21,6 +21,7 @@ import gregtechmod.common.blocks.GT_BlockMetaID_Block;
 import gregtechmod.common.blocks.GT_BlockMetaID_Block2;
 import gregtechmod.common.blocks.GT_BlockMetaID_Machine;
 import gregtechmod.common.blocks.GT_BlockMetaID_Ore;
+import gregtechmod.common.blocks.GT_Block_LightSource;
 import gregtechmod.common.covers.GT_Cover_Generic;
 import gregtechmod.common.covers.GT_Cover_None;
 import gregtechmod.common.covers.GT_Cover_Redstone;
@@ -47,6 +48,7 @@ import java.util.Scanner;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
@@ -470,7 +472,7 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 		GameRegistry.registerBlock(GregTech_API.sBlockList[1] = new GT_BlockMetaID_Machine(), GT_MetaMachine_Item.class	, GT_LanguageManager.mNameList1[0]);
 		GameRegistry.registerBlock(GregTech_API.sBlockList[2] = new GT_BlockMetaID_Ore	  (), GT_MetaOre_Item.class		, GT_LanguageManager.mNameList2[0]);
 		GameRegistry.registerBlock(GregTech_API.sBlockList[4] = new GT_BlockMetaID_Block2 (), GT_MetaBlock2_Item.class	, GT_LanguageManager.mNameList3[0]);
-//		GameRegistry.registerBlock(GregTech_API.sBlockList[3] = new GT_Block_LightSource  (), ItemBlock.class			, "GT_TransparentTileEntity"	  );
+		GameRegistry.registerBlock(GregTech_API.sBlockList[3] = new GT_Block_LightSource  (), ItemBlock.class			, "GT_TransparentTileEntity"	  );
 //		GameRegistry.registerBlock(GregTech_API.sBlockList[5] = new GT_BlockMetaID_Stone1 (), GT_MetaStone1_Item.class	, GT_LanguageManager.mNameList4[0]);
 //		
 //		LanguageRegistry.addName(GregTech_API.sBlockList[0], GT_LanguageManager.mRegionalNameList0[0]);

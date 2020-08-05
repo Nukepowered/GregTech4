@@ -8,8 +8,9 @@ import java.util.Random;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
@@ -18,17 +19,17 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_Block_LightSource extends BlockContainer {
 	
-	public GT_Block_LightSource(int aID) {
-        super(aID, Material.air);
-        setUnlocalizedName("GT_LightSource");
-        setLightValue(1.0F);
+	public GT_Block_LightSource() {
+        super(Material.air);
+        setBlockName("GT_LightSource");
+        setLightLevel(1.0F);
         setLightOpacity(1);
         setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 	}
 	
     @SideOnly(Side.CLIENT)
 	@Override
-    public void registerIcons(IconRegister par1IconRegister) {
+    public void registerBlockIcons(IIconRegister par1IconRegister) {
         this.blockIcon = par1IconRegister.registerIcon(GregTech_API.TEXTURE_PATH_ITEM + "void");
     }
     
@@ -57,8 +58,8 @@ public class GT_Block_LightSource extends BlockContainer {
     }
     
     @Override
-    public boolean isAirBlock(World world, int x, int y, int z) {
-        return true;
+    public int getRenderType() {
+        return -1;
     }
     
 	@Override
@@ -72,17 +73,19 @@ public class GT_Block_LightSource extends BlockContainer {
     }
 	
 	@Override
-	public int idDropped(int par1, Random par2Random, int par3) {
+	public int quantityDropped(int par1, int par3, Random par2Random) {
         return 0;
     }
 
 	@Override
-	public TileEntity createNewTileEntity(World aWorld) {
-		return new GT_TileEntity_LightSource();
+	public TileEntity createNewTileEntity(World aWorld, int meta) {
+//		return new GT_TileEntity_LightSource(); // TODO: Tile entities
+		return null;
 	}
 	
+	@SuppressWarnings("rawtypes")
 	@Override @SideOnly(Side.CLIENT)
-    public void getSubBlocks(int par1, CreativeTabs par2CreativeTabs, List par3List) {
+    public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
         
     }
 }
