@@ -6,6 +6,7 @@ import gregtechmod.api.util.GT_ModHandler;
 import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -13,8 +14,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class GT_EnergyStore_Item extends GT_Generic_Item {
 	public int mCharge, mTransfer, mTier, mEmptyID, mFullID;
 	
-	public GT_EnergyStore_Item(int aID, String aName, int aCharge, int aTransfer, int aTier, int aEmptyID, int aFullID) {
-		super(aID, aName, null);
+	public GT_EnergyStore_Item(String aName, int aCharge, int aTransfer, int aTier, int aEmptyID, int aFullID) {
+		super(aName, null);
 		setMaxStackSize(1);
 		setMaxDamage(100);
 		setNoRepair();
@@ -29,7 +30,8 @@ public class GT_EnergyStore_Item extends GT_Generic_Item {
         return true;
     }
     
-    @SideOnly(Side.CLIENT)
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	@SideOnly(Side.CLIENT)
     public void getSubItems(int var1, CreativeTabs var2, List var3) {
         ItemStack tCharged = GregTech_API.getGregTechItem(mFullID, 1, 0), tUncharged = GregTech_API.getGregTechItem(mEmptyID, 1, getMaxDamage());
         GT_ModHandler.chargeElectricItem(tCharged, Integer.MAX_VALUE, Integer.MAX_VALUE, true, false);
@@ -56,15 +58,15 @@ public class GT_EnergyStore_Item extends GT_Generic_Item {
 		return true;
 	}
 	
-	public int getChargedItemId(ItemStack aStack) {
-		return GregTech_API.getGregTechItem(mFullID, 1, 0).itemID;
+	public Item getChargedItem(ItemStack itemStack) {
+		return GregTech_API.getGregTechItem(mFullID, 1, 0).getItem();
 	}
 	
-	public int getEmptyItemId(ItemStack aStack) {
-		return GregTech_API.getGregTechItem(mEmptyID, 1, 0).itemID;
+	public Item getEmptyItem(ItemStack itemStack) {
+		return GregTech_API.getGregTechItem(mEmptyID, 1, 0).getItem();
 	}
 	
-	public int getMaxCharge(ItemStack aStack) {
+	public double getMaxCharge(ItemStack aStack) {
 		return mCharge;
 	}
 	
@@ -72,7 +74,7 @@ public class GT_EnergyStore_Item extends GT_Generic_Item {
 		return mTier;
 	}
 	
-	public int getTransferLimit(ItemStack aStack) {
+	public double getTransferLimit(ItemStack aStack) {
 		return mTransfer;
 	}
 }

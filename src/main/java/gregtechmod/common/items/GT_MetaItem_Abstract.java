@@ -56,7 +56,9 @@ public class GT_MetaItem_Abstract extends Item {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
     public void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean aF3_H) {
-		if (aStack.getItemDamage() >= 0 && aStack.getItemDamage() < MAXIMUM_META_IDS && !mToolTipList[aStack.getItemDamage()].equals("")) aList.add(mToolTipList[aStack.getItemDamage()]);
+		if (aStack.getItemDamage() >= 0 && aStack.getItemDamage() < MAXIMUM_META_IDS && !mToolTipList[aStack.getItemDamage()].equals("")) {
+			aList.add(mToolTipList[aStack.getItemDamage()]);
+		}
     }
 	
 	@Override

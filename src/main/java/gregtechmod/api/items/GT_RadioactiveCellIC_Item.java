@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import net.minecraft.item.ItemStack;
 
 public class GT_RadioactiveCellIC_Item extends GT_RadioactiveCell_Item implements IReactorComponent {
-    public GT_RadioactiveCellIC_Item(int aID, String aName, int aMaxDelay, int aCellcount, int aPulseRate, ItemStack aDepleted) {
-        super(aID, aName, aMaxDelay, aCellcount, aPulseRate, aDepleted);
+    public GT_RadioactiveCellIC_Item(String aName, int aMaxDelay, int aCellcount, int aPulseRate, ItemStack aDepleted) {
+        super(aName, aMaxDelay, aCellcount, aPulseRate, aDepleted);
     }
     
 	@Override
-	public boolean acceptUraniumPulse(IReactor aReactor, ItemStack aStack, ItemStack pulsingStack, int youX, int youY, int pulseX, int pulseY) {
+	public boolean acceptUraniumPulse(IReactor aReactor, ItemStack aStack, ItemStack pulsingStack, int youX, int youY, int pulseX, int pulseY, boolean val) {
 		if (aStack.stackSize != 1) return false;
 		return aReactor.addOutput(1) > 0;
 	}
@@ -44,7 +44,8 @@ public class GT_RadioactiveCellIC_Item extends GT_RadioactiveCell_Item implement
         return aHeat;
     }
     
-    public void processChamber(IReactor aReactor, ItemStack aStack, int x, int y) {
+	@Override
+    public void processChamber(IReactor aReactor, ItemStack aStack, int x, int y, boolean val) {
 		if (aStack.stackSize > 1) return;
         if (aReactor.produceEnergy()) {
 	        for (byte j = 0; j < cellCount; ++j) {
@@ -53,12 +54,12 @@ public class GT_RadioactiveCellIC_Item extends GT_RadioactiveCell_Item implement
     	            int tPulsables = 1 + cellCount / 2;
     	            
     	            for (byte k = 0; k < tPulsables; ++k) {
-    	            	acceptUraniumPulse(aReactor, aStack, aStack, x, y, x, y);
+    	            	acceptUraniumPulse(aReactor, aStack, aStack, x, y, x, y, false);
     	            }
     	            
             		tPulsables += checkPulseable(aReactor, x - 1, y, aStack, x, y) + this.checkPulseable(aReactor, x + 1, y, aStack, x, y) + this.checkPulseable(aReactor, x, y - 1, aStack, x, y) + this.checkPulseable(aReactor, x, y + 1, aStack, x, y);
 	                int tAddedHeat = sumUp(tPulsables) * 4;
-	                ArrayList tList = new ArrayList<ItemStackCoord>();
+	                ArrayList<ItemStackCoord> tList = new ArrayList<ItemStackCoord>();
 	                this.checkHeatAcceptor(aReactor, x - 1, y, tList);
 	                this.checkHeatAcceptor(aReactor, x + 1, y, tList);
 	                this.checkHeatAcceptor(aReactor, x, y - 1, tList);
@@ -99,10 +100,10 @@ public class GT_RadioactiveCellIC_Item extends GT_RadioactiveCell_Item implement
 
     protected int checkPulseable(IReactor var1, int var2, int var3, ItemStack var4, int var5, int var6) {
         ItemStack var7 = var1.getItemAt(var2, var3);
-        return var7 != null && var7.getItem() instanceof IReactorComponent && ((IReactorComponent)var7.getItem()).acceptUraniumPulse(var1, var7, var4, var2, var3, var5, var6) ? 1 : 0;
+        return var7 != null && var7.getItem() instanceof IReactorComponent && ((IReactorComponent)var7.getItem()).acceptUraniumPulse(var1, var7, var4, var2, var3, var5, var6, false) ? 1 : 0;
     }
     
-    protected void checkHeatAcceptor(IReactor var1, int var2, int var3, ArrayList var4) {
+	protected void checkHeatAcceptor(IReactor var1, int var2, int var3, ArrayList<ItemStackCoord> var4) {
         ItemStack var5 = var1.getItemAt(var2, var3);
 
         if (var5 != null && var5.getItem() instanceof IReactorComponent && ((IReactorComponent)var5.getItem()).canStoreHeat(var1, var5, var2, var3)) {

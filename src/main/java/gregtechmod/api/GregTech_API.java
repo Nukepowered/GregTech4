@@ -27,6 +27,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -330,7 +331,7 @@ public class GregTech_API {
 		try {
 			return (Item)Class.forName("gregtechmod.api.items.GT_CoolantCell_Item").getConstructors()[0].newInstance(aName, aMaxStore, aCellCount);
 		} catch(Throwable e) {}
-		return new gregtechmod.api.items.GT_Generic_Item(aName, "Doesn't work as intended, this is a Bug", false);
+		return new gregtechmod.api.items.GT_Generic_Item(aName, I18n.format("item.bug.tooltip"));
 	}
 	
 	/**
@@ -347,7 +348,7 @@ public class GregTech_API {
 		try {
 			return (Item)Class.forName("gregtechmod.api.items.GT_RadioactiveCell_Item").getConstructors()[0].newInstance(aName, aMaxDelay, aCellcount, aPulseRate, aDepleted);
 		} catch(Throwable e) {}
-		return new gregtechmod.api.items.GT_Generic_Item(aName, "Doesn't work as intended, this is a Bug", false);
+		return new gregtechmod.api.items.GT_Generic_Item(aName, I18n.format("item.bug.tooltip"));
 	}
 	
 	/**
@@ -360,7 +361,7 @@ public class GregTech_API {
 		try {
 			return (Item)Class.forName("gregtechmod.api.items.GT_EnergyArmor_Item").getConstructors()[0].newInstance(aName, aCharge, aTransfer, aTier, aDamageEnergyCost, aSpecials, aArmorAbsorbtionPercentage, aChargeProvider, aType, aArmorIndex);
 		} catch(Throwable e) {}
-		return new gregtechmod.api.items.GT_Generic_Item(aName, "Doesn't work as intended, this is a Bug", false);
+		return new gregtechmod.api.items.GT_Generic_Item(aName, I18n.format("item.bug.tooltip"));
 	}
 	
 	/**
@@ -373,7 +374,7 @@ public class GregTech_API {
 		try {
 			return (Item)Class.forName("gregtechmod.api.items.GT_EnergyStore_Item").getConstructors()[0].newInstance(aName, aCharge, aTransfer, aTier, aEmptyID, aFullID);
 		} catch(Throwable e) {}
-		return new gregtechmod.api.items.GT_Generic_Item(aName, "Doesn't work as intended, this is a Bug", false);
+		return new gregtechmod.api.items.GT_Generic_Item(aName, I18n.format("item.bug.tooltip"));
 	}
 	
 	/**

@@ -12,8 +12,8 @@ public class GT_RadioactiveCell_Item extends GT_Generic_Item implements ICapsule
 	protected int maxDelay, cellCount, pulserate;
 	protected ItemStack mDepleted;
 	
-    public GT_RadioactiveCell_Item(int aID, String aName, int aMaxDelay, int aCellcount, int aPulseRate, ItemStack aDepleted) {
-        super(aID, aName, null);
+    public GT_RadioactiveCell_Item(String aName, int aMaxDelay, int aCellcount, int aPulseRate, ItemStack aDepleted) {
+        super(aName, null);
         setMaxStackSize(1);
         setMaxDamage(10000);
         setNoRepair();
@@ -97,6 +97,7 @@ public class GT_RadioactiveCell_Item extends GT_Generic_Item implements ICapsule
         return b;
     }
     
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
 		super.addAdditionalToolTips(aList, aStack);
