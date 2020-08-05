@@ -50,14 +50,14 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugableBlock {
 	public static IIcon mIcons[] = new IIcon[390];
 	
-	public GT_BlockMetaID_Machine(int aID) {
+	public GT_BlockMetaID_Machine() {
         super(new GT_MachineMaterial());
         setHardness(10.0F);
         setResistance(10.0F);
         setBlockName("BlockMetaID_Machine");
         setStepSound(Block.soundTypeMetal);
 		setCreativeTab(GregTech_API.TAB_GREGTECH);
-        for (int i = 0; i < 16; i++) setHarvestLevel("wrench", 1, i); // MinecraftForge.setBlockHarvestLevel(this, i, "wrench", 1);
+        for (int i = 0; i < 16; i++) setHarvestLevel("wrench", 1, i);
 	}
 	
 	@Override
@@ -566,7 +566,7 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 		
 		try {
 			if (aMeta > 0 && aMeta < 16) {
-				tIndex = ((GT_TileEntityMetaID_Machine)createTileEntity(null, aMeta)).getTexture(aSide, aMeta);
+//				tIndex = ((GT_TileEntityMetaID_Machine)createTileEntity(null, aMeta)).getTexture(aSide, aMeta); // TODO
 			} else if (GregTech_API.mMetaTileList[aMeta] != null) {
 				rIcon = GregTech_API.mMetaTileList[aMeta].getTextureIcon((byte)aSide, (byte)4, true, false);
 				if (rIcon == null) tIndex = GregTech_API.mMetaTileList[aMeta].getTextureIndex((byte)aSide, (byte)4, true, false);
@@ -840,20 +840,21 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
     
 	@Override
 	public TileEntity createNewTileEntity(World aWorld, int meta) { // TODO: there wasnt meta before
-		return GregTech_API.constructBaseMetaTileEntity();
+//		return GregTech_API.constructBaseMetaTileEntity(); // FIXME
+		return null;
 	}
 	
 	@Override
 	public TileEntity createTileEntity(World aWorld, int aMeta) {
 		switch(aMeta) {
-		case  0: return GregTech_API.constructBaseMetaTileEntity();
-		case  1: return new BaseMetaPipeEntity();
-		case  2: return new BaseMetaPipeEntity();
-		case  3: return new BaseMetaPipeEntity();
-		case  4: return new GT_TileEntity_ComputerCube();
-		case  6: return new GT_TileEntity_Sonictron();
-		case 12: return new GT_TileEntity_Superconductor();
-		case 13: return new GT_TileEntity_PlayerDetector();
+//		case  0: return GregTech_API.constructBaseMetaTileEntity(); // TODO
+//		case  1: return new BaseMetaPipeEntity();
+//		case  2: return new BaseMetaPipeEntity();
+//		case  3: return new BaseMetaPipeEntity();
+//		case  4: return new GT_TileEntity_ComputerCube();
+//		case  6: return new GT_TileEntity_Sonictron();
+//		case 12: return new GT_TileEntity_Superconductor();
+//		case 13: return new GT_TileEntity_PlayerDetector();
 		default: return null;
 		}
 	}
@@ -911,7 +912,7 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 	
 	@Override
     public void onBlockAdded(World aWorld, int aX, int aY, int aZ) {
-		if (GregTech_API.isMachineBlock(getIdFromBlock(this), aWorld.getBlockMetadata(aX, aY, aZ))) {
+		if (GregTech_API.isMachineBlock(this, aWorld.getBlockMetadata(aX, aY, aZ))) {
 			GregTech_API.causeMachineUpdate(aWorld, aX, aY, aZ);
 		}
 	}

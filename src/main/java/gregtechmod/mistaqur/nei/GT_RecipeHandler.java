@@ -1,7 +1,5 @@
 package gregtechmod.mistaqur.nei;
 
-import static codechicken.core.gui.GuiDraw.changeTexture;
-import static codechicken.core.gui.GuiDraw.drawTexturedModalRect;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Recipe;
@@ -66,8 +64,8 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 	@Override
     public void drawBackground(int recipe) {
         GL11.glColor4f(1, 1, 1, 1);
-        changeTexture(getGuiTexture());
-        drawTexturedModalRect(0, 0, sOffsetX, sOffsetY, 168, 79);
+//        changeTexture(getGuiTexture());
+//        drawTexturedModalRect(0, 0, sOffsetX, sOffsetY, 168, 79); // TODO: NEI
     }
     
 	@Override

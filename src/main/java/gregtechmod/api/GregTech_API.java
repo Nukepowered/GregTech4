@@ -73,7 +73,7 @@ public class GregTech_API {
 	public static Object sBlockIcons, sItemIcons;
 	
 	/** Configured Booleans */
-	public static boolean DEBUG_MODE = false, SECONDARY_DEBUG_MODE = false, IC_ENERGY_COMPATIBILITY = true, UE_ENERGY_COMPATIBILITY = true, BC_ENERGY_COMPATIBILITY = true;
+	public static boolean DEBUG_MODE = true, SECONDARY_DEBUG_MODE = true, IC_ENERGY_COMPATIBILITY = true, UE_ENERGY_COMPATIBILITY = false, BC_ENERGY_COMPATIBILITY = true;
 	
 	/** The Configuration Object */
 	public static GT_Config sConfiguration = null;
@@ -133,7 +133,7 @@ public class GregTech_API {
 	public static final Map<Integer, GT_CoverBehavior> sCoverBehaviors = new HashMap<Integer, GT_CoverBehavior>();
 	
 	/** The List of Blocks, which can conduct Machine Block Updates */
-    public static final Map<Integer, Integer> sMachineIDs = new HashMap<Integer, Integer>();
+    public static final Map<Block, Integer> sMachines = new HashMap<Block, Integer>();
     
 	/** The Redstone Frequencies */
     public static final Map<Integer, Byte> sWirelessRedstone = new HashMap<Integer, Byte>();
@@ -281,7 +281,7 @@ public class GregTech_API {
 		if (tTileEntity != null && tTileEntity instanceof IMachineBlockUpdateable) {
 			((IMachineBlockUpdateable)tTileEntity).onMachineBlockUpdate();
 		}
-		if (aList.size() < 5 || (tTileEntity != null && tTileEntity instanceof IMachineBlockUpdateable) || GregTech_API.isMachineBlock(Block.getIdFromBlock(aWorld.getBlock(aX, aY, aZ)), aWorld.getBlockMetadata(aX, aY, aZ))) {
+		if (aList.size() < 5 || (tTileEntity != null && tTileEntity instanceof IMachineBlockUpdateable) || GregTech_API.isMachineBlock(aWorld.getBlock(aX, aY, aZ), aWorld.getBlockMetadata(aX, aY, aZ))) {
 			if (!aList.contains(new ChunkPosition(aX + 1, aY, aZ))) stepToUpdateMachine(aWorld, aX + 1, aY, aZ, aList);
 			if (!aList.contains(new ChunkPosition(aX - 1, aY, aZ))) stepToUpdateMachine(aWorld, aX - 1, aY, aZ, aList);
 			if (!aList.contains(new ChunkPosition(aX, aY + 1, aZ))) stepToUpdateMachine(aWorld, aX, aY + 1, aZ, aList);
@@ -295,19 +295,20 @@ public class GregTech_API {
 	 * Adds a Multi-Machine Block, like my Machine Casings for example.
 	 * You should call @causeMachineUpdate in @Block.breakBlock and in @Block.onBlockAdded of your registered Block.
 	 * You don't need to register TileEntities which implement @IMachineBlockUpdateable
-	 * @param aID the ID of your Block
+	 * @param aBlock the block
 	 * @param aMeta the Metadata of the Blocks as Bitmask! -1 for all Metavalues
 	 */
-	public static boolean registerMachineBlock(int aID, int aMeta) {
-		sMachineIDs.put(aID, aMeta);
+	public static boolean registerMachineBlock(Block aBlock, int aMeta) {
+//		sMachineIDs.put(aID, aMeta);
+		sMachines.put(aBlock, aMeta);
 		return true;
 	}
 	
 	/**
 	 * if this Block is a Machine Update Conducting Block
 	 */
-	public static boolean isMachineBlock(int aID, int aMeta) {
-		return (sMachineIDs.containsKey(aID) && (sMachineIDs.get(aID) & (1 << aMeta)) != 0);
+	public static boolean isMachineBlock(Block aBlock, int aMeta) {
+		return (sMachines.containsKey(aBlock) && (sMachines.get(aBlock) & (1 << aMeta)) != 0);
 	}
 	
 	/**

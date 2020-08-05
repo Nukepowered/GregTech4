@@ -40,7 +40,7 @@ public class WiremillRecipeHandler extends GT_RecipeHandler {
 		guis.add(GT_GUIContainer_BasicMachine_Wiremill.class);
 		transferRects2.add(new RecipeTransferRect(new Rectangle(70-5, 24-11, 36, 18), getRecipeId(), new Object[0]));
 		RecipeTransferRectHandler.registerRectsToGuis(guis, transferRects2);
-		} catch(Throwable e) {e.printStackTrace(GT_Log.out);}
+		} catch(Throwable e) {GT_Log.log.catching(e);}
 	}
 	
 	@Override

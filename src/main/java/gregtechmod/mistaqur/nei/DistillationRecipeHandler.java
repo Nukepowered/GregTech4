@@ -48,7 +48,7 @@ public class DistillationRecipeHandler extends GT_RecipeHandler {
 		guis.add(GT_GUIContainer_DistillationTower.class);
 		transferRects2.add(new RecipeTransferRect(new Rectangle(80-5, 4-11, 16, 72), getRecipeId(), new Object[0]));
 		RecipeTransferRectHandler.registerRectsToGuis(guis, transferRects2);
-		} catch(Throwable e) {e.printStackTrace(GT_Log.out);}
+		} catch(Throwable e) {GT_Log.log.catching(e);}
 	}
 	
 	@Override

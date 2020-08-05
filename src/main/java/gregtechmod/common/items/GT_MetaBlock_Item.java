@@ -15,7 +15,7 @@ public class GT_MetaBlock_Item extends ItemBlock {
         super(par1);
         setMaxDamage(0);
         setHasSubtypes(true);
-        setUnlocalizedName("GT_Block");
+        setUnlocalizedName("GT_Block"); // FIXME not correct name
         setCreativeTab(GregTech_API.TAB_GREGTECH);
     }
     
@@ -27,7 +27,7 @@ public class GT_MetaBlock_Item extends ItemBlock {
 	@SuppressWarnings("unchecked")
 	@Override
     public void addInformation(ItemStack aStack, EntityPlayer aPlayer, @SuppressWarnings("rawtypes") List aList, boolean par4) {
-		aList.add("Mobs can't spawn on this Block");
+		aList.add("Mobs can't spawn on this Block"); // FIXME localization!
     }
 
 	@Override

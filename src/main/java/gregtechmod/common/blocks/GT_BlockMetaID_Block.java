@@ -35,10 +35,10 @@ public class GT_BlockMetaID_Block extends Block {
         super(Material.iron);
         setHardness(3.0F);
         setResistance(10.0F);
-        this.setBlockName("BlockMetaID_Block");
+        setBlockName("BlockMetaID_Block");
         setStepSound(Block.soundTypeMetal);
 		setCreativeTab(GregTech_API.TAB_GREGTECH);
-        for (int i = 0; i < 16; i++) this.setHarvestLevel("pickaxe", 2, i);
+        for (int i = 0; i < 16; i++) setHarvestLevel("pickaxe", 2, i);
 	}
 	
 	@Override
@@ -62,19 +62,19 @@ public class GT_BlockMetaID_Block extends Block {
 	
 	@Override
     public boolean isBeaconBase(IBlockAccess aWorld, int aX, int aY, int aZ, int beaconX, int beaconY, int beaconZ) {
-        return !GregTech_API.isMachineBlock(getIdFromBlock(this), aWorld.getBlockMetadata(aX, aY, aZ));
+        return !GregTech_API.isMachineBlock(this, aWorld.getBlockMetadata(aX, aY, aZ));
     }
 	
 	@Override
 	public void breakBlock(World aWorld, int aX, int aY, int aZ, Block par5, int par6) {
-		if (GregTech_API.isMachineBlock(getIdFromBlock(this), aWorld.getBlockMetadata(aX, aY, aZ))) {
+		if (GregTech_API.isMachineBlock(this, aWorld.getBlockMetadata(aX, aY, aZ))) {
 			GregTech_API.causeMachineUpdate(aWorld, aX, aY, aZ);
 		}
 	}
 	
 	@Override
     public void onBlockAdded(World aWorld, int aX, int aY, int aZ) {
-		if (GregTech_API.isMachineBlock(getIdFromBlock(this), aWorld.getBlockMetadata(aX, aY, aZ))) {
+		if (GregTech_API.isMachineBlock(this, aWorld.getBlockMetadata(aX, aY, aZ))) {
 			GregTech_API.causeMachineUpdate(aWorld, aX, aY, aZ);
 		}
 	}

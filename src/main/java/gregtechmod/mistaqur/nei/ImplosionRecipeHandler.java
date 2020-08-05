@@ -45,7 +45,7 @@ public class ImplosionRecipeHandler extends GT_RecipeHandler {
 		guis.add(GT_GUIContainer_ImplosionCompressor.class);
 		transferRects2.add(new RecipeTransferRect(new Rectangle(56-5, 26-11, 24, 15), getRecipeId(), new Object[0]));
 		RecipeTransferRectHandler.registerRectsToGuis(guis, transferRects2);
-		} catch(Throwable e) {e.printStackTrace(GT_Log.out);}
+		} catch(Throwable e) {GT_Log.log.catching(e);}
 	}
 	
 	@Override

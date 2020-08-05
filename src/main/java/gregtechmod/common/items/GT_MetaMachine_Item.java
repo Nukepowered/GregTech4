@@ -8,7 +8,7 @@ import gregtechmod.api.util.GT_Log;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -19,8 +19,6 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_MetaMachine_Item extends ItemBlock {
-	public static int mItemID = 0;
-	
 	public String[] mString0 = new String[GregTech_API.MAXIMUM_METATILE_IDS],
 					mString1 = new String[GregTech_API.MAXIMUM_METATILE_IDS],
 					mString2 = new String[GregTech_API.MAXIMUM_METATILE_IDS],
@@ -29,15 +27,15 @@ public class GT_MetaMachine_Item extends ItemBlock {
 					mString5 = new String[GregTech_API.MAXIMUM_METATILE_IDS],
 					mString6 = new String[GregTech_API.MAXIMUM_METATILE_IDS];
 	
-    public GT_MetaMachine_Item(int par1) {
-        super(par1);
-        mItemID = par1;
+    public GT_MetaMachine_Item(Block bl) {
+        super(bl);
         setMaxDamage(0);
         setHasSubtypes(true);
         setUnlocalizedName(GT_LanguageManager.mNameList1[0]);
 		setCreativeTab(GregTech_API.TAB_GREGTECH);
     }
     
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
     public void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean par4) {
 		try {
@@ -56,9 +54,9 @@ public class GT_MetaMachine_Item extends ItemBlock {
 				if (tDamage == 0) {
 					
 				} else {
-					TileEntity temp = GregTech_API.sBlockList[1].createTileEntity(aPlayer.worldObj, tDamage>15?GregTech_API.mMetaTileList[tDamage] == null?0:GregTech_API.mMetaTileList[tDamage].getTileEntityBaseType():tDamage);
+					TileEntity temp = GregTech_API.sBlockList[1].createTileEntity(aPlayer.worldObj, tDamage > 15 ? GregTech_API.mMetaTileList[tDamage] == null ? 0 : GregTech_API.mMetaTileList[tDamage].getTileEntityBaseType() : tDamage);
 					if (temp != null) {
-						temp.worldObj = aPlayer.worldObj; temp.xCoord = 0; temp.yCoord = 0; temp.zCoord = 0;
+						temp.setWorldObj(aPlayer.worldObj); temp.xCoord = 0; temp.yCoord = 0; temp.zCoord = 0;
 						if (temp instanceof IGregTechTileEntity) {
 							IGregTechTileEntity tTileEntity = (IGregTechTileEntity)temp;
 							tTileEntity.setInitialValuesAsNBT(new NBTTagCompound(), (short)tDamage);
@@ -100,22 +98,22 @@ public class GT_MetaMachine_Item extends ItemBlock {
 				if ((tAmount = aNBT.getInteger("mUpgradedStorage"))	> 0) aList.add(tAmount + " " + GT_LanguageManager.addStringLocalization("TileEntity_EUSTORAGES", "Additional EU-Storage"));
 			}
 		} catch(Throwable e) {
-			e.printStackTrace(GT_Log.err);
+			GT_Log.log.catching(e);
 		}
     }
 	
     @SideOnly(Side.CLIENT)
     @Override
-    public void registerIcons(IconRegister aIconRegister) {
-		GT_Log.out.println("GT_Mod: Setting up Icon Register for Items");
+    public void registerIcons(IIconRegister aIconRegister) {
+		GT_Log.log.info("GT_Mod: Setting up Icon Register for Items");
     	GregTech_API.sItemIcons = aIconRegister;
     	
-		GT_Log.out.println("GT_Mod: Starting Item Icon Load Phase Clientside");
+    	GT_Log.log.info("GT_Mod: Starting Item Icon Load Phase Clientside");
     	for (Runnable tRunnable : GregTech_API.sGTItemIconload) {
     		try {
     			tRunnable.run();
     		} catch(Throwable e) {
-    			e.printStackTrace(GT_Log.err);
+    			GT_Log.log.catching(e);
     		}
     	}
     }
@@ -145,28 +143,28 @@ public class GT_MetaMachine_Item extends ItemBlock {
     	   if (GregTech_API.mMetaTileList[tDamage] == null) {
     		   return false;
     	   } else {
-	    	   if (!aWorld.setBlock(aX, aY, aZ, getBlockID(), GregTech_API.mMetaTileList[tDamage].getTileEntityBaseType(), 3)) {
+	    	   if (!aWorld.setBlock(aX, aY, aZ, this.field_150939_a, GregTech_API.mMetaTileList[tDamage].getTileEntityBaseType(), 3)) {
 	    		   return false;
 	    	   }
-	    	   IGregTechTileEntity tTileEntity = (IGregTechTileEntity)aWorld.getBlockTileEntity(aX, aY, aZ);
+	    	   IGregTechTileEntity tTileEntity = (IGregTechTileEntity)aWorld.getTileEntity(aX, aY, aZ);
 	    	   if (tTileEntity != null) {
 	    		   if (aStack.getTagCompound() != null && tTileEntity.isServerSide()) {
 	        		   tTileEntity.setInitialValuesAsNBT(aStack.getTagCompound(), tDamage);
 	    		   } else {
 	        		   tTileEntity.setInitialValuesAsNBT(null, tDamage);
 	    		   }
-	    		   if (aPlayer != null) tTileEntity.setOwnerName(aPlayer.username);
+	    		   if (aPlayer != null) tTileEntity.setOwnerName(aPlayer.getDisplayName());
 	    	   }
     	   }
        } else {
-    	   if (!aWorld.setBlock(aX, aY, aZ, getBlockID(), tDamage, 3)) {
+    	   if (!aWorld.setBlock(aX, aY, aZ, this.field_150939_a, tDamage, 3)) {
                return false;
            }
        }
        
-       if (aWorld.getBlockId(aX, aY, aZ) == getBlockID()) {
-           Block.blocksList[getBlockID()].onBlockPlacedBy(aWorld, aX, aY, aZ, aPlayer, aStack);
-           Block.blocksList[getBlockID()].onPostBlockPlaced(aWorld, aX, aY, aZ, tDamage);
+       if (aWorld.getBlock(aX, aY, aZ) == this.field_150939_a) {
+           this.field_150939_a.onBlockPlacedBy(aWorld, aX, aY, aZ, aPlayer, aStack);
+           this.field_150939_a.onPostBlockPlaced(aWorld, aX, aY, aZ, tDamage);
        }
        return true;
     }

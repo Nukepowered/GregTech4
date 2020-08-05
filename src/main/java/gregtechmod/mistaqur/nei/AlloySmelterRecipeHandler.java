@@ -77,7 +77,7 @@ public class AlloySmelterRecipeHandler extends GT_RecipeHandler {
 		guis.add(GT_GUIContainer_Scrapboxinator.class);
 		transferRects2.add(new RecipeTransferRect(new Rectangle(61-5, 62-11, 18, 18), "ic2.scrapbox", new Object[0]));
 		RecipeTransferRectHandler.registerRectsToGuis(guis, transferRects2);
-		} catch(Throwable e) {e.printStackTrace(GT_Log.out);}
+		} catch(Throwable e) {GT_Log.log.catching(e);}
 	}
 	
 	@Override

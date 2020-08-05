@@ -18,10 +18,12 @@ import gregtechmod.common.GT_OreDictHandler;
 import gregtechmod.common.GT_Proxy;
 import gregtechmod.common.GT_Worldgenerator;
 import gregtechmod.common.blocks.GT_BlockMetaID_Block;
+import gregtechmod.common.blocks.GT_BlockMetaID_Machine;
 import gregtechmod.common.covers.GT_Cover_Generic;
 import gregtechmod.common.covers.GT_Cover_None;
 import gregtechmod.common.covers.GT_Cover_Redstone;
 import gregtechmod.common.items.GT_MetaBlock_Item;
+import gregtechmod.common.items.GT_MetaMachine_Item;
 import gregtechmod.common.render.GT_Block_Renderer;
 import gregtechmod.loaders.misc.GT_CoverLoader;
 import gregtechmod.loaders.misc.GT_TooEasyModeLoader;
@@ -398,7 +400,7 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     	GT_Config.sConfigFileStandard.save();
     	GT_Config.sConfigFileIDs.save();
     	
-    	GT_Log.log.info("GT_Mod: Generating Lang-File");
+    	GT_Log.log.info("GT_Mod: Generating Lang-File"); // TODO move localization to resources
     	GT_LanguageManager.sLangFile = new Configuration(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "GregTech.lang"));
     	GT_LanguageManager.sLangFile.load();
     	
@@ -460,12 +462,12 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     	GregTech_API.sLoadStarted = true;
     	
     	GT_Log.log.info("GT_Mod: Adding Blocks.");
-		GameRegistry.registerBlock(GregTech_API.sBlockList[0] = new GT_BlockMetaID_Block(), GT_MetaBlock_Item.class		, "GT_Block");
-//		GameRegistry.registerBlock(GregTech_API.sBlockList[1] = new GT_BlockMetaID_Machine	(sBlockIDs[1]), GT_MetaMachine_Item.class	, GT_LanguageManager.mNameList1[0]	, GregTech_API.MOD_ID);
-//		GameRegistry.registerBlock(GregTech_API.sBlockList[2] = new GT_BlockMetaID_Ore		(sBlockIDs[2]), GT_MetaOre_Item.class		, GT_LanguageManager.mNameList2[0]	, GregTech_API.MOD_ID);
-//		GameRegistry.registerBlock(GregTech_API.sBlockList[4] = new GT_BlockMetaID_Block2	(sBlockIDs[4]), GT_MetaBlock2_Item.class	, GT_LanguageManager.mNameList3[0]	, GregTech_API.MOD_ID);
-//		GameRegistry.registerBlock(GregTech_API.sBlockList[3] = new GT_Block_LightSource	(sBlockIDs[3]), ItemBlock.class				, "GT_TransparentTileEntity"		, GregTech_API.MOD_ID);
-//		GameRegistry.registerBlock(GregTech_API.sBlockList[5] = new GT_BlockMetaID_Stone1	(sBlockIDs[5]), GT_MetaStone1_Item.class	, GT_LanguageManager.mNameList4[0]	, GregTech_API.MOD_ID);
+		GameRegistry.registerBlock(GregTech_API.sBlockList[0] = new GT_BlockMetaID_Block  (), GT_MetaBlock_Item.class	, "GT_Block");
+		GameRegistry.registerBlock(GregTech_API.sBlockList[1] = new GT_BlockMetaID_Machine(), GT_MetaMachine_Item.class	, GT_LanguageManager.mNameList1[0]);
+//		GameRegistry.registerBlock(GregTech_API.sBlockList[2] = new GT_BlockMetaID_Ore	  (), GT_MetaOre_Item.class		, GT_LanguageManager.mNameList2[0]);
+//		GameRegistry.registerBlock(GregTech_API.sBlockList[4] = new GT_BlockMetaID_Block2 (), GT_MetaBlock2_Item.class	, GT_LanguageManager.mNameList3[0]);
+//		GameRegistry.registerBlock(GregTech_API.sBlockList[3] = new GT_Block_LightSource  (), ItemBlock.class			, "GT_TransparentTileEntity"	  );
+//		GameRegistry.registerBlock(GregTech_API.sBlockList[5] = new GT_BlockMetaID_Stone1 (), GT_MetaStone1_Item.class	, GT_LanguageManager.mNameList4[0]);
 //		
 //		LanguageRegistry.addName(GregTech_API.sBlockList[0], GT_LanguageManager.mRegionalNameList0[0]);
 //		LanguageRegistry.addName(GregTech_API.sBlockList[1], GT_LanguageManager.mRegionalNameList1[0]);
