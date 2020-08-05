@@ -1,5 +1,6 @@
 package gregtechmod.loaders.load;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import gregtechmod.GT_Mod;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.Materials;
@@ -47,7 +48,9 @@ import gregtechmod.common.items.GT_Vanilla_Pickaxe;
 import gregtechmod.common.items.GT_Vanilla_Shovel;
 import gregtechmod.common.items.GT_Vanilla_Sword;
 import net.minecraft.block.material.Material;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 public class GT_ItemLoader implements Runnable {
 	@Override
@@ -613,13 +616,21 @@ public class GT_ItemLoader implements Runnable {
 		GregTech_API.sItemList[137] = new GT_Vanilla_Axe								(GT_LanguageManager.mNameListItem[137], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
 		GregTech_API.sItemList[138] = new GT_Vanilla_Hoe								(GT_LanguageManager.mNameListItem[138], "TungstenSteel"	, 4,  5, 5120								, 12.0F, 3.0F);
 		
+		GT_Log.log.info("GT_Mod: Register items");
+		for (Item item : GregTech_API.sItemList) {
+			if (item != null) {
+				GameRegistry.registerItem(item, item.getUnlocalizedName());
+			}
+		}
+		
+		
         GT_Log.log.info("GT_Mod: Hiding certain Items from NEI.");
 		try {
 		Class.forName("codechicken.nei.api.API");
 		codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sBlockList[3]));
-		codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[ 4]));
-		codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[ 7]));
-		codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[15]));
+		codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[ 4], 1, OreDictionary.WILDCARD_VALUE));
+		codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[ 7], 1, OreDictionary.WILDCARD_VALUE));
+		codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[15], 1, OreDictionary.WILDCARD_VALUE));
 		codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[16]));
 		codechicken.nei.api.API.hideItem(GT_ModHandler.getIC2Item("wrench", 1));
 		codechicken.nei.api.API.hideItem(GT_ModHandler.getIC2Item("electricWrench", 1));

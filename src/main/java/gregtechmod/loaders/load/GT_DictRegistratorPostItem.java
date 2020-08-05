@@ -6,14 +6,14 @@ import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.common.items.GT_MetaItem_Dust;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 public class GT_DictRegistratorPostItem implements Runnable {
 	@Override
 	public void run() {
-        GT_Log.out.println("GT_Mod: Registering GT/IC2-Circuitry and similar to the OreDict.");
+        GT_Log.log.info("GT_Mod: Registering GT/IC2-Circuitry and similar to the OreDict.");
     	GT_OreDictUnificator.registerOre("craftingLiBattery"			, GregTech_API.getGregTechItem(56, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
     	GT_OreDictUnificator.registerOre("craftingLiBattery"			, GregTech_API.getGregTechItem(57, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
     	GT_OreDictUnificator.registerOre("craftingCircuitTier08"		, GregTech_API.getGregTechItem(43, 1, 0));
@@ -51,12 +51,12 @@ public class GT_DictRegistratorPostItem implements Runnable {
 		GT_OreDictUnificator.registerOre("craftingRawMachineTier02"		, GT_ModHandler.getIC2Item("advancedMachine", 1));
     	GT_OreDictUnificator.registerOre("craftingRawMachineTier04"		, new ItemStack(GregTech_API.sBlockList[0], 1, 10));
     	
-    	GT_OreDictUnificator.registerOre("craftingRedstoneTorch"		, new ItemStack(Block.torchRedstoneIdle, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-    	GT_OreDictUnificator.registerOre("craftingRedstoneTorch"		, new ItemStack(Block.torchRedstoneActive, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+    	GT_OreDictUnificator.registerOre("craftingRedstoneTorch"		, new ItemStack(Blocks.unlit_redstone_torch, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+    	GT_OreDictUnificator.registerOre("craftingRedstoneTorch"		, new ItemStack(Blocks.redstone_torch, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
     	
-    	GT_OreDictUnificator.registerOre("craftingCircuitTier00"		, new ItemStack(Block.torchRedstoneIdle, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-    	GT_OreDictUnificator.registerOre("craftingCircuitTier00"		, new ItemStack(Block.torchRedstoneActive, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-    	GT_OreDictUnificator.registerOre("craftingCircuitTier00"		, new ItemStack(Block.lever, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+    	GT_OreDictUnificator.registerOre("craftingCircuitTier00"		, new ItemStack(Blocks.unlit_redstone_torch, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+    	GT_OreDictUnificator.registerOre("craftingCircuitTier00"		, new ItemStack(Blocks.redstone_torch, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+    	GT_OreDictUnificator.registerOre("craftingCircuitTier00"		, new ItemStack(Blocks.lever, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
     	
     	GT_OreDictUnificator.registerOre("craftingCircuitTier03"		, new ItemStack(GregTech_API.sBlockList[1], 1,69));
     	
@@ -64,19 +64,19 @@ public class GT_DictRegistratorPostItem implements Runnable {
     	GT_OreDictUnificator.registerOre("craftingCircuitTier04"		, GT_ModHandler.getIC2Item("advancedCircuit", 1));
     	GT_OreDictUnificator.registerOre("craftingCircuitTier10"		, new ItemStack(GregTech_API.sBlockList[1], 1, 4));
     	
-    	GT_OreDictUnificator.registerOre("craftingWorkBench"			, new ItemStack(Block.workbench, 1));
+    	GT_OreDictUnificator.registerOre("craftingWorkBench"			, new ItemStack(Blocks.crafting_table, 1));
     	GT_OreDictUnificator.registerOre("craftingWorkBench"			, new ItemStack(GregTech_API.sBlockList[1], 1, 16));
 
-    	GT_OreDictUnificator.registerOre("craftingPiston"				, new ItemStack(Block.pistonBase, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-    	GT_OreDictUnificator.registerOre("craftingPiston"				, new ItemStack(Block.pistonStickyBase, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+    	GT_OreDictUnificator.registerOre("craftingPiston"				, new ItemStack(Blocks.piston, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+    	GT_OreDictUnificator.registerOre("craftingPiston"				, new ItemStack(Blocks.sticky_piston, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
     	
     	GT_OreDictUnificator.registerOre("craftingChest"				, new ItemStack(GregTech_API.sBlockList[1], 1, 45));
-    	GT_OreDictUnificator.registerOre("craftingChest"				, new ItemStack(Block.chest, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-    	GT_OreDictUnificator.registerOre("craftingChest"				, new ItemStack(Block.chestTrapped, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+    	GT_OreDictUnificator.registerOre("craftingChest"				, new ItemStack(Blocks.chest, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+    	GT_OreDictUnificator.registerOre("craftingChest"				, new ItemStack(Blocks.trapped_chest, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
     	GT_OreDictUnificator.registerOre("craftingChest"				, GT_ModHandler.getIC2Item("personalSafe", 1));
     	
-    	GT_OreDictUnificator.registerOre("craftingFurnace"				, new ItemStack(Block.furnaceIdle, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-    	GT_OreDictUnificator.registerOre("craftingFurnace"				, new ItemStack(Block.furnaceBurning, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+    	GT_OreDictUnificator.registerOre("craftingFurnace"				, new ItemStack(Blocks.furnace, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+    	GT_OreDictUnificator.registerOre("craftingFurnace"				, new ItemStack(Blocks.lit_furnace, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
     	
     	GT_OreDictUnificator.registerOre("craftingPump"					, GT_ModHandler.getIC2Item("pump", 1));
     	GT_OreDictUnificator.registerOre("craftingElectromagnet"		, GT_ModHandler.getIC2Item("magnetizer", 1));
@@ -115,15 +115,15 @@ public class GT_DictRegistratorPostItem implements Runnable {
     	
 		GT_OreDictUnificator.registerOre("molecule_1n"			, GregTech_API.getGregTechItem(91, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		
-    	GT_OreDictUnificator.registerOre("paperEmpty"			, new ItemStack(Item.paper, 1));
-    	GT_OreDictUnificator.registerOre("paperMap"				, new ItemStack(Item.emptyMap, 1));
-    	GT_OreDictUnificator.registerOre("paperMap"				, new ItemStack(Item.map, 1));
-    	GT_OreDictUnificator.registerOre("bookEmpty"			, new ItemStack(Item.book, 1));
-    	GT_OreDictUnificator.registerOre("bookWritable"			, new ItemStack(Item.writableBook, 1));
-    	GT_OreDictUnificator.registerOre("bookWritten"			, new ItemStack(Item.writtenBook, 1));
-    	GT_OreDictUnificator.registerOre("bookEnchanted"		, new ItemStack(Item.enchantedBook, 1));
+    	GT_OreDictUnificator.registerOre("paperEmpty"			, new ItemStack(Items.paper, 1));
+    	GT_OreDictUnificator.registerOre("paperMap"				, new ItemStack(Items.map, 1));
+    	GT_OreDictUnificator.registerOre("paperMap"				, new ItemStack(Items.map, 1));
+    	GT_OreDictUnificator.registerOre("bookEmpty"			, new ItemStack(Items.book, 1));
+    	GT_OreDictUnificator.registerOre("bookWritable"			, new ItemStack(Items.writable_book, 1));
+    	GT_OreDictUnificator.registerOre("bookWritten"			, new ItemStack(Items.written_book, 1));
+    	GT_OreDictUnificator.registerOre("bookEnchanted"		, new ItemStack(Items.enchanted_book, 1));
     	
-        GT_Log.out.println("GT_Mod: Register colors to the OreDict.");
+        GT_Log.log.info("GT_Mod: Register colors to the OreDict.");
     	GT_OreDictUnificator.registerOre("dyeCyan"				, GT_MetaItem_Dust.instance.getUnunifiedStack(2, 1));
     	GT_OreDictUnificator.registerOre("dyeBlue"				, GT_MetaItem_Dust.instance.getUnunifiedStack(5, 1));
 	}

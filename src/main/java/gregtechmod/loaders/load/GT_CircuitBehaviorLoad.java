@@ -13,7 +13,7 @@ import gregtechmod.common.redstonecircuits.GT_Circuit_Timer;
 public class GT_CircuitBehaviorLoad implements Runnable {
 	@Override
 	public void run() {
-		GT_Log.out.println("GT_Mod: Register Redstone Circuit behaviours.");
+		GT_Log.log.info("GT_Mod: Register Redstone Circuit behaviours.");
 		new GT_Circuit_Timer(0);
 		new GT_Circuit_BasicLogic(1);
 		new GT_Circuit_Repeater(2);

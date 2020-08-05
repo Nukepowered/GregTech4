@@ -204,7 +204,7 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	
 	public void checkEnchantmentEffects(ItemStack aStack) {
 		if (aStack != null) {
-			aStack.stackTagCompound.removeTag("ench");
+			if (aStack.hasTagCompound()) aStack.stackTagCompound.removeTag("ench");
 			if (!GT_ModHandler.isElectricItem(aStack) || GT_ModHandler.canUseElectricItem(aStack, mEUperBrokenBlock)) {
 				if (mSilklevel		> 0) aStack.addEnchantment(Enchantment.silkTouch	, mSilklevel);
 				if (mFortunelevel	> 0) aStack.addEnchantment(Enchantment.fortune		, mFortunelevel);

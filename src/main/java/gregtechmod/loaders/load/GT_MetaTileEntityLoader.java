@@ -12,7 +12,7 @@ import gregtechmod.common.tileentities.*;
 public class GT_MetaTileEntityLoader implements Runnable {
 	@Override
 	public void run() {
-		GT_Log.out.println("GT_Mod: Register MetaTileEntities.");
+		GT_Log.log.info("GT_Mod: Register MetaTileEntities.");
 		new GT_MetaTileEntity_ElectricAutoWorkbench		( 16, "GT_E_Craftingtable"		, "Electric Craftingtable");
 		new GT_MetaTileEntity_Translocator				( 17, "GT_Translocator"			, "Electric Translocator");
 		new GT_MetaTileEntity_ElectricBufferSmall		( 18, "GT_E_Buffer_Small"		, "Small Electric Buffer");

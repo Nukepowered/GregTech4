@@ -32,6 +32,8 @@ import gregtechmod.common.items.GT_MetaMachine_Item;
 import gregtechmod.common.items.GT_MetaOre_Item;
 import gregtechmod.common.items.GT_MetaStone1_Item;
 import gregtechmod.common.render.GT_Block_Renderer;
+import gregtechmod.loaders.load.GT_CircuitBehaviorLoad;
+import gregtechmod.loaders.load.GT_DictRegistratorPostItem;
 import gregtechmod.loaders.load.GT_DictRegistratorPreItem;
 import gregtechmod.loaders.load.GT_ItemLoader;
 import gregtechmod.loaders.misc.GT_CoverLoader;
@@ -248,7 +250,7 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     	sNerfedStoneTools		= GT_Config.sConfigFileStandard.get("general", "smallerStoneToolDurability"	, true ).getBoolean(true);
     	//sPatchLightUpdateLag	= GT_Config.sConfigFileStandard.get("general", "patchingLightUpdateLag"		, true ).getBoolean(true);
     	float tScrapChance		= GT_Config.sConfigFileStandard.get("general", "weightForScrapFromScrapboxing", 200).getInt(200);
-//        
+        
 //    	sBlockIDs[ 0] = GT_Config.sConfigFileIDs.getBlock("Block"					,  sBlockIDs[ 0]).getInt();
 //    	sBlockIDs[ 1] = GT_Config.sConfigFileIDs.getBlock("Machine"					,  sBlockIDs[ 1]).getInt();
 //    	sBlockIDs[ 2] = GT_Config.sConfigFileIDs.getBlock("Ore"						,  sBlockIDs[ 2]).getInt();
@@ -492,34 +494,34 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 //			GT_LanguageManager.addStringLocalization("tile.BlockMetaID_Block2."		+ GT_LanguageManager.mNameList3[i] + ".name", GT_LanguageManager.mRegionalNameList3[i]);
 //			GT_LanguageManager.addStringLocalization("tile.BlockMetaID_Stone1."		+ GT_LanguageManager.mNameList4[i] + ".name", GT_LanguageManager.mRegionalNameList4[i]);
 //		}
-//		
-//		GregTech_API.registerMachineBlock(GregTech_API.sBlockList[0].blockID, (1|2|64|1024|8192|16384|32768));
-//		GregTech_API.registerMachineBlock(GregTech_API.sBlockList[1].blockID, (1));
-//		GregTech_API.registerMachineBlock(GregTech_API.sBlockList[4].blockID, (256|512|8192));
-//		
-//        GT_Log.out.println("GT_Mod: Register old TileEntities.");
+		
+		GregTech_API.registerMachineBlock(GregTech_API.sBlockList[0], (1|2|64|1024|8192|16384|32768));
+		GregTech_API.registerMachineBlock(GregTech_API.sBlockList[1], (1));
+		GregTech_API.registerMachineBlock(GregTech_API.sBlockList[4], (256|512|8192));
+		
+        GT_Log.log.info("GT_Mod: Register old TileEntities.");
 //		GameRegistry.registerTileEntity(GT_TileEntity_ComputerCube.class	, GT_LanguageManager.mNameList1[ 4]);
 //		GameRegistry.registerTileEntity(GT_TileEntity_Sonictron.class		, GT_LanguageManager.mNameList1[ 6]);
 //		GameRegistry.registerTileEntity(GT_TileEntity_Superconductor.class	, GT_LanguageManager.mNameList1[12]);
 //		GameRegistry.registerTileEntity(GT_TileEntity_PlayerDetector.class	, GT_LanguageManager.mNameList1[13]);
 //		GameRegistry.registerTileEntity(GT_TileEntity_LightSource.class		, "GT_LightSource");
-//		
+		
 //		GameRegistry.registerTileEntity(GregTech_API.constructBaseMetaTileEntity().getClass(), "MetatileEntity");
 //		GameRegistry.registerTileEntity(BaseMetaPipeEntity.class, "MetaPipeEntity");
-//		
-//		GT_Log.out.println("GT_Mod: Testing BaseMetaTileEntity.");
+		
+		GT_Log.log.info("GT_Mod: Testing BaseMetaTileEntity.");
 //		if (GregTech_API.constructBaseMetaTileEntity() == null) {
 //			GT_Log.out.println("GT_Mod: Fatal Error ocurred while initializing TileEntities, crashing Minecraft.");
 //			throw new RuntimeException("");
 //		}
-//		
+		
 //		new GT_MetaTileEntityLoader().run();
 		new GT_DictRegistratorPreItem().run();
 		new GT_ItemLoader().run();
-//		new GT_DictRegistratorPostItem().run();
-//		new GT_CircuitBehaviorLoad().run();
-//		
-//        GT_Log.out.println("GT_Mod: Adding Configs specific for MetaTileEntities");
+		new GT_DictRegistratorPostItem().run();
+		new GT_CircuitBehaviorLoad().run();
+		
+        GT_Log.log.info("GT_Mod: Adding Configs specific for MetaTileEntities");
 //    	try {
 //	    	for (IMetaTileEntity tMetaTileEntity : GregTech_API.mMetaTileList) {
 //	    		if (tMetaTileEntity != null) tMetaTileEntity.onConfigLoad(GregTech_API.sConfiguration);
@@ -527,7 +529,7 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 //    	} catch(Throwable e) {
 //    		e.printStackTrace(GT_Log.err);
 //    	}
-    	
+		
     	GregTech_API.sLoadFinished = true;
         GT_Log.log.info("GT_Mod: Load-Phase finished!");
     	for (Runnable tRunnable : GregTech_API.sAfterGTLoad) {
@@ -556,7 +558,7 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
         GT_Log.log.info("GT_Mod: Beginning PostLoad-Phase.");
     	GregTech_API.sPostloadStarted = true;
         
-//        GT_Log.out.println("GT_Mod: Checking if Items got overloaded.");
+        GT_Log.log.info("GT_Mod: Checking if Items got overloaded.");
 //		for (int i = 0; i < GregTech_API.sItemList.length; i++) {
 //			if (GregTech_API.sItemList[i] != null && Item.itemsList[GregTech_API.sItemList[i].itemID] != GregTech_API.sItemList[i]) {
 //		        GT_Log.err.println("GT_Mod: Another Mods ItemID is conflicting.");

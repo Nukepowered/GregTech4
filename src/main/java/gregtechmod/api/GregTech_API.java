@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -86,7 +87,7 @@ public class GregTech_API {
 	
 	/** Icon which represents failed rendering */
 	@SideOnly(Side.CLIENT)
-	public static IIcon FAIL_ICON = null;
+	public static IIcon FAIL_ICON;
 	
 	/** My Creative Tab */
 	public static final CreativeTabs TAB_GREGTECH = new GT_CreativeTab();
@@ -124,7 +125,7 @@ public class GregTech_API {
 	
 	/** The Icon List for Covers */
 	@SideOnly(Side.CLIENT)
-	public static final Map<Integer, IIcon> sCovers = new HashMap<Integer, IIcon>();
+	public static Map<Integer, IIcon> sCovers;
 	
 	/** The List of Circuit Behaviors for the Redstone Circuit Block */
 	public static final Map<Integer, GT_CircuitryBehavior> sCircuitryBehaviors = new HashMap<Integer, GT_CircuitryBehavior>();
@@ -186,6 +187,14 @@ public class GregTech_API {
 	
 	/** If you have to give something a World Parameter but there is no World... */
 	public static World sDummyWorld;
+	
+	
+	static {
+		if (FMLCommonHandler.instance().getSide().isClient()) {
+			sCovers = new HashMap<Integer, IIcon>();
+		}
+	}
+	
 	
 	/**
 	 * Gets a Block from my Addon.
