@@ -4,70 +4,72 @@ import gregtechmod.GT_Mod;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 
 public class GT_ItemMaxStacksizeLoader implements Runnable {
 	@Override
 	public void run() {
-        GT_Log.out.println("GT_Mod: Changing maximum Stacksizes if configured.");
+        GT_Log.log.info("GT_Mod: Changing maximum Stacksizes if configured.");
         
     	GT_ModHandler.getIC2Item("overclockerUpgrade", 1).getItem().setMaxStackSize(GT_Mod.sUpgradeCount);
-    	Item.cake.setMaxStackSize(64);
+    	Items.cake.setMaxStackSize(64);
     	
     	if (GT_Mod.sPlankStackSize < 64) {
-	    	Item.itemsList[Block.woodSingleSlab.blockID].setMaxStackSize(GT_Mod.sPlankStackSize);
-	    	Item.itemsList[Block.woodDoubleSlab.blockID].setMaxStackSize(GT_Mod.sPlankStackSize);
-	    	Item.itemsList[Block.stairsWoodOak.blockID].setMaxStackSize(GT_Mod.sPlankStackSize);
-	    	Item.itemsList[Block.stairsWoodBirch.blockID].setMaxStackSize(GT_Mod.sPlankStackSize);
-	    	Item.itemsList[Block.stairsWoodJungle.blockID].setMaxStackSize(GT_Mod.sPlankStackSize);
-	    	Item.itemsList[Block.stairsWoodSpruce.blockID].setMaxStackSize(GT_Mod.sPlankStackSize);
+	    	Item.getItemFromBlock(Blocks.wooden_slab).setMaxStackSize(GT_Mod.sPlankStackSize);
+	    	Item.getItemFromBlock(Blocks.double_wooden_slab).setMaxStackSize(GT_Mod.sPlankStackSize);
+	    	Item.getItemFromBlock(Blocks.oak_stairs).setMaxStackSize(GT_Mod.sPlankStackSize);
+	    	Item.getItemFromBlock(Blocks.birch_stairs).setMaxStackSize(GT_Mod.sPlankStackSize);
+	    	Item.getItemFromBlock(Blocks.jungle_stairs).setMaxStackSize(GT_Mod.sPlankStackSize);
+	    	Item.getItemFromBlock(Blocks.spruce_stairs).setMaxStackSize(GT_Mod.sPlankStackSize);
 	    }
     	
     	if (GT_Mod.sBlockStackSize < 64) {
-	    	Item.itemsList[Block.stoneSingleSlab.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.stoneDoubleSlab.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.stairsBrick.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.stairsNetherBrick.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.stairsSandStone.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.stairsStoneBrick.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.stairsCobblestone.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.ice.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.slowSand.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.glowStone.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.snow.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.blockSnow.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.blockIron.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.blockGold.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.blockEmerald.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.blockLapis.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.blockDiamond.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.blockClay.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.redstoneLampIdle.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.redstoneLampActive.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.dirt.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.grass.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.mycelium.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.gravel.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.sand.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.brick.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.cloth.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.melon.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.pumpkin.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.pumpkinLantern.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.dispenser.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.obsidian.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.pistonBase.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.pistonStickyBase.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.workbench.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.glass.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.jukebox.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.anvil.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.chest.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.music.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.mobSpawner.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.bookShelf.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.furnaceIdle.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
-	    	Item.itemsList[Block.furnaceBurning.blockID].setMaxStackSize(GT_Mod.sBlockStackSize);
+    		Item.getItemFromBlock(Blocks.stone_slab).setMaxStackSize(GT_Mod.sBlockStackSize);
+    		Item.getItemFromBlock(Blocks.double_stone_slab).setMaxStackSize(GT_Mod.sBlockStackSize);
+    		Item.getItemFromBlock(Blocks.brick_stairs).setMaxStackSize(GT_Mod.sBlockStackSize);
+    		Item.getItemFromBlock(Blocks.nether_brick_stairs).setMaxStackSize(GT_Mod.sBlockStackSize);
+    		Item.getItemFromBlock(Blocks.sandstone_stairs).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.stone_brick_stairs).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.stone_stairs).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.ice).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.soul_sand).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.glowstone).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.snow_layer).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.snow).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.iron_block).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.gold_block).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.emerald_block).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.lapis_block).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.diamond_block).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.clay).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.redstone_lamp).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.lit_redstone_lamp).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.dirt).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.grass).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.mycelium).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.gravel).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.sand).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.brick_block).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.wool).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.melon_block).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.pumpkin).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.lit_pumpkin).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.dispenser).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.obsidian).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.piston).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.sticky_piston).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.crafting_table).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.glass).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.jukebox).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.anvil).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.chest).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.noteblock).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.mob_spawner).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.bookshelf).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.furnace).setMaxStackSize(GT_Mod.sBlockStackSize);
+	    	Item.getItemFromBlock(Blocks.lit_furnace).setMaxStackSize(GT_Mod.sBlockStackSize);
     	}
 	}
 }

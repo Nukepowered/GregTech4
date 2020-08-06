@@ -10,6 +10,8 @@ import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.GT_FluidRegistry;
 import gregtechmod.common.items.GT_MetaItem_Cell;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -20,7 +22,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class GT_LiquidAndFuelLoader implements Runnable {
 	@Override
 	public void run() {
-        GT_Log.out.println("GT_Mod: Grabbing Liquids of other Mods to register Liquid Cells, and adding Liquid Transposer Recipes for them");
+        GT_Log.log.info("GT_Mod: Grabbing Liquids of other Mods to register Liquid Cells, and adding Liquid Transposer Recipes for them");
 
         ItemStack tStack = GT_ModHandler.getRCItem("fluid.creosote.cell", 1);
         FluidStack tLiquid = GT_Utility.getFluidForFilledItem(tStack);;
@@ -72,14 +74,14 @@ public class GT_LiquidAndFuelLoader implements Runnable {
 		GT_FluidRegistry.addFluid("Glyceryl"			, null					, Materials.Glyceryl		, 1, GT_MetaItem_Cell.instance.getUnunifiedStack(34, 1), GT_ModHandler.getEmptyCell(1));
 		GT_FluidRegistry.addFluid("NitroCoalFuel"		, "Nitro Coal Fuel"		, Materials.NitroCoalFuel	, 1, GT_MetaItem_Cell.instance.getUnunifiedStack(35, 1), GT_ModHandler.getEmptyCell(1));
 		
-        GT_Log.out.println("GT_Mod: Initializing various Fuels.");
-        new GT_Recipe(new ItemStack(Item.bucketLava), new ItemStack(Block.obsidian), GT_OreDictUnificator.get("ingotCopper", 1), GT_OreDictUnificator.get("ingotTin", 1), GT_OreDictUnificator.get("ingotElectrum", 1), 30, 2);
+        GT_Log.log.info("GT_Mod: Initializing various Fuels.");
+        new GT_Recipe(new ItemStack(Items.lava_bucket), new ItemStack(Blocks.obsidian), GT_OreDictUnificator.get("ingotCopper", 1), GT_OreDictUnificator.get("ingotTin", 1), GT_OreDictUnificator.get("ingotElectrum", 1), 30, 2);
         
         GregTech_API.sRecipeAdder.addFuel(GT_ModHandler.getIC2Item("reactorHeatpack", 1)	, GT_ModHandler.getEmptyCell(1),  30, 2);
 		
-        GregTech_API.sRecipeAdder.addFuel(new ItemStack(Item.expBottle, 1)					, null,     10, 5);
-        GregTech_API.sRecipeAdder.addFuel(new ItemStack(Item.ghastTear, 1)					, null,    500, 5);
-        GregTech_API.sRecipeAdder.addFuel(new ItemStack(Block.beacon, 1)					, null, Materials.NetherStar.mFuelPower * 2, Materials.NetherStar.mFuelType);
+        GregTech_API.sRecipeAdder.addFuel(new ItemStack(Items.experience_bottle, 1)					, null,     10, 5);
+        GregTech_API.sRecipeAdder.addFuel(new ItemStack(Items.ghast_tear, 1)					, null,    500, 5);
+        GregTech_API.sRecipeAdder.addFuel(new ItemStack(Blocks.beacon, 1)					, null, Materials.NetherStar.mFuelPower * 2, Materials.NetherStar.mFuelType);
 		
 		GT_ModHandler.addBoilerFuel(GT_Utility.getFluidForFilledItem(GT_MetaItem_Cell.instance.getUnunifiedStack(35, 1)), 18000);
 		GT_ModHandler.addBoilerFuel(GT_Utility.getFluidForFilledItem(GT_MetaItem_Cell.instance.getUnunifiedStack( 5, 1)), 24000);

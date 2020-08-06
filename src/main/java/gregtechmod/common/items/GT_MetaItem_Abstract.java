@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -57,7 +58,7 @@ public class GT_MetaItem_Abstract extends Item {
 	@Override
     public void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean aF3_H) {
 		if (aStack.getItemDamage() >= 0 && aStack.getItemDamage() < MAXIMUM_META_IDS && !mToolTipList[aStack.getItemDamage()].equals("")) {
-			aList.add(mToolTipList[aStack.getItemDamage()]);
+			aList.add(I18n.format(mToolTipList[aStack.getItemDamage()]));
 		}
     }
 	

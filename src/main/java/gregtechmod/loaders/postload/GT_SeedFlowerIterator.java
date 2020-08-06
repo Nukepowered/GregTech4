@@ -8,6 +8,8 @@ import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.GT_DummyWorld;
 import gregtechmod.common.items.GT_MetaItem_Cell;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.ForgeHooks;
@@ -17,7 +19,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class GT_SeedFlowerIterator implements Runnable {
 	@Override
 	public void run() {
-        GT_Log.out.println("GT_Mod: Iterating through the Seed-List of ForgeHooks, with a brilliant and 100% Reflection-free Method, to add Recipes for gaining Seed Oil from Seeds.");
+        GT_Log.log.info("GT_Mod: Iterating through the Seed-List of ForgeHooks, with a brilliant and 100% Reflection-free Method, to add Recipes for gaining Seed Oil from Seeds.");
 		boolean temp = false;
         try {
         	GT_DummyWorld tWorld = (GT_DummyWorld)GregTech_API.sDummyWorld;
@@ -36,7 +38,7 @@ public class GT_SeedFlowerIterator implements Runnable {
 				}
 			}
 			
-			GT_Log.out.println("GT_Mod: Iterating through the Grass-Flower-List of ForgeHooks, with a brilliant and 100% Reflection-free Method, to add Extractor Recipes for gaining more Dye from Flowers and also Compression Recipes for Plantballs.");
+			GT_Log.log.info("GT_Mod: Iterating through the Grass-Flower-List of ForgeHooks, with a brilliant and 100% Reflection-free Method, to add Extractor Recipes for gaining more Dye from Flowers and also Compression Recipes for Plantballs.");
 			tWorld.mRandom.mIterationStep = Integer.MAX_VALUE;
 			while (tWorld.mRandom.mIterationStep > 0) {
 				try {
@@ -51,25 +53,25 @@ public class GT_SeedFlowerIterator implements Runnable {
 						GT_ModHandler.addCompressionRecipe(GT_Utility.copy(8, tWorld.mLastSetBlock), GT_ModHandler.getIC2Item("compressedPlantBall", 1));
 					}
 				} catch(Throwable e) {
-					GT_Log.err.println("Minor Bug: Wasn't able to simulate the planting of a Flower with Bonemeal, to add Extractor Recipe for Dye:\n");
-					e.printStackTrace(GT_Log.err);
+					GT_Log.log.warn("Minor Bug: Wasn't able to simulate the planting of a Flower with Bonemeal, to add Extractor Recipe for Dye:\n");
+					GT_Log.log.catching(e);
 				}
 			}
         } catch (Throwable e) {
-        	GT_Log.out.println("GT_Mod: failed to iterate somehow, maybe it's your Forge Version causing it. But it's not that important\n");
-        	e.printStackTrace(GT_Log.err);
+        	GT_Log.log.warn("GT_Mod: failed to iterate somehow, maybe it's your Forge Version causing it. But it's not that important\n");
+        	GT_Log.log.catching(e);
         }
         
 		if (temp) {
-			GT_Log.out.println("GT_Mod: Forestry was properly loaded, so the Seed Recipes got added to the Squeezer.");
+			GT_Log.log.info("GT_Mod: Forestry was properly loaded, so the Seed Recipes got added to the Squeezer.");
 		} else {
-			GT_Log.out.println("GT_Mod: Forestry was NOT loaded, so the Recipes got added to the Industrial Centrifuge.");
-			GregTech_API.sRecipeAdder.addCentrifugeRecipe(new ItemStack(Item.melonSeeds, 64, 0), 1, GT_MetaItem_Cell.instance.getStack(24, 1), null, null, null, 200);
-			GregTech_API.sRecipeAdder.addCentrifugeRecipe(new ItemStack(Item.pumpkinSeeds, 64, 0), 1, GT_MetaItem_Cell.instance.getStack(24, 1), null, null, null, 200);
-			GregTech_API.sRecipeAdder.addCentrifugeRecipe(new ItemStack(Item.seeds, 64, 0), 1, GT_MetaItem_Cell.instance.getStack(24, 1), null, null, null, 200);
+			GT_Log.log.info("GT_Mod: Forestry was NOT loaded, so the Recipes got added to the Industrial Centrifuge.");
+			GregTech_API.sRecipeAdder.addCentrifugeRecipe(new ItemStack(Items.melon_seeds, 64, 0), 1, GT_MetaItem_Cell.instance.getStack(24, 1), null, null, null, 200);
+			GregTech_API.sRecipeAdder.addCentrifugeRecipe(new ItemStack(Items.pumpkin_seeds, 64, 0), 1, GT_MetaItem_Cell.instance.getStack(24, 1), null, null, null, 200);
+			GregTech_API.sRecipeAdder.addCentrifugeRecipe(new ItemStack(Items.wheat_seeds, 64, 0), 1, GT_MetaItem_Cell.instance.getStack(24, 1), null, null, null, 200);
 	    }
 		
-        GT_ModHandler.addExtractionRecipe(new ItemStack(Block.plantRed, 1, 0), new ItemStack(Item.dyePowder, 3, 1));
-        GT_ModHandler.addExtractionRecipe(new ItemStack(Block.plantYellow, 1, 0), new ItemStack(Item.dyePowder, 3, 11));
+        GT_ModHandler.addExtractionRecipe(new ItemStack(Blocks.red_flower, 1, 0), new ItemStack(Items.dye, 3, 1));
+        GT_ModHandler.addExtractionRecipe(new ItemStack(Blocks.yellow_flower, 1, 0), new ItemStack(Items.dye, 3, 11));
 	}
 }

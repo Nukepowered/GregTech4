@@ -5,6 +5,7 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
@@ -13,7 +14,7 @@ import net.minecraftforge.common.ChestGenHooks;
 public class GT_BookAndLootLoader implements Runnable {
 	@Override
 	public void run() {
-        GT_Log.out.println("GT_Mod: Adding worldgenerated Chest Content.");
+        GT_Log.log.info("GT_Mod: Adding worldgenerated Chest Content.");
         
         if (GT_Mod.sIncreaseDungeonLoot) {
         	ChestGenHooks tChest;
@@ -397,7 +398,7 @@ public class GT_BookAndLootLoader implements Runnable {
         ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemGarnetRed"		, 1), 2, 8,   4));
         ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemGarnetYellow"		, 1), 2, 8,   4));
         
-        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_DISPENSER, new WeightedRandomChestContent(new ItemStack(Item.fireballCharge				, 1), 2, 8,  30));
+        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_DISPENSER, new WeightedRandomChestContent(new ItemStack(Items.fire_charge			, 1), 2, 8,  30));
         
         ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get("ingotSilver"			, 1), 1, 4,  12));
         ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get("ingotLead"			, 1), 1, 4,   3));
