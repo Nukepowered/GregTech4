@@ -20,6 +20,10 @@ import gregtechmod.common.items.GT_MetaItem_Material;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Spliterator;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.function.Consumer;
 
 import cpw.mods.fml.common.Mod.EventHandler;
 import net.minecraft.block.Block;
@@ -335,18 +339,34 @@ public class GT_OreDictHandler {
 	 */
     public void activateHandler() {
     	mActivated = true;
-		for (OreRegisterEvent tEvent : mEvents) {
-	    	OrePrefixes tPrefix = OrePrefixes.getPrefix(tEvent.Name);
-			if (tPrefix != null && tPrefix.mIsUnificatable) {
-				GT_OreDictUnificator.add(tEvent.Name, tEvent.Ore);
-			}
-		}
-		for (OreRegisterEvent tEvent : mEvents) try {
-			registerRecipes(tEvent);
-		} catch(Throwable e) {
-			GT_Log.log.catching(e);
-		}
+    	long time = System.currentTimeMillis();
+    	Spliterator<OreRegisterEvent> splt = mEvents.spliterator();
+    	Spliterator<OreRegisterEvent> splt1 = splt.trySplit();
+    	ExecutorService serv = Executors.newFixedThreadPool(2);
+    	Consumer<Spliterator<OreRegisterEvent>> toExecute = sp -> {
+    		while (sp.tryAdvance(tEvent -> {
+		    	OrePrefixes tPrefix = OrePrefixes.getPrefix(tEvent.Name);
+				if (tPrefix != null && tPrefix.mIsUnificatable) {
+					GT_OreDictUnificator.add(tEvent.Name, tEvent.Ore);
+				}
+				
+//				try {
+//					registerRecipes(tEvent);
+//				} catch(Throwable e) {
+//					GT_Log.log.catching(e);
+//				}
+	    	}));
+    	};
+    	
+    	serv.submit(() -> toExecute.accept(splt));
+    	if (splt1 != null) serv.submit(() -> toExecute.accept(splt1));
+    	serv.shutdown(); 
+    	while (!serv.isTerminated()) try {
+    			Thread.sleep(50);
+    	} catch (InterruptedException ingored) {}
 		mEvents.clear();
+		
+		GT_Log.log.warn(String.format("Time spent for oredict iterating: %.3f seconds", (System.currentTimeMillis() - time) / 1000.0D));
     }
     
     @SuppressWarnings("deprecation")

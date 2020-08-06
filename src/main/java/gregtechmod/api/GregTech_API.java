@@ -824,6 +824,5 @@ public class GregTech_API {
 		sSoundList.put(106, GregTech_API.IC2_MOD_ID + ":" + "tools.drill.DrillSoft");
 		sSoundList.put(107, GregTech_API.IC2_MOD_ID + ":" + "tools.drill.DrillHard");
 		sSoundList.put(108, GregTech_API.IC2_MOD_ID + ":" + "ODScanner");
-//		sSoundList.put(108, GregTech_API.MOD_ID + ":" + "ODScanner");
 	}
 }

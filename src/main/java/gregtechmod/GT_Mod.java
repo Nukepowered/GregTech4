@@ -38,6 +38,21 @@ import gregtechmod.loaders.load.GT_DictRegistratorPreItem;
 import gregtechmod.loaders.load.GT_ItemLoader;
 import gregtechmod.loaders.misc.GT_CoverLoader;
 import gregtechmod.loaders.misc.GT_TooEasyModeLoader;
+import gregtechmod.loaders.postload.GT_BlockResistanceLoader;
+import gregtechmod.loaders.postload.GT_BookAndLootLoader;
+import gregtechmod.loaders.postload.GT_CraftingRecipeLoader;
+import gregtechmod.loaders.postload.GT_CropLoader;
+import gregtechmod.loaders.postload.GT_ItemIterator;
+import gregtechmod.loaders.postload.GT_ItemMaxStacksizeLoader;
+import gregtechmod.loaders.postload.GT_LiquidAndFuelLoader;
+import gregtechmod.loaders.postload.GT_MachineRecipeLoader;
+import gregtechmod.loaders.postload.GT_MinableRegistrator;
+import gregtechmod.loaders.postload.GT_RecyclerBlacklistLoader;
+import gregtechmod.loaders.postload.GT_RecyclingRecipeLoader;
+import gregtechmod.loaders.postload.GT_ScrapboxDropLoader;
+import gregtechmod.loaders.postload.GT_SeedFlowerIterator;
+import gregtechmod.loaders.postload.GT_SonictronLoader;
+import gregtechmod.loaders.postload.GT_UUMRecipeLoader;
 import gregtechmod.loaders.preload.GT_InitHardCodedCapeList;
 
 import java.io.File;
@@ -566,30 +581,30 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 //				throw new GT_ItsNotMyFaultException("One of the GregTech-Items got overloaded. Check the ID-Config of the Mod you just installed for Conflicts mentioned in the ForgeModLoader0.log with 'CONFLICT @'. That is an Item-ID-Conflict! Don't bother ANY Modauthor with that, we won't help you at all! Also if you are one of the very few Idiots, who can't read this (I'm not assuming you are that stupid Person, ID-Conflicts can happen to everyone), then don't f***ing go to my Thread and complain!!! Yes, that rage was fully justified, as I got a few Idiots already.");
 //			}
 //		}
-//		
-//    	new GT_ItemIterator().run();
-//		
-//		new GT_LiquidAndFuelLoader().run();
-//        new GT_ItemMaxStacksizeLoader().run();
-//    	new GT_BlockResistanceLoader().run();
-//        new GT_RecyclerBlacklistLoader().run();
-//		new GT_MinableRegistrator().run();
-//		new GT_SeedFlowerIterator().run();
-//		new GT_CraftingRecipeLoader().run();
-//    	new GT_BookAndLootLoader().run();
-//        new GT_MachineRecipeLoader().run();
-//        new GT_ScrapboxDropLoader().run();
+		
+    	new GT_ItemIterator().run();
+		
+		new GT_LiquidAndFuelLoader().run();
+        new GT_ItemMaxStacksizeLoader().run();
+    	new GT_BlockResistanceLoader().run();
+        new GT_RecyclerBlacklistLoader().run();
+		new GT_MinableRegistrator().run();
+		new GT_SeedFlowerIterator().run();
+		new GT_CraftingRecipeLoader().run();
+    	new GT_BookAndLootLoader().run();
+        new GT_MachineRecipeLoader().run();
+        new GT_ScrapboxDropLoader().run();
 //        new GT_UUMRecipeLoader().run();
-//		new GT_CropLoader().run();
+		new GT_CropLoader().run();
 //		new GT_Worldgenloader().run();
-//        new GT_SonictronLoader().run();
+        new GT_SonictronLoader().run();
 //        new GT_RecyclingRecipeLoader().run();
-//        
-//        GT_Log.out.println("GT_Mod: Activating OreDictionary Handler, this can take some time, as it scans the whole OreDictionary");
-//        System.out.println("If your Log stops here, you were too impatient. Wait a bit more next time, before killing Minecraft with the Task Manager.");
-//        GT_OreDictHandler.instance.activateHandler();
-//        System.out.println("Congratulations, you have been waiting long enough. Have a Cake.");
-//        
+        
+        GT_Log.log.info("GT_Mod: Activating OreDictionary Handler, this can take some time, as it scans the whole OreDictionary");
+        GT_Log.log.warn("If your Log stops here, you were too impatient. Wait a bit more next time, before killing Minecraft with the Task Manager.");
+        GT_OreDictHandler.instance.activateHandler();
+        GT_Log.log.info("Congratulations, you have been waiting long enough. Have a Cake.");
+        
 //        GT_Log.out.println("GT_Mod: Adding Stone related Recipes");
 //        GT_ModHandler.addSmeltingRecipe(new ItemStack(GregTech_API.sBlockList[5], 1, 0), new ItemStack(GregTech_API.sBlockList[5], 1, 7));
 //        GT_ModHandler.addSmeltingRecipe(new ItemStack(GregTech_API.sBlockList[5], 1, 1), new ItemStack(GregTech_API.sBlockList[5], 1, 0));

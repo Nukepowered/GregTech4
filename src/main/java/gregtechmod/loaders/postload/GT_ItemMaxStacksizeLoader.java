@@ -3,7 +3,6 @@ package gregtechmod.loaders.postload;
 import gregtechmod.GT_Mod;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;

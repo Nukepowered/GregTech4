@@ -713,7 +713,7 @@ public class GT_Utility {
 	}
 	
 	public static int stackToInt(ItemStack aStack) {
-		if (aStack == null) return 0;
+		if (aStack == null || aStack.getItem() == null) return 0;
 		return Item.getIdFromItem(aStack.getItem()) | (aStack.getItemDamage() << 16);
 	}
 	
@@ -734,7 +734,7 @@ public class GT_Utility {
 	}
 	
 	public static boolean isItemStackInList(ItemStack aStack, Collection<Integer> aList) {
-		if (aStack == null || aList == null) return false;
+		if (aStack == null || aList == null || aStack.getItem() == null) return false;
 		ItemStack tStack = copy(aStack); tStack.setItemDamage(GregTech_API.ITEM_WILDCARD_DAMAGE);
 		return aList.contains(stackToInt(tStack)) || aList.contains(stackToInt(aStack));
 	}

@@ -1,5 +1,9 @@
 package gregtechmod.loaders.postload;
 
+import java.util.UUID;
+
+import com.mojang.authlib.GameProfile;
+
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
@@ -7,11 +11,13 @@ import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.GT_DummyWorld;
 import gregtechmod.common.items.GT_MetaItem_Cell;
-import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
+import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.IChatComponent;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -40,9 +46,17 @@ public class GT_SeedFlowerIterator implements Runnable {
 			
 			GT_Log.log.info("GT_Mod: Iterating through the Grass-Flower-List of ForgeHooks, with a brilliant and 100% Reflection-free Method, to add Extractor Recipes for gaining more Dye from Flowers and also Compression Recipes for Plantballs.");
 			tWorld.mRandom.mIterationStep = Integer.MAX_VALUE;
-			while (tWorld.mRandom.mIterationStep > 0) {
+			while (tWorld.mRandom.mIterationStep > 0 && tWorld.mRandom.mIterationStep < 10000) {
 				try {
-					ForgeHooks.plantGrass(tWorld, 24, 65, 24);
+//					ForgeHooks.plantGrass(tWorld, 24, 65, 24); // TODO; do not planting grass
+					boolean a = ItemDye.applyBonemeal(new ItemStack(Items.dye, 64, 0), tWorld, 24, 65, 24, new EntityPlayer(tWorld, new GameProfile(UUID.randomUUID(), "ILYAPIDOR")) {
+						@Override
+						public ChunkCoordinates getPlayerCoordinates() {return null;}
+						@Override
+						public boolean canCommandSenderUseCommand(int p_70003_1_, String p_70003_2_) {return false;}
+						@Override
+						public void addChatMessage(IChatComponent p_145747_1_) {}
+					});
 					if (tWorld.mLastSetBlock != null) {
 						ItemStack tColor = GT_ModHandler.getRecipeOutput(new ItemStack[] {tWorld.mLastSetBlock});
 						if (GT_OreDictUnificator.isItemStackDye(tColor)) {

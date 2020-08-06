@@ -20,7 +20,7 @@ public class GT_Config {
 	}
 	
 	public String getStackConfigName(ItemStack aStack) {
-		if (aStack == null) return null;
+		if (aStack == null || aStack.getItem() == null) return null;
 		String rName;
 		if ((rName = GT_OreDictUnificator.getAssociation(aStack)) != null && !rName.equals("")) return rName;
 		try {if ((rName = aStack.getUnlocalizedName()) != null && !rName.equals("")) return rName;} catch (Throwable e) {}

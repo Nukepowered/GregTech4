@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -111,7 +111,7 @@ public class GT_Recipe {
 	}
 	
 	public static void reinit() {
-        GT_Log.out.println("GT_Mod: Re-Initializing Item Hashcodes for quick Recipe access.");
+        GT_Log.log.info("GT_Mod: Re-Initializing Item Hashcodes for quick Recipe access.");
         for (Map.Entry<ArrayList<GT_Recipe>, Map<Long, Integer>> tEntry : mRecipeMaps.entrySet()) {
         	tEntry.getValue().clear();
         	for (int i = 0; i < tEntry.getKey().size(); i++) {
@@ -291,7 +291,7 @@ public class GT_Recipe {
 	}
 	
 	public GT_Recipe(ItemStack aInput1, int aInput2, ItemStack aOutput1, ItemStack aOutput2) {
-		this(aInput1, GT_ModHandler.getIC2Item("industrialTnt", aInput2>0?aInput2<64?aInput2:64:1, new ItemStack(Block.tnt, aInput2>0?aInput2<64?aInput2:64:1)), aOutput1, aOutput2, null, null, 20, 30, 0);
+		this(aInput1, GT_ModHandler.getIC2Item("industrialTnt", aInput2>0?aInput2<64?aInput2:64:1, new ItemStack(Blocks.tnt, aInput2>0?aInput2<64?aInput2:64:1)), aOutput1, aOutput2, null, null, 20, 30, 0);
 		checkCellBalance();
 		if (mInput1 != null && mOutput1 != null && findEqualImplosionRecipe(mInput1, mInput2) != null) {
 			pImplosionRecipes.put(GT_Utility.stacksToLong(mInput1, mInput2), sImplosionRecipes.size());
@@ -390,7 +390,7 @@ public class GT_Recipe {
 		}
 		
 		if (temp) {
-			if (GregTech_API.DEBUG_MODE && aList.get(i).mInput1.getItemDamage() != GregTech_API.ITEM_WILDCARD_DAMAGE && (aList.get(i).mInput2 == null || aList.get(i).mInput2.getItemDamage() != GregTech_API.ITEM_WILDCARD_DAMAGE)) GT_Log.err.println("Didn't find Recipe via Hashcode, did another Mod attempt to remove a Recipe improperly? Hash = " + k + " / " + aInput1.getDisplayName() + " / " + (aInput2==null?"NULL":aInput2.getDisplayName()));
+			if (GregTech_API.DEBUG_MODE && aList.get(i).mInput1.getItemDamage() != GregTech_API.ITEM_WILDCARD_DAMAGE && (aList.get(i).mInput2 == null || aList.get(i).mInput2.getItemDamage() != GregTech_API.ITEM_WILDCARD_DAMAGE)) GT_Log.log.error("Didn't find Recipe via Hashcode, did another Mod attempt to remove a Recipe improperly? Hash = " + k + " / " + aInput1.getDisplayName() + " / " + (aInput2==null?"NULL":aInput2.getDisplayName()));
 			return i;
 		}
 		return -1;
@@ -404,13 +404,13 @@ public class GT_Recipe {
 			
 			if (tInputAmount < tOutputAmount) {
 				if (!Materials.Tin.contains(mInput1) && !Materials.Tin.contains(mInput2))
-					GT_Log.err.println("You get more Cells, than you put in? There must be something wrong. " + mInput1.getDisplayName() + " / " + (mInput2==null?"NULL":mInput2.getDisplayName()));
+					GT_Log.log.error("You get more Cells, than you put in? There must be something wrong. " + mInput1.getDisplayName() + " / " + (mInput2==null?"NULL":mInput2.getDisplayName()));
 			} else if (tInputAmount > tOutputAmount && !GT_Utility.areStacksEqual(mInput1, GT_ModHandler.getLavaCell(1))) {
 				if (!Materials.Tin.contains(mOutput1) && !Materials.Tin.contains(mOutput2) && !Materials.Tin.contains(mOutput3) && !Materials.Tin.contains(mOutput4))
-					GT_Log.err.println("You get less Cells, than you put in? My Machines usually don't destroy Cells. " + mInput1.getDisplayName() + " / " + (mInput2==null?"NULL":mInput2.getDisplayName()));
+					GT_Log.log.error("You get less Cells, than you put in? My Machines usually don't destroy Cells. " + mInput1.getDisplayName() + " / " + (mInput2==null?"NULL":mInput2.getDisplayName()));
 			}
 		} catch(Throwable e) {
-			e.printStackTrace(GT_Log.err);
+			GT_Log.log.catching(e);
 		}
 	}
 	

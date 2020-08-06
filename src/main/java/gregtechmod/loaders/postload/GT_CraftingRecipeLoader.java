@@ -11,11 +11,9 @@ import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.common.items.GT_MetaItem_Component;
 import gregtechmod.common.items.GT_MetaItem_Dust;
 import gregtechmod.common.items.GT_MetaItem_Material;
-import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class GT_CraftingRecipeLoader implements Runnable {

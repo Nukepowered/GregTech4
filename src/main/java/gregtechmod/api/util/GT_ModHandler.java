@@ -639,7 +639,7 @@ public class GT_ModHandler {
 	public static boolean addPulverisationRecipe(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2, int aChance, boolean aOverwrite, boolean aTakeOriginalPrimary) {
 		aOutput1 = GT_OreDictUnificator.get(true, aOutput1);
 		aOutput2 = GT_OreDictUnificator.get(true, aOutput2);
-		if (aInput == null || aOutput1 == null) return false;
+		if (aInput == null || aOutput1 == null || aInput.getItem() == null || aOutput1.getItem() == null) return false;
 		if (aTakeOriginalPrimary) {
 			ItemStack tOriginal = getMaceratorOutput(aInput, false, null);
 			if (tOriginal != null) {

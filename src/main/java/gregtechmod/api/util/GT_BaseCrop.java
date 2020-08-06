@@ -50,7 +50,7 @@ public class GT_BaseCrop extends CropCard {
 			mStats[4] = aStatWeed;
 			mAttributes = aAttributes;
 			if (!Crops.instance.registerCrop(this, aID)) throw new GT_ItsNotMyFaultException("Make sure the Crop ID is valid!");
-			if (aBaseSeed != null) Crops.instance.registerBaseSeed(aBaseSeed, aID, 1, 1, 1, 1);
+			if (aBaseSeed != null) Crops.instance.registerCrop(this, aID); // Crops.instance.registerBaseSeed(aBaseSeed, aID, 1, 1, 1, 1);
 			sCropList.add(this);
 		}
 	}
@@ -112,14 +112,14 @@ public class GT_BaseCrop extends CropCard {
 		if (mSpecialDrops != null && (tDrop = new Random().nextInt(mSpecialDrops.length+4)) < mSpecialDrops.length && mSpecialDrops[tDrop] != null) {
 			return GT_Utility.copy(mSpecialDrops[tDrop]);
 		}
-		if (mDrop.getItem().getContainerItemStack(mDrop)==null) return GT_Utility.copy(mDrop);
+		if (mDrop.getItem().getContainerItem(mDrop) == null) return GT_Utility.copy(mDrop);
 		return null;
 	}
 	
     @Override
     public boolean rightclick(ICropTile aCrop, EntityPlayer aPlayer) {
     	if (!canBeHarvested(aCrop)) return false;
-    	ItemStack tContainerItem = mDrop.getItem().getContainerItemStack(mDrop);
+    	ItemStack tContainerItem = mDrop.getItem().getContainerItem(mDrop);
     	if (tContainerItem == null) {
     		return aCrop.harvest(aPlayer==null?false:aPlayer instanceof EntityPlayerMP);
     	} else {
@@ -130,4 +130,10 @@ public class GT_BaseCrop extends CropCard {
     	}
     	return false;
     }
+
+	@Override
+	public int getOptimalHavestSize(ICropTile crop) {
+		// TODO Crops
+		return 0;
+	}
 }
