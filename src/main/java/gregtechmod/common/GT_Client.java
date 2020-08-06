@@ -8,9 +8,7 @@ import net.minecraft.world.World;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 
 public class GT_Client extends GT_Proxy {
-//	public static GT_TickHandler mClientTickHandler = new GT_TickHandler(false);
-//	public static GT_SoundAdder mSoundAdder = new GT_SoundAdder();
-//	public static GT_Renderer mRenderer = new GT_Renderer();
+	public static GT_Renderer mRenderer = new GT_Renderer();
 	
 	public boolean isServerSide() {
 		return true;

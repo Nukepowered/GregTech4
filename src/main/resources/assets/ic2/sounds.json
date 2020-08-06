@@ -1,0 +1,182 @@
+{	
+	"ChainsawIdle":  {
+        "category": "player",
+        "sounds": [
+			{ "name":"ic2:tools/chainsaw/ChainsawIdle" }
+        ]
+    },
+	"ChainsawStop":  {
+        "category": "player",
+        "sounds": [
+			{ "name":"ic2:tools/chainsaw/ChainsawStop" }
+        ]
+    },
+	"ChainsawUseOne":  {
+        "category": "player",
+        "sounds": [
+			{ "name":"ic2:tools/chainsaw/ChainsawUseOne" }
+        ]
+    },
+	"ChainsawUseTwo":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/chainsaw/ChainsawUseTwo" }
+        ]
+    },
+	"DrillHard":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/drill/DrillHard" }
+        ]
+    },
+	"DrillSoft":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/drill/DrillSoft" }
+        ]
+    },
+	"DrillUseLoop":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/drill/DrillUseLoop" }
+        ]
+    },
+	"JetpackFire":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/jetpack/JetpackFire" }
+        ]
+    },
+	"JetpackLoop":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/jetpack/JetpackLoop" }
+        ]
+    },
+	"MiningLaser":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/mininglaser/MiningLaser" }
+        ]
+    },
+	"MiningLaserExplosive":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/mininglaser/MiningLaserExplosive" }
+        ]
+    },
+	"MiningLaserLongRange":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/mininglaser/MiningLaserLongRange" }
+        ]
+    },
+	"MiningLaserLowFocus":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/mininglaser/MiningLaserLowFocus" }
+        ]
+    },
+	"MiningLaserScatter":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/mininglaser/MiningLaserScatter" }
+        ]
+    },
+	"NanosabreIdle":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/nanosabre/NanosabreIdle" }
+        ]
+    },
+	"NanosabrePowerup":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/nanosabre/NanosabrePowerup" }
+        ]
+    },
+	"NanosabreSwing1":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/nanosabre/NanosabreSwing1" }
+        ]
+    },
+	"NanosabreSwing2":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/nanosabre/NanosabreSwing2" }
+        ]
+    },
+	"NanosabreSwing3":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/nanosabre/NanosabreSwing3" }
+        ]
+    },
+	"HelmetLoop":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/quantumsuit/HelmetLoop" }
+        ]
+    },
+	"QuantumsuitBoots":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/quantumsuit/QuantumsuitBoots" }
+        ]
+    },
+	"BatteryUse":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/BatteryUse" }
+        ]
+    },
+	"Dynamiteomote":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/Dynamiteomote" }
+        ]
+    },
+	"InsulationCutters":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/InsulationCutters" }
+        ]
+    },
+	"NukeExplosion":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/NukeExplosion" }
+        ]
+    },
+	"ODScanner":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/ODScanner" }
+        ]
+    },
+	"Painter":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/Painter" }
+        ]
+    },
+	"RubberTrampoline":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/RubberTrampoline" }
+        ]
+    },
+	"Treetap":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/Treetap" }
+        ]
+    },
+	"Wrench":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/Wrench" }
+        ]
+    }
+}

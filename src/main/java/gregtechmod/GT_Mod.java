@@ -1174,7 +1174,7 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 				    CompressedStreamTools.writeCompressed(tNBT, new FileOutputStream(new File(tDirectory, "GT_IDSU_Energyvalues.dat")));
 		        }
 			} catch (Throwable e) {
-				e.printStackTrace();
+				GT_Log.log.catching(e);
 			}
     	}
     }
@@ -1195,7 +1195,7 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 	        	}
 			} catch (Throwable e) {
                	if (!(e instanceof java.io.FileNotFoundException))
-               		e.printStackTrace();
+               		GT_Log.log.catching(e);
 			}
 	    }
     }

@@ -13,9 +13,10 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
 
 import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class GT_Renderer extends RenderPlayer {
 	
@@ -24,15 +25,15 @@ public class GT_Renderer extends RenderPlayer {
 		setRenderManager(RenderManager.instance);
 	}
 	
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void receiveRenderEvent(RenderPlayerEvent.Pre aEvent) {
 		if (GT_Utility.getFullInvisibility(aEvent.entityPlayer)) {aEvent.setCanceled(true); return;}
 	}
 	
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void receiveRenderSpecialsEvent(RenderPlayerEvent.Specials.Pre aEvent) {
 		AbstractClientPlayer aPlayer = (AbstractClientPlayer)aEvent.entityPlayer;
-		float aPartialTicks = aEvent.partialTicks;
+		float aPartialTicks = aEvent.partialRenderTick;
 		
 		if (GT_Utility.getFullInvisibility(aPlayer)) {aEvent.setCanceled(true); return;}
 		
@@ -42,19 +43,22 @@ public class GT_Renderer extends RenderPlayer {
         try {
             ResourceLocation tResource = null;
             
-            if (GT_Mod.sAdminNames.contains(aPlayer.username.toLowerCase()))
+            if (GT_Mod.sAdminNames.contains(aPlayer.getDisplayName().toLowerCase()))
                	tResource = new ResourceLocation(GregTech_API.MOD_ID, "textures/AdminCape.png");
-	    	if (GT_Mod.sPremiumNames.contains(aPlayer.username.toLowerCase()))
+	    	if (GT_Mod.sPremiumNames.contains(aPlayer.getDisplayName().toLowerCase()))
 	            tResource = new ResourceLocation(GregTech_API.MOD_ID, "textures/PremiumCape.png");
-		    if (GT_Mod.mBrainTechCapeList.contains(aPlayer.username.toLowerCase()))
+		    if (GT_Mod.mBrainTechCapeList.contains(aPlayer.getDisplayName().toLowerCase()))
 	           	tResource = new ResourceLocation(GregTech_API.MOD_ID, "textures/BrainTechCape.png");
-	    	if (GT_Mod.mGregTechCapeList.contains(aPlayer.username.toLowerCase()))
+	    	if (GT_Mod.mGregTechCapeList.contains(aPlayer.getDisplayName().toLowerCase()))
 	            tResource = new ResourceLocation(GregTech_API.MOD_ID, "textures/GregTechCape.png");
-    		if (aPlayer.username.equalsIgnoreCase("Mr_Brain"))
+    		if (aPlayer.getDisplayName().equalsIgnoreCase("Mr_Brain"))
     			tResource = new ResourceLocation(GregTech_API.MOD_ID, "textures/MrBrainCape.png");
-    		if (aPlayer.username.equalsIgnoreCase("GregoriusT"))
+    		if (aPlayer.getDisplayName().equalsIgnoreCase("GregoriusT"))
     			tResource = new ResourceLocation(GregTech_API.MOD_ID, "textures/GregoriusCape.png");
-	        
+    		if (aPlayer.getDisplayName().equalsIgnoreCase("The_DnK"))
+    			tResource = new ResourceLocation(GregTech_API.MOD_ID, "textures/GregTechCape.png");
+    		
+    		
 	        if (!aPlayer.getHideCape()) {
 	        	bindTexture(tResource);
 	            GL11.glPushMatrix();

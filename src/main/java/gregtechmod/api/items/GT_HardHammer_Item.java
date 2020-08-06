@@ -137,6 +137,7 @@ public class GT_HardHammer_Item extends GT_Tool_Item {
 			    	tY = aY-5+tRandom.nextInt(11);
 			    	tZ = aZ-5+tRandom.nextInt(11);
 			    	tBlock = aWorld.getBlock(tX, tY, tZ);
+			    	if (tBlock == Blocks.air) continue;
 			    	tMetaID = aWorld.getBlockMetadata(tX, tY, tZ);
 			    	tString = GT_OreDictUnificator.getAssociation(new ItemStack(tBlock, 1, tMetaID));
 			    	if (tString != null && tString.startsWith("ore")) {
