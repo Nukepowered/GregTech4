@@ -9,6 +9,8 @@ import gregtechmod.api.enums.OrePrefixes;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -41,23 +43,23 @@ public class GT_RecipeRegistrator {
 		if (aAssotiation == null || !aAssotiation.startsWith(OrePrefixes.ingot.toString())) aPlate = null;
 		if (aPlate != null && GT_OreDictUnificator.getFirstOre(aPlate, 1) == null) aPlate = null;
 		
-		if (!GT_Utility.areStacksEqual(aMat, new ItemStack(Item.ingotIron, 1))) {
+		if (!GT_Utility.areStacksEqual(aMat, new ItemStack(Items.iron_ingot, 1))) {
 			if ((tStack = GT_ModHandler.getRecipeOutput(new ItemStack[] {aMat, null, aMat, null, aMat, null, null, null, null})) != null)
-				if (GT_Utility.areStacksEqual(tStack, new ItemStack(Item.bucketEmpty, 1)))
+				if (GT_Utility.areStacksEqual(tStack, new ItemStack(Items.bucket, 1)))
 					GT_ModHandler.removeRecipe(new ItemStack[] {aMat, null, aMat, null, aMat, null, null, null, null});
 			if ((tStack = GT_ModHandler.getRecipeOutput(new ItemStack[] {null, null, null, aMat, null, aMat, null, aMat, null})) != null)
-				if (GT_Utility.areStacksEqual(tStack, new ItemStack(Item.bucketEmpty, 1)))
+				if (GT_Utility.areStacksEqual(tStack, new ItemStack(Items.bucket, 1)))
 					GT_ModHandler.removeRecipe(new ItemStack[] {null, null, null, aMat, null, aMat, null, aMat, null});
 			if ((tStack = GT_ModHandler.getRecipeOutput(new ItemStack[] {aMat, null, aMat, aMat, aMat, aMat, null, null, null})) != null)
-				if (GT_Utility.areStacksEqual(tStack, new ItemStack(Item.minecartEmpty, 1)))
+				if (GT_Utility.areStacksEqual(tStack, new ItemStack(Items.bucket, 1)))
 					GT_ModHandler.removeRecipe(new ItemStack[] {aMat, null, aMat, aMat, aMat, aMat, null, null, null});
 			if ((tStack = GT_ModHandler.getRecipeOutput(new ItemStack[] {null, null, null, aMat, null, aMat, aMat, aMat, aMat})) != null)
-				if (GT_Utility.areStacksEqual(tStack, new ItemStack(Item.minecartEmpty, 1)))
+				if (GT_Utility.areStacksEqual(tStack, new ItemStack(Items.bucket, 1)))
 					GT_ModHandler.removeRecipe(new ItemStack[] {null, null, null, aMat, null, aMat, aMat, aMat, aMat});
 		}
 		
 		if (aBackMacerating || aBackSmelting) {
-			sMt1.itemID = aMat.itemID;
+			sMt1 = aMat;
 			sMt1.stackSize = 1;
 			sMt1.setItemDamage(aMat.getItemDamage());
 			
@@ -75,7 +77,7 @@ public class GT_RecipeRegistrator {
 		    for (Materials tMaterial : sRodMaterialList) {
 		    	ItemStack tMt2 = GT_OreDictUnificator.getFirstOre(OrePrefixes.stick.toString() + tMaterial, 1), tMt3 = GT_OreDictUnificator.getFirstOre(OrePrefixes.dustSmall.toString() + tMaterial, 2);
 		    	if (tMt2 != null) {
-					sMt2.itemID = tMt2.itemID;
+					sMt2 = tMt2;
 					sMt2.stackSize = 1;
 					sMt2.setItemDamage(tMt2.getItemDamage());
 					
@@ -123,7 +125,8 @@ public class GT_RecipeRegistrator {
 	}
 	*/
 	
-	private static final ItemStack sMt1 = new ItemStack(0, 1, 0), sMt2 = new ItemStack(0, 1, 1);
+	private static ItemStack sMt1 = new ItemStack(Blocks.air, 1, 0);
+	private static ItemStack sMt2 = new ItemStack(Blocks.air, 1, 1);
 	private static final String s_H = "H", s_F = "F", s_I = "I", s_P = "P", s_R = "R", s_W = "W";
 	
 	private static final ItemStack[][]

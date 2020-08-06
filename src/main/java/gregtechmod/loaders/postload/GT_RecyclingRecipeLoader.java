@@ -121,7 +121,7 @@ public class GT_RecyclingRecipeLoader implements Runnable {
 		
         GT_ModHandler.addPulverisationRecipe(new ItemStack(Blocks.enchanting_table, 1), GT_OreDictUnificator.get("dustDiamond", 2), GT_OreDictUnificator.get("dustObsidian", 4), 95, false);
         GT_ModHandler.addPulverisationRecipe(new ItemStack(Blocks.furnace, 1), new ItemStack(Blocks.sand, 7), null, 0, false);
-        GT_ModHandler.addPulverisationRecipe(new ItemStack(Blocks.lit_furnace, 1), new ItemStack(Blocks.sand, 7), null, 0, false);
+        GT_ModHandler.addPulverisationRecipe(new ItemStack(Blocks.furnace, 1), new ItemStack(Blocks.sand, 7), null, 0, false);
         GT_ModHandler.addPulverisationRecipe(new ItemStack(Blocks.stone_button, 1), new ItemStack(Blocks.sand, 1), null, 0, false);
         GT_ModHandler.addPulverisationRecipe(new ItemStack(Items.sign, 1, 0), GT_OreDictUnificator.get("dustWood", 2), null, 0, false);
         GT_ModHandler.addPulverisationRecipe(new ItemStack(Items.wooden_door, 1, 0), GT_OreDictUnificator.get("dustWood", 6), null, 0, false);

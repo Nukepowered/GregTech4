@@ -6,7 +6,9 @@ import gregtechmod.api.world.GT_Worldgen;
 
 import java.util.Random;
 
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.chunk.Chunk;
@@ -20,11 +22,11 @@ public class GT_Worldgenerator implements cpw.mods.fml.common.IWorldGenerator {
 	public static boolean sGeneratedOres[] = new boolean[] {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true};
 	
 	public GT_Worldgenerator() {
-		//net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(this);
-		cpw.mods.fml.common.registry.GameRegistry.registerWorldGenerator(this);
+		net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(this);
+		cpw.mods.fml.common.registry.GameRegistry.registerWorldGenerator(this,0);
 	}
 	
-	@net.minecraftforge.event.ForgeSubscribe
+	@SubscribeEvent
 	public void receiveWorldgenEvent(net.minecraftforge.event.terraingen.PopulateChunkEvent.Post aEvent) {
 		generate(aEvent.rand, aEvent.chunkX*16, aEvent.chunkZ*16, aEvent.world, aEvent.chunkProvider, aEvent.chunkProvider);
 	}
@@ -48,7 +50,7 @@ public class GT_Worldgenerator implements cpw.mods.fml.common.IWorldGenerator {
     		try {
     			tWorldGen.executeWorldgen(aWorld, aRandom, tBiome, tDimensionType, aX, aZ, aChunkGenerator, aChunkProvider);
     		} catch (Throwable e) {
-    			e.printStackTrace(GT_Log.err);
+    			GT_Log.log.catching(e);
     		}
     	}
     	
@@ -60,43 +62,43 @@ public class GT_Worldgenerator implements cpw.mods.fml.common.IWorldGenerator {
     	if (sAsteroids && aRandom.nextInt(100) == 0) {
     		int tPosY = 10 + aRandom.nextInt(237);
     		if (aRandom.nextInt(25) == 0) {
-    			new GT_MinableOreGenerator(Block.whiteStone.blockID, 0, 100+aRandom.nextInt(101), true, 0).generate(aWorld, aRandom, aX + aRandom.nextInt(16), tPosY, aZ + aRandom.nextInt(16));
+    			new GT_MinableOreGenerator(Blocks.end_stone, 0, 100+aRandom.nextInt(101), true, Blocks.air).generate(aWorld, aRandom, aX + aRandom.nextInt(16), tPosY, aZ + aRandom.nextInt(16));
     			if (sGeneratedOres[9])
             		for (int i = 0; i < 5; i++)
-            			new GT_MinableOreGenerator(GregTech_API.sBlockList[2].blockID, 9,16, true, Block.whiteStone.blockID).generate(aWorld, aRandom, aX - 8 + aRandom.nextInt(24), tPosY+aRandom.nextInt(41), aZ - 8 + aRandom.nextInt(24));
+            			new GT_MinableOreGenerator(GregTech_API.sBlockList[2], 9,16, true, Blocks.end_stone).generate(aWorld, aRandom, aX - 8 + aRandom.nextInt(24), tPosY+aRandom.nextInt(41), aZ - 8 + aRandom.nextInt(24));
             	if (sGeneratedOres[10])
             		for (int i = 0; i < 2; i++)
-            			new GT_MinableOreGenerator(GregTech_API.sBlockList[2].blockID,10, 4, true, Block.whiteStone.blockID).generate(aWorld, aRandom, aX - 8 + aRandom.nextInt(24), tPosY+aRandom.nextInt(41), aZ - 8 + aRandom.nextInt(24));
+            			new GT_MinableOreGenerator(GregTech_API.sBlockList[2],10, 4, true, Blocks.end_stone).generate(aWorld, aRandom, aX - 8 + aRandom.nextInt(24), tPosY+aRandom.nextInt(41), aZ - 8 + aRandom.nextInt(24));
              	if (sGeneratedOres[11])
             		for (int i = 0; i < 7; i++)
-            			new GT_MinableOreGenerator(GregTech_API.sBlockList[2].blockID,11, 8, true, Block.whiteStone.blockID).generate(aWorld, aRandom, aX - 8 + aRandom.nextInt(24), tPosY+aRandom.nextInt(41), aZ - 8 + aRandom.nextInt(24));
+            			new GT_MinableOreGenerator(GregTech_API.sBlockList[2],11, 8, true, Blocks.end_stone).generate(aWorld, aRandom, aX - 8 + aRandom.nextInt(24), tPosY+aRandom.nextInt(41), aZ - 8 + aRandom.nextInt(24));
              	if (sGeneratedOres[12])
             		for (int i = 0; i <12; i++)
-            			new GT_MinableOreGenerator(GregTech_API.sBlockList[2].blockID,12,16, true, Block.whiteStone.blockID).generate(aWorld, aRandom, aX - 8 + aRandom.nextInt(24), tPosY+aRandom.nextInt(41), aZ - 8 + aRandom.nextInt(24));
+            			new GT_MinableOreGenerator(GregTech_API.sBlockList[2],12,16, true, Blocks.end_stone).generate(aWorld, aRandom, aX - 8 + aRandom.nextInt(24), tPosY+aRandom.nextInt(41), aZ - 8 + aRandom.nextInt(24));
     		}
     		for (int i = 0; i < 5; i++)
-    			new GT_MinableOreGenerator(Block.whiteStone.blockID, 0, 30+aRandom.nextInt(31), true, 0).generate(aWorld, aRandom, aX + aRandom.nextInt(16), tPosY+aRandom.nextInt(51)-25, aZ + aRandom.nextInt(16));
+    			new GT_MinableOreGenerator(Blocks.end_stone, 0, 30+aRandom.nextInt(31), true, Blocks.air).generate(aWorld, aRandom, aX + aRandom.nextInt(16), tPosY+aRandom.nextInt(51)-25, aZ + aRandom.nextInt(16));
     		if (sGeneratedOres[9])
         		for (int i = 0; i < 5; i++)
-        			new GT_MinableOreGenerator(GregTech_API.sBlockList[2].blockID, 9,12, true, Block.whiteStone.blockID).generate(aWorld, aRandom, aX - 8 + aRandom.nextInt(24), tPosY+aRandom.nextInt(41)-20, aZ - 8 + aRandom.nextInt(24));
+        			new GT_MinableOreGenerator(GregTech_API.sBlockList[2], 9,12, true, Blocks.end_stone).generate(aWorld, aRandom, aX - 8 + aRandom.nextInt(24), tPosY+aRandom.nextInt(41)-20, aZ - 8 + aRandom.nextInt(24));
         	if (sGeneratedOres[10])
         		for (int i = 0; i < 1; i++)
-        			new GT_MinableOreGenerator(GregTech_API.sBlockList[2].blockID,10, 4, true, Block.whiteStone.blockID).generate(aWorld, aRandom, aX - 8 + aRandom.nextInt(24), tPosY+aRandom.nextInt(41)-20, aZ - 8 + aRandom.nextInt(24));
+        			new GT_MinableOreGenerator(GregTech_API.sBlockList[2],10, 4, true, Blocks.end_stone).generate(aWorld, aRandom, aX - 8 + aRandom.nextInt(24), tPosY+aRandom.nextInt(41)-20, aZ - 8 + aRandom.nextInt(24));
          	if (sGeneratedOres[11])
         		for (int i = 0; i < 3; i++)
-        			new GT_MinableOreGenerator(GregTech_API.sBlockList[2].blockID,11, 8, true, Block.whiteStone.blockID).generate(aWorld, aRandom, aX - 8 + aRandom.nextInt(24), tPosY+aRandom.nextInt(41)-20, aZ - 8 + aRandom.nextInt(24));
+        			new GT_MinableOreGenerator(GregTech_API.sBlockList[2],11, 8, true, Blocks.end_stone).generate(aWorld, aRandom, aX - 8 + aRandom.nextInt(24), tPosY+aRandom.nextInt(41)-20, aZ - 8 + aRandom.nextInt(24));
     	}
     	if (sGeneratedOres[9])
     		for (int i = 0; i < 4; i++)
-    			new GT_MinableOreGenerator(GregTech_API.sBlockList[2].blockID, 9,16, false, Block.whiteStone.blockID).generate(aWorld, aRandom, aX + aRandom.nextInt(16), aRandom.nextInt(128), aZ + aRandom.nextInt(16));
+    			new GT_MinableOreGenerator(GregTech_API.sBlockList[2], 9,16, false, Blocks.end_stone).generate(aWorld, aRandom, aX + aRandom.nextInt(16), aRandom.nextInt(128), aZ + aRandom.nextInt(16));
     	if (sGeneratedOres[10])
     		for (int i = 0; i < 1; i++)
-    			new GT_MinableOreGenerator(GregTech_API.sBlockList[2].blockID,10, 4, false, Block.whiteStone.blockID).generate(aWorld, aRandom, aX + aRandom.nextInt(16), aRandom.nextInt(128), aZ + aRandom.nextInt(16));
+    			new GT_MinableOreGenerator(GregTech_API.sBlockList[2],10, 4, false, Blocks.end_stone).generate(aWorld, aRandom, aX + aRandom.nextInt(16), aRandom.nextInt(128), aZ + aRandom.nextInt(16));
     	if (sGeneratedOres[11])
     		for (int i = 0; i < 5; i++)
-    			new GT_MinableOreGenerator(GregTech_API.sBlockList[2].blockID,11, 8, false, Block.whiteStone.blockID).generate(aWorld, aRandom, aX + aRandom.nextInt(16), aRandom.nextInt(128), aZ + aRandom.nextInt(16));
+    			new GT_MinableOreGenerator(GregTech_API.sBlockList[2],11, 8, false, Blocks.end_stone).generate(aWorld, aRandom, aX + aRandom.nextInt(16), aRandom.nextInt(128), aZ + aRandom.nextInt(16));
     	if (sGeneratedOres[12])
     		for (int i = 0; i < 8; i++)
-    			new GT_MinableOreGenerator(GregTech_API.sBlockList[2].blockID,12,16, false, Block.whiteStone.blockID).generate(aWorld, aRandom, aX + aRandom.nextInt(16), aRandom.nextInt(128), aZ + aRandom.nextInt(16));
+    			new GT_MinableOreGenerator(GregTech_API.sBlockList[2],12,16, false, Blocks.end_stone).generate(aWorld, aRandom, aX + aRandom.nextInt(16), aRandom.nextInt(128), aZ + aRandom.nextInt(16));
     }
 }

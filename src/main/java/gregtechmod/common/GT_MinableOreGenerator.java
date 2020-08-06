@@ -10,23 +10,24 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 public class GT_MinableOreGenerator extends WorldGenerator
 {
     /** The block ID of the ore to be placed using this generator. */
-    private int minableBlockId;
+    private Block minableBlock;
     private int minableBlockMeta = 0;
 
     /** The number of blocks to generate. */
-    private int numberOfBlocks, mBlockID;
+    private int numberOfBlocks; 
+    private Block mBlock;
     private boolean allowVoid = false;
     
-    public GT_MinableOreGenerator(int par1, int par2) {
-        minableBlockId = par1;
+    public GT_MinableOreGenerator(Block par1, int par2) {
+        minableBlock = par1;
         numberOfBlocks = par2;
     }
     
-    public GT_MinableOreGenerator(int id, int meta, int number, boolean aAllowVoid, int aBlockID) {
-        this(id, number);
+    public GT_MinableOreGenerator(Block block, int meta, int number, boolean aAllowVoid, Block aBlock) {
+        this(block, number);
         minableBlockMeta = meta;
         allowVoid = aAllowVoid;
-        mBlockID = aBlockID;
+        mBlock = aBlock;
     }
     
     public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5) {
@@ -61,9 +62,9 @@ public class GT_MinableOreGenerator extends WorldGenerator
                         if (var39 * var39 + var42 * var42 < 1.0D) {
                             for (int var44 = var34; var44 <= var37; ++var44) {
                                 double var45 = ((double)var44 + 0.5D - var24) / (var28 / 2.0D);
-                                Block block = Block.blocksList[par1World.getBlockId(var38, var41, var44)];
-                                if (var39 * var39 + var42 * var42 + var45 * var45 < 1.0D && ((allowVoid&&par1World.getBlockId(var38, var41, var44)==0) || (block != null && block.isGenMineableReplaceable(par1World, var38, var41, var44, mBlockID)))) {
-                                    par1World.setBlock(var38, var41, var44, this.minableBlockId, minableBlockMeta, 0);
+                                Block block = par1World.getBlock(var38, var41, var44);
+                                if (var39 * var39 + var42 * var42 + var45 * var45 < 1.0D && ((allowVoid&&par1World.isAirBlock(var38, var41, var44)) || (block != null && block.isReplaceableOreGen(par1World, var38, var41, var44, mBlock)))) {
+                                    par1World.setBlock(var38, var41, var44, this.minableBlock, minableBlockMeta, 0);
                                 }
                             }
                         }
