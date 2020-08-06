@@ -2,16 +2,14 @@ package gregtechmod.api.metatileentity;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IHasWorldObjectAndCoords;
-import gregtechmod.api.util.GT_Log;
-import gregtechmod.api.util.GT_Utility;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.network.packet.Packet54PlayNoteBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.IFluidHandler;
 
 /**
@@ -36,10 +34,10 @@ public abstract class BaseTileEntity extends TileEntity implements IHasWorldObje
     @Override public final int getRandomNumber(int aRange) {return getWorld().rand.nextInt(aRange);}
 	@Override public final BiomeGenBase getBiome(int aX, int aZ) {return getWorld().getBiomeGenForCoords(aX, aZ);}
 	@Override public final BiomeGenBase getBiome() {return getBiome(getXCoord(), getZCoord());}
-    @Override public final short getBlockID(int aX, int aY, int aZ) {if (ignoreUnloadedChunks && !getWorld().blockExists(aX, aY, aZ)) return 0; return (short)getWorld().getBlockId(aX, aY, aZ);}
-    @Override public final short getBlockIDOffset(int aX, int aY, int aZ) {return getBlockID(getXCoord()+aX, getYCoord()+aY, getZCoord()+aZ);}
-    @Override public final short getBlockIDAtSide(byte aSide) {return getBlockIDAtSideAndDistance(aSide, 1);}
-    @Override public final short getBlockIDAtSideAndDistance(byte aSide, int aDistance) {return getBlockID(getOffsetX(aSide, aDistance), getOffsetY(aSide, aDistance), getOffsetZ(aSide, aDistance));}
+    @Override public final Block getBlock(int aX, int aY, int aZ) {if (ignoreUnloadedChunks && !getWorld().blockExists(aX, aY, aZ)) return Blocks.air; return getWorld().getBlock(aX, aY, aZ);}
+    @Override public final Block getBlockOffset(int aX, int aY, int aZ) {return getBlock(getXCoord()+aX, getYCoord()+aY, getZCoord()+aZ);}
+    @Override public final Block getBlockAtSide(byte aSide) {return getBlockAtSideAndDistance(aSide, 1);}
+    @Override public final Block getBlockAtSideAndDistance(byte aSide, int aDistance) {return getBlock(getOffsetX(aSide, aDistance), getOffsetY(aSide, aDistance), getOffsetZ(aSide, aDistance));}
     @Override public final byte getMetaID(int aX, int aY, int aZ) {if (ignoreUnloadedChunks && !getWorld().blockExists(aX, aY, aZ)) return 0; return (byte)getWorld().getBlockMetadata(aX, aY, aZ);}
     @Override public final byte getMetaIDOffset(int aX, int aY, int aZ) {return getMetaID(getXCoord()+aX, getYCoord()+aY, getZCoord()+aZ);}
     @Override public final byte getMetaIDAtSide(byte aSide) {return getMetaIDAtSideAndDistance(aSide, 1);}
@@ -52,11 +50,11 @@ public abstract class BaseTileEntity extends TileEntity implements IHasWorldObje
 	@Override public final boolean getSkyOffset(int aX, int aY, int aZ) {return getSky(getXCoord()+aX, getYCoord()+aY, getZCoord()+aZ);}
 	@Override public final boolean getSkyAtSide(byte aSide) {return getSkyAtSideAndDistance(aSide, 1);}
 	@Override public final boolean getSkyAtSideAndDistance(byte aSide, int aDistance) {return getSky(getOffsetX(aSide, aDistance), getOffsetY(aSide, aDistance), getOffsetZ(aSide, aDistance));}
-	@Override public final boolean getAir(int aX, int aY, int aZ) {if (ignoreUnloadedChunks && !getWorld().blockExists(aX, aY, aZ)) return true; return GT_Utility.isAirBlock(getWorld(), aX, aY, aZ);}
+	@Override public final boolean getAir(int aX, int aY, int aZ) {if (ignoreUnloadedChunks && !getWorld().blockExists(aX, aY, aZ)) return true; return getWorld().isAirBlock(aX, aY, aZ);}
 	@Override public final boolean getAirOffset(int aX, int aY, int aZ) {return getAir(getXCoord()+aX, getYCoord()+aY, getZCoord()+aZ);}
 	@Override public final boolean getAirAtSide(byte aSide) {return getAirAtSideAndDistance(aSide, 1);}
 	@Override public final boolean getAirAtSideAndDistance(byte aSide, int aDistance) {return getAir(getOffsetX(aSide, aDistance), getOffsetY(aSide, aDistance), getOffsetZ(aSide, aDistance));}
-	@Override public final TileEntity getTileEntity(int aX, int aY, int aZ) {if (ignoreUnloadedChunks && !getWorld().blockExists(aX, aY, aZ)) return null; return getWorld().getBlockTileEntity(aX, aY, aZ);}
+	@Override public final TileEntity getTileEntity(int aX, int aY, int aZ) {if (ignoreUnloadedChunks && !getWorld().blockExists(aX, aY, aZ)) return null; return getWorld().getTileEntity(aX, aY, aZ);}
     @Override public final TileEntity getTileEntityOffset(int aX, int aY, int aZ) {return getTileEntity(getXCoord()+aX, getYCoord()+aY, getZCoord()+aZ);}
     @Override public final TileEntity getTileEntityAtSide(byte aSide) {return getTileEntityAtSideAndDistance(aSide, 1);}
     @Override public final TileEntity getTileEntityAtSideAndDistance(byte aSide, int aDistance) {return getTileEntity(getOffsetX(aSide, aDistance), getOffsetY(aSide, aDistance), getOffsetZ(aSide, aDistance));}
@@ -75,21 +73,25 @@ public abstract class BaseTileEntity extends TileEntity implements IHasWorldObje
     @Override public final int   getOffsetZ(byte aSide, int aMultiplier) {return         getZCoord() + ForgeDirection.getOrientation(aSide).offsetZ * aMultiplier ;}
     
 	@Override public final void sendBlockEvent(byte aID, byte aValue) {
-		try {
-			for (Object tObject : getWorld().playerEntities) {
-				if (tObject instanceof EntityPlayerMP) {
-					EntityPlayerMP tPlayer = (EntityPlayerMP)tObject;
-					if (Math.abs(tPlayer.posX - getXCoord()) < 256 && Math.abs(tPlayer.posZ - getZCoord()) < 256) {
-						tPlayer.playerNetServerHandler.sendPacketToPlayer(new Packet54PlayNoteBlock(getXCoord(), getYCoord(), getZCoord(), getBlockIDOffset(0, 0, 0), aID, aValue));
-					}
-				} else {
-					getWorld().addBlockEvent(getXCoord(), getYCoord(), getZCoord(), getBlockIDOffset(0, 0, 0), aID, aValue);
-					break;
-				}
-			}
-		} catch(Throwable e) {
-			getWorld().addBlockEvent(getXCoord(), getYCoord(), getZCoord(), getBlockIDOffset(0, 0, 0), aID, aValue);
-			if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);
+//		try {
+//			for (Object tObject : getWorld().playerEntities) {
+//				if (tObject instanceof EntityPlayerMP) {
+//					EntityPlayerMP tPlayer = (EntityPlayerMP)tObject;
+//					if (Math.abs(tPlayer.posX - getXCoord()) < 256 && Math.abs(tPlayer.posZ - getZCoord()) < 256) {
+//						tPlayer.playerNetServerHandler.sendPacketToPlayer(new Packet54PlayNoteBlock(getXCoord(), getYCoord(), getZCoord(), getBlockIDOffset(0, 0, 0), aID, aValue));
+//					}
+//				} else {
+//					getWorld().addBlockEvent(getXCoord(), getYCoord(), getZCoord(), getBlockOffset(0, 0, 0), aID, aValue);
+//					break;
+//				}
+//			}
+//		} catch(Throwable e) {
+//			getWorld().addBlockEvent(getXCoord(), getYCoord(), getZCoord(), getBlockOffset(0, 0, 0), aID, aValue);
+//			if (GregTech_API.DEBUG_MODE) GT_Log.log.throwing(e);
+//		}
+		World tWorld = getWorld();
+		if (!tWorld.isRemote) {
+			tWorld.addBlockEvent(getXCoord(), getYCoord(), getZCoord(), getBlockOffset(0, 0, 0), aID, aValue);
 		}
 	}
 }

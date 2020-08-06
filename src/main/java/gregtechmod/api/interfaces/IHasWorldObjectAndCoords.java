@@ -1,5 +1,6 @@
 package gregtechmod.api.interfaces;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.nbt.NBTTagCompound;
@@ -37,10 +38,10 @@ public interface IHasWorldObjectAndCoords {
 	public IFluidHandler getITankContainerAtSide(byte aSide);
 	public IFluidHandler getITankContainerAtSideAndDistance(byte aSide, int aDistance);
 	
-    public short getBlockID(int aX, int aY, int aZ);
-    public short getBlockIDOffset(int aX, int aY, int aZ);
-    public short getBlockIDAtSide(byte aSide);
-    public short getBlockIDAtSideAndDistance(byte aSide, int aDistance);
+    public Block getBlock(int aX, int aY, int aZ);
+    public Block getBlockOffset(int aX, int aY, int aZ);
+    public Block getBlockAtSide(byte aSide);
+    public Block getBlockAtSideAndDistance(byte aSide, int aDistance);
     
 	public byte getMetaID(int aX, int aY, int aZ);
     public byte getMetaIDOffset(int aX, int aY, int aZ);

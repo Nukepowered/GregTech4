@@ -19,7 +19,7 @@ import cpw.mods.fml.common.gameevent.TickEvent.Phase;
 
 public class GT_TickHandler {
 	public static boolean isFirstTick = true;
-    
+	
 	@SubscribeEvent
 	public void onServerTick(TickEvent.ServerTickEvent event) {
 		if (GT_Mod.mDoNotInit || event.phase == Phase.START) return;
