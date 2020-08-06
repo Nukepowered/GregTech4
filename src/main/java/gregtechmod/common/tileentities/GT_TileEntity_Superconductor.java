@@ -28,12 +28,12 @@ public class GT_TileEntity_Superconductor extends GT_TileEntityMetaID_Machine im
     	if (xCoord == 0 && yCoord == 0 && zCoord == 0) return 103;
     	
     	boolean[] tConnectedSides = {
-        	worldObj.getBlockTileEntity(xCoord, yCoord-1, zCoord) instanceof IEnergyTile,
-        	worldObj.getBlockTileEntity(xCoord, yCoord+1, zCoord) instanceof IEnergyTile,
-    		worldObj.getBlockTileEntity(xCoord+1, yCoord, zCoord) instanceof IEnergyTile,
-    		worldObj.getBlockTileEntity(xCoord, yCoord, zCoord+1) instanceof IEnergyTile,
-    		worldObj.getBlockTileEntity(xCoord-1, yCoord, zCoord) instanceof IEnergyTile,
-    		worldObj.getBlockTileEntity(xCoord, yCoord, zCoord-1) instanceof IEnergyTile
+        	worldObj.getTileEntity(xCoord, yCoord-1, zCoord) instanceof IEnergyTile,
+        	worldObj.getTileEntity(xCoord, yCoord+1, zCoord) instanceof IEnergyTile,
+    		worldObj.getTileEntity(xCoord+1, yCoord, zCoord) instanceof IEnergyTile,
+    		worldObj.getTileEntity(xCoord, yCoord, zCoord+1) instanceof IEnergyTile,
+    		worldObj.getTileEntity(xCoord-1, yCoord, zCoord) instanceof IEnergyTile,
+    		worldObj.getTileEntity(xCoord, yCoord, zCoord-1) instanceof IEnergyTile
     	};
     	
     	switch (aSide) {
@@ -157,15 +157,15 @@ public class GT_TileEntity_Superconductor extends GT_TileEntityMetaID_Machine im
 		return 0.0D;
 	}
 	@Override
-	public int getInsulationEnergyAbsorption() {
+	public double getInsulationEnergyAbsorption() {
 		return 8192;
 	}
 	@Override
-	public int getInsulationBreakdownEnergy() {
+	public double getInsulationBreakdownEnergy() {
 		return Integer.MAX_VALUE;
 	}
 	@Override
-	public int getConductorBreakdownEnergy() {
+	public double getConductorBreakdownEnergy() {
 		return Integer.MAX_VALUE;
 	}
 	@Override

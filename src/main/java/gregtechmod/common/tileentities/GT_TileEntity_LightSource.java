@@ -7,17 +7,14 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 
 public class GT_TileEntity_LightSource extends TileEntity {
-	
 	private int mTickTimer = 0;
 	
-    public GT_TileEntity_LightSource() {
-    	
-    }
+    public GT_TileEntity_LightSource() {}
     
-    @Override
+	@Override
 	public void updateEntity() {
     	if (worldObj.isRemote) return;
-    	
+    	@SuppressWarnings("unchecked")
     	Iterator<EntityPlayer> tIterator = worldObj.playerEntities.iterator();
     	
     	boolean temp = true;

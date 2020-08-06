@@ -42,6 +42,7 @@ public class GT_TileEntity_PlayerDetector extends GT_TileEntityMetaID_Machine {
 				mActive = false;
 				mRedstoneStrength = 0;
     			if (decreaseStoredEnergy(50, false)) {
+    				@SuppressWarnings("unchecked")
     				Iterator<EntityPlayer> tIterator = worldObj.playerEntities.iterator();
     				while (tIterator.hasNext()) {
     					EntityPlayer tPlayer = tIterator.next();

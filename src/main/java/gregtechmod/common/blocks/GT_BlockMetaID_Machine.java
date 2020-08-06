@@ -840,8 +840,7 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
     
 	@Override
 	public TileEntity createNewTileEntity(World aWorld, int meta) { // TODO: there wasnt meta before
-//		return GregTech_API.constructBaseMetaTileEntity(); // FIXME
-		return null;
+		return GregTech_API.constructBaseMetaTileEntity();
 	}
 	
 	@Override

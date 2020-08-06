@@ -8,6 +8,8 @@ import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.interfaces.IMachineProgress;
 import gregtechmod.api.interfaces.IUpgradableMachine;
 import gregtechmod.api.items.GT_EnergyArmor_Item;
+import gregtechmod.common.network.GT_PacketHandler;
+import gregtechmod.common.network.packet.GT_SoundPacket;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -41,10 +43,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
-import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S07PacketRespawn;
 import net.minecraft.network.play.server.S1DPacketEntityEffect;
-import net.minecraft.network.play.server.S3FPacketCustomPayload;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
@@ -64,9 +64,6 @@ import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
 import net.minecraftforge.fluids.IFluidContainerItem;
 import net.minecraftforge.fluids.IFluidHandler;
-
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
 
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 
@@ -679,23 +676,23 @@ public class GT_Utility {
 	
 	public static boolean sendSoundToPlayers(World aWorld, String aSoundName, float aSoundStrength, float aSoundModulation, int aX, int aY, int aZ) {
 		if (aSoundName == null || aSoundName.equals("") || aWorld == null || aWorld.isRemote) return false;
-        ByteArrayDataOutput tOut = ByteStreams.newDataOutput();
-
-        tOut.writeInt(aX);
-        tOut.writeShort(aY);
-        tOut.writeInt(aZ);
-		
-        tOut.writeUTF(aSoundName);
-        tOut.writeFloat(aSoundStrength);
-        tOut.writeFloat(aSoundModulation < 0 ? (1.0F + (aWorld.rand.nextFloat() - aWorld.rand.nextFloat()) * 0.2F) * 0.7F : aSoundModulation);
-        
-		S3FPacketCustomPayload tPacket = new S3FPacketCustomPayload(GregTech_API.SOUND_PACKET_CHANNEL, tOut.toByteArray());
+//        ByteArrayDataOutput tOut = ByteStreams.newDataOutput();
+//
+//        tOut.writeInt(aX);
+//        tOut.writeShort(aY);
+//        tOut.writeInt(aZ);
+//		
+//        tOut.writeUTF(aSoundName);
+//        tOut.writeFloat(aSoundStrength);
+//        tOut.writeFloat(aSoundModulation < 0 ? (1.0F + (aWorld.rand.nextFloat() - aWorld.rand.nextFloat()) * 0.2F) * 0.7F : aSoundModulation);
+		aSoundModulation = aSoundModulation < 0 ? (1.0F + (aWorld.rand.nextFloat() - aWorld.rand.nextFloat()) * 0.2F) * 0.7F : aSoundModulation;
+		GT_SoundPacket tPacket = new GT_SoundPacket(aSoundName, aX, aY, aZ, aSoundStrength, aSoundModulation);
         sendPacketToAllPlayersInRange(aWorld, tPacket, aX, aZ);
         
 		return true;
 	}
 	
-	public static void sendPacketToAllPlayersInRange(World aWorld, Packet aPacket, int aX, int aZ) {
+	public static void sendPacketToAllPlayersInRange(World aWorld, GT_SoundPacket aPacket, int aX, int aZ) {
         for (Object tObject : aWorld.playerEntities) {
         	if (tObject instanceof EntityPlayerMP) {
         		EntityPlayerMP tPlayer = (EntityPlayerMP)tObject;
@@ -703,7 +700,7 @@ public class GT_Utility {
 					Chunk tChunk = aWorld.getChunkFromBlockCoords(aX, aZ);
 					if (tPlayer.getServerForPlayer().getPlayerManager().isPlayerWatchingChunk(tPlayer, tChunk.xPosition, tChunk.zPosition)) {
 						if (GregTech_API.DEBUG_MODE) GT_Log.log.debug("sent Packet to " + tPlayer.getDisplayName());
-						tPlayer.playerNetServerHandler.sendPacket(aPacket);
+						GT_PacketHandler.SOUND_PACKET_CHANNEL.sendTo(aPacket, tPlayer);
 					}
 	        	}
         	} else {

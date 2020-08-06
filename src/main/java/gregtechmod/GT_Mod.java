@@ -31,7 +31,11 @@ import gregtechmod.common.items.GT_MetaBlock_Item;
 import gregtechmod.common.items.GT_MetaMachine_Item;
 import gregtechmod.common.items.GT_MetaOre_Item;
 import gregtechmod.common.items.GT_MetaStone1_Item;
+import gregtechmod.common.network.GT_PacketHandler;
+import gregtechmod.common.network.packet.GT_Packet;
 import gregtechmod.common.render.GT_Block_Renderer;
+import gregtechmod.common.tileentities.GT_TileEntity_LightSource;
+import gregtechmod.common.tileentities.GT_TileEntity_PlayerDetector;
 import gregtechmod.loaders.load.GT_CircuitBehaviorLoad;
 import gregtechmod.loaders.load.GT_DictRegistratorPostItem;
 import gregtechmod.loaders.load.GT_DictRegistratorPreItem;
@@ -220,6 +224,7 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     	GregTech_API.sPreloadStarted = true;
     	
     	new GT_InitHardCodedCapeList().run();
+    	new GT_PacketHandler().run();
     	
     	GT_Log.log.info("GT_Mod: Creating Config Object.");
     	GregTech_API.sConfiguration = new GT_Config(tConfig1, tConfig2, tConfig3);
@@ -518,10 +523,10 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 //		GameRegistry.registerTileEntity(GT_TileEntity_ComputerCube.class	, GT_LanguageManager.mNameList1[ 4]);
 //		GameRegistry.registerTileEntity(GT_TileEntity_Sonictron.class		, GT_LanguageManager.mNameList1[ 6]);
 //		GameRegistry.registerTileEntity(GT_TileEntity_Superconductor.class	, GT_LanguageManager.mNameList1[12]);
-//		GameRegistry.registerTileEntity(GT_TileEntity_PlayerDetector.class	, GT_LanguageManager.mNameList1[13]);
-//		GameRegistry.registerTileEntity(GT_TileEntity_LightSource.class		, "GT_LightSource");
+		GameRegistry.registerTileEntity(GT_TileEntity_PlayerDetector.class	, GT_LanguageManager.mNameList1[13]);
+		GameRegistry.registerTileEntity(GT_TileEntity_LightSource.class		, "GT_LightSource");
 		
-//		GameRegistry.registerTileEntity(GregTech_API.constructBaseMetaTileEntity().getClass(), "MetatileEntity");
+		GameRegistry.registerTileEntity(GregTech_API.constructBaseMetaTileEntity().getClass(), "MetatileEntity");
 //		GameRegistry.registerTileEntity(BaseMetaPipeEntity.class, "MetaPipeEntity");
 		
 		GT_Log.log.info("GT_Mod: Testing BaseMetaTileEntity.");
@@ -1145,7 +1150,7 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 		return false;
 	}
     
-    public boolean allowPacketToBeSent(Packet aPacket, EntityPlayerMP aPlayer) {
+    public boolean allowPacketToBeSent(GT_Packet aPacket, EntityPlayerMP aPlayer) {
     	return true;
     }
     

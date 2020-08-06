@@ -79,8 +79,7 @@ public class GT_Block_LightSource extends BlockContainer {
 
 	@Override
 	public TileEntity createNewTileEntity(World aWorld, int meta) {
-//		return new GT_TileEntity_LightSource(); // TODO: Tile entities
-		return null;
+		return new GT_TileEntity_LightSource();
 	}
 	
 	@SuppressWarnings("rawtypes")

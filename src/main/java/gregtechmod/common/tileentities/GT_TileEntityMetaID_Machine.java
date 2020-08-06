@@ -22,8 +22,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraft.util.IIcon;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
@@ -1303,7 +1302,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	}
 
 	@Override
-	public Icon getTextureIcon(byte aSide, byte aMeta) {
+	public IIcon getTextureIcon(byte aSide, byte aMeta) {
 		return null;
 	}
 

@@ -7,7 +7,6 @@ import gregtechmod.api.world.GT_Worldgen;
 import java.util.Random;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
