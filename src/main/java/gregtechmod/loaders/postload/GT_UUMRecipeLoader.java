@@ -1,11 +1,17 @@
 package gregtechmod.loaders.postload;
 
+import gregtechmod.api.util.GT_Log;
+import gregtechmod.api.util.GT_ModHandler;
+import gregtechmod.api.util.GT_OreDictUnificator;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 
 public class GT_UUMRecipeLoader implements Runnable {
 	@Override
 	public void run() {
-        /*
-        GT_Log.out.println("GT_Mod: Adding/Removing/Overloading UUM Recipes.");
+        
+        GT_Log.log.info("GT_Mod: Adding/Removing/Overloading UUM Recipes.");
         
         String tMat = "craftingUUMatter";
         
@@ -31,43 +37,43 @@ public class GT_UUMRecipeLoader implements Runnable {
         GT_ModHandler.addUUMRecipe(GT_OreDictUnificator.get("dustAluminium", 16)		, new Object[] {" U ", " U ", "UUU", true, 'U', tMat});
         GT_ModHandler.addUUMRecipe(GT_OreDictUnificator.get("dustRedstone", 24)			, new Object[] {"   ", " U ", "UUU", true, 'U', tMat});
         GT_ModHandler.addUUMRecipe(GT_OreDictUnificator.getFirstOre("dustNikolite", 12)	, new Object[] {"UUU", " U ", "   ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Item.coal, 8)							, new Object[] {"  U", "U  ", "  U", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Item.enderPearl, 1)					, new Object[] {"UUU", "U U", "UUU", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Item.blazeRod, 4)						, new Object[] {"U U", "UU ", "U U", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Block.waterlily, 32)					, new Object[] {"U U", "UUU", " U ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Item.leather, 32)						, new Object[] {"U U", " U ", "UUU", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Item.silk, 32)							, new Object[] {"U U", "   ", " U ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Block.obsidian, 12)					, new Object[] {"U U", "U U", "   ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Block.netherrack, 16)					, new Object[] {"  U", " U ", "U  ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Block.waterStill, 1)					, new Object[] {"   ", " U ", " U ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Block.lavaStill, 1)					, new Object[] {" U ", " U ", " U ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Block.stone, 16)						, new Object[] {"   ", " U ", "   ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Block.wood, 8, 0)						, new Object[] {" U ", "   ", "   ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Block.wood, 8, 1)						, new Object[] {"U  ", "   ", "   ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Block.wood, 8, 2)						, new Object[] {"  U", "   ", "   ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Block.wood, 8, 3)						, new Object[] {"   ", "U  ", "   ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Block.glass, 32)						, new Object[] {" U ", "U U", " U ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Block.grass, 16)						, new Object[] {"   ", "U  ", "U  ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Block.sandStone, 16)					, new Object[] {"   ", "  U", " U ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Block.cobblestoneMossy, 16)			, new Object[] {"   ", " U ", "U U", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Block.blockSnow, 16)					, new Object[] {"U U", "   ", "   ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Block.cactus, 48)						, new Object[] {" U ", "UUU", "U U", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Block.vine, 24)						, new Object[] {"U  ", "U  ", "U  ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Item.dyePowder, 9, 4)					, new Object[] {" U ", " U ", " UU", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Item.feather, 32)						, new Object[] {" U ", " U ", "U U", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Item.gunpowder, 15)					, new Object[] {"UUU", "U  ", "UUU", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Item.clay, 48)							, new Object[] {"UU ", "U  ", "UU ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Item.dyePowder, 32, 3)					, new Object[] {"UU ", "  U", "UU ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Item.dyePowder, 48, 0)					, new Object[] {" UU", " UU", " U ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Item.reed, 48)							, new Object[] {"U U", "U U", "U U", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Item.flint, 32)						, new Object[] {" U ", "UU ", "UU ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Item.bone, 32)							, new Object[] {"U  ", "UU ", "U  ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Block.stoneBrick, 48, 3)				, new Object[] {"UU ", "UU ", "U  ", true, 'U', tMat});
-        GT_ModHandler.addUUMRecipe(new ItemStack(Block.mycelium, 24)					, new Object[] {"   ", "U U", "UUU", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Items.coal, 8)							, new Object[] {"  U", "U  ", "  U", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Items.ender_pearl, 1)					, new Object[] {"UUU", "U U", "UUU", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Items.blaze_rod, 4)						, new Object[] {"U U", "UU ", "U U", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Blocks.waterlily, 32)					, new Object[] {"U U", "UUU", " U ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Items.leather, 32)						, new Object[] {"U U", " U ", "UUU", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Items.string, 32)							, new Object[] {"U U", "   ", " U ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Blocks.obsidian, 12)					, new Object[] {"U U", "U U", "   ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Blocks.netherrack, 16)					, new Object[] {"  U", " U ", "U  ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Blocks.water, 1)					, new Object[] {"   ", " U ", " U ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Blocks.lava, 1)					, new Object[] {" U ", " U ", " U ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Blocks.stone, 16)						, new Object[] {"   ", " U ", "   ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Blocks.log, 8, 0)						, new Object[] {" U ", "   ", "   ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Blocks.log, 8, 1)						, new Object[] {"U  ", "   ", "   ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Blocks.log, 8, 2)						, new Object[] {"  U", "   ", "   ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Blocks.log, 8, 3)						, new Object[] {"   ", "U  ", "   ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Blocks.glass, 32)						, new Object[] {" U ", "U U", " U ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Blocks.grass, 16)						, new Object[] {"   ", "U  ", "U  ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Blocks.sandstone, 16)					, new Object[] {"   ", "  U", " U ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Blocks.mossy_cobblestone, 16)			, new Object[] {"   ", " U ", "U U", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Blocks.snow, 16)					, new Object[] {"U U", "   ", "   ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Blocks.cactus, 48)						, new Object[] {" U ", "UUU", "U U", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Blocks.vine, 24)						, new Object[] {"U  ", "U  ", "U  ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Items.dye, 9, 4)					, new Object[] {" U ", " U ", " UU", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Items.feather, 32)						, new Object[] {" U ", " U ", "U U", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Items.gunpowder, 15)					, new Object[] {"UUU", "U  ", "UUU", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Items.clay_ball, 48)							, new Object[] {"UU ", "U  ", "UU ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Items.dye, 32, 3)					, new Object[] {"UU ", "  U", "UU ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Items.dye, 48, 0)					, new Object[] {" UU", " UU", " U ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Items.reeds, 48)							, new Object[] {"U U", "U U", "U U", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Items.flint, 32)						, new Object[] {" U ", "UU ", "UU ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Items.bone, 32)							, new Object[] {"U  ", "UU ", "U  ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Blocks.stonebrick, 48, 3)				, new Object[] {"UU ", "UU ", "U  ", true, 'U', tMat});
+        GT_ModHandler.addUUMRecipe(new ItemStack(Blocks.mycelium, 24)					, new Object[] {"   ", "U U", "UUU", true, 'U', tMat});
         GT_ModHandler.addUUMRecipe(GT_ModHandler.getIC2Item("resin", 21)				, new Object[] {"U U", "   ", "U U", true, 'U', tMat});
         GT_ModHandler.addUUMRecipe(GT_ModHandler.getIC2Item("iridiumOre", 1)			, new Object[] {"UUU", " U ", "UUU", true, 'U', tMat});
         
         GT_ModHandler.removeRecipe(new ItemStack[] {null, null, null, null, null, null, GT_ModHandler.getIC2Item("matter", 1), GT_ModHandler.getIC2Item("matter", 1), GT_ModHandler.getIC2Item("matter", 1)});
-		*/
+		
 	}
 }
