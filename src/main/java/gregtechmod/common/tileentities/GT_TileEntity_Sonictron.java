@@ -8,7 +8,7 @@ import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.packet.Packet;
+import net.minecraft.network.Packet;
 
 public class GT_TileEntity_Sonictron extends GT_TileEntityMetaID_Machine {
 	
@@ -68,7 +68,7 @@ public class GT_TileEntity_Sonictron extends GT_TileEntityMetaID_Machine {
 				if (++mCurrentIndex>63) mCurrentIndex=-1;
 			}
 		} catch (Throwable e) {
-			e.printStackTrace(GT_Log.err);
+			GT_Log.log.catching(e);
 		}
     }
     
@@ -107,7 +107,7 @@ public class GT_TileEntity_Sonictron extends GT_TileEntityMetaID_Machine {
 		    	}
 	    	}
     	} catch (Throwable e) {
-    		e.printStackTrace(GT_Log.err);
+    		GT_Log.log.catching(e);
     	}
     	return true;
     }

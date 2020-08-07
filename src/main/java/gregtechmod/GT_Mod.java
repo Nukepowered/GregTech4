@@ -6,6 +6,7 @@ import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IGT_Mod;
 import gregtechmod.api.interfaces.IGT_RecipeAdder;
 import gregtechmod.api.items.GT_Tool_Item;
+import gregtechmod.api.metatileentity.BaseMetaPipeEntity;
 import gregtechmod.api.util.GT_Config;
 import gregtechmod.api.util.GT_ItsNotMyFaultException;
 import gregtechmod.api.util.GT_LanguageManager;
@@ -35,12 +36,16 @@ import gregtechmod.common.network.GT_ConnectionHandler;
 import gregtechmod.common.network.GT_PacketHandler;
 import gregtechmod.common.network.packet.GT_Packet;
 import gregtechmod.common.render.GT_Block_Renderer;
+import gregtechmod.common.tileentities.GT_TileEntity_ComputerCube;
 import gregtechmod.common.tileentities.GT_TileEntity_LightSource;
 import gregtechmod.common.tileentities.GT_TileEntity_PlayerDetector;
+import gregtechmod.common.tileentities.GT_TileEntity_Sonictron;
+import gregtechmod.common.tileentities.GT_TileEntity_Superconductor;
 import gregtechmod.loaders.load.GT_CircuitBehaviorLoad;
 import gregtechmod.loaders.load.GT_DictRegistratorPostItem;
 import gregtechmod.loaders.load.GT_DictRegistratorPreItem;
 import gregtechmod.loaders.load.GT_ItemLoader;
+import gregtechmod.loaders.load.GT_MetaTileEntityLoader;
 import gregtechmod.loaders.misc.GT_CoverLoader;
 import gregtechmod.loaders.misc.GT_TooEasyModeLoader;
 import gregtechmod.loaders.postload.GT_BlockResistanceLoader;
@@ -58,6 +63,7 @@ import gregtechmod.loaders.postload.GT_ScrapboxDropLoader;
 import gregtechmod.loaders.postload.GT_SeedFlowerIterator;
 import gregtechmod.loaders.postload.GT_SonictronLoader;
 import gregtechmod.loaders.postload.GT_UUMRecipeLoader;
+import gregtechmod.loaders.postload.GT_Worldgenloader;
 import gregtechmod.loaders.preload.GT_InitHardCodedCapeList;
 
 import java.io.File;
@@ -523,22 +529,22 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 		GregTech_API.registerMachineBlock(GregTech_API.sBlockList[4], (256|512|8192));
 		
         GT_Log.log.info("GT_Mod: Register old TileEntities.");
-//		GameRegistry.registerTileEntity(GT_TileEntity_ComputerCube.class	, GT_LanguageManager.mNameList1[ 4]);
-//		GameRegistry.registerTileEntity(GT_TileEntity_Sonictron.class		, GT_LanguageManager.mNameList1[ 6]);
-//		GameRegistry.registerTileEntity(GT_TileEntity_Superconductor.class	, GT_LanguageManager.mNameList1[12]);
+		GameRegistry.registerTileEntity(GT_TileEntity_ComputerCube.class	, GT_LanguageManager.mNameList1[ 4]);
+		GameRegistry.registerTileEntity(GT_TileEntity_Sonictron.class		, GT_LanguageManager.mNameList1[ 6]);
+		GameRegistry.registerTileEntity(GT_TileEntity_Superconductor.class	, GT_LanguageManager.mNameList1[12]);
 		GameRegistry.registerTileEntity(GT_TileEntity_PlayerDetector.class	, GT_LanguageManager.mNameList1[13]);
 		GameRegistry.registerTileEntity(GT_TileEntity_LightSource.class		, "GT_LightSource");
 		
 		GameRegistry.registerTileEntity(GregTech_API.constructBaseMetaTileEntity().getClass(), "MetatileEntity");
-//		GameRegistry.registerTileEntity(BaseMetaPipeEntity.class, "MetaPipeEntity");
+		GameRegistry.registerTileEntity(BaseMetaPipeEntity.class, "MetaPipeEntity");
 		
 		GT_Log.log.info("GT_Mod: Testing BaseMetaTileEntity.");
-//		if (GregTech_API.constructBaseMetaTileEntity() == null) {
-//			GT_Log.out.println("GT_Mod: Fatal Error ocurred while initializing TileEntities, crashing Minecraft.");
-//			throw new RuntimeException("");
-//		}
+		if (GregTech_API.constructBaseMetaTileEntity() == null) {
+			GT_Log.log.error("GT_Mod: Fatal Error ocurred while initializing TileEntities, crashing Minecraft.");
+			throw new RuntimeException("");
+		}
 		
-//		new GT_MetaTileEntityLoader().run();
+		new GT_MetaTileEntityLoader().run();
 		new GT_DictRegistratorPreItem().run();
 		new GT_ItemLoader().run();
 		new GT_DictRegistratorPostItem().run();
@@ -604,7 +610,7 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
         new GT_ScrapboxDropLoader().run();
 //        new GT_UUMRecipeLoader().run();
 		new GT_CropLoader().run();
-//		new GT_Worldgenloader().run();
+		new GT_Worldgenloader().run();
         new GT_SonictronLoader().run();
 //        new GT_RecyclingRecipeLoader().run();
         
