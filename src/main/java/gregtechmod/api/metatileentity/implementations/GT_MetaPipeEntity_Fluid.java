@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
@@ -37,7 +37,7 @@ public abstract class GT_MetaPipeEntity_Fluid extends MetaPipeEntity {
 	public void saveNBTData(NBTTagCompound aNBT) {
 		if (mFluid != null) {
 			try {
-				aNBT.setCompoundTag("mLiquid", mFluid.writeToNBT(new NBTTagCompound("mLiquid")));
+				aNBT.setTag("mLiquid", mFluid.writeToNBT(new NBTTagCompound())); // TODO "mLiquid"
 			} catch(Throwable e) {}
 		}
 		aNBT.setByte("mLastReceivedFrom", mLastReceivedFrom);
@@ -143,11 +143,12 @@ public abstract class GT_MetaPipeEntity_Fluid extends MetaPipeEntity {
 		return mFluid != null ? mFluid.amount : 0;
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public final int fill_default(ForgeDirection aSide, FluidStack aFluid, boolean doFill) {
-		if (aFluid == null || aFluid.fluidID <= 0) return 0;
+		if (aFluid == null || aFluid.getFluidID() <= 0) return 0;
 		
-		if (mFluid == null || mFluid.fluidID <= 0) {
+		if (mFluid == null || mFluid.getFluidID() <= 0) {
 			if(aFluid.amount <= getCapacity()) {
 				if (doFill) {
 					mFluid = aFluid.copy();
@@ -184,6 +185,7 @@ public abstract class GT_MetaPipeEntity_Fluid extends MetaPipeEntity {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public final FluidStack drain(int maxDrain, boolean doDrain) {
 		if (mFluid == null) return null;

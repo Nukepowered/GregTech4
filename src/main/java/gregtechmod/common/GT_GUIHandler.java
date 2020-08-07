@@ -1,6 +1,5 @@
 package gregtechmod.common;
 
-import gregtechmod.api.GregTech_API;
 import gregtechmod.api.gui.GT_Container_BasicMachine;
 import gregtechmod.api.gui.GT_Container_BasicTank;
 import gregtechmod.api.gui.GT_Container_MultiMachine;
@@ -123,17 +122,16 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.network.IGuiHandler;
-import cpw.mods.fml.common.network.NetworkRegistry;
 
 public class GT_GUIHandler implements IGuiHandler {
 	
 	public GT_GUIHandler() {
-		NetworkRegistry.instance().registerGuiHandler(GregTech_API.gregtechmod, this);
+//		NetworkRegistry.instance().registerGuiHandler(GregTech_API.gregtechmod, this);
 	}
 	
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        TileEntity tTileEntity = world.getBlockTileEntity(x, y, z);
+        TileEntity tTileEntity = world.getTileEntity(x, y, z);
         if (ID ==   0) return new GT_ContainerMetaID_Machine			(player.inventory, (GT_TileEntityMetaID_Machine)tTileEntity, 0);
         
         if (ID ==   6) return new GT_Container_Sonictron				(player.inventory, (GT_TileEntity_Sonictron)		tTileEntity, 0);
@@ -222,7 +220,7 @@ public class GT_GUIHandler implements IGuiHandler {
 	
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-        TileEntity tTileEntity = world.getBlockTileEntity(x, y, z);
+        TileEntity tTileEntity = world.getTileEntity(x, y, z);
         if (ID ==   0) return new GT_GUIContainerMetaID_Machine				(player.inventory, (GT_TileEntityMetaID_Machine)	tTileEntity, 0, "");
         
         if (ID ==   6) return new GT_GUIContainer_Sonictron					(player.inventory, (GT_TileEntity_Sonictron)		tTileEntity, 0);

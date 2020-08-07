@@ -14,6 +14,7 @@ import net.minecraft.item.ItemStack;
 
 public class GT_BaseCrop extends CropCard {
 	private String mName = "", mDiscoveredBy = "Gregorius Techneticies", mAttributes[];
+	@SuppressWarnings("unused")
 	private int mTier = 0, mMaxSize = 0, mGrowthSpeed = 0, mAfterHarvestSize = 0, mHarvestSize = 0, mStats[] = new int[5];
 	private ItemStack mDrop = null, mSpecialDrops[] = null;
 	

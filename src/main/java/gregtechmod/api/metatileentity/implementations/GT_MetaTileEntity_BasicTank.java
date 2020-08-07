@@ -33,7 +33,7 @@ public abstract class GT_MetaTileEntity_BasicTank extends MetaTileEntity {
 	public void saveNBTData(NBTTagCompound aNBT) {
 		if (mFluid != null) {
 			try {
-				aNBT.setCompoundTag("mLiquid", mFluid.writeToNBT(new NBTTagCompound("mLiquid")));
+				aNBT.setTag("mLiquid", mFluid.writeToNBT(new NBTTagCompound())); // TODO "mLiquid"
 			} catch(Throwable e) {}
 		}
 	}
@@ -74,7 +74,7 @@ public abstract class GT_MetaTileEntity_BasicTank extends MetaTileEntity {
 			
 			if (displaysItemStack()) {
 				if (getDrainableStack() != null) {
-					mInventory[getStackDisplaySlot()] = GregTech_API.getGregTechItem(15, displaysStackSize()?Math.max(1, Math.min(getDrainableStack().amount/1000, 64)):1, getDrainableStack().fluidID);
+					mInventory[getStackDisplaySlot()] = GregTech_API.getGregTechItem(15, displaysStackSize()?Math.max(1, Math.min(getDrainableStack().amount/1000, 64)):1, getDrainableStack().getFluidID());
 				} else {
 					mInventory[getStackDisplaySlot()] = null;
 				}
@@ -123,11 +123,12 @@ public abstract class GT_MetaTileEntity_BasicTank extends MetaTileEntity {
 		return getDrainableStack() != null ? getDrainableStack().amount : 0;
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public final int fill(FluidStack aFluid, boolean doFill) {
-		if (aFluid == null || aFluid.fluidID <= 0 || !canTankBeFilled() || !isFluidInputAllowed(aFluid)) return 0;
+		if (aFluid == null || aFluid.getFluidID() <= 0 || !canTankBeFilled() || !isFluidInputAllowed(aFluid)) return 0;
 		
-		if (getFillableStack() == null || getFillableStack().fluidID <= 0) {
+		if (getFillableStack() == null || getFillableStack().getFluidID() <= 0) {
 			if(aFluid.amount <= getCapacity()) {
 				if (doFill)
 					setFillableStack(aFluid.copy());
@@ -158,6 +159,7 @@ public abstract class GT_MetaTileEntity_BasicTank extends MetaTileEntity {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public final FluidStack drain(int maxDrain, boolean doDrain) {
 		if (getDrainableStack() == null || !canTankBeEmptied()) return null;

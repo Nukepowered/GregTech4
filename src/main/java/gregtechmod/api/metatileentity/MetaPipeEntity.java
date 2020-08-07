@@ -9,12 +9,12 @@ import gregtechmod.api.util.GT_Utility;
 
 import java.util.ArrayList;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Icon;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraft.util.IIcon;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
@@ -113,10 +113,10 @@ public abstract class MetaPipeEntity implements IMetaTileEntity {
 	public void onServerStop() {}
 	public void onConfigLoad(GT_Config aConfig) {}
 	public void setItemNBT(NBTTagCompound aNBT) {}
-	public Icon getTextureIcon(byte aSide, byte aFacing, boolean aActive, boolean aRedstone) {return null;}
+	public IIcon getTextureIcon(byte aSide, byte aFacing, boolean aActive, boolean aRedstone) {return null;}
 	
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister aBlockIconRegister) {}
+	public void registerIcons(IIconRegister aBlockIconRegister) {}
 	
 	public boolean allowCoverOnSide(byte aSide, int aCoverID) {return true;}
 	public void onScrewdriverRightClick(byte aSide, EntityPlayer aPlayer, float aX, float aY, float aZ) {}
@@ -244,7 +244,7 @@ public abstract class MetaPipeEntity implements IMetaTileEntity {
 	public int getSizeInventory() {return getInvSize();}
 	public ItemStack getStackInSlot(int aIndex) {if (aIndex >= 0 && aIndex < mInventory.length) return mInventory[aIndex]; return null;}
 	public void setInventorySlotContents(int aIndex, ItemStack aStack) {if (aIndex >= 0 && aIndex < mInventory.length) mInventory[aIndex] = aStack;}
-	public String getInvName() {if (GregTech_API.mMetaTileList[getBaseMetaTileEntity().getMetaTileID()] != null) return GregTech_API.mMetaTileList[getBaseMetaTileEntity().getMetaTileID()].getMetaName(); return "";}
+	public String getInventoryName() {if (GregTech_API.mMetaTileList[getBaseMetaTileEntity().getMetaTileID()] != null) return GregTech_API.mMetaTileList[getBaseMetaTileEntity().getMetaTileID()].getMetaName(); return "";}
 	public int getInventoryStackLimit() {return 64;}
 	public boolean isItemValidForSlot(int aIndex, ItemStack aStack) {return getBaseMetaTileEntity().isValidSlot(aIndex);}
 	
@@ -340,13 +340,8 @@ public abstract class MetaPipeEntity implements IMetaTileEntity {
 	}
 	
 	@Override
-	public boolean isInvNameLocalized() {
+	public boolean hasCustomInventoryName() {
 		return false;
-	}
-	
-	@Override
-	public void onInventoryChanged() {
-		
 	}
 	
 	@Override
@@ -355,13 +350,13 @@ public abstract class MetaPipeEntity implements IMetaTileEntity {
 	}
 	
 	@Override
-	public void openChest() {
-		
+	public void openInventory() {
+
 	}
-	
+
 	@Override
-	public void closeChest() {
-		
+	public void closeInventory() {
+
 	}
 	
 	@Override

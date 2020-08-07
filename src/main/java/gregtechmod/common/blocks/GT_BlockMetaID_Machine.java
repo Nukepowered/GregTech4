@@ -5,7 +5,6 @@ import gregtechmod.api.interfaces.ICoverable;
 import gregtechmod.api.interfaces.IDebugableBlock;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.interfaces.IMetaTileEntity;
-import gregtechmod.api.metatileentity.BaseMetaPipeEntity;
 import gregtechmod.api.metatileentity.BaseMetaTileEntity;
 import gregtechmod.api.util.GT_Config;
 import gregtechmod.api.util.GT_Log;
@@ -14,11 +13,7 @@ import gregtechmod.common.GT_FluidRegistry;
 import gregtechmod.common.items.GT_MetaItem_Component;
 import gregtechmod.common.render.GT_Block_Renderer;
 import gregtechmod.common.tileentities.GT_TileEntityMetaID_Machine;
-import gregtechmod.common.tileentities.GT_TileEntity_ComputerCube;
 import gregtechmod.common.tileentities.GT_TileEntity_PlayerDetector;
-import gregtechmod.common.tileentities.GT_TileEntity_Sonictron;
-import gregtechmod.common.tileentities.GT_TileEntity_Superconductor;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -566,7 +561,7 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 		
 		try {
 			if (aMeta > 0 && aMeta < 16) {
-//				tIndex = ((GT_TileEntityMetaID_Machine)createTileEntity(null, aMeta)).getTexture(aSide, aMeta); // TODO
+				tIndex = ((GT_TileEntityMetaID_Machine)createTileEntity(null, aMeta)).getTexture(aSide, aMeta); // TODO textures
 			} else if (GregTech_API.mMetaTileList[aMeta] != null) {
 				rIcon = GregTech_API.mMetaTileList[aMeta].getTextureIcon((byte)aSide, (byte)4, true, false);
 				if (rIcon == null) tIndex = GregTech_API.mMetaTileList[aMeta].getTextureIndex((byte)aSide, (byte)4, true, false);

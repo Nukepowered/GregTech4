@@ -31,6 +31,7 @@ import gregtechmod.common.items.GT_MetaBlock_Item;
 import gregtechmod.common.items.GT_MetaMachine_Item;
 import gregtechmod.common.items.GT_MetaOre_Item;
 import gregtechmod.common.items.GT_MetaStone1_Item;
+import gregtechmod.common.network.GT_ConnectionHandler;
 import gregtechmod.common.network.GT_PacketHandler;
 import gregtechmod.common.network.packet.GT_Packet;
 import gregtechmod.common.render.GT_Block_Renderer;
@@ -72,6 +73,7 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -94,12 +96,12 @@ import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.ReflectionHelper;
 
 /**
  * @author Gregorius Techneticies
  */
 @Mod(modid = "gregtech_addon", name="GregTech-Addon", version="MC1710", useMetadata=false, dependencies="required-after:IC2; after:UndergroundBiomes; after:factorization; after:Railcraft; after:ThermalExpansion; after:ThermalExpansion|Transport; after:ThermalExpansion|Energy; after:ThermalExpansion|Factory; after:XyCraft; after:MetallurgyCore; after:MetallurgyBase; after:MetallurgyEnder; after:MetallurgyFantasy; after:MetallurgyNether; after:MetallurgyPrecious; after:MetallurgyUtility; after:BuildCraft|Silicon; after:BuildCraft|Core; after:BuildCraft|Transport; after:BuildCraft|Factory; after:BuildCraft|Energy; after:BuildCraft|Builders; after:LiquidUU; after:TwilightForest; after:Forestry; after:RedPowerCore; after:RedPowerBase; after:RedPowerMachine; after:RedPowerCompat; after:RedPowerWiring; after:RedPowerLogic; after:RedPowerLighting; after:RedPowerWorld; after:RedPowerControl; after:Tubestuff; after:ICBM; after:Mekanism; after:MekanismGenerators; after:MekanismTools; after:ThaumicTinkerer; after:LiquidXP; after:MineFactoryReloaded; after:TConstruct; after:factorization.misc; after:AtomicScience; after:MFFS; after:ICBM|Contraption; after:ICBM|Explosion; after:ICBM|Sentry; after:mmmPowersuits;")
-// @NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = {GregTech_API.GENERIC_CHANNEL, GregTech_API.SOUND_PACKET_CHANNEL, GregTech_API.TILEENTITY_PACKET_CHANNEL/*, "EB", "RC", "XT|TradeSel", "mystcraft", "fz.bounce", "TwilightForest", "mmmPowerSuits", "tfmagicmap", "FOR", "BC", "TC", "TCF", "NuclearControl", "TConstruct", "BasicComponents", "RecipeRemover", "IronChest", "MFFS", "ICBM", "CoFH", "SC2", "ICBM|C", "ICBM|E", "InventoryTweaks", "BIN", "tfmazemap", "BCLP"/**/}, packetHandler = GT_PacketHandler.class, connectionHandler = GT_ConnectionHandler.class)
 public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     @Instance
     public static GT_Mod instance;
@@ -225,6 +227,7 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     	
     	new GT_InitHardCodedCapeList().run();
     	new GT_PacketHandler().run();
+    	new GT_ConnectionHandler().run();
     	
     	GT_Log.log.info("GT_Mod: Creating Config Object.");
     	GregTech_API.sConfiguration = new GT_Config(tConfig1, tConfig2, tConfig3);
@@ -877,8 +880,8 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     
     @EventHandler
     public void start(FMLServerStartedEvent aEvent) {
-//    	if (mDoNotInit) return;
-//    	GT_Recipe.reinit();
+    	if (mDoNotInit) return;
+    	GT_Recipe.reinit();
     }
     
     @EventHandler
@@ -1218,6 +1221,16 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
                		GT_Log.log.catching(e);
 			}
 	    }
+    }
+    
+    public static String drawMessage() {
+    	try {
+    		boolean isDrawing = ReflectionHelper.getPrivateValue(Tessellator.class, Tessellator.instance, new String[] {"isDrawing", "field_78415_z"});
+    		isDrawing = !isDrawing;
+    		ReflectionHelper.setPrivateValue(Tessellator.class, Tessellator.instance, isDrawing, new String[] {"isDrawing", "field_78415_z"});
+    	} catch(Throwable e) {} 
+    	
+    	return "I'm so great at drawing things :P";
     }
     
 	@Override

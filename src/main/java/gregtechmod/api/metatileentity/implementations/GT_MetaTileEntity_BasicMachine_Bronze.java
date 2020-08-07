@@ -10,7 +10,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 
 /**
  * NEVER INCLUDE THIS FILE IN YOUR MOD!!!
@@ -75,6 +75,7 @@ public abstract class GT_MetaTileEntity_BasicMachine_Bronze extends GT_MetaTileE
 		return false;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean allowToCheckRecipe() {
 		if (mNeedsSteamVenting && getBaseMetaTileEntity().getCoverIDAtSide(getBaseMetaTileEntity().getFrontFacing()) == 0 && !GT_Utility.hasBlockHitBox(getBaseMetaTileEntity().getWorld(), getBaseMetaTileEntity().getOffsetX(getBaseMetaTileEntity().getFrontFacing(), 1), getBaseMetaTileEntity().getOffsetY(getBaseMetaTileEntity().getFrontFacing(), 1), getBaseMetaTileEntity().getOffsetZ(getBaseMetaTileEntity().getFrontFacing(), 1))) {
@@ -85,7 +86,7 @@ public abstract class GT_MetaTileEntity_BasicMachine_Bronze extends GT_MetaTileE
 					tLiving.attackEntityFrom(DamageSource.generic, getSteamDamage());
 				}
 			} catch(Throwable e) {
-				if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);
+				if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);
 			}
 		}
 		return !mNeedsSteamVenting;

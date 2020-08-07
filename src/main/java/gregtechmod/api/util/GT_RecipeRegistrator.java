@@ -11,7 +11,6 @@ import java.util.List;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -37,7 +36,6 @@ public class GT_RecipeRegistrator {
 		aMat = GT_Utility.copy(aMat);
 		aOutput = GT_Utility.copy(aOutput);
 		ItemStack tStack, tUnificated = GT_OreDictUnificator.get(true, aMat);
-		ArrayList<ItemStack> tList;
 		String aAssotiation = GT_OreDictUnificator.getAssociation(aMat);
 		if (aOutput.stackSize < 1) aOutput.stackSize = 1;
 		if (aAssotiation == null || !aAssotiation.startsWith(OrePrefixes.ingot.toString())) aPlate = null;

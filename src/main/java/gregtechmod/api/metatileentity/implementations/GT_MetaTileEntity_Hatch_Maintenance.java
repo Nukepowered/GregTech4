@@ -59,7 +59,6 @@ public class GT_MetaTileEntity_Hatch_Maintenance extends MetaTileEntity {
 	
 	public void onToolClick(ItemStack aStack, EntityLivingBase aPlayer) {
 		if (aStack == null || aPlayer == null) return;
-		int tStack = GT_Utility.stackToInt(aStack);
 		if (GT_Utility.isItemStackInList(aStack, GregTech_API.sWrenchList)			&& GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) mWrench = true;
 		if (GT_Utility.isItemStackInList(aStack, GregTech_API.sScrewdriverList)		&& GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) mScrewdriver = true;
 		if (GT_Utility.isItemStackInList(aStack, GregTech_API.sSoftHammerList)		&& GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) mSoftHammer = true;

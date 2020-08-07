@@ -576,6 +576,11 @@ public abstract class MetaTileEntity implements IMetaTileEntity {
 	}
 
 	@Override
+	public void markDirty() {
+		
+	}
+	
+	@Override
 	public boolean hasCustomInventoryName() {
 		return true;
 	}
