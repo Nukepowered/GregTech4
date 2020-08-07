@@ -40,7 +40,7 @@ public abstract class MetaTileEntity implements IMetaTileEntity {
 	}
 	
 	/**
-	 * Only assigned for the MetaTileEntity in the List! Also only used to get the localized Name for the ItemStack and for getInvName.
+	 * Only assigned for the MetaTileEntity in the List! Also only used to get the localized Name for the ItemStack and for getInventoryName.
 	 */
 	public String mName;
 	

@@ -5,6 +5,7 @@ import gregtechmod.api.interfaces.ICoverable;
 import gregtechmod.api.interfaces.IDebugableBlock;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.interfaces.IMetaTileEntity;
+import gregtechmod.api.metatileentity.BaseMetaPipeEntity;
 import gregtechmod.api.metatileentity.BaseMetaTileEntity;
 import gregtechmod.api.util.GT_Config;
 import gregtechmod.api.util.GT_Log;
@@ -13,7 +14,11 @@ import gregtechmod.common.GT_FluidRegistry;
 import gregtechmod.common.items.GT_MetaItem_Component;
 import gregtechmod.common.render.GT_Block_Renderer;
 import gregtechmod.common.tileentities.GT_TileEntityMetaID_Machine;
+import gregtechmod.common.tileentities.GT_TileEntity_ComputerCube;
 import gregtechmod.common.tileentities.GT_TileEntity_PlayerDetector;
+import gregtechmod.common.tileentities.GT_TileEntity_Sonictron;
+import gregtechmod.common.tileentities.GT_TileEntity_Superconductor;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -786,7 +791,7 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 	@SideOnly(Side.CLIENT)
 	@Override
 	public int getMixedBrightnessForBlock(IBlockAccess aWorld, int aX, int aY, int aZ) {
-		return 0;
+		return super.getMixedBrightnessForBlock(aWorld, aX, aY, aZ);
 	}
 	
 	@Override
@@ -841,14 +846,14 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 	@Override
 	public TileEntity createTileEntity(World aWorld, int aMeta) {
 		switch(aMeta) {
-//		case  0: return GregTech_API.constructBaseMetaTileEntity(); // TODO
-//		case  1: return new BaseMetaPipeEntity();
-//		case  2: return new BaseMetaPipeEntity();
-//		case  3: return new BaseMetaPipeEntity();
-//		case  4: return new GT_TileEntity_ComputerCube();
-//		case  6: return new GT_TileEntity_Sonictron();
-//		case 12: return new GT_TileEntity_Superconductor();
-//		case 13: return new GT_TileEntity_PlayerDetector();
+		case  0: return GregTech_API.constructBaseMetaTileEntity(); // TODO
+		case  1: return new BaseMetaPipeEntity();
+		case  2: return new BaseMetaPipeEntity();
+		case  3: return new BaseMetaPipeEntity();
+		case  4: return new GT_TileEntity_ComputerCube();
+		case  6: return new GT_TileEntity_Sonictron();
+		case 12: return new GT_TileEntity_Superconductor();
+		case 13: return new GT_TileEntity_PlayerDetector();
 		default: return null;
 		}
 	}

@@ -45,8 +45,8 @@ public class GT_MetaTileEntityLoader implements Runnable {
 		new GT_MetaTileEntity_DistillationTower			( 44, "GT_DistillationTower"	, I18n.format("metatileentity.GT_DistillationTower.name"));
 		new GT_MetaTileEntity_Safe						( 45, "GT_Safe"					, I18n.format("metatileentity.GT_Safe.name"));
 		new GT_MetaTileEntity_ElectricInventoryManager	( 46, "GT_InventoryManager"		, I18n.format("metatileentity.GT_InventoryManager.name"));
-//		new GT_MetaTileEntity_AdvancedPump				( 47, "GT_Pump"					, I18n.format("metatileentity.GT_Pump.name"));
-//		new GT_MetaTileEntity_Barrel					( 48, "GT_Barrel"				, I18n.format("metatileentity.GT_Barrel.name"));
+		new GT_MetaTileEntity_AdvancedPump				( 47, "GT_Pump"					, I18n.format("metatileentity.GT_Pump.name"));
+		new GT_MetaTileEntity_Barrel					( 48, "GT_Barrel"				, I18n.format("metatileentity.GT_Barrel.name"));
 		new GT_MetaTileEntity_QuantumChest				( 49, "GT_QuantumChest"			, I18n.format("metatileentity.GT_QuantumChest.name"));
 		new GT_MetaTileEntity_Macerator					( 50, "GT_Macerator"			, I18n.format("metatileentity.GT_Macerator.name"));
 		new GT_MetaTileEntity_Extractor					( 51, "GT_Extractor"			, I18n.format("metatileentity.GT_Extractor.name"));
@@ -67,13 +67,13 @@ public class GT_MetaTileEntityLoader implements Runnable {
 		new GT_MetaTileEntity_RedstoneNoteBlock			( 66, "GT_RedstoneNoteBlock"	, I18n.format("metatileentity.GT_RedstoneNoteBlock.name"));
 		new GT_MetaTileEntity_RedstoneButtonPanel		( 67, "GT_RedstoneButtonPanel"	, I18n.format("metatileentity.GT_RedstoneButtonPanel.name"));
 		new GT_MetaTileEntity_RedstoneStrengthDisplay	( 68, "GT_RedstoneDisplayBlock"	, I18n.format("metatileentity.GT_RedstoneDisplayBlock.name"));
-//		new GT_MetaTileEntity_RedstoneCircuitBlock		( 69, "GT_RedstoneCircuitBlock"	, I18n.format("metatileentity.GT_RedstoneCircuitBlock.name"));
+		new GT_MetaTileEntity_RedstoneCircuitBlock		( 69, "GT_RedstoneCircuitBlock"	, I18n.format("metatileentity.GT_RedstoneCircuitBlock.name"));
 		new GT_MetaTileEntity_Shelf						( 70, "GT_Shelf"				, I18n.format("metatileentity.GT_Shelf.name"));
 		new GT_MetaTileEntity_Shelf_Iron				( 71, "GT_Shelf_Iron"			, I18n.format("metatileentity.GT_Shelf_Iron.name"));
 		new GT_MetaTileEntity_Shelf_FileCabinet			( 72, "GT_Shelf_FileCabinet"	, I18n.format("metatileentity.GT_Shelf_FileCabinet.name"));
 		new GT_MetaTileEntity_Shelf_Desk				( 73, "GT_Shelf_Desk"			, I18n.format("metatileentity.GT_Shelf_Desk.name"));
 		new GT_MetaTileEntity_Shelf_Compartment			( 74, "GT_Shelf_Compartment"	, I18n.format("metatileentity.GT_Shelf_Compartment.name"));
-//		
+		
 		new GT_MetaTileEntity_RedstoneStrengthScale		( 78, "GT_RedstoneScaleBlock"	, I18n.format("metatileentity.GT_RedstoneScaleBlock.name"));
 		new GT_MetaTileEntity_MachineBox				( 79, "GT_MachineBox"			, I18n.format("metatileentity.GT_MachineBox.name"));
 		new GT_MetaTileEntity_FusionComputer			( 80, "GT_Fusion_Computer"		, I18n.format("metatileentity.GT_Fusion_Computer.name"));
@@ -93,19 +93,19 @@ public class GT_MetaTileEntityLoader implements Runnable {
 		new GT_MetaTileEntity_Hatch_Dynamo				( 94, "GT_Dynamo_Hatch"			, I18n.format("metatileentity.GT_Dynamo_Hatch.name"));
 		new GT_MetaTileEntity_Hatch_EnergyInput			( 95, "GT_Energy_Hatch"			, I18n.format("metatileentity.GT_Energy_Hatch.name"));
 		new GT_MetaTileEntity_Hatch_Muffler				( 96, "GT_Muffler_Hatch"		, I18n.format("metatileentity.GT_Muffler_Hatch.name"));
-//		
+		
 		new GT_MetaTileEntity_AESU						(100, "GT_AESU"					, I18n.format("metatileentity.GT_AESU.name"));
 		new GT_MetaTileEntity_IDSU						(101, "GT_IDSU"					, I18n.format("metatileentity.GT_IDSU.name"));
 		new GT_MetaTileEntity_Lightningrod				(102, "GT_Lightningrod"			, I18n.format("metatileentity.GT_Lightningrod.name"));
 		new GT_MetaTileEntity_Supercondensator			(103, "GT_Supercondensator"		, I18n.format("metatileentity.GT_Supercondensator.name"));
-//		
+		
 		new GT_MetaTileEntity_Multi_GasTurbine			(108, "GT_Multi_GasTurbine"		, I18n.format("metatileentity.GT_Multi_GasTurbine.name"));
 		new GT_MetaTileEntity_Multi_SteamTurbine		(109, "GT_Multi_SteamTurbine"	, I18n.format("metatileentity.GT_Multi_SteamTurbine.name"));
 		new GT_MetaTileEntity_Multi_ThermalBoiler		(110, "GT_Multi_ThermalBoiler"	, I18n.format("metatileentity.GT_Multi_ThermalBoiler.name"));
 		new GT_MetaTileEntity_Lathe						(111, "GT_Lathe"				, I18n.format("metatileentity.GT_Lathe.name"));
 //		new GT_MetaTileEntity_AdvancedCraftingTable		(112, "GT_ProjectTable"			, I18n.format("metatileentity.GT_ProjectTable.name"));
 		new GT_MetaTileEntity_PlateCutter				(113, "GT_Cutter"				, I18n.format("metatileentity.GT_Cutter.name"));
-//		
+		
 		new GT_MetaTileEntity_BronzeCraftingTable		(128, "GT_BronzeTable"			, I18n.format("metatileentity.GT_BronzeTable.name"));
 //		new GT_MetaTileEntity_Boiler_Bronze				(129, "GT_BronzeBoiler"			, I18n.format("metatileentity.GT_BronzeBoiler.name"));
 		new GT_MetaTileEntity_BronzeMacerator			(130, "GT_BronzeMacerator"		, I18n.format("metatileentity.GT_BronzeMacerator.name"));
@@ -117,23 +117,23 @@ public class GT_MetaTileEntityLoader implements Runnable {
 		new GT_MetaTileEntity_BronzeBlastFurnace		(136, "GT_BronzeBlastFurnace"	, I18n.format("metatileentity.GT_BronzeBlastFurnace.name"));
 //		new GT_MetaTileEntity_Boiler_Steel				(137, "GT_SteelBoiler"			, I18n.format("metatileentity.GT_SteelBoiler.name"));
 		new GT_MetaTileEntity_SteelFurnace				(138, "GT_SteelFurnace"			, I18n.format("metatileentity.GT_SteelFurnace.name"));
-//		
-//		//---------------------------------------------------------------------------------------------------------------
-//		
-//		new GT_MetaPipeEntity_Bronze					(1800, "GT_Pipe_Bronze"					, I18n.format("metatileentity.GT_Pipe_Bronze.name"));
-//		new GT_MetaPipeEntity_Steel						(1801, "GT_Pipe_Steel"					, I18n.format("metatileentity.GT_Pipe_Steel.name"));
-//		new GT_MetaPipeEntity_StainlessSteel			(1802, "GT_Pipe_StainlessSteel"			, I18n.format("metatileentity.GT_Pipe_StainlessStee.namel"));
-//		new GT_MetaPipeEntity_TungstenSteel				(1803, "GT_Pipe_TungstenSteel"			, I18n.format("metatileentity.GT_Pipe_TungstenSteel.name"));
-//		
-//		new GT_MetaPipeEntity_Bronze_Large				(1850, "GT_Pipe_Bronze_Large"			, I18n.format("metatileentity.GT_Pipe_Bronze_Large.name"));
-//		new GT_MetaPipeEntity_Steel_Large				(1851, "GT_Pipe_Steel_Large"			, I18n.format("metatileentity.GT_Pipe_Steel_Large.name"));
-//		new GT_MetaPipeEntity_StainlessSteel_Large		(1852, "GT_Pipe_StainlessSteel_Large"	, I18n.format("metatileentity.GT_Pipe_StainlessSteel_Large.name"));
-//		new GT_MetaPipeEntity_TungstenSteel_Large		(1853, "GT_Pipe_TungstenSteel_Large"	, I18n.format("metatileentity.GT_Pipe_TungstenSteel_Large.name"));
-//		
-//		new GT_MetaPipeEntity_Brass						(1900, "GT_Pipe_Brass"					, I18n.format("metatileentity.GT_Pipe_Brass.name"));
-//		new GT_MetaPipeEntity_Electrum					(1901, "GT_Pipe_Electrum"				, I18n.format("metatileentity.GT_Pipe_Electrum.name"));
-//		
-//		new GT_MetaPipeEntity_Brass_Large				(1950, "GT_Pipe_Brass_Large"			, I18n.format("metatileentity.GT_Pipe_Brass_Large.name"));
-//		new GT_MetaPipeEntity_Electrum_Large			(1951, "GT_Pipe_Electrum_Large"			, I18n.format("metatileentity.GT_Pipe_Electrum_Large.name"));
+		
+		//---------------------------------------------------------------------------------------------------------------
+		
+		new GT_MetaPipeEntity_Bronze					(1800, "GT_Pipe_Bronze"					, I18n.format("metatileentity.GT_Pipe_Bronze.name"));
+		new GT_MetaPipeEntity_Steel						(1801, "GT_Pipe_Steel"					, I18n.format("metatileentity.GT_Pipe_Steel.name"));
+		new GT_MetaPipeEntity_StainlessSteel			(1802, "GT_Pipe_StainlessSteel"			, I18n.format("metatileentity.GT_Pipe_StainlessStee.namel"));
+		new GT_MetaPipeEntity_TungstenSteel				(1803, "GT_Pipe_TungstenSteel"			, I18n.format("metatileentity.GT_Pipe_TungstenSteel.name"));
+		
+		new GT_MetaPipeEntity_Bronze_Large				(1850, "GT_Pipe_Bronze_Large"			, I18n.format("metatileentity.GT_Pipe_Bronze_Large.name"));
+		new GT_MetaPipeEntity_Steel_Large				(1851, "GT_Pipe_Steel_Large"			, I18n.format("metatileentity.GT_Pipe_Steel_Large.name"));
+		new GT_MetaPipeEntity_StainlessSteel_Large		(1852, "GT_Pipe_StainlessSteel_Large"	, I18n.format("metatileentity.GT_Pipe_StainlessSteel_Large.name"));
+		new GT_MetaPipeEntity_TungstenSteel_Large		(1853, "GT_Pipe_TungstenSteel_Large"	, I18n.format("metatileentity.GT_Pipe_TungstenSteel_Large.name"));
+		
+		new GT_MetaPipeEntity_Brass						(1900, "GT_Pipe_Brass"					, I18n.format("metatileentity.GT_Pipe_Brass.name"));
+		new GT_MetaPipeEntity_Electrum					(1901, "GT_Pipe_Electrum"				, I18n.format("metatileentity.GT_Pipe_Electrum.name"));
+		
+		new GT_MetaPipeEntity_Brass_Large				(1950, "GT_Pipe_Brass_Large"			, I18n.format("metatileentity.GT_Pipe_Brass_Large.name"));
+		new GT_MetaPipeEntity_Electrum_Large			(1951, "GT_Pipe_Electrum_Large"			, I18n.format("metatileentity.GT_Pipe_Electrum_Large.name"));
 	}
 }

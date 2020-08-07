@@ -87,7 +87,10 @@ public class GT_Block_Renderer implements ISimpleBlockRenderingHandler {
 		case  1: return renderPipeBlock(aWorld, aX, aY, aZ, aBlock, aModelID, aRenderer);
 		case  2: return renderPipeBlock(aWorld, aX, aY, aZ, aBlock, aModelID, aRenderer);
 		case  3: return renderPipeBlock(aWorld, aX, aY, aZ, aBlock, aModelID, aRenderer);
-		default: return aRenderer.renderStandardBlock(aBlock, aX, aY, aZ);
+		default: 
+			aBlock.colorMultiplier(aWorld, aX, aY, aZ);
+			
+			return aRenderer.renderStandardBlock(aBlock, aX, aY, aZ);
 		}
     }
     

@@ -33,4 +33,10 @@ public class GT_MetaPipeEntity_TungstenSteel_Large extends GT_MetaPipeEntity_Flu
 	public int getFluidCapacityPerTick() {
 		return 960;
 	}
+
+	@Override
+	public void markDirty() {
+		// TODO Auto-generated method stub
+		
+	}
 }

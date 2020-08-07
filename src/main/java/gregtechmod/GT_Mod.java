@@ -65,11 +65,9 @@ import gregtechmod.loaders.postload.GT_LiquidAndFuelLoader;
 import gregtechmod.loaders.postload.GT_MachineRecipeLoader;
 import gregtechmod.loaders.postload.GT_MinableRegistrator;
 import gregtechmod.loaders.postload.GT_RecyclerBlacklistLoader;
-import gregtechmod.loaders.postload.GT_RecyclingRecipeLoader;
 import gregtechmod.loaders.postload.GT_ScrapboxDropLoader;
 import gregtechmod.loaders.postload.GT_SeedFlowerIterator;
 import gregtechmod.loaders.postload.GT_SonictronLoader;
-import gregtechmod.loaders.postload.GT_UUMRecipeLoader;
 import gregtechmod.loaders.postload.GT_Worldgenloader;
 import gregtechmod.loaders.preload.GT_InitHardCodedCapeList;
 
@@ -80,8 +78,10 @@ import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.EnumMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
@@ -95,7 +95,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.Packet;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.storage.SaveHandler;
@@ -112,9 +111,11 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartedEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
+import cpw.mods.fml.common.network.FMLEmbeddedChannel;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.ReflectionHelper;
+import cpw.mods.fml.relauncher.Side;
 
 /**
  * @author Gregorius Techneticies
@@ -563,13 +564,13 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 		new GT_CircuitBehaviorLoad().run();
 		
         GT_Log.log.info("GT_Mod: Adding Configs specific for MetaTileEntities");
-//    	try {
-//	    	for (IMetaTileEntity tMetaTileEntity : GregTech_API.mMetaTileList) {
-//	    		if (tMetaTileEntity != null) tMetaTileEntity.onConfigLoad(GregTech_API.sConfiguration);
-//	    	}
-//    	} catch(Throwable e) {
-//    		e.printStackTrace(GT_Log.err);
-//    	}
+    	try {
+	    	for (IMetaTileEntity tMetaTileEntity : GregTech_API.mMetaTileList) {
+	    		if (tMetaTileEntity != null) tMetaTileEntity.onConfigLoad(GregTech_API.sConfiguration);
+	    	}
+    	} catch(Throwable e) {
+    		GT_Log.log.catching(e);
+    	}
 		
     	GregTech_API.sLoadFinished = true;
         GT_Log.log.info("GT_Mod: Load-Phase finished!");
@@ -803,15 +804,18 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     	GregTech_API.sPostloadFinished = true;
         GT_Log.log.info("GT_Mod: PostLoad-Phase finished!");
         
-//        if (GregTech_API.DEBUG_MODE) {
-//	        try {
-//	        	GT_Log.log.info("GT_Mod: Printing registered Channels");
-//	        	com.google.common.collect.ArrayListMultimap<String, Object> tMap = (com.google.common.collect.ArrayListMultimap<String, Object>)GT_Utility.getField(NetworkRegistry.instance(), "universalPacketHandlers").get(NetworkRegistry.instance());
-//	        	for (String tLine : tMap.keySet()) GT_Log.log.info(tLine);
-//	        } catch(Throwable e) {
-//	        	GT_Log.log.catching(e);
-//	        }
-//        }
+        if (GregTech_API.DEBUG_MODE) {
+	        try {
+	        	GT_Log.log.info("GT_Mod: Printing registered Channels");
+	        	EnumMap<Side, Map<String, FMLEmbeddedChannel>> channels = ReflectionHelper.getPrivateValue(NetworkRegistry.class, NetworkRegistry.INSTANCE, new String[] {"channels"});
+	        	if (channels != null) {
+	        		Map<String, FMLEmbeddedChannel> serverChannel = channels.get(Side.SERVER);
+	        		serverChannel.keySet().forEach(key -> GT_Log.log.info("  " + key));
+	        	}
+	        } catch(Throwable e) {
+	        	GT_Log.log.catching(e);
+	        }
+        }
         
     	for (Runnable tRunnable : GregTech_API.sAfterGTPostload) {
     		try {
@@ -851,7 +855,7 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     	}
     	mUniverse = null;
     	GT_TickHandler.isFirstTick = true;
-		new GT_GUIHandler();
+		NetworkRegistry.INSTANCE.registerGuiHandler(GregTech_API.gregtechmod, new GT_GUIHandler());
     	
     	try {
 	    	for (IMetaTileEntity tMetaTileEntity : GregTech_API.mMetaTileList) {
@@ -904,28 +908,28 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     
     @EventHandler
     public void stop(FMLServerStoppingEvent aEvent) {
-//    	if (mDoNotInit) return;
-//    	
-//    	for (Runnable tRunnable : GregTech_API.sBeforeGTServerstop) {
-//    		try {
-//    			tRunnable.run();
-//    		} catch(Throwable e) {
-//    			e.printStackTrace(GT_Log.err);
-//    		}
-//    	}
-//    	
-//    	writeIDSUData();
-//    	mUniverse = null;
-//    	GregTech_API.sWirelessRedstone.clear();
-//    	
-//    	try {
-//	    	for (IMetaTileEntity tMetaTileEntity : GregTech_API.mMetaTileList) {
-//	    		if (tMetaTileEntity != null) tMetaTileEntity.onServerStop();
-//	    	}
-//    	} catch(Throwable e) {
-//    		e.printStackTrace(GT_Log.err);
-//    	}
-//    	
+    	if (mDoNotInit) return;
+    	
+    	for (Runnable tRunnable : GregTech_API.sBeforeGTServerstop) {
+    		try {
+    			tRunnable.run();
+    		} catch(Throwable e) {
+    			GT_Log.log.catching(e);
+    		}
+    	}
+    	
+    	writeIDSUData();
+    	mUniverse = null;
+    	GregTech_API.sWirelessRedstone.clear();
+    	
+    	try {
+	    	for (IMetaTileEntity tMetaTileEntity : GregTech_API.mMetaTileList) {
+	    		if (tMetaTileEntity != null) tMetaTileEntity.onServerStop();
+	    	}
+    	} catch(Throwable e) {
+    		GT_Log.log.catching(e);
+    	}
+    	
 //    	try {
 //		if (GregTech_API.DEBUG_MODE || GT_Log.out != System.out) {
 //			if (GregTech_API.DEBUG_MODE) System.out.println("BEGIN GregTech-Item-Print");

@@ -4,6 +4,8 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.gui.GT_Container_BasicTank;
 import gregtechmod.api.gui.GT_GUIContainerMetaTile_Machine;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.StatCollector;
 
@@ -15,6 +17,7 @@ public class GT_GUIContainer_Quantumtank extends GT_GUIContainerMetaTile_Machine
     
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
+    	FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
         fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
         fontRenderer.drawString("Quantum Tank", 8, 6, 4210752);
         if (mContainer != null) {

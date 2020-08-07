@@ -656,7 +656,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	@Override public int getSizeInventory() {if (hasValidMetaTileEntity()) return mMetaTileEntity.getSizeInventory(); else return 0;}
 	@Override public ItemStack getStackInSlot(int aIndex) {if (hasValidMetaTileEntity()) return mMetaTileEntity.getStackInSlot(aIndex); return null;}
 	@Override public void setInventorySlotContents(int aIndex, ItemStack aStack) {mInventoryChanged = true; if (hasValidMetaTileEntity()) mMetaTileEntity.setInventorySlotContents(aIndex, GT_OreDictUnificator.setStack(true, aStack));}
-	@Override public String getInventoryName() {if (hasValidMetaTileEntity()) return mMetaTileEntity.getInvName(); if (GregTech_API.mMetaTileList[mID] != null) return GregTech_API.mMetaTileList[mID].getInventoryName(); return "";}
+	@Override public String getInventoryName() {if (hasValidMetaTileEntity()) return mMetaTileEntity.getInventoryName(); if (GregTech_API.mMetaTileList[mID] != null) return GregTech_API.mMetaTileList[mID].getInventoryName(); return "";}
 	@Override public int getInventoryStackLimit() {if (hasValidMetaTileEntity()) return mMetaTileEntity.getInventoryStackLimit(); return 64;}
 	@Override public void openInventory()  {if (hasValidMetaTileEntity()) mMetaTileEntity.onOpenGUI();}
 	@Override public void closeInventory() {if (hasValidMetaTileEntity()) mMetaTileEntity.onCloseGUI();}

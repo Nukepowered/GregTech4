@@ -38,4 +38,10 @@ public class GT_MetaPipeEntity_Electrum_Large extends GT_MetaPipeEntity_Item {
 	public int getStepSize() {
 		return 8192;
 	}
+
+	@Override
+	public void markDirty() {
+		// TODO Auto-generated method stub
+		
+	}
 }

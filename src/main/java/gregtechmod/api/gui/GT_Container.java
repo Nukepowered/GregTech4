@@ -118,11 +118,11 @@ public class GT_Container extends Container {
             if (aSlotIndex == -999) {
                 if (aPlayerInventory.getItemStack() != null && aSlotIndex == -999) {
                     if (aMouseclick == 0) {
-                        aPlayer.dropPlayerItem(aPlayerInventory.getItemStack());
+//                        aPlayer.dropPlayerItem(aPlayerInventory.getItemStack());
                         aPlayerInventory.setItemStack((ItemStack)null);
                     }
                     if (aMouseclick == 1) {
-                        aPlayer.dropPlayerItem(aPlayerInventory.getItemStack().splitStack(1));
+//                        aPlayer.dropPlayerItem(aPlayerInventory.getItemStack().splitStack(1));
 
                         if (aPlayerInventory.getItemStack().stackSize == 0) {
                             aPlayerInventory.setItemStack((ItemStack)null);

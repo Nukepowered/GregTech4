@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Set;
 
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -232,12 +233,12 @@ public class GT_MetaTileEntity_RedstoneCircuitBlock extends MetaTileEntity imple
 	}
 	
 	@Override
-	public int getBlockIDAtSide(byte aSide) {
-		return getBaseMetaTileEntity().getBlockIDAtSide(aSide);
+	public Block getBlockAtSide(byte aSide) {
+		return getBaseMetaTileEntity().getBlockAtSide(aSide);
 	}
 	
 	@Override
-	public byte getMetaIDAtSide(byte aSide) {
+	public byte getMetaAtSide(byte aSide) {
 		return getBaseMetaTileEntity().getMetaIDAtSide(aSide);
 	}
 	
