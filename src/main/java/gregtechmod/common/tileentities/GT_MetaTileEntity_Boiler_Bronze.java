@@ -9,7 +9,6 @@ import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -45,7 +44,7 @@ public class GT_MetaTileEntity_Boiler_Bronze extends GT_MetaTileEntity_BasicTank
 		if (aPlayer != null) {
 			if (GT_Utility.areStacksEqual(aPlayer.getCurrentEquippedItem(), new ItemStack(Items.bucket, 1))) {
 				fill(GT_ModHandler.getWater(1000 * aPlayer.getCurrentEquippedItem().stackSize), true);
-				aPlayer.setCurrentItemOrArmor(0, new ItemStack(Items.bucket));
+				aPlayer.getCurrentEquippedItem().func_150996_a(Items.bucket);
 			} else {
 				getBaseMetaTileEntity().openGUI(aPlayer, 163);
 			}
@@ -82,7 +81,7 @@ public class GT_MetaTileEntity_Boiler_Bronze extends GT_MetaTileEntity_BasicTank
     	aNBT.setInteger("mProcessingEnergy", mProcessingEnergy);
 		if (mSteam != null) {
 			try {
-				aNBT.setCompoundTag("mSteam", mSteam.writeToNBT(new NBTTagCompound("mSteam")));
+				aNBT.setTag("mSteam", mSteam.writeToNBT(new NBTTagCompound())); // TODO "mSteam"
 			} catch(Throwable e) {}
 		}
 	}

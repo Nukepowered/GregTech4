@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 
 public class GT_MetaTileEntity_ElectricRegulatorAdvanced extends GT_MetaTileEntity_ElectricBufferSmall {
 	
@@ -72,10 +71,8 @@ public class GT_MetaTileEntity_ElectricRegulatorAdvanced extends GT_MetaTileEnti
 		mTargetSlots[8] = aNBT.getInteger("mTargetSlot9");
 	}
 	
-	@SuppressWarnings("unused")
 	public void onPostTick() {
 		if (getBaseMetaTileEntity().isAllowedToWork() && getBaseMetaTileEntity().isServerSide() && getBaseMetaTileEntity().getUniversalEnergyStored() >= 500 && (getBaseMetaTileEntity().hasWorkJustBeenEnabled() || getBaseMetaTileEntity().getTimer()%10 == 0)) {
-			TileEntity tTileEntity1, tTileEntity2;
 			ArrayList<ItemStack> tList = new ArrayList<ItemStack>();
 			tList.add(null);
 			int tCosts = 0;

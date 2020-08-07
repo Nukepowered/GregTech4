@@ -466,7 +466,7 @@ public abstract class MetaTileEntity implements IMetaTileEntity {
 	public int getSizeInventory() {return getInvSize();}
 	public ItemStack getStackInSlot(int aIndex) {if (aIndex >= 0 && aIndex < mInventory.length) return mInventory[aIndex]; return null;}
 	public void setInventorySlotContents(int aIndex, ItemStack aStack) {if (aIndex >= 0 && aIndex < mInventory.length) mInventory[aIndex] = aStack;}
-	public String getInvName() {if (GregTech_API.mMetaTileList[getBaseMetaTileEntity().getMetaTileID()] != null) return GregTech_API.mMetaTileList[getBaseMetaTileEntity().getMetaTileID()].getMetaName(); return "";}
+	public String getInventoryName() {if (GregTech_API.mMetaTileList[getBaseMetaTileEntity().getMetaTileID()] != null) return GregTech_API.mMetaTileList[getBaseMetaTileEntity().getMetaTileID()].getMetaName(); return "";}
 	public int getInventoryStackLimit() {return 64;}
 	public boolean isItemValidForSlot(int aIndex, ItemStack aStack) {return getBaseMetaTileEntity().isValidSlot(aIndex);}
 	
@@ -567,11 +567,6 @@ public abstract class MetaTileEntity implements IMetaTileEntity {
 	
 	@Override
 	public ItemStack getStackInSlotOnClosing(int i) {
-		return null;
-	}
-	
-	@Override
-	public String getInventoryName() {
 		return null;
 	}
 

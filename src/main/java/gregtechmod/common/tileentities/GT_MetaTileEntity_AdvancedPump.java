@@ -20,8 +20,7 @@ import net.minecraftforge.fluids.IFluidBlock;
 public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank {
 	
 	public ArrayList<ChunkPosition> mPumpList = new ArrayList<ChunkPosition>();
-	
-	public Block mPumpedBlockID1 = null, mPumpedBlockID2 = null;
+	public Block mPumpedBlock1 = null, mPumpedBlock2 = null;
 	
 	public GT_MetaTileEntity_AdvancedPump(int aID, String mName, String mNameRegional) {
 		super(aID, mName, mNameRegional);
@@ -55,15 +54,15 @@ public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank 
 	@Override
 	public void saveNBTData(NBTTagCompound aNBT) {
 		super.saveNBTData(aNBT);
-		aNBT.setInteger("mPumpedBlockID1", mPumpedBlockID1);
-		aNBT.setInteger("mPumpedBlockID2", mPumpedBlockID2);
+		aNBT.setInteger("mPumpedBlockID1", Block.getIdFromBlock(mPumpedBlock1));
+		aNBT.setInteger("mPumpedBlockID2", Block.getIdFromBlock(mPumpedBlock2));
 	}
 	
 	@Override
 	public void loadNBTData(NBTTagCompound aNBT) {
 		super.loadNBTData(aNBT);
-    	mPumpedBlockID1 = aNBT.getInteger("mPumpedBlockID1");
-    	mPumpedBlockID2 = aNBT.getInteger("mPumpedBlockID2");
+    	mPumpedBlock1 = Block.getBlockById(aNBT.getInteger("mPumpedBlockID1"));
+    	mPumpedBlock2 = Block.getBlockById(aNBT.getInteger("mPumpedBlockID2"));
 	}
 	
 	@Override public boolean doesFillContainers()	{return true;}
@@ -91,18 +90,18 @@ public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank 
         			tMovedOneDown = moveOneDown();
         		}
         		
-        		if (mPumpedBlockID1 <= 0 || mPumpedBlockID2 <= 0) {
+        		if (mPumpedBlock1 == null || mPumpedBlock2 == null) {
             		getFluidAt(getBaseMetaTileEntity().getXCoord(), getYOfPumpHead() - 1, getBaseMetaTileEntity().getZCoord());
-            		if (mPumpedBlockID1 <= 0 || mPumpedBlockID2 <= 0) {
+            		if (mPumpedBlock1 == null || mPumpedBlock2 == null) {
             			getFluidAt(getBaseMetaTileEntity().getXCoord(), getYOfPumpHead(), getBaseMetaTileEntity().getZCoord() + 1);
             		}
-            		if (mPumpedBlockID1 <= 0 || mPumpedBlockID2 <= 0) {
+            		if (mPumpedBlock1 == null || mPumpedBlock2 == null) {
             			getFluidAt(getBaseMetaTileEntity().getXCoord(), getYOfPumpHead(), getBaseMetaTileEntity().getZCoord() - 1);
             		}
-            		if (mPumpedBlockID1 <= 0 || mPumpedBlockID2 <= 0) {
+            		if (mPumpedBlock1 == null || mPumpedBlock2 == null) {
             			getFluidAt(getBaseMetaTileEntity().getXCoord() + 1, getYOfPumpHead(), getBaseMetaTileEntity().getZCoord());
             		}
-            		if (mPumpedBlockID1 <= 0 || mPumpedBlockID2 <= 0) {
+            		if (mPumpedBlock1 == null || mPumpedBlock2 == null) {
             			getFluidAt(getBaseMetaTileEntity().getXCoord() - 1, getYOfPumpHead(), getBaseMetaTileEntity().getZCoord());
             		}
                 } else {
@@ -114,7 +113,7 @@ public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank 
     		        		}
     		        	}
     		        	if (!tMovedOneDown && !mPumpList.isEmpty()) {
-    			        	consumeFluid(mPumpList.get(mPumpList.size()-1).x, mPumpList.get(mPumpList.size()-1).y, mPumpList.get(mPumpList.size()-1).z);
+    			        	consumeFluid(mPumpList.get(mPumpList.size()-1).chunkPosX, mPumpList.get(mPumpList.size()-1).chunkPosY, mPumpList.get(mPumpList.size()-1).chunkPosZ);
     			        	mPumpList.remove(mPumpList.size()-1);
     		        	}
                 	}
@@ -129,22 +128,22 @@ public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank 
     	int yHead = getYOfPumpHead();
     	if (yHead <= 0) return false;
     	if (!consumeFluid(getBaseMetaTileEntity().getXCoord(), yHead - 1, getBaseMetaTileEntity().getZCoord()) && !getBaseMetaTileEntity().getAir(getBaseMetaTileEntity().getXCoord(), yHead - 1, getBaseMetaTileEntity().getZCoord())) return false;
-    	if (!getBaseMetaTileEntity().getWorld().setBlock(getBaseMetaTileEntity().getXCoord(), yHead - 1, getBaseMetaTileEntity().getZCoord(), GT_ModHandler.getIC2Item("miningPipeTip", 1).itemID)) return false;
-    	if (yHead != getBaseMetaTileEntity().getYCoord()) getBaseMetaTileEntity().getWorld().setBlock(getBaseMetaTileEntity().getXCoord(), yHead, getBaseMetaTileEntity().getZCoord(), GT_ModHandler.getIC2Item("miningPipe", 1).itemID);
+    	if (!getBaseMetaTileEntity().getWorld().setBlock(getBaseMetaTileEntity().getXCoord(), yHead - 1, getBaseMetaTileEntity().getZCoord(), Block.getBlockFromItem(GT_ModHandler.getIC2Item("miningPipeTip", 1).getItem()))) return false;
+    	if (yHead != getBaseMetaTileEntity().getYCoord()) getBaseMetaTileEntity().getWorld().setBlock(getBaseMetaTileEntity().getXCoord(), yHead, getBaseMetaTileEntity().getZCoord(), Block.getBlockFromItem(GT_ModHandler.getIC2Item("miningPipe", 1).getItem()));
     	getBaseMetaTileEntity().decrStackSize(0, 1);
     	return true;
     }
     
     private int getYOfPumpHead() {
     	int y = getBaseMetaTileEntity().getYCoord() - 1;
-    	while (getBaseMetaTileEntity().getBlockID(getBaseMetaTileEntity().getXCoord(), y, getBaseMetaTileEntity().getZCoord()) == GT_ModHandler.getIC2Item("miningPipe", 1).itemID) y--;
+    	while (getBaseMetaTileEntity().getBlock(getBaseMetaTileEntity().getXCoord(), y, getBaseMetaTileEntity().getZCoord()) == Block.getBlockFromItem(GT_ModHandler.getIC2Item("miningPipe", 1).getItem())) y--;
     	if (y == getBaseMetaTileEntity().getYCoord() - 1) {
-    		if (getBaseMetaTileEntity().getBlockID(getBaseMetaTileEntity().getXCoord(), y, getBaseMetaTileEntity().getZCoord()) != GT_ModHandler.getIC2Item("miningPipeTip", 1).itemID) {
+    		if (getBaseMetaTileEntity().getBlock(getBaseMetaTileEntity().getXCoord(), y, getBaseMetaTileEntity().getZCoord()) != Block.getBlockFromItem(GT_ModHandler.getIC2Item("miningPipeTip", 1).getItem())) {
         		return y + 1;
     		}
     	} else {
-    		if (getBaseMetaTileEntity().getBlockID(getBaseMetaTileEntity().getXCoord(), y, getBaseMetaTileEntity().getZCoord()) != GT_ModHandler.getIC2Item("miningPipeTip", 1).itemID) {
-    			getBaseMetaTileEntity().getWorld().setBlock(getBaseMetaTileEntity().getXCoord(), y, getBaseMetaTileEntity().getZCoord(), GT_ModHandler.getIC2Item("miningPipeTip", 1).itemID);
+    		if (getBaseMetaTileEntity().getBlock(getBaseMetaTileEntity().getXCoord(), y, getBaseMetaTileEntity().getZCoord()) != Block.getBlockFromItem(GT_ModHandler.getIC2Item("miningPipeTip", 1).getItem())) {
+    			getBaseMetaTileEntity().getWorld().setBlock(getBaseMetaTileEntity().getXCoord(), y, getBaseMetaTileEntity().getZCoord(), Block.getBlockFromItem(GT_ModHandler.getIC2Item("miningPipeTip", 1).getItem()));
     		}
     	}
     	return y;
@@ -177,7 +176,7 @@ public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank 
     	ChunkPosition tCoordinate = new ChunkPosition(aX, aY, aZ);
     	if (!aList.contains(tCoordinate)) {
     		Block s = getBaseMetaTileEntity().getBlock(aX, aY, aZ);
-    		if (mPumpedBlockID1 == t || mPumpedBlockID2 == t) {
+    		if (mPumpedBlock1 == s || mPumpedBlock2 == s) {
     			aList.add(tCoordinate);
     			return true;
     		}
@@ -186,34 +185,34 @@ public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank 
     }
     
     private void getFluidAt(int aX, int aY, int aZ) {
-    	Block aID = getBaseMetaTileEntity().getBlock(aX, aY, aZ);
-    	if (aID != Blocks.air) {
-			if (aID == Blocks.lava || aID == Blocks.flowing_lava) {
-				mPumpedBlockID1 = Blocks.lava;
-				mPumpedBlockID2 = Blocks.flowing_lava;
+    	Block aBlock = getBaseMetaTileEntity().getBlock(aX, aY, aZ);
+    	if (aBlock != Blocks.air) {
+			if (aBlock == Blocks.lava || aBlock == Blocks.flowing_lava) {
+				mPumpedBlock1 = Blocks.lava;
+				mPumpedBlock2 = Blocks.flowing_lava;
 				return;
 			}
-			if (aID == Blocks.water || aID == Blocks.flowing_water) {
-				mPumpedBlockID1 = Blocks.water;
-				mPumpedBlockID2 = Blocks.flowing_water;
+			if (aBlock == Blocks.water || aBlock == Blocks.flowing_water) {
+				mPumpedBlock1 = Blocks.water;
+				mPumpedBlock2 = Blocks.flowing_water;
 				return;
 			}
-			if (Block.blocksList[aID] instanceof IFluidBlock) {
-				mPumpedBlockID1 = aID;
-				mPumpedBlockID2 = aID;
+			if (aBlock instanceof IFluidBlock) {
+				mPumpedBlock1 = aBlock;
+				mPumpedBlock2 = aBlock;
 				return;
 			}
     	}
-		mPumpedBlockID1 = null;
-		mPumpedBlockID2 = null;
+		mPumpedBlock1 = null;
+		mPumpedBlock2 = null;
     }
     
     private boolean consumeFluid(int aX, int aY, int aZ) {
-    	Block t = getBaseMetaTileEntity().getBlock(aX, aY, aZ);
+    	Block tBlock = getBaseMetaTileEntity().getBlock(aX, aY, aZ);
     	byte tMeta = getBaseMetaTileEntity().getMetaID(aX, aY, aZ);
-    	if (mPumpedBlockID1 == t || mPumpedBlockID2 == t) {
+    	if (mPumpedBlock1 == tBlock || mPumpedBlock2 == tBlock) {
     		
-    		if (t == Blocks.water || t == Blocks.flowing_water) {
+    		if (tBlock == Blocks.water || tBlock == Blocks.flowing_water) {
 	    		if (tMeta == 0) {
 	    			if (mFluid == null) {
 		        		getBaseMetaTileEntity().decreaseStoredEnergyUnits(1000, true);
@@ -229,7 +228,7 @@ public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank 
 	    		}
     		}
     		
-    		if (t == Blocks.lava || t == Blocks.flowing_lava) {
+    		if (tBlock == Blocks.lava || tBlock == Blocks.flowing_lava) {
 	    		if (tMeta == 0) {
 		    		if (mFluid == null) {
 		        		getBaseMetaTileEntity().decreaseStoredEnergyUnits(1000, true);
@@ -245,9 +244,9 @@ public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank 
 	    		}
     		}
     		
-			if (Block.blocksList[t] instanceof IFluidBlock) {
+			if (tBlock instanceof IFluidBlock) {
 	    		if (mFluid == null) {
-	    			mFluid = ((IFluidBlock)Block.blocksList[t]).drain(getBaseMetaTileEntity().getWorld(), aX, aY, aZ, true);
+	    			mFluid = ((IFluidBlock) tBlock).drain(getBaseMetaTileEntity().getWorld(), aX, aY, aZ, true);
 	        		getBaseMetaTileEntity().decreaseStoredEnergyUnits(mFluid==null?1000:mFluid.amount, true);
 	    		} else {
 	    			return false;
