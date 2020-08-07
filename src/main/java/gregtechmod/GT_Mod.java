@@ -7,6 +7,7 @@ import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IGT_Mod;
 import gregtechmod.api.interfaces.IGT_RecipeAdder;
+import gregtechmod.api.interfaces.IMetaTileEntity;
 import gregtechmod.api.items.GT_Tool_Item;
 import gregtechmod.api.metatileentity.BaseMetaPipeEntity;
 import gregtechmod.api.util.GT_Config;
@@ -18,8 +19,10 @@ import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Recipe;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.GT_DummyWorld;
+import gregtechmod.common.GT_GUIHandler;
 import gregtechmod.common.GT_OreDictHandler;
 import gregtechmod.common.GT_Proxy;
+import gregtechmod.common.GT_TickHandler;
 import gregtechmod.common.GT_Worldgenerator;
 import gregtechmod.common.blocks.GT_BlockMetaID_Block;
 import gregtechmod.common.blocks.GT_BlockMetaID_Block2;
@@ -837,26 +840,26 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     */
     @EventHandler
     public void start(FMLServerStartingEvent aEvent) {
-//    	if (mDoNotInit) return;
-//    	
-//    	for (Runnable tRunnable : GregTech_API.sBeforeGTServerstart) {
-//    		try {
-//    			tRunnable.run();
-//    		} catch(Throwable e) {
-//    			e.printStackTrace(GT_Log.err);
-//    		}
-//    	}
-//    	mUniverse = null;
-//    	GT_TickHandler.isFirstTick = true;
-//		new GT_GUIHandler();
-//    	
-//    	try {
-//	    	for (IMetaTileEntity tMetaTileEntity : GregTech_API.mMetaTileList) {
-//	    		if (tMetaTileEntity != null) tMetaTileEntity.onServerStart();
-//	    	}
-//    	} catch(Throwable e) {
-//    		e.printStackTrace(GT_Log.err);
-//    	}
+    	if (mDoNotInit) return;
+    	
+    	for (Runnable tRunnable : GregTech_API.sBeforeGTServerstart) {
+    		try {
+    			tRunnable.run();
+    		} catch(Throwable e) {
+    			GT_Log.log.catching(e);
+    		}
+    	}
+    	mUniverse = null;
+    	GT_TickHandler.isFirstTick = true;
+		new GT_GUIHandler();
+    	
+    	try {
+	    	for (IMetaTileEntity tMetaTileEntity : GregTech_API.mMetaTileList) {
+	    		if (tMetaTileEntity != null) tMetaTileEntity.onServerStart();
+	    	}
+    	} catch(Throwable e) {
+    		GT_Log.log.catching(e);
+    	}
     	
     	/*
     	try {((CommandHandler)aEvent.getServer().getCommandManager()).registerCommand(new CommandBase() {
@@ -884,13 +887,13 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     	});} catch(Throwable e) {}
     	*/
     	
-//    	for (Runnable tRunnable : GregTech_API.sAfterGTServerstart) {
-//    		try {
-//    			tRunnable.run();
-//    		} catch(Throwable e) {
-//    			e.printStackTrace(GT_Log.err);
-//    		}
-//    	}
+    	for (Runnable tRunnable : GregTech_API.sAfterGTServerstart) {
+    		try {
+    			tRunnable.run();
+    		} catch(Throwable e) {
+    			GT_Log.log.catching(e);
+    		}
+    	}
     }
     
     @EventHandler

@@ -35,12 +35,6 @@ public class GT_MetaPipeEntity_Bronze extends GT_MetaPipeEntity_Fluid {
 	}
 
 	@Override
-	public String getInvName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void markDirty() {
 		// TODO Auto-generated method stub
 		

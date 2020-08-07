@@ -106,7 +106,7 @@ public class GT_Container_AdvancedWorkbench extends GT_ContainerMetaTile_Machine
 	    		return null;
 	    	}
     	} catch(Throwable e) {
-    		e.printStackTrace(GT_Log.err);
+    		GT_Log.log.catching(e);
     	}
 	    return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
     }
