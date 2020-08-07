@@ -33,4 +33,16 @@ public class GT_MetaPipeEntity_Steel extends GT_MetaPipeEntity_Fluid {
 	public int getFluidCapacityPerTick() {
 		return 240;
 	}
+
+	@Override
+	public String getInvName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void markDirty() {
+		// TODO Auto-generated method stub
+		
+	}
 }

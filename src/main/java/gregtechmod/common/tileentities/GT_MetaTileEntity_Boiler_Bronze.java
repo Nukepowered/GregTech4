@@ -8,10 +8,11 @@ import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidHandler;
 
@@ -42,9 +43,9 @@ public class GT_MetaTileEntity_Boiler_Bronze extends GT_MetaTileEntity_BasicTank
 	
 	@Override public void onRightclick(EntityPlayer aPlayer) {
 		if (aPlayer != null) {
-			if (GT_Utility.areStacksEqual(aPlayer.getCurrentEquippedItem(), new ItemStack(Item.bucketWater, 1))) {
+			if (GT_Utility.areStacksEqual(aPlayer.getCurrentEquippedItem(), new ItemStack(Items.bucket, 1))) {
 				fill(GT_ModHandler.getWater(1000 * aPlayer.getCurrentEquippedItem().stackSize), true);
-				aPlayer.getCurrentEquippedItem().itemID = Item.bucketEmpty.itemID;
+				aPlayer.setCurrentItemOrArmor(0, new ItemStack(Items.bucket));
 			} else {
 				getBaseMetaTileEntity().openGUI(aPlayer, 163);
 			}
@@ -152,7 +153,7 @@ public class GT_MetaTileEntity_Boiler_Bronze extends GT_MetaTileEntity_BasicTank
     		
     		if (mProcessingEnergy <= 0 && getBaseMetaTileEntity().isAllowedToWork()) {
     			if (mInventory[2] != null) {
-    				if (mInventory[2].getItem() == Item.coal) {
+    				if (mInventory[2].getItem() == Items.coal) {
     					mProcessingEnergy += 160;
     					getBaseMetaTileEntity().decrStackSize(2, 1);
     					if (getBaseMetaTileEntity().getRandomNumber(3) == 0) {

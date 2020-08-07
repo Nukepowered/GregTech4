@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.ChunkPosition;
@@ -20,7 +21,7 @@ public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank 
 	
 	public ArrayList<ChunkPosition> mPumpList = new ArrayList<ChunkPosition>();
 	
-	public int mPumpedBlockID1 = -1, mPumpedBlockID2 = -1;
+	public Block mPumpedBlockID1 = null, mPumpedBlockID2 = null;
 	
 	public GT_MetaTileEntity_AdvancedPump(int aID, String mName, String mNameRegional) {
 		super(aID, mName, mNameRegional);
@@ -175,8 +176,8 @@ public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank 
     private boolean addIfFluidAndNotAlreadyAdded(int aX, int aY, int aZ, ArrayList<ChunkPosition> aList) {
     	ChunkPosition tCoordinate = new ChunkPosition(aX, aY, aZ);
     	if (!aList.contains(tCoordinate)) {
-    		int tID = getBaseMetaTileEntity().getBlockID(aX, aY, aZ);
-    		if (mPumpedBlockID1 == tID || mPumpedBlockID2 == tID) {
+    		Block s = getBaseMetaTileEntity().getBlock(aX, aY, aZ);
+    		if (mPumpedBlockID1 == t || mPumpedBlockID2 == t) {
     			aList.add(tCoordinate);
     			return true;
     		}
@@ -185,16 +186,16 @@ public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank 
     }
     
     private void getFluidAt(int aX, int aY, int aZ) {
-    	int aID = getBaseMetaTileEntity().getBlockID(aX, aY, aZ);
-    	if (aID > 0) {
-			if (aID == Block.lavaStill.blockID || aID == Block.lavaMoving.blockID) {
-				mPumpedBlockID1 = Block.lavaStill.blockID;
-				mPumpedBlockID2 = Block.lavaMoving.blockID;
+    	Block aID = getBaseMetaTileEntity().getBlock(aX, aY, aZ);
+    	if (aID != Blocks.air) {
+			if (aID == Blocks.lava || aID == Blocks.flowing_lava) {
+				mPumpedBlockID1 = Blocks.lava;
+				mPumpedBlockID2 = Blocks.flowing_lava;
 				return;
 			}
-			if (aID == Block.waterStill.blockID || aID == Block.waterMoving.blockID) {
-				mPumpedBlockID1 = Block.waterStill.blockID;
-				mPumpedBlockID2 = Block.waterMoving.blockID;
+			if (aID == Blocks.water || aID == Blocks.flowing_water) {
+				mPumpedBlockID1 = Blocks.water;
+				mPumpedBlockID2 = Blocks.flowing_water;
 				return;
 			}
 			if (Block.blocksList[aID] instanceof IFluidBlock) {
@@ -203,15 +204,16 @@ public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank 
 				return;
 			}
     	}
-		mPumpedBlockID1 = -1;
-		mPumpedBlockID2 = -1;
+		mPumpedBlockID1 = null;
+		mPumpedBlockID2 = null;
     }
     
     private boolean consumeFluid(int aX, int aY, int aZ) {
-    	int tID = getBaseMetaTileEntity().getBlockID(aX, aY, aZ), tMeta = getBaseMetaTileEntity().getMetaID(aX, aY, aZ);
-    	if (mPumpedBlockID1 == tID || mPumpedBlockID2 == tID) {
+    	Block t = getBaseMetaTileEntity().getBlock(aX, aY, aZ);
+    	byte tMeta = getBaseMetaTileEntity().getMetaID(aX, aY, aZ);
+    	if (mPumpedBlockID1 == t || mPumpedBlockID2 == t) {
     		
-    		if (tID == Block.waterStill.blockID || tID == Block.waterMoving.blockID) {
+    		if (t == Blocks.water || t == Blocks.flowing_water) {
 	    		if (tMeta == 0) {
 	    			if (mFluid == null) {
 		        		getBaseMetaTileEntity().decreaseStoredEnergyUnits(1000, true);
@@ -227,7 +229,7 @@ public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank 
 	    		}
     		}
     		
-    		if (tID == Block.lavaStill.blockID || tID == Block.lavaMoving.blockID) {
+    		if (t == Blocks.lava || t == Blocks.flowing_lava) {
 	    		if (tMeta == 0) {
 		    		if (mFluid == null) {
 		        		getBaseMetaTileEntity().decreaseStoredEnergyUnits(1000, true);
@@ -243,16 +245,16 @@ public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank 
 	    		}
     		}
     		
-			if (Block.blocksList[tID] instanceof IFluidBlock) {
+			if (Block.blocksList[t] instanceof IFluidBlock) {
 	    		if (mFluid == null) {
-	    			mFluid = ((IFluidBlock)Block.blocksList[tID]).drain(getBaseMetaTileEntity().getWorld(), aX, aY, aZ, true);
+	    			mFluid = ((IFluidBlock)Block.blocksList[t]).drain(getBaseMetaTileEntity().getWorld(), aX, aY, aZ, true);
 	        		getBaseMetaTileEntity().decreaseStoredEnergyUnits(mFluid==null?1000:mFluid.amount, true);
 	    		} else {
 	    			return false;
 	    		}
 			}
 			
-    		getBaseMetaTileEntity().getWorld().setBlock(aX, aY, aZ, 0, 0, 0);
+    		getBaseMetaTileEntity().getWorld().setBlock(aX, aY, aZ, Blocks.air, 0, 0);
     		return true;
     	}
     	return false;

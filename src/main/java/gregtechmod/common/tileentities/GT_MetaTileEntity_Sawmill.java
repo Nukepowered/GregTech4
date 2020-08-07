@@ -7,7 +7,6 @@ import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Recipe;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
@@ -246,7 +245,7 @@ public class GT_MetaTileEntity_Sawmill extends MetaTileEntity {
 	
 	@Override
 	public int fill(FluidStack resource, boolean doFill) {
-		if (resource == null || resource.fluidID <= 0) return 0;
+		if (resource == null || resource.getFluidID() <= 0) return 0;
 		FluidStack tLiquid = GT_ModHandler.getWater(mWaterAmount);
 		if (!tLiquid.isFluidEqual(resource)) return 0;
 		
