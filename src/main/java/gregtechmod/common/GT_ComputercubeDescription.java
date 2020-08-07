@@ -1,16 +1,5 @@
 package gregtechmod.common;
 
-import gregtechmod.api.GregTech_API;
-import gregtechmod.api.util.GT_ModHandler;
-import gregtechmod.api.util.GT_OreDictUnificator;
-import gregtechmod.common.items.GT_MetaItem_Dust;
-import gregtechmod.common.items.GT_MetaItem_Material;
-
-import java.util.ArrayList;
-
-import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
-
 public class GT_ComputercubeDescription {/*
 	public static ArrayList<GT_ComputercubeDescription> sDescriptions = new ArrayList<GT_ComputercubeDescription>();
 	

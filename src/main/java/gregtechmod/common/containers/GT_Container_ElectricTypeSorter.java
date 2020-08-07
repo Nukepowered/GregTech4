@@ -75,7 +75,8 @@ public class GT_Container_ElectricTypeSorter extends GT_ContainerMetaTile_Machin
     
     public int mTargetDirection = 0, mMode = 0;
     
-    public void detectAndSendChanges() {
+    @SuppressWarnings("rawtypes")
+	public void detectAndSendChanges() {
         super.detectAndSendChanges();
     	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
     	mMode  = ((GT_MetaTileEntity_ElectricTypeSorter)mTileEntity.getMetaTileEntity()).mMode;

@@ -21,8 +21,8 @@ public class GT_MetaTileEntity_Boiler_Steel extends GT_MetaTileEntity_BasicTank 
 	public FluidStack mSteam = null;
 	public boolean mHadNoWater = false;
 	
-	public GT_MetaTileEntity_Boiler_Steel(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_Boiler_Steel(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_Boiler_Steel() {

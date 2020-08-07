@@ -8,8 +8,8 @@ import net.minecraft.tileentity.TileEntity;
 
 public class GT_MetaTileEntity_CropHarvestor extends GT_MetaTileEntity_ElectricBufferSmall {
 	
-	public GT_MetaTileEntity_CropHarvestor(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_CropHarvestor(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_CropHarvestor() {
@@ -30,6 +30,7 @@ public class GT_MetaTileEntity_CropHarvestor extends GT_MetaTileEntity_ElectricB
 		return new GT_MetaTileEntity_CropHarvestor();
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onPostTick() {
 		if (getBaseMetaTileEntity().isServerSide() && getBaseMetaTileEntity().isAllowedToWork() && (getBaseMetaTileEntity().hasWorkJustBeenEnabled() || getBaseMetaTileEntity().getTimer()%20 == 0)) {

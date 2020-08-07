@@ -12,8 +12,8 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class GT_MetaTileEntity_SemifluidGenerator extends GT_MetaTileEntity_BasicTank {
 	
-	public GT_MetaTileEntity_SemifluidGenerator(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_SemifluidGenerator(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_SemifluidGenerator() {

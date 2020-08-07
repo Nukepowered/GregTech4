@@ -64,8 +64,8 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 	@Override
     public void drawBackground(int recipe) {
         GL11.glColor4f(1, 1, 1, 1);
-//        changeTexture(getGuiTexture());
-//        drawTexturedModalRect(0, 0, sOffsetX, sOffsetY, 168, 79); // TODO: NEI
+        codechicken.lib.gui.GuiDraw.changeTexture(getGuiTexture());
+        codechicken.lib.gui.GuiDraw.drawTexturedModalRect(0, 0, sOffsetX, sOffsetY, 168, 79);
     }
     
 	@Override

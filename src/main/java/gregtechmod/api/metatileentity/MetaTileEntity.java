@@ -4,7 +4,6 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.interfaces.IMetaTileEntity;
 import gregtechmod.api.util.GT_Config;
-import gregtechmod.api.util.GT_LanguageManager;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 
@@ -72,7 +71,7 @@ public abstract class MetaTileEntity implements IMetaTileEntity {
 	 * 		super(aID, mName, mNameRegional);
 	 * 	}
 	 */
-	public MetaTileEntity(int aID, String aBasicName, String aRegionalName) {
+	public MetaTileEntity(int aID, String aBasicName) {
 		if (GregTech_API.sPostloadStarted || !GregTech_API.sPreloadFinished) throw new IllegalAccessError("This Constructor has to be called in the load Phase");
 		if (GregTech_API.mMetaTileList[aID] == null) {
 			GregTech_API.mMetaTileList[aID] = this;
@@ -81,7 +80,6 @@ public abstract class MetaTileEntity implements IMetaTileEntity {
 		}
 		mName = aBasicName.replaceAll(" ", "_");
 		setBaseMetaTileEntity(GregTech_API.constructBaseMetaTileEntity());
-		GT_LanguageManager.addStringLocalization("tile.BlockMetaID_Machine." + mName + ".name", aRegionalName);
 	}
 	
 	public void setBaseMetaTileEntity(IGregTechTileEntity aBaseMetaTileEntity) {

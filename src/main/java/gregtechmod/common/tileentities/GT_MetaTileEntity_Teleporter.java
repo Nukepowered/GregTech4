@@ -36,8 +36,8 @@ public class GT_MetaTileEntity_Teleporter extends MetaTileEntity {
 	public boolean mDebug = false, hasEgg = false;
 	public static boolean sInterDimensionalTeleportAllowed = true;
 	
-	public GT_MetaTileEntity_Teleporter(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_Teleporter(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_Teleporter() {

@@ -123,7 +123,8 @@ public class GT_Container_ElectricInventoryManager extends GT_ContainerMetaTile_
     public int[] mTargetDirections = new int[] {0,0,0,0,0,0,0,0,0,0,0,0}, mRangeDirections = new int[] {0,0,0,0};
     public int mTargetInOut = 0, mTargetEnergy = 0;
     
-    public void detectAndSendChanges() {
+    @SuppressWarnings("rawtypes")
+	public void detectAndSendChanges() {
         super.detectAndSendChanges();
     	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
     	mTargetDirections = new int[] {0,0,0,0,0,0,0,0,0,0,0,0};

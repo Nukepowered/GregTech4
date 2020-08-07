@@ -18,11 +18,13 @@ import java.util.ArrayList;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
@@ -218,9 +220,9 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 		return false;
 	}
 	
-    @Override public String getInvName() {return "Defaultmachine";}
-    @Override public void openChest() {}
-    @Override public void closeChest() {}
+    @Override public String getInventoryName() {return "Defaultmachine";}
+    @Override public void openInventory() {}
+    @Override public void closeInventory() {}
     
     // Basecode, which should not be touched in extending Devices
     
@@ -266,14 +268,14 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
     	onPreTickUpdate();
 	    if (worldObj.isRemote) {
 	    	if (mNeedsUpdate) {
-			    worldObj.markBlockForRenderUpdate(xCoord, yCoord, zCoord);
+			    worldObj.markBlockForUpdate(xCoord, yCoord, zCoord);
 			    mNeedsUpdate = false;
 	    	}
 	    } else {
 		    if (mNeedsUpdate) {
-	    		worldObj.addBlockEvent(xCoord, yCoord, zCoord, GregTech_API.sBlockList[1].blockID, 0, mFacing);
-		    	worldObj.addBlockEvent(xCoord, yCoord, zCoord, GregTech_API.sBlockList[1].blockID, 1, mActive?1:0);
-		    	worldObj.addBlockEvent(xCoord, yCoord, zCoord, GregTech_API.sBlockList[1].blockID, 2, mRedstone?1:0);
+	    		worldObj.addBlockEvent(xCoord, yCoord, zCoord, GregTech_API.sBlockList[1], 0, mFacing);
+		    	worldObj.addBlockEvent(xCoord, yCoord, zCoord, GregTech_API.sBlockList[1], 1, mActive?1:0);
+		    	worldObj.addBlockEvent(xCoord, yCoord, zCoord, GregTech_API.sBlockList[1], 2, mRedstone?1:0);
 			    mNeedsUpdate = false;
 	    	}
 	    	
@@ -283,7 +285,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	    	}
 
 	    	if (mRedstone != oRedstone) {
-		    	worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, worldObj.getBlockId(xCoord, yCoord, zCoord));
+		    	worldObj.notifyBlocksOfNeighborChange(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord));
 	    		oRedstone = mRedstone;
 			    mNeedsUpdate = true;
 	    	}
@@ -317,22 +319,22 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 		    if (mIsAddedToEnet && GregTech_API.sMachineFireExplosions && worldObj.rand.nextInt(1000) == 0) {
 		    	switch (worldObj.rand.nextInt(6)) {
 		    	case 0:
-		    		if (worldObj.getBlockId(xCoord+1, yCoord, zCoord) == Block.fire.blockID) doEnergyExplosion();
+		    		if (worldObj.getBlock(xCoord+1, yCoord, zCoord) == Blocks.fire) doEnergyExplosion();
 		    		break;
 		    	case 1:
-		    		if (worldObj.getBlockId(xCoord-1, yCoord, zCoord) == Block.fire.blockID) doEnergyExplosion();
+		    		if (worldObj.getBlock(xCoord-1, yCoord, zCoord) == Blocks.fire) doEnergyExplosion();
 		    		break;
 		    	case 2:
-		    		if (worldObj.getBlockId(xCoord, yCoord+1, zCoord) == Block.fire.blockID) doEnergyExplosion();
+		    		if (worldObj.getBlock(xCoord, yCoord+1, zCoord) == Blocks.fire) doEnergyExplosion();
 		    		break;
 		    	case 3:
-		    		if (worldObj.getBlockId(xCoord, yCoord-1, zCoord) == Block.fire.blockID) doEnergyExplosion();
+		    		if (worldObj.getBlock(xCoord, yCoord-1, zCoord) == Blocks.fire) doEnergyExplosion();
 		    		break;
 		    	case 4:
-		    		if (worldObj.getBlockId(xCoord, yCoord, zCoord+1) == Block.fire.blockID) doEnergyExplosion();
+		    		if (worldObj.getBlock(xCoord, yCoord, zCoord+1) == Blocks.fire) doEnergyExplosion();
 		    		break;
 		    	case 5:
-		    		if (worldObj.getBlockId(xCoord, yCoord, zCoord-1) == Block.fire.blockID) doEnergyExplosion();
+		    		if (worldObj.getBlock(xCoord, yCoord, zCoord-1) == Blocks.fire) doEnergyExplosion();
 		    		break;
 		    	}
 		    }
@@ -345,22 +347,22 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 		        for (int i = dechargerSlotStartIndex(); i < dechargerSlotCount()+dechargerSlotStartIndex(); i++) {
 			        if (mInventory[i] != null && demandsEnergy()>0 && mInventory[i].getItem() instanceof IElectricItem) {
 			            if (((IElectricItem)mInventory[i].getItem()).canProvideEnergy(mInventory[i]))
-			                increaseStoredEnergy(ElectricItem.discharge(mInventory[i], maxEUStore() - getEnergyVar(), getChargeTier(), false, false));
+			                increaseStoredEnergy((int)ElectricItem.manager.discharge(mInventory[i], maxEUStore() - getEnergyVar(), getChargeTier(), false, false, false));
 			        }
 		        }
 		        
 		        for (int i = rechargerSlotStartIndex(); i < rechargerSlotCount()+rechargerSlotStartIndex(); i++) {
 			        if (getEnergyVar() > 0 && mInventory[i] != null && mInventory[i].getItem() instanceof IElectricItem)
-			        	decreaseStoredEnergy(ElectricItem.charge(mInventory[i], getEnergyVar(), getChargeTier(), false, false), true);
+			        	decreaseStoredEnergy((int)ElectricItem.manager.charge(mInventory[i], getEnergyVar(), getChargeTier(), false, false), true);
 		        }
 	        }
 	    }
     	onPostTickUpdate();
-    	onInventoryChanged();
+    	markDirty();
     	
     	} catch(Throwable e) {
-    		GT_Log.err.println("Encountered Exception while ticking TileEntity, the Game should've crashed by now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
-    		e.printStackTrace(GT_Log.err);
+    		GT_Log.log.error("Encountered Exception while ticking TileEntity, the Game should've crashed by now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
+    		GT_Log.log.catching(e);
     	}
     }
     
@@ -400,9 +402,9 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
     	
         getAdditionalData(aNBT);
         
-        NBTTagList tagList = aNBT.getTagList("Inventory");
+        NBTTagList tagList = aNBT.getTagList("Inventory", 10);
         for (int i = 0; i < tagList.tagCount(); i++) {
-            NBTTagCompound tag = (NBTTagCompound) tagList.tagAt(i);
+            NBTTagCompound tag = (NBTTagCompound) tagList.getCompoundTagAt(i);
             byte slot = tag.getByte("Slot");
             if (slot >= 0 && slot < mInventory.length) {
                 mInventory[slot] = GT_Utility.loadItem(tag);
@@ -543,9 +545,9 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
     public boolean playerOwnsThis(EntityPlayer aPlayer) {
     	if (ownerControl())
     		if (mOwnerName.equals("")&&!worldObj.isRemote)
-    			mOwnerName = aPlayer.username;
+    			mOwnerName = aPlayer.getDisplayName();
     		else
-    			if (!aPlayer.username.equals("Player") && !mOwnerName.equals("Player") && !mOwnerName.equals(aPlayer.username))
+    			if (!aPlayer.getDisplayName().equals("Player") && !mOwnerName.equals("Player") && !mOwnerName.equals(aPlayer.getDisplayName()))
     				return false;
     	return true;
     }
@@ -553,7 +555,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
     @Override
     public boolean isUseableByPlayer(EntityPlayer aPlayer) {
     	mNeedsUpdate = true;
-        return playerOwnsThis(aPlayer)&&!mFirstTick&&mTickTimer>20&&worldObj.getBlockTileEntity(xCoord, yCoord, zCoord) == this && aPlayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64 && isAccessible(aPlayer);
+        return playerOwnsThis(aPlayer)&&!mFirstTick&&mTickTimer>20&&worldObj.getTileEntity(xCoord, yCoord, zCoord) == this && aPlayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64 && isAccessible(aPlayer);
     }
     
 	@Override
@@ -605,7 +607,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
     	mReleaseEnergy = false;
         float tStrength = aAmount<10?1.0F:aAmount<32?2.0F:aAmount<128?3.0F:aAmount<512?4.0F:aAmount<2048?5.0F:aAmount<4096?6.0F:aAmount<8192?7.0F:8.0F;
         int tX=xCoord, tY=yCoord, tZ=zCoord;
-        worldObj.setBlock(tX, tY, tZ, 0);
+        worldObj.setBlock(tX, tY, tZ, Blocks.air);
         worldObj.createExplosion(null, tX+0.5, tY+0.5, tZ+0.5, tStrength, true);
     }
 	
@@ -619,12 +621,12 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 		return maxEUStore() - getEnergyVar();
 	}
 	
-	public int injectEnergy(Direction directionFrom, int aAmount) {
+	public double injectEnergy(ForgeDirection directionFrom, double aAmount, double voltage) {
 		if (aAmount > maxEUInput()) {
-			doExplosion(aAmount);
+			doExplosion((int)aAmount);
 			return 0;
 		}
-		setStoredEnergy(getEnergyVar() + aAmount);
+		setStoredEnergy((int)(getEnergyVar() + aAmount));
 		return 0;
 	}
 	
@@ -688,12 +690,12 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	}
 	
 	@Override
-	public int getMaxSafeInput() {
+	public double getDemandedEnergy() {
 		return maxEUInput();
 	}
-
+	
 	@Override
-	public boolean isInvNameLocalized() {
+	public boolean hasCustomInventoryName() {
 		return false;
 	}
 	
@@ -914,7 +916,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	
 	@Override
 	public void issueBlockUpdate() {
-		getWorld().notifyBlocksOfNeighborChange(getXCoord(), getYCoord(), getZCoord(), getBlockIDOffset(0, 0, 0));
+		getWorld().notifyBlocksOfNeighborChange(getXCoord(), getYCoord(), getZCoord(), getBlockOffset(0, 0, 0));
 	}
 	
 	@Override
@@ -1055,10 +1057,9 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	@Override
 	public void setOnFire() {
 		for (byte i = 0; i < 6; i++) {
-			short tID = getBlockIDAtSide(i);
-			Block tBlock = Block.blocksList[tID];
-			if (tID == 0 || tBlock == null || null == tBlock.getCollisionBoundingBoxFromPool(getWorld(), getOffsetX(i, 1), getOffsetY(i, 1), getOffsetZ(i, 1))) {
-    			getWorld().setBlock(getOffsetX(i, 1), getOffsetY(i, 1), getOffsetZ(i, 1), Block.fire.blockID);
+			Block tBlock = getBlockAtSide(i);
+			if (tBlock == Blocks.air || tBlock == null || null == tBlock.getCollisionBoundingBoxFromPool(getWorld(), getOffsetX(i, 1), getOffsetY(i, 1), getOffsetZ(i, 1))) {
+    			getWorld().setBlock(getOffsetX(i, 1), getOffsetY(i, 1), getOffsetZ(i, 1), Blocks.fire);
     		}
     	}
 	}
@@ -1080,7 +1081,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 
 	@Override
 	public int getInputVoltage() {
-		return getMaxSafeInput();
+		return demandsEnergy();
 	}
 
 	@Override
@@ -1319,5 +1320,15 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	@Override
 	public boolean dropCover(byte aSide, byte aDroppedSide, boolean aForced) {
 		return false;
+	}
+
+	@Override
+	public int getSinkTier() {
+		return getTier();
+	}
+
+	@Override
+	public int getSourceTier() {
+		return getTier();
 	}
 }

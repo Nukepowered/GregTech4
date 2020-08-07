@@ -16,7 +16,7 @@ public class GT_TileEntity_Superconductor extends GT_TileEntityMetaID_Machine im
     public int maxEUInput()            					{return Integer.MAX_VALUE;}
     public int maxEUOutput()           					{return Integer.MAX_VALUE;}
     
-    @Override public String getInvName() {return GT_LanguageManager.mNameList1[12];}
+    @Override public String getInventoryName() {return GT_LanguageManager.mNameList1[12];}
 
 	@Override
 	public float getWrenchDropRate() {

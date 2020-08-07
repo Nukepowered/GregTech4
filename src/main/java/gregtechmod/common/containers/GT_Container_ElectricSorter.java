@@ -95,7 +95,8 @@ public class GT_Container_ElectricSorter extends GT_ContainerMetaTile_Machine {
     
     public int mTargetDirection;
     
-    public void detectAndSendChanges() {
+    @SuppressWarnings("rawtypes")
+	public void detectAndSendChanges() {
         super.detectAndSendChanges();
     	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
     	mTargetDirection  = ((GT_MetaTileEntity_ElectricSorter)mTileEntity.getMetaTileEntity()).mTargetDirection;

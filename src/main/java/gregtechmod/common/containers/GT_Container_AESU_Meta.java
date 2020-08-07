@@ -36,7 +36,6 @@ public class GT_Container_AESU_Meta extends GT_ContainerMetaTile_Machine {
     public ItemStack slotClick(int aSlotIndex, int aMouseclick, int aShifthold, EntityPlayer aPlayer) {
     	if (aSlotIndex < 0) return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
 	    Slot tSlot = (Slot)inventorySlots.get(aSlotIndex);
-	    ItemStack tStack = tSlot.getStack();
 	    if (tSlot != null) {
 	    	int tOutput = ((GT_MetaTileEntity_AESU)mTileEntity.getMetaTileEntity()).mOutput;
 	    	switch(aSlotIndex) {

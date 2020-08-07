@@ -12,8 +12,8 @@ public class GT_MetaTileEntity_FusionInjector extends GT_MetaTileEntity_BasicTan
 	
 	public IGregTechTileEntity mFusionComputer;
 	
-	public GT_MetaTileEntity_FusionInjector(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_FusionInjector(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_FusionInjector() {

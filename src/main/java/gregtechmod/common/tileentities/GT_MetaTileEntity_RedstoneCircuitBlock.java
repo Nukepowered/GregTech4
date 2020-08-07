@@ -25,8 +25,8 @@ public class GT_MetaTileEntity_RedstoneCircuitBlock extends MetaTileEntity imple
 	public int mGate = 0, mGateData[] = new int[] {0,0,0,0,0,0,0,0};
     public boolean bOutput = true;
 	
-	public GT_MetaTileEntity_RedstoneCircuitBlock(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_RedstoneCircuitBlock(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_RedstoneCircuitBlock() {

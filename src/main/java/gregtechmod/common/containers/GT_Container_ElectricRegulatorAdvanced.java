@@ -102,7 +102,8 @@ public class GT_Container_ElectricRegulatorAdvanced extends GT_ContainerMetaTile
     
     public int[] mTargetSlots = new int[] {0,0,0,0,0,0,0,0,0};
     
-    public void detectAndSendChanges() {
+    @SuppressWarnings("rawtypes")
+	public void detectAndSendChanges() {
         super.detectAndSendChanges();
     	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
     	mTargetSlots = new int[9];

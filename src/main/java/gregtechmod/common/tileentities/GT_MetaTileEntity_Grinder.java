@@ -20,8 +20,8 @@ public class GT_MetaTileEntity_Grinder extends GT_MetaTileEntity_BasicTank {
 	private ItemStack mOutputItem1, mOutputItem2, mOutputItem3, mOutputItem4;
 	public boolean mMachine = false;
 	
-	public GT_MetaTileEntity_Grinder(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_Grinder(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_Grinder() {

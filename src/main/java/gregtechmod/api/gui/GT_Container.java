@@ -385,7 +385,8 @@ public class GT_Container extends Container {
     	}
     }
     
-    @Override
+    @SuppressWarnings("rawtypes")
+	@Override
     public List getInventory() {
     	try {
     		return super.getInventory();

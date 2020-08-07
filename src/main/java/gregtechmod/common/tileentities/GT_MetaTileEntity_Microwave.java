@@ -22,8 +22,8 @@ import net.minecraftforge.common.util.FakePlayer;
 
 public class GT_MetaTileEntity_Microwave extends GT_MetaTileEntity_BasicMachine {
 	
-	public GT_MetaTileEntity_Microwave(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_Microwave(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_Microwave() {

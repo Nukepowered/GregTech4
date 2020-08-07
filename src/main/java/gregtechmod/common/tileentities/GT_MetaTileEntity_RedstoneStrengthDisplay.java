@@ -17,8 +17,8 @@ public class GT_MetaTileEntity_RedstoneStrengthDisplay extends MetaTileEntity {
 	
 	public static IIcon[] sIconList = new IIcon[256];
 	
-	public GT_MetaTileEntity_RedstoneStrengthDisplay(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_RedstoneStrengthDisplay(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_RedstoneStrengthDisplay() {

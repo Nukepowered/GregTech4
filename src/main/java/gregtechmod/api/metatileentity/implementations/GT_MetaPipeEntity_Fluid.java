@@ -18,8 +18,8 @@ public abstract class GT_MetaPipeEntity_Fluid extends MetaPipeEntity {
 	public FluidStack mFluid;
 	public byte mLastReceivedFrom = 0, oLastReceivedFrom = 0;
 
-	public GT_MetaPipeEntity_Fluid(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaPipeEntity_Fluid(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaPipeEntity_Fluid() {

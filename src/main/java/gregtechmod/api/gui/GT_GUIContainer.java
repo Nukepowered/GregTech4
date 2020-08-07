@@ -1,5 +1,7 @@
 package gregtechmod.api.gui;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
@@ -12,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
 public class GT_GUIContainer extends GuiContainer {
 	
 	public boolean mCrashed = false;
-	
+	protected FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
 	public ResourceLocation mGUIbackground;
 	
 	public GT_GUIContainer(Container aContainer, String aGUIbackground) {

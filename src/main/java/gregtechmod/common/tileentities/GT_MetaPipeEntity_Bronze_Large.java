@@ -6,8 +6,8 @@ import gregtechmod.api.metatileentity.implementations.GT_MetaPipeEntity_Fluid;
 
 public class GT_MetaPipeEntity_Bronze_Large extends GT_MetaPipeEntity_Fluid {
 	
-	public GT_MetaPipeEntity_Bronze_Large(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaPipeEntity_Bronze_Large(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaPipeEntity_Bronze_Large() {

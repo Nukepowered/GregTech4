@@ -22,8 +22,8 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 	
 	public ItemStack mOutputItem1, mOutputItem2;
 	
-	public GT_MetaTileEntity_BasicMachine(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_BasicMachine(int aID, String nBaseName) {
+		super(aID, nBaseName);
 	}
 	
 	public GT_MetaTileEntity_BasicMachine() {

@@ -15,8 +15,8 @@ public class GT_MetaTileEntity_AdvancedTranslocator extends MetaTileEntity {
 	public boolean bOutput = true, bInvertFilter = false;
 	public byte mInputSide = 0, mOutputSide = 0, mSuccess = 0;
 	
-	public GT_MetaTileEntity_AdvancedTranslocator(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_AdvancedTranslocator(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_AdvancedTranslocator() {

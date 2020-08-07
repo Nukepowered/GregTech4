@@ -12,8 +12,8 @@ public class GT_MetaTileEntity_RedstoneNoteBlock extends MetaTileEntity {
 	
 	private byte mRedstoneStrength = 0;
 	
-	public GT_MetaTileEntity_RedstoneNoteBlock(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_RedstoneNoteBlock(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_RedstoneNoteBlock() {

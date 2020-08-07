@@ -18,8 +18,8 @@ public class GT_MetaTileEntity_Barrel extends MetaTileEntity {
 	public Item mItem = null;
 	public boolean isDigitalChest;
 	
-	public GT_MetaTileEntity_Barrel(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_Barrel(int aID, String mName) {
+		super(aID, mName);
 		isDigitalChest = true;
 	}
 	

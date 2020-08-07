@@ -15,7 +15,7 @@ public class GT_TileEntityPacket extends GT_Packet {
 	public int aY;
 	public int aZ;
 	public short aID;
-	public int[] aCovers;
+	public int[] aCovers = new int[6];
 	public byte aTextureData;
 	public byte aUpdateData;
 	public byte aRedstoneData;

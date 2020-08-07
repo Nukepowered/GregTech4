@@ -19,8 +19,8 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends GT_MetaTileEntity_Mul
 	@Override public boolean isFacingValid(byte aFacing)			{return aFacing > 1;}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 158, GregTech_API.gregtechmod);}
 	
-	public GT_MetaTileEntity_Multi_ThermalBoiler(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_Multi_ThermalBoiler(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_Multi_ThermalBoiler() {

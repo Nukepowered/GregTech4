@@ -23,8 +23,8 @@ public class GT_MetaTileEntity_Multi_GasTurbine extends GT_MetaTileEntity_MultiB
 	@Override public boolean isFacingValid(byte aFacing)			{return aFacing > 1;}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 156, GregTech_API.gregtechmod);}
 	
-	public GT_MetaTileEntity_Multi_GasTurbine(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_Multi_GasTurbine(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_Multi_GasTurbine() {

@@ -14,8 +14,8 @@ public class GT_MetaTileEntity_E_Furnace extends GT_MetaTileEntity_BasicMachine 
 	
 	public int mHeatingCoilTier = 0;
 	
-	public GT_MetaTileEntity_E_Furnace(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_E_Furnace(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_E_Furnace() {

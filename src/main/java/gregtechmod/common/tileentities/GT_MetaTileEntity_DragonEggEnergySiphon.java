@@ -20,10 +20,10 @@ public class GT_MetaTileEntity_DragonEggEnergySiphon extends MetaTileEntity {
 	
 	public static GT_MetaTileEntity_DragonEggEnergySiphon mActiveSiphon = null;
 	
-	public GT_MetaTileEntity_DragonEggEnergySiphon(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_DragonEggEnergySiphon(int aID, String mName) {
+		super(aID, mName);
 	}
-	
+	// TODO thaumcraft kekw
 	public GT_MetaTileEntity_DragonEggEnergySiphon() {
 		
 	}

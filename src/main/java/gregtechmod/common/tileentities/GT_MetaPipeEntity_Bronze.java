@@ -6,8 +6,8 @@ import gregtechmod.api.metatileentity.implementations.GT_MetaPipeEntity_Fluid;
 
 public class GT_MetaPipeEntity_Bronze extends GT_MetaPipeEntity_Fluid {
 	
-	public GT_MetaPipeEntity_Bronze(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaPipeEntity_Bronze(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaPipeEntity_Bronze() {

@@ -38,7 +38,7 @@ public class GT_MetaMachine_Item extends ItemBlock {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
     public void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean par4) {
-		try {
+		try { // TODO localization
 			int tDamage = aStack.getItemDamage();
 			
 			if (tDamage < 0 || tDamage >= GregTech_API.MAXIMUM_METATILE_IDS) return;
@@ -130,10 +130,10 @@ public class GT_MetaMachine_Item extends ItemBlock {
     	if (tDamage < 16) return getUnlocalizedName() + "." + GT_LanguageManager.mNameList1[tDamage];
     	
     	if (GregTech_API.mMetaTileList[tDamage] != null) {
-    		return getUnlocalizedName() + "." + GregTech_API.mMetaTileList[tDamage].getMetaName();
+    		return "metatileentity." + GregTech_API.mMetaTileList[tDamage].getMetaName();
     	}
     	
-    	return "";
+    	return "null";
     }
     
     @Override

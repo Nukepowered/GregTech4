@@ -19,8 +19,8 @@ public class GT_MetaTileEntity_Centrifuge extends GT_MetaTileEntity_BasicTank {
 	private int mProgresstime = 0, mMaxProgresstime = 0, mEUt = 0;
 	private ItemStack mOutputItem1, mOutputItem2, mOutputItem3, mOutputItem4;
 	
-	public GT_MetaTileEntity_Centrifuge(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_Centrifuge(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_Centrifuge() {

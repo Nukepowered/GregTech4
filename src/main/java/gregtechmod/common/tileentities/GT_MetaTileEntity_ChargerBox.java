@@ -13,8 +13,8 @@ public class GT_MetaTileEntity_ChargerBox extends MetaTileEntity {
 	
 	public boolean mCharge = false, mDecharge = false;
 	
-	public GT_MetaTileEntity_ChargerBox(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_ChargerBox(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_ChargerBox() {

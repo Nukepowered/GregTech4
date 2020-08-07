@@ -46,7 +46,6 @@ public class GT_Container_Teleporter extends GT_ContainerMetaTile_Machine {
     public ItemStack slotClick(int aSlotIndex, int aMouseclick, int aShifthold, EntityPlayer aPlayer) {
     	if (aSlotIndex < 0) return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
 	    Slot tSlot = (Slot)inventorySlots.get(aSlotIndex);
-	    ItemStack tStack = tSlot.getStack();
 	    if (tSlot != null) {
 	    	switch(aSlotIndex) {
 	    	case 0:
@@ -104,7 +103,8 @@ public class GT_Container_Teleporter extends GT_ContainerMetaTile_Machine {
 	
 	public int mTargetX = 0, mTargetY = 0, mTargetZ = 0, mTargetD = 0, mEgg = 0;
 	
-    @Override
+    @SuppressWarnings("rawtypes")
+	@Override
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
         if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;

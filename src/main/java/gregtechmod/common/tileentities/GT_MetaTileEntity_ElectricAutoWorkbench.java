@@ -20,8 +20,8 @@ public class GT_MetaTileEntity_ElectricAutoWorkbench extends GT_MetaTileEntity_B
 	public int mMode = 0, mCurrentSlot = 0, mThroughPut = 0, mTicksUntilNextUpdate = 20;
 	public boolean mLastCraftSuccessful = false;
 	
-	public GT_MetaTileEntity_ElectricAutoWorkbench(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_ElectricAutoWorkbench(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_ElectricAutoWorkbench() {
@@ -106,6 +106,7 @@ public class GT_MetaTileEntity_ElectricAutoWorkbench extends GT_MetaTileEntity_B
 		return "Automatic Crafting Table Mk III";
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void onPostTick() {
 		if (getBaseMetaTileEntity().isAllowedToWork() && getBaseMetaTileEntity().isServerSide() && getBaseMetaTileEntity().getUniversalEnergyStored() >= (mMode==5||mMode==6?128:2048) && (getBaseMetaTileEntity().hasWorkJustBeenEnabled() || --mTicksUntilNextUpdate<1)) {
 			mTicksUntilNextUpdate = 32;
@@ -502,7 +503,6 @@ public class GT_MetaTileEntity_ElectricAutoWorkbench extends GT_MetaTileEntity_B
 					}
 					
 					if (mInventory[18] == null && mThroughPut < 2) {
-						ItemStack tStack = null;
 						for (byte i = 0; i < 8; i++) {
 							for (byte j = i; ++j < 9;) {
 								if (GT_Utility.areStacksEqual(mInventory[i], mInventory[j]) && mInventory[i].getMaxStackSize() > 8) {

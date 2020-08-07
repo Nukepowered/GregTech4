@@ -27,8 +27,8 @@ public class GT_Sonictron_Item extends GT_Generic_Item {
 	
 	@Override
     public boolean onItemUseFirst(ItemStack aStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7, float par8, float par9, float par10) {
-		if (!par3World.isRemote && par3World.getBlockId(par4, par5, par6) == GregTech_API.sBlockList[1].blockID && par3World.getBlockMetadata(par4, par5, par6) == 6) {
-			GT_TileEntity_Sonictron tSonictron = (GT_TileEntity_Sonictron)par3World.getBlockTileEntity(par4, par5, par6);
+		if (!par3World.isRemote && par3World.getBlock(par4, par5, par6) == GregTech_API.sBlockList[1] && par3World.getBlockMetadata(par4, par5, par6) == 6) {
+			GT_TileEntity_Sonictron tSonictron = (GT_TileEntity_Sonictron)par3World.getTileEntity(par4, par5, par6);
         	if (tSonictron != null) {
             	ItemStack[] tInventory = getNBTInventory(aStack);
         		if (par2EntityPlayer.isSneaking()) {
@@ -85,9 +85,9 @@ public class GT_Sonictron_Item extends GT_Generic_Item {
     	NBTTagCompound tNBT = aStack.getTagCompound();
     	if (tNBT == null) return tInventory;
     	
-    	NBTTagList tNBT_ItemList = tNBT.getTagList("Inventory");
+    	NBTTagList tNBT_ItemList = tNBT.getTagList("Inventory", 10);
         for (int i = 0; i < tNBT_ItemList.tagCount(); i++) {
-            NBTTagCompound tag = (NBTTagCompound) tNBT_ItemList.tagAt(i);
+            NBTTagCompound tag = (NBTTagCompound) tNBT_ItemList.getCompoundTagAt(i);
             byte slot = tag.getByte("Slot");
             if (slot >= 0 && slot < tInventory.length) {
                 tInventory[slot] = GT_Utility.loadItem(tag);

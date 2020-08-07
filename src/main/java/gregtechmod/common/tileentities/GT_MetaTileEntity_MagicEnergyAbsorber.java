@@ -22,7 +22,7 @@ import thaumcraft.api.EnumTag;
 import thaumcraft.api.ObjectTags;
 import thaumcraft.common.aura.AuraManager;
 import thaumcraft.common.entities.monster.EntityWisp;
-
+// TODO THAUMCRAFT KEK
 public class GT_MetaTileEntity_MagicEnergyAbsorber extends MetaTileEntity {
 	
 	public static int sEnergyPerEnderCrystal = 32, sEnergyFromVis = 12800;
@@ -33,8 +33,8 @@ public class GT_MetaTileEntity_MagicEnergyAbsorber extends MetaTileEntity {
 	
 	public boolean isActive1 = false, isActive2 = false;
 	
-	public GT_MetaTileEntity_MagicEnergyAbsorber(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_MagicEnergyAbsorber(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_MagicEnergyAbsorber() {

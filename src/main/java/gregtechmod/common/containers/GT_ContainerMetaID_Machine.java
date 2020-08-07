@@ -29,10 +29,11 @@ public class GT_ContainerMetaID_Machine extends GT_Container {
     
     public int mEnergy, mStorage, mOutput, mInput, mID;
     
-    @Override
+    @SuppressWarnings("rawtypes")
+	@Override
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
-    	if (mTileEntity.worldObj.isRemote) return;
+    	if (mTileEntity.getWorld().isRemote) return;
         mStorage = mTileEntity.maxEUStore();
     	mEnergy = mTileEntity.getStored();
     	mOutput = mTileEntity.maxEUOutput();

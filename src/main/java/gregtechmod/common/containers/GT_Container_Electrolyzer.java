@@ -32,7 +32,8 @@ public class GT_Container_Electrolyzer extends GT_ContainerMetaTile_Machine {
     
     public int mProgress, mMaxProgress, mProgressScale;
     
-    public void detectAndSendChanges() {
+    @SuppressWarnings("rawtypes")
+	public void detectAndSendChanges() {
         super.detectAndSendChanges();
     	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
     	mProgress = ((GT_MetaTileEntity_Electrolyzer)mTileEntity.getMetaTileEntity()).getProgresstime();

@@ -4,6 +4,8 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.gui.GT_GUIContainerMetaTile_Machine;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.common.containers.GT_Container_Teleporter;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GT_GUIContainer_Teleporter extends GT_GUIContainerMetaTile_Machine {
@@ -14,6 +16,7 @@ public class GT_GUIContainer_Teleporter extends GT_GUIContainerMetaTile_Machine 
     
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
+    	FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
     	fontRenderer.drawString("Teleporter", 46, 8, 16448255);
         if (mContainer != null) {
         	fontRenderer.drawString("X: "   + toNumber(((GT_Container_Teleporter)mContainer).mTargetX), 46, 16, 16448255);

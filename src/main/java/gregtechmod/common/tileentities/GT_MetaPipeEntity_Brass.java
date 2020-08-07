@@ -6,8 +6,8 @@ import gregtechmod.api.metatileentity.implementations.GT_MetaPipeEntity_Item;
 
 public class GT_MetaPipeEntity_Brass extends GT_MetaPipeEntity_Item {
 	
-	public GT_MetaPipeEntity_Brass(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaPipeEntity_Brass(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaPipeEntity_Brass() {

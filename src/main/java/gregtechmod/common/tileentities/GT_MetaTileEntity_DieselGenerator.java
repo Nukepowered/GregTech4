@@ -13,8 +13,8 @@ import net.minecraftforge.fluids.FluidStack;
 
 public class GT_MetaTileEntity_DieselGenerator extends GT_MetaTileEntity_BasicTank {
 	
-	public GT_MetaTileEntity_DieselGenerator(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_DieselGenerator(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_DieselGenerator() {

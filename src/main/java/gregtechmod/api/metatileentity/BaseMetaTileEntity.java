@@ -503,29 +503,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	
 	@Override
     public Packet getDescriptionPacket() {
-//        ByteArrayDataOutput tOut = ByteStreams.newDataOutput();
-//        
-//        tOut.writeInt(getXCoord());
-//        tOut.writeShort(getYCoord());
-//        tOut.writeInt(getZCoord());
-//        
-//        tOut.writeShort(mID);
-//        tOut.writeInt(mCoverSides[0]);
-//        tOut.writeInt(mCoverSides[1]);
-//        tOut.writeInt(mCoverSides[2]);
-//        tOut.writeInt(mCoverSides[3]);
-//        tOut.writeInt(mCoverSides[4]);
-//        tOut.writeInt(mCoverSides[5]);
-//        
-//        tOut.writeByte(oTextureData = (byte)((getFrontFacing()&7) | (mActive?8:0) | (mRedstone?16:0) | (mLockUpgrade?32:0)));
-//        tOut.writeByte(oUpdateData = hasValidMetaTileEntity()?mMetaTileEntity.getUpdateData():0);
-//        tOut.writeByte(oRedstoneData = (byte)(((mSidedRedstone[0]>0)?1:0)|((mSidedRedstone[1]>0)?2:0)|((mSidedRedstone[2]>0)?4:0)|((mSidedRedstone[3]>0)?8:0)|((mSidedRedstone[4]>0)?16:0)|((mSidedRedstone[5]>0)?32:0)));
-//        tOut.writeByte(oColor = mColor);
-//        
-//        oLightValue = -1;
-//        
-//		S3FPacketCustomPayload rPacket = new S3FPacketCustomPayload(GregTech_API.TILEENTITY_PACKET_CHANNEL, tOut.toByteArray());
-//        return rPacket;
+		GT_Utility.sendPacketToAllPlayersInRange(getWorld(), getMetaTileEntityData(), getXCoord(), getZCoord());
 		return super.getDescriptionPacket();
     }
 	

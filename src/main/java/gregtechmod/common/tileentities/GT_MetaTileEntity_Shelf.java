@@ -15,8 +15,8 @@ public class GT_MetaTileEntity_Shelf extends MetaTileEntity {
 	
 	public byte mType = 0;
 	
-	public GT_MetaTileEntity_Shelf(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_Shelf(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_Shelf() {

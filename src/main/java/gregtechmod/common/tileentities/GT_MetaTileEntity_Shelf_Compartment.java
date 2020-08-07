@@ -16,8 +16,8 @@ public class GT_MetaTileEntity_Shelf_Compartment extends GT_MetaTileEntity_Shelf
 	
 	public static IIcon[] sIconList = new IIcon[256];
 	
-	public GT_MetaTileEntity_Shelf_Compartment(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_Shelf_Compartment(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_Shelf_Compartment() {

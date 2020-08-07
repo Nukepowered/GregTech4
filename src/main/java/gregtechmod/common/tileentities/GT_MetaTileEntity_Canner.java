@@ -10,8 +10,8 @@ import net.minecraft.item.ItemStack;
 
 public class GT_MetaTileEntity_Canner extends GT_MetaTileEntity_BasicMachine {
 	
-	public GT_MetaTileEntity_Canner(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_Canner(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_Canner() {

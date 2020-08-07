@@ -16,8 +16,8 @@ public class GT_MetaTileEntity_ElectricInventoryManager extends MetaTileEntity {
 	public int[] mSlotRange = new int[4];
 	public boolean mWorkedLastTick = false;
 	
-	public GT_MetaTileEntity_ElectricInventoryManager(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_ElectricInventoryManager(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_ElectricInventoryManager() {

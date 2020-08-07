@@ -9,8 +9,8 @@ public class GT_MetaTileEntity_FusionExtractor extends GT_MetaTileEntity_BasicTa
 	
 	public IGregTechTileEntity mFusionComputer;
 	
-	public GT_MetaTileEntity_FusionExtractor(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_FusionExtractor(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_FusionExtractor() {

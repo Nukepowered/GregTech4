@@ -17,8 +17,8 @@ public abstract class GT_MetaTileEntity_BasicTank extends MetaTileEntity {
 	
 	public FluidStack mFluid;
 	
-	public GT_MetaTileEntity_BasicTank(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_BasicTank(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_BasicTank() {

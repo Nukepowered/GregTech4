@@ -14,8 +14,8 @@ public class GT_MetaTileEntity_MachineBox extends GT_MetaTileEntity_BasicTank {
 	
 	public static final String DESCRIPTIONTEXT = EnumChatFormatting.RESET + "You just need " + EnumChatFormatting.DARK_PURPLE + "I" + EnumChatFormatting.LIGHT_PURPLE + "m" + EnumChatFormatting.DARK_RED + "a" + EnumChatFormatting.RED + "g" + EnumChatFormatting.YELLOW + "i" + EnumChatFormatting.GREEN + "n" + EnumChatFormatting.AQUA + "a" + EnumChatFormatting.DARK_AQUA + "t" + EnumChatFormatting.BLUE + "i" + EnumChatFormatting.DARK_BLUE + "o" + EnumChatFormatting.DARK_PURPLE + "n" + EnumChatFormatting.RESET + " to use this.";
 	
-	public GT_MetaTileEntity_MachineBox(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_MachineBox(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_MachineBox() {

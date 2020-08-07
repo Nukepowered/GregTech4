@@ -7,8 +7,8 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class GT_MetaTileEntity_ElectricItemClearer extends GT_MetaTileEntity_ElectricBufferSmall {
 	
-	public GT_MetaTileEntity_ElectricItemClearer(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_ElectricItemClearer(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_ElectricItemClearer() {

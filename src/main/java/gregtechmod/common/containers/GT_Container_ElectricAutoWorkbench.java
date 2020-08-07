@@ -95,7 +95,8 @@ public class GT_Container_ElectricAutoWorkbench extends GT_ContainerMetaTile_Mac
 
     public int mMode, mThroughPut;
     
-    public void detectAndSendChanges() {
+    @SuppressWarnings("rawtypes")
+	public void detectAndSendChanges() {
         super.detectAndSendChanges();
     	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
     	mMode = ((GT_MetaTileEntity_ElectricAutoWorkbench)mTileEntity.getMetaTileEntity()).mMode;

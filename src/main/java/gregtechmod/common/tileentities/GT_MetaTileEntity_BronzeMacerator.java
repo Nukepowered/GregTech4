@@ -11,8 +11,8 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class GT_MetaTileEntity_BronzeMacerator extends GT_MetaTileEntity_BasicMachine_Bronze {
 	
-	public GT_MetaTileEntity_BronzeMacerator(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_BronzeMacerator(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_BronzeMacerator() {

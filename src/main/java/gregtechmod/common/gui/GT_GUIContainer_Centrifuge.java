@@ -4,6 +4,8 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.gui.GT_GUIContainerMetaTile_Machine;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.common.containers.GT_Container_Centrifuge;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.StatCollector;
 
@@ -15,6 +17,7 @@ public class GT_GUIContainer_Centrifuge extends GT_GUIContainerMetaTile_Machine 
     
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
+    	FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
         fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 94, 4210752);
         fontRenderer.drawString("Industrial", 110,  4, 4210752);
         fontRenderer.drawString("Centrifuge", 110, 12, 4210752);

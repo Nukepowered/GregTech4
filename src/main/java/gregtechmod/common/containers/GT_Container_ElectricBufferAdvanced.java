@@ -73,7 +73,8 @@ public class GT_Container_ElectricBufferAdvanced extends GT_ContainerMetaTile_Ma
     
     public int mTargetSlot;
     
-    public void detectAndSendChanges() {
+    @SuppressWarnings("rawtypes")
+	public void detectAndSendChanges() {
         super.detectAndSendChanges();
     	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
     	mTargetSlot = ((GT_MetaTileEntity_ElectricBufferAdvanced)mTileEntity.getMetaTileEntity()).mTargetSlot;

@@ -71,7 +71,8 @@ public class GT_Container_RedstoneCircuitBlock extends GT_ContainerMetaTile_Mach
     
     public int mData[] = new int[] {0,0,0,0,0,0,0,0}, mGate = 0;
     
-    public void detectAndSendChanges() {
+    @SuppressWarnings("rawtypes")
+	public void detectAndSendChanges() {
         super.detectAndSendChanges();
     	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
     	mGate = ((GT_MetaTileEntity_RedstoneCircuitBlock)mTileEntity.getMetaTileEntity()).mGate;

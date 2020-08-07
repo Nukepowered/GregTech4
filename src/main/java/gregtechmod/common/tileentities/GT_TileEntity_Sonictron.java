@@ -112,7 +112,7 @@ public class GT_TileEntity_Sonictron extends GT_TileEntityMetaID_Machine {
     	return true;
     }
     
-    @Override public String getInvName() {return GT_LanguageManager.mNameList1[6];}
+    @Override public String getInventoryName() {return GT_LanguageManager.mNameList1[6];}
     
     @Override
     public int getTexture(int aSide, int aMeta) {

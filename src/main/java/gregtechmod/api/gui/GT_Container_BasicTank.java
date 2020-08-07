@@ -30,7 +30,8 @@ public class GT_Container_BasicTank extends GT_ContainerMetaTile_Machine {
     
     public int mContent = 0;
     
-    public void detectAndSendChanges() {
+    @SuppressWarnings("rawtypes")
+	public void detectAndSendChanges() {
         super.detectAndSendChanges();
     	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
     	if (((GT_MetaTileEntity_BasicTank)mTileEntity.getMetaTileEntity()).mFluid != null)

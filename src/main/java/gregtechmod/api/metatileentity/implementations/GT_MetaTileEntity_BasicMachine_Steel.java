@@ -8,8 +8,8 @@ package gregtechmod.api.metatileentity.implementations;
  * Extend this class to make a simple Machine
  */
 public abstract class GT_MetaTileEntity_BasicMachine_Steel extends GT_MetaTileEntity_BasicMachine_Bronze {
-	public GT_MetaTileEntity_BasicMachine_Steel(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_BasicMachine_Steel(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_BasicMachine_Steel() {

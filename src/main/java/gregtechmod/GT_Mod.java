@@ -1,6 +1,7 @@
 package gregtechmod;
 
 import gregtechmod.api.GregTech_API;
+import gregtechmod.api.enums.Element;
 import gregtechmod.api.enums.GT_ConfigCategories;
 import gregtechmod.api.enums.GT_ToolDictNames;
 import gregtechmod.api.enums.Materials;
@@ -10,13 +11,19 @@ import gregtechmod.api.interfaces.IGT_RecipeAdder;
 import gregtechmod.api.interfaces.IMetaTileEntity;
 import gregtechmod.api.items.GT_Tool_Item;
 import gregtechmod.api.metatileentity.BaseMetaPipeEntity;
+import gregtechmod.api.metatileentity.BaseMetaTileEntity;
+import gregtechmod.api.metatileentity.MetaPipeEntity;
+import gregtechmod.api.metatileentity.MetaTileEntity;
+import gregtechmod.api.util.GT_CircuitryBehavior;
 import gregtechmod.api.util.GT_Config;
+import gregtechmod.api.util.GT_CoverBehavior;
 import gregtechmod.api.util.GT_ItsNotMyFaultException;
 import gregtechmod.api.util.GT_LanguageManager;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Recipe;
+import gregtechmod.api.util.GT_RecipeRegistrator;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.GT_DummyWorld;
 import gregtechmod.common.GT_GUIHandler;
@@ -148,32 +155,32 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     public static String sMessage = "";
     
     static {
-//    	checkVersions();
+    	checkVersions();
     }
     
-//    private static final void checkVersions() { // Will uncomment in the end
-//    	if (   VERSION != GregTech_API			.VERSION
-//            || VERSION != BaseMetaTileEntity	.VERSION
-//            || VERSION != BaseMetaPipeEntity	.VERSION
-//            || VERSION != MetaTileEntity		.VERSION
-//            || VERSION != MetaPipeEntity		.VERSION
-//    	    || VERSION != GT_CircuitryBehavior	.VERSION
-//    	    || VERSION != GT_CoverBehavior		.VERSION
-//    		|| VERSION != GT_Config				.VERSION
-//    		|| VERSION != GT_LanguageManager	.VERSION
-//    		|| VERSION != GT_ModHandler			.VERSION
-//    		|| VERSION != GT_OreDictUnificator	.VERSION
-//    		|| VERSION != GT_Recipe				.VERSION
-//    		|| VERSION != GT_Utility			.VERSION
-//    	    || VERSION != GT_RecipeRegistrator	.VERSION
-//    		|| VERSION != Element				.VERSION
-//    		|| VERSION != Materials				.VERSION
-//    		|| VERSION != OrePrefixes			.VERSION)
-//    		throw new GT_ItsNotMyFaultException("One of your Mods included GregTech-API Files inside it's download, mention this to the Mod Author, who does this bad thing, and tell him/her to use reflection. I have added a Version check, to prevent Authors from breaking my Mod that way.");
-//    }
+    private static final void checkVersions() { // Will uncomment in the end
+    	if (   VERSION != GregTech_API			.VERSION
+            || VERSION != BaseMetaTileEntity	.VERSION
+            || VERSION != BaseMetaPipeEntity	.VERSION
+            || VERSION != MetaTileEntity		.VERSION
+            || VERSION != MetaPipeEntity		.VERSION
+    	    || VERSION != GT_CircuitryBehavior	.VERSION
+    	    || VERSION != GT_CoverBehavior		.VERSION
+    		|| VERSION != GT_Config				.VERSION
+    		|| VERSION != GT_LanguageManager	.VERSION
+    		|| VERSION != GT_ModHandler			.VERSION
+    		|| VERSION != GT_OreDictUnificator	.VERSION
+    		|| VERSION != GT_Recipe				.VERSION
+    		|| VERSION != GT_Utility			.VERSION
+    	    || VERSION != GT_RecipeRegistrator	.VERSION
+    		|| VERSION != Element				.VERSION
+    		|| VERSION != Materials				.VERSION
+    		|| VERSION != OrePrefixes			.VERSION)
+    		throw new GT_ItsNotMyFaultException("One of your Mods included GregTech-API Files inside it's download, mention this to the Mod Author, who does this bad thing, and tell him/her to use reflection. I have added a Version check, to prevent Authors from breaking my Mod that way.");
+    }
     
     public GT_Mod() {
-//    	checkVersions();
+    	checkVersions();
     	if (GregTech_API.isGregTechLoaded()) throw new GT_ItsNotMyFaultException("Why did you install my Addon twice? Remove the second gregtechmod.zip out of your mods-Folder, you need only one of them.");
 		GregTech_API.gregtechmod = this;
 		GregTech_API.sRecipeAdder = this;
@@ -188,7 +195,7 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     @SuppressWarnings("rawtypes")
 	@EventHandler
     public void preload(FMLPreInitializationEvent aEvent) {
-//    	checkVersions();
+    	checkVersions();
     	for (Runnable tRunnable : GregTech_API.sBeforeGTPreload) {
     		try {
     			tRunnable.run();
@@ -205,17 +212,7 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     	tFile = new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "DynamicConfig.cfg");
     	Configuration tConfig3 = new Configuration(tFile);
     	tConfig3.load();
-//    	GT_Log.mLogFile = new File(aEvent.getModConfigurationDirectory().getParentFile(), "GregTech.log");
-//    	if (GT_Log.mLogFile.exists()) {
-//    		mAlreadyPlayed = true;
-//    		try {
-//    			GT_Log.out = GT_Log.err = new PrintStream(GT_Log.mLogFile);
-//    		} catch (FileNotFoundException e) {
-//        		GT_Log.out = System.out;
-//        		GT_Log.log = System.err;
-//    		}
-//    	}
-//    	
+
     	mDoNotInit = (!tFile.getAbsolutePath().toLowerCase().contains("voltz")) && (tFile.getAbsolutePath().toLowerCase().contains(".technic") || tFile.getAbsolutePath().toLowerCase().contains("tekkit"));
     	if (mDoNotInit) {
             GT_Log.log.warn("GT_Mod: Detected Technic Launcher.");
@@ -292,137 +289,6 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     	sNerfedStoneTools		= GT_Config.sConfigFileStandard.get("general", "smallerStoneToolDurability"	, true ).getBoolean(true);
     	//sPatchLightUpdateLag	= GT_Config.sConfigFileStandard.get("general", "patchingLightUpdateLag"		, true ).getBoolean(true);
     	float tScrapChance		= GT_Config.sConfigFileStandard.get("general", "weightForScrapFromScrapboxing", 200).getInt(200);
-        
-//    	sBlockIDs[ 0] = GT_Config.sConfigFileIDs.getBlock("Block"					,  sBlockIDs[ 0]).getInt();
-//    	sBlockIDs[ 1] = GT_Config.sConfigFileIDs.getBlock("Machine"					,  sBlockIDs[ 1]).getInt();
-//    	sBlockIDs[ 2] = GT_Config.sConfigFileIDs.getBlock("Ore"						,  sBlockIDs[ 2]).getInt();
-//    	sBlockIDs[ 3] = GT_Config.sConfigFileIDs.getBlock("LightSource"				,  sBlockIDs[ 3]).getInt();
-//    	sBlockIDs[ 4] = GT_Config.sConfigFileIDs.getBlock("Block2"					,  sBlockIDs[ 4]).getInt();
-//    	sBlockIDs[ 5] = GT_Config.sConfigFileIDs.getBlock("Stone1"					,  sBlockIDs[ 5]).getInt();
-//    	
-//    	sItemIDs[  0] = GT_Config.sConfigFileIDs.getItem("MATERIALS"  				, 21000).getInt();
-//    	sItemIDs[  1] = GT_Config.sConfigFileIDs.getItem("DUSTS"  					, 21001).getInt();
-//    	sItemIDs[  2] = GT_Config.sConfigFileIDs.getItem("CELLS"  					, 21002).getInt();
-//    	sItemIDs[  3] = GT_Config.sConfigFileIDs.getItem("COMPONENTS"  				, 21003).getInt();
-//    	sItemIDs[  4] = GT_Config.sConfigFileIDs.getItem("SMALLDUSTS"  				, 21004).getInt();
-//    	sItemIDs[  5] = GT_Config.sConfigFileIDs.getItem("NUGGETS"  				, 21005).getInt();
-//    	sItemIDs[  6] = GT_Config.sConfigFileIDs.getItem("DIRTYDUSTS"  				, 21006).getInt();
-//    	sItemIDs[  7] = GT_Config.sConfigFileIDs.getItem("TINYDUSTS"  				, 21007).getInt();
-//    	
-//    	sItemIDs[ 15] = GT_Config.sConfigFileIDs.getItem("LIQUIDDISPLAY"  			, 21015).getInt();
-//    	sItemIDs[ 16] = GT_Config.sConfigFileIDs.getItem("NCSensorCard"				, 21016).getInt();
-//    	sItemIDs[ 17] = GT_Config.sConfigFileIDs.getItem("NCSensorKit"				, 21017).getInt();
-//    	sItemIDs[ 18] = GT_Config.sConfigFileIDs.getItem("CheatyDevice"				, 21018).getInt();
-//    	
-//    	sItemIDs[ 30] = GT_Config.sConfigFileIDs.getItem("IronMortar"				, 21030).getInt();
-//    	sItemIDs[ 31] = GT_Config.sConfigFileIDs.getItem("Mortar"					, 21031).getInt();
-//    	sItemIDs[ 32] = GT_Config.sConfigFileIDs.getItem("HandheldSonictron"		, 21032).getInt();
-//    	sItemIDs[ 33] = GT_Config.sConfigFileIDs.getItem("Destructopack"			, 21033).getInt();
-//    	sItemIDs[ 34] = GT_Config.sConfigFileIDs.getItem("Heliumcoolant060k"		, 21034).getInt();
-//    	sItemIDs[ 35] = GT_Config.sConfigFileIDs.getItem("Heliumcoolant120k"		, 21035).getInt();
-//    	sItemIDs[ 36] = GT_Config.sConfigFileIDs.getItem("Heliumcoolant180k"		, 21036).getInt();
-//    	sItemIDs[ 37] = GT_Config.sConfigFileIDs.getItem("LapotronicEnergycrystal"	, 21037).getInt();
-//    	sItemIDs[ 38] = GT_Config.sConfigFileIDs.getItem("CloakingDevice"			, 21038).getInt();
-//    	sItemIDs[ 39] = GT_Config.sConfigFileIDs.getItem("JackHammerIron"			, 21039).getInt();
-//    	sItemIDs[ 40] = GT_Config.sConfigFileIDs.getItem("Neutronreflector"			, 21040).getInt();
-//    	sItemIDs[ 41] = GT_Config.sConfigFileIDs.getItem("JackHammerSteel"			, 21041).getInt();
-//    	sItemIDs[ 42] = GT_Config.sConfigFileIDs.getItem("JackHammerDiamond"		, 21042).getInt();
-//    	sItemIDs[ 43] = GT_Config.sConfigFileIDs.getItem("Dataorb"					, 21043).getInt();
-//    	sItemIDs[ 44] = GT_Config.sConfigFileIDs.getItem("Lamphelmet"				, 21044).getInt();
-//    	sItemIDs[ 45] = GT_Config.sConfigFileIDs.getItem("Lapotronpack"				, 21045).getInt();
-//    	sItemIDs[ 46] = GT_Config.sConfigFileIDs.getItem("Rockcutter"				, 21046).getInt();
-//    	sItemIDs[ 47] = GT_Config.sConfigFileIDs.getItem("Teslastaff"				, 21047).getInt();
-//    	sItemIDs[ 48] = GT_Config.sConfigFileIDs.getItem("Thorium1"					, 21048).getInt();
-//    	sItemIDs[ 49] = GT_Config.sConfigFileIDs.getItem("Thorium2"					, 21049).getInt();
-//    	sItemIDs[ 50] = GT_Config.sConfigFileIDs.getItem("Thorium4"					, 21050).getInt();
-//    	sItemIDs[ 51] = GT_Config.sConfigFileIDs.getItem("Plutonium1"				, 21051).getInt();
-//    	sItemIDs[ 52] = GT_Config.sConfigFileIDs.getItem("Plutonium2"				, 21052).getInt();
-//    	sItemIDs[ 53] = GT_Config.sConfigFileIDs.getItem("Plutonium4"				, 21053).getInt();
-//    	sItemIDs[ 54] = GT_Config.sConfigFileIDs.getItem("LithiumCell"				, 21054).getInt();
-//    	sItemIDs[ 55] = GT_Config.sConfigFileIDs.getItem("DebugScanner"				, 21055).getInt();
-//    	sItemIDs[ 56] = GT_Config.sConfigFileIDs.getItem("LithiumbatteryEmpty"		, 21056).getInt();
-//    	sItemIDs[ 57] = GT_Config.sConfigFileIDs.getItem("LithiumbatteryFull"		, 21057).getInt();
-//		sItemIDs[ 58] = GT_Config.sConfigFileIDs.getItem("Lithiumpack"				, 21058).getInt();
-//		//Shield
-//		sItemIDs[ 60] = GT_Config.sConfigFileIDs.getItem("NaKcoolant060k"			, 21060).getInt();
-//    	sItemIDs[ 61] = GT_Config.sConfigFileIDs.getItem("NaKcoolant120k"			, 21061).getInt();
-//    	sItemIDs[ 62] = GT_Config.sConfigFileIDs.getItem("NaKcoolant180k"			, 21062).getInt();
-//    	sItemIDs[ 63] = GT_Config.sConfigFileIDs.getItem("Scanner"					, 21063).getInt();
-//    	sItemIDs[ 64] = GT_Config.sConfigFileIDs.getItem("Crowbar"					, 21064).getInt();
-//    	sItemIDs[ 65] = GT_Config.sConfigFileIDs.getItem("Screwdriver"				, 21065).getInt();
-//    	sItemIDs[ 66] = GT_Config.sConfigFileIDs.getItem("WrenchSteel"				, 21066).getInt();
-//    	sItemIDs[ 67] = GT_Config.sConfigFileIDs.getItem("WrenchRefIron"			, 21067).getInt();
-//    	sItemIDs[ 68] = GT_Config.sConfigFileIDs.getItem("WrenchTungstensteel"		, 21068).getInt();
-//    	sItemIDs[ 69] = GT_Config.sConfigFileIDs.getItem("WrenchBronze"				, 21069).getInt();
-//    	sItemIDs[ 70] = GT_Config.sConfigFileIDs.getItem("WrenchElectric"			, 21070).getInt();
-//    	sItemIDs[ 71] = GT_Config.sConfigFileIDs.getItem("WrenchAdvanced"			, 21071).getInt();
-//    	sItemIDs[ 72] = GT_Config.sConfigFileIDs.getItem("HammerRubber"				, 21072).getInt();
-//    	sItemIDs[ 73] = GT_Config.sConfigFileIDs.getItem("HammerIron"				, 21073).getInt();
-//    	sItemIDs[ 74] = GT_Config.sConfigFileIDs.getItem("HammerBronze"				, 21074).getInt();
-//    	sItemIDs[ 75] = GT_Config.sConfigFileIDs.getItem("HammerSteel"				, 21075).getInt();
-//    	sItemIDs[ 76] = GT_Config.sConfigFileIDs.getItem("HammerTungstenSteel"		, 21076).getInt();
-//    	sItemIDs[ 77] = GT_Config.sConfigFileIDs.getItem("SolderingTool"			, 21077).getInt();
-//    	sItemIDs[ 78] = GT_Config.sConfigFileIDs.getItem("SolderingTin"				, 21078).getInt();
-//    	sItemIDs[ 79] = GT_Config.sConfigFileIDs.getItem("SolderingLead"			, 21079).getInt();
-//    	sItemIDs[ 80] = GT_Config.sConfigFileIDs.getItem("TurbineBronze"			, 21080).getInt();
-//    	sItemIDs[ 81] = GT_Config.sConfigFileIDs.getItem("TurbineSteel"				, 21081).getInt();
-//    	sItemIDs[ 82] = GT_Config.sConfigFileIDs.getItem("TurbineMagnalium"			, 21082).getInt();
-//    	sItemIDs[ 83] = GT_Config.sConfigFileIDs.getItem("TurbineTungstensteel"		, 21083).getInt();
-//    	sItemIDs[ 84] = GT_Config.sConfigFileIDs.getItem("TurbineCarbon"			, 21084).getInt();
-//    	sItemIDs[ 85] = GT_Config.sConfigFileIDs.getItem("LavaFilter"				, 21085).getInt();
-//    	sItemIDs[ 86] = GT_Config.sConfigFileIDs.getItem("FileIron"					, 21086).getInt();
-//    	sItemIDs[ 87] = GT_Config.sConfigFileIDs.getItem("FileBronze"				, 21087).getInt();
-//    	sItemIDs[ 88] = GT_Config.sConfigFileIDs.getItem("FileSteel"				, 21088).getInt();
-//    	sItemIDs[ 89] = GT_Config.sConfigFileIDs.getItem("FileTungstenSteel"		, 21089).getInt();
-//    	sItemIDs[ 90] = GT_Config.sConfigFileIDs.getItem("Spray_Bug"				, 21090).getInt();
-//    	sItemIDs[ 91] = GT_Config.sConfigFileIDs.getItem("Spray_Ice"				, 21091).getInt();
-//    	sItemIDs[ 92] = GT_Config.sConfigFileIDs.getItem("Spray_Hardener"			, 21092).getInt();
-//    	sItemIDs[ 93] = GT_Config.sConfigFileIDs.getItem("Spray_CFoam"				, 21093).getInt();
-//    	sItemIDs[ 94] = GT_Config.sConfigFileIDs.getItem("Spray_Pepper"				, 21094).getInt();
-//    	sItemIDs[ 95] = GT_Config.sConfigFileIDs.getItem("Spray_Hydration"			, 21095).getInt();
-//    	sItemIDs[ 96] = GT_Config.sConfigFileIDs.getItem("Spray_00"					, 21096).getInt();
-//    	sItemIDs[ 97] = GT_Config.sConfigFileIDs.getItem("Spray_01"					, 21097).getInt();
-//    	sItemIDs[ 98] = GT_Config.sConfigFileIDs.getItem("Spray_02"					, 21098).getInt();
-//    	sItemIDs[ 99] = GT_Config.sConfigFileIDs.getItem("Spray_03"					, 21099).getInt();
-//    	sItemIDs[100] = GT_Config.sConfigFileIDs.getItem("Spray_04"					, 21100).getInt();
-//    	sItemIDs[101] = GT_Config.sConfigFileIDs.getItem("Spray_05"					, 21101).getInt();
-//    	sItemIDs[102] = GT_Config.sConfigFileIDs.getItem("Spray_06"					, 21102).getInt();
-//    	sItemIDs[103] = GT_Config.sConfigFileIDs.getItem("Spray_07"					, 21103).getInt();
-//    	sItemIDs[104] = GT_Config.sConfigFileIDs.getItem("Spray_08"					, 21104).getInt();
-//    	sItemIDs[105] = GT_Config.sConfigFileIDs.getItem("Spray_09"					, 21105).getInt();
-//    	sItemIDs[106] = GT_Config.sConfigFileIDs.getItem("Spray_10"					, 21106).getInt();
-//    	sItemIDs[107] = GT_Config.sConfigFileIDs.getItem("Spray_11"					, 21107).getInt();
-//    	sItemIDs[108] = GT_Config.sConfigFileIDs.getItem("Spray_12"					, 21108).getInt();
-//    	sItemIDs[109] = GT_Config.sConfigFileIDs.getItem("Spray_13"					, 21109).getInt();
-//    	sItemIDs[110] = GT_Config.sConfigFileIDs.getItem("Spray_14"					, 21110).getInt();
-//    	sItemIDs[111] = GT_Config.sConfigFileIDs.getItem("Spray_15"					, 21111).getInt();
-//    	sItemIDs[112] = GT_Config.sConfigFileIDs.getItem("Empty_Tool_01"			, 21112).getInt();
-//    	sItemIDs[113] = GT_Config.sConfigFileIDs.getItem("Empty_Tool_02"			, 21113).getInt();
-//    	sItemIDs[114] = GT_Config.sConfigFileIDs.getItem("Empty_Tool_03"			, 21114).getInt();
-//    	sItemIDs[115] = GT_Config.sConfigFileIDs.getItem("Saw_Iron"					, 21115).getInt();
-//    	sItemIDs[116] = GT_Config.sConfigFileIDs.getItem("Saw_Bronze"				, 21116).getInt();
-//    	sItemIDs[117] = GT_Config.sConfigFileIDs.getItem("Saw_Steel"				, 21117).getInt();
-//    	sItemIDs[118] = GT_Config.sConfigFileIDs.getItem("Saw_Tungstensteel"		, 21118).getInt();
-//    	sItemIDs[119] = GT_Config.sConfigFileIDs.getItem("Saw_Electric"				, 21119).getInt();
-//    	sItemIDs[120] = GT_Config.sConfigFileIDs.getItem("Saw_Advanced"				, 21120).getInt();
-//    	sItemIDs[121] = GT_Config.sConfigFileIDs.getItem("Empty_Tool_04"			, 21121).getInt();
-//    	sItemIDs[122] = GT_Config.sConfigFileIDs.getItem("Empty_Tool_05"			, 21122).getInt();
-//    	sItemIDs[123] = GT_Config.sConfigFileIDs.getItem("Drill_Advanced"			, 21123).getInt();
-//    	sItemIDs[124] = GT_Config.sConfigFileIDs.getItem("Flint_Sword"				, 21124).getInt();
-//    	sItemIDs[125] = GT_Config.sConfigFileIDs.getItem("Flint_Pickaxe"			, 21125).getInt();
-//    	sItemIDs[126] = GT_Config.sConfigFileIDs.getItem("Flint_Shovel"				, 21126).getInt();
-//    	sItemIDs[127] = GT_Config.sConfigFileIDs.getItem("Flint_Axe"				, 21127).getInt();
-//    	sItemIDs[128] = GT_Config.sConfigFileIDs.getItem("Flint_Hoe"				, 21128).getInt();
-//    	sItemIDs[129] = GT_Config.sConfigFileIDs.getItem("Steel_Sword"				, 21129).getInt();
-//    	sItemIDs[130] = GT_Config.sConfigFileIDs.getItem("Steel_Pickaxe"			, 21130).getInt();
-//    	sItemIDs[131] = GT_Config.sConfigFileIDs.getItem("Steel_Shovel"				, 21131).getInt();
-//    	sItemIDs[132] = GT_Config.sConfigFileIDs.getItem("Steel_Axe"				, 21132).getInt();
-//    	sItemIDs[133] = GT_Config.sConfigFileIDs.getItem("Steel_Hoe"				, 21133).getInt();
-//    	sItemIDs[134] = GT_Config.sConfigFileIDs.getItem("TungstenSteel_Sword"		, 21134).getInt();
-//    	sItemIDs[135] = GT_Config.sConfigFileIDs.getItem("TungstenSteel_Pickaxe"	, 21135).getInt();
-//    	sItemIDs[136] = GT_Config.sConfigFileIDs.getItem("TungstenSteel_Shovel"		, 21136).getInt();
-//    	sItemIDs[137] = GT_Config.sConfigFileIDs.getItem("TungstenSteel_Axe"		, 21137).getInt();
-//    	sItemIDs[138] = GT_Config.sConfigFileIDs.getItem("TungstenSteel_Hoe"		, 21138).getInt();
     	
     	mOnline = GT_Config.sConfigFileStandard.get("general", "online", true).getBoolean(false);
     	GT_BlockMetaID_Block.mConnectedMachineTextures = GT_Config.sConfigFileStandard.get("general", "ConnectedMachineCasingTextures", true).getBoolean(false);
@@ -511,7 +377,7 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     		}
     	}
     	
-//    	checkVersions();
+    	checkVersions();
         GT_Log.log.info("GT_Mod: Beginning Load-Phase.");
     	GregTech_API.sLoadStarted = true;
     	
@@ -522,20 +388,6 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 		GameRegistry.registerBlock(GregTech_API.sBlockList[4] = new GT_BlockMetaID_Block2 (), GT_MetaBlock2_Item.class	, GT_LanguageManager.mNameList3[0]);
 		GameRegistry.registerBlock(GregTech_API.sBlockList[3] = new GT_Block_LightSource  (), ItemBlock.class			, "GT_TransparentTileEntity"	  );
 		GameRegistry.registerBlock(GregTech_API.sBlockList[5] = new GT_BlockMetaID_Stone1 (), GT_MetaStone1_Item.class	, GT_LanguageManager.mNameList4[0]);
-		
-//		LanguageRegistry.addName(GregTech_API.sBlockList[0], GT_LanguageManager.mRegionalNameList0[0]); // FIXME localization
-//		LanguageRegistry.addName(GregTech_API.sBlockList[1], GT_LanguageManager.mRegionalNameList1[0]);
-//		LanguageRegistry.addName(GregTech_API.sBlockList[2], GT_LanguageManager.mRegionalNameList2[0]);
-//		LanguageRegistry.addName(GregTech_API.sBlockList[4], GT_LanguageManager.mRegionalNameList3[0]);
-//		LanguageRegistry.addName(GregTech_API.sBlockList[5], GT_LanguageManager.mRegionalNameList4[0]);
-		
-//		for (int i=0;i<16;i++) {
-//			GT_LanguageManager.addStringLocalization("tile.BlockMetaID_Block."		+ GT_LanguageManager.mNameList0[i] + ".name", GT_LanguageManager.mRegionalNameList0[i]);
-//			GT_LanguageManager.addStringLocalization("tile.BlockMetaID_Machine."	+ GT_LanguageManager.mNameList1[i] + ".name", GT_LanguageManager.mRegionalNameList1[i]);
-//			GT_LanguageManager.addStringLocalization("tile.BlockMetaID_Ore."		+ GT_LanguageManager.mNameList2[i] + ".name", GT_LanguageManager.mRegionalNameList2[i]);
-//			GT_LanguageManager.addStringLocalization("tile.BlockMetaID_Block2."		+ GT_LanguageManager.mNameList3[i] + ".name", GT_LanguageManager.mRegionalNameList3[i]);
-//			GT_LanguageManager.addStringLocalization("tile.BlockMetaID_Stone1."		+ GT_LanguageManager.mNameList4[i] + ".name", GT_LanguageManager.mRegionalNameList4[i]);
-//		}
 		
 		GregTech_API.registerMachineBlock(GregTech_API.sBlockList[0], (1|2|64|1024|8192|16384|32768));
 		GregTech_API.registerMachineBlock(GregTech_API.sBlockList[1], (1));
@@ -595,19 +447,10 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     		}
     	}
     	
-//    	checkVersions();
+    	checkVersions();
     	
         GT_Log.log.info("GT_Mod: Beginning PostLoad-Phase.");
     	GregTech_API.sPostloadStarted = true;
-        
-        GT_Log.log.info("GT_Mod: Checking if Items got overloaded.");
-//		for (int i = 0; i < GregTech_API.sItemList.length; i++) {
-//			if (GregTech_API.sItemList[i] != null && Item.itemsList[GregTech_API.sItemList[i].itemID] != GregTech_API.sItemList[i]) {
-//		        GT_Log.err.println("GT_Mod: Another Mods ItemID is conflicting.");
-//		        GT_Log.err.println("GT_Mod: Errored.");
-//				throw new GT_ItsNotMyFaultException("One of the GregTech-Items got overloaded. Check the ID-Config of the Mod you just installed for Conflicts mentioned in the ForgeModLoader0.log with 'CONFLICT @'. That is an Item-ID-Conflict! Don't bother ANY Modauthor with that, we won't help you at all! Also if you are one of the very few Idiots, who can't read this (I'm not assuming you are that stupid Person, ID-Conflicts can happen to everyone), then don't f***ing go to my Thread and complain!!! Yes, that rage was fully justified, as I got a few Idiots already.");
-//			}
-//		}
 		
     	new GT_ItemIterator().run();
 		
@@ -997,13 +840,13 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 //			GT_Log.out.println("*"); GT_Log.out.println("*"); GT_Log.out.println("*");
 //    	}
 //		} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
-//    	for (Runnable tRunnable : GregTech_API.sAfterGTServerstop) {
-//    		try {
-//    			tRunnable.run();
-//    		} catch(Throwable e) {
-//    			e.printStackTrace(GT_Log.err);
-//    		}
-//    	}
+    	for (Runnable tRunnable : GregTech_API.sAfterGTServerstop) {
+    		try {
+    			tRunnable.run();
+    		} catch(Throwable e) {
+    			GT_Log.log.catching(e);
+    		}
+    	}
     }
     
 	public boolean addFusionReactorRecipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, int aDuration, int aEUt, int aStartEU) {

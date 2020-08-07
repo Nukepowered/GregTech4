@@ -35,7 +35,8 @@ public class GT_Container_SteelBoiler extends GT_ContainerMetaTile_Machine {
     
     public int mTemperature = 2, mProcessingEnergy = 0, mSteamAmount = 0, mWaterAmount = 0;
     
-    public void detectAndSendChanges() {
+    @SuppressWarnings("rawtypes")
+	public void detectAndSendChanges() {
         super.detectAndSendChanges();
     	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
     	

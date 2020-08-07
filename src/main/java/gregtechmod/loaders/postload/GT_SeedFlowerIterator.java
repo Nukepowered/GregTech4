@@ -49,7 +49,7 @@ public class GT_SeedFlowerIterator implements Runnable {
 			while (tWorld.mRandom.mIterationStep > 0 && tWorld.mRandom.mIterationStep < 10000) {
 				try {
 //					ForgeHooks.plantGrass(tWorld, 24, 65, 24); // TODO; do not planting grass
-					boolean a = ItemDye.applyBonemeal(new ItemStack(Items.dye, 64, 0), tWorld, 24, 65, 24, new EntityPlayer(tWorld, new GameProfile(UUID.randomUUID(), "ILYAPIDOR")) {
+					ItemDye.applyBonemeal(new ItemStack(Items.dye, 64, 0), tWorld, 24, 65, 24, new EntityPlayer(tWorld, new GameProfile(UUID.randomUUID(), "ILYAPIDOR")) {
 						@Override
 						public ChunkCoordinates getPlayerCoordinates() {return null;}
 						@Override

@@ -22,8 +22,8 @@ public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank 
 	public ArrayList<ChunkPosition> mPumpList = new ArrayList<ChunkPosition>();
 	public Block mPumpedBlock1 = null, mPumpedBlock2 = null;
 	
-	public GT_MetaTileEntity_AdvancedPump(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_AdvancedPump(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_AdvancedPump() {

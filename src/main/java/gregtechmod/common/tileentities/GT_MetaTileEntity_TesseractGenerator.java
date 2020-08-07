@@ -33,8 +33,8 @@ public class GT_MetaTileEntity_TesseractGenerator extends MetaTileEntity {
 	public byte isWorking = 0;
 	public int mFrequency = 0, oFrequency = 0;
 	
-	public GT_MetaTileEntity_TesseractGenerator(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_TesseractGenerator(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_TesseractGenerator() {
@@ -295,7 +295,7 @@ public class GT_MetaTileEntity_TesseractGenerator extends MetaTileEntity {
 	}
 	
 	@Override
-	public String getInvName() {
+	public String getInventoryName() {
 		IInventory tTileEntity = getBaseMetaTileEntity().getIInventoryAtSide(getBaseMetaTileEntity().getBackFacing());
 		if (tTileEntity == null || !getBaseMetaTileEntity().isAllowedToWork()) return "";
 		return tTileEntity.getInventoryName();

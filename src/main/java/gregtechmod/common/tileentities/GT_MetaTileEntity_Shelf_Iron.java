@@ -4,8 +4,8 @@ import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 
 public class GT_MetaTileEntity_Shelf_Iron extends GT_MetaTileEntity_Shelf {
-	public GT_MetaTileEntity_Shelf_Iron(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_Shelf_Iron(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_Shelf_Iron() {

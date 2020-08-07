@@ -47,7 +47,8 @@ public class GT_Container_MagicEnergyAbsorber extends GT_ContainerMetaTile_Machi
     
     public boolean isActive1 = false, isActive2 = false;
 
-    public void detectAndSendChanges() {
+    @SuppressWarnings("rawtypes")
+	public void detectAndSendChanges() {
         super.detectAndSendChanges();
     	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
     	isActive1 = ((GT_MetaTileEntity_MagicEnergyAbsorber)mTileEntity.getMetaTileEntity()).isActive1;

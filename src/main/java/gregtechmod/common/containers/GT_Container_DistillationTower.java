@@ -31,7 +31,8 @@ public class GT_Container_DistillationTower extends GT_ContainerMetaTile_Machine
     public int mProgress, mMaxProgress, mProgressScale;
     public boolean mMachine = true;
     
-    public void detectAndSendChanges() {
+    @SuppressWarnings("rawtypes")
+	public void detectAndSendChanges() {
         super.detectAndSendChanges();
     	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
     	mMachine = ((GT_MetaTileEntity_DistillationTower)mTileEntity.getMetaTileEntity()).mMachine;

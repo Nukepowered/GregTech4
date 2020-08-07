@@ -30,7 +30,8 @@ public class GT_Container_IDSU_Meta extends GT_ContainerMetaTile_Machine {
 	
     public int mPlayerHash;
     
-    @Override
+    @SuppressWarnings("rawtypes")
+	@Override
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
         if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;

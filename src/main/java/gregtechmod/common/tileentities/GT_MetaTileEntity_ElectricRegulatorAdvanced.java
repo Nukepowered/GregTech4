@@ -14,8 +14,8 @@ public class GT_MetaTileEntity_ElectricRegulatorAdvanced extends GT_MetaTileEnti
 	
 	public int[] mTargetSlots = new int[] {0,0,0,0,0,0,0,0,0};
 	
-	public GT_MetaTileEntity_ElectricRegulatorAdvanced(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_ElectricRegulatorAdvanced(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_ElectricRegulatorAdvanced() {

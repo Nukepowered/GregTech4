@@ -15,8 +15,8 @@ import thaumcraft.common.aura.AuraManager;
 
 public class GT_MetaTileEntity_MagicEnergyConverter extends GT_MetaTileEntity_BasicTank {
 	
-	public GT_MetaTileEntity_MagicEnergyConverter(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_MagicEnergyConverter(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_MagicEnergyConverter() {

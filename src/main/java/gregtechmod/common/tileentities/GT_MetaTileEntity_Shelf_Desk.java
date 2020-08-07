@@ -6,8 +6,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 public class GT_MetaTileEntity_Shelf_Desk extends GT_MetaTileEntity_Shelf {
-	public GT_MetaTileEntity_Shelf_Desk(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_Shelf_Desk(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_Shelf_Desk() {

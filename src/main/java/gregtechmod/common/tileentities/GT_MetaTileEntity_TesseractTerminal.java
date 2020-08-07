@@ -23,8 +23,8 @@ public class GT_MetaTileEntity_TesseractTerminal extends MetaTileEntity {
 	
 	public static boolean sInterDimensionalTesseractAllowed = true;
 	
-	public GT_MetaTileEntity_TesseractTerminal(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_TesseractTerminal(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_TesseractTerminal() {
@@ -262,10 +262,10 @@ public class GT_MetaTileEntity_TesseractTerminal extends MetaTileEntity {
 	}
 	
 	@Override
-	public String getInvName() {
+	public String getInventoryName() {
 		GT_MetaTileEntity_TesseractGenerator tTileEntity = getTesseract(mFrequency, false);
 		if (tTileEntity == null || !getBaseMetaTileEntity().isAllowedToWork()) return "";
-		return tTileEntity.getInvName();
+		return tTileEntity.getInventoryName();
 	}
 	
 	@Override

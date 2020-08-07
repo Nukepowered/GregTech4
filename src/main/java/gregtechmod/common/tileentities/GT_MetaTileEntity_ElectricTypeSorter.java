@@ -17,8 +17,8 @@ public class GT_MetaTileEntity_ElectricTypeSorter extends GT_MetaTileEntity_Elec
 	
 	public static String[] sTypeList = {"ore", "gem", "nugget", "dustSmall", "dust", "ingot", "block", "treeLeaves", "treeSapling", "logWood", "plankWood", "", "", "beeComb"};
 	
-	public GT_MetaTileEntity_ElectricTypeSorter(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_ElectricTypeSorter(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_ElectricTypeSorter() {

@@ -78,7 +78,8 @@ public class GT_Container_AdvancedTranslocator extends GT_ContainerMetaTile_Mach
     
     public int mInputSide, mOutputSide;
     
-    public void detectAndSendChanges() {
+    @SuppressWarnings("rawtypes")
+	public void detectAndSendChanges() {
         super.detectAndSendChanges();
     	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
     	mInputSide  = ((GT_MetaTileEntity_AdvancedTranslocator)mTileEntity.getMetaTileEntity()).mInputSide;

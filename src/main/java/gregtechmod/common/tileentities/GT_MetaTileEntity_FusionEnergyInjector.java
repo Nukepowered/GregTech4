@@ -10,8 +10,8 @@ public class GT_MetaTileEntity_FusionEnergyInjector extends MetaTileEntity {
 	
 	public IGregTechTileEntity mFusionComputer;
 	
-	public GT_MetaTileEntity_FusionEnergyInjector(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_FusionEnergyInjector(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_FusionEnergyInjector() {

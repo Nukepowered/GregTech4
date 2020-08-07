@@ -8,8 +8,8 @@ import net.minecraft.item.ItemStack;
 
 public class GT_MetaTileEntity_ElectricBufferLarge extends GT_MetaTileEntity_ElectricBufferSmall {
 	
-	public GT_MetaTileEntity_ElectricBufferLarge(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_ElectricBufferLarge(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_ElectricBufferLarge() {

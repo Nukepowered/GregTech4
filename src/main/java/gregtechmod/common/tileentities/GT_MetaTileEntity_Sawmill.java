@@ -17,8 +17,8 @@ public class GT_MetaTileEntity_Sawmill extends MetaTileEntity {
 	private ItemStack mOutputItem1, mOutputItem2, mOutputItem3;
 	public boolean mMachine = false;
 	
-	public GT_MetaTileEntity_Sawmill(int aID, String mName, String mNameRegional) {
-		super(aID, mName, mNameRegional);
+	public GT_MetaTileEntity_Sawmill(int aID, String mName) {
+		super(aID, mName);
 	}
 	
 	public GT_MetaTileEntity_Sawmill() {
