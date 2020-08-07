@@ -8,10 +8,10 @@ import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Recipe;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
 public class GT_MetaTileEntity_Grinder extends GT_MetaTileEntity_BasicTank {
@@ -111,10 +111,10 @@ public class GT_MetaTileEntity_Grinder extends GT_MetaTileEntity_BasicTank {
     	int xDir = ForgeDirection.getOrientation(getBaseMetaTileEntity().getFrontFacing()).offsetX*2, yDir = ForgeDirection.getOrientation(getBaseMetaTileEntity().getFrontFacing()).offsetY*2, zDir = ForgeDirection.getOrientation(getBaseMetaTileEntity().getFrontFacing()).offsetZ*2;
     	for (int i = -1; i < 2; i++) for (int j = -1; j < 2; j++) for (int k = -1; k < 2; k++) {
     		if (i!=0||j!=0||k!=0) {
-    			if (getBaseMetaTileEntity().getBlockIDOffset(-xDir+i, -yDir+j, -zDir+k) != GregTech_API.sBlockList[0].blockID) return false;
+    			if (getBaseMetaTileEntity().getBlockOffset(-xDir+i, -yDir+j, -zDir+k) != GregTech_API.sBlockList[0]) return false;
             	if (getBaseMetaTileEntity().getMetaIDOffset(-xDir+i, -yDir+j, -zDir+k) != (j==0?14:13)) return false;
     		} else {
-    			if (getBaseMetaTileEntity().getBlockIDOffset(-xDir+i, -yDir+j, -zDir+k) != 9) return false;
+    			if (getBaseMetaTileEntity().getBlockOffset(-xDir+i, -yDir+j, -zDir+k) != Blocks.water) return false;
     		}
     	}
     	return true;

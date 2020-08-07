@@ -3,11 +3,11 @@ package gregtechmod.common.tileentities;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -15,7 +15,7 @@ public class GT_MetaTileEntity_RedstoneStrengthDisplay extends MetaTileEntity {
 	
 	public byte mRedstoneStrength = 0, mType = 0;
 	
-	public static Icon[] sIconList = new Icon[256];
+	public static IIcon[] sIconList = new IIcon[256];
 	
 	public GT_MetaTileEntity_RedstoneStrengthDisplay(int aID, String mName, String mNameRegional) {
 		super(aID, mName, mNameRegional);
@@ -84,7 +84,7 @@ public class GT_MetaTileEntity_RedstoneStrengthDisplay extends MetaTileEntity {
 	}
 	
 	@Override
-	public Icon getTextureIcon(byte aSide, byte aFacing, boolean aActive, boolean aRedstone) {
+	public IIcon getTextureIcon(byte aSide, byte aFacing, boolean aActive, boolean aRedstone) {
 		return aSide==aFacing?sIconList[mType*16+mRedstoneStrength]:null;
 	}
 	
@@ -95,7 +95,7 @@ public class GT_MetaTileEntity_RedstoneStrengthDisplay extends MetaTileEntity {
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister aBlockIconRegister) {
+	public void registerIcons(IIconRegister aBlockIconRegister) {
 		for (int i = 0; i < 96; i++) {
 			sIconList[i] = aBlockIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_ITEM + "tile.RedstoneDisplay/" + i);
 		}

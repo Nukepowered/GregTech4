@@ -125,7 +125,7 @@ public class GT_MetaTileEntity_ChargerBox extends MetaTileEntity {
 	
 	@Override
 	public boolean allowPullStack(int aIndex, byte aSide, ItemStack aStack) {
-		return !GT_ModHandler.isElectricItem(mInventory[aIndex]) || (getBaseMetaTileEntity().isAllowedToWork() && (getBaseMetaTileEntity().getStoredEU() < getBaseMetaTileEntity().getEUCapacity() / 3 ? !GT_ModHandler.canUseElectricItem(mInventory[aIndex], 1) : GT_ModHandler.canUseElectricItem(mInventory[aIndex], GT_ModHandler.getMaxElectricCharge(mInventory[aIndex]))));
+		return !GT_ModHandler.isElectricItem(mInventory[aIndex]) || (getBaseMetaTileEntity().isAllowedToWork() && (getBaseMetaTileEntity().getStoredEU() < getBaseMetaTileEntity().getEUCapacity() / 3 ? !GT_ModHandler.canUseElectricItem(mInventory[aIndex], 1) : GT_ModHandler.canUseElectricItem(mInventory[aIndex], (int)GT_ModHandler.getMaxElectricCharge(mInventory[aIndex]))));
 	}
 	
 	@Override

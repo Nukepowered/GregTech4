@@ -4,17 +4,17 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_Utility;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_MetaTileEntity_Shelf_Compartment extends GT_MetaTileEntity_Shelf {
 	
-	public static Icon[] sIconList = new Icon[256];
+	public static IIcon[] sIconList = new IIcon[256];
 	
 	public GT_MetaTileEntity_Shelf_Compartment(int aID, String mName, String mNameRegional) {
 		super(aID, mName, mNameRegional);
@@ -47,13 +47,13 @@ public class GT_MetaTileEntity_Shelf_Compartment extends GT_MetaTileEntity_Shelf
 	}
 	
 	@Override
-	public Icon getTextureIcon(byte aSide, byte aFacing, boolean aActive, boolean aRedstone) {
+	public IIcon getTextureIcon(byte aSide, byte aFacing, boolean aActive, boolean aRedstone) {
 		return aSide==aFacing?sIconList[mType]:null;
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister aBlockIconRegister) {
+	public void registerIcons(IIconRegister aBlockIconRegister) {
 		for (int i = 0; i < 32; i++) {
 			sIconList[i] = aBlockIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_ITEM + "tile.Compartment/" + i);
 		}

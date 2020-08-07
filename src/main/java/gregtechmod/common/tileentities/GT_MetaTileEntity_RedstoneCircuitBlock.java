@@ -86,7 +86,7 @@ public class GT_MetaTileEntity_RedstoneCircuitBlock extends MetaTileEntity imple
 		mGate = tList.get(tIndex);
 		switchGate();
 		} catch(Throwable e) {
-			e.printStackTrace(GT_Log.err);
+			GT_Log.log.catching(e);
 		}
 	}
 	
@@ -104,7 +104,7 @@ public class GT_MetaTileEntity_RedstoneCircuitBlock extends MetaTileEntity imple
 		mGate = tList.get(tIndex);
 		switchGate();
 		} catch(Throwable e) {
-			e.printStackTrace(GT_Log.err);
+			GT_Log.log.catching(e);
 		}
 	}
 	
@@ -136,13 +136,13 @@ public class GT_MetaTileEntity_RedstoneCircuitBlock extends MetaTileEntity imple
 		resetRedstone();
 		for (int i = 0; i < mGateData.length; i++) mGateData[i] = 0;
     	GT_CircuitryBehavior tBehaviour = GregTech_API.sCircuitryBehaviors.get(mGate);
-    	if (tBehaviour != null) try {tBehaviour.initParameters(mGateData, this);} catch(Throwable e) {e.printStackTrace(GT_Log.err);}
+    	if (tBehaviour != null) try {tBehaviour.initParameters(mGateData, this);} catch(Throwable e) {GT_Log.log.catching(e);}
 		validateGateData();
 	}
 	
 	private void validateGateData() {
     	GT_CircuitryBehavior tBehaviour = GregTech_API.sCircuitryBehaviors.get(mGate);
-    	if (tBehaviour != null) try {tBehaviour.validateParameters(mGateData, this);} catch(Throwable e) {e.printStackTrace(GT_Log.err);}
+    	if (tBehaviour != null) try {tBehaviour.validateParameters(mGateData, this);} catch(Throwable e) {GT_Log.log.catching(e);}
 	}
 	
 	@Override
@@ -165,7 +165,7 @@ public class GT_MetaTileEntity_RedstoneCircuitBlock extends MetaTileEntity imple
 				    	if (tBehaviour.displayItemStack(mGateData, this, 1)) mInventory[2] = GT_Utility.intToStack(mGateData[1]);
 				    	if (tBehaviour.displayItemStack(mGateData, this, 2)) mInventory[3] = GT_Utility.intToStack(mGateData[2]);
 				    	if (tBehaviour.displayItemStack(mGateData, this, 3)) mInventory[4] = GT_Utility.intToStack(mGateData[3]);
-			    	} catch(Throwable e) {e.printStackTrace(GT_Log.err);}}
+			    	} catch(Throwable e) {GT_Log.log.catching(e);}}
 		    	}
 				getBaseMetaTileEntity().setErrorDisplayID(0);
 		    } else {

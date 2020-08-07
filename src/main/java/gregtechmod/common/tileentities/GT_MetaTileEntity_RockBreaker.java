@@ -3,9 +3,9 @@ package gregtechmod.common.tileentities;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_Utility;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 public class GT_MetaTileEntity_RockBreaker extends GT_MetaTileEntity_ElectricBufferSmall {
@@ -30,29 +30,29 @@ public class GT_MetaTileEntity_RockBreaker extends GT_MetaTileEntity_ElectricBuf
 	
 	public void onPostTick() {
 		if (getBaseMetaTileEntity().isAllowedToWork() && getBaseMetaTileEntity().isServerSide() && getBaseMetaTileEntity().getUniversalEnergyStored() >= 1000 && (getBaseMetaTileEntity().getTimer()%(40/(int)Math.pow(2, getBaseMetaTileEntity().getOverclockerUpgradeCount()))) == 0) {
-			ItemStack tOutput = new ItemStack(Block.cobblestone, 1);
+			ItemStack tOutput = new ItemStack(Blocks.cobblestone, 1);
 			
 			boolean tWater = true;
 			
-			if (getBaseMetaTileEntity().getBlockIDOffset(0, 0, +1) != 9)
-			if (getBaseMetaTileEntity().getBlockIDOffset(0, 0, -1) != 9)
-			if (getBaseMetaTileEntity().getBlockIDOffset(-1, 0, 0) != 9)
-			if (getBaseMetaTileEntity().getBlockIDOffset(+1, 0, 0) != 9)
+			if (getBaseMetaTileEntity().getBlockOffset(0, 0, +1) != Blocks.water)
+			if (getBaseMetaTileEntity().getBlockOffset(0, 0, -1) != Blocks.water)
+			if (getBaseMetaTileEntity().getBlockOffset(-1, 0, 0) != Blocks.water)
+			if (getBaseMetaTileEntity().getBlockOffset(+1, 0, 0) != Blocks.water)
 				tWater = false;
 			
-			if (getBaseMetaTileEntity().getBlockIDOffset(0, +1, 0) == 11)
-				tOutput = new ItemStack(Block.stone, 1);
+			if (getBaseMetaTileEntity().getBlockOffset(0, +1, 0) == Blocks.lava)
+				tOutput = new ItemStack(Blocks.stone, 1);
 			else
-				if (getBaseMetaTileEntity().getBlockIDOffset(0, 0, +1) != 11)
-				if (getBaseMetaTileEntity().getBlockIDOffset(0, 0, -1) != 11)
-				if (getBaseMetaTileEntity().getBlockIDOffset(-1, 0, 0) != 11)
-				if (getBaseMetaTileEntity().getBlockIDOffset(+1, 0, 0) != 11)
+				if (getBaseMetaTileEntity().getBlockOffset(0, 0, +1) != Blocks.lava)
+				if (getBaseMetaTileEntity().getBlockOffset(0, 0, -1) != Blocks.lava)
+				if (getBaseMetaTileEntity().getBlockOffset(-1, 0, 0) != Blocks.lava)
+				if (getBaseMetaTileEntity().getBlockOffset(+1, 0, 0) != Blocks.lava)
 					tOutput = null;
 			
 			if (tOutput != null && tWater) {
 				if (mInventory[0] == null) {
-					if (mInventory[1] != null && mInventory[1].getItem() == Item.redstone) {
-						mInventory[0] = new ItemStack(Block.obsidian, 1);
+					if (mInventory[1] != null && mInventory[1].getItem() == Items.redstone) {
+						mInventory[0] = new ItemStack(Blocks.obsidian, 1);
 						getBaseMetaTileEntity().decrStackSize(1, 1);
 						getBaseMetaTileEntity().decreaseStoredEnergyUnits(500*(int)Math.pow(4, getBaseMetaTileEntity().getOverclockerUpgradeCount()), true);
 					} else {
@@ -60,7 +60,7 @@ public class GT_MetaTileEntity_RockBreaker extends GT_MetaTileEntity_ElectricBuf
 						getBaseMetaTileEntity().decreaseStoredEnergyUnits(100*(int)Math.pow(4, getBaseMetaTileEntity().getOverclockerUpgradeCount()), true);
 					}
 				} else {
-					if (mInventory[1] != null && mInventory[1].getItem() == Item.redstone && GT_Utility.areStacksEqual(mInventory[0], new ItemStack(Block.obsidian)) && mInventory[0].stackSize < 64) {
+					if (mInventory[1] != null && mInventory[1].getItem() == Items.redstone && GT_Utility.areStacksEqual(mInventory[0], new ItemStack(Blocks.obsidian)) && mInventory[0].stackSize < 64) {
 						mInventory[0].stackSize++;
 						getBaseMetaTileEntity().decrStackSize(1, 1);
 						getBaseMetaTileEntity().decreaseStoredEnergyUnits(500*(int)Math.pow(4, getBaseMetaTileEntity().getOverclockerUpgradeCount()), true);

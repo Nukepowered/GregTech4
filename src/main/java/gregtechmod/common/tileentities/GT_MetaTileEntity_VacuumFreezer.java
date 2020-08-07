@@ -75,7 +75,7 @@ public class GT_MetaTileEntity_VacuumFreezer extends MetaTileEntity {
     private boolean checkMachine() {
     	for (int i = -1; i < 2; i++) for (int j = -1; j < 2; j++) for (int k = -1; k < 2; k++) {
     		if (i!=0||j!=0||k!=0) {
-    			if (getBaseMetaTileEntity().getBlockIDOffset(i, j-2, k) != GregTech_API.sBlockList[0].blockID) return false;
+    			if (getBaseMetaTileEntity().getBlockOffset(i, j-2, k) != GregTech_API.sBlockList[0]) return false;
             	if (getBaseMetaTileEntity().getMetaIDOffset (i, j-2, k) != ((i==0&&j==0&&k!=0)||(i==0&&j!=0&&k==0)||(i!=0&&j==0&&k==0)?15:14)) return false;
     		} else {
     			if (!getBaseMetaTileEntity().getAirOffset(i, j-2, k)) return false;

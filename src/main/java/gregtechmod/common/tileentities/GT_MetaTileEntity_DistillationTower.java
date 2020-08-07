@@ -6,10 +6,11 @@ import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Recipe;
 import gregtechmod.api.util.GT_Utility;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class GT_MetaTileEntity_DistillationTower extends MetaTileEntity {
 
@@ -104,9 +105,9 @@ public class GT_MetaTileEntity_DistillationTower extends MetaTileEntity {
     private boolean checkMachine() {
     	int xDir = ForgeDirection.getOrientation(getBaseMetaTileEntity().getFrontFacing()).offsetX*2, yDir = ForgeDirection.getOrientation(getBaseMetaTileEntity().getFrontFacing()).offsetY*2, zDir = ForgeDirection.getOrientation(getBaseMetaTileEntity().getFrontFacing()).offsetZ*2;
     	for (int i = -1; i < 2; i++) for (int j = 0; j < 5; j++) for (int k = -1; k < 2; k++) {
-    		int tBlockID = getBaseMetaTileEntity().getBlockIDOffset(-xDir+i, -yDir+j, -zDir+k);
+    		Block tBlockID = getBaseMetaTileEntity().getBlockOffset(-xDir+i, -yDir+j, -zDir+k);
     		if (i!=0||k!=0||j==0||j==4) {
-    			if (tBlockID != GregTech_API.sBlockList[0].blockID) return false;
+    			if (tBlockID != GregTech_API.sBlockList[0]) return false;
             	int tMeta = getBaseMetaTileEntity().getMetaIDOffset(-xDir+i, -yDir+j, -zDir+k);
             	if (j%2==0) {
             		if (tMeta != 13) return false;

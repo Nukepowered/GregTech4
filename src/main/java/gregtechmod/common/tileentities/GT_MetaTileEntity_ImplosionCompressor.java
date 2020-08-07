@@ -6,8 +6,8 @@ import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Recipe;
 import gregtechmod.api.util.GT_Utility;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -86,7 +86,7 @@ public class GT_MetaTileEntity_ImplosionCompressor extends MetaTileEntity {
     private boolean checkMachine() {
     	for (int i = -1; i < 2; i++) for (int j = -1; j < 2; j++) for (int k = -1; k < 2; k++) {
     		if (i!=0||j!=0||k!=0) {
-    			if (getBaseMetaTileEntity().getBlockIDOffset(i, j-2, k) != GregTech_API.sBlockList[0].blockID) return false;
+    			if (getBaseMetaTileEntity().getBlockOffset(i, j-2, k) != GregTech_API.sBlockList[0]) return false;
             	if (getBaseMetaTileEntity().getMetaIDOffset (i, j-2, k) != (i==0||j==0||k==0?14:13)) return false;
     		} else {
     			if (!getBaseMetaTileEntity().getAirOffset(i, j-2, k)) return false;
@@ -173,7 +173,7 @@ public class GT_MetaTileEntity_ImplosionCompressor extends MetaTileEntity {
 	
 	@Override
 	public boolean allowPutStack(int aIndex, byte aSide, ItemStack aStack) {
-		return GT_Utility.areStacksEqual(aStack, GT_ModHandler.getIC2Item("industrialTnt", 1, new ItemStack(Block.tnt, 1)))?aIndex==1:aIndex==0;
+		return GT_Utility.areStacksEqual(aStack, GT_ModHandler.getIC2Item("industrialTnt", 1, new ItemStack(Blocks.tnt, 1)))?aIndex==1:aIndex==0;
 	}
 	
 	@Override

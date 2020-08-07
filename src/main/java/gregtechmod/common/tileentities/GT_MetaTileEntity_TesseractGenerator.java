@@ -18,7 +18,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
@@ -298,7 +298,7 @@ public class GT_MetaTileEntity_TesseractGenerator extends MetaTileEntity {
 	public String getInvName() {
 		IInventory tTileEntity = getBaseMetaTileEntity().getIInventoryAtSide(getBaseMetaTileEntity().getBackFacing());
 		if (tTileEntity == null || !getBaseMetaTileEntity().isAllowedToWork()) return "";
-		return tTileEntity.getInvName();
+		return tTileEntity.getInventoryName();
 	}
 	
 	@Override

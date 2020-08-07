@@ -8,6 +8,7 @@ import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Recipe;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -205,7 +206,7 @@ public class GT_MetaTileEntity_Centrifuge extends GT_MetaTileEntity_BasicTank {
     		}
     	}
     	if (mFluid != null) {
-    		ItemStack tStack = GT_Utility.fillFluidContainer(mFluid, new ItemStack(Item.bucketEmpty, 1));
+    		ItemStack tStack = GT_Utility.fillFluidContainer(mFluid, new ItemStack(Items.bucket, 1));
     		FluidStack tFluid = GT_Utility.getFluidForFilledItem(tStack);
     		if (tStack != null && tFluid != null) {
     			tStack.stackSize = mFluid.amount / tFluid.amount;
@@ -221,7 +222,7 @@ public class GT_MetaTileEntity_Centrifuge extends GT_MetaTileEntity_BasicTank {
 			        	mOutputItem1 = GT_Utility.copy(tRecipe.mOutput1);
 			        	mOutputItem2 = GT_Utility.copy(tRecipe.mOutput2);
 			        	mOutputItem3 = GT_Utility.copy(tRecipe.mOutput3);
-			        	if (!GT_Utility.areStacksEqual(tRecipe.mOutput4, new ItemStack(Item.bucketEmpty, 1))) mOutputItem4 = GT_Utility.copy(tRecipe.mOutput4);
+			        	if (!GT_Utility.areStacksEqual(tRecipe.mOutput4, new ItemStack(Items.bucket, 1))) mOutputItem4 = GT_Utility.copy(tRecipe.mOutput4);
 			        	return true;
 		    		}
 		    	}

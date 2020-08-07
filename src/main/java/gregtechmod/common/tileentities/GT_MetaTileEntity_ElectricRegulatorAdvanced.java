@@ -72,6 +72,7 @@ public class GT_MetaTileEntity_ElectricRegulatorAdvanced extends GT_MetaTileEnti
 		mTargetSlots[8] = aNBT.getInteger("mTargetSlot9");
 	}
 	
+	@SuppressWarnings("unused")
 	public void onPostTick() {
 		if (getBaseMetaTileEntity().isAllowedToWork() && getBaseMetaTileEntity().isServerSide() && getBaseMetaTileEntity().getUniversalEnergyStored() >= 500 && (getBaseMetaTileEntity().hasWorkJustBeenEnabled() || getBaseMetaTileEntity().getTimer()%10 == 0)) {
 			TileEntity tTileEntity1, tTileEntity2;

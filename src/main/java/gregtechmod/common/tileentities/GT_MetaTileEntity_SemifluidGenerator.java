@@ -5,8 +5,8 @@ import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicTank;
 import gregtechmod.api.util.GT_Recipe;
 import gregtechmod.api.util.GT_Utility;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -51,7 +51,7 @@ public class GT_MetaTileEntity_SemifluidGenerator extends GT_MetaTileEntity_Basi
     				mInventory[2] = null;
     			else
     				if (mInventory[2] == null)
-    					mInventory[2] = new ItemStack(Block.fire, 1);
+    					mInventory[2] = new ItemStack(Blocks.fire, 1);
     		} else {
     			if (getFuelValue(mFluid) > 0) while (getBaseMetaTileEntity().getUniversalEnergyStored() < (getBaseMetaTileEntity().getOutputVoltage() * 10 + getMinimumStoredEU()) && mFluid.amount > 0) {
     				if (getBaseMetaTileEntity().increaseStoredEnergyUnits(getFuelValue(mFluid), true)) mFluid.amount--;

@@ -1,5 +1,9 @@
 package gregtechmod.common.tileentities;
 
+import java.util.UUID;
+
+import com.mojang.authlib.GameProfile;
+
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
@@ -8,12 +12,13 @@ import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraftforge.common.FakePlayer;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.FakePlayer;
 
 public class GT_MetaTileEntity_Microwave extends GT_MetaTileEntity_BasicMachine {
 	
@@ -49,7 +54,7 @@ public class GT_MetaTileEntity_Microwave extends GT_MetaTileEntity_BasicMachine 
 	    		getBaseMetaTileEntity().doExplosion(128);
 				try {
 					for (byte i = 0; i < 6; i++) {
-						GT_ModHandler.getIC2Item("constructionFoamSprayer", 1, new ItemStack(Block.sponge, 1)).getItem().onItemUse(GT_ModHandler.getIC2Item("constructionFoamSprayer", 1, new ItemStack(Block.sponge, 1)), new FakePlayer(getBaseMetaTileEntity().getWorld(), "Foo"), getBaseMetaTileEntity().getWorld(), getBaseMetaTileEntity().getXCoord(), getBaseMetaTileEntity().getYCoord(), getBaseMetaTileEntity().getZCoord(), i, 0, 0, 0);
+						GT_ModHandler.getIC2Item("constructionFoamSprayer", 1, new ItemStack(Blocks.sponge, 1)).getItem().onItemUse(GT_ModHandler.getIC2Item("constructionFoamSprayer", 1, new ItemStack(Blocks.sponge, 1)), new FakePlayer((WorldServer) getBaseMetaTileEntity().getWorld(), new GameProfile(UUID.fromString("Foo"),"Foo")), getBaseMetaTileEntity().getWorld(), getBaseMetaTileEntity().getXCoord(), getBaseMetaTileEntity().getYCoord(), getBaseMetaTileEntity().getZCoord(), i, 0, 0, 0);
 					}
 				} catch(Throwable e) {}
 				return;
@@ -60,8 +65,8 @@ public class GT_MetaTileEntity_Microwave extends GT_MetaTileEntity_BasicMachine 
 			||  Materials.Netherrack.contains(mInventory[2])
 			||  Materials.Gunpowder.contains(mInventory[2])
 			||  Materials.Gunpowder.contains(tOutput)
-			||  mInventory[2].isItemEqual(new ItemStack(Block.netherrack))
-			||  mInventory[2].getItem() == Item.egg) {
+			||  mInventory[2].isItemEqual(new ItemStack(Blocks.netherrack))
+			||  mInventory[2].getItem() == Items.egg) {
 	    		mInventory[2] = null;
 				getBaseMetaTileEntity().doExplosion(128);
 				return;

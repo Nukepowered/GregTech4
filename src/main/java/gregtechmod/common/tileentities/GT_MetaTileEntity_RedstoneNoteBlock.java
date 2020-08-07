@@ -3,8 +3,8 @@ package gregtechmod.common.tileentities;
 import gregtechmod.GT_Mod;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -59,12 +59,12 @@ public class GT_MetaTileEntity_RedstoneNoteBlock extends MetaTileEntity {
 		aIndex--;
         ItemStack tStack;
         switch (getBaseMetaTileEntity().getFrontFacing()) {
-        case  1: tStack = new ItemStack(Block.blockGold, 1); break;
-        case  2: tStack = new ItemStack(Block.stone, 1); break;
-        case  3: tStack = new ItemStack(Block.sand, 1); break;
-        case  4: tStack = new ItemStack(Block.glass, 1); break;
-        case  5: tStack = new ItemStack(Block.wood, 1); break;
-        default: tStack = new ItemStack(Block.blockIron, 1); break;
+        case  1: tStack = new ItemStack(Blocks.gold_block, 1); break;
+        case  2: tStack = new ItemStack(Blocks.stone, 1); break;
+        case  3: tStack = new ItemStack(Blocks.sand, 1); break;
+        case  4: tStack = new ItemStack(Blocks.glass, 1); break;
+        case  5: tStack = new ItemStack(Blocks.log, 1); break;
+        default: tStack = new ItemStack(Blocks.iron_block, 1); break;
         }
         tStack.stackSize = 1+(int)(aIndex * 1.714);
         GT_Mod.gregtechproxy.doSonictronSound(tStack, getBaseMetaTileEntity().getWorld(), aX, aY, aZ);

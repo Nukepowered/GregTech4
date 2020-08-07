@@ -5,6 +5,7 @@ import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
+import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -14,7 +15,9 @@ import net.minecraft.tileentity.TileEntity;
 
 public class GT_MetaTileEntity_Barrel extends MetaTileEntity {
 	
-	public int mItemCount = 0, mItemID = 0, mItemMeta = 0;
+	public int mItemCount = 0, mItemMeta = 0;
+	
+	public ItemStack mItemID = null;
 	
 	public boolean isDigitalChest;
 	
@@ -47,9 +50,9 @@ public class GT_MetaTileEntity_Barrel extends MetaTileEntity {
 	    ItemStack tPlayerItem = aPlayer.inventory.getCurrentItem();
 	    
 	    if (tPlayerItem == null) {
-		    if (mItemID > 0) {
+		    if (mItemID != null) {
 		    	for (int i = 0; mItemCount < getMaxItemCount() && i < aPlayer.inventory.getSizeInventory(); i++) {
-		    		if (aPlayer.inventory.getStackInSlot(i) != null && aPlayer.inventory.getStackInSlot(i).itemID == mItemID && aPlayer.inventory.getStackInSlot(i).getItemDamage() == mItemMeta && !aPlayer.inventory.getStackInSlot(i).hasTagCompound()) {
+		    		if (aPlayer.inventory.getStackInSlot(i) != null && aPlayer.inventory.getStackInSlot(i) == mItemID && aPlayer.inventory.getStackInSlot(i).getItemDamage() == mItemMeta && !aPlayer.inventory.getStackInSlot(i).hasTagCompound()) {
 					    mItemCount += aPlayer.inventory.getStackInSlot(i).stackSize;
 					    if (aPlayer.inventory.getStackInSlot(i).stackSize == 111) {
 					    	mItemCount = getMaxItemCount() + 192 - (mItemCount + (mInventory[0]==null?0:mInventory[0].stackSize)+(mInventory[1]==null?0:mInventory[1].stackSize)+(mInventory[2]==null?0:mInventory[2].stackSize));

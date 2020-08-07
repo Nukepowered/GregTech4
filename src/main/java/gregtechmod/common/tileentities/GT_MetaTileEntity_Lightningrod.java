@@ -3,8 +3,10 @@ package gregtechmod.common.tileentities;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_ModHandler;
+import net.minecraft.block.Block;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -54,11 +56,11 @@ public class GT_MetaTileEntity_Lightningrod extends MetaTileEntity {
 	    		boolean rodvalid = true;
 	    		
 	        	for (int i = getBaseMetaTileEntity().getYCoord() + 1; i < getBaseMetaTileEntity().getWorld().getHeight()-1; i++) {
-	        		if (rodvalid && getBaseMetaTileEntity().getBlockIDOffset(0, i-getBaseMetaTileEntity().getYCoord(), 0) == GT_ModHandler.getIC2Item("ironFence", 1).itemID) {
+	        		if (rodvalid && getBaseMetaTileEntity().getBlockOffset(0, i-getBaseMetaTileEntity().getYCoord(), 0) == Block.getBlockFromItem(GT_ModHandler.getIC2Item("ironFence", 1).getItem())) {
 	        			rodvalue++;
 	        		} else {
 	        			rodvalid = false;
-	        			if ( getBaseMetaTileEntity().getBlockIDOffset(0, i-getBaseMetaTileEntity().getYCoord(), 0) != 0) {
+	        			if ( getBaseMetaTileEntity().getBlockOffset(0, i-getBaseMetaTileEntity().getYCoord(), 0) != Blocks.air) {
 	        				rodvalue=0;
 	        				break;
 	        			}

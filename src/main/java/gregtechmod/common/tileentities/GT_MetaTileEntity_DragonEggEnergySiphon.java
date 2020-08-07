@@ -6,6 +6,7 @@ import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_Config;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import thaumcraft.api.EnumTag;
@@ -157,7 +158,7 @@ public class GT_MetaTileEntity_DragonEggEnergySiphon extends MetaTileEntity {
 	}
 	
 	public boolean hasEgg() {
-		return Block.dragonEgg.blockID == getBaseMetaTileEntity().getBlockIDOffset(0, 1, 0);
+		return Blocks.dragon_egg == getBaseMetaTileEntity().getBlockOffset(0, 1, 0);
 	}
 	
 	@Override

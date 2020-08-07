@@ -12,7 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
 public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity {
@@ -521,11 +521,11 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity {
     }
     
     private boolean isAdvancedMachineCasing(int aX, int aY, int aZ) {
-    	return getBaseMetaTileEntity().getBlockID(aX, aY, aZ) == GregTech_API.sBlockList[0].blockID && getBaseMetaTileEntity().getMetaID(aX, aY, aZ) == 15;
+    	return getBaseMetaTileEntity().getBlock(aX, aY, aZ) == GregTech_API.sBlockList[0] && getBaseMetaTileEntity().getMetaID(aX, aY, aZ) == 15;
     }
     
     private boolean isFusionCoil(int aX, int aY, int aZ) {
-    	return getBaseMetaTileEntity().getBlockID(aX, aY, aZ) == GregTech_API.sBlockList[0].blockID && getBaseMetaTileEntity().getMetaID(aX, aY, aZ) ==  1;
+    	return getBaseMetaTileEntity().getBlock(aX, aY, aZ) == GregTech_API.sBlockList[0] && getBaseMetaTileEntity().getMetaID(aX, aY, aZ) ==  1;
     }
     
     private boolean isEnergyInjector(int aX, int aY, int aZ) {

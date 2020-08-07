@@ -1,5 +1,6 @@
 package gregtechmod.common.tileentities;
 
+import cofh.thermalexpansion.api.crafting.recipes.IPulverizerRecipe;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
@@ -8,8 +9,8 @@ import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_PulverizerRecipe;
 import gregtechmod.api.util.GT_Utility;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 public class GT_MetaTileEntity_Pulverizer extends GT_MetaTileEntity_BasicMachine {
@@ -35,7 +36,7 @@ public class GT_MetaTileEntity_Pulverizer extends GT_MetaTileEntity_BasicMachine
 		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 3, 4, (byte)64, (byte)1, (byte)64, (byte)1);
     	if (mInventory[2] != null) {
 	    	if (mInventory[3] == null && mInventory[4] == null) {
-		    	if (mInventory[2].isItemEqual(new ItemStack(Block.gravel, 1))) {
+		    	if (mInventory[2].isItemEqual(new ItemStack(Blocks.gravel, 1))) {
 		    		Object tObject = GT_ModHandler.getPulverizerRecipe(mInventory[2]);
 				    try {
 				    	if (tObject instanceof GT_PulverizerRecipe) {
@@ -52,7 +53,7 @@ public class GT_MetaTileEntity_Pulverizer extends GT_MetaTileEntity_BasicMachine
 						    	}
 				    		}
 		    			} else {
-					    	thermalexpansion.api.crafting.IPulverizerRecipe tRecipe = (thermalexpansion.api.crafting.IPulverizerRecipe)tObject;
+					    	IPulverizerRecipe tRecipe = (IPulverizerRecipe)tObject;
 				    		if (tRecipe != null && tRecipe.getInput().stackSize <= mInventory[2].stackSize) {
 						    	if ((mOutputItem1 = tRecipe.getPrimaryOutput()) != null) {
 					    			if (getBaseMetaTileEntity().getRandomNumber(100) < tRecipe.getSecondaryOutputChance()) {
@@ -65,7 +66,7 @@ public class GT_MetaTileEntity_Pulverizer extends GT_MetaTileEntity_BasicMachine
 						    	}
 				    		}
 					    }
-					} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+					} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 		    	}
 			    try {
 			    	for (ItemStack tOutput : mods.railcraft.api.crafting.RailcraftCraftingManager.rockCrusher.getRecipe(mInventory[2]).getRandomizedOuputs()) {
@@ -94,7 +95,7 @@ public class GT_MetaTileEntity_Pulverizer extends GT_MetaTileEntity_BasicMachine
 					    mEUt = 4;
 				    	return;
 			    	}
-			    } catch(Throwable e) {if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);}
+			    } catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 				if (null != (mOutputItem1 = GT_ModHandler.getMaceratorOutput(mInventory[2], true, mInventory[3]))) {
 	    			mOutputItem2 = null;
 			    	mMaxProgresstime = 400;

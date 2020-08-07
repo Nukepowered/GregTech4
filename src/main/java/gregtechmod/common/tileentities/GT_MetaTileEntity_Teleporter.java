@@ -6,7 +6,6 @@ import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_Config;
 import gregtechmod.api.util.GT_Utility;
-import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityHanging;
 import net.minecraft.entity.EntityLiving;
@@ -15,7 +14,7 @@ import net.minecraft.entity.effect.EntityWeatherEffect;
 import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.item.EntityEnderEye;
-import net.minecraft.entity.item.EntityFallingSand;
+import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.item.EntityFireworkRocket;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.item.EntityMinecart;
@@ -26,6 +25,7 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.entity.projectile.EntityFishHook;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
@@ -107,7 +107,7 @@ public class GT_MetaTileEntity_Teleporter extends MetaTileEntity {
 	}
 	
 	public boolean checkForEgg() {
-		for (byte i = -5; i <= 5; i++) for (byte j = -5; j <= 5; j++) for (byte k = -5; k <= 5; k++) if (getBaseMetaTileEntity().getBlockIDOffset(i, j, k) == Block.dragonEgg.blockID) return true;
+		for (byte i = -5; i <= 5; i++) for (byte j = -5; j <= 5; j++) for (byte k = -5; k <= 5; k++) if (getBaseMetaTileEntity().getBlockOffset(i, j, k) == Blocks.dragon_egg) return true;
 		return false;
 	}
 	
@@ -195,7 +195,7 @@ public class GT_MetaTileEntity_Teleporter extends MetaTileEntity {
 		if (aEntity instanceof EntityBoat) return 0.1F;
 		if (aEntity instanceof EntityEnderCrystal) return 2.0F;
 		if (aEntity instanceof EntityEnderEye) return 0.001F;
-		if (aEntity instanceof EntityFallingSand) return 0.01F;
+		if (aEntity instanceof EntityFallingBlock) return 0.01F;
 		if (aEntity instanceof EntityFireball) return 0.001F;
 		if (aEntity instanceof EntityFireworkRocket) return 0.001F;
 		if (aEntity instanceof EntityHanging) return 0.005F;
