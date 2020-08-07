@@ -290,7 +290,7 @@ public interface IMetaTileEntity extends ISidedInventory, IFluidTank, IFluidHand
 	 */
 	public byte getComparatorValue(byte aSide);
 	
-	public String getInvName();
+	public String getInventoryName();
 	
 	public String getMainInfo();
 	public String getSecondaryInfo();
