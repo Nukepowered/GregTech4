@@ -9,6 +9,7 @@ import gregtechmod.api.interfaces.IMachineProgress;
 import gregtechmod.api.interfaces.IUpgradableMachine;
 import gregtechmod.api.items.GT_EnergyArmor_Item;
 import gregtechmod.common.network.GT_PacketHandler;
+import gregtechmod.common.network.packet.GT_Packet;
 import gregtechmod.common.network.packet.GT_SoundPacket;
 
 import java.lang.reflect.Field;
@@ -676,15 +677,6 @@ public class GT_Utility {
 	
 	public static boolean sendSoundToPlayers(World aWorld, String aSoundName, float aSoundStrength, float aSoundModulation, int aX, int aY, int aZ) {
 		if (aSoundName == null || aSoundName.equals("") || aWorld == null || aWorld.isRemote) return false;
-//        ByteArrayDataOutput tOut = ByteStreams.newDataOutput();
-//
-//        tOut.writeInt(aX);
-//        tOut.writeShort(aY);
-//        tOut.writeInt(aZ);
-//		
-//        tOut.writeUTF(aSoundName);
-//        tOut.writeFloat(aSoundStrength);
-//        tOut.writeFloat(aSoundModulation < 0 ? (1.0F + (aWorld.rand.nextFloat() - aWorld.rand.nextFloat()) * 0.2F) * 0.7F : aSoundModulation);
 		aSoundModulation = aSoundModulation < 0 ? (1.0F + (aWorld.rand.nextFloat() - aWorld.rand.nextFloat()) * 0.2F) * 0.7F : aSoundModulation;
 		GT_SoundPacket tPacket = new GT_SoundPacket(aSoundName, aX, aY, aZ, aSoundStrength, aSoundModulation);
         sendPacketToAllPlayersInRange(aWorld, tPacket, aX, aZ);
@@ -692,7 +684,7 @@ public class GT_Utility {
 		return true;
 	}
 	
-	public static void sendPacketToAllPlayersInRange(World aWorld, GT_SoundPacket aPacket, int aX, int aZ) {
+	public static void sendPacketToAllPlayersInRange(World aWorld, GT_Packet aPacket, int aX, int aZ) {
         for (Object tObject : aWorld.playerEntities) {
         	if (tObject instanceof EntityPlayerMP) {
         		EntityPlayerMP tPlayer = (EntityPlayerMP)tObject;
@@ -700,7 +692,7 @@ public class GT_Utility {
 					Chunk tChunk = aWorld.getChunkFromBlockCoords(aX, aZ);
 					if (tPlayer.getServerForPlayer().getPlayerManager().isPlayerWatchingChunk(tPlayer, tChunk.xPosition, tChunk.zPosition)) {
 						if (GregTech_API.DEBUG_MODE) GT_Log.log.debug("sent Packet to " + tPlayer.getDisplayName());
-						GT_PacketHandler.SOUND_PACKET_CHANNEL.sendTo(aPacket, tPlayer);
+						GT_PacketHandler.sendPacket(aPacket, tPlayer);
 					}
 	        	}
         	} else {

@@ -10,6 +10,7 @@ import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
@@ -334,19 +335,14 @@ public class BaseMetaPipeEntity extends BaseTileEntity implements IGregTechTileE
         return rPacket;
     }
 	
-	public final void receiveMetaTileEntityData(short aID, int aCover0, int aCover1, int aCover2, int aCover3, int aCover4, int aCover5, byte aTextureData, byte aUpdateData, byte aRedstoneData, byte aColorData) {
+	public final void receiveMetaTileEntityData(short aID, int[] aCovers, byte aTextureData, byte aUpdateData, byte aRedstoneData, byte aColorData) {
     	issueTextureUpdate();
 		if (mID != aID && aID > 0) {
 	    	mID = aID;
 	    	createNewMetatileEntity(mID);
 		}
 		
-		mCoverSides[0] = aCover0;
-		mCoverSides[1] = aCover1;
-		mCoverSides[2] = aCover2;
-		mCoverSides[3] = aCover3;
-		mCoverSides[4] = aCover4;
-		mCoverSides[5] = aCover5;
+		mCoverSides = Arrays.copyOf(aCovers, aCovers.length);
 		
 		receiveClientEvent(0, aTextureData);
 		receiveClientEvent(1, aUpdateData);

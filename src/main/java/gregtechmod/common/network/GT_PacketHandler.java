@@ -6,6 +6,7 @@ import cpw.mods.fml.relauncher.Side;
 import gregtechmod.common.network.packet.GT_Packet;
 import gregtechmod.common.network.packet.GT_SoundPacket;
 import gregtechmod.common.network.packet.GT_TileEntityPacket;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 public final class GT_PacketHandler implements Runnable {
 	private static byte discriminator = 0;
@@ -24,6 +25,16 @@ public final class GT_PacketHandler implements Runnable {
 		GT_PacketHandler.registerClientMessage(GENERIC_CHANNEL, GT_Packet.class);
 		GT_PacketHandler.registerClientMessage(TILEENTITY_PACKET_CHANNEL, GT_TileEntityPacket.class);
 		GT_PacketHandler.registerClientMessage(SOUND_PACKET_CHANNEL, GT_SoundPacket.class);
+	}
+	
+	public static <T extends GT_Packet> void sendPacket(T packet, EntityPlayerMP reciever) {
+		if (packet instanceof GT_TileEntityPacket) {
+			TILEENTITY_PACKET_CHANNEL.sendTo(packet, reciever);
+		} else if (packet instanceof GT_SoundPacket) {
+			SOUND_PACKET_CHANNEL.sendTo(packet, reciever);
+		} else {
+			GENERIC_CHANNEL.sendTo(packet, reciever);
+		}
 	}
 	
 	protected static <T extends GT_Packet> void registerServerMessage(SimpleNetworkWrapper channel, Class<T> type) {

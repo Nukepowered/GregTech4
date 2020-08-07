@@ -3,6 +3,12 @@ package gregtechmod.common.network.packet;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import io.netty.buffer.ByteBuf;
 
+/**
+ * Abstract packet, contains raw data buffer.
+ * Fucking new packet system, in same time it is useful
+ * @author iDnK
+ *
+ */
 public abstract class GT_Packet implements IMessage {
 	public ByteBuf data;
 	

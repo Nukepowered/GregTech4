@@ -8,8 +8,10 @@ import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.common.network.packet.GT_TileEntityPacket;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
@@ -20,7 +22,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S3FPacketCustomPayload;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.EnumSkyBlock;
@@ -28,9 +29,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
-
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
 
 /**
  * NEVER INCLUDE THIS FILE IN YOUR MOD!!!
@@ -468,7 +466,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
         	if (isServerSide()) {
         		if (getTimer() % 10 == 0) {
         		    if (mSendClientData) {
-        		    	GT_Utility.sendPacketToAllPlayersInRange(getWorld(), getDescriptionPacket(), getXCoord(), getZCoord());
+        		    	GT_Utility.sendPacketToAllPlayersInRange(getWorld(), getMetaTileEntityData(), getXCoord(), getZCoord());
 	    		    	mSendClientData = false;
         	    	}
         		}
@@ -505,44 +503,60 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	
 	@Override
     public Packet getDescriptionPacket() {
-        ByteArrayDataOutput tOut = ByteStreams.newDataOutput();
-        
-        tOut.writeInt(getXCoord());
-        tOut.writeShort(getYCoord());
-        tOut.writeInt(getZCoord());
-        
-        tOut.writeShort(mID);
-        tOut.writeInt(mCoverSides[0]);
-        tOut.writeInt(mCoverSides[1]);
-        tOut.writeInt(mCoverSides[2]);
-        tOut.writeInt(mCoverSides[3]);
-        tOut.writeInt(mCoverSides[4]);
-        tOut.writeInt(mCoverSides[5]);
-        
-        tOut.writeByte(oTextureData = (byte)((getFrontFacing()&7) | (mActive?8:0) | (mRedstone?16:0) | (mLockUpgrade?32:0)));
-        tOut.writeByte(oUpdateData = hasValidMetaTileEntity()?mMetaTileEntity.getUpdateData():0);
-        tOut.writeByte(oRedstoneData = (byte)(((mSidedRedstone[0]>0)?1:0)|((mSidedRedstone[1]>0)?2:0)|((mSidedRedstone[2]>0)?4:0)|((mSidedRedstone[3]>0)?8:0)|((mSidedRedstone[4]>0)?16:0)|((mSidedRedstone[5]>0)?32:0)));
-        tOut.writeByte(oColor = mColor);
-        
-        oLightValue = -1;
-        
-		S3FPacketCustomPayload rPacket = new S3FPacketCustomPayload(GregTech_API.TILEENTITY_PACKET_CHANNEL, tOut.toByteArray());
-        return rPacket;
+//        ByteArrayDataOutput tOut = ByteStreams.newDataOutput();
+//        
+//        tOut.writeInt(getXCoord());
+//        tOut.writeShort(getYCoord());
+//        tOut.writeInt(getZCoord());
+//        
+//        tOut.writeShort(mID);
+//        tOut.writeInt(mCoverSides[0]);
+//        tOut.writeInt(mCoverSides[1]);
+//        tOut.writeInt(mCoverSides[2]);
+//        tOut.writeInt(mCoverSides[3]);
+//        tOut.writeInt(mCoverSides[4]);
+//        tOut.writeInt(mCoverSides[5]);
+//        
+//        tOut.writeByte(oTextureData = (byte)((getFrontFacing()&7) | (mActive?8:0) | (mRedstone?16:0) | (mLockUpgrade?32:0)));
+//        tOut.writeByte(oUpdateData = hasValidMetaTileEntity()?mMetaTileEntity.getUpdateData():0);
+//        tOut.writeByte(oRedstoneData = (byte)(((mSidedRedstone[0]>0)?1:0)|((mSidedRedstone[1]>0)?2:0)|((mSidedRedstone[2]>0)?4:0)|((mSidedRedstone[3]>0)?8:0)|((mSidedRedstone[4]>0)?16:0)|((mSidedRedstone[5]>0)?32:0)));
+//        tOut.writeByte(oColor = mColor);
+//        
+//        oLightValue = -1;
+//        
+//		S3FPacketCustomPayload rPacket = new S3FPacketCustomPayload(GregTech_API.TILEENTITY_PACKET_CHANNEL, tOut.toByteArray());
+//        return rPacket;
+		return super.getDescriptionPacket();
     }
 	
-	public final void receiveMetaTileEntityData(short aID, int aCover0, int aCover1, int aCover2, int aCover3, int aCover4, int aCover5, byte aTextureData, byte aUpdateData, byte aRedstoneData, byte aColorData) {
+	public final GT_TileEntityPacket getMetaTileEntityData() {
+		GT_TileEntityPacket tOut = new GT_TileEntityPacket();
+		tOut.aX = getXCoord();
+		tOut.aY = getYCoord();
+		tOut.aZ = getZCoord();
+		tOut.aID = mID;
+		tOut.aCovers = mCoverSides;
+		tOut.aTextureData = (byte)((getFrontFacing() & 7) | (mActive ? 8 : 0) | (mRedstone ? 16 : 0) | (mLockUpgrade ? 32 : 0));
+		tOut.aUpdateData = (oUpdateData = hasValidMetaTileEntity() ? mMetaTileEntity.getUpdateData() : 0);
+		tOut.aRedstoneData = (oRedstoneData = (byte)
+				(((mSidedRedstone[0] >0 ) ? 1: 0)   |
+				((mSidedRedstone[1] > 0) ? 2 : 0)   |
+				((mSidedRedstone[2] > 0) ? 4 : 0)   |
+				((mSidedRedstone[3] >0) ? 8 : 0)    |
+				((mSidedRedstone[4] > 0) ? 16 : 0)  |
+				((mSidedRedstone[5] > 0) ? 32 : 0)));
+		tOut.aRedstoneData = (oColor = mColor);
+		return tOut;
+	}
+	
+	public final void receiveMetaTileEntityData(short aID, int[] aCovers, byte aTextureData, byte aUpdateData, byte aRedstoneData, byte aColorData) {
     	issueTextureUpdate();
 		if (mID != aID && aID > 0) {
 	    	mID = aID;
 	    	createNewMetatileEntity(mID);
 		}
 		
-		mCoverSides[0] = aCover0;
-		mCoverSides[1] = aCover1;
-		mCoverSides[2] = aCover2;
-		mCoverSides[3] = aCover3;
-		mCoverSides[4] = aCover4;
-		mCoverSides[5] = aCover5;
+		mCoverSides = Arrays.copyOf(aCovers, aCovers.length);
 		
 		receiveClientEvent(0, aTextureData);
 		receiveClientEvent(1, aUpdateData);
