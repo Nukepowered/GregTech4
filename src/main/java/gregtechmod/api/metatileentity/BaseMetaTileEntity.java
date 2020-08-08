@@ -1411,10 +1411,9 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	
     public boolean isAddedToEnergyNet() {return mIsAddedToEnet;}
 	public void setStored(int aEU) {if (hasValidMetaTileEntity()) setStoredEU(aEU);}
-	public int demandsEnergy() {if (mReleaseEnergy || !hasValidMetaTileEntity() || !mMetaTileEntity.isEnetInput()) return 0; return getCapacity() - getStored();}
+	public double getDemandedEnergy() {if (mReleaseEnergy || !hasValidMetaTileEntity() || !mMetaTileEntity.isEnetInput()) return 0; return getCapacity() - getStored();}
 	public int getCapacity() {return getEUCapacity();}
     public int getStored() {return Math.min(getStoredEU(), getCapacity());}
-	public int getMaxSafeInput() {return getInputVoltage();}
 	public int getMaxEnergyOutput() {if (mReleaseEnergy) return Integer.MAX_VALUE; return getOutput();}
 	public int getOutput() {return getOutputVoltage();}
 	
@@ -1456,5 +1455,13 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	@Override
 	public byte setColorization(byte aColor) {
 		return mColor = (byte)(aColor+1);
+	}
+	
+	public int getSinkTier() {
+		return mMetaTileEntity.getInputTier();
+	}
+
+	public int getSourceTier() {
+		return mMetaTileEntity.getOutputTier();
 	}
 }

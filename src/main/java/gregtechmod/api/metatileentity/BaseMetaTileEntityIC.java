@@ -19,22 +19,4 @@ public class BaseMetaTileEntityIC extends BaseMetaTileEntity implements IIC2Tile
 	public boolean isTeleporterCompatible(Direction aSide) {return hasValidMetaTileEntity() && mMetaTileEntity.isTeleporterCompatible();}
 	public boolean acceptsEnergyFrom(TileEntity aReceiver, Direction aDirection) {return inputEnergyFrom((byte)aDirection.toSideValue());}
     public boolean emitsEnergyTo(TileEntity aReceiver, Direction aDirection) {return outputsEnergyTo((byte)aDirection.toSideValue());}
-
-	@Override
-	public double getDemandedEnergy() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getSinkTier() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getSourceTier() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 }
