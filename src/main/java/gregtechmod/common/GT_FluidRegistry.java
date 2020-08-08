@@ -1,8 +1,6 @@
 package gregtechmod.common;
 
 import gregtechmod.api.enums.Materials;
-import gregtechmod.api.util.GT_LanguageManager;
-
 import java.util.ArrayList;
 
 import net.minecraft.item.ItemStack;
@@ -16,7 +14,6 @@ public class GT_FluidRegistry {
 	
 	public static void addFluid(String aName, String aLocalized, Materials aMaterial, int aState, ItemStack aFullContainer, ItemStack aEmptyContainer) {
 		Fluid tFluid = new Fluid(aName.toLowerCase());
-		GT_LanguageManager.addStringLocalization(aName.toLowerCase(), aLocalized==null?aName:aLocalized);
 		
 		if (FluidRegistry.registerFluid(tFluid)) {
 			sFluids.add(tFluid);

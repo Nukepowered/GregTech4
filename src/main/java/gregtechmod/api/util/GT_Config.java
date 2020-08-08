@@ -11,12 +11,11 @@ public class GT_Config {
 	
 	public static boolean system = false;
 	
-	public static Configuration sConfigFileStandard, sConfigFileIDs, sConfigFileAdvRecipes;
+	public static Configuration sConfigFileStandard, sConfigFileAdvRecipes;
 	
-	public GT_Config(Configuration aConfigFileStandard, Configuration aConfigFileIDs, Configuration aConfigFileAdvRecipes) {
+	public GT_Config(Configuration aConfigFileStandard, Configuration aConfigFileAdvRecipes) {
 		sConfigFileAdvRecipes = aConfigFileAdvRecipes;
 		sConfigFileStandard = aConfigFileStandard;
-		sConfigFileIDs = aConfigFileIDs;
 	}
 	
 	public String getStackConfigName(ItemStack aStack) {
@@ -25,14 +24,6 @@ public class GT_Config {
 		if ((rName = GT_OreDictUnificator.getAssociation(aStack)) != null && !rName.equals("")) return rName;
 		try {if ((rName = aStack.getUnlocalizedName()) != null && !rName.equals("")) return rName;} catch (Throwable e) {}
 		return aStack.getItem() + "." + aStack.getItemDamage();
-	}
-	
-	public int addIDConfig(String aCategory, String aName, int aDefault) {
-		if (aName == null) return aDefault;
-		Property tProperty = sConfigFileIDs.get(aCategory, aName, aDefault);
-		int rResult = tProperty.getInt(aDefault);
-		if (!tProperty.wasRead()) sConfigFileIDs.save();
-		return rResult;
 	}
 	
 	public boolean addAdvConfig(Object aCategory, ItemStack aStack, boolean aDefault) {

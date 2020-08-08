@@ -493,7 +493,7 @@ public class GT_Container extends Container {
     @Override
     public void putStacksInSlots(ItemStack[] par1ArrayOfItemStack) {
     	try {
-            super.putStacksInSlots(par1ArrayOfItemStack);
+            if (par1ArrayOfItemStack.length > 0) super.putStacksInSlots(par1ArrayOfItemStack);
     	} catch(Throwable e) {
     		GT_Log.log.catching(e);
     	}

@@ -21,7 +21,9 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.EnumSkyBlock;
@@ -500,6 +502,11 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
     	
     	mWorkUpdate = mInventoryChanged = mRunningThroughTick = false;
     }
+	
+	@Override
+	public void onDataPacket(NetworkManager manager, S35PacketUpdateTileEntity packet) {
+		// TODO синхронизация
+	}
 	
 	@Override
     public Packet getDescriptionPacket() {

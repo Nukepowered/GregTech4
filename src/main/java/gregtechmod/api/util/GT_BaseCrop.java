@@ -1,6 +1,5 @@
 package gregtechmod.api.util;
 
-import gregtechmod.api.GregTech_API;
 import ic2.api.crops.CropCard;
 import ic2.api.crops.Crops;
 import ic2.api.crops.ICropTile;
@@ -34,7 +33,6 @@ public class GT_BaseCrop extends CropCard {
 	 */
 	public GT_BaseCrop(int aID, String aCropName, String aDiscoveredBy, ItemStack aDrop, ItemStack[] aSpecialDrops, ItemStack aBaseSeed, int aTier, int aMaxSize, int aGrowthSpeed, int aAfterHarvestSize, int aHarvestSize, int aStatChemical, int aStatFood, int aStatDefensive, int aStatColor, int aStatWeed, String[] aAttributes) {
 		mName = aCropName;
-		aID = GregTech_API.sConfiguration.addIDConfig("crops", mName.replaceAll(" ", "_"), aID);
 		if (aDiscoveredBy != null && !aDiscoveredBy.equals("")) mDiscoveredBy = aDiscoveredBy;
 		if (aDrop != null && aID > 0 && aID < 256) {
 			mDrop = GT_Utility.copy(aDrop);
@@ -51,7 +49,7 @@ public class GT_BaseCrop extends CropCard {
 			mStats[4] = aStatWeed;
 			mAttributes = aAttributes;
 			if (!Crops.instance.registerCrop(this, aID)) throw new GT_ItsNotMyFaultException("Make sure the Crop ID is valid!");
-			if (aBaseSeed != null) Crops.instance.registerCrop(this, aID); // Crops.instance.registerBaseSeed(aBaseSeed, aID, 1, 1, 1, 1);
+			if (aBaseSeed != null) Crops.instance.registerCrop(this, aID);
 			sCropList.add(this);
 		}
 	}

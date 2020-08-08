@@ -60,17 +60,17 @@ public class GT_MetaMachine_Item extends ItemBlock {
 						if (temp instanceof IGregTechTileEntity) {
 							IGregTechTileEntity tTileEntity = (IGregTechTileEntity)temp;
 							tTileEntity.setInitialValuesAsNBT(new NBTTagCompound(), (short)tDamage);
-							if (tTileEntity.getDescription()    != null) mString0[tDamage] = GT_LanguageManager.addStringLocalization("TileEntity_DESCRIPTION_" + tDamage, tTileEntity.getDescription());
-							if (tTileEntity.getInputVoltage()		> 0) mString1[tDamage] = GT_LanguageManager.addStringLocalization("TileEntity_EUp_IN", "Max EU/p IN: ") + tTileEntity.getInputVoltage();					else mString1[tDamage] = "";
+							if (tTileEntity.getDescription()    != null) mString0[tDamage] = "LOCALE";//GT_LanguageManager.addStringLocalization("TileEntity_DESCRIPTION_" + tDamage, tTileEntity.getDescription());
+							if (tTileEntity.getInputVoltage()		> 0) mString1[tDamage] = "LOCALE";//GT_LanguageManager.addStringLocalization("TileEntity_EUp_IN", "Max EU/p IN: ") + tTileEntity.getInputVoltage();					else mString1[tDamage] = "";
 							if (tTileEntity.getMetaTileEntity() == null || tTileEntity.getMetaTileEntity().getSpecialVoltageToolTip() == null) {
-								if (tTileEntity.getOutputVoltage()	> 0) mString2[tDamage] = GT_LanguageManager.addStringLocalization("TileEntity_EUp_OUT", "Max EU/p OUT: ") + tTileEntity.getOutputVoltage();					else mString2[tDamage] = "";
+								if (tTileEntity.getOutputVoltage()	> 0) mString2[tDamage] = "LOCALE";//GT_LanguageManager.addStringLocalization("TileEntity_EUp_OUT", "Max EU/p OUT: ") + tTileEntity.getOutputVoltage();					else mString2[tDamage] = "";
 							} else {
-								mString2[tDamage] = GT_LanguageManager.addStringLocalization("TileEntity_VoltageToolTip_" + tDamage, tTileEntity.getMetaTileEntity().getSpecialVoltageToolTip());
+								mString2[tDamage] = "LOCALE";//GT_LanguageManager.addStringLocalization("TileEntity_VoltageToolTip_" + tDamage, tTileEntity.getMetaTileEntity().getSpecialVoltageToolTip());
 							}
-							if (tTileEntity.getOutputAmperage()		> 1) mString3[tDamage] = GT_LanguageManager.addStringLocalization("TileEntity_EUp_AMOUNT", "Amount of Output Packets: ") + tTileEntity.getOutputAmperage();	else mString3[tDamage] = "";
-							if (tTileEntity.getEUCapacity()		> 10000) mString4[tDamage] = GT_LanguageManager.addStringLocalization("TileEntity_EUp_STORE", "EU Storage: ") + tTileEntity.getEUCapacity();					else mString4[tDamage] = "";
+							if (tTileEntity.getOutputAmperage()		> 1) mString3[tDamage] = "LOCALE";//GT_LanguageManager.addStringLocalization("TileEntity_EUp_AMOUNT", "Amount of Output Packets: ") + tTileEntity.getOutputAmperage();	else mString3[tDamage] = "";
+							if (tTileEntity.getEUCapacity()		> 10000) mString4[tDamage] = "LOCALE";//GT_LanguageManager.addStringLocalization("TileEntity_EUp_STORE", "EU Storage: ") + tTileEntity.getEUCapacity();					else mString4[tDamage] = "";
 							mString5[tDamage] = (tTileEntity.isOverclockerUpgradable()?"O ":"") + (tTileEntity.isTransformerUpgradable()?"T ":"") + (tTileEntity.isBatteryUpgradable(0, (byte)0)?"B ":"") + (tTileEntity.isMJConverterUpgradable()?"M ":"") + (tTileEntity.isSteamEngineUpgradable()?"S ":"");
-							if (!mString5[tDamage].equals("")) mString5[tDamage] = GT_LanguageManager.addStringLocalization("TileEntity_UPGRADES", "Possible Upgrades: ") + mString5[tDamage];
+							if (!mString5[tDamage].equals("")) mString5[tDamage] = "LOCALE";//GT_LanguageManager.addStringLocalization("TileEntity_UPGRADES", "Possible Upgrades: ") + mString5[tDamage];
 							mString6[tDamage] = "";
 						}
 					}
@@ -88,14 +88,14 @@ public class GT_MetaMachine_Item extends ItemBlock {
 			NBTTagCompound aNBT = aStack.getTagCompound();
 			
 			if (aNBT != null) {
-				if (aNBT.getBoolean("mMJConverter")) aList.add(GT_LanguageManager.addStringLocalization("TileEntity_MJCONVERTER", "has MJ-Converter"));
-				if (aNBT.getBoolean("mSteamConverter")) aList.add(GT_LanguageManager.addStringLocalization("TileEntity_STEAMCONVERTER", "has Steam Upgrade"));
-				int tAmount = 0;
-				if ((tAmount = aNBT.getByte("mOverclockers")) 		> 0) aList.add(tAmount + " " + GT_LanguageManager.addStringLocalization("TileEntity_OVERCLOCKERS", "Overclocker Upgrades"));
-				if ((tAmount = aNBT.getByte("mTransformers")) 		> 0) aList.add(tAmount + " " + GT_LanguageManager.addStringLocalization("TileEntity_TRANSFORMERS", "Transformer Upgrades"));
-				if ((tAmount = aNBT.getByte("mRSEnergyCells"))		> 0) aList.add(tAmount + " " + GT_LanguageManager.addStringLocalization("TileEntity_ENERGYCELLS", "Energy Cell Upgrades"));
-				if ((tAmount = aNBT.getByte("mSteamTanks"))			> 0) aList.add(tAmount + " " + GT_LanguageManager.addStringLocalization("TileEntity_STEAMTANKS", "Steam Tank Upgrades"));
-				if ((tAmount = aNBT.getInteger("mUpgradedStorage"))	> 0) aList.add(tAmount + " " + GT_LanguageManager.addStringLocalization("TileEntity_EUSTORAGES", "Additional EU-Storage"));
+//				if (aNBT.getBoolean("mMJConverter")) aList.add(GT_LanguageManager.addStringLocalization("TileEntity_MJCONVERTER", "has MJ-Converter"));
+//				if (aNBT.getBoolean("mSteamConverter")) aList.add(GT_LanguageManager.addStringLocalization("TileEntity_STEAMCONVERTER", "has Steam Upgrade"));
+//				int tAmount = 0;
+//				if ((tAmount = aNBT.getByte("mOverclockers")) 		> 0) aList.add(tAmount + " " + GT_LanguageManager.addStringLocalization("TileEntity_OVERCLOCKERS", "Overclocker Upgrades"));
+//				if ((tAmount = aNBT.getByte("mTransformers")) 		> 0) aList.add(tAmount + " " + GT_LanguageManager.addStringLocalization("TileEntity_TRANSFORMERS", "Transformer Upgrades"));
+//				if ((tAmount = aNBT.getByte("mRSEnergyCells"))		> 0) aList.add(tAmount + " " + GT_LanguageManager.addStringLocalization("TileEntity_ENERGYCELLS", "Energy Cell Upgrades"));
+//				if ((tAmount = aNBT.getByte("mSteamTanks"))			> 0) aList.add(tAmount + " " + GT_LanguageManager.addStringLocalization("TileEntity_STEAMTANKS", "Steam Tank Upgrades"));
+//				if ((tAmount = aNBT.getInteger("mUpgradedStorage"))	> 0) aList.add(tAmount + " " + GT_LanguageManager.addStringLocalization("TileEntity_EUSTORAGES", "Additional EU-Storage"));
 			}
 		} catch(Throwable e) {
 			GT_Log.log.catching(e);

@@ -206,12 +206,9 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     	File tFile = new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "GregTech.cfg");
     	Configuration tConfig1 = new Configuration(tFile);
     	tConfig1.load();
-    	tFile = new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "BlockItemIDs.cfg");
+    	tFile = new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "DynamicConfig.cfg");
     	Configuration tConfig2 = new Configuration(tFile);
     	tConfig2.load();
-    	tFile = new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "DynamicConfig.cfg");
-    	Configuration tConfig3 = new Configuration(tFile);
-    	tConfig3.load();
 
     	mDoNotInit = (!tFile.getAbsolutePath().toLowerCase().contains("voltz")) && (tFile.getAbsolutePath().toLowerCase().contains(".technic") || tFile.getAbsolutePath().toLowerCase().contains("tekkit"));
     	if (mDoNotInit) {
@@ -246,7 +243,7 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     	new GT_ConnectionHandler().run();
     	
     	GT_Log.log.info("GT_Mod: Creating Config Object.");
-    	GregTech_API.sConfiguration = new GT_Config(tConfig1, tConfig2, tConfig3);
+    	GregTech_API.sConfiguration = new GT_Config(tConfig1, tConfig2);
     	
     	GT_Log.log.info("GT_Mod: Setting Configs");
     	if (GT_Config.sConfigFileStandard.get("general", "TooEasyMode", false).getBoolean(false)) GregTech_API.sAfterGTPostload.add(new GT_TooEasyModeLoader());
@@ -318,11 +315,6 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     	
     	GT_Log.log.info("GT_Mod: Saving Configs");
     	GT_Config.sConfigFileStandard.save();
-    	GT_Config.sConfigFileIDs.save();
-    	
-    	GT_Log.log.info("GT_Mod: Generating Lang-File"); // TODO move localization to resources
-    	GT_LanguageManager.sLangFile = new Configuration(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "GregTech.lang"));
-    	GT_LanguageManager.sLangFile.load();
     	
     	GT_Log.log.info("GT_Mod: Removing all original Scrapbox Drops.");
         try {

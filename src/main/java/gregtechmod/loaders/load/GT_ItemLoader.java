@@ -636,12 +636,5 @@ public class GT_ItemLoader implements Runnable {
 		codechicken.nei.api.API.hideItem(GT_ModHandler.getIC2Item("electricWrench", 1));
 		codechicken.nei.api.API.hideItem(GT_ModHandler.getIC2Item("chainsaw", 1));
 		} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
-		
-        GT_Log.log.info("GT_Mod: Register regular Item Names.");
-		for (int i = 16; i < GregTech_API.sItemList.length; i++) {
-			if (GregTech_API.sItemList[i] != null) {
-				GT_LanguageManager.addStringLocalization(GregTech_API.sItemList[i].getUnlocalizedName() + ".name", GT_LanguageManager.mRegionalNameListItem[i]);
-			}
-		}
 	}
 }

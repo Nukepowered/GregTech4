@@ -625,11 +625,11 @@ public class GT_Utility {
 		sBookCount++;
 		ItemStack rStack = new ItemStack(Items.written_book, 1);
         NBTTagCompound tNBT = new NBTTagCompound();
-        tNBT.setString("title", GT_LanguageManager.addStringLocalization("Book." + aTitle + ".Name", aTitle));
+//        tNBT.setString("title", GT_LanguageManager.addStringLocalization("Book." + aTitle + ".Name", aTitle)); TODO: LOCALE
         tNBT.setString("author", aAuthor);
         NBTTagList tNBTList = new NBTTagList();
         for (byte i = 0; i < aPages.length; i++) {
-        	aPages[i] = GT_LanguageManager.addStringLocalization("Book." + aTitle + ".Page" + ((i<10)?"0"+i:i), aPages[i]);
+        	//aPages[i] = GT_LanguageManager.addStringLocalization("Book." + aTitle + ".Page" + ((i<10)?"0"+i:i), aPages[i]);
 	        if (i < 48) {
 	        	if (aPages[i].length() < 256)
 	        		tNBTList.appendTag(new NBTTagString(aPages[i]));
@@ -691,7 +691,7 @@ public class GT_Utility {
 				if (GregTech_API.gregtechmod.allowPacketToBeSent(aPacket, tPlayer)) {
 					Chunk tChunk = aWorld.getChunkFromBlockCoords(aX, aZ);
 					if (tPlayer.getServerForPlayer().getPlayerManager().isPlayerWatchingChunk(tPlayer, tChunk.xPosition, tChunk.zPosition)) {
-						if (GregTech_API.DEBUG_MODE) GT_Log.log.debug("sent Packet to " + tPlayer.getDisplayName());
+						if (GregTech_API.DEBUG_MODE) GT_Log.log.info("sent Packet to " + tPlayer.getDisplayName());
 						GT_PacketHandler.sendPacket(aPacket, tPlayer);
 					}
 	        	}
