@@ -318,20 +318,20 @@ public class GT_CraftingRecipeLoader implements Runnable {
     	
     	GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1, 4), new Object[] {"CGD", "GAG", "DGC", 'D', "craftingCircuitTier07", 'G', "craftingMonitorTier02", 'C', "craftingCircuitTier08", 'A', "craftingRawMachineTier02"});
     	
-    	//if (GregTech_API.sConfiguration.addAdvConfig(GT_Config_Category.gregtechrecipes, "lesu", true)) {
-    		//GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[0], 1, 6), new Object[] {"LLL", "LML", "LLL", 'M', "craftingCircuitTier02", 'L', "blockLazurite"});
-    		//GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[0], 1, 6), new Object[] {"LLL", "LML", "LLL", 'M', "craftingCircuitTier02", 'L', "blockLapis"});
-    		//GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1, 7), new Object[] {" L ", "ACA", " M ", 'A', "craftingCircuitTier04", 'C', new ItemStack(GregTech_API.sBlockList[0], 1, 6), 'L', GT_ModHandler.getIC2Item("lvTransformer", 1), 'M', GT_ModHandler.getIC2Item("mvTransformer", 1)});
-    	//}
+    	if (GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.gregtechrecipes, "lesu", true)) {
+    		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[0], 1, 6), new Object[] {"LLL", "LML", "LLL", 'M', "craftingCircuitTier02", 'L', "blockLazurite"});
+    		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[0], 1, 6), new Object[] {"LLL", "LML", "LLL", 'M', "craftingCircuitTier02", 'L', "blockLapis"});
+    		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1, 7), new Object[] {" L ", "ACA", " M ", 'A', "craftingCircuitTier04", 'C', new ItemStack(GregTech_API.sBlockList[0], 1, 6), 'L', GT_ModHandler.getIC2Item("lvTransformer", 1), 'M', GT_ModHandler.getIC2Item("mvTransformer", 1)});
+    	}
     	if (GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.gregtechrecipes, "idsu", true)) {
     		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,101), new Object[] {"IMI", "MCM", "IMI", 'I', OrePrefixes.plateAlloy.get("Iridium"), 'C', GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.disabledrecipes, "enderchest", false)?new ItemStack(Items.ender_eye, 1):"craftingEnderChest", 'M', GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.gregtechrecipes, "aesu", true)?new ItemStack(GregTech_API.sBlockList[1], 1, 100):"crafting100kkEUStore"});
     	}
     	if (GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.gregtechrecipes, "aesu", true)) {
     		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,100), new Object[] {"CQC", "CEC", "CMC", 'Q', "craftingCircuitTier10", 'C', "craftingCircuitTier07", 'E', "crafting100kkEUStore", 'M', "craftingRawMachineTier04"});
     	}
-    	//if (GregTech_API.sConfiguration.addAdvConfig(GT_Config_Category.gregtechrecipes, "chargeomat", true)) {
-    		//GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,10), new Object[] {"BCB", "TMT", "BAB", 'C', "craftingCircuitTier10", 'M', "crafting100kkEUStore", 'A', "craftingRawMachineTier02", 'T', new ItemStack(Block.chest, 1), 'B', "craftingCircuitTier07"});
-    	//}
+    	if (GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.gregtechrecipes, "chargeomat", true)) {
+    		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,10), new Object[] {"BCB", "TMT", "BAB", 'C', "craftingCircuitTier10", 'M', "crafting100kkEUStore", 'A', "craftingRawMachineTier02", 'T', new ItemStack(Blocks.chest, 1), 'B', "craftingCircuitTier07"});
+    	}
     	if (GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.gregtechrecipes, "digitalchest", true)) {
     		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,48), new Object[] {"AAA", "ADA", "ASA", 'D', "craftingCircuitTier08", 'S', "craftingMonitorTier02", 'A', OrePrefixes.plate.get(Materials.Iron)});
     		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,48), new Object[] {"AAA", "ADA", "ASA", 'D', "craftingCircuitTier08", 'S', "craftingMonitorTier02", 'A', OrePrefixes.plate.get(Materials.Aluminium)});
