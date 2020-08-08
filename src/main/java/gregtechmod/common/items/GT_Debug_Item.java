@@ -11,7 +11,6 @@ import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -77,19 +76,31 @@ public class GT_Debug_Item extends GT_Generic_Item implements IElectricItem {
 	
 	@Override
 	public boolean onItemUseFirst(ItemStack aStack, EntityPlayer aPlayer, World aWorld, int aX, int aY, int aZ, int aSide, float aClickX, float aClickY, float aClickZ) {
-		if (aWorld.isRemote) {
-    		GT_Utility.doSoundAtClient(GregTech_API.sSoundList.get(108), 1.0F, aX, aY, aZ);
-    		return false;
-    	}
-		if (aPlayer instanceof EntityPlayerMP && GT_ModHandler.canUseElectricItem(aStack, 25000)) {
-			ArrayList<String> tList = new ArrayList<String>();
-			GT_ModHandler.useElectricItem(aStack, GT_Utility.getCoordinateScan(tList, aPlayer, aWorld, 1, aX, aY, aZ, aSide, aClickX, aClickY, aClickZ), aPlayer);
-			for (int i = 0; i < tList.size(); i++) GT_Utility.sendChatToPlayer(aPlayer, tList.get(i));
-	        return true;
-	    }
-        return false;
+		if (aPlayer.isSneaking()) {
+			if (aWorld.isRemote) {
+				GT_Utility.doSoundAtClient(GregTech_API.sSoundList.get(108), 1.0F, aX, aY, aZ);
+				this.debug(aStack, aPlayer, aX, aY, aZ, aSide, aClickX, aClickY, aClickZ, Side.CLIENT);
+				return true;
+			} else return false;
+		} else {
+			if (!aWorld.isRemote) {
+				this.debug(aStack, aPlayer, aX, aY, aZ, aSide, aClickX, aClickY, aClickZ, Side.SERVER);
+				return true;
+			} else {
+				GT_Utility.doSoundAtClient(GregTech_API.sSoundList.get(108), 1.0F, aX, aY, aZ);
+				return false;
+			}
+		}
 	}
-
+	
+	private void debug(ItemStack aStack, EntityPlayer aPlayer, int aX, int aY, int aZ, int aSide, float aClickX, float aClickY, float aClickZ, Side side) {
+		ArrayList<String> tList = new ArrayList<String>();
+		tList.add("=====================");
+		tList.add(String.format("%s-sided info", side.isClient() ? "§aCLIENT" : "§cSERVER"));
+		GT_ModHandler.useElectricItem(aStack, GT_Utility.getCoordinateScan(tList, aPlayer, aPlayer.worldObj, 1, aX, aY, aZ, aSide, aClickX, aClickY, aClickZ), aPlayer);
+		for (int i = 0; i < tList.size(); i++) GT_Utility.sendChatToPlayer(aPlayer, tList.get(i));
+	}
+	
 	@Override
 	public Item getChargedItem(ItemStack itemStack) {
 		return new ItemStack(this, 1).getItem();

@@ -296,7 +296,7 @@ public class GT_Utility {
 	}
 	
 	public static void sendChatToPlayer(EntityPlayer aPlayer, String aChatMessage) {
-		if (aPlayer != null && aPlayer instanceof EntityPlayerMP && aChatMessage != null) {
+		if (aPlayer != null && aChatMessage != null) {
 			aPlayer.addChatMessage(new ChatComponentText(aChatMessage));
 		}
 	}
@@ -904,8 +904,10 @@ public class GT_Utility {
 		    	tList.add("Name: " + ((IInventory)tTileEntity).getInventoryName() + "  ID: " + Block.getIdFromBlock(tBlock) + "  MetaData: " + aWorld.getBlockMetadata(aX, aY, aZ));
 		    else
 		    	tList.add("Name: " + tBlock.getUnlocalizedName() + "  ID: " + Block.getIdFromBlock(tBlock) + "  MetaData: " + aWorld.getBlockMetadata(aX, aY, aZ));
-		    
+		    tList.add("Block class: §e" + tBlock.getClass().getSimpleName());
+		    if (tTileEntity != null) tList.add("TileEntity class: §e" + tTileEntity.getClass().getSimpleName());
 		    tList.add("Hardness: " + tBlock.getBlockHardness(aWorld, aX, aY, aZ) + "  Blast Resistance: " + tBlock.getExplosionResistance(aPlayer, aWorld, aX, aY, aZ, aPlayer.posX, aPlayer.posY, aPlayer.posZ));
+		    tList.add("-----");
 		} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 	    if (tTileEntity != null) {
 			try {if (tTileEntity instanceof IFluidHandler) {
