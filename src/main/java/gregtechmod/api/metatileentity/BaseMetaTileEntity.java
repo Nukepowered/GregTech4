@@ -505,13 +505,32 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	
 	@Override
 	public void onDataPacket(NetworkManager manager, S35PacketUpdateTileEntity packet) {
-		// TODO синхронизация
+		NBTTagCompound data = packet.func_148857_g();
+		this.receiveMetaTileEntityData(data.getShort("aID"),
+				data.getIntArray("aCovers"),
+				data.getByte("aTextuteData"),
+				data.getByte("aUpdateData"),
+				data.getByte("aRedstoneData"),
+				data.getByte("aColorData"));
 	}
 	
 	@Override
     public Packet getDescriptionPacket() {
-		GT_Utility.sendPacketToAllPlayersInRange(getWorld(), getMetaTileEntityData(), getXCoord(), getZCoord());
-		return super.getDescriptionPacket();
+		NBTTagCompound data = new NBTTagCompound();
+		data.setShort("aID", mID);
+		data.setIntArray("aCovers", mCoverSides);
+		data.setByte("aTextuteData", (byte)((getFrontFacing() & 7) | (mActive ? 8 : 0) | (mRedstone ? 16 : 0) | (mLockUpgrade ? 32 : 0)));
+		data.setByte("aUpdateData", (oUpdateData = hasValidMetaTileEntity() ? mMetaTileEntity.getUpdateData() : 0));
+		data.setByte("aColorData", (oColor = mColor));
+		data.setByte("aRedstoneData", (oRedstoneData = (byte)
+				(((mSidedRedstone[0] >0 ) ? 1: 0)   |
+				((mSidedRedstone[1] > 0) ? 2 : 0)   |
+				((mSidedRedstone[2] > 0) ? 4 : 0)   |
+				((mSidedRedstone[3] >0) ? 8 : 0)    |
+				((mSidedRedstone[4] > 0) ? 16 : 0)  |
+				((mSidedRedstone[5] > 0) ? 32 : 0))));
+		
+		return new S35PacketUpdateTileEntity(getXCoord(), getYCoord(), getZCoord(), 0, data);
     }
 	
 	public final GT_TileEntityPacket getMetaTileEntityData() {
@@ -530,7 +549,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 				((mSidedRedstone[3] >0) ? 8 : 0)    |
 				((mSidedRedstone[4] > 0) ? 16 : 0)  |
 				((mSidedRedstone[5] > 0) ? 32 : 0)));
-		tOut.aRedstoneData = (oColor = mColor);
+		tOut.aColorData = (oColor = mColor);
 		return tOut;
 	}
 	
