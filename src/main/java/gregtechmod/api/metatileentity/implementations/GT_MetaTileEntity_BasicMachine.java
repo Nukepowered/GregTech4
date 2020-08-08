@@ -9,6 +9,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.StatCollector;
 
 /**
  * NEVER INCLUDE THIS FILE IN YOUR MOD!!!
@@ -376,15 +377,16 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 	
 	@Override
 	public String getMainInfo() {
-		return "Progress:";
+		String invName = this.getInventoryName();
+		return invName == null || invName.isEmpty() ? "" : StatCollector.translateToLocal("metatileentity." + getInventoryName() + ".name");
 	}
 	@Override
 	public String getSecondaryInfo() {
-		return (mProgresstime/20)+"secs";
+		return mMaxProgresstime > 0 ? (mProgresstime / 20 + "/" + mMaxProgresstime / 20) : "Idle";
 	}
 	@Override
 	public String getTertiaryInfo() {
-		return "/"+(mMaxProgresstime/20)+"secs";
+		return getBaseMetaTileEntity().isActive() ? mEUt * (int)Math.pow(4, getBaseMetaTileEntity().getOverclockerUpgradeCount()) + "" : "0";
 	}
 	@Override
 	public boolean isGivingInformation() {

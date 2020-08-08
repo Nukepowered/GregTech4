@@ -146,7 +146,7 @@ public class GT_MetaTileEntity_Barrel extends MetaTileEntity {
 	@Override
 	public void onPostTick() {
 		if (getBaseMetaTileEntity().isAllowedToWork() && getBaseMetaTileEntity().isServerSide() && mItem != null) {
-			if (!Item.itemRegistry.containsKey(mItem)) {
+			if (Item.itemRegistry.getIDForObject(mItem) < 0) {
 				mItem = null;
 				mItemMeta = 0;
 				mItemCount = 0;
@@ -211,8 +211,8 @@ public class GT_MetaTileEntity_Barrel extends MetaTileEntity {
 	
 	@Override
 	public String getMainInfo() {
-		if (getStoredItem() == null) return "";
-		return getStoredItem().getDisplayName();
+		ItemStack item = getStoredItem();
+		return item == null ? "" : item.getDisplayName();
 	}
 	@Override
 	public String getSecondaryInfo() {
