@@ -190,6 +190,19 @@ metatileentity.GT_Pipe_Electrum.name=Electrum Item Pipe
 metatileentity.GT_Pipe_Brass_Large.name=Large Brass Item Pipe
 metatileentity.GT_Pipe_Electrum_Large.name=Large Electrum Item Pipe
 
+metatileentity.TileEntity_DESCRIPTION.tooltip=
+metatileentity.TileEntity_EUp_IN.tooltip=Max EU/p IN: %d
+metatileentity.TileEntity_EUp_OUT.tooltip=Max EU/p OUT: %d
+metatileentity.TileEntity_EUp_AMOUNT.tooltip=Amount of Output Packets: %d
+metatileentity.TileEntity_EUp_STORE.tooltip=EU Storage: %d
+metatileentity.TileEntity_UPGRADES.tooltip=Possible Upgrades: 
+metatileentity.MJCONVERTER.tooltip=has MJ-Converter
+metatileentity.STEAMCONVERTER.tooltip=has Steam Upgrade
+metatileentity.OVERCLOCKERS.tooltip=%d Overclocker Upgrades
+metatileentity.TRANSFORMERS.tooltip=%d Transformer Upgrades
+metatileentity.ENERGYCELLS.tooltip=%d Energy Cell Upgrades
+metatileentity.STEAMTANKS.tooltip=%d Steam Tank Upgrades
+metatileentity.EUSTORAGES.tooltip=%d Additional EU-Storage
 
 item.180k_Helium_Coolantcell.name=180k Helium Coolant Cell
 item.180k_NaK_Coolantcell.name=180k NaK Coolantcell
