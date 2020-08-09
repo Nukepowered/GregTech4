@@ -9,16 +9,19 @@ import java.util.List;
 import java.util.UUID;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.world.World;
 import shedar.mods.ic2.nuclearcontrol.api.CardState;
 import shedar.mods.ic2.nuclearcontrol.api.ICardWrapper;
 import shedar.mods.ic2.nuclearcontrol.api.IPanelDataSource;
 import shedar.mods.ic2.nuclearcontrol.api.IRemoteSensor;
 import shedar.mods.ic2.nuclearcontrol.api.PanelSetting;
 import shedar.mods.ic2.nuclearcontrol.api.PanelString;
+import shedar.mods.ic2.nuclearcontrol.utils.StringUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -58,12 +61,19 @@ public class GT_SensorCard_Item extends GT_Generic_Item implements IRemoteSensor
 	
 	@Override
 	public CardState update(TileEntity panel, ICardWrapper card, int maxRange) {
+        return this.update(panel.getWorldObj(), card, maxRange);
+	}
+	
+	@Override
+	public CardState update(World world, ICardWrapper card, int maxRange) {
         ChunkCoordinates target = card.getTarget();
-        TileEntity tTileEntity = panel.worldObj.getBlockTileEntity(target.posX, target.posY, target.posZ);
+        if (target == null) return CardState.INVALID_CARD;
+        TileEntity tTileEntity = world.getTileEntity(target.posX, target.posY, target.posZ);
         if (tTileEntity != null && tTileEntity instanceof IGregTechDeviceInformation && ((IGregTechDeviceInformation)tTileEntity).isGivingInformation()) {
             card.setString("mString1", ((IGregTechDeviceInformation)tTileEntity).getMainInfo());
             card.setString("mString2", ((IGregTechDeviceInformation)tTileEntity).getSecondaryInfo());
             card.setString("mString3", ((IGregTechDeviceInformation)tTileEntity).getTertiaryInfo());
+            
             return CardState.OK;
         } else {
             return CardState.NO_TARGET;
@@ -81,12 +91,12 @@ public class GT_SensorCard_Item extends GT_Generic_Item implements IRemoteSensor
         }
         if((displaySettings & DISPLAY_SECOND) != 0) {
             PanelString line = new PanelString();
-        	line.textLeft = card.getString("mString2");
+        	line.textLeft = line.textLeft = StringUtils.getFormatted("sensor.progress", card.getString("mString2"), showLabels);
             result.add(line);
         }
         if((displaySettings & DISPLAY_TERTIARY) != 0) {
             PanelString line = new PanelString();
-        	line.textLeft = card.getString("mString3");
+        	line.textLeft = StringUtils.getFormatted("sensor.eut", card.getString("mString3"), showLabels);
             result.add(line);
         }
         return result;
@@ -106,5 +116,5 @@ public class GT_SensorCard_Item extends GT_Generic_Item implements IRemoteSensor
 		return CARD_TYPE;
 	}
 	
-	@Override @SideOnly(Side.CLIENT) public void getSubItems(int var1, CreativeTabs aTab, List aList) {}
+	@SuppressWarnings("rawtypes") @Override @SideOnly(Side.CLIENT) public void getSubItems(Item var1, CreativeTabs aTab, List aList) {}
 }

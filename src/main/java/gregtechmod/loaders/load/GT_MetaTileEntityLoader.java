@@ -37,10 +37,10 @@ public class GT_MetaTileEntityLoader implements Runnable {
 		new GT_MetaTileEntity_PlasmaGenerator			( 37, "GT_PlasmaGenerator");
 		new GT_MetaTileEntity_VacuumFreezer				( 38, "GT_VacuumFreezer");
 		new GT_MetaTileEntity_ElectricRegulatorAdvanced	( 39, "GT_RegulatorAdvanced");
-//		new GT_MetaTileEntity_DragonEggEnergySiphon		( 40, "GT_DragonEggEnergySiphon", "metatileentity.GT_DragonEggEnergySiphon.name");
+		new GT_MetaTileEntity_DragonEggEnergySiphon		( 40, "GT_DragonEggEnergySiphon");
 		new GT_MetaTileEntity_ChemicalReactor			( 41, "GT_ChemicalReactor");
-//		new GT_MetaTileEntity_MagicEnergyConverter		( 42, "GT_MagicConverter"		, "metatileentity.GT_MagicConverter.name");
-//		new GT_MetaTileEntity_MagicEnergyAbsorber		( 43, "GT_MagicAbsorber"		, "metatileentity.GT_MagicAbsorber.name");
+		new GT_MetaTileEntity_MagicEnergyConverter		( 42, "GT_MagicConverter");
+		new GT_MetaTileEntity_MagicEnergyAbsorber		( 43, "GT_MagicAbsorber");
 		new GT_MetaTileEntity_DistillationTower			( 44, "GT_DistillationTower");
 		new GT_MetaTileEntity_Safe						( 45, "GT_Safe");
 		new GT_MetaTileEntity_ElectricInventoryManager	( 46, "GT_InventoryManager");

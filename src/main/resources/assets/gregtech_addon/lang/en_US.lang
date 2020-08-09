@@ -1068,3 +1068,5 @@ item.tool.discharged.tooltip=Empty. You need to recharge it.
 
 itemGroup.gregtech=GregTech Intergalactical
 block.deny_mobs_spawn.tooltip=Mobs can't spawn on this block
+sensor.progress=Progress: %s sec.
+sensor.eut=Consumes: %s EU/t
