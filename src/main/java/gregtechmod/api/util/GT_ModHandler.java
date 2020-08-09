@@ -7,6 +7,7 @@ import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IBasicEnergyContainer;
 import gregtechmod.api.interfaces.ICapsuleCellContainer;
 import gregtechmod.api.interfaces.IHasWorldObjectAndCoords;
+import gregtechmod.api.items.GT_Tool_Item;
 import ic2.api.item.IBoxable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -1518,14 +1519,9 @@ public class GT_ModHandler {
 			}
 			if (aStack.getItemDamage() >= aStack.getMaxDamage()) {
 				aStack.setItemDamage(aStack.getMaxDamage() + 1);
-				if (aStack.getItem().hasContainerItem()) {
-					ItemStack tStack = aStack.getItem().getContainerItem(aStack);
-					if (tStack != null) {
-//						aStack.itemID = tStack.itemID; // TODO: wtf is it?
-						aStack.setItemDamage(tStack.getItemDamage());
-						aStack.stackSize = tStack.stackSize;
-						aStack.setTagCompound(tStack.getTagCompound());
-					}
+				if (aStack.getItem().hasContainerItem() && aStack.getItem() instanceof GT_Tool_Item) {
+					GT_Tool_Item item = (GT_Tool_Item) aStack.getItem();
+					item.getEmptyItem(aStack);
 				}
 			}
 			return true;

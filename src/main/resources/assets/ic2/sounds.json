@@ -11,25 +11,25 @@
 			{ "name":"ic2:tools/chainsaw/ChainsawStop" }
         ]
     },
-	"ChainsawUseOne":  {
+	"tools.chainsaw.ChainsawUseOne":  {
         "category": "player",
         "sounds": [
 			{ "name":"ic2:tools/chainsaw/ChainsawUseOne" }
         ]
     },
-	"ChainsawUseTwo":  {
+	"tools.chainsaw.ChainsawUseTwo":  {
         "category": "player",
         "sounds":  [
 			{ "name":"ic2:tools/chainsaw/ChainsawUseTwo" }
         ]
     },
-	"DrillHard":  {
+	"tools.drill.DrillHard":  {
         "category": "player",
         "sounds":  [
 			{ "name":"ic2:tools/drill/DrillHard" }
         ]
     },
-	"DrillSoft":  {
+	"tools.drill.DrillSoft":  {
         "category": "player",
         "sounds":  [
 			{ "name":"ic2:tools/drill/DrillSoft" }
@@ -125,7 +125,7 @@
 			{ "name":"ic2:tools/quantumsuit/QuantumsuitBoots" }
         ]
     },
-	"BatteryUse":  {
+	"tools.BatteryUse":  {
         "category": "player",
         "sounds":  [
 			{ "name":"ic2:tools/BatteryUse" }
@@ -149,19 +149,19 @@
 			{ "name":"ic2:tools/NukeExplosion" }
         ]
     },
-	"ODScanner":  {
+	"tools.ODScanner":  {
         "category": "player",
         "sounds":  [
 			{ "name":"ic2:tools/ODScanner" }
         ]
     },
-	"Painter":  {
+	"tools.Painter":  {
         "category": "player",
         "sounds":  [
 			{ "name":"ic2:tools/Painter" }
         ]
     },
-	"RubberTrampoline":  {
+	"tools.RubberTrampoline":  {
         "category": "player",
         "sounds":  [
 			{ "name":"ic2:tools/RubberTrampoline" }
@@ -173,7 +173,7 @@
 			{ "name":"ic2:tools/Treetap" }
         ]
     },
-	"Wrench":  {
+	"tools.Wrench":  {
         "category": "player",
         "sounds":  [
 			{ "name":"ic2:tools/Wrench" }

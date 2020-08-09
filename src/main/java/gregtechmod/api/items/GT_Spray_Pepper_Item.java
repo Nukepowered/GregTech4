@@ -44,7 +44,12 @@ public class GT_Spray_Pepper_Item extends GT_Tool_Item {
 	
 	@Override
 	public Item getEmptyItem(ItemStack aStack) {
-		return GT_OreDictUnificator.getFirstOre("craftingSprayCan", 1).getItem();
+		ItemStack dictionary = GT_OreDictUnificator.getFirstOre("craftingSprayCan", 1);
+		aStack.func_150996_a(dictionary.getItem());
+		aStack.stackSize = 1;
+		aStack.setTagCompound(dictionary.getTagCompound());
+		aStack.setItemDamage(dictionary.getItemDamage());
+		return dictionary.getItem();
 	}
 	
 	@Override
