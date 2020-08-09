@@ -5,13 +5,16 @@ import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicTank;
 import gregtechmod.api.util.GT_Recipe;
 import gregtechmod.api.util.GT_Utility;
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.fluids.FluidStack;
-import thaumcraft.api.EnumTag;
-import thaumcraft.api.ObjectTags;
-import thaumcraft.common.aura.AuraManager;
+import thaumcraft.common.blocks.BlockTaintFibres;
+import thaumcraft.common.lib.utils.Utils;
+import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 
 public class GT_MetaTileEntity_MagicEnergyConverter extends GT_MetaTileEntity_BasicTank {
 	
@@ -54,7 +57,7 @@ public class GT_MetaTileEntity_MagicEnergyConverter extends GT_MetaTileEntity_Ba
     				mInventory[2] = null;
     			else
     				if (mInventory[2] == null)
-    					mInventory[2] = new ItemStack(Block.fire, 1);
+    					mInventory[2] = new ItemStack(Blocks.fire, 1);
     		} else {
     			if (getFuelValue(mFluid) > 0) while (getBaseMetaTileEntity().getUniversalEnergyStored() < (getBaseMetaTileEntity().getOutputVoltage() * 10 + getMinimumStoredEU()) && mFluid.amount > 0) {
     				if (getBaseMetaTileEntity().increaseStoredEnergyUnits(getFuelValue(mFluid), true)) mFluid.amount--;
@@ -94,16 +97,27 @@ public class GT_MetaTileEntity_MagicEnergyConverter extends GT_MetaTileEntity_Ba
     @Override
 	public void onExplosion() {
 	   	try {
-			ObjectTags tTags = new ObjectTags();
-			tTags.add(EnumTag.MECHANISM, 20 + getBaseMetaTileEntity().getRandomNumber(20));
-			tTags.add(EnumTag.DESTRUCTION, 20 + getBaseMetaTileEntity().getRandomNumber(20));
-			tTags.add(EnumTag.FLUX, 20 + getBaseMetaTileEntity().getRandomNumber(20));
-			tTags.add(EnumTag.EVIL, 20 + getBaseMetaTileEntity().getRandomNumber(20));
-			tTags.add(EnumTag.FIRE, 20 + getBaseMetaTileEntity().getRandomNumber(20));
-			tTags.add(EnumTag.DARK, 20 + getBaseMetaTileEntity().getRandomNumber(20));
-			tTags.add(EnumTag.POWER, 20 + getBaseMetaTileEntity().getRandomNumber(20));
-			tTags.add(EnumTag.EXCHANGE, 20 + getBaseMetaTileEntity().getRandomNumber(20));
-			AuraManager.addFluxToClosest(getBaseMetaTileEntity().getWorld(), getBaseMetaTileEntity().getXCoord(), getBaseMetaTileEntity().getYCoord(), getBaseMetaTileEntity().getZCoord(), tTags);
+	   		TileEntity te = (TileEntity) this.getBaseMetaTileEntity();
+    		World tWorld = this.getBaseMetaTileEntity().getWorld();
+    		int iterations = getBaseMetaTileEntity().getRandomNumber(200) + 100;
+			int x = 0;
+			int z = 0;
+			int y = 0;
+			for (int i = 0; i < iterations; i++) {
+				x = te.xCoord + tWorld.rand.nextInt(16) - tWorld.rand.nextInt(16);
+				z = te.zCoord + tWorld.rand.nextInt(16) - tWorld.rand.nextInt(16);
+				final BiomeGenBase bg = tWorld.getBiomeGenForCoords(x, z);
+				if (bg.biomeID != ThaumcraftWorldGenerator.biomeTaint.biomeID) {
+					Utils.setBiomeAt(tWorld, x, z, ThaumcraftWorldGenerator.biomeTaint);
+				}
+				if (tWorld.rand.nextBoolean()) {
+					x = te.xCoord + tWorld.rand.nextInt(10) - tWorld.rand.nextInt(10);
+					z = te.zCoord + tWorld.rand.nextInt(10) - tWorld.rand.nextInt(10);
+					y = te.yCoord + tWorld.rand.nextInt(5) - tWorld.rand.nextInt(5);
+					if (BlockTaintFibres.spreadFibres(tWorld, x, y, z)) {
+					}
+				}
+			}
 		} catch(Throwable e) {}
     }
     

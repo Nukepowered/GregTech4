@@ -1,29 +1,40 @@
 package gregtechmod.common.tileentities;
 
+import java.lang.ref.SoftReference;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import cpw.mods.fml.common.network.NetworkRegistry;
 import gregtechmod.api.enums.GT_ConfigCategories;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_Config;
-import net.minecraft.block.Block;
+import gregtechmod.api.util.GT_Log;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import thaumcraft.api.EnumTag;
-import thaumcraft.api.ObjectTags;
-import thaumcraft.common.aura.AuraManager;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
+import thaumcraft.common.lib.network.PacketHandler;
+import thaumcraft.common.lib.network.fx.PacketFXEssentiaSource;
+import thaumcraft.common.tiles.TileNode;
 
 public class GT_MetaTileEntity_DragonEggEnergySiphon extends MetaTileEntity {
 	
 	public static int sDragonEggEnergyPerTick = 128;
 	public static boolean sAllowMultipleEggs = false, sAllowFlux = true;
+	private SoftReference<TileNode> cachedNode = new SoftReference<>(null);
 	
 	public static GT_MetaTileEntity_DragonEggEnergySiphon mActiveSiphon = null;
 	
 	public GT_MetaTileEntity_DragonEggEnergySiphon(int aID, String mName) {
 		super(aID, mName);
 	}
-	// TODO thaumcraft kekw
+	
 	public GT_MetaTileEntity_DragonEggEnergySiphon() {
 		
 	}
@@ -91,22 +102,36 @@ public class GT_MetaTileEntity_DragonEggEnergySiphon extends MetaTileEntity {
     			if (getBaseMetaTileEntity().increaseStoredEnergyUnits(sDragonEggEnergyPerTick, false)) {
     				if (sAllowFlux) {
 	        			try {
-	        				ObjectTags tTags = new ObjectTags();
-	        				switch (getBaseMetaTileEntity().getRandomNumber(1000)) {
-	        				case  0: tTags.add(EnumTag.MECHANISM, 3); break;
-	        				case  1: tTags.add(EnumTag.CONTROL, 1); break;
-	            			case  2: tTags.add(EnumTag.VOID, 1); break;
-	                		case  3: tTags.add(EnumTag.FLUX, 2); break;
-	                		case  4: tTags.add(EnumTag.ELDRITCH, 2); break;
-	                		case  5: tTags.add(EnumTag.EXCHANGE, 1); break;
-	                		case  6: tTags.add(EnumTag.MAGIC, 1); break;
-	                		case  7: tTags.add(EnumTag.POWER, 1); break;
-	                		case  8: tTags.add(EnumTag.MOTION, 3); break;
-	                		case  9: tTags.add(EnumTag.SPIRIT, 5); break;
-	                		default: tTags = null; break;
+	        				if (this.findNode()) {
+	        					TileNode node = cachedNode.get();
+		        				AspectList aspects = new AspectList();
+		        				switch (getBaseMetaTileEntity().getRandomNumber(1000)) {
+		        				case  0:  aspects.add(Aspect.MECHANISM, 3); break;
+		            			case  1:  aspects.add(Aspect.VOID, 1); break;
+		                		case  2:  aspects.add(Aspect.ELDRITCH, 2); break;
+		                		case  3:  aspects.add(Aspect.EXCHANGE, 1); break;
+		                		case  4:  aspects.add(Aspect.MAGIC, 1); break;
+		                		case  5:  aspects.add(Aspect.MOTION, 3); break;
+		                		case  6:  aspects.add(Aspect.AIR, 2); break;
+		                		case  7:  aspects.add(Aspect.EARTH, 2); break;
+		                		case  8:  aspects.add(Aspect.FIRE, 2); break;
+		                		case  9:  aspects.add(Aspect.WATER, 2); break;
+		                		case  10: aspects.add(Aspect.ORDER, 2); break;
+		                		case  11: aspects.add(Aspect.ENTROPY, 2); break;
+		        				}
+		        				
+		        				if (!aspects.aspects.isEmpty()) {
+		        					Aspect toAdd = aspects.getAspects()[0];
+		        					TileEntity tThis = (TileEntity) this.getBaseMetaTileEntity();
+		        					node.getAspects().add(aspects);
+		        					node.nodeChange();
+		        					PacketHandler.INSTANCE.sendToAllAround(new PacketFXEssentiaSource(node.xCoord, node.yCoord, node.zCoord, (byte)(node.xCoord - tThis.xCoord), (byte)(node.yCoord - tThis.yCoord), (byte)(node.zCoord - tThis.zCoord), toAdd.getColor()), 
+		        							new NetworkRegistry.TargetPoint(node.getWorldObj().provider.dimensionId, node.xCoord, node.yCoord, node.zCoord, 32.0));
+		        				}
 	        				}
-	        				if (tTags != null) AuraManager.addFluxToClosest(getBaseMetaTileEntity().getWorld(), getBaseMetaTileEntity().getXCoord(), getBaseMetaTileEntity().getYCoord(), getBaseMetaTileEntity().getZCoord(), tTags);
-	        			} catch(Throwable e) {}
+	        			} catch(Throwable e) {
+	        				GT_Log.log.catching(e);
+	        			}
     				}
     			}
     			if (mActiveSiphon != this && !sAllowMultipleEggs)
@@ -120,6 +145,50 @@ public class GT_MetaTileEntity_DragonEggEnergySiphon extends MetaTileEntity {
     			}
     		}
     	}
+    }
+    
+    private boolean findNode() {
+    	List<ArrayList<Integer>> nodesCoords = TileNode.locations.entrySet().stream()
+				.map(entry -> entry.getValue())
+				.collect(Collectors.toList());
+		TileEntity tThis = (TileEntity) this.getBaseMetaTileEntity();
+		World tWorld = tThis.getWorldObj();
+		
+		List<Integer> coords = null;
+		double dist = Double.MAX_VALUE;
+		for (ArrayList<Integer> nodeEntry : nodesCoords) {
+			if (nodeEntry.get(0) == tWorld.provider.dimensionId) {
+				double deltaX = tThis.xCoord + 0.5 - nodeEntry.get(1);
+		        double deltaY = tThis.yCoord + 0.5 - nodeEntry.get(2);
+		        double deltaZ = tThis.zCoord + 0.5 - nodeEntry.get(3);
+		        double temp = deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ;
+		        if (temp < dist) {
+		        	dist = temp;
+		        	coords = nodeEntry;
+		        }
+			}
+		}
+		
+    	if (coords != null && !coords.isEmpty()) {
+    		TileEntity tr = tWorld.getTileEntity(coords.get(1), coords.get(2), coords.get(3));
+    		if (tr != null && tr instanceof TileNode) {
+    			TileNode node = (TileNode) tr;
+    			if (node.isInvalid()) {
+    				String key = node.getId();
+    				node = null;
+    				TileNode.locations.remove(key);
+    				System.gc();
+    				return false;
+    			}
+    			
+    			this.cachedNode = new SoftReference<>(node);
+    			return true;
+    		} else {
+    			TileNode.locations.remove(String.format("%d:%d:%d:%d", coords.get(0), coords.get(1), coords.get(2), coords.get(3)));
+    		}
+    	}
+    	
+    	return false;
     }
     
 	@Override
