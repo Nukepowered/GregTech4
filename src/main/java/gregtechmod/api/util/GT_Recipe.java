@@ -7,7 +7,7 @@ import gregtechmod.api.enums.Materials;
 import java.util.*;
 import java.util.Map.Entry;
 
-import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -54,7 +54,7 @@ public class GT_Recipe {
 	private static final IdentityHashMap<List<GT_Recipe>, HashMap<Integer, List<GT_Recipe>>> sRecipeMappings = new IdentityHashMap<List<GT_Recipe>, HashMap<Integer, List<GT_Recipe>>>();
 	
 	public static void reInit() {
-        GT_Log.out.println("GT_Mod: Re-Unificating Recipes.");
+        GT_Log.log.info("GT_Mod: Re-Unificating Recipes.");
         for (Entry<List<GT_Recipe>, HashMap<Integer, List<GT_Recipe>>> tMapEntry : sRecipeMappings.entrySet()) {
         	HashMap<Integer, List<GT_Recipe>> tMap = tMapEntry.getValue();
         	if (tMap != null) tMap.clear();
@@ -136,13 +136,11 @@ public class GT_Recipe {
 		
 		if (tInputAmount < tOutputAmount) {
 			if (!Materials.Tin.contains(mInputs)) {
-				GT_Log.err.println("You get more Cells, than you put in? There must be something wrong.");
-				new Exception().printStackTrace(GT_Log.err);
+				GT_Log.log.catching(new Exception());
 			}
 		} else if (tInputAmount > tOutputAmount) {
 			if (!Materials.Tin.contains(mOutputs)) {
-				GT_Log.err.println("You get less Cells, than you put in? GT Machines usually don't destroy Cells.");
-				new Exception().printStackTrace(GT_Log.err);
+				GT_Log.log.catching(new Exception());
 			}
 		}
 	}
@@ -382,7 +380,7 @@ public class GT_Recipe {
 	}
 	
 	public GT_Recipe(ItemStack aInput1, int aInput2, ItemStack aOutput1, ItemStack aOutput2) {
-		this(aInput1, GT_ModHandler.getIC2Item("industrialTnt", aInput2>0?aInput2<64?aInput2:64:1, new ItemStack(Block.tnt, aInput2>0?aInput2<64?aInput2:64:1)), aOutput1, aOutput2, null, null, 20, 30, 0);
+		this(aInput1, GT_ModHandler.getIC2Item("industrialTnt", aInput2>0?aInput2<64?aInput2:64:1, new ItemStack(Blocks.tnt, aInput2>0?aInput2<64?aInput2:64:1)), aOutput1, aOutput2, null, null, 20, 30, 0);
 		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(false, false, sImplosionRecipes, mInputs) == null) {
 			addToLists(sImplosionRecipes);
 		}

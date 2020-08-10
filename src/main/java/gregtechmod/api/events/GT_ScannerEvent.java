@@ -6,10 +6,9 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.event.Cancelable;
 import net.minecraftforge.event.world.WorldEvent;
 
-@Cancelable
+@cpw.mods.fml.common.eventhandler.Cancelable
 public class GT_ScannerEvent extends WorldEvent {
 	
 	public final EntityPlayer mPlayer;

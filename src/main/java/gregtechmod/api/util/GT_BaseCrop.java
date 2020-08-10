@@ -30,6 +30,7 @@ public class GT_BaseCrop extends CropCard {
 	 * @param aGrowthSpeed how fast the Crop grows. if < 0 then its set to Tier*300
 	 * @param aHarvestSize the size the Crop needs to be harvested. forced to be between 2 and max size
 	 */
+	@SuppressWarnings("deprecation")
 	public GT_BaseCrop(int aID, String aCropName, String aDiscoveredBy, ItemStack aDrop, ItemStack[] aSpecialDrops, ItemStack aBaseSeed, int aTier, int aMaxSize, int aGrowthSpeed, int aAfterHarvestSize, int aHarvestSize, int aStatChemical, int aStatFood, int aStatDefensive, int aStatColor, int aStatWeed, String[] aAttributes) {
 		mName = aCropName;
 		aID = GT_Config.addIDConfig("crops", mName.replaceAll(" ", "_"), aID);
@@ -111,14 +112,14 @@ public class GT_BaseCrop extends CropCard {
 		if (mSpecialDrops != null && (tDrop = new Random().nextInt(mSpecialDrops.length+4)) < mSpecialDrops.length && mSpecialDrops[tDrop] != null) {
 			return GT_Utility.copy(mSpecialDrops[tDrop]);
 		}
-		if (mDrop.getItem().getContainerItemStack(mDrop)==null) return GT_Utility.copy(mDrop);
+		if (mDrop.getItem().getContainerItem(mDrop)==null) return GT_Utility.copy(mDrop);
 		return null;
 	}
 	
     @Override
     public boolean rightclick(ICropTile aCrop, EntityPlayer aPlayer) {
     	if (!canBeHarvested(aCrop)) return false;
-    	ItemStack tContainerItem = mDrop.getItem().getContainerItemStack(mDrop);
+    	ItemStack tContainerItem = mDrop.getItem().getContainerItem(mDrop);
     	if (tContainerItem == null) {
     		return aCrop.harvest(aPlayer==null?false:aPlayer instanceof EntityPlayerMP);
     	}
@@ -128,4 +129,9 @@ public class GT_BaseCrop extends CropCard {
 		}
     	return false;
     }
+
+	@Override
+	public int getOptimalHavestSize(ICropTile crop) {
+		return (byte)mAfterHarvestSize; //TODO: Этого метода раньше не было, проверь ту хню, что я тут написал
+	}
 }

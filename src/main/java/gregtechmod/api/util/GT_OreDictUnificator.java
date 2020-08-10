@@ -7,7 +7,7 @@ import gregtechmod.api.enums.OrePrefixes;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import net.minecraft.item.Item;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -58,7 +58,7 @@ public class GT_OreDictUnificator {
 	}
 	
 	public static void set(Object aName, ItemStack aStack, boolean aOverwrite, boolean aAlreadyRegistered) {
-		if (GT_Utility.isStringInvalid(aName) || GT_Utility.isStackInvalid(aStack) || Item.feather.getDamage(aStack) == GregTech_API.ITEM_WILDCARD_DAMAGE) return;
+		if (GT_Utility.isStringInvalid(aName) || GT_Utility.isStackInvalid(aStack) || Items.feather.getDamage(aStack) == GregTech_API.ITEM_WILDCARD_DAMAGE) return;
 		isAddingOre++;
 		aStack = GT_Utility.copyAmount(1, aStack);
 		if (!aAlreadyRegistered) registerOre(aName.toString(), aStack);
@@ -93,7 +93,7 @@ public class GT_OreDictUnificator {
 	
 	public static ItemStack get(Object aName, ItemStack aReplacement, long aAmount, boolean aMentionPossibleTypos, boolean aNoInvalidAmounts) {
 		if (aNoInvalidAmounts && aAmount < 1) return null;
-		if (!sName2OreMap.containsKey(aName.toString()) && aMentionPossibleTypos) GT_Log.err.println("Unknown Key for Unification, Typo? " + aName);
+		if (!sName2OreMap.containsKey(aName.toString()) && aMentionPossibleTypos) GT_Log.log.error("Unknown Key for Unification, Typo? " + aName);
 		return GT_Utility.copyAmount(aAmount, sName2OreMap.get(aName.toString()), getFirstOre(aName, aAmount), aReplacement);
 	}
 	
@@ -116,8 +116,8 @@ public class GT_OreDictUnificator {
 		if (GT_Utility.isStackInvalid(aStack)) return aStack;
 		ItemStack tStack = get(aUseBlackList, aStack);
 		if (GT_Utility.areStacksEqual(aStack, tStack)) return aStack;
-		aStack.itemID = tStack.itemID;
-		Item.feather.setDamage(aStack, Item.feather.getDamage(tStack));
+		aStack.func_150996_a(tStack.getItem());
+		Items.feather.setDamage(aStack, Items.feather.getDamage(tStack));
 		return aStack;
 	}
 	
@@ -139,10 +139,10 @@ public class GT_OreDictUnificator {
 	
 	public static void addAssociation(Object aName, ItemStack aStack) {
 		if (GT_Utility.isStringInvalid(aName) || GT_Utility.isStackInvalid(aStack)) return;
-		if (Item.feather.getDamage(aStack) == GregTech_API.ITEM_WILDCARD_DAMAGE) {
+		if (Items.feather.getDamage(aStack) == GregTech_API.ITEM_WILDCARD_DAMAGE) {
 			aStack = GT_Utility.copyAmount(1, aStack);
 			for (byte i = 0; i < 16; i++) {
-				Item.feather.setDamage(aStack, i);
+				Items.feather.setDamage(aStack, i);
 				sItemhash2NameMap.put(GT_Utility.stackToInt(aStack), aName.toString());
 			}
 		}

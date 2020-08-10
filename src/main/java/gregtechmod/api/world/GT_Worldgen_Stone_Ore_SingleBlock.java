@@ -4,17 +4,19 @@ import java.util.Collection;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 
 public class GT_Worldgen_Stone_Ore_SingleBlock extends GT_Worldgen_Ore {
 	
-	private final int[] mOreIDs, mOreMetas, mOreChances;
+	private final int[]mOreMetas, mOreChances;
+	private final Block[] mOres;
 	
-	public GT_Worldgen_Stone_Ore_SingleBlock(String aName, boolean aDefault, int aBlockID, int aBlockMeta, int aDimensionType, int aAmount, int aSize, int aProbability, int aMinY, int aMaxY, Collection<String> aBiomeList, boolean aAllowToGenerateinVoid, int[] aOreIDs, int[] aOreMetas, int[] aOreChances) {
-		super(aName, aDefault, aBlockID, aBlockMeta, aDimensionType, aAmount, aSize, aProbability, aMinY, aMaxY, aBiomeList, aAllowToGenerateinVoid);
-		mOreIDs = aOreIDs;
+	public GT_Worldgen_Stone_Ore_SingleBlock(String aName, boolean aDefault, Block aBlock, int aBlockMeta, int aDimensionType, int aAmount, int aSize, int aProbability, int aMinY, int aMaxY, Collection<String> aBiomeList, boolean aAllowToGenerateinVoid, Block[] aOres, int[] aOreMetas, int[] aOreChances) {
+		super(aName, aDefault, aBlock, aBlockMeta, aDimensionType, aAmount, aSize, aProbability, aMinY, aMaxY, aBiomeList, aAllowToGenerateinVoid);
+		mOres = aOres;
 		mOreMetas = aOreMetas;
 		mOreChances = aOreChances;
 	}
@@ -24,7 +26,7 @@ public class GT_Worldgen_Stone_Ore_SingleBlock extends GT_Worldgen_Ore {
 		if (aDimensionType == mDimensionType && (mBiomeList.isEmpty() || mBiomeList.contains(aBiome)) && (mProbability <= 1 || aRandom.nextInt(mProbability) == 0)) {
 			for (int i = 0; i < mAmount; i++) {
 				int tX = aChunkX + aRandom.nextInt(16), tY = mMinY + aRandom.nextInt(mMaxY - mMinY), tZ = aChunkZ + aRandom.nextInt(16);
-				if (mAllowToGenerateinVoid || aWorld.getBlockId(tX, tY, tZ) != 0) {
+				if (mAllowToGenerateinVoid || !aWorld.isAirBlock(tX, tY, tZ)) {
 					float var6 = aRandom.nextFloat() * (float)Math.PI;
 			        double var7 = ((tX + 8) + MathHelper.sin(var6) * mSize / 8.0F);
 			        double var9 = ((tX + 8) - MathHelper.sin(var6) * mSize / 8.0F);
@@ -55,16 +57,16 @@ public class GT_Worldgen_Stone_Ore_SingleBlock extends GT_Worldgen_Ore {
 			                        if (var39 * var39 + var42 * var42 < 1.0D) {
 			                            for (int var44 = var34; var44 <= var37; ++var44) {
 			                                double var45 = (var44 + 0.5D - var24) / (var28 / 2.0D);
-			                                Block block = Block.blocksList[aWorld.getBlockId(var38, var41, var44)];
-			                                int tBlockID = mBlockID;
+			                                Block block = aWorld.getBlock(var38, var41, var44);
+			                                Block tBlock = mBlock;
 			                                int tBlockMeta = mBlockMeta;
 			                                for (byte x = 0; x < mOreChances.length; x++) if (aRandom.nextInt(mOreChances[x]) == 0) {
-			                                	tBlockID = mOreIDs[x];
+			                                	tBlock = mOres[x];
 			                                	tBlockMeta = mOreMetas[x];
 			                                	break;
 			                                }
-			                                if (var39 * var39 + var42 * var42 + var45 * var45 < 1.0D && ((mAllowToGenerateinVoid&&aWorld.getBlockId(var38, var41, var44)==0) || (block != null && (block.isGenMineableReplaceable(aWorld, var38, var41, var44, Block.stone.blockID) || block.isGenMineableReplaceable(aWorld, var38, var41, var44, Block.whiteStone.blockID) || block.isGenMineableReplaceable(aWorld, var38, var41, var44, Block.netherrack.blockID))))) {
-			                                    aWorld.setBlock(var38, var41, var44, tBlockID, tBlockMeta, 0);
+			                                if (var39 * var39 + var42 * var42 + var45 * var45 < 1.0D && ((mAllowToGenerateinVoid&&aWorld.isAirBlock(var38, var41, var44)) || (block != null && (block.isReplaceableOreGen(aWorld, var38, var41, var44, Blocks.stone) || block.isReplaceableOreGen(aWorld, var38, var41, var44, Blocks.end_stone) || block.isReplaceableOreGen(aWorld, var38, var41, var44, Blocks.netherrack))))) {
+			                                    aWorld.setBlock(var38, var41, var44, tBlock, tBlockMeta, 0);
 			                                }
 			                            }
 			                        }

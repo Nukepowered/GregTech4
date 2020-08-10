@@ -10,8 +10,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 
 public class GT_Worldgen_Boulder extends GT_Worldgen_Ore {
-	public GT_Worldgen_Boulder(String aName, boolean aDefault, int aBlockID, int aBlockMeta, int aDimensionType, int aAmount, int aSize, int aProbability, int aMinY, int aMaxY, Collection<String> aBiomeList, boolean aAllowToGenerateinVoid) {
-		super(aName, aDefault, aBlockID, aBlockMeta, aDimensionType, aAmount, aSize, aProbability, aMinY, aMaxY, aBiomeList, aAllowToGenerateinVoid);
+	public GT_Worldgen_Boulder(String aName, boolean aDefault, Block aBlock, int aBlockMeta, int aDimensionType, int aAmount, int aSize, int aProbability, int aMinY, int aMaxY, Collection<String> aBiomeList, boolean aAllowToGenerateinVoid) {
+		super(aName, aDefault, aBlock, aBlockMeta, aDimensionType, aAmount, aSize, aProbability, aMinY, aMaxY, aBiomeList, aAllowToGenerateinVoid);
 	}
 	
 	@Override
@@ -19,8 +19,8 @@ public class GT_Worldgen_Boulder extends GT_Worldgen_Ore {
 		if (aDimensionType == mDimensionType && (mBiomeList.isEmpty() || mBiomeList.contains(aBiome)) && (mProbability <= 1 || aRandom.nextInt(mProbability) == 0)) {
 			for (int i = 0; i < mAmount; i++) {
 				int tX = aChunkX + aRandom.nextInt(16), tY = mMinY + aRandom.nextInt(mMaxY - mMinY), tZ = aChunkZ + aRandom.nextInt(16);
-				Block tBlock = Block.blocksList[aWorld.getBlockId(tX, tY - 7, tZ)];
-				if (tBlock != null && tBlock.isOpaqueCube() && aWorld.getBlockId(tX, tY-6, tZ) == 0) {
+				Block tBlock = aWorld.getBlock(tX, tY - 7, tZ);
+				if (tBlock != null && tBlock.isOpaqueCube() && aWorld.isAirBlock(tX, tY-6, tZ)) {
 					float var6 = aRandom.nextFloat() * (float)Math.PI;
 			        double var7 = ((tX + 8) + MathHelper.sin(var6) * mSize / 8.0F);
 			        double var9 = ((tX + 8) - MathHelper.sin(var6) * mSize / 8.0F);
@@ -51,9 +51,9 @@ public class GT_Worldgen_Boulder extends GT_Worldgen_Ore {
 			                        if (var39 * var39 + var42 * var42 < 1.0D) {
 			                            for (int var44 = var34; var44 <= var37; ++var44) {
 			                                double var45 = (var44 + 0.5D - var24) / (var28 / 2.0D);
-			                                Block block = Block.blocksList[aWorld.getBlockId(var38, var41, var44)];
-			                                if (var39 * var39 + var42 * var42 + var45 * var45 < 1.0D && ((mAllowToGenerateinVoid&&aWorld.getBlockId(var38, var41, var44)==0) || (block != null && !(block instanceof BlockContainer)))) {
-			                                    aWorld.setBlock(var38, var41, var44, mBlockID, mBlockMeta, 0);
+			                                Block block = aWorld.getBlock(var38, var41, var44);
+			                                if (var39 * var39 + var42 * var42 + var45 * var45 < 1.0D && ((mAllowToGenerateinVoid&&aWorld.isAirBlock(var38, var41, var44)) || (block != null && !(block instanceof BlockContainer)))) {
+			                                    aWorld.setBlock(var38, var41, var44, mBlock, mBlockMeta, 0);
 			                                }
 			                            }
 			                        }
