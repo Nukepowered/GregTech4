@@ -6,7 +6,9 @@ import gregtechmod.api.world.GT_Worldgen;
 
 import java.util.Random;
 
+import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -14,31 +16,34 @@ import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.IChunkProvider;
 import net.minecraft.world.gen.ChunkProviderEnd;
 import net.minecraft.world.gen.ChunkProviderHell;
+import net.minecraftforge.common.MinecraftForge;
 
-public class GT_Worldgenerator implements cpw.mods.fml.common.IWorldGenerator {
+public class GT_Worldgenerator implements IWorldGenerator {
 	
 	public static boolean sAsteroids = true;
 	public static boolean sGeneratedOres[] = new boolean[] {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true};
 	
 	public GT_Worldgenerator() {
-		net.minecraftforge.common.MinecraftForge.EVENT_BUS.register(this);
-		cpw.mods.fml.common.registry.GameRegistry.registerWorldGenerator(this,0);
+		MinecraftForge.EVENT_BUS.register(this);
+		GameRegistry.registerWorldGenerator(this,1);
 	}
 	
 	@SubscribeEvent
 	public void receiveWorldgenEvent(net.minecraftforge.event.terraingen.PopulateChunkEvent.Post aEvent) {
-		generate(aEvent.rand, aEvent.chunkX*16, aEvent.chunkZ*16, aEvent.world, aEvent.chunkProvider, aEvent.chunkProvider);
+		generate(aEvent.rand, aEvent.chunkX, aEvent.chunkZ, aEvent.world, aEvent.chunkProvider, aEvent.chunkProvider);
 	}
 	
 	@Override
     public void generate(Random aRandom, int aX, int aZ, World aWorld, IChunkProvider aChunkGenerator, IChunkProvider aChunkProvider) {
-    	aRandom = new Random(aRandom.nextInt());
-    	String tBiome = aWorld.getBiomeGenForCoords(aX+8, aZ+8).biomeName;
+		aRandom = new Random(aRandom.nextInt());
+		aX *= 16;
+		aZ *= 16;
+		BiomeGenBase tBiome = aWorld.getBiomeGenForCoords(aX+8, aZ+8);
     	int tDimensionType = 0;
     	
-    	if (tBiome.equals(BiomeGenBase.hell.biomeName) || aWorld.provider.dimensionId == -1 || aChunkGenerator instanceof ChunkProviderHell) {
+    	if (tBiome.equals(BiomeGenBase.hell) || aWorld.provider.dimensionId == -1 || aChunkGenerator instanceof ChunkProviderHell) {
     		tDimensionType = -1;
-    	} else if (tBiome.equals(BiomeGenBase.sky.biomeName) || aWorld.provider.dimensionId == +1 || aChunkGenerator instanceof ChunkProviderEnd) {
+    	} else if (tBiome.equals(BiomeGenBase.sky) || aWorld.provider.dimensionId == +1 || aChunkGenerator instanceof ChunkProviderEnd) {
     		generateEnd(aWorld, aRandom, aX, aZ, aChunkGenerator, aChunkProvider);
     		tDimensionType = +1;
     	} else {
@@ -47,7 +52,7 @@ public class GT_Worldgenerator implements cpw.mods.fml.common.IWorldGenerator {
     	
     	for (GT_Worldgen tWorldGen : GregTech_API.sWorldgenList) {
     		try {
-    			tWorldGen.executeWorldgen(aWorld, aRandom, tBiome, tDimensionType, aX, aZ, aChunkGenerator, aChunkProvider);
+    			tWorldGen.executeWorldgen(aWorld, aRandom, tBiome.biomeName, tDimensionType, aX, aZ, aChunkGenerator, aChunkProvider);
     		} catch (Throwable e) {
     			GT_Log.log.catching(e);
     		}

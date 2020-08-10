@@ -14,7 +14,6 @@ public abstract class GT_Worldgen_Ore extends GT_Worldgen {
 	
 	public GT_Worldgen_Ore(String aName, boolean aDefault, Block aBlock, int aBlockMeta, int aDimensionType, int aAmount, int aSize, int aProbability, int aMinY, int aMaxY, Collection<String> aBiomeList, boolean aAllowToGenerateinVoid) {
 		super(aName, aDefault);
-//		mBlockID		= Math.min(Math.max(aBlockID, 0), 4095);
 		mBlock = aBlock;
 		mBlockMeta		= Math.min(Math.max(aBlockMeta, 0), 15);
 		mDimensionType	= aDimensionType;
