@@ -17,6 +17,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.Icon;
 import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
@@ -72,7 +73,7 @@ public class GregTech_API {
 	public static final short MAXIMUM_METATILE_IDS = Short.MAX_VALUE - 1;
 	
 	/** Icon which represents failed rendering */
-	public static Icon FAIL_ICON = null;
+	public static IIcon FAIL_ICON = null;
 	
 	/** My Creative Tab */
 	public static final CreativeTabs TAB_GREGTECH = new GT_CreativeTab(), TAB_GREGTECH_MATERIALS = new GT_CreativeTab();

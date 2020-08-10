@@ -3,7 +3,7 @@ package gregtechmod.api.interfaces;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
-import net.minecraft.network.packet.Packet;
+import net.minecraft.network.Packet;
 import net.minecraft.world.World;
 
 /**
@@ -21,11 +21,6 @@ public interface IGT_Mod {
 	 * This means that Client specific Basefiles are definitely existing! Not if the World is actually client side or not!
 	 */
 	public boolean isClientSide();
-	
-	/**
-	 * This means that Bukkit specific Basefiles are definitely existing! Not if the World is actually bukkit server or not!
-	 */
-	public boolean isBukkitSide();
 	
 	/**
 	 * works only ClientSide otherwise returns null

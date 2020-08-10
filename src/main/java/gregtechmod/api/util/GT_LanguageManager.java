@@ -1,72 +1,12 @@
 package gregtechmod.api.util;
 
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.StatCollector;
-import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.Property;
-import cpw.mods.fml.common.registry.LanguageRegistry;
-
 public class GT_LanguageManager {
 	public static volatile int VERSION = 408;
 	
-    public static Configuration sEnglishFile;
-    
-	public static String addStringLocalization(String aKey, String aEnglish) {
-		return addStringLocalization(aKey, aEnglish, true);
-	}
-	
-	public static String addStringLocalization(String aKey, String aEnglish, boolean aWriteIntoLangFile) {
-		if (aWriteIntoLangFile) aEnglish = writeToLangFile(aKey, aEnglish);
-		LanguageRegistry.instance().addStringLocalization(aKey.trim(), aEnglish);
-		return aEnglish;
-	}
-	
-	private static synchronized String writeToLangFile(String aKey, String aEnglish) {
-		Property tProperty = sEnglishFile.get("LanguageFile", aKey.trim(), aEnglish);
-		if (!tProperty.wasRead()) sEnglishFile.save();
-		if (sEnglishFile.get("EnableLangFile", "UseThisFileAsLanguageFile", false).getBoolean(false)) aEnglish = tProperty.getString();
-		return aEnglish;
-	}
-	
-	public static String getTranslation(String aKey) {
-		String tTrimmedKey = aKey.trim(), rTranslation = LanguageRegistry.instance().getStringLocalization(tTrimmedKey);
-		if (GT_Utility.isStringInvalid(rTranslation)) {
-			rTranslation = StatCollector.translateToLocal(tTrimmedKey);
-			if (GT_Utility.isStringInvalid(rTranslation) || tTrimmedKey.equals(rTranslation)) {
-				if (aKey.endsWith(".name")) {
-					rTranslation = StatCollector.translateToLocal(tTrimmedKey.substring(0, tTrimmedKey.length() - 5));
-					if (GT_Utility.isStringInvalid(rTranslation) || tTrimmedKey.substring(0, tTrimmedKey.length() - 5).equals(rTranslation)) {
-						return aKey;
-					}
-				} else {
-					rTranslation = StatCollector.translateToLocal(tTrimmedKey + ".name");
-					if (GT_Utility.isStringInvalid(rTranslation) || (tTrimmedKey + ".name").equals(rTranslation)) {
-						return aKey;
-					}
-				}
-			}
-		}
-		return rTranslation;
-	}
-	
-	public static String getTranslation(String aKey, String aSeperator) {
-		String rTranslation = "";
-		for (String tString : aKey.split(aSeperator)) {
-			rTranslation += getTranslation(tString);
-		}
-		return rTranslation;
-	}
-	
-	public static String getTranslateableItemStackName(ItemStack aStack) {
-		if (GT_Utility.isStackInvalid(aStack)) return "null";
-		NBTTagCompound tNBT = aStack.getTagCompound();
-		if (tNBT != null && tNBT.hasKey("display")) {
-			String tName = tNBT.getCompoundTag("display").getString("Name");
-			if (GT_Utility.isStringValid(tName)) {
-				return tName;
-			}
-		}
-		return aStack.getUnlocalizedName() + ".name";
-	}
+	public static String[] mNameList0		= {"Adv_Machine", "Fusioncoil", "Iridium_reinforced_Stone", "Block_of_Silver", "Block_of_Ruby", "Block_of_Sapphire", "LESU_Block", "Block_of_Aluminium", "Block_of_Titanium", "Block_of_Chrome", "Highly_Advanced_Machineblock", "Block_of_Steel", "Block_of_Brass", "Standard_Machine_Casing", "Reinforced_Machine_Casing", "Advanced_Machine_Casing"};
+    public static String[] mNameList1		= {"GT_BUG", "Fusionreactor", "Lightningrod", "Quantumchest", "GregTech_Computercube", "UUM_Assembler", "Sonictron", "Lapotronic_Energystorageunit", "Interdimensional_Energystorageunit", "Adjustable_Energystorageunit", "Charge_O_Mat", "Industrial_Centrifuge", "Superconductorwire", "Playerdetector", "Matterfabricator", "Supercondensator"};
+    public static String[] mNameList2		= {"GT_Ore", "Galena_Ore", "Iridium_Ore", "Ruby_Ore", "Sapphire_Ore", "Bauxite_Ore", "Pyrite_Ore", "Cinnabar_Ore", "Sphalerite_Ore", "Tungstate_Ore", "Cooperite_Ore", "Olivine_Ore", "Sodalite_Ore", "Tetrahedrite_Ore", "Cassiterite_Ore", "Nickel_Ore"};
+    public static String[] mNameList3		= {"GT_LeadBlock", "GT_ElectrumBlock", "GT_ZincBlock", "GT_OlivineBlock", "GT_GreenSapphireBlock", "GT_PlatinumBlock", "GT_TungstenBlock", "GT_NickelBlock", "GT_TungstenSteelWall", "GT_TungstenSteelIridiumWall", "GT_InvarBlock", "GT_OsmiumBlock", "GT_IridiumBlock", "GT_Bronze_Plated_Bricks", "GT_YellowGarnetBlock", "GT_RedGarnetBlock"};
+    public static String[] mNameList4		= {"GT_Black_Granite", "GT_Black_Granite_Cobble", "GT_Black_Granite_Cobble_Mossy", "GT_Black_Granite_Bricks", "GT_Black_Granite_Bricks_Cracked", "GT_Black_Granite_Bricks_Mossy", "GT_Black_Granite_Bricks_Chiseled", "GT_Black_Granite_Smooth", "GT_Red_Granite", "GT_Red_Granite_Cobble", "GT_Red_Granite_Cobble_Mossy", "GT_Red_Granite_Bricks", "GT_Red_Granite_Bricks_Cracked", "GT_Red_Granite_Bricks_Mossy", "GT_Red_Granite_Bricks_Chiseled", "GT_Red_Granite_Smooth"};
+	public static String[] mNameListItem	= {"GT_MetaItem_00", "GT_MetaItem_01", "GT_MetaItem_02", "GT_MetaItem_03", "GT_MetaItem_04", "GT_MetaItem_05", "GT_MetaItem_06", "GT_MetaItem_07", "GT_MetaItem_08", "GT_MetaItem_09", "GT_MetaItem_10", "GT_MetaItem_11", "GT_MetaItem_12", "GT_MetaItem_13", "GT_MetaItem_14", "GT_MetaItem_15", "GregTech_Sensorcard", "GregTech_Sensorkit", "Ultimate_Cheat_Armor", "", "", "", "", "", "", "", "", "", "", "", "Iron_Mortar", "Flint_Mortar", "Sonictron", "Destructopack", "60k_Helium_Coolantcell", "180k_Helium_Coolantcell", "360k_Helium_Coolantcell", "Lapotronic_Energyorb", "Cloaking_Device", "Bronze_Jack_Hammer", "Iridium_Neutronreflector", "Steel_Jack_Hammer", "Diamond_Jack_Hammer", "Dataorb", "Lighthelmet", "Lapotronpack", "Rockcutter", "Teslastaff", "Thoriumcell", "Double_Thoriumcell", "Quad_Thoriumcell", "Plutoniumcell", "Double_Plutoniumcell", "Quad_Plutoniumcell", "Lithium_Reactor_Cell", "Debug_Scanner", "Lithium_Battery_Empty", "Lithium_Battery", "Lithium_Batpack", "Personal_Force_Field_Generator", "60k_NaK_Coolantcell", "180k_NaK_Coolantcell", "360k_NaK_Coolantcell", "GT_Scanner", "GT_Crowbar", "GT_Screwdriver", "GT_Wrench_Steel", "GT_Wrench_Iron", "GT_Wrench_TungstenSteel", "GT_Wrench_Bronze", "GT_Wrench_Electric", "GT_Wrench_Advanced", "GT_Hammer_Rubber", "GT_Hammer_Iron", "GT_Hammer_Bronze", "GT_Hammer_Steel", "GT_Hammer_Tungstensteel", "GT_SolderingTool", "GT_SolderingTin", "GT_SolderingLead", "GT_Turbine_Bronze", "GT_Turbine_Steel", "GT_Turbine_Magnalium", "GT_Turbine_Tungstensteel", "GT_Turbine_Carbon", "GT_Lava_Filter", "GT_File_Iron", "GT_File_Bronze", "GT_File_Steel", "GT_File_Tungstensteel", "GT_Spray_Bug", "GT_Spray_Ice", "GT_Spray_Hardener", "GT_Spray_Foam", "GT_Spray_Pepper", "GT_Spray_Hydration", "GT_Spray_00", "GT_Spray_01", "GT_Spray_02", "GT_Spray_03", "GT_Spray_04", "GT_Spray_05", "GT_Spray_06", "GT_Spray_07", "GT_Spray_08", "GT_Spray_09", "GT_Spray_10", "GT_Spray_11", "GT_Spray_12", "GT_Spray_13", "GT_Spray_14", "GT_Spray_15", "Empty_Electric_Wrench", "Empty_Advanced_Wrench", "Empty_Soldering_Tool", "GT_Saw_Iron", "GT_Saw_Bronze", "GT_Saw_Steel", "GT_Saw_Tungstensteel", "GT_Saw_Electric", "GT_Saw_Advanced", "Empty_Electric_Saw", "Empty_Advanced_Saw", "GT_Drill_Advanced", "GT_Flint_Sword", "GT_Flint_Pickaxe", "GT_Flint_Shovel", "GT_Flint_Axe", "GT_Flint_Hoe", "GT_Steel_Sword", "GT_Steel_Pickaxe", "GT_Steel_Shovel", "GT_Steel_Axe", "GT_Steel_Hoe", "GT_TungstenSteel_Sword", "GT_TungstenSteel_Pickaxe", "GT_TungstenSteel_Shovel", "GT_TungstenSteel_Axe", "GT_TungstenSteel_Hoe"};
 }

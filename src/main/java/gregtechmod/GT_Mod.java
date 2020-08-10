@@ -93,7 +93,9 @@ import java.util.Map.Entry;
 import java.util.Scanner;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -102,11 +104,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.Packet;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.storage.SaveHandler;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
+import net.minecraftforge.fluids.FluidContainerRegistry;
+import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -135,7 +142,7 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     @SidedProxy(clientSide = "gregtechmod.common.GT_Client", serverSide = "gregtechmod.common.GT_Server")
     public static GT_Proxy gregtechproxy;
     
-	public static volatile int VERSION = 404;
+	public static volatile int VERSION = 408;
 	
     public static boolean sInventoryUnification = true, sIncreaseDungeonLoot = true, sAxeWhenAdventure = true, sSurvivalIntoAdventure = false, sPatchLightUpdateLag = false, sNerfedWoodPlank = true, sNerfedWoodenTools = true, sNerfedStoneTools = true, sInvisibleOres = false, sTinkersWarning = false, sHardRock = false, sHungerEffect = true, sUnificatorRP = false, sUnificatorTE = false, sUnificatorFR = false, sUnificatorRC = false, sUnificatorTC = false, mOnline = true, mAlreadyPlayed = false, mDetectIDConflicts = false, mDoNotInit = false;
     
@@ -159,43 +166,78 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
     }
     
     private static final void checkVersions() { // Will uncomment in the end
-    	if (   VERSION != GregTech_API			.VERSION
-            || VERSION != BaseMetaTileEntity	.VERSION
-            || VERSION != BaseMetaPipeEntity	.VERSION
-            || VERSION != MetaTileEntity		.VERSION
-            || VERSION != MetaPipeEntity		.VERSION
-    	    || VERSION != GT_CircuitryBehavior	.VERSION
-    	    || VERSION != GT_CoverBehavior		.VERSION
-    		|| VERSION != GT_Config				.VERSION
-    		|| VERSION != GT_LanguageManager	.VERSION
-    		|| VERSION != GT_ModHandler			.VERSION
-    		|| VERSION != GT_OreDictUnificator	.VERSION
-    		|| VERSION != GT_Recipe				.VERSION
-    		|| VERSION != GT_Utility			.VERSION
-    	    || VERSION != GT_RecipeRegistrator	.VERSION
-    		|| VERSION != Element				.VERSION
-    		|| VERSION != Materials				.VERSION
-    		|| VERSION != OrePrefixes			.VERSION)
-    		throw new GT_ItsNotMyFaultException("One of your Mods included GregTech-API Files inside it's download, mention this to the Mod Author, who does this bad thing, and tell him/her to use reflection. I have added a Version check, to prevent Authors from breaking my Mod that way.");
+//    	if (   VERSION != GregTech_API			.VERSION
+//            || VERSION != BaseMetaTileEntity	.VERSION
+//            || VERSION != BaseMetaPipeEntity	.VERSION
+//            || VERSION != MetaTileEntity		.VERSION
+//            || VERSION != MetaPipeEntity		.VERSION
+//    	    || VERSION != GT_CircuitryBehavior	.VERSION
+//    	    || VERSION != GT_CoverBehavior		.VERSION
+//    		|| VERSION != GT_Config				.VERSION
+//    		|| VERSION != GT_LanguageManager	.VERSION
+//    		|| VERSION != GT_ModHandler			.VERSION
+//    		|| VERSION != GT_OreDictUnificator	.VERSION
+//    		|| VERSION != GT_Recipe				.VERSION
+//    		|| VERSION != GT_Utility			.VERSION
+//    	    || VERSION != GT_RecipeRegistrator	.VERSION
+//    		|| VERSION != Element				.VERSION
+//    		|| VERSION != Materials				.VERSION
+//    		|| VERSION != OrePrefixes			.VERSION)
+//    		throw new GT_ItsNotMyFaultException("One of your Mods included GregTech-API Files inside it's download, mention this to the Mod Author, who does this bad thing, and tell him/her to use reflection. I have added a Version check, to prevent Authors from breaking my Mod that way.");
     }
     
     public GT_Mod() {
     	checkVersions();
     	if (GregTech_API.isGregTechLoaded()) throw new GT_ItsNotMyFaultException("Why did you install my Addon twice? Remove the second gregtechmod.zip out of your mods-Folder, you need only one of them.");
+    	try {
+            Class.forName("ic2.core.IC2").getField("enableOreDictCircuit").set(null, true);
+        }
+        catch (Throwable e) {
+        	GT_Log.log.catching(e);
+        }
+        try {
+            Class.forName("ic2.core.IC2").getField("enableCraftingBucket").set(null, false);
+        }
+        catch (Throwable e) {
+        	GT_Log.log.catching(e);
+        }
+        try {
+            Class.forName("ic2.core.IC2").getField("enableEnergyInStorageBlockItems").set(null, false);
+        }
+        catch (Throwable e) {
+            GT_Log.log.catching(e);
+        }
 		GregTech_API.gregtechmod = this;
 		GregTech_API.sRecipeAdder = this;
 		GregTech_API.sDummyWorld = new GT_DummyWorld();
 		GregTech_API.sGTCoverload.add(new GT_CoverLoader());
         GT_OreDictHandler.instance.registerHandler();
+        
+        for (FluidContainerData tData : FluidContainerRegistry.getRegisteredFluidContainerData()) {
+        	if (tData.filledContainer.getItem() == Items.potionitem) {
+        		tData.fluid.amount = 0;
+        		break;
+        	}
+        }
+        
+        MinecraftForge.EVENT_BUS.register(this);
     	new GT_Cover_None();
 		new GT_Cover_Generic();
 		new GT_Cover_Redstone();
+		//new GT_ItemTextures(); TODO
     }
     
     @SuppressWarnings("rawtypes")
 	@EventHandler
     public void preload(FMLPreInitializationEvent aEvent) {
     	checkVersions();
+    	
+    	try {
+            Integer.parseInt(((String)Class.forName("ic2.core.IC2").getField("VERSION").get((Object)null)).substring(4, 7));
+         } catch (Throwable var16) {
+            throw new GT_ItsNotMyFaultException("Ancient IndustrialCraft Version detected, please update your IndustrialCraft here: ic2api.player.to:8080/job/IC2_experimental/?");
+         }
+    	
     	for (Runnable tRunnable : GregTech_API.sBeforeGTPreload) {
     		try {
     			tRunnable.run();
@@ -1010,10 +1052,20 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 		return false;
 	}
     
-    public boolean allowPacketToBeSent(GT_Packet aPacket, EntityPlayerMP aPlayer) {
+	@Override
+	public boolean allowPacketToBeSent(Packet aPacket, EntityPlayerMP aPlayer) {
     	return true;
     }
     
+	@Override
+	public EntityPlayer getThePlayer() {
+		if (FMLCommonHandler.instance().getSide().isClient()) {
+			return Minecraft.getMinecraft().thePlayer;
+		}
+		
+		return null;
+	}
+	
     public static File getSaveDirectory() {
     	if (mUniverse == null) return null;
         SaveHandler tSaveHandler = (SaveHandler)mUniverse.getSaveHandler();
@@ -1098,5 +1150,29 @@ public class GT_Mod implements IGT_Mod, IGT_RecipeAdder {
 	@Override
 	public boolean isClientSide() {
 		return gregtechproxy.isClientSide();
+	}
+
+	@Override
+	public boolean addForgeHammerRecipe(ItemStack aInput1, ItemStack aOutput1, int aDuration, int aEUt) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean addExtruderRecipe(ItemStack aInput1, ItemStack aShape, ItemStack aOutput1, int aDuration, int aEUt) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int addArmor(String aArmorPrefix) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void doSonictronSound(ItemStack aStack, World aWorld, double aX, double aY, double aZ) {
+		// TODO Auto-generated method stub
+		
 	}
 }
