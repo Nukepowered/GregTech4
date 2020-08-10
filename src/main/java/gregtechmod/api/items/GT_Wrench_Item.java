@@ -2,26 +2,27 @@ package gregtechmod.api.items;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_ToolDictNames;
+import gregtechmod.api.util.GT_LanguageManager;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.common.ForgeDirection;
 
 public class GT_Wrench_Item extends GT_Tool_Item {
 	
-	public GT_Wrench_Item(String aName, int aMaxDamage, int aEntityDamage, int aDischargedGTID) {
-		super(aName, "item.GT_Wrech.tooltip", aMaxDamage, aEntityDamage, -1, aDischargedGTID);
+	public GT_Wrench_Item(int aID, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage, int aDischargedGTID) {
+		super(aID, aUnlocalized, aEnglish, "To dismantle and rotate Blocks of most Mods", aMaxDamage, aEntityDamage, true, -1, aDischargedGTID);
 		GregTech_API.registerWrench(new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		GT_OreDictUnificator.registerOre(GT_ToolDictNames.craftingToolWrench, new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		addToEffectiveList(EntityIronGolem.class.getName());
@@ -45,10 +46,9 @@ public class GT_Wrench_Item extends GT_Tool_Item {
 		setUsageAmounts(8, 3, 1);
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
-		aList.add(I18n.format("item.GT_Wrech.tooltip_1"));
+		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_1", "Rotation of target depends on where exactly you click"));
 	}
 	
 	@Override
@@ -57,10 +57,10 @@ public class GT_Wrench_Item extends GT_Tool_Item {
     	if (aWorld.isRemote) {
     		return false;
     	}
-    	Block aBlock = aWorld.getBlock(aX, aY, aZ);
+    	Block aBlock = Block.blocksList[aWorld.getBlockId(aX, aY, aZ)];
     	if (aBlock == null) return false;
     	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ), aTargetSide = GT_Utility.determineWrenchingSide((byte)aSide, hitX, hitY, hitZ);
-    	TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ);
+    	TileEntity aTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
     	
     	try {
         	if (aTileEntity != null && aTileEntity instanceof ic2.api.tile.IWrenchable) {
@@ -75,7 +75,7 @@ public class GT_Wrench_Item extends GT_Tool_Item {
         			int tDamage = (((ic2.api.tile.IWrenchable)aTileEntity).getWrenchDropRate() < 1.0F ? 10 : 3);
         			if (GT_ModHandler.damageOrDechargeItem(aStack, tDamage, tDamage*1000, aPlayer)) {
         				ItemStack tOutput = ((ic2.api.tile.IWrenchable)aTileEntity).getWrenchDrop(aPlayer);
-            			for (ItemStack tStack : aBlock.getDrops(aWorld, aX, aY, aZ, aMeta, 0)) {
+            			for (ItemStack tStack : aBlock.getBlockDropped(aWorld, aX, aY, aZ, aMeta, 0)) {
             				if (tOutput == null) {
                 				aWorld.spawnEntityInWorld(new EntityItem(aWorld, aX+0.5, aY+0.5, aZ+0.5, tStack));
             				} else {
@@ -90,22 +90,22 @@ public class GT_Wrench_Item extends GT_Tool_Item {
         		}
         		return true;
         	}
-        } catch(Throwable e) {}
+        } catch(Throwable e) {/*Do nothing*/}
     	
-//    	try {
-//        	if (aTileEntity instanceof universalelectricity.prefab.tile.IRotatable) {
-//        		if (((universalelectricity.prefab.tile.IRotatable)aTileEntity).getDirection().ordinal() != aTargetSide) {
-//        			if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
-//            			((universalelectricity.prefab.tile.IRotatable)aTileEntity).setDirection(ForgeDirection.getOrientation(aTargetSide));
-//            			GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(100), 1.0F, -1, aX, aY, aZ);
-//            		}
-//        			return true;
-//        		}
-//        		return true;
-//        	}
-//        } catch(Throwable e) {}
+    	try {
+        	if (aTileEntity instanceof universalelectricity.prefab.tile.IRotatable) {
+        		if (((universalelectricity.prefab.tile.IRotatable)aTileEntity).getDirection().ordinal() != aTargetSide) {
+        			if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
+            			((universalelectricity.prefab.tile.IRotatable)aTileEntity).setDirection(ForgeDirection.getOrientation(aTargetSide));
+            			GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(100), 1.0F, -1, aX, aY, aZ);
+            		}
+        			return true;
+        		}
+        		return true;
+        	}
+        } catch(Throwable e) {/*Do nothing*/}
     	
-    	if (aBlock == Blocks.log || aBlock == Blocks.hay_block) {
+    	if (aBlock == Block.wood || aBlock == Block.hay) {
 			if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
 				aWorld.setBlockMetadataWithNotify(aX, aY, aZ, (aMeta + 4) % 12, 3);
 				GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(100), 1.0F, -1, aX, aY, aZ);
@@ -113,7 +113,7 @@ public class GT_Wrench_Item extends GT_Tool_Item {
     		return true;
     	}
     	
-    	if (aBlock == Blocks.unpowered_repeater || aBlock == Blocks.powered_repeater) {
+    	if (aBlock == Block.redstoneRepeaterIdle || aBlock == Block.redstoneRepeaterActive) {
 			if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
 				aWorld.setBlockMetadataWithNotify(aX, aY, aZ, (aMeta / 4) * 4  + (((aMeta%4) + 1) % 4), 3);
 				GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(100), 1.0F, -1, aX, aY, aZ);
@@ -121,7 +121,7 @@ public class GT_Wrench_Item extends GT_Tool_Item {
     		return true;
     	}
     	
-    	if (aBlock == Blocks.unpowered_comparator || aBlock == Blocks.powered_comparator) {
+    	if (aBlock == Block.redstoneComparatorIdle || aBlock == Block.redstoneComparatorActive) {
 			if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
 				aWorld.setBlockMetadataWithNotify(aX, aY, aZ, (aMeta / 4) * 4  + (((aMeta%4) + 1) % 4), 3);
 				GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(100), 1.0F, -1, aX, aY, aZ);
@@ -129,7 +129,7 @@ public class GT_Wrench_Item extends GT_Tool_Item {
     		return true;
     	}
     	
-    	if (aBlock == Blocks.crafting_table || aBlock == Blocks.bookshelf) {
+    	if (aBlock == Block.workbench || aBlock == Block.bookShelf) {
 			if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
     			aWorld.spawnEntityInWorld(new EntityItem(aWorld, aX+0.5, aY+0.5, aZ+0.5, new ItemStack(aBlock, 1, aMeta)));
     			aWorld.setBlockToAir(aX, aY, aZ);
@@ -139,7 +139,7 @@ public class GT_Wrench_Item extends GT_Tool_Item {
     	}
     	
     	if (aMeta == aTargetSide) {
-	    	if (aBlock == Blocks.piston || aBlock == Blocks.sticky_piston || aBlock == Blocks.dispenser || aBlock == Blocks.dropper || aBlock == Blocks.furnace || aBlock == Blocks.lit_furnace || aBlock == Blocks.chest || aBlock == Blocks.trapped_chest || aBlock == Blocks.hopper) {
+	    	if (aBlock == Block.pistonBase || aBlock == Block.pistonStickyBase || aBlock == Block.dispenser || aBlock == Block.dropper || aBlock == Block.furnaceIdle || aBlock == Block.furnaceBurning || aBlock == Block.chest || aBlock == Block.chestTrapped || aBlock == Block.hopperBlock) {
 	    		if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
         			aWorld.spawnEntityInWorld(new EntityItem(aWorld, aX+0.5, aY+0.5, aZ+0.5, new ItemStack(aBlock, 1, 0)));
         			aWorld.setBlockToAir(aX, aY, aZ);
@@ -148,27 +148,36 @@ public class GT_Wrench_Item extends GT_Tool_Item {
 	    		return true;
 	    	}
     	} else {
-	    	if (aBlock == Blocks.piston || aBlock == Blocks.sticky_piston || aBlock == Blocks.dispenser || aBlock == Blocks.dropper) {
+	    	if (aBlock == Block.pistonBase || aBlock == Block.pistonStickyBase || aBlock == Block.dispenser || aBlock == Block.dropper) {
 				if (aMeta < 6 && GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
 					aWorld.setBlockMetadataWithNotify(aX, aY, aZ, aTargetSide, 3);
 					GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(100), 1.0F, -1, aX, aY, aZ);
 		    	}
 	    		return true;
 	    	}
-	    	if (aBlock == Blocks.pumpkin || aBlock == Blocks.lit_pumpkin || aBlock == Blocks.furnace || aBlock == Blocks.lit_furnace || aBlock == Blocks.chest || aBlock == Blocks.trapped_chest) {
+	    	if (aBlock == Block.pumpkin || aBlock == Block.pumpkinLantern || aBlock == Block.furnaceIdle || aBlock == Block.furnaceBurning || aBlock == Block.chest || aBlock == Block.chestTrapped) {
 				if (aTargetSide > 1 && GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
 					aWorld.setBlockMetadataWithNotify(aX, aY, aZ, aTargetSide, 3);
 					GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(100), 1.0F, -1, aX, aY, aZ);
 		    	}
 	    		return true;
 	    	}
-	    	if (aBlock == Blocks.hopper) {
+	    	if (aBlock == Block.hopperBlock) {
 				if (aTargetSide != 1 && GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
 					aWorld.setBlockMetadataWithNotify(aX, aY, aZ, aTargetSide, 3);
 					GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(100), 1.0F, -1, aX, aY, aZ);
 		    	}
 	    		return true;
 	    	}
+    	}
+    	
+    	if (Arrays.asList(aBlock.getValidRotations(aWorld, aX, aY, aZ)).contains(ForgeDirection.getOrientation(aTargetSide))) {
+    		if (!GT_ModHandler.isElectricItem(aStack) || GT_ModHandler.canUseElectricItem(aStack, 1000)) {
+    			if (aBlock.rotateBlock(aWorld, aX, aY, aZ, ForgeDirection.getOrientation(aTargetSide))) {
+    				GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer);
+    				GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(100), 1.0F, -1, aX, aY, aZ);
+    			}
+    		}
     	}
     	
     	return false;

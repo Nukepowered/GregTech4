@@ -1,35 +1,33 @@
 package gregtechmod.api.items;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.util.GT_OreDictUnificator;
+import gregtechmod.api.enums.GT_Items;
+import gregtechmod.api.util.GT_LanguageManager;
 
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
 public class GT_Spray_Pepper_Item extends GT_Tool_Item {
-	public GT_Spray_Pepper_Item(String aName, int aMaxDamage, int aEntityDamage) {
-		super(aName, "To defend yourself against Bears", aMaxDamage, aEntityDamage);
+	public GT_Spray_Pepper_Item(int aID, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage) {
+		super(aID, aUnlocalized, aEnglish, "To defend yourself against Bears", aMaxDamage, aEntityDamage, true);
 		setCraftingSound(GregTech_API.sSoundList.get(102));
 		setBreakingSound(GregTech_API.sSoundList.get(102));
 		setEntityHitSound(GregTech_API.sSoundList.get(102));
 		setUsageAmounts(1, 8, 1);
 	}
 	
-	@SuppressWarnings("unchecked")
 	@Override
-	public void addAdditionalToolTips(@SuppressWarnings("rawtypes") List aList, ItemStack aStack) {
-		aList.add(I18n.format("item.GT_Spray_Pepper.tooltip_1",getUnlocalizedName()));
-		aList.add(I18n.format("item.GT_Spray_Pepper.tooltip_2",getUnlocalizedName()));
+	public void addAdditionalToolTips(List aList, ItemStack aStack) {
+		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_1", "especially Pedobears, Care Bears,"));
+		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_2", "Confession Bears and Bear Grylls"));
 	}
 	
 	@Override
@@ -43,13 +41,8 @@ public class GT_Spray_Pepper_Item extends GT_Tool_Item {
 	}
 	
 	@Override
-	public Item getEmptyItem(ItemStack aStack) {
-		ItemStack dictionary = GT_OreDictUnificator.getFirstOre("craftingSprayCan", 1);
-		aStack.func_150996_a(dictionary.getItem());
-		aStack.stackSize = 1;
-		aStack.setTagCompound(dictionary.getTagCompound());
-		aStack.setItemDamage(dictionary.getItemDamage());
-		return dictionary.getItem();
+	public ItemStack getEmptyItem(ItemStack aStack) {
+		return GT_Items.Spray_Empty.get(1);
 	}
 	
 	@Override
@@ -58,8 +51,11 @@ public class GT_Spray_Pepper_Item extends GT_Tool_Item {
 		if (aWorld.isRemote) {
     		return false;
     	}
-    	Block aBlock = aWorld.getBlock(aX, aY, aZ);
+    	Block aBlock = Block.blocksList[aWorld.getBlockId(aX, aY, aZ)];
     	if (aBlock == null) return false;
+//    	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
+//    	TileEntity aTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
+    	
     	return false;
     }
 }

@@ -8,7 +8,7 @@ package gregtechmod.api.metatileentity;
  */
 public class BaseMetaTileEntityMJ extends BaseMetaTileEntity /*implements IBCTileEntity*/ {
 	/*
-	IPowerProvider mProvider; // TODO RF api
+	IPowerProvider mProvider;
 	
 	public BaseMetaTileEntityMJ() {
 		super();

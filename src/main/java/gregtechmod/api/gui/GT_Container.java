@@ -20,7 +20,6 @@ import net.minecraft.item.ItemStack;
  * Main Container-Class, used for all my GUIs
  */
 public class GT_Container extends Container {
-
     public IGregTechTileEntity mTileEntity;
 	public InventoryPlayer mPlayerInventory;
 	
@@ -33,7 +32,7 @@ public class GT_Container extends Container {
      * To add the Slots to your GUI
      */
     public void addSlots(InventoryPlayer aPlayerInventory) {
-    	
+    	//
     }
     
     /**
@@ -48,11 +47,8 @@ public class GT_Container extends Container {
      */
     protected final int getAllSlotCount() {
     	if (inventorySlots != null) {
-    		if (doesBindPlayerInventory()) {
-    			return inventorySlots.size()-36;
-    		} else {
-    			return inventorySlots.size();
-    		}
+    		if (doesBindPlayerInventory()) return inventorySlots.size()-36;
+    		return inventorySlots.size();
     	}
     	return getSlotCount();
     }
@@ -105,7 +101,7 @@ public class GT_Container extends Container {
     		if (!(inventorySlots.get(aSlotIndex) instanceof GT_Slot_Armor)) if (aSlotIndex < getAllSlotCount()) if (aSlotIndex < getSlotStartIndex() || aSlotIndex >= getSlotStartIndex() + getSlotCount()) return null;
     	}
     	
-    	try {return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);} catch (Throwable e) {GT_Log.log.catching(e);}
+    	try {return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);} catch (Throwable e) {e.printStackTrace(GT_Log.err);}
     	
         ItemStack rStack = null;
         InventoryPlayer aPlayerInventory = aPlayer.inventory;
@@ -118,11 +114,11 @@ public class GT_Container extends Container {
             if (aSlotIndex == -999) {
                 if (aPlayerInventory.getItemStack() != null && aSlotIndex == -999) {
                     if (aMouseclick == 0) {
-//                        aPlayer.dropPlayerItem(aPlayerInventory.getItemStack());
+                        aPlayer.dropPlayerItem(aPlayerInventory.getItemStack());
                         aPlayerInventory.setItemStack((ItemStack)null);
                     }
                     if (aMouseclick == 1) {
-//                        aPlayer.dropPlayerItem(aPlayerInventory.getItemStack().splitStack(1));
+                        aPlayer.dropPlayerItem(aPlayerInventory.getItemStack().splitStack(1));
 
                         if (aPlayerInventory.getItemStack().stackSize == 0) {
                             aPlayerInventory.setItemStack((ItemStack)null);
@@ -135,7 +131,7 @@ public class GT_Container extends Container {
                     tTempStack = this.transferStackInSlot(aPlayer, aSlotIndex);
                     if (tTempStack != null) {
                         rStack = GT_Utility.copy(tTempStack);
-                        if (aSlot != null && aSlot.getStack() != null && aSlot.getStack().getItem() == tTempStack.getItem()) {
+                        if (aSlot.getStack() != null && aSlot.getStack().getItem() == tTempStack.getItem()) {
                             slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
                         }
                     }
@@ -371,7 +367,7 @@ public class GT_Container extends Container {
     	try {
     		return super.addSlotToContainer(par1Slot);
     	} catch(Throwable e) {
-    		GT_Log.log.catching(e);
+    		e.printStackTrace(GT_Log.err);
     	}
     	return par1Slot;
     }
@@ -381,17 +377,16 @@ public class GT_Container extends Container {
     	try {
     		super.addCraftingToCrafters(par1ICrafting);
     	} catch(Throwable e) {
-    		GT_Log.log.catching(e);
+    		e.printStackTrace(GT_Log.err);
     	}
     }
     
-    @SuppressWarnings("rawtypes")
-	@Override
+    @Override
     public List getInventory() {
     	try {
     		return super.getInventory();
     	} catch(Throwable e) {
-    		GT_Log.log.catching(e);
+    		e.printStackTrace(GT_Log.err);
     	}
     	return null;
     }
@@ -401,7 +396,7 @@ public class GT_Container extends Container {
     	try {
             super.removeCraftingFromCrafters(par1ICrafting);
     	} catch(Throwable e) {
-    		GT_Log.log.catching(e);
+    		e.printStackTrace(GT_Log.err);
     	}
     }
     
@@ -410,7 +405,7 @@ public class GT_Container extends Container {
     	try {
             super.detectAndSendChanges();
     	} catch(Throwable e) {
-    		GT_Log.log.catching(e);
+    		e.printStackTrace(GT_Log.err);
     	}
     }
     
@@ -419,7 +414,7 @@ public class GT_Container extends Container {
     	try {
             return super.enchantItem(par1EntityPlayer, par2);
     	} catch(Throwable e) {
-    		GT_Log.log.catching(e);
+    		e.printStackTrace(GT_Log.err);
     	}
     	return false;
     }
@@ -429,7 +424,7 @@ public class GT_Container extends Container {
     	try {
             return super.getSlotFromInventory(par1IInventory, par2);
     	} catch(Throwable e) {
-    		GT_Log.log.catching(e);
+    		e.printStackTrace(GT_Log.err);
     	}
     	return null;
     }
@@ -437,9 +432,9 @@ public class GT_Container extends Container {
     @Override
     public Slot getSlot(int par1) {
     	try {
-            return super.getSlot(par1);
+    		if (this.inventorySlots.size() > par1) return super.getSlot(par1);
     	} catch(Throwable e) {
-    		GT_Log.log.catching(e);
+    		e.printStackTrace(GT_Log.err);
     	}
         return null;
     }
@@ -449,7 +444,7 @@ public class GT_Container extends Container {
     	try {
             return super.func_94530_a(par1ItemStack, par2Slot);
     	} catch(Throwable e) {
-    		GT_Log.log.catching(e);
+    		e.printStackTrace(GT_Log.err);
     	}
         return true;
     }
@@ -459,7 +454,7 @@ public class GT_Container extends Container {
     	try {
             super.retrySlotClick(par1, par2, par3, par4EntityPlayer);
     	} catch(Throwable e) {
-    		GT_Log.log.catching(e);
+    		e.printStackTrace(GT_Log.err);
     	}
     }
     
@@ -468,7 +463,7 @@ public class GT_Container extends Container {
     	try {
             super.onContainerClosed(par1EntityPlayer);
     	} catch(Throwable e) {
-    		GT_Log.log.catching(e);
+    		e.printStackTrace(GT_Log.err);
     	}
     }
     
@@ -477,7 +472,7 @@ public class GT_Container extends Container {
     	try {
             super.onCraftMatrixChanged(par1IInventory);
     	} catch(Throwable e) {
-    		GT_Log.log.catching(e);
+    		e.printStackTrace(GT_Log.err);
     	}
     }
     
@@ -486,16 +481,16 @@ public class GT_Container extends Container {
     	try {
             super.putStackInSlot(par1, par2ItemStack);
     	} catch(Throwable e) {
-    		GT_Log.log.catching(e);
+    		e.printStackTrace(GT_Log.err);
     	}
     }
     
     @Override
     public void putStacksInSlots(ItemStack[] par1ArrayOfItemStack) {
     	try {
-            if (par1ArrayOfItemStack.length > 0) super.putStacksInSlots(par1ArrayOfItemStack);
+            super.putStacksInSlots(par1ArrayOfItemStack);
     	} catch(Throwable e) {
-    		GT_Log.log.catching(e);
+    		e.printStackTrace(GT_Log.err);
     	}
     }
     
@@ -504,7 +499,7 @@ public class GT_Container extends Container {
     	try {
             super.updateProgressBar(par1, par2);
     	} catch(Throwable e) {
-    		GT_Log.log.catching(e);
+    		e.printStackTrace(GT_Log.err);
     	}
     }
     
@@ -513,7 +508,7 @@ public class GT_Container extends Container {
     	try {
             return super.getNextTransactionID(par1InventoryPlayer);
     	} catch(Throwable e) {
-    		GT_Log.log.catching(e);
+    		e.printStackTrace(GT_Log.err);
     	}
     	return 0;
     }
@@ -523,7 +518,7 @@ public class GT_Container extends Container {
     	try {
             return super.isPlayerNotUsingContainer(par1EntityPlayer);
     	} catch(Throwable e) {
-    		GT_Log.log.catching(e);
+    		e.printStackTrace(GT_Log.err);
     	}
     	return true;
     }
@@ -533,7 +528,7 @@ public class GT_Container extends Container {
     	try {
             super.setPlayerIsPresent(par1EntityPlayer, par2);
     	} catch(Throwable e) {
-    		GT_Log.log.catching(e);
+    		e.printStackTrace(GT_Log.err);
     	}
     }
     
@@ -542,7 +537,7 @@ public class GT_Container extends Container {
     	try {
             super.func_94533_d();
     	} catch(Throwable e) {
-    		GT_Log.log.catching(e);
+    		e.printStackTrace(GT_Log.err);
     	}
     }
     
@@ -551,7 +546,7 @@ public class GT_Container extends Container {
     	try {
             return super.canDragIntoSlot(par1Slot);
     	} catch(Throwable e) {
-    		GT_Log.log.catching(e);
+    		e.printStackTrace(GT_Log.err);
     	}
     	return true;
     }

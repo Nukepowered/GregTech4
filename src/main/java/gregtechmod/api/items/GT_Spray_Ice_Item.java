@@ -1,26 +1,28 @@
 package gregtechmod.api.items;
 
 import gregtechmod.api.GregTech_API;
+import gregtechmod.api.enums.GT_Items;
+import gregtechmod.api.enums.Materials;
+import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.util.GT_ModHandler;
-import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
+
+import java.util.Arrays;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.common.ForgeDirection;
 
 public class GT_Spray_Ice_Item extends GT_Tool_Item {
-	public GT_Spray_Ice_Item( String aName, int aMaxDamage, int aEntityDamage) {
-		super(aName, "Very effective against Slimes", aMaxDamage, aEntityDamage);
+	public GT_Spray_Ice_Item(int aID, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage) {
+		super(aID, aUnlocalized, aEnglish, "Very effective against Slimes", aMaxDamage, aEntityDamage, true);
 		addToEffectiveList(EntitySlime.class.getName());
 		addToEffectiveList("BlueSlime");
 		addToEffectiveList("SlimeClone");
@@ -31,9 +33,11 @@ public class GT_Spray_Ice_Item extends GT_Tool_Item {
 		setCraftingSound(GregTech_API.sSoundList.get(102));
 		setBreakingSound(GregTech_API.sSoundList.get(102));
 		setEntityHitSound(GregTech_API.sSoundList.get(102));
-		setUsageAmounts(32, 16, 1);
-		GT_ModHandler.addShapelessCraftingRecipe(new ItemStack(Blocks.ice, 1, 0), false, new Object[] {new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), new ItemStack(Items.water_bucket, 1)});
-		GT_ModHandler.addShapelessCraftingRecipe(new ItemStack(Blocks.ice, 1, 0), false, new Object[] {new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_ModHandler.getWaterCell(1)});
+		setUsageAmounts(4, 16, 1);
+		
+		for (String tName : Arrays.asList(OrePrefixes.bucket.get(Materials.Water), OrePrefixes.cell.get(Materials.Water), OrePrefixes.capsule.get(Materials.Water))) {
+			GT_ModHandler.addShapelessCraftingRecipe(new ItemStack(Block.ice, 1, 0), false, new Object[] {new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), tName});
+		}
 	}
 	
 	@Override
@@ -45,13 +49,8 @@ public class GT_Spray_Ice_Item extends GT_Tool_Item {
 	}
 	
 	@Override
-	public Item getEmptyItem(ItemStack aStack) {
-		ItemStack dictionary = GT_OreDictUnificator.getFirstOre("craftingSprayCan", 1);
-		aStack.func_150996_a(dictionary.getItem());
-		aStack.stackSize = 1;
-		aStack.setTagCompound(dictionary.getTagCompound());
-		aStack.setItemDamage(dictionary.getItemDamage());
-		return dictionary.getItem();
+	public ItemStack getEmptyItem(ItemStack aStack) {
+		return GT_Items.Spray_Empty.get(1);
 	}
 	
 	@Override
@@ -63,23 +62,24 @@ public class GT_Spray_Ice_Item extends GT_Tool_Item {
     	aX += ForgeDirection.getOrientation(aSide).offsetX;
     	aY += ForgeDirection.getOrientation(aSide).offsetY;
     	aZ += ForgeDirection.getOrientation(aSide).offsetZ;
-    	Block aBlock = aWorld.getBlock(aX, aY, aZ);
+    	Block aBlock = Block.blocksList[aWorld.getBlockId(aX, aY, aZ)];
     	if (aBlock == null) return false;
     	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
+//    	TileEntity aTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
     	
-    	if (aBlock == Blocks.water || aBlock == Blocks.flowing_water) {
+    	if (aBlock == Block.waterStill || aBlock == Block.waterMoving) {
     		if (aMeta == 0 && GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
     			GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(102), 1.0F, -1, aX, aY, aZ);
-        		aWorld.setBlock(aX, aY, aZ, Blocks.ice, 0, 3);
+        		aWorld.setBlock(aX, aY, aZ, Block.ice.blockID, 0, 3);
     			return true;
     		}
     		return false;
     	}
     	
-    	if (aBlock == Blocks.lava || aBlock == Blocks.flowing_lava) {
+    	if (aBlock == Block.lavaStill || aBlock == Block.lavaMoving) {
     		if (aMeta == 0 && GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
     			GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(102), 1.0F, -1, aX, aY, aZ);
-        		aWorld.setBlock(aX, aY, aZ, Blocks.obsidian, 0, 3);
+        		aWorld.setBlock(aX, aY, aZ, Block.obsidian.blockID, 0, 3);
     			return true;
     		}
     		return false;

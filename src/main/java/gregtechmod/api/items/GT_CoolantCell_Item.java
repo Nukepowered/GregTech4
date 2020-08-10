@@ -1,24 +1,21 @@
 package gregtechmod.api.items;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.interfaces.ICapsuleCellContainer;
 
 import java.util.List;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class GT_CoolantCell_Item extends GT_Generic_Item implements ICapsuleCellContainer {
-    protected int heatStorage, mCellCount;
+public class GT_CoolantCell_Item extends GT_Generic_Item {
+    protected int heatStorage;
 	
-    public GT_CoolantCell_Item(String aName, int aMaxStore, int aCellCount) {
-        super(aName, null);
+    public GT_CoolantCell_Item(int aID, String aUnlocalized, String aEnglish, int aMaxStore) {
+        super(aID, aUnlocalized, aEnglish, null);
         setMaxStackSize(1);
         setMaxDamage(100);
         setNoRepair();
         heatStorage = aMaxStore;
-        mCellCount = aCellCount;
         setCreativeTab(GregTech_API.TAB_GREGTECH);
     }
     
@@ -33,7 +30,7 @@ public class GT_CoolantCell_Item extends GT_Generic_Item implements ICapsuleCell
 
         if (heatStorage > 0) {
             double var4 = (double)aHeat / (double)heatStorage;
-            int var6 = (int)((double)aStack.getMaxDamage() * var4);
+            int var6 = (int)(aStack.getMaxDamage() * var4);
 
             if (var6 >= aStack.getMaxDamage()) {
                 var6 = aStack.getMaxDamage() - 1;
@@ -42,14 +39,13 @@ public class GT_CoolantCell_Item extends GT_Generic_Item implements ICapsuleCell
         }
     }
     
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
 		super.addAdditionalToolTips(aList, aStack);
-		aList.add(I18n.format("item.coolant.stored.tooltip", getHeatOfStack(aStack)));
+		aList.add("Stored Heat: " + getHeatOfStack(aStack));
 	}
 	
-    protected int getHeatOfStack(ItemStack aStack) {
+    protected static int getHeatOfStack(ItemStack aStack) {
         NBTTagCompound tNBT = aStack.getTagCompound();
         if (tNBT == null) {
             tNBT = new NBTTagCompound();
@@ -57,9 +53,4 @@ public class GT_CoolantCell_Item extends GT_Generic_Item implements ICapsuleCell
         }
         return tNBT.getInteger("heat");
     }
-    
-	@Override
-	public int CapsuleCellContainerCount(ItemStack aStack) {
-		return mCellCount;
-	}
 }

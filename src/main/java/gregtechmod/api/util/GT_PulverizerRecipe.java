@@ -35,5 +35,4 @@ public class GT_PulverizerRecipe {
 	public int getEnergy() {
 		return 400;
 	}
-
 }

@@ -1,15 +1,15 @@
 package gregtechmod.api.enums;
 
 public class MaterialStack implements Cloneable {
-	public int mAmount;
+	public long mAmount;
 	public Materials mMaterial;
 
-	public MaterialStack(Materials aMaterial, int aAmount) {
+	public MaterialStack(Materials aMaterial, long aAmount) {
 		mMaterial = aMaterial==null?Materials._NULL:aMaterial;
 		mAmount = aAmount;
 	}
 	
-	public MaterialStack copy(int aAmount) {
+	public MaterialStack copy(long aAmount) {
 		return new MaterialStack(mMaterial, aAmount);
 	}
 	
@@ -29,6 +29,11 @@ public class MaterialStack implements Cloneable {
 	
 	@Override
 	public String toString() {
-		return (mMaterial.mMaterialList.size() > 1 && mAmount > 1 ? "(" : "") + mMaterial.getToolTip() + (mMaterial.mMaterialList.size() > 1 && mAmount > 1 ? ")" : "") + (mAmount > 1 ? mAmount : "");
+		return (mMaterial.mMaterialList.size() > 1 && mAmount > 1 ? "(" : "") + mMaterial.getToolTip(true) + (mMaterial.mMaterialList.size() > 1 && mAmount > 1 ? ")" : "") + (mAmount > 1 ? mAmount : "");
+	}
+
+	@Override
+	public int hashCode() {
+		return mMaterial.hashCode();
 	}
 }

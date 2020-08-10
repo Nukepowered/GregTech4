@@ -3,7 +3,6 @@ package gregtechmod.api.metatileentity;
 import gregtechmod.api.interfaces.IIC2TileEntity;
 import ic2.api.Direction;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraftforge.common.util.ForgeDirection;
 
 /**
  * NEVER INCLUDE THIS FILE IN YOUR MOD!!!
@@ -15,7 +14,7 @@ public class BaseMetaTileEntityICMJ extends BaseMetaTileEntityMJ implements IIC2
 		super();
 	}
 	
-	public double injectEnergy(ForgeDirection aDirection, double aAmount, double voltage) {return injectEnergyUnits((byte)aDirection.ordinal(), (int)aAmount, 1)? 0 : (int)aAmount;}
+	public int injectEnergy(Direction aDirection, int aAmount) {return injectEnergyUnits((byte)aDirection.toSideValue(), aAmount, 1)?0:aAmount;}
 	public boolean isTeleporterCompatible(Direction aSide) {return hasValidMetaTileEntity() && mMetaTileEntity.isTeleporterCompatible();}
 	public boolean acceptsEnergyFrom(TileEntity aReceiver, Direction aDirection) {return inputEnergyFrom((byte)aDirection.toSideValue());}
     public boolean emitsEnergyTo(TileEntity aReceiver, Direction aDirection) {return outputsEnergyTo((byte)aDirection.toSideValue());}

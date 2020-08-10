@@ -4,13 +4,12 @@ import java.util.Collection;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.IChunkProvider;
 
 public class GT_Worldgen_Ore_SingleBlock extends GT_Worldgen_Ore {
-	public GT_Worldgen_Ore_SingleBlock(String aName, boolean aDefault, Block aBlock, int aBlockMeta, int aDimensionType, int aAmount, int aSize, int aProbability, int aMinY, int aMaxY, Collection<String> aBiomeList, boolean aAllowToGenerateinVoid) {
-		super(aName, aDefault, aBlock, aBlockMeta, aDimensionType, aAmount, aSize, aProbability, aMinY, aMaxY, aBiomeList, aAllowToGenerateinVoid);
+	public GT_Worldgen_Ore_SingleBlock(String aName, boolean aDefault, int aBlockID, int aBlockMeta, int aDimensionType, int aAmount, int aSize, int aProbability, int aMinY, int aMaxY, Collection<String> aBiomeList, boolean aAllowToGenerateinVoid) {
+		super(aName, aDefault, aBlockID, aBlockMeta, aDimensionType, aAmount, aSize, aProbability, aMinY, aMaxY, aBiomeList, aAllowToGenerateinVoid);
 	}
 	
 	@Override
@@ -18,9 +17,9 @@ public class GT_Worldgen_Ore_SingleBlock extends GT_Worldgen_Ore {
 		if (aDimensionType == mDimensionType && (mBiomeList.isEmpty() || mBiomeList.contains(aBiome)) && (mProbability <= 1 || aRandom.nextInt(mProbability) == 0)) {
 			for (int i = 0; i < mAmount; i++) {
 				int tX = aChunkX + aRandom.nextInt(16), tY = mMinY + aRandom.nextInt(mMaxY - mMinY), tZ = aChunkZ + aRandom.nextInt(16);
-		        Block tBlock = aWorld.getBlock(tX, tY, tZ);
-		        if (((mAllowToGenerateinVoid&&aWorld.isAirBlock(tX, tY, tZ)) || (tBlock != null && (tBlock.isReplaceableOreGen(aWorld, tX, tY, tZ, Blocks.stone) || tBlock.isReplaceableOreGen(aWorld, tX, tY, tZ, Blocks.end_stone) || tBlock.isReplaceableOreGen(aWorld, tX, tY, tZ, Blocks.netherrack))))) {
-		            aWorld.setBlock(tX, tY, tZ, mBlock, mBlockMeta, 0);
+		        Block tBlock = Block.blocksList[aWorld.getBlockId(tX, tY, tZ)];
+		        if (((mAllowToGenerateinVoid&&aWorld.getBlockId(tX, tY, tZ)==0) || (tBlock != null && (tBlock.isGenMineableReplaceable(aWorld, tX, tY, tZ, Block.stone.blockID) || tBlock.isGenMineableReplaceable(aWorld, tX, tY, tZ, Block.whiteStone.blockID) || tBlock.isGenMineableReplaceable(aWorld, tX, tY, tZ, Block.netherrack.blockID))))) {
+		            aWorld.setBlock(tX, tY, tZ, mBlockID, mBlockMeta, 0);
 		        }
 	        }
 			return true;

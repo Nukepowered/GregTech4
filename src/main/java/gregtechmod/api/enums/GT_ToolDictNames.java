@@ -1,6 +1,8 @@
 package gregtechmod.api.enums;
 
 public enum GT_ToolDictNames {
+	craftingToolDrawplate,
+	craftingToolForgeHammer,
 	craftingToolHardHammer,
 	craftingToolSoftHammer,
 	craftingToolFile,
@@ -8,6 +10,8 @@ public enum GT_ToolDictNames {
 	craftingToolScrewdriver,
 	craftingToolCrowbar,
 	craftingToolSaw,
+	craftingToolScoop,
 	craftingToolSolderingMetal,
-	craftingToolSolderingIron;
+	craftingToolSolderingIron,
+	craftingToolWireCutter;
 }

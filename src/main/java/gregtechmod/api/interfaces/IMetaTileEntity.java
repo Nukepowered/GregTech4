@@ -4,12 +4,12 @@ import gregtechmod.api.util.GT_Config;
 
 import java.util.ArrayList;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.Icon;
 import net.minecraftforge.fluids.IFluidHandler;
 import net.minecraftforge.fluids.IFluidTank;
 import cpw.mods.fml.relauncher.Side;
@@ -25,9 +25,7 @@ public interface IMetaTileEntity extends ISidedInventory, IFluidTank, IFluidHand
 	 * This determines the BaseMetaTileEntity belonging to this MetaTileEntity by using the Meta ID of the Block itself.
 	 * 
 	 * 0 = BaseMetaTileEntity
-	 * 1 = BaseMetaCable
-	 * 2 = BaseMetaFluidPipe
-	 * 3 = BaseMetaItemPipe
+	 * 1 = BaseMetaPipeEntity
 	 */
 	public byte getTileEntityBaseType();
 	
@@ -38,6 +36,11 @@ public interface IMetaTileEntity extends ISidedInventory, IFluidTank, IFluidHand
 	public IMetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity);
 	
 	/**
+	 * @return an ItemStack representing this MetaTileEntity.
+	 */
+	public ItemStack getStackForm(long aAmount);
+	
+	/**
 	 * Sets the BaseMetaTileEntity of this
 	 */
 	public void setBaseMetaTileEntity(IGregTechTileEntity aBaseMetaTileEntity);
@@ -46,6 +49,11 @@ public interface IMetaTileEntity extends ISidedInventory, IFluidTank, IFluidHand
 	 * new getter for the BaseMetaTileEntity, which restricts usage to certain Functions.
 	 */
 	public IGregTechTileEntity getBaseMetaTileEntity();
+
+	/**
+	 * when placing a Machine in World, to initialize default Modes. aNBT can be null!
+	 */
+	public void initDefaultModes(NBTTagCompound aNBT);
 	
 	/**
 	 * ^= writeToNBT
@@ -67,6 +75,11 @@ public interface IMetaTileEntity extends ISidedInventory, IFluidTank, IFluidHand
 	 * Called in the registered MetaTileEntity when the Server starts, to reset static variables
 	 */
 	public void onServerStart();
+	
+	/**
+	 * Called in the registered MetaTileEntity when the Server ticks the first time, to initialize static variables
+	 */
+	public void onFirstServerTick();
 	
 	/**
 	 * Called in the registered MetaTileEntity when the Server stops, to reset static variables
@@ -242,6 +255,14 @@ public interface IMetaTileEntity extends ISidedInventory, IFluidTank, IFluidHand
 	 */
 	public boolean isSimpleMachine();
 	
+	/**
+	 * If there should be a Lag Warning if something laggy happens during this Tick.
+	 * 
+	 * The Advanced Pump uses this to not cause the Lag Message, while it scans for all close Fluids.
+	 * The Item Pipes and Retrievers neither send this Message, when scanning for Pipes.
+	 */
+	public boolean doTickProfilingMessageDuringThisTick();
+	
     /**
      * returns the DebugLog
      */
@@ -275,7 +296,7 @@ public interface IMetaTileEntity extends ISidedInventory, IFluidTank, IFluidHand
 	 * @param aActive if the Machine is currently active (use this instead of calling mBaseMetaTileEntity.mActive!!!)
 	 * @param aRedstone if the Machine is currently outputting a RedstoneSignal (use this instead of calling mBaseMetaTileEntity.mRedstone!!!)
 	 */
-	public IIcon getTextureIcon(byte aSide, byte aFacing, boolean aActive, boolean aRedstone);
+	public Icon getTextureIcon(byte aSide, byte aFacing, boolean aActive, boolean aRedstone);
 	
 	/**
 	 * Register Icons here. This gets called when the Icons get initialized by the Base Block
@@ -283,19 +304,22 @@ public interface IMetaTileEntity extends ISidedInventory, IFluidTank, IFluidHand
 	 * @param aBlockIconRegister The Block Icon Register
 	 */
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IIconRegister aBlockIconRegister);
+	public void registerIcons(IconRegister aBlockIconRegister);
 	
 	/**
 	 * Gets the Output for the comparator on the given Side
 	 */
 	public byte getComparatorValue(byte aSide);
 	
-	public String getInventoryName();
+	public float getExplosionResistance(byte aSide);
 	
-	public String getMainInfo();
-	public String getSecondaryInfo();
-	public String getTertiaryInfo();
+	@Override
+	public String getInvName();
+	
+	public String[] getInfoData();
 	public boolean isGivingInformation();
 	
 	public ItemStack[] getRealInventory();
+
+	boolean connectsToItemPipe(byte aSide);
 }

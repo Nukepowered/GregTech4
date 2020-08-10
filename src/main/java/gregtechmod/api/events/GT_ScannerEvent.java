@@ -2,11 +2,11 @@ package gregtechmod.api.events;
 
 import java.util.ArrayList;
 
-import cpw.mods.fml.common.eventhandler.Cancelable;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import net.minecraftforge.event.Cancelable;
 import net.minecraftforge.event.world.WorldEvent;
 
 @Cancelable

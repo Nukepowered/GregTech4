@@ -1,25 +1,20 @@
 package gregtechmod.api.util;
 
-import gregtechmod.api.GregTech_API;
+import gregtechmod.api.enums.GT_Items;
+import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 
 public class GT_CreativeTab extends CreativeTabs {
-	public static ItemStack icon;
-	
+
 	public GT_CreativeTab() {
-		super("gregtech");
+		super("GregTech");
+		LanguageRegistry.instance().addStringLocalization("itemGroup.GregTech", "GregTech Intergalactical");
 	}
 	
 	@Override
     public ItemStack getIconItemStack() {
-		return icon != null ? icon : (icon = GregTech_API.getGregTechItem(55, 1, 0)) != null ? icon : new ItemStack(Blocks.iron_block, 1);
+        return GT_Items.Tool_Cheat.getUndamaged(1, new ItemStack(Block.blockIron, 1));
     }
-
-	@Override
-	public Item getTabIconItem() {
-		return null;
-	}
 }

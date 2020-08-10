@@ -10,7 +10,7 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
@@ -18,14 +18,13 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+
 import com.google.common.collect.Multimap;
 
-import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -42,25 +41,27 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	protected final float mToolStrength;
 	
 	private short mDamagePerContainerCraft = 10, mDamagePerWeaponUse = 3, mDamagePerBlockBreak = 1;
-	private int mTier = 1, mEUperBrokenBlock = 1000, mSilklevel = 0, mFortunelevel = 0, mLootinglevel = 0;
-	private String mToolClass1, mToolClass2, mToolClass3, mCraftingSound, mBreakingSound, mBlockBreakSound, mEntityHitSound;
+	private int mTier = 1, mEUperBrokenBlock = -1, mEUperHitEntity = -1, mSilklevel = 0, mFortunelevel = 0, mLootinglevel = 0;
+	private String mToolClasses[], mCraftingSound, mBreakingSound, mBlockBreakSound, mEntityHitSound;
 	private float mCraftingSoundStrength = 1, mBreakingSoundStrength = 1, mBlockBreakSoundStrength = 1, mEntityHitSoundStrength = 1;
+	private final boolean mSwingIfUsed;
 	
-	public GT_Tool_Item(String aName, String aTooltip, int aMaxDamage, int aEntityDamage) {
-		this(aName, aTooltip, aMaxDamage, aEntityDamage, -1, -1);
+	public GT_Tool_Item(int aID, String aUnlocalized, String aEnglish, String aTooltip, int aMaxDamage, int aEntityDamage, boolean aSwingIfUsed) {
+		this(aID, aUnlocalized, aEnglish, aTooltip, aMaxDamage, aEntityDamage, aSwingIfUsed, -1, -1);
 	}
 	
-	public GT_Tool_Item(String aName, String aTooltip, int aMaxDamage, int aEntityDamage, int aChargedGTID, int aDisChargedGTID) {
-		this(aName, aTooltip, aMaxDamage, aEntityDamage, aChargedGTID, aDisChargedGTID, 0, 0.0F);
+	public GT_Tool_Item(int aID, String aUnlocalized, String aEnglish, String aTooltip, int aMaxDamage, int aEntityDamage, boolean aSwingIfUsed, int aChargedGTID, int aDisChargedGTID) {
+		this(aID, aUnlocalized, aEnglish, aTooltip, aMaxDamage, aEntityDamage, aSwingIfUsed, aChargedGTID, aDisChargedGTID, 0, 0.0F);
 	}
 	
-	public GT_Tool_Item(String aName, String aTooltip, int aMaxDamage, int aEntityDamage, int aChargedGTID, int aDisChargedGTID, int aToolQuality, float aToolStrength) {
-		super(aName, aTooltip);
+	public GT_Tool_Item(int aID, String aUnlocalized, String aEnglish, String aTooltip, int aMaxDamage, int aEntityDamage, boolean aSwingIfUsed, int aChargedGTID, int aDisChargedGTID, int aToolQuality, float aToolStrength) {
+		super(aID, aUnlocalized, aEnglish, aTooltip, aTooltip != null && !aTooltip.equals("Doesn't work as intended, this is a Bug"));
 		mEntityDamage = aEntityDamage;
 		mDisChargedGTID = aDisChargedGTID;
 		mChargedGTID = aChargedGTID;
 		mToolQuality = Math.max(aToolQuality, 0);
 		mToolStrength = aToolStrength;
+		mSwingIfUsed = aSwingIfUsed;
 		setMaxDamage(aMaxDamage);
 		setMaxStackSize(1);
 		setNoRepair();
@@ -79,12 +80,11 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	}
 	
 	public final GT_Tool_Item addToBlockList(ItemStack aBlock) {
-		if (aBlock != null && aBlock.getItem() != null && aBlock.getItem() instanceof ItemBlock) mEffectiveBlocksList.add(Block.getBlockFromItem(aBlock.getItem()));
-		return this;
+		return addToBlockList(GT_Utility.getBlockFromStack(aBlock));
 	}
 	
 	public final GT_Tool_Item addToBlockList(Block aBlock) {
-		if (aBlock != null) mEffectiveBlocksList.add(aBlock);
+		if (GT_Utility.isBlockValid(aBlock)) mEffectiveBlocksList.add(aBlock);
 		return this;
 	}
 	
@@ -97,27 +97,22 @@ public class GT_Tool_Item extends GT_Generic_Item {
 		mTier = Math.max(1, aTier);
 		return this;
 	}
-	
+
 	public final GT_Tool_Item setElectricConsumptionPerBrokenBlock(int aEU) {
 		mEUperBrokenBlock = Math.max(0, aEU);
 		return this;
 	}
-
-	public final GT_Tool_Item setPrimaryToolClass(String aClass) {
-		mToolClass1 = aClass;
+	
+	public final GT_Tool_Item setElectricConsumptionPerHitEntity(int aEU) {
+		mEUperHitEntity = Math.max(0, aEU);
 		return this;
 	}
 	
-	public final GT_Tool_Item setSecondaryToolClass(String aClass) {
-		mToolClass2 = aClass;
+	public final GT_Tool_Item setToolClasses(String... aClasses) {
+		mToolClasses = aClasses;
 		return this;
 	}
-
-	public final GT_Tool_Item setTertiaryToolClass(String aClass) {
-		mToolClass3 = aClass;
-		return this;
-	}
-
+	
 	public final GT_Tool_Item setCraftingSound(String aSound) {
 		mCraftingSound = aSound;
 		return this;
@@ -127,7 +122,7 @@ public class GT_Tool_Item extends GT_Generic_Item {
 		mBreakingSound = aSound;
 		return this;
 	}
-
+	
 	public final GT_Tool_Item setBlockBreakSound(String aSound) {
 		mBlockBreakSound = aSound;
 		return this;
@@ -160,7 +155,7 @@ public class GT_Tool_Item extends GT_Generic_Item {
 		return this;
 	}
 	
-	public final GT_Tool_Item registerAtOreDict(String aName) {
+	public final GT_Tool_Item registerAtOreDict(Object aName) {
 		GT_OreDictUnificator.registerOre(aName, new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		return this;
 	}
@@ -199,13 +194,13 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	}
 	
 	public void onHitEntity(Entity aEntity) {
-		
+		//
 	}
 	
 	public void checkEnchantmentEffects(ItemStack aStack) {
 		if (aStack != null) {
-			if (aStack.hasTagCompound()) aStack.stackTagCompound.removeTag("ench");
-			if (!GT_ModHandler.isElectricItem(aStack) || GT_ModHandler.canUseElectricItem(aStack, mEUperBrokenBlock)) {
+			if (aStack.isItemEnchanted()) aStack.stackTagCompound.getTags().remove(aStack.stackTagCompound.getTag("ench"));
+			if (!GT_ModHandler.isElectricItem(aStack) || GT_ModHandler.canUseElectricItem(aStack, mEUperBrokenBlock < 0 ? getDamagePerBlockBreak() * 1000 : mEUperBrokenBlock)) {
 				if (mSilklevel		> 0) aStack.addEnchantment(Enchantment.silkTouch	, mSilklevel);
 				if (mFortunelevel	> 0) aStack.addEnchantment(Enchantment.fortune		, mFortunelevel);
 				if (mLootinglevel	> 0) aStack.addEnchantment(Enchantment.looting		, mLootinglevel);
@@ -213,17 +208,13 @@ public class GT_Tool_Item extends GT_Generic_Item {
 		}
 	}
 	
-	public Item getEmptyItem(ItemStack aStack) {
-		return this;
-	}
-	
-	public Item getChargedItem(ItemStack itemStack) {
-		return this;
+	public ItemStack getEmptyItem(ItemStack aStack) {
+		return null;
 	}
 	
 	@Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister aIconRegister) {
+    public void registerIcons(IconRegister aIconRegister) {
 		super.registerIcons(aIconRegister);
 		if (mChargedGTID >= 0)		((GT_Generic_Item)GregTech_API.sItemList[mChargedGTID])		.mIcon = mIcon;
 		if (mDisChargedGTID >= 0)	((GT_Generic_Item)GregTech_API.sItemList[mDisChargedGTID])	.mIcon = mIcon;
@@ -238,15 +229,15 @@ public class GT_Tool_Item extends GT_Generic_Item {
     
 	@Override
 	public boolean onItemUseFirst(ItemStack aStack, EntityPlayer aPlayer, World aWorld, int aX, int aY, int aZ, int aSide, float hitX, float hitY, float hitZ) {
+		if (mSwingIfUsed) aPlayer.swingItem();
 		GT_ModHandler.useElectricItem(aStack, 0, aPlayer);
 		checkEnchantmentEffects(aStack);
 		return false;
 	}
 	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item var1, CreativeTabs var2, List aList) {
+    public void getSubItems(int var1, CreativeTabs var2, List aList) {
 		if (GT_ModHandler.isElectricItem(new ItemStack(this, 1))) {
 	        ItemStack tCharged = new ItemStack(this, 1);
 	        GT_ModHandler.chargeElectricItem(tCharged, Integer.MAX_VALUE, Integer.MAX_VALUE, true, false);
@@ -254,11 +245,6 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	        return;
 		}
 		aList.add(new ItemStack(this, 1));
-    }
-	
-	@Override
-	public boolean doesSneakBypassUse(World world, int x, int y, int z, EntityPlayer player) {
-        return true;
     }
 	
 	@Override
@@ -277,15 +263,15 @@ public class GT_Tool_Item extends GT_Generic_Item {
     }
 	
 	@Override
-    public final ItemStack getContainerItem(ItemStack aStack) {
+    public final ItemStack getContainerItemStack(ItemStack aStack) {
 		checkEnchantmentEffects(aStack);
 		aStack = GT_Utility.copy(aStack);
 		if (aStack.getItemDamage() > aStack.getMaxDamage()) {
-			GT_Utility.doSoundAtClient(mBreakingSound, mBreakingSoundStrength);
-			ItemStack tStack = new ItemStack(getEmptyItem(aStack));
+			GT_Utility.doSoundAtClient(mBreakingSound, 1, mBreakingSoundStrength);
+			ItemStack tStack = getEmptyItem(aStack);
 			if (tStack != null) return tStack;
 		} else {
-			GT_Utility.doSoundAtClient(mCraftingSound, mCraftingSoundStrength);
+			GT_Utility.doSoundAtClient(mCraftingSound, 1, mCraftingSoundStrength);
 			GT_ModHandler.damageOrDechargeItem(aStack, getDamagePerContainerItemCraft(), getDamagePerContainerItemCraft()*1000, null);
 		}
 		checkEnchantmentEffects(aStack);
@@ -308,97 +294,72 @@ public class GT_Tool_Item extends GT_Generic_Item {
 		GT_Utility.sendSoundToPlayers(aEntity.worldObj, mEntityHitSound, mEntityHitSoundStrength, -1, (int)aEntity.posX, (int)aEntity.posY, (int)aEntity.posZ);
 		checkEnchantmentEffects(aStack);
 		if (mEntityDamage > 1) {
-			GT_ModHandler.damageOrDechargeItem(aStack, getDamagePerWeaponUse(), getDamagePerWeaponUse() * 1000, aPlayer);
-			if (aEntity != null) onHitEntity(aEntity);
+			GT_ModHandler.damageOrDechargeItem(aStack, getDamagePerWeaponUse(), mEUperHitEntity < 0 ? getDamagePerWeaponUse() * 1000 : mEUperHitEntity, aPlayer);
+			onHitEntity(aEntity);
 			checkEnchantmentEffects(aStack);
 			return true;
 		}
         return false;
     }
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-    public Multimap getAttributeModifiers(ItemStack stack) {
-        Multimap multimap = super.getAttributeModifiers(stack);
+    public Multimap getItemAttributeModifiers() {
+        Multimap multimap = super.getItemAttributeModifiers();
         multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Weapon modifier", mEntityDamage>0?mEntityDamage:1, 0));
         return multimap;
     }
 	
-//	@Override // FIXME: dynamic damage
-//	public float getDamageVsEntity() { // To provide with entities, use Item#onLeftClickEntity
-//		checkEnchantmentEffects(aStack);
-//		int tDamage = mEntityDamage;
-//		if (mEffectiveAgainstList.contains(GT_Utility.getClassName(aAttackedEntity))) tDamage *= 2;
-//		if (tDamage > 1) {
-//			if (GT_ModHandler.isElectricItem(aStack)) {
-//				if (GT_ModHandler.canUseElectricItem(aStack, getDamagePerWeaponUse() * 1000)) {
-//					return tDamage;
-//				} else {
-//					return 1;
-//				}
-//			} else {
-//				return tDamage;
-//			}
-//		}
-//        return 1.0F;
-//    }
+	@Override
+    public final float getDamageVsEntity(Entity aAttackedEntity, ItemStack aStack) {
+		checkEnchantmentEffects(aStack);
+		int tDamage = mEntityDamage;
+		if (mEffectiveAgainstList.contains(GT_Utility.getClassName(aAttackedEntity))) tDamage *= 2;
+		if (tDamage > 1) {
+			if (GT_ModHandler.isElectricItem(aStack)) {
+				if (GT_ModHandler.canUseElectricItem(aStack, mEUperHitEntity < 0 ? getDamagePerWeaponUse() * 1000 : mEUperHitEntity)) return tDamage;
+				return 1;
+			}
+			return tDamage;
+		}
+        return 1;
+    }
 	
 	private final boolean isEffectiveAgainst(Block aBlock, int aMeta) {
-		if (mToolStrength > 1 && aBlock != null) {
-			Float tHarvestLevel = ReflectionHelper.getPrivateValue(Block.class, aBlock, new String[] {"blockHardness", "field_149782_v"});
-			if (getPrimaryToolClass() != null) {
-				if (tHarvestLevel >= 0) return tHarvestLevel <= mToolQuality;
+		if (mToolStrength > 1 && GT_Utility.isBlockValid(aBlock)) {
+			if (mToolClasses != null) for (String tToolClass : mToolClasses) {
+				int tHarvestLevel = MinecraftForge.getBlockHarvestLevel(aBlock, aMeta==-1?0:aMeta, tToolClass);
+				if (tHarvestLevel >= 0 && tHarvestLevel <= mToolQuality) return true;
 			}
-			if (getSecondaryToolClass() != null) {
-				if (tHarvestLevel >= 0) return tHarvestLevel <= mToolQuality;
-			}
-			if (getTertiaryToolClass() != null) {
-				if (tHarvestLevel >= 0) return tHarvestLevel <= mToolQuality;
-			}
-			if (mEffectiveMaterialsList.contains(aBlock.getMaterial())) return true;
+			if (mEffectiveMaterialsList.contains(aBlock.blockMaterial)) return true;
 			if (mEffectiveBlocksList.contains(aBlock)) return true;
-			for (String tString : mEffectiveOreDictList) {
-				if (GT_OreDictUnificator.isItemStackInstanceOf(new ItemStack(aBlock, 1, aMeta==-1?GregTech_API.ITEM_WILDCARD_DAMAGE:aMeta), tString)) return true;
-			}
+			for (String tString : mEffectiveOreDictList) if (GT_OreDictUnificator.isItemStackInstanceOf(new ItemStack(aBlock, 1, aMeta==-1?GregTech_API.ITEM_WILDCARD_DAMAGE:aMeta), tString)) return true;
 		}
 		return false;
 	}
 	
-    public final String getPrimaryToolClass() {
-        return mToolClass1;
-    }
-    
-    public final String getSecondaryToolClass() {
-        return mToolClass2;
-    }
-    
-    public final String getTertiaryToolClass() {
-        return mToolClass3;
-    }
-    
 	@Override
     public final boolean canHarvestBlock(Block aBlock, ItemStack aStack) {
-		return func_150897_b(aBlock) && (!GT_ModHandler.isElectricItem(aStack) || GT_ModHandler.canUseElectricItem(aStack, mEUperBrokenBlock));
+		return canHarvestBlock(aBlock) && (!GT_ModHandler.isElectricItem(aStack) || GT_ModHandler.canUseElectricItem(aStack, mEUperBrokenBlock < 0 ? getDamagePerBlockBreak() * 1000 : mEUperBrokenBlock));
     }
 	
 	@Override
-    public final boolean func_150897_b(Block aBlock) {
+    public final boolean canHarvestBlock(Block aBlock) {
 		return mToolStrength > 1 && isEffectiveAgainst(aBlock, -1);
     }
     
     @Override
-    public float getDigSpeed(ItemStack aStack, Block aBlock, int aMeta) {
+    public float getStrVsBlock(ItemStack aStack, Block aBlock, int aMeta) {
 		checkEnchantmentEffects(aStack);
-    	if (mToolStrength <= 1 || !isEffectiveAgainst(aBlock, aMeta) || (GT_ModHandler.isElectricItem(aStack) && !GT_ModHandler.canUseElectricItem(aStack, mEUperBrokenBlock))) return 1.0F;
+    	if (mToolStrength <= 1 || !isEffectiveAgainst(aBlock, aMeta) || (GT_ModHandler.isElectricItem(aStack) && !GT_ModHandler.canUseElectricItem(aStack, mEUperBrokenBlock < 0 ? getDamagePerBlockBreak() * 1000 : mEUperBrokenBlock))) return 1.0F;
         return mToolStrength;
     }
     
 	@Override
-    public final boolean onBlockDestroyed(ItemStack aStack, World aWorld, Block aBlock, int aX, int aY, int aZ, EntityLivingBase aPlayer) {
+    public final boolean onBlockDestroyed(ItemStack aStack, World aWorld, int aID, int aX, int aY, int aZ, EntityLivingBase aPlayer) {
 		GT_Utility.sendSoundToPlayers(aWorld, mBlockBreakSound, mBlockBreakSoundStrength, -1, aX, aY, aZ);
 		checkEnchantmentEffects(aStack);
-		if (mToolStrength > 1 && (double) aBlock.getBlockHardness(aWorld, aX, aY, aZ) != 0.0D) {
-        	GT_ModHandler.damageOrDechargeItem(aStack, getDamagePerBlockBreak(), getDamagePerBlockBreak()*mEUperBrokenBlock, aPlayer);
+		if (mToolStrength > 1 && Block.blocksList[aID].getBlockHardness(aWorld, aX, aY, aZ) != 0.0) {
+        	GT_ModHandler.damageOrDechargeItem(aStack, getDamagePerBlockBreak(), mEUperBrokenBlock < 0 ? getDamagePerBlockBreak() * 1000 : mEUperBrokenBlock, aPlayer);
     		checkEnchantmentEffects(aStack);
         }
         return true;
@@ -409,11 +370,19 @@ public class GT_Tool_Item extends GT_Generic_Item {
         return false;
     }
     
-	public final boolean canProvideEnergy(ItemStack aStack) {
+	public boolean canProvideEnergy(ItemStack aStack) {
 		return false;
 	}
 	
-	public final double getMaxCharge(ItemStack aStack) {
+	public final int getChargedItemId(ItemStack aStack) {
+		return mChargedGTID<0?itemID:GregTech_API.sItemList[mChargedGTID].itemID;
+	}
+	
+	public final int getEmptyItemId(ItemStack aStack) {
+		return mDisChargedGTID<0?itemID:GregTech_API.sItemList[mDisChargedGTID].itemID;
+	}
+	
+	public final int getMaxCharge(ItemStack aStack) {
 		return getMaxDamage() * 1000;
 	}
 	
@@ -422,7 +391,7 @@ public class GT_Tool_Item extends GT_Generic_Item {
 		return mTier;
 	}
 	
-	public final double getTransferLimit(ItemStack aStack) {
-		return Math.pow(2, mTier) * 128;
+	public final int getTransferLimit(ItemStack aStack) {
+		return (int)(Math.pow(2, mTier) * 128);
 	}
 }

@@ -1,8 +1,8 @@
 package gregtechmod.api.items;
 
 import gregtechmod.api.GregTech_API;
+import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.util.GT_ModHandler;
-import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -10,7 +10,6 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntityCaveSpider;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -18,8 +17,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class GT_Spray_Bug_Item extends GT_Tool_Item {
-	public GT_Spray_Bug_Item(String aName, int aMaxDamage, int aEntityDamage) {
-		super(aName, "A very 'buggy' Spray", aMaxDamage, aEntityDamage);
+	public GT_Spray_Bug_Item(int aID, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage) {
+		super(aID, aUnlocalized, aEnglish, "A very 'buggy' Spray", aMaxDamage, aEntityDamage, true);
 		addToEffectiveList(EntityCaveSpider.class.getName());
 		addToEffectiveList(EntitySpider.class.getName());
 		addToEffectiveList("EntityTFHedgeSpider");
@@ -43,13 +42,8 @@ public class GT_Spray_Bug_Item extends GT_Tool_Item {
 	}
 	
 	@Override
-	public Item getEmptyItem(ItemStack aStack) {
-		ItemStack dictionary = GT_OreDictUnificator.getFirstOre("craftingSprayCan", 1);
-		aStack.func_150996_a(dictionary.getItem());
-		aStack.stackSize = 1;
-		aStack.setTagCompound(dictionary.getTagCompound());
-		aStack.setItemDamage(dictionary.getItemDamage());
-		return dictionary.getItem();
+	public ItemStack getEmptyItem(ItemStack aStack) {
+		return GT_Items.Spray_Empty.get(1);
 	}
 	
 	@Override
@@ -58,9 +52,10 @@ public class GT_Spray_Bug_Item extends GT_Tool_Item {
 		if (aWorld.isRemote) {
     		return false;
     	}
-    	Block aBlock = aWorld.getBlock(aX, aY, aZ);
+    	Block aBlock = Block.blocksList[aWorld.getBlockId(aX, aY, aZ)];
     	if (aBlock == null) return false;
-    	TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ);
+//    	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
+    	TileEntity aTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
     	
     	try {
     		if (aTileEntity instanceof ic2.api.crops.ICropTile) {
@@ -71,7 +66,7 @@ public class GT_Spray_Bug_Item extends GT_Tool_Item {
 	        		return true;
 	    		}
     		}
-    	} catch (Throwable e) {}
+    	} catch (Throwable e) {/*Do nothing*/}
     	
     	return false;
     }

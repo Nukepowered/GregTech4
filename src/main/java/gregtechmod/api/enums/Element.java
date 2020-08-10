@@ -71,7 +71,7 @@ public enum Element {
 	La		(  57,  81,   0,          -1, null		, "Lantanium"		),
 	Ce		(  58,  82,   0,          -1, null		, "Cerium"			),
 	Pr		(  59,  81,   0,          -1, null		, "Praseodymium"	),
-	Nd		(  60,  84,   0,          -1, null		, "Neidymium"		),
+	Nd		(  60,  84,   0,          -1, null		, "Neodymium"		),
 	Pm		(  61,  83,   0,          -1, null		, "Promethium"		),
 	Sm		(  62,  88,   0,          -1, null		, "Samarium"		),
 	Eu		(  63,  88,   0,          -1, null		, "Europium"		),
@@ -108,7 +108,7 @@ public enum Element {
 	Np		(  93, 144,   0,          -1, null		, "Neptunium"		),
 	Pu		(  94, 152,   0,          -1, null		, "Plutonium"		),
 	Pu_241	(  94, 149,   0,          -1, null		, "Plutonium-241"	),
-	Am		(  95, 150,   0,          -1, null		, "Americum"		),
+	Am		(  95, 150,   0,          -1, null		, "Americium"		),
 	Cm		(  96, 153,   0,          -1, null		, "Curium"			),
 	Bk		(  97, 152,   0,          -1, null		, "Berkelium"		),
 	Cf		(  98, 153,   0,          -1, null		, "Californium"		),
@@ -134,7 +134,7 @@ public enum Element {
 	Uuo		( 118, 176,   0,          -1, null		, "Ununoctium"		),
 	
 	Ma		(   0,   0, 100,          -1, null		, "Magic"			),
-	Nt		(0, 100000,   0,          -1, null		, "Neutronium"		),
+	Nt		(   0,1000,   0,          -1, null		, "Neutronium"		),
 	
 	$H		(-  1,-  0,   0,          -1, null		, "Anti-Hydrogen"		),
 	$D		(-  1,-  1,   0,          -1, "H"		, "Anti-Deuterium"		),
@@ -306,5 +306,5 @@ public enum Element {
 		return mProtons + mNeutrons + mAdditionalMass;
 	}
 	
-	public static volatile int VERSION = 404;
+	public static volatile int VERSION = 408;
 }

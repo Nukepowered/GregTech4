@@ -17,10 +17,9 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class GT_ContainerMetaTile_Machine extends GT_Container {
     
-    public GT_ContainerMetaTile_Machine (InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
+    public GT_ContainerMetaTile_Machine(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
     	super(aInventoryPlayer, aTileEntity);
     	mTileEntity = aTileEntity;
-        mID = aID;
         
     	if (mTileEntity != null && mTileEntity.getMetaTileEntity() != null) {
             addSlots(aInventoryPlayer);
@@ -34,8 +33,7 @@ public class GT_ContainerMetaTile_Machine extends GT_Container {
     public  int mActive = 0, mMaxProgressTime = 0, mProgressTime = 0, mMJ = 0, mEnergy = 0, mMJStorage = 0, mSteam = 0, mSteamStorage = 0, mStorage = 0, mOutput = 0, mInput = 0, mID = 0, mDisplayErrorCode = 0;
     private int oActive = 0, oMaxProgressTime = 0, oProgressTime = 0, oMJ = 0, oEnergy = 0, oMJStorage = 0, oSteam = 0, oSteamStorage = 0, oStorage = 0, oOutput = 0, oInput = 0, oID = 0, oDisplayErrorCode = 0, mTimer = 0;
     
-    @SuppressWarnings("rawtypes")
-	@Override
+    @Override
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
     	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;

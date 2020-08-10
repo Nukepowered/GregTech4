@@ -99,6 +99,15 @@ public interface IGT_RecipeAdder {
 	 * @param aEUt should be > 0
 	 */
 	public boolean addAssemblerRecipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, int aDuration, int aEUt);
+
+	/**
+	 * Adds a Forge Hammer Recipe
+	 * @param aInput1 must be != null
+	 * @param aOutput1 must be != null
+	 * @param aDuration must be > 0
+	 * @param aEUt should be > 0
+	 */
+	public boolean addForgeHammerRecipe(ItemStack aInput1, ItemStack aOutput1, int aDuration, int aEUt);
 	
 	/**
 	 * Adds a Wiremill Recipe
@@ -108,7 +117,7 @@ public interface IGT_RecipeAdder {
 	 * @param aEUt should be > 0
 	 */
 	public boolean addWiremillRecipe(ItemStack aInput1, ItemStack aOutput1, int aDuration, int aEUt);
-	
+
 	/**
 	 * Adds a Plate Bending Machine Recipe
 	 * @param aInput1 must be != null
@@ -117,6 +126,16 @@ public interface IGT_RecipeAdder {
 	 * @param aEUt should be > 0
 	 */
 	public boolean addBenderRecipe(ItemStack aInput1, ItemStack aOutput1, int aDuration, int aEUt);
+	
+	/**
+	 * Adds a Extruder Machine Recipe
+	 * @param aInput1 must be != null
+	 * @param aShape must be != null, Set the stackSize to 0 if you don't want to let it consume this Item.
+	 * @param aOutput1 must be != null
+	 * @param aDuration must be > 0
+	 * @param aEUt should be > 0
+	 */
+	public boolean addExtruderRecipe(ItemStack aInput1, ItemStack aShape, ItemStack aOutput1, int aDuration, int aEUt);
 	
 	/**
 	 * Adds an Implosion Compressor Recipe

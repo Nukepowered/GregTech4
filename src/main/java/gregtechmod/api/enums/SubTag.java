@@ -22,7 +22,7 @@ public final class SubTag {
 	
 	/**
 	 * Materials which are outputting less in an Induction Smelter. Already listed are:
-	 * Pyrite
+	 * Pyrite, Tetrahedrite, Sphalerite, Cinnabar
 	 */
 	public static final SubTag INDUCTIONSMELTING_LOW_OUTPUT = new SubTag("INDUCTIONSMELTING_LOW_OUTPUT");
 	
@@ -37,6 +37,35 @@ public final class SubTag {
 	 * Gold, Silver, Osmium, Mithril, Platinum, Midasium, Cooperite and AstralSilver.
 	 */
 	public static final SubTag WASHING_MERCURY			= new SubTag("WASHING_MERCURY");
+	
+	/**
+	 * Add this to your Material if you want to have its Ore giving Cinnabar Crystals on Pulverization. Already listed are:
+	 * Redstone
+	 */
+	public static final SubTag PULVERIZING_CINNABAR		= new SubTag("PULVERIZING_CINNABAR");
+	
+	/**
+	 * This Material cannot be used for regular Metal working techniques since it is not possible to bend it. Already listed are:
+	 * Rubber, Plastic, Paper, Wood, Stone
+	 */
+	public static final SubTag NO_SMASHING				= new SubTag("NO_SMASHING");
+	
+	/**
+	 * This Material cannot be used in any Furnace alike Structure. Already listed are:
+	 * Paper, Wood, Gunpowder, Stone
+	 */
+	public static final SubTag NO_SMELTING				= new SubTag("NO_SMELTING");
+	
+	/**
+	 * This Ore should be smolten directly into a Gem of this Material, if the Ingot is missing. Already listed are:
+	 * Cinnabar
+	 */
+	public static final SubTag SMELTING_TO_GEM			= new SubTag("SMELTING_TO_GEM");
+	
+	/**
+	 * If this Material should glow enchantedly
+	 */
+	public static final SubTag ENCHANTMENT_GLOW			= new SubTag("ENCHANTMENT_GLOW");
 	
 	public final long mSubtagID;
 	public final String mName;

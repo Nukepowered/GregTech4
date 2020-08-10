@@ -31,4 +31,9 @@ public class ElementStack implements Cloneable {
 	public String toString() {
 		return mElement.toString()+mAmount;
 	}
+
+	@Override
+	public int hashCode() {
+		return mElement.hashCode();
+	}
 }

@@ -12,8 +12,8 @@ public class GT_MetaTileEntity_Hatch_Output extends GT_MetaTileEntity_BasicTank 
 	
 	public byte mMode = 0;
 	
-	public GT_MetaTileEntity_Hatch_Output(int aID, String mName) {
-		super(aID, mName);
+	public GT_MetaTileEntity_Hatch_Output(int aID, String aName, String aNameRegional) {
+		super(aID, aName, aNameRegional);
 	}
 	
 	public GT_MetaTileEntity_Hatch_Output() {

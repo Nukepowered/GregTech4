@@ -6,16 +6,15 @@ import gregtechmod.api.util.GT_ModHandler;
 import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_EnergyStore_Item extends GT_Generic_Item {
-	public int mCharge, mTransfer, mTier, mEmptyID, mFullID;
+	protected int mCharge, mTransfer, mTier, mEmptyID, mFullID;
 	
-	public GT_EnergyStore_Item(String aName, int aCharge, int aTransfer, int aTier, int aEmptyID, int aFullID) {
-		super(aName, null);
+	public GT_EnergyStore_Item(int aID, String aUnlocalized, String aEnglish, int aCharge, int aTransfer, int aTier, int aEmptyID, int aFullID) {
+		super(aID, aUnlocalized, aEnglish, null);
 		setMaxStackSize(1);
 		setMaxDamage(100);
 		setNoRepair();
@@ -26,17 +25,18 @@ public class GT_EnergyStore_Item extends GT_Generic_Item {
 		mFullID = aFullID;
 	}
     
-    public boolean getShareTag() {
+    @Override
+	public boolean getShareTag() {
         return true;
     }
     
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @Override
 	@SideOnly(Side.CLIENT)
     public void getSubItems(int var1, CreativeTabs var2, List var3) {
-        ItemStack tCharged = GregTech_API.getGregTechItem(mFullID, 1, 0), tUncharged = GregTech_API.getGregTechItem(mEmptyID, 1, getMaxDamage());
+        ItemStack tCharged = new ItemStack(GregTech_API.sItemList[mFullID], 1, 0), tUncharged = new ItemStack(GregTech_API.sItemList[mEmptyID], 1, getMaxDamage() - 1);
         GT_ModHandler.chargeElectricItem(tCharged, Integer.MAX_VALUE, Integer.MAX_VALUE, true, false);
-        if (this == GregTech_API.getGregTechItem(mFullID, 1, 0).getItem()) var3.add(tCharged);
-        if (this == GregTech_API.getGregTechItem(mEmptyID, 1, 0).getItem()) var3.add(tUncharged);
+        if (this == GregTech_API.sItemList[mFullID]) var3.add(tCharged);
+        if (this == GregTech_API.sItemList[mEmptyID]) var3.add(tUncharged);
     }
     
 	@Override
@@ -54,27 +54,8 @@ public class GT_EnergyStore_Item extends GT_Generic_Item {
         return false;
     }
 	
-	public boolean canProvideEnergy(ItemStack aStack) {
-		return true;
-	}
-	
-	public Item getChargedItem(ItemStack itemStack) {
-		return GregTech_API.getGregTechItem(mFullID, 1, 0).getItem();
-	}
-	
-	public Item getEmptyItem(ItemStack itemStack) {
-		return GregTech_API.getGregTechItem(mEmptyID, 1, 0).getItem();
-	}
-	
-	public double getMaxCharge(ItemStack aStack) {
-		return mCharge;
-	}
-	
+	@Override
 	public int getTier(ItemStack aStack) {
 		return mTier;
-	}
-	
-	public double getTransferLimit(ItemStack aStack) {
-		return mTransfer;
 	}
 }

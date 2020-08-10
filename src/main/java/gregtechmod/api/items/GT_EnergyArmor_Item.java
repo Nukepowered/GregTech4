@@ -1,6 +1,7 @@
 package gregtechmod.api.items;
 
 import gregtechmod.api.GregTech_API;
+import gregtechmod.api.util.GT_LanguageManager;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 
@@ -8,13 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.client.resources.I18n;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
+import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,8 +24,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -35,14 +34,15 @@ public class GT_EnergyArmor_Item extends ItemArmor implements ISpecialArmor {
 	public boolean mChargeProvider;
 	public double mArmorAbsorbtionPercentage;
 	
-    public static Map<EntityPlayer, Float> jumpChargeMap = new HashMap<>();
+    public static Map jumpChargeMap = new HashMap();
     
-	public GT_EnergyArmor_Item(String aName, int aCharge, int aTransfer, int aTier, int aDamageEnergyCost, int aSpecials, double aArmorAbsorbtionPercentage, boolean aChargeProvider, int aType, int aArmorIndex) {
-		super(ArmorMaterial.DIAMOND, aArmorIndex, aType);
+	public GT_EnergyArmor_Item(int aID, String aUnlocalized, String aEnglish, int aCharge, int aTransfer, int aTier, int aDamageEnergyCost, int aSpecials, double aArmorAbsorbtionPercentage, boolean aChargeProvider, int aType, int aArmorIndex) {
+		super(aID, EnumArmorMaterial.DIAMOND, aArmorIndex, aType);
 		setMaxStackSize(1);
 		setMaxDamage(100);
 		setNoRepair();
-		setUnlocalizedName(aName);
+		setUnlocalizedName(aUnlocalized);
+		GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".name", aEnglish);
 		mCharge = Math.max(1, aCharge);
 		mTransfer = Math.max(1, aTransfer);
 		mTier = Math.max(1, aTier);
@@ -73,28 +73,27 @@ public class GT_EnergyArmor_Item extends ItemArmor implements ISpecialArmor {
 	
 	@Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister aIconRegister) {
+    public void registerIcons(IconRegister aIconRegister) {
         this.itemIcon = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_ITEM + getUnlocalizedName());
     }
     
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
     public void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean aF3_H) {
-		aList.add(I18n.format("item.electric.tier.tooltip", mTier));
-		if ((mSpecials &    1) != 0) aList.add(I18n.format("item.armor.capability.tooltip_1"));
-		if ((mSpecials &    2) != 0) aList.add(I18n.format("item.armor.capability.tooltip_2"));
-		if ((mSpecials &    4) != 0) aList.add(I18n.format("item.armor.capability.tooltip_3"));
-		if ((mSpecials &    8) != 0) aList.add(I18n.format("item.armor.capability.tooltip_4"));
-		if ((mSpecials &   16) != 0) aList.add(I18n.format("item.armor.capability.tooltip_5"));
-		if ((mSpecials &   32) != 0) aList.add(I18n.format("item.armor.capability.tooltip_6"));
-		if ((mSpecials &   64) != 0) aList.add(I18n.format("item.armor.capability.tooltip_7"));
-		if ((mSpecials &  128) != 0) aList.add(I18n.format("item.armor.capability.tooltip_8"));
-		if ((mSpecials &  256) != 0) aList.add(I18n.format("item.armor.capability.tooltip_9"));
-		if ((mSpecials &  512) != 0) aList.add(I18n.format("item.armor.capability.tooltip_10"));
-		if ((mSpecials & 1024) != 0) aList.add(I18n.format("item.armor.capability.tooltip_11"));
+		aList.add("Tier: " + mTier);
+		if ((mSpecials &    1) != 0) aList.add("Rebreather");
+		if ((mSpecials &    2) != 0) aList.add("Inertia Damper");
+		if ((mSpecials &    4) != 0) aList.add("Food Replicator");
+		if ((mSpecials &    8) != 0) aList.add("Medicine Module");
+		if ((mSpecials &   16) != 0) aList.add("Lamp");
+		if ((mSpecials &   32) != 0) aList.add("Solarpanel");
+		if ((mSpecials &   64) != 0) aList.add("Extinguisher Module");
+		if ((mSpecials &  128) != 0) aList.add("Jump Booster");
+		if ((mSpecials &  256) != 0) aList.add("Speed Booster");
+		if ((mSpecials &  512) != 0) aList.add("Invisibility Field");
+		if ((mSpecials & 1024) != 0) aList.add("Infinite Charge");
     }
 	
-    private void setCharge(ItemStack aStack) {
+    private static void setCharge(ItemStack aStack) {
 		NBTTagCompound tNBT = aStack.getTagCompound();
 		if (tNBT == null) tNBT = new NBTTagCompound();
 		tNBT.setInteger("charge", 1000000000);
@@ -102,7 +101,7 @@ public class GT_EnergyArmor_Item extends ItemArmor implements ISpecialArmor {
     }
     
 	@Override
-	public void onArmorTick(World aWorld, EntityPlayer aPlayer, ItemStack aStack) {
+	public void onArmorTickUpdate(World aWorld, EntityPlayer aPlayer, ItemStack aStack) {
 		if (mSpecials == 0) return;
 		
 		if (!aPlayer.worldObj.isRemote && (mSpecials & 1) != 0) {
@@ -150,8 +149,8 @@ public class GT_EnergyArmor_Item extends ItemArmor implements ISpecialArmor {
                     	aPlayer.motionZ *= 3.5D;
                     }
 
-                    aPlayer.motionY += (double)(var6 * 0.3F);
-                    var6 = (float)((double)var6 * 0.75D);
+                    aPlayer.motionY += (var6 * 0.3F);
+                    var6 = (float)(var6 * 0.75D);
                 } else if (var6 < 1.0F) {
                     var6 = 0.0F;
                 }
@@ -195,7 +194,7 @@ public class GT_EnergyArmor_Item extends ItemArmor implements ISpecialArmor {
 				if (GT_ModHandler.chargeElectricItem(tTargetChargeItem, 1, Integer.MAX_VALUE, true, true) < 1) {
 					tTargetChargeItem = aPlayer.inventory.armorInventory[2];
 				}
-				if (GT_ModHandler.dischargeElectricItem(tTargetDechargeItem, 10, Integer.MAX_VALUE, true, true, true, true) < 10) {
+				if (GT_ModHandler.dischargeElectricItem(tTargetDechargeItem, 10, Integer.MAX_VALUE, true, true, true) < 10) {
 					tTargetDechargeItem = aPlayer.inventory.armorInventory[2];
 				}
 				
@@ -212,8 +211,8 @@ public class GT_EnergyArmor_Item extends ItemArmor implements ISpecialArmor {
 					}
 				} else {
 					if ((mSpecials & 16) != 0 && tTargetDechargeItem != null && GT_ModHandler.canUseElectricItem(tTargetDechargeItem, 10)) {
-						if (aPlayer.worldObj.getBlock	((int)aPlayer.posX, (int)aPlayer.posY+1, (int)aPlayer.posZ) == Blocks.air)
-							aPlayer.worldObj.setBlock	((int)aPlayer.posX, (int)aPlayer.posY+1, (int)aPlayer.posZ, GregTech_API.sBlockList[3]);
+						if (aPlayer.worldObj.getBlockId	((int)aPlayer.posX, (int)aPlayer.posY+1, (int)aPlayer.posZ) == 0)
+							aPlayer.worldObj.setBlock	((int)aPlayer.posX, (int)aPlayer.posY+1, (int)aPlayer.posZ, GregTech_API.sBlockList[3].blockID);
 						GT_ModHandler.useElectricItem(tTargetDechargeItem, 10, aPlayer);
 					}
 				}
@@ -226,10 +225,9 @@ public class GT_EnergyArmor_Item extends ItemArmor implements ISpecialArmor {
         return true;
     }
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
     @SideOnly(Side.CLIENT)
-    public void getSubItems(Item aStack, CreativeTabs var2, List var3) {
+    public void getSubItems(int aStack, CreativeTabs var2, List var3) {
         ItemStack tCharged = new ItemStack(this, 1), tUncharged = new ItemStack(this, 1, getMaxDamage());
         GT_ModHandler.chargeElectricItem(tCharged, Integer.MAX_VALUE, Integer.MAX_VALUE, true, false);
         var3.add(tCharged);
@@ -241,17 +239,17 @@ public class GT_EnergyArmor_Item extends ItemArmor implements ISpecialArmor {
 		return mChargeProvider;
 	}
 	
-	public Item getChargedItem(ItemStack aStack) {
+	public int getChargedItemId(ItemStack aStack) {
 		if ((mSpecials & 1024) != 0) setCharge(aStack);
-		return aStack.getItem();
-	}
-
-	public Item getEmptyItem(ItemStack aStack) {
-		if ((mSpecials & 1024) != 0) setCharge(aStack);
-		return aStack.getItem();
+		return itemID;
 	}
 	
-	public double getMaxCharge(ItemStack aStack) {
+	public int getEmptyItemId(ItemStack aStack) {
+		if ((mSpecials & 1024) != 0) setCharge(aStack);
+		return itemID;
+	}
+	
+	public int getMaxCharge(ItemStack aStack) {
 		if ((mSpecials & 1024) != 0) setCharge(aStack);
 		return mCharge;
 	}
@@ -261,7 +259,7 @@ public class GT_EnergyArmor_Item extends ItemArmor implements ISpecialArmor {
 		return mTier;
 	}
 	
-	public double getTransferLimit(ItemStack aStack) {
+	public int getTransferLimit(ItemStack aStack) {
 		if ((mSpecials & 1024) != 0) setCharge(aStack);
 		return mTransfer;
 	}
@@ -281,7 +279,7 @@ public class GT_EnergyArmor_Item extends ItemArmor implements ISpecialArmor {
         return false;
     }
 	
-    @SubscribeEvent
+    @ForgeSubscribe
     public void onEntityLivingFallEvent(LivingFallEvent var1) {
         if (!var1.entity.worldObj.isRemote && var1.entity instanceof EntityPlayer) {
             EntityPlayer var2 = (EntityPlayer)var1.entity;
@@ -290,8 +288,8 @@ public class GT_EnergyArmor_Item extends ItemArmor implements ISpecialArmor {
 	            if (var3 != null && var3.getItem() == this && (mSpecials & 2) != 0) {
 	                int var4 = (int)var1.distance - 3;
 	                int var5 = (this.mDamageEnergyCost * var4) / 4;
-	                if (var5 <= GT_ModHandler.dischargeElectricItem(var3, Integer.MAX_VALUE, Integer.MAX_VALUE, true, true, true, false)) {
-	                    GT_ModHandler.dischargeElectricItem(var3, var5, Integer.MAX_VALUE, true, false, true, false);
+	                if (var5 <= GT_ModHandler.dischargeElectricItem(var3, Integer.MAX_VALUE, Integer.MAX_VALUE, true, true, true)) {
+	                    GT_ModHandler.dischargeElectricItem(var3, var5, Integer.MAX_VALUE, true, false, true);
 	                    var1.setCanceled(true);
 	                    break;
 	                }
@@ -302,7 +300,7 @@ public class GT_EnergyArmor_Item extends ItemArmor implements ISpecialArmor {
     
 	@Override
     public ISpecialArmor.ArmorProperties getProperties(EntityLivingBase var1, ItemStack var2, DamageSource var3, double var4, int var6) {
-    	return new ISpecialArmor.ArmorProperties((var3 == DamageSource.fall && (mSpecials & 2) != 0)?10:0, getBaseAbsorptionRatio() * mArmorAbsorbtionPercentage, (int) (mDamageEnergyCost > 0 ? 25 * GT_ModHandler.dischargeElectricItem(var2, Integer.MAX_VALUE, Integer.MAX_VALUE, true, true, true, false) / mDamageEnergyCost : 0));
+    	return new ISpecialArmor.ArmorProperties((var3 == DamageSource.fall && (mSpecials & 2) != 0)?10:0, getBaseAbsorptionRatio() * mArmorAbsorbtionPercentage, mDamageEnergyCost > 0 ? 25 * GT_ModHandler.dischargeElectricItem(var2, Integer.MAX_VALUE, Integer.MAX_VALUE, true, true, true) / mDamageEnergyCost : 0);
     }
 	
 	@Override
@@ -312,13 +310,9 @@ public class GT_EnergyArmor_Item extends ItemArmor implements ISpecialArmor {
 	
 	@Override
     public void damageArmor(EntityLivingBase var1, ItemStack var2, DamageSource var3, int var4, int var5) {
-        GT_ModHandler.dischargeElectricItem(var2, var4 * mDamageEnergyCost, Integer.MAX_VALUE, true, false, true, false);
+        GT_ModHandler.dischargeElectricItem(var2, var4 * mDamageEnergyCost, Integer.MAX_VALUE, true, false, true);
     }
 	
-    public boolean isMetalArmor(ItemStack var1, EntityPlayer var2) {
-        return true;
-    }
-    
     private double getBaseAbsorptionRatio() {
     	if (mArmorAbsorbtionPercentage <= 0) return 0.00;
         switch (this.armorType) {
