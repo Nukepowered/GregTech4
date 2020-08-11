@@ -339,40 +339,40 @@ public class GregTech_API {
 	/**
 	 * Creates a new Coolant Cell Item for your Nuclear Reactor
 	 */
-	public static Item constructCoolantCellItem(Item aItem, String aUnlocalized, String aEnglish, int aMaxStore) {
+	public static Item constructCoolantCellItem(int aID, String aUnlocalized, String aEnglish, int aMaxStore) {
 		try {
-			return (Item)Class.forName("gregtechmod.api.items.GT_CoolantCellIC_Item").getConstructors()[0].newInstance(aItem, aUnlocalized, aEnglish, aMaxStore);
+			return (Item)Class.forName("gregtechmod.api.items.GT_CoolantCellIC_Item").getConstructors()[0].newInstance(aID, aUnlocalized, aEnglish, aMaxStore);
 		} catch(Throwable e) {/*Do nothing*/}
 		try {
-			return (Item)Class.forName("gregtechmod.api.items.GT_CoolantCell_Item").getConstructors()[0].newInstance(aItem, aUnlocalized, aEnglish, aMaxStore);
+			return (Item)Class.forName("gregtechmod.api.items.GT_CoolantCell_Item").getConstructors()[0].newInstance(aID, aUnlocalized, aEnglish, aMaxStore);
 		} catch(Throwable e) {/*Do nothing*/}
-		return new gregtechmod.api.items.GT_Generic_Item(aItem, aUnlocalized, aEnglish, "Doesn't work as intended, this is a Bug", false);
+		return new gregtechmod.api.items.GT_Generic_Item(aID, aUnlocalized, aEnglish, "Doesn't work as intended, this is a Bug", false);
 	}
 	
 	/**
 	 * Creates a new Energy Armor Item
 	 */
-	public static Item constructElectricArmorItem(Item aItem, String aUnlocalized, String aEnglish, int aCharge, int aTransfer, int aTier, int aDamageEnergyCost, int aSpecials, double aArmorAbsorbtionPercentage, boolean aChargeProvider, int aType, int aArmorIndex) {
+	public static Item constructElectricArmorItem(int aID, String aUnlocalized, String aEnglish, int aCharge, int aTransfer, int aTier, int aDamageEnergyCost, int aSpecials, double aArmorAbsorbtionPercentage, boolean aChargeProvider, int aType, int aArmorIndex) {
 		try {
-			return (Item)Class.forName("gregtechmod.api.items.GT_EnergyArmorIC_Item").getConstructors()[0].newInstance(aItem, aUnlocalized, aEnglish, aCharge, aTransfer, aTier, aDamageEnergyCost, aSpecials, aArmorAbsorbtionPercentage, aChargeProvider, aType, aArmorIndex);
+			return (Item)Class.forName("gregtechmod.api.items.GT_EnergyArmorIC_Item").getConstructors()[0].newInstance(aID, aUnlocalized, aEnglish, aCharge, aTransfer, aTier, aDamageEnergyCost, aSpecials, aArmorAbsorbtionPercentage, aChargeProvider, aType, aArmorIndex);
 		} catch(Throwable e) {/*Do nothing*/}
 		try {
-			return (Item)Class.forName("gregtechmod.api.items.GT_EnergyArmor_Item").getConstructors()[0].newInstance(aItem, aUnlocalized, aEnglish, aCharge, aTransfer, aTier, aDamageEnergyCost, aSpecials, aArmorAbsorbtionPercentage, aChargeProvider, aType, aArmorIndex);
+			return (Item)Class.forName("gregtechmod.api.items.GT_EnergyArmor_Item").getConstructors()[0].newInstance(aID, aUnlocalized, aEnglish, aCharge, aTransfer, aTier, aDamageEnergyCost, aSpecials, aArmorAbsorbtionPercentage, aChargeProvider, aType, aArmorIndex);
 		} catch(Throwable e) {/*Do nothing*/}
-		return new gregtechmod.api.items.GT_Generic_Item(aItem, aUnlocalized, aEnglish, "Doesn't work as intended, this is a Bug", false);
+		return new gregtechmod.api.items.GT_Generic_Item(aID, aUnlocalized, aEnglish, "Doesn't work as intended, this is a Bug", false);
 	}
 	
 	/**
 	 * Creates a new Energy Battery Item
 	 */
-	public static Item constructElectricEnergyStorageItem(Item aItem, String aUnlocalized, String aEnglish, int aCharge, int aTransfer, int aTier, int aEmptyID, int aFullID) {
+	public static Item constructElectricEnergyStorageItem(int aID, String aUnlocalized, String aEnglish, int aCharge, int aTransfer, int aTier, int aEmptyID, int aFullID) {
 		try {
-			return (Item)Class.forName("gregtechmod.api.items.GT_EnergyStoreIC_Item").getConstructors()[0].newInstance(aItem, aUnlocalized, aEnglish, aCharge, aTransfer, aTier, aEmptyID, aFullID);
+			return (Item)Class.forName("gregtechmod.api.items.GT_EnergyStoreIC_Item").getConstructors()[0].newInstance(aID, aUnlocalized, aEnglish, aCharge, aTransfer, aTier, aEmptyID, aFullID);
 		} catch(Throwable e) {/*Do nothing*/}
 		try {
-			return (Item)Class.forName("gregtechmod.api.items.GT_EnergyStore_Item").getConstructors()[0].newInstance(aItem, aUnlocalized, aEnglish, aCharge, aTransfer, aTier, aEmptyID, aFullID);
+			return (Item)Class.forName("gregtechmod.api.items.GT_EnergyStore_Item").getConstructors()[0].newInstance(aID, aUnlocalized, aEnglish, aCharge, aTransfer, aTier, aEmptyID, aFullID);
 		} catch(Throwable e) {/*Do nothing*/}
-		return new gregtechmod.api.items.GT_Generic_Item(aItem, aUnlocalized, aEnglish, "Doesn't work as intended, this is a Bug", false);
+		return new gregtechmod.api.items.GT_Generic_Item(aID, aUnlocalized, aEnglish, "Doesn't work as intended, this is a Bug", false);
 	}
 	
 	/**
@@ -468,8 +468,7 @@ public class GregTech_API {
 		return new gregtechmod.api.items.GT_Tool_Item(aID, aUnlocalized, aEnglish, "Doesn't work as intended, this is a Bug", aMaxDamage, 0, false);
 	}
 	
-	@SuppressWarnings("rawtypes")
-	private static Class sBaseMetaTileEntityClass = null;
+	private static Class<?> sBaseMetaTileEntityClass = null;
 	
 	/**
 	 * This gives you a new BaseMetaTileEntity. As some Interfaces are not always loaded (Buildcraft, Univeral Electricity) I have to use Invocation at the Constructor of the BaseMetaTileEntity
@@ -506,7 +505,6 @@ public class GregTech_API {
 			return (BaseMetaTileEntity)(sBaseMetaTileEntityClass.newInstance());
 		} catch(Throwable e) {
 			GT_Log.log.error("GT_Mod: Fatal Error ocurred while initializing TileEntities, crashing Minecraft.");
-			GT_Log.log.catching(e);
 			throw new RuntimeException(e);
 		}
 	}
