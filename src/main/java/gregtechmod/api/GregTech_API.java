@@ -13,12 +13,12 @@ import gregtechmod.api.world.GT_Worldgen;
 import java.util.*;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.Icon;
 import net.minecraft.world.ChunkPosition;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -114,7 +114,7 @@ public class GregTech_API {
 	public static boolean sPreloadStarted = false, sPreloadFinished = false, sLoadStarted = false, sLoadFinished = false, sPostloadStarted = false, sPostloadFinished = false;
 	
 	/** The Icon List for Covers */
-	public static final Map<Integer, Icon> sCovers = new HashMap<Integer, Icon>();
+	public static final Map<Integer, IIcon> sCovers = new HashMap<Integer, IIcon>();
 	
 	/** The List of Circuit Behaviors for the Redstone Circuit Block */
 	public static final Map<Integer, GT_CircuitryBehavior> sCircuitryBehaviors = new HashMap<Integer, GT_CircuitryBehavior>();
@@ -195,8 +195,8 @@ public class GregTech_API {
 	public static ItemStack getGregTechBlock(int aIndex, int aAmount, int aMeta) {
     	if (aIndex < GregTech_API.sBlockList.length && aIndex >= 0) {
 	    	if (GregTech_API.sBlockList[aIndex] != null) return new ItemStack(GregTech_API.sBlockList[aIndex], aAmount, aMeta);
-	    	GT_Log.err.println("GregTech_API ERROR: This Block Index " + aIndex + " wasn't initialized, you either called it before the Init-Phase (Only Post-Init or later will work), or this Item doesn't exist now");
-    	} else GT_Log.err.println("GregTech_API ERROR: The Index " + aIndex + " is not part of my Block Range");
+	    	GT_Log.log.error("GregTech_API ERROR: This Block Index " + aIndex + " wasn't initialized, you either called it before the Init-Phase (Only Post-Init or later will work), or this Item doesn't exist now");
+    	} else GT_Log.log.error("GregTech_API ERROR: The Index " + aIndex + " is not part of my Block Range");
 		return null;
 	}
 	
@@ -224,8 +224,8 @@ public class GregTech_API {
 	public static ItemStack getGregTechItem(int aIndex, int aAmount, int aMeta) {
     	if (aIndex < GregTech_API.sItemList.length && aIndex >= 0) {
 	    	if (GregTech_API.sItemList[aIndex] != null) return GT_OreDictUnificator.get(true, new ItemStack(GregTech_API.sItemList[aIndex], aAmount, aMeta));
-	    	GT_Log.err.println("GregTech_API ERROR: This Item Index " + aIndex + " wasn't initialized, you either called it before the Init-Phase (Only Post-Init or later will work), or this Item doesn't exist now");
-    	} else GT_Log.err.println("GregTech_API ERROR: The Index " + aIndex + " is not part of my Item Range");
+	    	GT_Log.log.error("GregTech_API ERROR: This Item Index " + aIndex + " wasn't initialized, you either called it before the Init-Phase (Only Post-Init or later will work), or this Item doesn't exist now");
+    	} else GT_Log.log.error("GregTech_API ERROR: The Index " + aIndex + " is not part of my Item Range");
 		return null;
 	}
 	
@@ -270,7 +270,7 @@ public class GregTech_API {
 	 * @return Either an unificated Stack or the stack you toss in, but it should never be null, unless you throw a Nullpointer into it.
 	 */
 	public static ItemStack getUnificatedOreDictStack(ItemStack aOreStack) {
-		if (!GregTech_API.sPreloadFinished) GT_Log.err.println("GregTech_API ERROR: " + aOreStack.getItem() + "." + aOreStack.getItemDamage() + " - OreDict Unification Entries are not registered now, please call it in the postload phase.");
+		if (!GregTech_API.sPreloadFinished) GT_Log.log.error("GregTech_API ERROR: " + aOreStack.getItem() + "." + aOreStack.getItemDamage() + " - OreDict Unification Entries are not registered now, please call it in the postload phase.");
 		return GT_OreDictUnificator.get(true, aOreStack);
 	}
 	
@@ -290,11 +290,11 @@ public class GregTech_API {
 	
 	private static void stepToUpdateMachine(World aWorld, int aX, int aY, int aZ, ArrayList<ChunkPosition> aList) {
 		aList.add(new ChunkPosition(aX, aY, aZ));
-		TileEntity tTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
+		TileEntity tTileEntity = aWorld.getTileEntity(aX, aY, aZ);
 		if (tTileEntity != null && tTileEntity instanceof IMachineBlockUpdateable) {
 			((IMachineBlockUpdateable)tTileEntity).onMachineBlockUpdate();
 		}
-		if (aList.size() < 5 || (tTileEntity != null && tTileEntity instanceof IMachineBlockUpdateable) || GregTech_API.isMachineBlock(Block.blocksList[aWorld.getBlockId(aX, aY, aZ)], aWorld.getBlockMetadata(aX, aY, aZ))) {
+		if (aList.size() < 5 || (tTileEntity != null && tTileEntity instanceof IMachineBlockUpdateable) || GregTech_API.isMachineBlock(aWorld.getBlock(aX, aY, aZ), aWorld.getBlockMetadata(aX, aY, aZ))) {
 			if (!aList.contains(new ChunkPosition(aX + 1, aY, aZ))) stepToUpdateMachine(aWorld, aX + 1, aY, aZ, aList);
 			if (!aList.contains(new ChunkPosition(aX - 1, aY, aZ))) stepToUpdateMachine(aWorld, aX - 1, aY, aZ, aList);
 			if (!aList.contains(new ChunkPosition(aX, aY + 1, aZ))) stepToUpdateMachine(aWorld, aX, aY + 1, aZ, aList);
@@ -468,7 +468,7 @@ public class GregTech_API {
 		return new gregtechmod.api.items.GT_Tool_Item(aID, aUnlocalized, aEnglish, "Doesn't work as intended, this is a Bug", aMaxDamage, 0, false);
 	}
 	
-	private static Class sBaseMetaTileEntityClass = null;
+	private static Class<?> sBaseMetaTileEntityClass = null;
 	
 	/**
 	 * This gives you a new BaseMetaTileEntity. As some Interfaces are not always loaded (Buildcraft, Univeral Electricity) I have to use Invocation at the Constructor of the BaseMetaTileEntity
@@ -504,8 +504,7 @@ public class GregTech_API {
 		try {
 			return (BaseMetaTileEntity)(sBaseMetaTileEntityClass.newInstance());
 		} catch(Throwable e) {
-			GT_Log.err.println("GT_Mod: Fatal Error ocurred while initializing TileEntities, crashing Minecraft.");
-			e.printStackTrace(GT_Log.err);
+			GT_Log.log.error("GT_Mod: Fatal Error ocurred while initializing TileEntities, crashing Minecraft.");
 			throw new RuntimeException(e);
 		}
 	}
@@ -515,7 +514,7 @@ public class GregTech_API {
 	 * 
 	 * Best is you make a Runnable with all Cover Registrations, and add it to the Cover Registration ArrayList ontop of this File.
 	 */
-	public static void registerCover(ItemStack aStack, Icon aCover) {
+	public static void registerCover(ItemStack aStack, IIcon aCover) {
 		int tStack = GT_Utility.stackToInt(aStack);
 		if (tStack != 0 && sCovers.get(tStack) == null) sCovers.put(tStack, aCover);
 	}
@@ -525,16 +524,16 @@ public class GregTech_API {
 	 */
 	public static void registerCover(ItemStack aStack, String aCover) {
 		if (aCover != null && !aCover.equals("") && sBlockIcons != null) {try {
-			registerCover(aStack, ((net.minecraft.client.renderer.texture.IconRegister)sBlockIcons).registerIcon(aCover));
+			registerCover(aStack, ((IIconRegister)sBlockIcons).registerIcon(aCover));
 			return;
 		} catch(Throwable e) {/*Do nothing*/}}
-		registerCover(aStack, (Icon)null);
+		registerCover(aStack, (IIcon)null);
 	}
 	
 	/**
 	 * Registers multiple Cover Items. I use that for the OreDict Functionality.
 	 */
-	public static void registerCover(Collection<ItemStack> aStackList, Icon aCover) {
+	public static void registerCover(Collection<ItemStack> aStackList, IIcon aCover) {
 		for (ItemStack tStack : aStackList) {
 			registerCover(tStack, aCover);
 		}
