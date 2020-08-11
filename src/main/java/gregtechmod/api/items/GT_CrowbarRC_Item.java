@@ -9,6 +9,7 @@ import java.util.List;
 
 import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -22,8 +23,8 @@ import net.minecraft.item.ItemStack;
  * Achievement get: Defused the legal Stuff of an Interface instead of asking CJ :P
  */
 public class GT_CrowbarRC_Item extends GT_Crowbar_Item implements mods.railcraft.api.core.items.IToolCrowbar {
-	public GT_CrowbarRC_Item(int aID, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage) {
-		super(aID, aUnlocalized, aEnglish, aMaxDamage, aEntityDamage);
+	public GT_CrowbarRC_Item(Item aItem, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage) {
+		super(aItem, aUnlocalized, aEnglish, aMaxDamage, aEntityDamage);
 	}
 	
 	@Override
@@ -65,8 +66,9 @@ public class GT_CrowbarRC_Item extends GT_Crowbar_Item implements mods.railcraft
 	}
 	
 	@Override
+	//TODO: localization
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
 		super.addAdditionalToolTips(aList, aStack);
-		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_rc", "Works as Railcraft Crowbar too"));
+//		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_rc", "Works as Railcraft Crowbar too"));
 	}
 }

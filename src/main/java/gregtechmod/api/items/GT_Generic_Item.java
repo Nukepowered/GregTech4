@@ -5,11 +5,11 @@ import gregtechmod.api.util.*;
 
 import java.util.List;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -19,19 +19,18 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 public class GT_Generic_Item extends Item {
 	
-	public Icon mIcon;
+	public IIcon mIcon;
 	
-	private final String mTooltip;
 	
-	public GT_Generic_Item(int aID, String aUnlocalized, String aEnglish, String aEnglishTooltip) {
-		this(aID, aUnlocalized, aEnglish, aEnglishTooltip, true);
+	public GT_Generic_Item(Item aItem, String aUnlocalized, String aEnglish, String aEnglishTooltip) {
+		this(aItem, aUnlocalized, aEnglish, aEnglishTooltip, true);
 	}
-	
-	public GT_Generic_Item(int aID, String aUnlocalized, String aEnglish, String aEnglishTooltip, boolean aWriteToolTipIntoLangFile) {
-		super(aID);
+	//TODO: сделать локализацию
+	public GT_Generic_Item(Item aItem, String aUnlocalized, String aEnglish, String aEnglishTooltip, boolean aWriteToolTipIntoLangFile) {
+		super();
 		setUnlocalizedName(aUnlocalized);
-		GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".name", aEnglish);
-		if (GT_Utility.isStringValid(aEnglishTooltip)) GT_LanguageManager.addStringLocalization(mTooltip = getUnlocalizedName() + ".tooltip_main", aEnglishTooltip, aWriteToolTipIntoLangFile); else mTooltip = null;
+//		GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".name", aEnglish);
+//		if (GT_Utility.isStringValid(aEnglishTooltip)) GT_LanguageManager.addStringLocalization(mTooltip = getUnlocalizedName() + ".tooltip_main", aEnglishTooltip, aWriteToolTipIntoLangFile); else mTooltip = null;
 		setCreativeTab(GregTech_API.TAB_GREGTECH);
 	}
 	
@@ -42,17 +41,17 @@ public class GT_Generic_Item extends Item {
 	
 	@Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister aIconRegister) {
+    public void registerIcons(IIconRegister aIconRegister) {
 		mIcon = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_ITEM + (GT_Config.system?"troll":getUnlocalizedName()));
     }
 	
-	@Override
+	//TODO: Посмотри, нужен ли вообще такой метод
     public boolean shouldPassSneakingClickToBlock(World aWorld, int aX, int aY, int aZ) {
         return true;
     }
 	
 	@Override
-    public Icon getIconFromDamage(int par1) {
+    public IIcon getIconFromDamage(int par1) {
         return mIcon;
     }
 	
@@ -62,9 +61,9 @@ public class GT_Generic_Item extends Item {
 	
 	@Override
     public void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean aF3_H) {
-		if (getMaxDamage() > 0 && !getHasSubtypes()) aList.add((aStack.getMaxDamage() - getDamage(aStack)) + " / " + aStack.getMaxDamage());
-	    if (mTooltip != null) aList.add(GT_LanguageManager.getTranslation(mTooltip));
-	    if (GT_ModHandler.isElectricItem(aStack)) aList.add("Tier: " + getTier(aStack));
+//		if (getMaxDamage() > 0 && !getHasSubtypes()) aList.add((aStack.getMaxDamage() - getDamage(aStack)) + " / " + aStack.getMaxDamage());
+//	    if (mTooltip != null) aList.add(GT_LanguageManager.getTranslation(mTooltip));
+//	    if (GT_ModHandler.isElectricItem(aStack)) aList.add("Tier: " + getTier(aStack));
 	    addAdditionalToolTips(aList, aStack);
 	}
 	

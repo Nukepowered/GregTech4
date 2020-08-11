@@ -10,7 +10,7 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
@@ -18,6 +18,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -25,6 +26,7 @@ import net.minecraftforge.common.MinecraftForge;
 
 import com.google.common.collect.Multimap;
 
+import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -46,16 +48,16 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	private float mCraftingSoundStrength = 1, mBreakingSoundStrength = 1, mBlockBreakSoundStrength = 1, mEntityHitSoundStrength = 1;
 	private final boolean mSwingIfUsed;
 	
-	public GT_Tool_Item(int aID, String aUnlocalized, String aEnglish, String aTooltip, int aMaxDamage, int aEntityDamage, boolean aSwingIfUsed) {
-		this(aID, aUnlocalized, aEnglish, aTooltip, aMaxDamage, aEntityDamage, aSwingIfUsed, -1, -1);
+	public GT_Tool_Item(Item aItem, String aUnlocalized, String aEnglish, String aTooltip, int aMaxDamage, int aEntityDamage, boolean aSwingIfUsed) {
+		this(aItem, aUnlocalized, aEnglish, aTooltip, aMaxDamage, aEntityDamage, aSwingIfUsed, -1, -1);
 	}
 	
-	public GT_Tool_Item(int aID, String aUnlocalized, String aEnglish, String aTooltip, int aMaxDamage, int aEntityDamage, boolean aSwingIfUsed, int aChargedGTID, int aDisChargedGTID) {
-		this(aID, aUnlocalized, aEnglish, aTooltip, aMaxDamage, aEntityDamage, aSwingIfUsed, aChargedGTID, aDisChargedGTID, 0, 0.0F);
+	public GT_Tool_Item(Item aItem, String aUnlocalized, String aEnglish, String aTooltip, int aMaxDamage, int aEntityDamage, boolean aSwingIfUsed, int aChargedGTID, int aDisChargedGTID) {
+		this(aItem, aUnlocalized, aEnglish, aTooltip, aMaxDamage, aEntityDamage, aSwingIfUsed, aChargedGTID, aDisChargedGTID, 0, 0.0F);
 	}
 	
-	public GT_Tool_Item(int aID, String aUnlocalized, String aEnglish, String aTooltip, int aMaxDamage, int aEntityDamage, boolean aSwingIfUsed, int aChargedGTID, int aDisChargedGTID, int aToolQuality, float aToolStrength) {
-		super(aID, aUnlocalized, aEnglish, aTooltip, aTooltip != null && !aTooltip.equals("Doesn't work as intended, this is a Bug"));
+	public GT_Tool_Item(Item aItem, String aUnlocalized, String aEnglish, String aTooltip, int aMaxDamage, int aEntityDamage, boolean aSwingIfUsed, int aChargedGTID, int aDisChargedGTID, int aToolQuality, float aToolStrength) {
+		super(aItem, aUnlocalized, aEnglish, aTooltip, aTooltip != null && !aTooltip.equals("Doesn't work as intended, this is a Bug"));
 		mEntityDamage = aEntityDamage;
 		mDisChargedGTID = aDisChargedGTID;
 		mChargedGTID = aChargedGTID;
@@ -199,7 +201,7 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	
 	public void checkEnchantmentEffects(ItemStack aStack) {
 		if (aStack != null) {
-			if (aStack.isItemEnchanted()) aStack.stackTagCompound.getTags().remove(aStack.stackTagCompound.getTag("ench"));
+			if (aStack.isItemEnchanted()) aStack.stackTagCompound.removeTag("ench");
 			if (!GT_ModHandler.isElectricItem(aStack) || GT_ModHandler.canUseElectricItem(aStack, mEUperBrokenBlock < 0 ? getDamagePerBlockBreak() * 1000 : mEUperBrokenBlock)) {
 				if (mSilklevel		> 0) aStack.addEnchantment(Enchantment.silkTouch	, mSilklevel);
 				if (mFortunelevel	> 0) aStack.addEnchantment(Enchantment.fortune		, mFortunelevel);
@@ -208,13 +210,9 @@ public class GT_Tool_Item extends GT_Generic_Item {
 		}
 	}
 	
-	public ItemStack getEmptyItem(ItemStack aStack) {
-		return null;
-	}
-	
 	@Override
     @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister aIconRegister) {
+    public void registerIcons(IIconRegister aIconRegister) {
 		super.registerIcons(aIconRegister);
 		if (mChargedGTID >= 0)		((GT_Generic_Item)GregTech_API.sItemList[mChargedGTID])		.mIcon = mIcon;
 		if (mDisChargedGTID >= 0)	((GT_Generic_Item)GregTech_API.sItemList[mDisChargedGTID])	.mIcon = mIcon;
@@ -327,10 +325,10 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	private final boolean isEffectiveAgainst(Block aBlock, int aMeta) {
 		if (mToolStrength > 1 && GT_Utility.isBlockValid(aBlock)) {
 			if (mToolClasses != null) for (String tToolClass : mToolClasses) {
-				int tHarvestLevel = MinecraftForge.getBlockHarvestLevel(aBlock, aMeta==-1?0:aMeta, tToolClass);
+				Float tHarvestLevel = ReflectionHelper.getPrivateValue(Block.class, aBlock, new String[] {"blockHardness", "field_149782_v"});
 				if (tHarvestLevel >= 0 && tHarvestLevel <= mToolQuality) return true;
 			}
-			if (mEffectiveMaterialsList.contains(aBlock.blockMaterial)) return true;
+			if (mEffectiveMaterialsList.contains(aBlock.getMaterial())) return true;
 			if (mEffectiveBlocksList.contains(aBlock)) return true;
 			for (String tString : mEffectiveOreDictList) if (GT_OreDictUnificator.isItemStackInstanceOf(new ItemStack(aBlock, 1, aMeta==-1?GregTech_API.ITEM_WILDCARD_DAMAGE:aMeta), tString)) return true;
 		}
@@ -374,11 +372,11 @@ public class GT_Tool_Item extends GT_Generic_Item {
 		return false;
 	}
 	
-	public final int getChargedItemId(ItemStack aStack) {
+	public final Item getChargedItem(ItemStack aStack) {
 		return mChargedGTID<0?itemID:GregTech_API.sItemList[mChargedGTID].itemID;
 	}
 	
-	public final int getEmptyItemId(ItemStack aStack) {
+	public final Item getEmptyItem(ItemStack aStack) {
 		return mDisChargedGTID<0?itemID:GregTech_API.sItemList[mDisChargedGTID].itemID;
 	}
 	
@@ -393,5 +391,9 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	
 	public final int getTransferLimit(ItemStack aStack) {
 		return (int)(Math.pow(2, mTier) * 128);
+	}
+
+	public ItemStack getEmptyItem(ItemStack aStack) {
+		return null;
 	}
 }

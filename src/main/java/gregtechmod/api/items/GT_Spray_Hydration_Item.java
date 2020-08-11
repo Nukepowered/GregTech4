@@ -7,13 +7,14 @@ import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class GT_Spray_Hydration_Item extends GT_Tool_Item {
-	public GT_Spray_Hydration_Item(int aID, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage) {
-		super(aID, aUnlocalized, aEnglish, "To hydrate Crops and similar", aMaxDamage, aEntityDamage, true);
+	public GT_Spray_Hydration_Item(Item aItem, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage) {
+		super(aItem, aUnlocalized, aEnglish, "To hydrate Crops and similar", aMaxDamage, aEntityDamage, true);
 		setCraftingSound(GregTech_API.sSoundList.get(102));
 		setBreakingSound(GregTech_API.sSoundList.get(102));
 		setEntityHitSound(GregTech_API.sSoundList.get(102));
@@ -31,10 +32,10 @@ public class GT_Spray_Hydration_Item extends GT_Tool_Item {
 		if (aWorld.isRemote) {
     		return false;
     	}
-    	Block aBlock = Block.blocksList[aWorld.getBlockId(aX, aY, aZ)];
+    	Block aBlock = aWorld.getBlock(aX, aY, aZ);
     	if (aBlock == null) return false;
 //    	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
-    	TileEntity aTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
+    	TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ);
     	
     	try {
     		if (aTileEntity instanceof ic2.api.crops.ICropTile) {

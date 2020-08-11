@@ -2,6 +2,7 @@ package gregtechmod.api.items;
 
 import java.util.List;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -10,8 +11,8 @@ public class GT_RadioactiveCell_Item extends GT_Generic_Item {
 	protected int maxDelay, pulserate, cellCount;
 	protected ItemStack mDepleted;
 	
-    public GT_RadioactiveCell_Item(int aID, String aUnlocalized, String aEnglish, int aMaxDelay, int aCellcount, int aPulseRate, ItemStack aDepleted) {
-        super(aID, aUnlocalized, aEnglish, null);
+    public GT_RadioactiveCell_Item(Item aItem, String aUnlocalized, String aEnglish, int aMaxDelay, int aCellcount, int aPulseRate, ItemStack aDepleted) {
+        super(aItem, aUnlocalized, aEnglish, null);
         setMaxStackSize(1);
         setMaxDamage(10000);
         setNoRepair();

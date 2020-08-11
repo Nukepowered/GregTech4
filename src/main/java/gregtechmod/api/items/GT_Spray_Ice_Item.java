@@ -14,15 +14,17 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class GT_Spray_Ice_Item extends GT_Tool_Item {
-	public GT_Spray_Ice_Item(int aID, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage) {
-		super(aID, aUnlocalized, aEnglish, "Very effective against Slimes", aMaxDamage, aEntityDamage, true);
+	public GT_Spray_Ice_Item(Item aItem, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage) {
+		super(aItem, aUnlocalized, aEnglish, "Very effective against Slimes", aMaxDamage, aEntityDamage, true);
 		addToEffectiveList(EntitySlime.class.getName());
 		addToEffectiveList("BlueSlime");
 		addToEffectiveList("SlimeClone");
@@ -36,7 +38,7 @@ public class GT_Spray_Ice_Item extends GT_Tool_Item {
 		setUsageAmounts(4, 16, 1);
 		
 		for (String tName : Arrays.asList(OrePrefixes.bucket.get(Materials.Water), OrePrefixes.cell.get(Materials.Water), OrePrefixes.capsule.get(Materials.Water))) {
-			GT_ModHandler.addShapelessCraftingRecipe(new ItemStack(Block.ice, 1, 0), false, new Object[] {new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), tName});
+			GT_ModHandler.addShapelessCraftingRecipe(new ItemStack(Blocks.ice, 1, 0), false, new Object[] {new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), tName});
 		}
 	}
 	
@@ -62,24 +64,24 @@ public class GT_Spray_Ice_Item extends GT_Tool_Item {
     	aX += ForgeDirection.getOrientation(aSide).offsetX;
     	aY += ForgeDirection.getOrientation(aSide).offsetY;
     	aZ += ForgeDirection.getOrientation(aSide).offsetZ;
-    	Block aBlock = Block.blocksList[aWorld.getBlockId(aX, aY, aZ)];
+    	Block aBlock = aWorld.getBlock(aX, aY, aZ);
     	if (aBlock == null) return false;
     	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
 //    	TileEntity aTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
     	
-    	if (aBlock == Block.waterStill || aBlock == Block.waterMoving) {
+    	if (aBlock == Blocks.water || aBlock == Blocks.flowing_water) {
     		if (aMeta == 0 && GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
     			GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(102), 1.0F, -1, aX, aY, aZ);
-        		aWorld.setBlock(aX, aY, aZ, Block.ice.blockID, 0, 3);
+        		aWorld.setBlock(aX, aY, aZ, Blocks.ice, 0, 3);
     			return true;
     		}
     		return false;
     	}
     	
-    	if (aBlock == Block.lavaStill || aBlock == Block.lavaMoving) {
+    	if (aBlock == Blocks.lava || aBlock == Blocks.flowing_lava) {
     		if (aMeta == 0 && GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
     			GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(102), 1.0F, -1, aX, aY, aZ);
-        		aWorld.setBlock(aX, aY, aZ, Block.obsidian.blockID, 0, 3);
+        		aWorld.setBlock(aX, aY, aZ, Blocks.obsidian, 0, 3);
     			return true;
     		}
     		return false;

@@ -1,14 +1,15 @@
 package gregtechmod.api.items;
 
-import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 
 
 public class GT_Drill_Item extends GT_Tool_Item {
-	public GT_Drill_Item(int aID, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage, int aToolQuality, float aToolStrength, int aEnergyConsumptionPerBlockBreak, int aDisChargedGTID) {
-		super(aID, aUnlocalized, aEnglish, "For quickly making Holes", aMaxDamage, aEntityDamage, true, -1, aDisChargedGTID, aToolQuality, aToolStrength);
+	public GT_Drill_Item(Item aItem, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage, int aToolQuality, float aToolStrength, int aEnergyConsumptionPerBlockBreak, int aDisChargedGTID) {
+		super(aItem, aUnlocalized, aEnglish, "For quickly making Holes", aMaxDamage, aEntityDamage, true, -1, aDisChargedGTID, aToolQuality, aToolStrength);
 		setElectricConsumptionPerBrokenBlock(aEnergyConsumptionPerBlockBreak);
-		addToBlockList(Block.silverfish);
-		addToBlockList(Block.tnt);
+		addToBlockList(Blocks.monster_egg);
+		addToBlockList(Blocks.tnt);
 	}
 	
 	@Override

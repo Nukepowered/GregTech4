@@ -3,8 +3,8 @@ package gregtechmod.api.enums;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IIconContainer;
 import gregtechmod.api.util.GT_Config;
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.util.Icon;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.util.IIcon;
 
 public class GT_ItemTextures implements Runnable {
 	public GT_ItemTextures() {
@@ -14,8 +14,8 @@ public class GT_ItemTextures implements Runnable {
 	@Override
 	public void run() {
 		for (MetaIcons tIcon : MetaIcons.values()) {
-			tIcon.mIcon		= ((IconRegister)GregTech_API.sItemIcons).registerIcon(GregTech_API.TEXTURE_PATH_ITEM + (GT_Config.system?"troll":"iconsets/" + tIcon));
-			tIcon.mOverlay	= ((IconRegister)GregTech_API.sItemIcons).registerIcon(GregTech_API.TEXTURE_PATH_ITEM + (GT_Config.system?"troll":"iconsets/" + tIcon + "_OVERLAY"));
+			tIcon.mIcon		= ((IIconRegister)GregTech_API.sItemIcons).registerIcon(GregTech_API.TEXTURE_PATH_ITEM + (GT_Config.system?"troll":"iconsets/" + tIcon));
+			tIcon.mOverlay	= ((IIconRegister)GregTech_API.sItemIcons).registerIcon(GregTech_API.TEXTURE_PATH_ITEM + (GT_Config.system?"troll":"iconsets/" + tIcon + "_OVERLAY"));
 		}
 	}
 	
@@ -61,10 +61,10 @@ public class GT_ItemTextures implements Runnable {
 		, GEAR_METALLIC, GEAR_SHINY, GEAR_STONE, GEAR_WOOD
 		;
 		
-		protected Icon mIcon, mOverlay;
+		protected IIcon mIcon, mOverlay;
 		
-		@Override public Icon getIcon() {return mIcon;}
-		@Override public Icon getOverlayIcon() {return mOverlay;}
+		@Override public IIcon getIcon() {return mIcon;}
+		@Override public IIcon getOverlayIcon() {return mOverlay;}
 		@Override public int getOverlayX() {return 0;}
 		@Override public int getOverlayY() {return 0;}
 		@Override public int getOverlayWidth() {return 16;}

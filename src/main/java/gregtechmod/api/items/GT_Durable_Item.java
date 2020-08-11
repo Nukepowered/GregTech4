@@ -1,5 +1,6 @@
 package gregtechmod.api.items;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -7,8 +8,8 @@ import net.minecraft.item.ItemStack;
  */
 public class GT_Durable_Item extends GT_Generic_Item {
 	
-	public GT_Durable_Item(int aID, String aUnlocalized, String aEnglish, String aTooltip, int aMaxDamage) {
-		super(aID, aUnlocalized, aEnglish, aTooltip);
+	public GT_Durable_Item(Item aItem, String aUnlocalized, String aEnglish, String aTooltip, int aMaxDamage) {
+		super(aItem, aUnlocalized, aEnglish, aTooltip);
 		setMaxDamage(aMaxDamage);
 		setMaxStackSize(1);
 	}

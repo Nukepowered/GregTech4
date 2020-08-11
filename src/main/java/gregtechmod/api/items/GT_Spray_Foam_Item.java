@@ -11,16 +11,17 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class GT_Spray_Foam_Item extends GT_Tool_Item {
-	public GT_Spray_Foam_Item(int aID, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage) {
-		super(aID, aUnlocalized, aEnglish, "Precision Spray", aMaxDamage, aEntityDamage, true);
+	public GT_Spray_Foam_Item(Item aItem, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage) {
+		super(aItem, aUnlocalized, aEnglish, "Precision Spray", aMaxDamage, aEntityDamage, true);
 		setCraftingSound(GregTech_API.sSoundList.get(102));
 		setBreakingSound(GregTech_API.sSoundList.get(102));
 		setEntityHitSound(GregTech_API.sSoundList.get(102));
@@ -64,10 +65,10 @@ public class GT_Spray_Foam_Item extends GT_Tool_Item {
 		if (aWorld.isRemote) {
     		return false;
     	}
-    	Block aBlock = Block.blocksList[aWorld.getBlockId(aX, aY, aZ)];
+    	Block aBlock = aWorld.getBlock(aX, aY, aZ);
     	if (aBlock == null) return false;
 //    	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
-    	TileEntity aTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
+    	TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ);
     	
     	try {
     		if (GT_Utility.getClassName(aTileEntity).startsWith("TileEntityCable")) {
@@ -81,7 +82,7 @@ public class GT_Spray_Foam_Item extends GT_Tool_Item {
     			return false;
     		}
     	} catch(Throwable e) {
-    		if (GregTech_API.DEBUG_MODE) e.printStackTrace(GT_Log.err);
+    		if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);
     	}
     	
     	if (aTileEntity instanceof BaseMetaPipeEntity && (((BaseMetaPipeEntity)aTileEntity).mConnections & -64) == 0) {
@@ -91,7 +92,6 @@ public class GT_Spray_Foam_Item extends GT_Tool_Item {
 			}
 			return true;
     	}
-    	
     	aX += ForgeDirection.getOrientation(aSide).offsetX;
     	aY += ForgeDirection.getOrientation(aSide).offsetY;
     	aZ += ForgeDirection.getOrientation(aSide).offsetZ;
@@ -116,7 +116,7 @@ public class GT_Spray_Foam_Item extends GT_Tool_Item {
     		case 0:
     			if (GT_Utility.isAirBlock(aWorld, aX, aY, aZ) && GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
     				GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(102), 1.0F, -1, aX, aY, aZ);
-    	    		aWorld.setBlock(aX, aY, aZ, ((ItemBlock)tStack.getItem()).getBlockID(), tStack.getItemDamage(), 3);
+    	    		aWorld.setBlock(aX, aY, aZ, Block.getBlockFromItem((ItemBlock)tStack.getItem()), tStack.getItemDamage(), 3);
     	    		return true;
     			}
     			break;
@@ -124,7 +124,7 @@ public class GT_Spray_Foam_Item extends GT_Tool_Item {
 	            for (byte i = 0; i < 4; i++) {
 	    			if (GT_Utility.isAirBlock(aWorld, aX, aY, aZ) && GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
 	    				GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(102), 1.0F, -1, aX, aY, aZ);
-	    	    		aWorld.setBlock(aX, aY, aZ, ((ItemBlock)tStack.getItem()).getBlockID(), tStack.getItemDamage(), 3);
+	    	    		aWorld.setBlock(aX, aY, aZ, Block.getBlockFromItem((ItemBlock)tStack.getItem()), tStack.getItemDamage(), 3);
 	    			} else {
 	    				if (i == 0) return false;
 	    				break;
@@ -148,7 +148,7 @@ public class GT_Spray_Foam_Item extends GT_Tool_Item {
 			    	if (GT_Utility.isAirBlock(aWorld, aX + (tXFactor?i:0), aY + (!tXFactor&&tYFactor?i:0) + (!tZFactor&&tYFactor?j:0), aZ + (tZFactor?j:0))) {
 			    		if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
 			    			GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(102), 1.0F, -1, aX, aY, aZ);
-			        		aWorld.setBlock(aX + (tXFactor?i:0), aY + (!tXFactor&&tYFactor?i:0) + (!tZFactor&&tYFactor?j:0), aZ + (tZFactor?j:0), ((ItemBlock)tStack.getItem()).getBlockID(), tStack.getItemDamage(), 3);
+			        		aWorld.setBlock(aX + (tXFactor?i:0), aY + (!tXFactor&&tYFactor?i:0) + (!tZFactor&&tYFactor?j:0), aZ + (tZFactor?j:0), Block.getBlockFromItem((ItemBlock)tStack.getItem()), tStack.getItemDamage(), 3);
 			    			temp = true;
 			    		} else {
 			    			break;

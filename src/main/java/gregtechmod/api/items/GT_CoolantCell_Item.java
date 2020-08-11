@@ -4,14 +4,15 @@ import gregtechmod.api.GregTech_API;
 
 import java.util.List;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class GT_CoolantCell_Item extends GT_Generic_Item {
     protected int heatStorage;
 	
-    public GT_CoolantCell_Item(int aID, String aUnlocalized, String aEnglish, int aMaxStore) {
-        super(aID, aUnlocalized, aEnglish, null);
+    public GT_CoolantCell_Item(Item aItem, String aUnlocalized, String aEnglish, int aMaxStore) {
+        super(aItem, aUnlocalized, aEnglish, null);
         setMaxStackSize(1);
         setMaxDamage(100);
         setNoRepair();
@@ -39,6 +40,7 @@ public class GT_CoolantCell_Item extends GT_Generic_Item {
         }
     }
     
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
 		super.addAdditionalToolTips(aList, aStack);

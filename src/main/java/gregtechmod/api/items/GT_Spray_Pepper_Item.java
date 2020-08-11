@@ -10,14 +10,15 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
 public class GT_Spray_Pepper_Item extends GT_Tool_Item {
-	public GT_Spray_Pepper_Item(int aID, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage) {
-		super(aID, aUnlocalized, aEnglish, "To defend yourself against Bears", aMaxDamage, aEntityDamage, true);
+	public GT_Spray_Pepper_Item(Item aItem, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage) {
+		super(aItem, aUnlocalized, aEnglish, "To defend yourself against Bears", aMaxDamage, aEntityDamage, true);
 		setCraftingSound(GregTech_API.sSoundList.get(102));
 		setBreakingSound(GregTech_API.sSoundList.get(102));
 		setEntityHitSound(GregTech_API.sSoundList.get(102));
@@ -25,9 +26,10 @@ public class GT_Spray_Pepper_Item extends GT_Tool_Item {
 	}
 	
 	@Override
+	//TODO:localization
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
-		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_1", "especially Pedobears, Care Bears,"));
-		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_2", "Confession Bears and Bear Grylls"));
+//		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_1", "especially Pedobears, Care Bears,"));
+//		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_2", "Confession Bears and Bear Grylls"));
 	}
 	
 	@Override
@@ -51,7 +53,7 @@ public class GT_Spray_Pepper_Item extends GT_Tool_Item {
 		if (aWorld.isRemote) {
     		return false;
     	}
-    	Block aBlock = Block.blocksList[aWorld.getBlockId(aX, aY, aZ)];
+    	Block aBlock = aWorld.getBlock(aX, aY, aZ);
     	if (aBlock == null) return false;
 //    	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
 //    	TileEntity aTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);

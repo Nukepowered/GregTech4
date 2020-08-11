@@ -15,14 +15,17 @@ import ic2.api.item.ISpecialElectricItem;
 
 import java.util.*;
 
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
@@ -53,7 +56,7 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 	
 	private BitSet mEnabledItems = new BitSet(766);
 	private final OrePrefixes[] mGeneratedPrefixList;
-	public Icon[][] mIconList = new Icon[mEnabledItems.size()][1];
+	public IIcon[][] mIconList = new IIcon[mEnabledItems.size()][1];
 	
 	public final HashMap<Short, ArrayList<IOnItemClick>> mClickBehaviors = new HashMap<Short, ArrayList<IOnItemClick>>();
 	public final HashMap<Short, IFoodStat> mFoodStats = new HashMap<Short, IFoodStat>();
@@ -66,23 +69,23 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 	 * @param aUnlocalized The Unlocalized Name of this Item.
 	 * @param aGeneratedPrefixList The OreDict Prefixes you want to have generated.
 	 */
-	public GT_MetaGenerated_Item(int aID, String aUnlocalized, OrePrefixes... aGeneratedPrefixList) {
-		super(aID, aUnlocalized, "Generated Item", null, false);
+	public GT_MetaGenerated_Item(Item aItem, String aUnlocalized, OrePrefixes... aGeneratedPrefixList) {
+		super(aItem, aUnlocalized, "Generated Item", null, false);
 		mGeneratedPrefixList = Arrays.copyOf(aGeneratedPrefixList, 32);
 		setCreativeTab(GregTech_API.TAB_GREGTECH_MATERIALS);
         setHasSubtypes(true);
         setMaxDamage(0);
         
         sInstances.put(getUnlocalizedName(), this);
-        
+        //TODO: add localization
         for (int i = 0; i < 32000; i++) {
 			OrePrefixes tPrefix = mGeneratedPrefixList[i / 1000];
 			if (tPrefix == null) continue;
 			Materials tMaterial = GregTech_API.sGeneratedMaterials[i % 1000];
 			if (tMaterial == null) continue;
 			if (doesMaterialAllowGeneration(tPrefix, tMaterial)) {
-				GT_LanguageManager.addStringLocalization(getUnlocalizedName() + "." + i + ".name", getDefaultLocalization(tPrefix, tMaterial, i));
-				GT_LanguageManager.addStringLocalization(getUnlocalizedName() + "." + i + ".tooltip", tMaterial.getToolTip(tPrefix.mMaterialAmount / GregTech_API.MATERIAL_UNIT));
+//				GT_LanguageManager.addStringLocalization(getUnlocalizedName() + "." + i + ".name", getDefaultLocalization(tPrefix, tMaterial, i));
+//				GT_LanguageManager.addStringLocalization(getUnlocalizedName() + "." + i + ".tooltip", tMaterial.getToolTip(tPrefix.mMaterialAmount / GregTech_API.MATERIAL_UNIT));
 				String tOreName = getOreDictString(tPrefix, tMaterial);
 				tPrefix = OrePrefixes.getOrePrefix(tOreName);
 //				if (tPrefix != null && tPrefix.mIsUnificatable) {
@@ -177,12 +180,13 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 	 * @param aOreDictNames The OreDict Names you want to give the Item.
 	 * @return An ItemStack containing the newly created Item.
 	 */
+	//TODO: add localization
 	public final ItemStack addItem(int aID, String aEnglish, String aToolTip, IFoodStat aFoodBehavior, Object... aOreDictNames) {
 		if (aToolTip == null) aToolTip = "";
 		if (aID >= 0 && aID < mEnabledItems.size()) {
 			mEnabledItems.set(aID);
-			GT_LanguageManager.addStringLocalization(getUnlocalizedName() + "." + (32000+aID) + ".name", aEnglish);
-			GT_LanguageManager.addStringLocalization(getUnlocalizedName() + "." + (32000+aID) + ".tooltip", aToolTip);
+//			GT_LanguageManager.addStringLocalization(getUnlocalizedName() + "." + (32000+aID) + ".name", aEnglish);
+//			GT_LanguageManager.addStringLocalization(getUnlocalizedName() + "." + (32000+aID) + ".tooltip", aToolTip);
 			setFoodBehavior(32000+aID, aFoodBehavior);
 			ItemStack rStack = new ItemStack(this, 1, 32000+aID);
 			for (Object tOreDictName : aOreDictNames) GT_OreDictUnificator.registerOre(tOreDictName, rStack);
@@ -339,7 +343,7 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 	
 	@Override
     @SideOnly(Side.CLIENT)
-    public final void registerIcons(IconRegister aIconRegister) {
+    public final void registerIcons(IIconRegister aIconRegister) {
 		for (short i = 0, j = (short)mEnabledItems.length(); i < j; i++) if (mEnabledItems.get(i)) {
 			for (byte k = 1; k < mIconList[i].length; k++) {
 				mIconList[i][k] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_ITEM + (GT_Config.system?"troll":getUnlocalizedName() + "/" + i + "/" + k));
@@ -349,7 +353,7 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
     }
 	
 	@Override
-    public final Icon getIconFromDamage(int aMetaData) {
+    public final IIcon getIconFromDamage(int aMetaData) {
 		if (aMetaData < 0) return null;
 		if (aMetaData < 32000) {
 			Materials tMaterial = GregTech_API.sGeneratedMaterials[aMetaData % 1000];
@@ -389,8 +393,9 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
     }
     
 	@Override
+//TODO: localization
     public final void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean aF3_H) {
-		String tKey = getUnlocalizedName() + "." + getDamage(aStack) + ".tooltip", tString = GT_LanguageManager.getTranslation(tKey);
+//		String tKey = getUnlocalizedName() + "." + getDamage(aStack) + ".tooltip", tString = GT_LanguageManager.getTranslation(tKey);
 		if (GT_Utility.isStringValid(tString) && !tKey.equals(tString)) aList.add(tString);
 		
 		Integer[] tStats = mElectricStats.get((short)aStack.getItemDamage());
@@ -409,14 +414,14 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 	}
 	
 	@Override
-	public final int getMaxCharge(ItemStack aStack) {
+	public final double getMaxCharge(ItemStack aStack) {
 		Integer[] tStats = mElectricStats.get((short)aStack.getItemDamage());
 		if (tStats == null) return 0;
 		return tStats[0];
 	}
 	
 	@Override
-	public final int getTransferLimit(ItemStack aStack) {
+	public final double getTransferLimit(ItemStack aStack) {
 		Integer[] tStats = mElectricStats.get((short)aStack.getItemDamage());
 		if (tStats == null) return 0;
 		return Math.max(tStats[1], tStats[3]);
@@ -453,7 +458,7 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 	}
 	
 	@Override
-	public final int getCharge(ItemStack aStack) {
+	public final double getCharge(ItemStack aStack) {
 		Integer[] tStats = mElectricStats.get((short)aStack.getItemDamage());
 		if (tStats == null) return 0;
 		if (tStats[3] > 0) return tStats[3];

@@ -1,17 +1,17 @@
 package gregtechmod.api.interfaces;
 
-import net.minecraft.util.Icon;
+import net.minecraft.util.IIcon;
 
 public interface IIconContainer {
 	/**
 	 * @return A regular Icon.
 	 */
-	public Icon getIcon();
+	public IIcon getIcon();
 	
 	/**
 	 * @return Icon of the Overlay (or null if there is no Icon)
 	 */
-	public Icon getOverlayIcon();
+	public IIcon getOverlayIcon();
 	
 	/**
 	 * @return X of the Overlay (0-15)

@@ -6,6 +6,7 @@ import gregtechmod.api.util.GT_ModHandler;
 import java.util.List;
 
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -13,8 +14,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class GT_EnergyStore_Item extends GT_Generic_Item {
 	protected int mCharge, mTransfer, mTier, mEmptyID, mFullID;
 	
-	public GT_EnergyStore_Item(int aID, String aUnlocalized, String aEnglish, int aCharge, int aTransfer, int aTier, int aEmptyID, int aFullID) {
-		super(aID, aUnlocalized, aEnglish, null);
+	public GT_EnergyStore_Item(Item aItem, String aUnlocalized, String aEnglish, int aCharge, int aTransfer, int aTier, int aEmptyID, int aFullID) {
+		super(aItem, aUnlocalized, aEnglish, null);
 		setMaxStackSize(1);
 		setMaxDamage(100);
 		setNoRepair();

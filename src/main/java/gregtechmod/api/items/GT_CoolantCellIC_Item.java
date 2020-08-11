@@ -2,11 +2,12 @@ package gregtechmod.api.items;
 
 import ic2.api.reactor.IReactor;
 import ic2.api.reactor.IReactorComponent;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class GT_CoolantCellIC_Item extends GT_CoolantCell_Item implements IReactorComponent {
-    public GT_CoolantCellIC_Item(int aID, String aUnlocalized, String aEnglish, int aMaxStore) {
-        super(aID, aUnlocalized, aEnglish, aMaxStore);
+    public GT_CoolantCellIC_Item(Item aItem, String aUnlocalized, String aEnglish, int aMaxStore) {
+        super(aItem, aUnlocalized, aEnglish, aMaxStore);
     }
     
 	@Override

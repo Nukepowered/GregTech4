@@ -2,6 +2,7 @@ package gregtechmod.api.items;
 
 import gregtechmod.api.GregTech_API;
 import ic2.api.item.IElectricItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class GT_EnergyStoreIC_Item extends GT_EnergyStore_Item implements IElectricItem {
@@ -15,22 +16,23 @@ public class GT_EnergyStoreIC_Item extends GT_EnergyStore_Item implements IElect
 	}
 	
 	@Override
-	public int getChargedItemId(ItemStack aStack) {
-		return GregTech_API.sItemList[mFullID].itemID;
+	public Item getChargedItem(ItemStack aStack) {
+		return GregTech_API.sItemList[mFullID];
 	}
 	
 	@Override
-	public int getEmptyItemId(ItemStack aStack) {
-		return GregTech_API.sItemList[mEmptyID].itemID;
+	public Item getEmptyItem(ItemStack aStack) {
+		return GregTech_API.sItemList[mEmptyID];
 	}
 	
 	@Override
-	public int getMaxCharge(ItemStack aStack) {
-		return mCharge;
+	public double getMaxCharge(ItemStack aStack) {
+		return (double)mCharge;
 	}
 	
 	@Override
-	public int getTransferLimit(ItemStack aStack) {
-		return mTransfer;
+	public double getTransferLimit(ItemStack aStack) {
+		return (double)mTransfer;
 	}
+
 }
