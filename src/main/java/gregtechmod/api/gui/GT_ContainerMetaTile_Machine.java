@@ -51,7 +51,8 @@ public class GT_ContainerMetaTile_Machine extends GT_Container {
     	mActive = mTileEntity.isActive()?1:0;
     	mTimer++;
     	
-        Iterator var2 = this.crafters.iterator();
+        @SuppressWarnings("rawtypes")
+		Iterator var2 = this.crafters.iterator();
         while (var2.hasNext()) {
             ICrafting var1 = (ICrafting)var2.next();
             if (mTimer % 500 == 10 || oEnergy != mEnergy) {

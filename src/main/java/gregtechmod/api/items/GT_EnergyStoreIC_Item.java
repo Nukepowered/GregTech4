@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 
 public class GT_EnergyStoreIC_Item extends GT_EnergyStore_Item implements IElectricItem {
 	public GT_EnergyStoreIC_Item(int aID, String aUnlocalized, String aEnglish, int aCharge, int aTransfer, int aTier, int aEmptyID, int aFullID) {
-		super(aID, aUnlocalized, aEnglish, aCharge, aTransfer, aTier, aEmptyID, aFullID);
+		super(aUnlocalized, aCharge, aTransfer, aTier, aEmptyID, aFullID);
 	}
 	
 	@Override

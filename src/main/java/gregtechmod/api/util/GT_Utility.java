@@ -44,6 +44,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.chunk.Chunk;
@@ -292,6 +294,10 @@ public class GT_Utility {
 	}
 	
 	public static void sendChatToPlayer(EntityPlayer aPlayer, String aChatMessage) {
+		GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentText(aChatMessage));
+	}
+	
+	public static void sendChatToPlayer(EntityPlayer aPlayer, IChatComponent aChatMessage) {
 		if (aPlayer != null && aPlayer instanceof EntityPlayerMP && aChatMessage != null) {
 			aPlayer.addChatMessage(aChatMessage);
 		}

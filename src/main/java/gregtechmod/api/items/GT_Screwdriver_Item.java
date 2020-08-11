@@ -2,7 +2,6 @@ package gregtechmod.api.items;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_ToolDictNames;
-import gregtechmod.api.util.GT_LanguageManager;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
@@ -10,17 +9,17 @@ import gregtechmod.api.util.GT_Utility;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.monster.EntityCaveSpider;
 import net.minecraft.entity.monster.EntitySpider;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class GT_Screwdriver_Item extends GT_Tool_Item {
-	public GT_Screwdriver_Item(Item aItem, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage, int aDischargedGTID) {
-		super(aItem, aUnlocalized, aEnglish, "To screw Covers on Machines", aMaxDamage, aEntityDamage, true, -1, aDischargedGTID);
+	public GT_Screwdriver_Item(String aUnlocalized, int aMaxDamage, int aEntityDamage, int aDischargedGTID) {
+		super(aUnlocalized, "item.GT_Screwdriver.tooltip_main", aMaxDamage, aEntityDamage, true, -1, aDischargedGTID);
 		GregTech_API.registerScrewdriver(new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		GT_OreDictUnificator.registerOre(GT_ToolDictNames.craftingToolScrewdriver, new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		addToEffectiveList(EntityCaveSpider.class.getName());
@@ -34,10 +33,10 @@ public class GT_Screwdriver_Item extends GT_Tool_Item {
 	}
 	
 	@Override
-	//TODO: localization
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
-//		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_1", "Can switch the Design of certain Blocks"));
-//		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_2", "Can rotate Repeaters and Comparators"));
+		aList.add(I18n.format("item.GT_Screwdriver.tooltip_1"));
+		aList.add(I18n.format("item.GT_Screwdriver.tooltip_2"));
 	}
 	
 	@Override
@@ -49,7 +48,6 @@ public class GT_Screwdriver_Item extends GT_Tool_Item {
     	Block aBlock = aWorld.getBlock(aX, aY, aZ);
     	if (aBlock == null) return false;
     	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
-//    	TileEntity aTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
     	
     	if (aBlock == Blocks.powered_repeater || aBlock == Blocks.unpowered_repeater) {
 			if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 200, aPlayer)) {

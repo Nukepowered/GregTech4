@@ -23,8 +23,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class GT_Spray_Ice_Item extends GT_Tool_Item {
-	public GT_Spray_Ice_Item(Item aItem, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage) {
-		super(aItem, aUnlocalized, aEnglish, "Very effective against Slimes", aMaxDamage, aEntityDamage, true);
+	public GT_Spray_Ice_Item(String aUnlocalized, int aMaxDamage, int aEntityDamage) {
+		super(aUnlocalized, "item.GT_Spray_Ice.tooltip_main", aMaxDamage, aEntityDamage, true);
 		addToEffectiveList(EntitySlime.class.getName());
 		addToEffectiveList("BlueSlime");
 		addToEffectiveList("SlimeClone");
@@ -51,8 +51,13 @@ public class GT_Spray_Ice_Item extends GT_Tool_Item {
 	}
 	
 	@Override
-	public ItemStack getEmptyItem(ItemStack aStack) {
-		return GT_Items.Spray_Empty.get(1);
+	public Item getEmptyItem(ItemStack aStack) {
+		ItemStack empty = GT_Items.Spray_Empty.get(1);
+		aStack.func_150996_a(empty.getItem());
+		aStack.stackSize = 1;
+		aStack.setTagCompound(empty.getTagCompound());
+		aStack.setItemDamage(empty.getItemDamage());
+		return empty.getItem();
 	}
 	
 	@Override
@@ -67,7 +72,6 @@ public class GT_Spray_Ice_Item extends GT_Tool_Item {
     	Block aBlock = aWorld.getBlock(aX, aY, aZ);
     	if (aBlock == null) return false;
     	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
-//    	TileEntity aTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
     	
     	if (aBlock == Blocks.water || aBlock == Blocks.flowing_water) {
     		if (aMeta == 0 && GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {

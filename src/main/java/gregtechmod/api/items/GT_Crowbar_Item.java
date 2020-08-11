@@ -9,15 +9,15 @@ import gregtechmod.api.util.GT_Utility;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class GT_Crowbar_Item extends GT_Tool_Item {
-	public GT_Crowbar_Item(Item aItem, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage) {
-		super(aItem, aUnlocalized, aEnglish, "To remove Covers from Machines", aMaxDamage, aEntityDamage, true, -1, -1, 5, 20.0F);
+	public GT_Crowbar_Item(String aUnlocalized, int aMaxDamage, int aEntityDamage) {
+		super(aUnlocalized, "item.GT_Crowbar.tooltip_main", aMaxDamage, aEntityDamage, true, -1, -1, 5, 20.0F);
 		GregTech_API.registerCrowbar(new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		GT_OreDictUnificator.registerOre(GT_ToolDictNames.craftingToolCrowbar, new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		addToBlockList(Blocks.rail);
@@ -33,12 +33,11 @@ public class GT_Crowbar_Item extends GT_Tool_Item {
 		return false;
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@Override
-	//TODO : localization
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
 		super.addAdditionalToolTips(aList, aStack);
-//		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_1", "Can turn Rails"));
+		aList.add(I18n.format("item.GT_Crowbar.tooltip_1"));
 	}
 	
 	@Override

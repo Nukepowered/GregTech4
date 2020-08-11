@@ -2,7 +2,7 @@ package gregtechmod.api.items;
 
 import java.util.List;
 
-import net.minecraft.item.Item;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -11,8 +11,8 @@ public class GT_RadioactiveCell_Item extends GT_Generic_Item {
 	protected int maxDelay, pulserate, cellCount;
 	protected ItemStack mDepleted;
 	
-    public GT_RadioactiveCell_Item(Item aItem, String aUnlocalized, String aEnglish, int aMaxDelay, int aCellcount, int aPulseRate, ItemStack aDepleted) {
-        super(aItem, aUnlocalized, aEnglish, null);
+    public GT_RadioactiveCell_Item(String aUnlocalized, int aMaxDelay, int aCellcount, int aPulseRate, ItemStack aDepleted) {
+        super(aUnlocalized, null);
         setMaxStackSize(1);
         setMaxDamage(10000);
         setNoRepair();
@@ -96,9 +96,10 @@ public class GT_RadioactiveCell_Item extends GT_Generic_Item {
         return b;
     }
     
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
 		super.addAdditionalToolTips(aList, aStack);
-		aList.add("Time left: " + (maxDelay - getDurabilityOfStack(aStack)) + " secs");
+		aList.add(I18n.format("item.RadioactiveCell_Item.tooltip_1", maxDelay - getDurabilityOfStack(aStack)));
 	}
 }

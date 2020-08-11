@@ -2,12 +2,11 @@ package gregtechmod.api.items;
 
 import ic2.api.reactor.IReactor;
 import ic2.api.reactor.IReactorComponent;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class GT_RadioactiveCellIC_Item extends GT_RadioactiveCell_Item implements IReactorComponent {
-    public GT_RadioactiveCellIC_Item(Item aItem, String aUnlocalized, String aEnglish, int aMaxDelay, int aCellcount, int aPulseRate, ItemStack aDepleted) {
-        super(aItem, aUnlocalized, aEnglish, aMaxDelay, aCellcount, aPulseRate, aDepleted);
+    public GT_RadioactiveCellIC_Item(String aUnlocalized, int aMaxDelay, int aCellcount, int aPulseRate, ItemStack aDepleted) {
+        super(aUnlocalized, aMaxDelay, aCellcount, aPulseRate, aDepleted);
     }
     
 	@Override
@@ -42,9 +41,7 @@ public class GT_RadioactiveCellIC_Item extends GT_RadioactiveCell_Item implement
     }
 	
 	@Override
-	public void processChamber(IReactor aReactor, ItemStack aStack, int x, int y, boolean aHeatRun) {
-		//
-	}
+	public void processChamber(IReactor aReactor, ItemStack aStack, int x, int y, boolean aHeatRun) {}
 	
     protected class ItemStackCoord {
         public ItemStack stack;

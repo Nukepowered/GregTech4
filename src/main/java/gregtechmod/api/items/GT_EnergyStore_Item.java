@@ -14,8 +14,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class GT_EnergyStore_Item extends GT_Generic_Item {
 	protected int mCharge, mTransfer, mTier, mEmptyID, mFullID;
 	
-	public GT_EnergyStore_Item(Item aItem, String aUnlocalized, String aEnglish, int aCharge, int aTransfer, int aTier, int aEmptyID, int aFullID) {
-		super(aItem, aUnlocalized, aEnglish, null);
+	public GT_EnergyStore_Item(String aUnlocalized, int aCharge, int aTransfer, int aTier, int aEmptyID, int aFullID) { // TODO remove IDs
+		super(aUnlocalized, null);
 		setMaxStackSize(1);
 		setMaxDamage(100);
 		setNoRepair();
@@ -31,9 +31,10 @@ public class GT_EnergyStore_Item extends GT_Generic_Item {
         return true;
     }
     
-    @Override
+	@Override
 	@SideOnly(Side.CLIENT)
-    public void getSubItems(int var1, CreativeTabs var2, List var3) {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public void getSubItems(Item item, CreativeTabs var2, List var3) {
         ItemStack tCharged = new ItemStack(GregTech_API.sItemList[mFullID], 1, 0), tUncharged = new ItemStack(GregTech_API.sItemList[mEmptyID], 1, getMaxDamage() - 1);
         GT_ModHandler.chargeElectricItem(tCharged, Integer.MAX_VALUE, Integer.MAX_VALUE, true, false);
         if (this == GregTech_API.sItemList[mFullID]) var3.add(tCharged);

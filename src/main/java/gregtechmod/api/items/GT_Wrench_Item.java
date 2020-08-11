@@ -2,7 +2,6 @@ package gregtechmod.api.items;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_ToolDictNames;
-import gregtechmod.api.util.GT_LanguageManager;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
@@ -11,11 +10,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -23,8 +22,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class GT_Wrench_Item extends GT_Tool_Item {
 	
-	public GT_Wrench_Item(Item aItem, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage, int aDischargedGTID) {
-		super(aItem, aUnlocalized, aEnglish, "To dismantle and rotate Blocks of most Mods", aMaxDamage, aEntityDamage, true, -1, aDischargedGTID);
+	public GT_Wrench_Item(String aUnlocalized, int aMaxDamage, int aEntityDamage, int aDischargedGTID) {
+		super(aUnlocalized, "item.GT_Wrech.tooltip", aMaxDamage, aEntityDamage, true, -1, aDischargedGTID);
 		GregTech_API.registerWrench(new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		GT_OreDictUnificator.registerOre(GT_ToolDictNames.craftingToolWrench, new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		addToEffectiveList(EntityIronGolem.class.getName());
@@ -47,11 +46,11 @@ public class GT_Wrench_Item extends GT_Tool_Item {
 		setBreakingSound(GregTech_API.sSoundList.get(100));
 		setUsageAmounts(8, 3, 1);
 	}
-	
+
 	@Override
-	//TODO: localization
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
-//		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_1", "Rotation of target depends on where exactly you click"));
+		aList.add(I18n.format("item.GT_Wrech.tooltip_1"));
 	}
 	
 	@Override
@@ -94,18 +93,18 @@ public class GT_Wrench_Item extends GT_Tool_Item {
         		return true;
         	}
         } catch(Throwable e) {/*Do nothing*/}
-    	try {
-        	if (aTileEntity instanceof universalelectricity.prefab.tile.IRotatable) {
-        		if (((universalelectricity.prefab.tile.IRotatable)aTileEntity).getDirection().ordinal() != aTargetSide) {
-        			if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
-            			((universalelectricity.prefab.tile.IRotatable)aTileEntity).setDirection(ForgeDirection.getOrientation(aTargetSide));
-            			GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(100), 1.0F, -1, aX, aY, aZ);
-            		}
-        			return true;
-        		}
-        		return true;
-        	}
-        } catch(Throwable e) {/*Do nothing*/}
+//    	try {
+//        	if (aTileEntity instanceof universalelectricity.prefab.tile.IRotatable) {
+//        		if (((universalelectricity.prefab.tile.IRotatable)aTileEntity).getDirection().ordinal() != aTargetSide) {
+//        			if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {
+//            			((universalelectricity.prefab.tile.IRotatable)aTileEntity).setDirection(ForgeDirection.getOrientation(aTargetSide));
+//            			GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(100), 1.0F, -1, aX, aY, aZ);
+//            		}
+//        			return true;
+//        		}
+//        		return true;
+//        	}
+//        } catch(Throwable e) {/*Do nothing*/}
     	
     	if (aBlock == Blocks.log || aBlock == Blocks.hay_block) {
 			if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {

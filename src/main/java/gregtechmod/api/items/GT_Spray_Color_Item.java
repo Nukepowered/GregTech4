@@ -10,6 +10,7 @@ import gregtechmod.api.util.GT_Utility;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -20,8 +21,8 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class GT_Spray_Color_Item extends GT_Tool_Item {
 	public byte mColorMeta = 0;
 	
-	public GT_Spray_Color_Item(Item aItem, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage, byte aColorMeta) {
-		super(aItem, aUnlocalized, aEnglish, "To give the World more Color", aMaxDamage, aEntityDamage, true);
+	public GT_Spray_Color_Item(String aUnlocalized, int aMaxDamage, int aEntityDamage, byte aColorMeta) {
+		super(aUnlocalized, "item.GT_Spray_Color_Item.tooltip_1", aMaxDamage, aEntityDamage, true);
 		GT_OreDictUnificator.registerOre(Dyes.get(mColorMeta = aColorMeta), new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		setCraftingSound(GregTech_API.sSoundList.get(102));
 		setBreakingSound(GregTech_API.sSoundList.get(102));
@@ -30,15 +31,20 @@ public class GT_Spray_Color_Item extends GT_Tool_Item {
 	}
 	
 	@Override
-	//TODO: Localization
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
-//		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_3", "Enough for dying " + getMaxDamage() + " Blocks in World " + Dyes.get(mColorMeta).mName.toLowerCase()));
-//		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_2", "Enough for crafting " + (getMaxDamage()/getDamagePerContainerItemCraft()) + " times"));
+		aList.add(I18n.format("item.GT_Spray_Color_Item.tooltip_3", getMaxDamage(), Dyes.get(mColorMeta).mName.toLowerCase()));
+		aList.add(I18n.format("item.GT_Spray_Color_Item.tooltip_2", getMaxDamage() / getDamagePerContainerItemCraft()));
 	}
 	
 	@Override
-	public ItemStack getEmptyItem(ItemStack aStack) {
-		return GT_Items.Spray_Empty.get(1);
+	public Item getEmptyItem(ItemStack aStack) {
+		ItemStack empty = GT_Items.Spray_Empty.get(1);
+		aStack.func_150996_a(empty.getItem());
+		aStack.stackSize = 1;
+		aStack.setTagCompound(empty.getTagCompound());
+		aStack.setItemDamage(empty.getItemDamage());
+		return empty.getItem();
 	}
 	
 	@Override
@@ -50,7 +56,6 @@ public class GT_Spray_Color_Item extends GT_Tool_Item {
     	Block aBlock = aWorld.getBlock(aX, aY, aZ);
     	if (aBlock == null) return false;
     	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
-//    	TileEntity aTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
     	
     	if (aBlock == Blocks.carpet || aBlock == Blocks.hardened_clay || aBlock == Blocks.stained_hardened_clay || aBlock == GT_Items.TE_Rockwool.getBlock()) {
     		if (aMeta == (~mColorMeta & 15) && aBlock != Blocks.hardened_clay) return false;

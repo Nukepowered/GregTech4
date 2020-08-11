@@ -10,18 +10,18 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.IFluidBlock;
 
 public class GT_HardHammer_Item extends GT_Tool_Item {
-	public GT_HardHammer_Item(Item aItem, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage) {
-		super(aItem, aUnlocalized, aEnglish, "To give a Machine a hard whack", aMaxDamage, aEntityDamage, true);
+	public GT_HardHammer_Item(String aUnlocalized, int aMaxDamage, int aEntityDamage) {
+		super(aUnlocalized, "item.GT_Hammer.tooltip", aMaxDamage, aEntityDamage, true);
 		GregTech_API.registerHardHammer(new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		GT_OreDictUnificator.registerOre(GT_ToolDictNames.craftingToolHardHammer, new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		addToEffectiveList(EntityIronGolem.class.getName());
@@ -47,13 +47,13 @@ public class GT_HardHammer_Item extends GT_Tool_Item {
 	}
 	
 	@Override
-	//TODO:Localization
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
 		super.addAdditionalToolTips(aList, aStack);
-//		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_1", "Used to craft Plates from Ingots"));
-//		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_2", "Can rotate some Blocks as well"));
-//		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_3", "Also used to toggle general Machine states"));
-//		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_4", "Usable as Prospectors Hammer"));
+		aList.add(I18n.format("item.GT_Hammer.tooltip_1"));
+		aList.add(I18n.format("item.GT_Hammer.tooltip_2"));
+		aList.add(I18n.format("item.GT_Hammer.tooltip_3"));
+		aList.add(I18n.format("item.GT_Hammer.tooltip_4"));
 	}
 	
 	@Override
@@ -65,7 +65,6 @@ public class GT_HardHammer_Item extends GT_Tool_Item {
     	Block aBlock = aWorld.getBlock(aX, aY, aZ);
     	if (aBlock == null) return false;
     	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
-//    	TileEntity aTileEntity = aWorld.getBlockTileEntity(aX, aY, aZ);
     	
     	if (aBlock == Blocks.log || aBlock == Blocks.hay_block) {
 			if (GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) {

@@ -9,16 +9,16 @@ import gregtechmod.api.util.GT_Utility;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class GT_SoftHammer_Item extends GT_Tool_Item {
-	public GT_SoftHammer_Item(Item aItem, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage) {
-		super(aItem, aUnlocalized, aEnglish, "To give a Machine a soft whack", aMaxDamage, aEntityDamage, true);
+	public GT_SoftHammer_Item(String aUnlocalized, int aMaxDamage, int aEntityDamage) {
+		super(aUnlocalized, "item.GT_Hammer_Rubber.tooltip_main", aMaxDamage, aEntityDamage, true);
 		GregTech_API.registerSoftHammer(new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		GT_OreDictUnificator.registerOre(GT_ToolDictNames.craftingToolSoftHammer, new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		setCraftingSound(GregTech_API.sSoundList.get(101));
@@ -33,12 +33,12 @@ public class GT_SoftHammer_Item extends GT_Tool_Item {
 	}
 	
 	@Override
-	//TODO: localization
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
 		super.addAdditionalToolTips(aList, aStack);
-//		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_1", "Can enable/disable Machines"));
-//		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_2", "Can rotate some Blocks as well"));
-//		aList.add(GT_LanguageManager.addStringLocalization(getUnlocalizedName() + ".tooltip_4", "Can switch Redstone Lamps and Booster Tracks"));
+		aList.add(I18n.format("item.GT_Hammer_Rubber.tooltip_1"));
+		aList.add(I18n.format("item.GT_Hammer_Rubber.tooltip_2"));
+		aList.add(I18n.format("item.GT_Hammer_Rubber.tooltip_4"));
 	}
 	
 	@Override

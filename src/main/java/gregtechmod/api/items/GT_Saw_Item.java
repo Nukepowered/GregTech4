@@ -4,15 +4,13 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_ToolDictNames;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
-import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class GT_Saw_Item extends GT_Tool_Item {
-	public GT_Saw_Item(Item aItem, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage, int aToolQuality, float aToolStrength, int aEnergyConsumptionPerBlockBreak, int aDisChargedGTID) {
-		super(aItem, aUnlocalized, aEnglish, "For sawing Logs into Planks", aMaxDamage, aEntityDamage, true, -1, aDisChargedGTID, aToolQuality, aToolStrength);
+	public GT_Saw_Item(String aUnlocalized, int aMaxDamage, int aEntityDamage, int aToolQuality, float aToolStrength, int aEnergyConsumptionPerBlockBreak, int aDisChargedGTID) {
+		super(aUnlocalized, "item.GT_Saw_Bronze.tooltip_main", aMaxDamage, aEntityDamage, true, -1, aDisChargedGTID, aToolQuality, aToolStrength);
 		//GregTech_API.registerSaw(new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		GT_OreDictUnificator.registerOre(GT_ToolDictNames.craftingToolSaw, new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 		if (GT_ModHandler.isElectricItem(new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) setSilkyness(1);

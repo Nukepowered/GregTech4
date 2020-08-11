@@ -13,8 +13,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
 public class GT_Spray_Hydration_Item extends GT_Tool_Item {
-	public GT_Spray_Hydration_Item(Item aItem, String aUnlocalized, String aEnglish, int aMaxDamage, int aEntityDamage) {
-		super(aItem, aUnlocalized, aEnglish, "To hydrate Crops and similar", aMaxDamage, aEntityDamage, true);
+	public GT_Spray_Hydration_Item(String aUnlocalized, int aMaxDamage, int aEntityDamage) {
+		super(aUnlocalized, "To hydrate Crops and similar", aMaxDamage, aEntityDamage, true);
 		setCraftingSound(GregTech_API.sSoundList.get(102));
 		setBreakingSound(GregTech_API.sSoundList.get(102));
 		setEntityHitSound(GregTech_API.sSoundList.get(102));
@@ -22,8 +22,13 @@ public class GT_Spray_Hydration_Item extends GT_Tool_Item {
 	}
 	
 	@Override
-	public ItemStack getEmptyItem(ItemStack aStack) {
-		return GT_Items.Spray_Empty.get(1);
+	public Item getEmptyItem(ItemStack aStack) {
+		ItemStack empty = GT_Items.Spray_Empty.get(1);
+		aStack.func_150996_a(empty.getItem());
+		aStack.stackSize = 1;
+		aStack.setTagCompound(empty.getTagCompound());
+		aStack.setItemDamage(empty.getItemDamage());
+		return empty.getItem();
 	}
 	
 	@Override
@@ -34,7 +39,6 @@ public class GT_Spray_Hydration_Item extends GT_Tool_Item {
     	}
     	Block aBlock = aWorld.getBlock(aX, aY, aZ);
     	if (aBlock == null) return false;
-//    	byte aMeta = (byte)aWorld.getBlockMetadata(aX, aY, aZ);
     	TileEntity aTileEntity = aWorld.getTileEntity(aX, aY, aZ);
     	
     	try {

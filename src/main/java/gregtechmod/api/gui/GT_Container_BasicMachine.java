@@ -71,7 +71,8 @@ public class GT_Container_BasicMachine extends GT_ContainerMetaTile_Machine {
     	mItemTransfer = ((GT_MetaTileEntity_BasicMachine)mTileEntity.getMetaTileEntity()).bItemTransfer;
     	mSeperatedInputs = ((GT_MetaTileEntity_BasicMachine)mTileEntity.getMetaTileEntity()).bSeperatedInputs;
     	
-        Iterator var2 = this.crafters.iterator();
+        @SuppressWarnings("rawtypes")
+		Iterator var2 = this.crafters.iterator();
         while (var2.hasNext()) {
             ICrafting var1 = (ICrafting)var2.next();
             var1.sendProgressBarUpdate(this, 101, mOutputting?1:0);

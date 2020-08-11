@@ -16,7 +16,7 @@ import ic2.api.item.ISpecialElectricItem;
 import java.util.*;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,7 +26,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.Icon;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -69,8 +68,8 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 	 * @param aUnlocalized The Unlocalized Name of this Item.
 	 * @param aGeneratedPrefixList The OreDict Prefixes you want to have generated.
 	 */
-	public GT_MetaGenerated_Item(Item aItem, String aUnlocalized, OrePrefixes... aGeneratedPrefixList) {
-		super(aItem, aUnlocalized, "Generated Item", null, false);
+	public GT_MetaGenerated_Item(String aUnlocalized, OrePrefixes... aGeneratedPrefixList) {
+		super(aUnlocalized, "item.generated.tooltip");
 		mGeneratedPrefixList = Arrays.copyOf(aGeneratedPrefixList, 32);
 		setCreativeTab(GregTech_API.TAB_GREGTECH_MATERIALS);
         setHasSubtypes(true);
@@ -321,7 +320,8 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 	
 	@Override
     @SideOnly(Side.CLIENT)
-    public final void getSubItems(int var1, CreativeTabs aCreativeTab, List aList) {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+    public final void getSubItems(Item item, CreativeTabs aCreativeTab, List aList) {
         for (int i = 0; i < 32000; i++) if (doesMaterialAllowGeneration(mGeneratedPrefixList[i / 1000], GregTech_API.sGeneratedMaterials[i % 1000]) && doesShowInCreative(mGeneratedPrefixList[i / 1000], GregTech_API.sGeneratedMaterials[i % 1000], GregTech_API.sDoShowAllItemsInCreative)) aList.add(new ItemStack(this, 1, i));
         for (int i = 0, j = mEnabledItems.length(); i < j; i++) if (mEnabledItems.get(i)) {
     		Integer[] tStats = mElectricStats.get((short)(32000+i));
@@ -393,19 +393,18 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
     }
     
 	@Override
-//TODO: localization
+	@SuppressWarnings({ "unchecked", "rawtypes" })
     public final void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean aF3_H) {
-//		String tKey = getUnlocalizedName() + "." + getDamage(aStack) + ".tooltip", tString = GT_LanguageManager.getTranslation(tKey);
-		if (GT_Utility.isStringValid(tString) && !tKey.equals(tString)) aList.add(tString);
+		if (GT_Utility.isStringValid(mTooltip)) aList.add(I18n.format(mTooltip));
 		
 		Integer[] tStats = mElectricStats.get((short)aStack.getItemDamage());
 		if (tStats != null) {
 			if (tStats[3] > 0) {
-				aList.add("Contains " + tStats[3] + " EU   Tier: " + (tStats[2]>0?tStats[2]:1));
+				aList.add("Contains " + tStats[3] + " EU   Tier: " + (tStats[2]>0?tStats[2]:1)); // TODO localization
 			} else {
-				int tCharge = getCharge(aStack);
+				int tCharge = (int) getCharge(aStack);
 				if (tStats[3] == -2 && tCharge <= 0) {
-					aList.add("Empty. You should recycle it properly.");
+					aList.add(I18n.format("item.empty"));
 				} else {
 					aList.add(tCharge + " / " + tStats[0] + " EU - Voltage: " + GregTech_API.VOLTAGES[tStats[2]>0?tStats[2]<GregTech_API.VOLTAGES.length?tStats[2]:GregTech_API.VOLTAGES.length-1:1]);
 				}
@@ -435,16 +434,16 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 	}
 	
 	@Override
-	public final int charge(ItemStack aStack, int aCharge, int aTier, boolean aIgnoreTransferLimit, boolean aSimulate) {
+	public final double charge(ItemStack aStack, double aCharge, int aTier, boolean aIgnoreTransferLimit, boolean aSimulate) {
 		Integer[] tStats = mElectricStats.get((short)aStack.getItemDamage());
 		if (tStats == null || tStats[2] > aTier || !(tStats[3] == -1 || tStats[3] == -3 || (tStats[3] < 0 && aCharge == Integer.MAX_VALUE)) || aStack.stackSize != 1) return 0;
-		int tChargeBefore = getCharge(aStack), tNewCharge = Math.min(tStats[0], tChargeBefore + (aIgnoreTransferLimit?aCharge:Math.min(tStats[1], aCharge)));
+		double tChargeBefore = getCharge(aStack), tNewCharge = Math.min(tStats[0], tChargeBefore + (aIgnoreTransferLimit?aCharge:Math.min(tStats[1], aCharge)));
 		if (!aSimulate) setCharge(aStack, tNewCharge);
 		return tNewCharge-tChargeBefore;
 	}
 	
 	@Override
-	public final int discharge(ItemStack aStack, int aCharge, int aTier, boolean aIgnoreTransferLimit, boolean aSimulate) {
+	public final double discharge(ItemStack aStack, double aCharge, int aTier, boolean aIgnoreTransferLimit, boolean externally, boolean aSimulate) {
 		Integer[] tStats = mElectricStats.get((short)aStack.getItemDamage());
 		if (tStats == null || tStats[2] > aTier) return 0;
 		if (tStats[3] > 0) {
@@ -452,7 +451,7 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 			if (!aSimulate) aStack.stackSize--;
 			return tStats[3];
 		}
-		int tChargeBefore = getCharge(aStack), tNewCharge = Math.max(0, tChargeBefore - (aIgnoreTransferLimit?aCharge:Math.min(tStats[1], aCharge)));
+		double tChargeBefore = getCharge(aStack), tNewCharge = Math.max(0, tChargeBefore - (aIgnoreTransferLimit?aCharge:Math.min(tStats[1], aCharge)));
 		if (!aSimulate) setCharge(aStack, tNewCharge);
 		return tChargeBefore-tNewCharge;
 	}
@@ -467,20 +466,20 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 	}
 	
 	@Override
-	public final boolean canUse(ItemStack aStack, int aAmount) {
+	public final boolean canUse(ItemStack aStack, double aAmount) {
 		return getCharge(aStack) >= aAmount;
 	}
 	
 	@Override
-	public final boolean use(ItemStack aStack, int aAmount, EntityLivingBase aPlayer) {
+	public final boolean use(ItemStack aStack, double aAmount, EntityLivingBase aPlayer) {
 		if (aPlayer.worldObj.isRemote) return false;
 		if (aAmount <= 0) {
 			chargeFromArmor(aStack, aPlayer);
 			return true;
 		}
-		int transfer = discharge(aStack, aAmount, Integer.MAX_VALUE, true, true);
+		double transfer = discharge(aStack, aAmount, Integer.MAX_VALUE, true, false, true);
 		if (transfer == aAmount) {
-			discharge(aStack, aAmount, Integer.MAX_VALUE, true, false);
+			discharge(aStack, aAmount, Integer.MAX_VALUE, true, false, false);
 			chargeFromArmor(aStack, aPlayer);
 			return true;
 		}
@@ -491,11 +490,11 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 	public final void chargeFromArmor(ItemStack aStack, EntityLivingBase aPlayer) {
 		if (aPlayer.worldObj.isRemote) return;
 		for (int i = 1; i < 5; i++) {
-			ItemStack tArmor = aPlayer.getCurrentItemOrArmor(i);
+			ItemStack tArmor = aPlayer.getEquipmentInSlot(i);
 			if (GT_ModHandler.isElectricItem(tArmor)) {
 				IElectricItem tArmorItem = (IElectricItem)tArmor.getItem();
 				if (tArmorItem.canProvideEnergy(tArmor) && tArmorItem.getTier(tArmor) >= getTier(aStack)) {
-					int tCharge = ElectricItem.manager.discharge(tArmor, charge(aStack, Integer.MAX_VALUE-1, Integer.MAX_VALUE, true, true), Integer.MAX_VALUE, true, false);
+					double tCharge = ElectricItem.manager.discharge(tArmor, charge(aStack, Integer.MAX_VALUE-1, Integer.MAX_VALUE, true, true), Integer.MAX_VALUE, true, false, false);
 					if (tCharge > 0) {
 						charge(aStack, tCharge, Integer.MAX_VALUE, true, false);
 						if (aPlayer instanceof EntityPlayer) {
@@ -508,15 +507,15 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 		}
 	}
 	
-	public final boolean setCharge(ItemStack aStack, int aCharge) {
+	public final boolean setCharge(ItemStack aStack, double aCharge) {
 		Integer[] tStats = mElectricStats.get((short)aStack.getItemDamage());
 		if (tStats == null || tStats[3] > 0) return false;
 		NBTTagCompound tNBT = aStack.getTagCompound();
 		if (tNBT == null) tNBT = new NBTTagCompound();
 		tNBT.removeTag("GT.ItemCharge");
 		aCharge = Math.min(aCharge, tStats[0]);
-		if (aCharge > 0) tNBT.setInteger("GT.ItemCharge", aCharge);
-		if (tNBT.getTags().isEmpty()) aStack.setTagCompound(null); else aStack.setTagCompound(tNBT);
+		if (aCharge > 0) tNBT.setInteger("GT.ItemCharge", (int)aCharge);
+		if (tNBT.hasNoTags()) aStack.setTagCompound(null); else aStack.setTagCompound(tNBT);
 		return true;
 	}
 	
@@ -529,8 +528,8 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 	
     @Override public final int getTier(ItemStack aStack) {Integer[] tStats = mElectricStats.get((short)aStack.getItemDamage()); return tStats==null?Integer.MAX_VALUE:tStats[2]>0?tStats[2]:1;}
 	@Override public final String getToolTip(ItemStack aStack) {return null;} // This has its own ToolTip Handler, no need to let the IC2 Handler screw us up at this Point
-	@Override public final int getChargedItemId(ItemStack aStack) {return itemID;} // ID Changes? How primitive
-	@Override public final int getEmptyItemId(ItemStack aStack) {return itemID;} // ID Changes? How primitive
+	@Override public final Item getChargedItem(ItemStack aStack) {return this;} // Item Changes? How primitive
+	@Override public final Item getEmptyItem(ItemStack aStack) {return this;} // Item Changes? How primitive
 	@Override public final IElectricItemManager getManager(ItemStack aStack) {return this;} // We are our own Manager
 	@Override public final boolean getShareTag() {return true;} // just to be sure.
 }
