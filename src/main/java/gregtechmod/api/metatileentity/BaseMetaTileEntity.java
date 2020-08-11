@@ -16,12 +16,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.packet.Packet;
-import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.Icon;
 import net.minecraft.world.EnumSkyBlock;
-import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
@@ -59,8 +55,8 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 		try {
 			super.writeToNBT(aNBT);
     	} catch(Throwable e) {
-			GT_Log.err.println("Encountered CRITICAL ERROR while saving MetaTileEntity, the Chunk whould've been corrupted by now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
-			e.printStackTrace(GT_Log.err);
+			GT_Log.log.error("Encountered CRITICAL ERROR while saving MetaTileEntity, the Chunk whould've been corrupted by now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
+			GT_Log.log.catching(e);
 		}
 		try {
 	        aNBT.setInteger		("mID"				, mID);
@@ -92,8 +88,8 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	    	aNBT.setBoolean		("mInputDisabled"	, mInputDisabled);
 	    	aNBT.setBoolean		("mOutputDisabled"	, mOutputDisabled);
 		} catch(Throwable e) {
-			GT_Log.err.println("Encountered CRITICAL ERROR while saving MetaTileEntity, the Chunk whould've been corrupted by now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
-			e.printStackTrace(GT_Log.err);
+			GT_Log.log.error("Encountered CRITICAL ERROR while saving MetaTileEntity, the Chunk whould've been corrupted by now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
+			GT_Log.log.catching(e);
 		}
 		try {
 	    	if (hasValidMetaTileEntity()) {
@@ -112,13 +108,13 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	    		try {
 	    			mMetaTileEntity.saveNBTData(aNBT);
 	    		} catch(Throwable e) {
-	    			GT_Log.err.println("Encountered CRITICAL ERROR while saving MetaTileEntity, the Chunk whould've been corrupted by now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
-	    			e.printStackTrace(GT_Log.err);
+	    			GT_Log.log.error("Encountered CRITICAL ERROR while saving MetaTileEntity, the Chunk whould've been corrupted by now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
+	    			GT_Log.log.catching(e);
 	    		}
 	    	}
     	} catch(Throwable e) {
-			GT_Log.err.println("Encountered CRITICAL ERROR while saving MetaTileEntity, the Chunk whould've been corrupted by now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
-			e.printStackTrace(GT_Log.err);
+			GT_Log.log.error("Encountered CRITICAL ERROR while saving MetaTileEntity, the Chunk whould've been corrupted by now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
+			GT_Log.log.catching(e);
 		}
     }
 	
@@ -169,9 +165,9 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	        if (mSidedRedstone.length != 6) if (hasValidMetaTileEntity() && mMetaTileEntity.hasSidedRedstoneOutputBehavior()) mSidedRedstone = new byte[] {0,0,0,0,0,0}; else mSidedRedstone = new byte[] {15,15,15,15,15,15};
 	    	
 	        if (mID!=0 && createNewMetatileEntity(mID)) {
-	            NBTTagList tItemList = aNBT.getTagList("Inventory");
+	            NBTTagList tItemList = aNBT.getTagList("Inventory", 10);
 	            for (int i = 0; i < tItemList.tagCount(); i++) {
-	                NBTTagCompound tTag = (NBTTagCompound)tItemList.tagAt(i);
+	                NBTTagCompound tTag = tItemList.getCompoundTagAt(i);
 	                int tSlot = tTag.getInteger("IntSlot");
 	                if (tSlot >= 0 && tSlot < mMetaTileEntity.getRealInventory().length) {
 	                	mMetaTileEntity.getRealInventory()[tSlot] = GT_Utility.loadItem(tTag);
@@ -181,8 +177,8 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	    		try {
 	    			mMetaTileEntity.loadNBTData(aNBT);
 	        	} catch(Throwable e) {
-	        		GT_Log.err.println("Encountered Exception while loading MetaTileEntity, the Server should've crashed now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
-	        		e.printStackTrace(GT_Log.err);
+	        		GT_Log.log.error("Encountered Exception while loading MetaTileEntity, the Server should've crashed now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
+	        		GT_Log.log.catching(e);
 	        	}
 			}
 		}
@@ -194,7 +190,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	
 	private boolean createNewMetatileEntity(short aID) {
 		if (aID < 16 || aID >= GregTech_API.MAXIMUM_METATILE_IDS || GregTech_API.mMetaTileList[aID] == null) {
-			GT_Log.err.println("MetaID " + aID + " not loadable => locking TileEntity!");
+			GT_Log.log.error("MetaID " + aID + " not loadable => locking TileEntity!");
 		} else {
 			if (aID != 0) {
 				if (hasValidMetaTileEntity()) mMetaTileEntity.setBaseMetaTileEntity(null);
@@ -252,8 +248,8 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	    	    try {
 	    	    	mMetaTileEntity.onFirstTick();
 	    	    } catch(Throwable e) {
-	    	    	GT_Log.err.println("Encountered Exception while ticking MetaTileEntity, the Game should've crashed now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
-	    	    	e.printStackTrace(GT_Log.err);
+	    	    	GT_Log.log.error("Encountered Exception while ticking MetaTileEntity, the Game should've crashed now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
+	    	    	GT_Log.log.catching(e);
 	    	    }
 	    		
         		if (!hasValidMetaTileEntity()) {
@@ -294,8 +290,8 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
     	    			try {
     	    				mCoverData[i] = getCoverBehaviorAtSide(i).doCoverThings(i, getInputRedstoneSignal(i), getCoverIDAtSide(i), mCoverData[i], this);
 	    	    	    } catch(Throwable e) {
-	    	    	    	GT_Log.err.println("Encountered Exception while ticking Cover, the Game should've crashed now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
-	    	    	    	e.printStackTrace(GT_Log.err);
+	    	    	    	GT_Log.log.error("Encountered Exception while ticking Cover, the Game should've crashed now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
+	    	    	    	GT_Log.log.catching(e);
 	    	    	    }
     	    		}
     	    	}
@@ -310,8 +306,8 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
     	    try {
     	    	mMetaTileEntity.onPreTick();
     	    } catch(Throwable e) {
-    	    	GT_Log.err.println("Encountered Exception while ticking MetaTileEntity, the Game should've crashed now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
-    	    	e.printStackTrace(GT_Log.err);
+    	    	GT_Log.log.error("Encountered Exception while ticking MetaTileEntity, the Game should've crashed now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
+    	    	GT_Log.log.catching(e);
     	    }
     	    
     		if (!hasValidMetaTileEntity()) {
@@ -403,8 +399,8 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 		        		}
 	    	        }
     	        } catch(Throwable e) {
-    	        	GT_Log.err.println("Encountered Exception while checking for Explosion conditions");
-    	        	e.printStackTrace(GT_Log.err);
+    	        	GT_Log.log.error("Encountered Exception while checking for Explosion conditions");
+    	        	GT_Log.log.catching(e);
     	        }
     	        
         		if (!hasValidMetaTileEntity()) {
@@ -437,16 +433,16 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 		    	        }
 	        	    }
         	    } catch(Throwable e) {
-        	    	GT_Log.err.println("Encountered Exception while charging/decharging Items");
-        	    	e.printStackTrace(GT_Log.err);
+        	    	GT_Log.log.error("Encountered Exception while charging/decharging Items");
+        	    	GT_Log.log.catching(e);
         	    }
    	        }
     	    
     	    try {
     	    	updateStatus();
     	    } catch(Throwable e) {
-    	    	GT_Log.err.println("Encountered Exception in Cross Mod Energy Systems");
-    	    	e.printStackTrace(GT_Log.err);
+    	    	GT_Log.log.error("Encountered Exception in Cross Mod Energy Systems");
+    	    	GT_Log.log.catching(e);
     	    }
     	    
     		if (!hasValidMetaTileEntity()) {
@@ -457,8 +453,8 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
     	    try {
     	    	mMetaTileEntity.onPostTick();
     	    } catch(Throwable e) {
-    	    	GT_Log.err.println("Encountered Exception while ticking MetaTileEntity, the Game should've crashed now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
-    	    	e.printStackTrace(GT_Log.err);
+    	    	GT_Log.log.error("Encountered Exception while ticking MetaTileEntity, the Game should've crashed now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
+    	    	GT_Log.log.catching(e);
     	    }
     	    
     		if (!hasValidMetaTileEntity()) {
@@ -504,8 +500,8 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
     	}
     	
     	} catch(Throwable e) {
-    		GT_Log.err.println("Encountered Exception while ticking TileEntity, the Game should've crashed now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
-    		e.printStackTrace(GT_Log.err);
+    		GT_Log.log.error("Encountered Exception while ticking TileEntity, the Game should've crashed now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
+    		GT_Log.log.catching(e);
     	}
     	
     	if (isServerSide() && hasValidMetaTileEntity()) {
@@ -578,8 +574,8 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 			try {
 				mMetaTileEntity.receiveClientEvent((byte)aEventID, (byte)aValue);
 			} catch(Throwable e) {
-				GT_Log.err.println("Encountered Exception while receiving Data from the Server, the Client should've been crashed by now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
-				e.printStackTrace(GT_Log.err);
+				GT_Log.log.error("Encountered Exception while receiving Data from the Server, the Client should've been crashed by now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
+				GT_Log.log.catching(e);
 			}
 		}
 		
@@ -993,8 +989,8 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 			try {
 				if (hasValidMetaTileEntity() && mID > 15) return mMetaTileEntity.onRightclick(aPlayer, aSide, aX, aY, aZ);
 	    	} catch(Throwable e) {
-	    		GT_Log.err.println("Encountered Exception while rightclicking TileEntity, the Game should've crashed now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
-	    		e.printStackTrace(GT_Log.err);
+	    		GT_Log.log.error("Encountered Exception while rightclicking TileEntity, the Game should've crashed now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
+	    		GT_Log.log.catching(e);
 	    	}
 		}
 		return true;
@@ -1005,8 +1001,8 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 		try {
 			if (aPlayer != null && hasValidMetaTileEntity() && mID > 15) mMetaTileEntity.onLeftclick(aPlayer);
     	} catch(Throwable e) {
-    		GT_Log.err.println("Encountered Exception while leftclicking TileEntity, the Game should've crashed now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
-    		e.printStackTrace(GT_Log.err);
+    		GT_Log.log.error("Encountered Exception while leftclicking TileEntity, the Game should've crashed now, but I prevented that. Please report immidietly to GregTech Intergalactical!!!");
+    		GT_Log.log.catching(e);
     	}
 	}
 	

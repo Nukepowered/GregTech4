@@ -48,11 +48,6 @@ public interface IHasWorldObjectAndCoords {
     public Block getBlockAtSide(byte aSide);
     public Block getBlockAtSideAndDistance(byte aSide, int aDistance);
     
-    public short getBlockID(int aX, int aY, int aZ);
-    public short getBlockIDOffset(int aX, int aY, int aZ);
-    public short getBlockIDAtSide(byte aSide);
-    public short getBlockIDAtSideAndDistance(byte aSide, int aDistance);
-    
 	public byte getMetaID(int aX, int aY, int aZ);
     public byte getMetaIDOffset(int aX, int aY, int aZ);
     public byte getMetaIDAtSide(byte aSide);

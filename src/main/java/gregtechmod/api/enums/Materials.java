@@ -848,7 +848,7 @@ public enum Materials {
 			if (tMaterial.mBlastFurnaceRequired) tMaterial.mBlastFurnaceRequired = aConfiguration.get(GT_ConfigCategories.Materials.blastfurnacerequirements, tString, true);
 			if (tMaterial.mAmplificationValue > 0) tMaterial.mAmplificationValue = aConfiguration.get(GT_ConfigCategories.Materials.UUM_MaterialCost, tString, tMaterial.mAmplificationValue);
 			if (tMaterial.mUUMEnergy > 0) tMaterial.mUUMEnergy = aConfiguration.get(GT_ConfigCategories.Materials.UUM_EnergyCost, tString, tMaterial.mUUMEnergy);
-			if (tMaterial.mBlastFurnaceRequired && aConfiguration.get(GT_ConfigCategories.Materials.blastinductionsmelter, tString, tMaterial.mBlastFurnaceTemp < 1500)) GT_ModHandler.ThermalExpansion.addSmelterBlastOre(tMaterial);
+//			if (tMaterial.mBlastFurnaceRequired && aConfiguration.get(GT_ConfigCategories.Materials.blastinductionsmelter, tString, tMaterial.mBlastFurnaceTemp < 1500)) GT_ModHandler.ThermalExpansion.addSmelterBlastOre(tMaterial); // TODO: recipe
 		}
 	}
 	
