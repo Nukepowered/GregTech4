@@ -1,6 +1,7 @@
 package gregtechmod.common;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
@@ -21,6 +22,14 @@ public abstract class GT_Proxy {
 	public abstract void doSonictronSound(ItemStack aStack, World aWorld, double aX, double aY, double aZ);
 	
 	public abstract int addArmor(String aPrefix);
+	
+	public boolean registerRenderers() {
+		return false;
+	}
+	
+	public EntityPlayer getThePlayer() {
+		return null;
+	}
 	
 	static {
 		mTickHandler = new GT_TickHandler();
