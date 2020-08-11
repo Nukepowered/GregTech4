@@ -52,7 +52,7 @@ public class GT_FoodStat implements IFoodStat {
 	public void onEaten(GT_MetaGenerated_Item aItem, ItemStack aStack, EntityPlayer aPlayer) {
         aStack.stackSize--;
         ItemStack tStack = GT_OreDictUnificator.get(GT_Utility.copy(mEmptyContainer));
-        if (tStack != null && !aPlayer.inventory.addItemStackToInventory(tStack)) aPlayer.dropPlayerItem(tStack);
+        if (tStack != null && !aPlayer.inventory.addItemStackToInventory(tStack)) aPlayer.entityDropItem(tStack, 0);
 		aPlayer.worldObj.playSoundAtEntity(aPlayer, "random.burp", 0.5F, aPlayer.worldObj.rand.nextFloat() * 0.1F + 0.9F);
 		if (!aPlayer.worldObj.isRemote) {
 			for (int i = 3; i < mPotionEffects.length; i+=4) {

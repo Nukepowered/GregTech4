@@ -960,6 +960,16 @@ public class GT_Utility {
 		return null;
 	}
 	
+	public static ItemStack copy(int amount, ItemStack stack) {
+		if (amount >= 0 && stack != null) {
+			ItemStack copy = stack.copy();
+			copy.stackSize = amount;
+			return copy;
+		}
+		
+		return null;
+	}
+	
 	public static ItemStack copyAmount(long aAmount, ItemStack... aStacks) {
 		ItemStack rStack = copy(aStacks);
 		if (isStackInvalid(rStack)) return null;

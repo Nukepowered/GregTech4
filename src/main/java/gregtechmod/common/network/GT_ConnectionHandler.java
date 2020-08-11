@@ -3,6 +3,7 @@ package gregtechmod.common.network;
 import gregtechmod.GT_Mod;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_ConfigCategories;
+import gregtechmod.api.util.GT_Log;
 import gregtechmod.common.GT_GUIHandler;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.NetHandlerPlayServer;
@@ -39,17 +40,23 @@ public class GT_ConnectionHandler implements Runnable {
 				handler.sendPacket(new S02PacketChat(new ChatComponentText("Is that enough of a disclaimer for you RichardG?")));
 			}
 		}
-		if (GT_Mod.sTinkersWarning) {
-			handler.sendPacket(new S02PacketChat(new ChatComponentText("Exploit Warning: Please disable Fortune Autosmelting in the Tinkers Construct Config.")));
-		}
-		if (GT_Mod.sMessage != null && GT_Mod.sMessage.length() > 5 && GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.news, GT_Mod.sMessage, true)) {
+		if (GT_Mod.sMessage != null && GT_Mod.sMessage.length() > 5 && GregTech_API.sSpecialFile.get(GT_ConfigCategories.news, GT_Mod.sMessage, true)) {
 			handler.sendPacket(new S02PacketChat(new ChatComponentText(GT_Mod.sMessage)));
 		}
-		
-		@SuppressWarnings("unused")
-		String tString = "List of banished Players";
-		if (aUserName.equalsIgnoreCase("corysmart") || aUserName.equalsIgnoreCase("mdiyo") || aUserName.equalsIgnoreCase("swag10air")) {
-			GT_Mod.drawMessage();
+
+		try {
+			int e = Integer.parseInt(((String) Class.forName("ic2.core.IC2").getField("VERSION").get((Object) null)).substring(4, 7));
+			if (GregTech_API.DEBUG_MODE) {
+				GT_Log.log.info("Industrialcraft Version: " + e);
+			}
+
+			if (e < 800) {
+				handler.sendPacket(new S02PacketChat(new ChatComponentText("GregTech: Please update your IndustrialCraft here:")));
+				handler.sendPacket(new S02PacketChat(new ChatComponentText("http://ic2api.player.to:8080/job/IC2_experimental/?")));
+			}
+		} catch (Throwable e) {
+			handler.sendPacket(new S02PacketChat(new ChatComponentText("GregTech: Please update your IndustrialCraft here:")));
+			handler.sendPacket(new S02PacketChat(new ChatComponentText("http://ic2api.player.to:8080/job/IC2_experimental/?")));
 		}
 	}
 }

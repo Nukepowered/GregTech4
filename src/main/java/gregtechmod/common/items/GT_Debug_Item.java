@@ -78,7 +78,7 @@ public class GT_Debug_Item extends GT_Generic_Item implements IElectricItem {
 	public boolean onItemUseFirst(ItemStack aStack, EntityPlayer aPlayer, World aWorld, int aX, int aY, int aZ, int aSide, float aClickX, float aClickY, float aClickZ) {
 		if (aPlayer.isSneaking()) {
 			if (aWorld.isRemote) {
-				GT_Utility.doSoundAtClient(GregTech_API.sSoundList.get(108), 1.0F, aX, aY, aZ);
+				GT_Utility.doSoundAtClient(GregTech_API.sSoundList.get(108), 1, 1.0F, aX, aY, aZ);
 				this.debug(aStack, aPlayer, aX, aY, aZ, aSide, aClickX, aClickY, aClickZ, Side.CLIENT);
 				return true;
 			} else return false;
@@ -87,7 +87,7 @@ public class GT_Debug_Item extends GT_Generic_Item implements IElectricItem {
 				this.debug(aStack, aPlayer, aX, aY, aZ, aSide, aClickX, aClickY, aClickZ, Side.SERVER);
 				return true;
 			} else {
-				GT_Utility.doSoundAtClient(GregTech_API.sSoundList.get(108), 1.0F, aX, aY, aZ);
+				GT_Utility.doSoundAtClient(GregTech_API.sSoundList.get(108), 1, 1.0F, aX, aY, aZ);
 				return false;
 			}
 		}
@@ -96,7 +96,7 @@ public class GT_Debug_Item extends GT_Generic_Item implements IElectricItem {
 	private void debug(ItemStack aStack, EntityPlayer aPlayer, int aX, int aY, int aZ, int aSide, float aClickX, float aClickY, float aClickZ, Side side) {
 		ArrayList<String> tList = new ArrayList<String>();
 		tList.add("=====================");
-		tList.add(String.format("%s-sided info", side.isClient() ? "§aCLIENT" : "§cSERVER"));
+		tList.add(String.format("%s-sided info", side.isClient() ? "ï¿½aCLIENT" : "ï¿½cSERVER"));
 		GT_ModHandler.useElectricItem(aStack, GT_Utility.getCoordinateScan(tList, aPlayer, aPlayer.worldObj, 1, aX, aY, aZ, aSide, aClickX, aClickY, aClickZ), aPlayer);
 		for (int i = 0; i < tList.size(); i++) GT_Utility.sendChatToPlayer(aPlayer, tList.get(i));
 	}

@@ -72,7 +72,7 @@ public class GT_OreDictUnificator {
 	public static ItemStack getFirstOre(Object aName, long aAmount) {
 		if (GT_Utility.isStringInvalid(aName)) return null;
 		if (GT_Utility.isStackValid(sName2OreMap.get(aName.toString()))) return GT_Utility.copyAmount(aAmount, sName2OreMap.get(aName.toString()));
-		return GT_Utility.copyAmount(aAmount, getOres(aName).toArray());
+		return GT_Utility.copyAmount(aAmount, getOres(aName).toArray(new ItemStack[0]));
 	}
 	
 	public static ItemStack get(Object aName, long aAmount) {
@@ -104,7 +104,7 @@ public class GT_OreDictUnificator {
 	
 	public static ItemStack[] getStackArray(boolean aUseBlackList, Object... aStacks) {
 		ItemStack[] rStacks = new ItemStack[aStacks.length];
-		for (int i = 0; i < aStacks.length; i++) rStacks[i] = get(aUseBlackList, GT_Utility.copy(aStacks[i]));
+		for (int i = 0; i < aStacks.length; i++) rStacks[i] = get(aUseBlackList, GT_Utility.copy((ItemStack)aStacks[i]));
 		return rStacks;
 	}
 	
