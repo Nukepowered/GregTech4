@@ -3,12 +3,11 @@ package gregtechmod.common.items;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
-import gregtechmod.api.interfaces.ICapsuleCellContainer;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import net.minecraft.item.ItemStack;
 
-public class GT_MetaItem_Cell extends GT_MetaItem_Abstract implements ICapsuleCellContainer {
+public class GT_MetaItem_Cell extends GT_MetaItem_Abstract {
 
 	public static GT_MetaItem_Abstract instance;
 	
@@ -33,15 +32,6 @@ public class GT_MetaItem_Cell extends GT_MetaItem_Abstract implements ICapsuleCe
 		else
 			GT_OreDictUnificator.add(OrePrefixes.cell, aMaterial, instance.getUnunifiedStack(aMeta, 1));
 		
-		if (aOreDictName != null && !aOreDictName.equals("")) {
-			GT_OreDictUnificator.registerOre(aOreDictName, instance.getUnunifiedStack(aMeta, 1));
-		}
-		
 		return instance.getUnunifiedStack(aMeta, 1);
-	}
-	
-	@Override
-	public int CapsuleCellContainerCount(ItemStack aStack) {
-		return 1;
 	}
 }

@@ -30,8 +30,8 @@ public class GT_SensorCard_Item extends GT_Generic_Item implements IRemoteSensor
     public static final int DISPLAY_MAIN = 1;
     public static final int DISPLAY_SECOND = 2;
     public static final int DISPLAY_TERTIARY = 4;
-
     public static final UUID CARD_TYPE = new UUID(0, 41);
+    private byte stringCound = 0; // TODO rewrite this
     
 	public GT_SensorCard_Item(String aName) {
 		super(aName, "Insert into Display Panel");
@@ -70,10 +70,10 @@ public class GT_SensorCard_Item extends GT_Generic_Item implements IRemoteSensor
         if (target == null) return CardState.INVALID_CARD;
         TileEntity tTileEntity = world.getTileEntity(target.posX, target.posY, target.posZ);
         if (tTileEntity != null && tTileEntity instanceof IGregTechDeviceInformation && ((IGregTechDeviceInformation)tTileEntity).isGivingInformation()) {
-            card.setString("mString1", ((IGregTechDeviceInformation)tTileEntity).getMainInfo());
-            card.setString("mString2", ((IGregTechDeviceInformation)tTileEntity).getSecondaryInfo());
-            card.setString("mString3", ((IGregTechDeviceInformation)tTileEntity).getTertiaryInfo());
-            
+            String[] data = ((IGregTechDeviceInformation)tTileEntity).getInfoData();
+            for (int i = 0; i < data.length; i++) {
+            	card.setString("mString" + i, data[i]);
+            }
             return CardState.OK;
         } else {
             return CardState.NO_TARGET;

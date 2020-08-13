@@ -91,7 +91,7 @@ public abstract class MetaPipeEntity implements IMetaTileEntity {
 	 * 		super(aID, mName, mNameRegional);
 	 * 	}
 	 */
-	public MetaPipeEntity(int aID, String aBasicName, String aRegionalName) {
+	public MetaPipeEntity(int aID, String aBasicName) {
 		if (GregTech_API.sPostloadStarted || !GregTech_API.sPreloadStarted) throw new IllegalAccessError("This Constructor has to be called in the load Phase");
 		if (GregTech_API.mMetaTileList[aID] == null) {
 			GregTech_API.mMetaTileList[aID] = this;

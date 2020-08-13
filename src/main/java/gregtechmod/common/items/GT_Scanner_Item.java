@@ -62,7 +62,7 @@ public class GT_Scanner_Item extends GT_Generic_Item implements IElectricItem {
 	@Override
 	public boolean onItemUseFirst(ItemStack aStack, EntityPlayer aPlayer, World aWorld, int aX, int aY, int aZ, int aSide, float aClickX, float aClickY, float aClickZ) {
 		if (aWorld.isRemote) {
-    		GT_Utility.doSoundAtClient(GregTech_API.sSoundList.get(108), 1.0F, aX, aY, aZ);
+    		GT_Utility.doSoundAtClient(GregTech_API.sSoundList.get(108), 0, 1.0F, aX, aY, aZ);
     		return false;
     	}
 		if (aPlayer instanceof EntityPlayerMP && GT_ModHandler.canUseElectricItem(aStack, 25000)) {
