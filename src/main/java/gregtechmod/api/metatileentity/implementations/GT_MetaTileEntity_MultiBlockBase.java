@@ -29,8 +29,8 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity {
 	public ArrayList<GT_MetaTileEntity_Hatch_EnergyInput> mEnergyHatches = new ArrayList<GT_MetaTileEntity_Hatch_EnergyInput>();
 	public ArrayList<GT_MetaTileEntity_Hatch_Maintenance> mMaintenanceHatches = new ArrayList<GT_MetaTileEntity_Hatch_Maintenance>();
 	
-	public GT_MetaTileEntity_MultiBlockBase(int aID, String aName, String aNameRegional) {
-		super(aID, aName, aNameRegional);
+	public GT_MetaTileEntity_MultiBlockBase(int aID, String aName) {
+		super(aID, aName);
 	}
 	
 	public GT_MetaTileEntity_MultiBlockBase() {

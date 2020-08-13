@@ -23,8 +23,8 @@ public class GT_MetaTileEntity_E_Furnace extends GT_MetaTileEntity_BasicMachine 
 	public int mHeatingCoilTier = 0;
 	
 	// see @MetaTileEntity to register MetaTileEntities
-	public GT_MetaTileEntity_E_Furnace(int aID, String aName, String aNameRegional) {
-		super(aID, aName, aNameRegional);
+	public GT_MetaTileEntity_E_Furnace(int aID, String aName) {
+		super(aID, aName);
 	}
 	
 	// An empty constructor, which is needed for several Java reasons

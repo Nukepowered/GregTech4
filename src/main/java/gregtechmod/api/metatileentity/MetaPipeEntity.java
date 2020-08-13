@@ -4,17 +4,16 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.interfaces.IMetaTileEntity;
 import gregtechmod.api.util.GT_Config;
-import gregtechmod.api.util.GT_LanguageManager;
 import gregtechmod.api.util.GT_Utility;
 
 import java.util.ArrayList;
 
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.Icon;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraft.util.IIcon;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
@@ -102,7 +101,6 @@ public abstract class MetaPipeEntity implements IMetaTileEntity {
 		mName = aBasicName.replaceAll(" ", "_");
 		setBaseMetaTileEntity(new BaseMetaPipeEntity());
 		getBaseMetaTileEntity().setMetaTileID((short)aID);
-		GT_LanguageManager.addStringLocalization("tile.BlockMetaID_Machine." + mName + ".name", aRegionalName);
 	}
 	
 	@Override
@@ -131,11 +129,11 @@ public abstract class MetaPipeEntity implements IMetaTileEntity {
 	@Override
 	public void setItemNBT(NBTTagCompound aNBT) {/*Do nothing*/}
 	@Override
-	public Icon getTextureIcon(byte aSide, byte aFacing, boolean aActive, boolean aRedstone) {return null;}
+	public IIcon getTextureIcon(byte aSide, byte aFacing, boolean aActive, boolean aRedstone) {return null;}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister aBlockIconRegister) {/*Do nothing*/}
+	public void registerIcons(IIconRegister aBlockIconRegister) {/*Do nothing*/}
 	
 	@Override
 	public boolean allowCoverOnSide(byte aSide, int aCoverID) {return true;}
@@ -306,7 +304,7 @@ public abstract class MetaPipeEntity implements IMetaTileEntity {
 	@Override
 	public void setInventorySlotContents(int aIndex, ItemStack aStack) {if (aIndex >= 0 && aIndex < mInventory.length) mInventory[aIndex] = aStack;}
 	@Override
-	public String getInvName() {if (GregTech_API.mMetaTileList[getBaseMetaTileEntity().getMetaTileID()] != null) return GregTech_API.mMetaTileList[getBaseMetaTileEntity().getMetaTileID()].getMetaName(); return "";}
+	public String getInventoryName() {if (GregTech_API.mMetaTileList[getBaseMetaTileEntity().getMetaTileID()] != null) return GregTech_API.mMetaTileList[getBaseMetaTileEntity().getMetaTileID()].getMetaName(); return "";}
 	@Override
 	public int getInventoryStackLimit() {return 64;}
 	@Override
@@ -408,7 +406,7 @@ public abstract class MetaPipeEntity implements IMetaTileEntity {
 	}
 	
 	@Override
-	public boolean isInvNameLocalized() {
+	public boolean hasCustomInventoryName() {
 		return false;
 	}
 	
@@ -418,9 +416,7 @@ public abstract class MetaPipeEntity implements IMetaTileEntity {
 	}
 	
 	@Override
-	public void onInventoryChanged() {
-		//
-	}
+	public void markDirty() {}
 	
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer entityplayer) {
@@ -433,14 +429,10 @@ public abstract class MetaPipeEntity implements IMetaTileEntity {
 	}
 	
 	@Override
-	public void openChest() {
-		//
-	}
+	public void openInventory() {}
 	
 	@Override
-	public void closeChest() {
-		//
-	}
+	public void closeInventory() {}
 	
 	@Override
 	public float getExplosionResistance(byte aSide) {

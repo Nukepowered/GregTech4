@@ -15,8 +15,8 @@ public class GT_MetaTileEntity_Hatch_Maintenance extends MetaTileEntity {
 	
 	public boolean mDuctTape = false, mWrench = false, mScrewdriver = false, mSoftHammer = false, mHardHammer = false, mSolderingTool = false, mCrowbar = false;
 	
-	public GT_MetaTileEntity_Hatch_Maintenance(int aID, String aName, String aNameRegional) {
-		super(aID, aName, aNameRegional);
+	public GT_MetaTileEntity_Hatch_Maintenance(int aID, String aName) {
+		super(aID, aName);
 	}
 	
 	public GT_MetaTileEntity_Hatch_Maintenance() {

@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.common.ForgeDirection;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidEvent;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
@@ -38,7 +38,7 @@ public abstract class GT_MetaPipeEntity_Fluid extends MetaPipeEntity {
 	public void saveNBTData(NBTTagCompound aNBT) {
 		if (mFluid != null) {
 			try {
-				aNBT.setCompoundTag("mLiquid", mFluid.writeToNBT(new NBTTagCompound("mLiquid")));
+				aNBT.setTag("mLiquid", mFluid.writeToNBT(new NBTTagCompound()));
 			} catch(Throwable e) {/*Do nothing*/}
 		}
 		aNBT.setByte("mLastReceivedFrom", mLastReceivedFrom);
@@ -149,9 +149,9 @@ public abstract class GT_MetaPipeEntity_Fluid extends MetaPipeEntity {
 	
 	@Override
 	public final int fill_default(ForgeDirection aSide, FluidStack aFluid, boolean doFill) {
-		if (aFluid == null || aFluid.fluidID <= 0) return 0;
+		if (aFluid == null || aFluid.getFluidID() <= 0) return 0;
 		
-		if (mFluid == null || mFluid.fluidID <= 0) {
+		if (mFluid == null || mFluid.getFluidID() <= 0) {
 			if(aFluid.amount <= getCapacity()) {
 				if (doFill) {
 					mFluid = aFluid.copy();
@@ -164,7 +164,7 @@ public abstract class GT_MetaPipeEntity_Fluid extends MetaPipeEntity {
 				mLastReceivedFrom |= (1<<aSide.ordinal());
 				mFluid.amount = getCapacity();
 				if (getBaseMetaTileEntity()!=null)
-					FluidEvent.fireEvent(new FluidEvent.FluidFillingEvent(mFluid, getBaseMetaTileEntity().getWorld(), getBaseMetaTileEntity().getXCoord(), getBaseMetaTileEntity().getYCoord(), getBaseMetaTileEntity().getZCoord(), this));
+					FluidEvent.fireEvent(new FluidEvent.FluidFillingEvent(mFluid, getBaseMetaTileEntity().getWorld(), getBaseMetaTileEntity().getXCoord(), getBaseMetaTileEntity().getYCoord(), getBaseMetaTileEntity().getZCoord(), this, mFluid.amount));
 			}
 			return getCapacity();
 		}
@@ -209,7 +209,7 @@ public abstract class GT_MetaPipeEntity_Fluid extends MetaPipeEntity {
 			mFluid = null;
 		}
 		
-		if (doDrain && getBaseMetaTileEntity()!=null) FluidEvent.fireEvent(new FluidEvent.FluidDrainingEvent(drained, getBaseMetaTileEntity().getWorld(), getBaseMetaTileEntity().getXCoord(), getBaseMetaTileEntity().getYCoord(), getBaseMetaTileEntity().getZCoord(), this));
+		if (doDrain && getBaseMetaTileEntity()!=null) FluidEvent.fireEvent(new FluidEvent.FluidDrainingEvent(drained, getBaseMetaTileEntity().getWorld(), getBaseMetaTileEntity().getXCoord(), getBaseMetaTileEntity().getYCoord(), getBaseMetaTileEntity().getZCoord(), this, drained.amount));
 		
 		return drained;
 	}

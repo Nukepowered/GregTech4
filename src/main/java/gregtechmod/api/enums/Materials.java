@@ -3,7 +3,6 @@ package gregtechmod.api.enums;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IIconContainer;
 import gregtechmod.api.util.GT_Config;
-import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 
 import java.util.ArrayList;

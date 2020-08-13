@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class GT_MetaTileEntity_Hatch_Muffler extends MetaTileEntity {
-	public GT_MetaTileEntity_Hatch_Muffler(int aID, String aName, String aNameRegional) {
-		super(aID, aName, aNameRegional);
+	public GT_MetaTileEntity_Hatch_Muffler(int aID, String aName) {
+		super(aID, aName);
 	}
 	
 	public GT_MetaTileEntity_Hatch_Muffler() {

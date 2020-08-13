@@ -8,8 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class GT_MetaTileEntity_Hatch_InputBus extends MetaTileEntity {
-	public GT_MetaTileEntity_Hatch_InputBus(int aID, String aName, String aNameRegional) {
-		super(aID, aName, aNameRegional);
+	public GT_MetaTileEntity_Hatch_InputBus(int aID, String aName) {
+		super(aID, aName);
 	}
 	
 	public GT_MetaTileEntity_Hatch_InputBus() {

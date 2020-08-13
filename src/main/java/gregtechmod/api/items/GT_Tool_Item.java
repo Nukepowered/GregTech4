@@ -79,7 +79,7 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	}
 	
 	public final GT_Tool_Item addToBlockList(ItemStack aBlock) {
-		return addToBlockList(GT_Utility.getBlockFromStack(aBlock));
+		return addToBlockList(Block.getBlockFromItem(aBlock.getItem())); // TODO mb not work
 	}
 	
 	public final GT_Tool_Item addToBlockList(Block aBlock) {

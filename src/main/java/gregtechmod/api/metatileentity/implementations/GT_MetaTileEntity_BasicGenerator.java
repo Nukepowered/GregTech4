@@ -5,15 +5,15 @@ import gregtechmod.api.util.GT_Utility;
 
 import java.util.List;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 public abstract class GT_MetaTileEntity_BasicGenerator extends GT_MetaTileEntity_BasicTank {
 	
-	public GT_MetaTileEntity_BasicGenerator(int aID, String aName, String aNameRegional) {
-		super(aID, aName, aNameRegional);
+	public GT_MetaTileEntity_BasicGenerator(int aID, String aName) {
+		super(aID, aName);
 	}
 	
 	public GT_MetaTileEntity_BasicGenerator() {
@@ -43,8 +43,8 @@ public abstract class GT_MetaTileEntity_BasicGenerator extends GT_MetaTileEntity
     			if (getBaseMetaTileEntity().getUniversalEnergyStored() < getBaseMetaTileEntity().getOutputVoltage() + getMinimumStoredEU()) {
     				mInventory[getStackDisplaySlot()] = null;
     			} else {
-    				if (mInventory[getStackDisplaySlot()] == null) mInventory[getStackDisplaySlot()] = new ItemStack(Block.fire, 1);
-    				mInventory[getStackDisplaySlot()].setItemName("Generating: " + (getBaseMetaTileEntity().getUniversalEnergyStored() - getMinimumStoredEU()) + " EU");
+    				if (mInventory[getStackDisplaySlot()] == null) mInventory[getStackDisplaySlot()] = new ItemStack(Blocks.fire, 1);
+    				mInventory[getStackDisplaySlot()].setStackDisplayName("Generating: " + (getBaseMetaTileEntity().getUniversalEnergyStored() - getMinimumStoredEU()) + " EU"); // TODO localization
     			}
     		} else {
     			int tFuelValue = getFuelValue(mFluid);
