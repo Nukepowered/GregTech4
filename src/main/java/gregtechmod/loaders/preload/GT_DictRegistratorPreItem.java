@@ -1,4 +1,4 @@
-package gregtechmod.loaders.load;
+package gregtechmod.loaders.preload;
 
 import gregtechmod.GT_Mod;
 import gregtechmod.api.GregTech_API;
@@ -196,88 +196,88 @@ public class GT_DictRegistratorPreItem implements Runnable {
         GT_OreDictUnificator.add(OrePrefixes.block	, Materials.GarnetRed		, new ItemStack(GregTech_API.sBlockList[4], 1,15));
         
         GT_Log.log.info("GT_Mod: Register other Mods Unification Targets.");
-        if (GT_Mod.sUnificatorFR) {
-        	GT_OreDictUnificator.override("ingotCopper"		, GT_ModHandler.getFRItem("ingotCopper", 1));
-        	GT_OreDictUnificator.override("ingotTin"		, GT_ModHandler.getFRItem("ingotTin", 1));
-        	GT_OreDictUnificator.override("ingotBronze"		, GT_ModHandler.getFRItem("ingotBronze", 1));
-        	GT_OreDictUnificator.override("dustAsh"			, GT_ModHandler.getFRItem("ash", 1));
-        	GT_OreDictUnificator.override("dustWood"		, GT_ModHandler.getFRItem("woodPulp", 1));
-        	GT_OreDictUnificator.override("pulpWood"		, GT_ModHandler.getFRItem("woodPulp", 1));
-        }
-        if (GT_Mod.sUnificatorRC) {
-        	GT_OreDictUnificator.override("blockSteel"		, GT_ModHandler.getRCItem("cube.steel", 1));
-        	GT_OreDictUnificator.override("nuggetIron"		, GT_ModHandler.getRCItem("nugget.iron", 1));
-        	GT_OreDictUnificator.override("nuggetSteel"		, GT_ModHandler.getRCItem("nugget.steel", 1));
-        	GT_OreDictUnificator.override("ingotSteel"		, GT_ModHandler.getRCItem("part.ingot.steel", 1));
-        	GT_OreDictUnificator.override("dustCharcoal"	, GT_ModHandler.getRCItem("dust.charcoal", 1));
-        	GT_OreDictUnificator.override("dustObsidian"	, GT_ModHandler.getRCItem("dust.obsidian", 1));
-        	GT_OreDictUnificator.override("dustSaltpeter"	, GT_ModHandler.getRCItem("dust.saltpeter", 1));
-        	GT_OreDictUnificator.override("dustSulfur"		, GT_ModHandler.getRCItem("dust.sulfur", 1));
-        }
-        if (GT_Mod.sUnificatorTE) {
-        	GT_OreDictUnificator.override("dustWood"		, GT_ModHandler.getTEItem("sawdust", 1));
-    		GT_OreDictUnificator.override("pulpWood"		, GT_ModHandler.getTEItem("sawdust", 1));
-        	GT_OreDictUnificator.override("dustGold"		, GT_ModHandler.getTEItem("dustGold", 1));
-        	GT_OreDictUnificator.override("dustBrass"		, GT_ModHandler.getTEItem("dustBrass", 1));
-        	GT_OreDictUnificator.override("dustBronze"		, GT_ModHandler.getTEItem("dustBronze", 1));
-        	GT_OreDictUnificator.override("dustCopper"		, GT_ModHandler.getTEItem("dustCopper", 1));
-        	GT_OreDictUnificator.override("dustElectrum"	, GT_ModHandler.getTEItem("dustElectrum", 1));
-        	GT_OreDictUnificator.override("dustInvar"		, GT_ModHandler.getTEItem("dustInvar", 1));
-        	GT_OreDictUnificator.override("dustIron"		, GT_ModHandler.getTEItem("dustIron", 1));
-        	GT_OreDictUnificator.override("dustLead"		, GT_ModHandler.getTEItem("dustLead", 1));
-        	GT_OreDictUnificator.override("dustNickel"		, GT_ModHandler.getTEItem("dustNickel", 1));
-        	GT_OreDictUnificator.override("dustObsidian"	, GT_ModHandler.getTEItem("dustObsidian", 1));
-        	GT_OreDictUnificator.override("dustPlatinum"	, GT_ModHandler.getTEItem("dustPlatinum", 1));
-        	GT_OreDictUnificator.override("dustSilver"		, GT_ModHandler.getTEItem("dustSilver", 1));
-        	GT_OreDictUnificator.override("dustTin"			, GT_ModHandler.getTEItem("dustTin", 1));
-        	GT_OreDictUnificator.override("ingotCopper"		, GT_ModHandler.getTEItem("ingotCopper", 1));
-        	GT_OreDictUnificator.override("ingotElectrum"	, GT_ModHandler.getTEItem("ingotElectrum", 1));
-        	GT_OreDictUnificator.override("ingotInvar"		, GT_ModHandler.getTEItem("ingotInvar", 1));
-        	GT_OreDictUnificator.override("ingotLead"		, GT_ModHandler.getTEItem("ingotLead", 1));
-        	GT_OreDictUnificator.override("ingotNickel"		, GT_ModHandler.getTEItem("ingotNickel", 1));
-        	GT_OreDictUnificator.override("ingotPlatinum"	, GT_ModHandler.getTEItem("ingotPlatinum", 1));
-        	GT_OreDictUnificator.override("ingotSilver"		, GT_ModHandler.getTEItem("ingotSilver", 1));
-        	GT_OreDictUnificator.override("ingotTin"		, GT_ModHandler.getTEItem("ingotTin", 1));
-        	GT_OreDictUnificator.override("nuggetCopper"	, GT_ModHandler.getTEItem("nuggetCopper", 1));
-        	GT_OreDictUnificator.override("nuggetElectrum"	, GT_ModHandler.getTEItem("nuggetElectrum", 1));
-        	GT_OreDictUnificator.override("nuggetInvar"		, GT_ModHandler.getTEItem("nuggetInvar", 1));
-        	GT_OreDictUnificator.override("nuggetLead"		, GT_ModHandler.getTEItem("nuggetLead", 1));
-        	GT_OreDictUnificator.override("nuggetNickel"	, GT_ModHandler.getTEItem("nuggetNickel", 1));
-        	GT_OreDictUnificator.override("nuggetPlatinum"	, GT_ModHandler.getTEItem("nuggetPlatinum", 1));
-        	GT_OreDictUnificator.override("nuggetSilver"	, GT_ModHandler.getTEItem("nuggetSilver", 1));
-        	GT_OreDictUnificator.override("nuggetTin"		, GT_ModHandler.getTEItem("nuggetTin", 1));
-        	GT_OreDictUnificator.override("blockCopper"		, GT_ModHandler.getTEItem("blockCopper", 1));
-        	GT_OreDictUnificator.override("blockElectrum"	, GT_ModHandler.getTEItem("blockElectrum", 1));
-        	GT_OreDictUnificator.override("blockInvar"		, GT_ModHandler.getTEItem("blockInvar", 1));
-        	GT_OreDictUnificator.override("blockLead"		, GT_ModHandler.getTEItem("blockLead", 1));
-        	GT_OreDictUnificator.override("blockNickel"		, GT_ModHandler.getTEItem("blockNickel", 1));
-        	GT_OreDictUnificator.override("blockPlatinum"	, GT_ModHandler.getTEItem("blockPlatinum", 1));
-        	GT_OreDictUnificator.override("blockSilver"		, GT_ModHandler.getTEItem("blockSilver", 1));
-        	GT_OreDictUnificator.override("blockTin"		, GT_ModHandler.getTEItem("blockTin", 1));
-        }
-        if (GT_Mod.sUnificatorRP) {
-        	GT_OreDictUnificator.override("gemRuby"			, GT_ModHandler.mRuby);
-        	GT_OreDictUnificator.override("gemSapphire"		, GT_ModHandler.mSapphire);
-        	GT_OreDictUnificator.override("gemGreenSapphire", GT_ModHandler.mGreenSapphire);
-        	GT_OreDictUnificator.override("ingotSilver"		, GT_ModHandler.mSilver);
-        	GT_OreDictUnificator.override("ingotCopper"		, GT_ModHandler.mCopper);
-        	GT_OreDictUnificator.override("ingotTin"		, GT_ModHandler.mTin);
-        	GT_OreDictUnificator.override("ingotBrass"		, GT_ModHandler.mBrass);
-        	GT_OreDictUnificator.override("nuggetIron"		, GT_ModHandler.mIronNugget);
-        	GT_OreDictUnificator.override("nuggetSilver"	, GT_ModHandler.mSilverNugget);
-        	GT_OreDictUnificator.override("nuggetTin"		, GT_ModHandler.mTinNugget);
-        	GT_OreDictUnificator.override("nuggetCopper"	, GT_ModHandler.mCopperNugget);
-        }
-        if (GT_Mod.sUnificatorTC) {
-        	GT_OreDictUnificator.override("nuggetIron"		, GT_ModHandler.mNuggetIron);
-        	GT_OreDictUnificator.override("nuggetSilver"	, GT_ModHandler.mNuggetSilver);
-        	GT_OreDictUnificator.override("nuggetTin"		, GT_ModHandler.mNuggetTin);
-        	GT_OreDictUnificator.override("nuggetCopper"	, GT_ModHandler.mNuggetCopper);
-        	GT_OreDictUnificator.override("nuggetLead"		, GT_ModHandler.mNuggetLead);
-        }
-        
-    	//GT_OreDictUnificator.override("plateTin"		, GT_ModHandler.getRCItem("part.plate.tin", 1)); needs 50% Iron and 50% Tin to be crafted
-    	GT_OreDictUnificator.override("plateIron"		, GT_ModHandler.getRCItem("part.plate.iron", 1));
-    	GT_OreDictUnificator.override("plateSteel"		, GT_ModHandler.getRCItem("part.plate.steel", 1));
+//        if (GT_Mod.sUnificatorFR) {
+//        	GT_OreDictUnificator.override("ingotCopper"		, GT_ModHandler.getFRItem("ingotCopper", 1));
+//        	GT_OreDictUnificator.override("ingotTin"		, GT_ModHandler.getFRItem("ingotTin", 1));
+//        	GT_OreDictUnificator.override("ingotBronze"		, GT_ModHandler.getFRItem("ingotBronze", 1));
+//        	GT_OreDictUnificator.override("dustAsh"			, GT_ModHandler.getFRItem("ash", 1));
+//        	GT_OreDictUnificator.override("dustWood"		, GT_ModHandler.getFRItem("woodPulp", 1));
+//        	GT_OreDictUnificator.override("pulpWood"		, GT_ModHandler.getFRItem("woodPulp", 1));
+//        }
+//        if (GT_Mod.sUnificatorRC) {
+//        	GT_OreDictUnificator.override("blockSteel"		, GT_ModHandler.getRCItem("cube.steel", 1));
+//        	GT_OreDictUnificator.override("nuggetIron"		, GT_ModHandler.getRCItem("nugget.iron", 1));
+//        	GT_OreDictUnificator.override("nuggetSteel"		, GT_ModHandler.getRCItem("nugget.steel", 1));
+//        	GT_OreDictUnificator.override("ingotSteel"		, GT_ModHandler.getRCItem("part.ingot.steel", 1));
+//        	GT_OreDictUnificator.override("dustCharcoal"	, GT_ModHandler.getRCItem("dust.charcoal", 1));
+//        	GT_OreDictUnificator.override("dustObsidian"	, GT_ModHandler.getRCItem("dust.obsidian", 1));
+//        	GT_OreDictUnificator.override("dustSaltpeter"	, GT_ModHandler.getRCItem("dust.saltpeter", 1));
+//        	GT_OreDictUnificator.override("dustSulfur"		, GT_ModHandler.getRCItem("dust.sulfur", 1));
+//        }
+//        if (GT_Mod.sUnificatorTE) {
+//        	GT_OreDictUnificator.override("dustWood"		, GT_ModHandler.getTEItem("sawdust", 1));
+//    		GT_OreDictUnificator.override("pulpWood"		, GT_ModHandler.getTEItem("sawdust", 1));
+//        	GT_OreDictUnificator.override("dustGold"		, GT_ModHandler.getTEItem("dustGold", 1));
+//        	GT_OreDictUnificator.override("dustBrass"		, GT_ModHandler.getTEItem("dustBrass", 1));
+//        	GT_OreDictUnificator.override("dustBronze"		, GT_ModHandler.getTEItem("dustBronze", 1));
+//        	GT_OreDictUnificator.override("dustCopper"		, GT_ModHandler.getTEItem("dustCopper", 1));
+//        	GT_OreDictUnificator.override("dustElectrum"	, GT_ModHandler.getTEItem("dustElectrum", 1));
+//        	GT_OreDictUnificator.override("dustInvar"		, GT_ModHandler.getTEItem("dustInvar", 1));
+//        	GT_OreDictUnificator.override("dustIron"		, GT_ModHandler.getTEItem("dustIron", 1));
+//        	GT_OreDictUnificator.override("dustLead"		, GT_ModHandler.getTEItem("dustLead", 1));
+//        	GT_OreDictUnificator.override("dustNickel"		, GT_ModHandler.getTEItem("dustNickel", 1));
+//        	GT_OreDictUnificator.override("dustObsidian"	, GT_ModHandler.getTEItem("dustObsidian", 1));
+//        	GT_OreDictUnificator.override("dustPlatinum"	, GT_ModHandler.getTEItem("dustPlatinum", 1));
+//        	GT_OreDictUnificator.override("dustSilver"		, GT_ModHandler.getTEItem("dustSilver", 1));
+//        	GT_OreDictUnificator.override("dustTin"			, GT_ModHandler.getTEItem("dustTin", 1));
+//        	GT_OreDictUnificator.override("ingotCopper"		, GT_ModHandler.getTEItem("ingotCopper", 1));
+//        	GT_OreDictUnificator.override("ingotElectrum"	, GT_ModHandler.getTEItem("ingotElectrum", 1));
+//        	GT_OreDictUnificator.override("ingotInvar"		, GT_ModHandler.getTEItem("ingotInvar", 1));
+//        	GT_OreDictUnificator.override("ingotLead"		, GT_ModHandler.getTEItem("ingotLead", 1));
+//        	GT_OreDictUnificator.override("ingotNickel"		, GT_ModHandler.getTEItem("ingotNickel", 1));
+//        	GT_OreDictUnificator.override("ingotPlatinum"	, GT_ModHandler.getTEItem("ingotPlatinum", 1));
+//        	GT_OreDictUnificator.override("ingotSilver"		, GT_ModHandler.getTEItem("ingotSilver", 1));
+//        	GT_OreDictUnificator.override("ingotTin"		, GT_ModHandler.getTEItem("ingotTin", 1));
+//        	GT_OreDictUnificator.override("nuggetCopper"	, GT_ModHandler.getTEItem("nuggetCopper", 1));
+//        	GT_OreDictUnificator.override("nuggetElectrum"	, GT_ModHandler.getTEItem("nuggetElectrum", 1));
+//        	GT_OreDictUnificator.override("nuggetInvar"		, GT_ModHandler.getTEItem("nuggetInvar", 1));
+//        	GT_OreDictUnificator.override("nuggetLead"		, GT_ModHandler.getTEItem("nuggetLead", 1));
+//        	GT_OreDictUnificator.override("nuggetNickel"	, GT_ModHandler.getTEItem("nuggetNickel", 1));
+//        	GT_OreDictUnificator.override("nuggetPlatinum"	, GT_ModHandler.getTEItem("nuggetPlatinum", 1));
+//        	GT_OreDictUnificator.override("nuggetSilver"	, GT_ModHandler.getTEItem("nuggetSilver", 1));
+//        	GT_OreDictUnificator.override("nuggetTin"		, GT_ModHandler.getTEItem("nuggetTin", 1));
+//        	GT_OreDictUnificator.override("blockCopper"		, GT_ModHandler.getTEItem("blockCopper", 1));
+//        	GT_OreDictUnificator.override("blockElectrum"	, GT_ModHandler.getTEItem("blockElectrum", 1));
+//        	GT_OreDictUnificator.override("blockInvar"		, GT_ModHandler.getTEItem("blockInvar", 1));
+//        	GT_OreDictUnificator.override("blockLead"		, GT_ModHandler.getTEItem("blockLead", 1));
+//        	GT_OreDictUnificator.override("blockNickel"		, GT_ModHandler.getTEItem("blockNickel", 1));
+//        	GT_OreDictUnificator.override("blockPlatinum"	, GT_ModHandler.getTEItem("blockPlatinum", 1));
+//        	GT_OreDictUnificator.override("blockSilver"		, GT_ModHandler.getTEItem("blockSilver", 1));
+//        	GT_OreDictUnificator.override("blockTin"		, GT_ModHandler.getTEItem("blockTin", 1));
+//        }
+//        if (GT_Mod.sUnificatorRP) {
+//        	GT_OreDictUnificator.override("gemRuby"			, GT_ModHandler.mRuby);
+//        	GT_OreDictUnificator.override("gemSapphire"		, GT_ModHandler.mSapphire);
+//        	GT_OreDictUnificator.override("gemGreenSapphire", GT_ModHandler.mGreenSapphire);
+//        	GT_OreDictUnificator.override("ingotSilver"		, GT_ModHandler.mSilver);
+//        	GT_OreDictUnificator.override("ingotCopper"		, GT_ModHandler.mCopper);
+//        	GT_OreDictUnificator.override("ingotTin"		, GT_ModHandler.mTin);
+//        	GT_OreDictUnificator.override("ingotBrass"		, GT_ModHandler.mBrass);
+//        	GT_OreDictUnificator.override("nuggetIron"		, GT_ModHandler.mIronNugget);
+//        	GT_OreDictUnificator.override("nuggetSilver"	, GT_ModHandler.mSilverNugget);
+//        	GT_OreDictUnificator.override("nuggetTin"		, GT_ModHandler.mTinNugget);
+//        	GT_OreDictUnificator.override("nuggetCopper"	, GT_ModHandler.mCopperNugget);
+//        }
+//        if (GT_Mod.sUnificatorTC) {
+//        	GT_OreDictUnificator.override("nuggetIron"		, GT_ModHandler.mNuggetIron);
+//        	GT_OreDictUnificator.override("nuggetSilver"	, GT_ModHandler.mNuggetSilver);
+//        	GT_OreDictUnificator.override("nuggetTin"		, GT_ModHandler.mNuggetTin);
+//        	GT_OreDictUnificator.override("nuggetCopper"	, GT_ModHandler.mNuggetCopper);
+//        	GT_OreDictUnificator.override("nuggetLead"		, GT_ModHandler.mNuggetLead);
+//        }
+//        
+//    	//GT_OreDictUnificator.override("plateTin"		, GT_ModHandler.getRCItem("part.plate.tin", 1)); needs 50% Iron and 50% Tin to be crafted
+//    	GT_OreDictUnificator.override("plateIron"		, GT_ModHandler.getRCItem("part.plate.iron", 1));
+//    	GT_OreDictUnificator.override("plateSteel"		, GT_ModHandler.getRCItem("part.plate.steel", 1));
 	}
 }

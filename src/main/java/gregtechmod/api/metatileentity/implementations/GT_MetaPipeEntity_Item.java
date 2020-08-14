@@ -21,8 +21,8 @@ public abstract class GT_MetaPipeEntity_Item extends MetaPipeEntity {
 	public int mTransferredItems = 0;
 	public byte mLastReceivedFrom = 0, oLastReceivedFrom = 0;
 	
-	public GT_MetaPipeEntity_Item(int aID, String aName, String aNameRegional) {
-		super(aID, aName, aNameRegional);
+	public GT_MetaPipeEntity_Item(int aID, String aName) {
+		super(aID, aName);
 	}
 	
 	public GT_MetaPipeEntity_Item() {

@@ -115,7 +115,7 @@ public class GT_TickHandler {
             if (isFirstTick) {
                 for (IMetaTileEntity tMetaTileEntity : GregTech_API.mMetaTileList) {
                 	try {
-                		tMetaTileEntity.onFirstServerTick();
+                		if (tMetaTileEntity != null) tMetaTileEntity.onFirstServerTick();
                 	} catch (Throwable e) {
                 		GT_Log.log.catching(e);
                 	}

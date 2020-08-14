@@ -6,8 +6,8 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public abstract class GT_MetaPipeEntity_Frame extends MetaPipeEntity {
 	
-	public GT_MetaPipeEntity_Frame(int aID, String aName, String aNameRegional) {
-		super(aID, aName, aNameRegional);
+	public GT_MetaPipeEntity_Frame(int aID, String aName) {
+		super(aID, aName);
 	}
 	
 	public GT_MetaPipeEntity_Frame() {

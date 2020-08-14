@@ -339,12 +339,12 @@ public class GregTech_API {
 	/**
 	 * Creates a new Coolant Cell Item for your Nuclear Reactor
 	 */
-	public static Item constructCoolantCellItem(String aUnlocalized, String aEnglish, int aMaxStore) {
+	public static Item constructCoolantCellItem(String aUnlocalized, int aMaxStore) {
 		try {
-			return (Item)Class.forName("gregtechmod.api.items.GT_CoolantCellIC_Item").getConstructors()[0].newInstance(aUnlocalized, aEnglish, aMaxStore);
+			return (Item)Class.forName("gregtechmod.api.items.GT_CoolantCellIC_Item").getConstructors()[0].newInstance(aUnlocalized, aMaxStore);
 		} catch(Throwable e) {/*Do nothing*/}
 		try {
-			return (Item)Class.forName("gregtechmod.api.items.GT_CoolantCell_Item").getConstructors()[0].newInstance(aUnlocalized, aEnglish, aMaxStore);
+			return (Item)Class.forName("gregtechmod.api.items.GT_CoolantCell_Item").getConstructors()[0].newInstance(aUnlocalized, aMaxStore);
 		} catch(Throwable e) {/*Do nothing*/}
 		return new gregtechmod.api.items.GT_Generic_Item(aUnlocalized, "item.bug.tooltip");
 	}

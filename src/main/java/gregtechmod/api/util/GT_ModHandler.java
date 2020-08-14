@@ -284,10 +284,12 @@ public class GT_ModHandler {
 	/**
 	 * Adds a Valuable Ore to the Miner
 	 */
-	public static boolean addValuableOre(int aID, int aMeta, int aValue) {
+	public static boolean addValuableOre(ItemStack aStack, int aValue) {
 		if (aValue <= 0) return false;
 		try {
-			Class.forName("ic2.core.IC2").getMethod("addValuableOre", int.class, int.class, int.class).invoke(null, aID, aMeta, aValue);
+			Class<?> type = Class.forName("ic2.api.recipe.IRecipeInput");
+			Object value = Class.forName("ic2.api.recipe.RecipeInputItemStack").getConstructor(ItemStack.class, int.class).newInstance(aStack, aStack.stackSize);
+			Class.forName("ic2.core.IC2").getMethod("addValuableOre", type, int.class).invoke(null, value, aValue); // TODO mb need RecipeInputOreDict
 		} catch (Throwable e) {/*Do nothing*/}
 		return true;
 	}

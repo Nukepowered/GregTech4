@@ -978,6 +978,14 @@ public class GT_Utility {
 		return rStack;
 	}
 	
+	public static ItemStack copyAmount(long aAmount, Object... aStacks) {
+		ItemStack rStack = copy((ItemStack[])aStacks);
+		if (isStackInvalid(rStack)) return null;
+		if (aAmount > 64) aAmount = 64; else if (aAmount == -1) aAmount = 111; else if (aAmount < 0) aAmount = 0;
+		rStack.stackSize = (byte)aAmount;
+		return rStack;
+	}
+	
 	public static ItemStack copyMetaData(long aMetaData, ItemStack... aStacks) {
 		ItemStack rStack = copy(aStacks);
 		if (isStackInvalid(rStack)) return null;
@@ -1000,6 +1008,10 @@ public class GT_Utility {
 		if (rStack == null) return null;
 		rStack.stackSize *= aMultiplier;
 		return rStack;
+	}
+	
+	public static ItemStack mul(long aMultiplier, Object... aStacks) {
+		return GT_Utility.mul(aMultiplier, (ItemStack[])aStacks);
 	}
 	
 	/**

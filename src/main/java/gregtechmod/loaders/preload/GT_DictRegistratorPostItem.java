@@ -1,4 +1,4 @@
-package gregtechmod.loaders.load;
+package gregtechmod.loaders.preload;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_ConfigCategories;
@@ -47,7 +47,7 @@ public class GT_DictRegistratorPostItem implements Runnable {
 		
     	GT_OreDictUnificator.registerOre("craftingRawMachineTier01"		, GT_ModHandler.getIC2Item("machine", 1));
     	GT_OreDictUnificator.registerOre("craftingRawMachineTier01"		, new ItemStack(GregTech_API.sBlockList[1], 1, 79));
-		if (!GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.harderrecipes, "NotUseAdvMachineBlockInGT", true))
+//		if (!GregTech_API.sConfiguration.addAdvConfig(GT_ConfigCategories.harderrecipes, "NotUseAdvMachineBlockInGT", true))
 		GT_OreDictUnificator.registerOre("craftingRawMachineTier02"		, GT_ModHandler.getIC2Item("advancedMachine", 1));
     	GT_OreDictUnificator.registerOre("craftingRawMachineTier04"		, new ItemStack(GregTech_API.sBlockList[0], 1, 10));
     	

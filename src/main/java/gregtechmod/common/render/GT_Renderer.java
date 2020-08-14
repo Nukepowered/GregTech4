@@ -43,10 +43,6 @@ public class GT_Renderer extends RenderPlayer {
         try {
             ResourceLocation tResource = null;
             
-            if (GT_Mod.sAdminNames.contains(aPlayer.getDisplayName().toLowerCase()))
-               	tResource = new ResourceLocation(GregTech_API.MOD_ID, "textures/AdminCape.png");
-	    	if (GT_Mod.sPremiumNames.contains(aPlayer.getDisplayName().toLowerCase()))
-	            tResource = new ResourceLocation(GregTech_API.MOD_ID, "textures/PremiumCape.png");
 		    if (GT_Mod.mBrainTechCapeList.contains(aPlayer.getDisplayName().toLowerCase()))
 	           	tResource = new ResourceLocation(GregTech_API.MOD_ID, "textures/BrainTechCape.png");
 	    	if (GT_Mod.mGregTechCapeList.contains(aPlayer.getDisplayName().toLowerCase()))

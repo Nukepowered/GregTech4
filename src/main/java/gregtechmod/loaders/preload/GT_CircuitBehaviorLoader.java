@@ -1,4 +1,4 @@
-package gregtechmod.loaders.load;
+package gregtechmod.loaders.preload;
 
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.common.redstonecircuits.GT_Circuit_BasicLogic;

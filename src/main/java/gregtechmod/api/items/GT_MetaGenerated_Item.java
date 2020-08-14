@@ -180,7 +180,7 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 	 * @return An ItemStack containing the newly created Item.
 	 */
 	//TODO: add localization
-	public final ItemStack addItem(int aID, String aEnglish, String aToolTip, IFoodStat aFoodBehavior, Object... aOreDictNames) {
+	public final ItemStack addItem(int aID, String aToolTip, IFoodStat aFoodBehavior, Object... aOreDictNames) {
 		if (aToolTip == null) aToolTip = "";
 		if (aID >= 0 && aID < mEnabledItems.size()) {
 			mEnabledItems.set(aID);

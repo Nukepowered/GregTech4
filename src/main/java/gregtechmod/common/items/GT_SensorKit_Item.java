@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 public class GT_SensorKit_Item extends GT_Generic_Item {
 
 	public GT_SensorKit_Item(String aName) {
-		super(aName, "Attach to GregTech Machines");
+		super(aName, null);
 		setCreativeTab(GregTech_API.TAB_GREGTECH);
 		setMaxStackSize(1);
 	}
