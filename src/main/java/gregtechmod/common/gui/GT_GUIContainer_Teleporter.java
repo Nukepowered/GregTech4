@@ -3,6 +3,7 @@ package gregtechmod.common.gui;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.gui.GT_GUIContainerMetaTile_Machine;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
+import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.containers.GT_Container_Teleporter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -10,8 +11,8 @@ import net.minecraft.entity.player.InventoryPlayer;
 
 public class GT_GUIContainer_Teleporter extends GT_GUIContainerMetaTile_Machine {
 	
-    public GT_GUIContainer_Teleporter(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-        super(new GT_Container_Teleporter(aInventoryPlayer, aTileEntity, aID), aTileEntity, aID, GregTech_API.GUI_PATH + "Teleporter.png");
+    public GT_GUIContainer_Teleporter(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+        super(new GT_Container_Teleporter(aInventoryPlayer, aTileEntity), GregTech_API.GUI_PATH + "Teleporter.png");
     }
     
     @Override
@@ -19,11 +20,11 @@ public class GT_GUIContainer_Teleporter extends GT_GUIContainerMetaTile_Machine 
     	FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
     	fontRenderer.drawString("Teleporter", 46, 8, 16448255);
         if (mContainer != null) {
-        	fontRenderer.drawString("X: "   + toNumber(((GT_Container_Teleporter)mContainer).mTargetX), 46, 16, 16448255);
-        	fontRenderer.drawString("Y: "   + toNumber(((GT_Container_Teleporter)mContainer).mTargetY), 46, 24, 16448255);
-        	fontRenderer.drawString("Z: "   + toNumber(((GT_Container_Teleporter)mContainer).mTargetZ), 46, 32, 16448255);
+        	fontRenderer.drawString("X: "   + GT_Utility.parseNumberToString(((GT_Container_Teleporter)mContainer).mTargetX), 46, 16, 16448255);
+        	fontRenderer.drawString("Y: "   + GT_Utility.parseNumberToString(((GT_Container_Teleporter)mContainer).mTargetY), 46, 24, 16448255);
+        	fontRenderer.drawString("Z: "   + GT_Utility.parseNumberToString(((GT_Container_Teleporter)mContainer).mTargetZ), 46, 32, 16448255);
         	if (((GT_Container_Teleporter)mContainer).mEgg>0)
-        	fontRenderer.drawString("Dim: " + toNumber(((GT_Container_Teleporter)mContainer).mTargetD), 46, 40, 16448255);
+        	fontRenderer.drawString("Dim: " + GT_Utility.parseNumberToString(((GT_Container_Teleporter)mContainer).mTargetD), 46, 40, 16448255);
         }
     }
     

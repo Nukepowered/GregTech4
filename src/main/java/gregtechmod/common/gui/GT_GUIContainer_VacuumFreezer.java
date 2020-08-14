@@ -9,8 +9,8 @@ import net.minecraft.util.StatCollector;
 
 public class GT_GUIContainer_VacuumFreezer extends GT_GUIContainerMetaTile_Machine {
 	
-    public GT_GUIContainer_VacuumFreezer(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-        super(new GT_Container_VacuumFreezer(aInventoryPlayer, aTileEntity, aID), aTileEntity, aID, GregTech_API.GUI_PATH + "VacuumFreezer.png");
+    public GT_GUIContainer_VacuumFreezer(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+        super(new GT_Container_VacuumFreezer(aInventoryPlayer, aTileEntity), GregTech_API.GUI_PATH + "VacuumFreezer.png");
     }
     
     @Override

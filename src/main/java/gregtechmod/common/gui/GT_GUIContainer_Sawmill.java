@@ -9,8 +9,8 @@ import net.minecraft.util.StatCollector;
 
 public class GT_GUIContainer_Sawmill extends GT_GUIContainerMetaTile_Machine {
 	
-    public GT_GUIContainer_Sawmill(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-        super(new GT_Container_Sawmill(aInventoryPlayer, aTileEntity, aID), aTileEntity, aID, GregTech_API.GUI_PATH + "Sawmill.png");
+    public GT_GUIContainer_Sawmill(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+        super(new GT_Container_Sawmill(aInventoryPlayer, aTileEntity), GregTech_API.GUI_PATH + "Sawmill.png");
     }
     
     @Override

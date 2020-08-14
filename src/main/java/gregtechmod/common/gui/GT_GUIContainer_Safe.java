@@ -9,7 +9,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 public class GT_GUIContainer_Safe extends GT_GUIContainerMetaTile_Machine {
 	
     public GT_GUIContainer_Safe(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-        super(new GT_Container_Safe(aInventoryPlayer, aTileEntity, aID), aTileEntity, aID, GregTech_API.GUI_PATH + "Safe.png");
+        super(new GT_Container_Safe(aInventoryPlayer, aTileEntity), GregTech_API.GUI_PATH + "Safe.png");
     }
     
     @Override
