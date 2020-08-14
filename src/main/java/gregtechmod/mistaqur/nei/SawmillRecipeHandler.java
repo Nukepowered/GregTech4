@@ -18,18 +18,18 @@ public class SawmillRecipeHandler extends GT_RecipeHandler {
 
 		public CachedSawmillRecipe(GT_Recipe aRecipe) {
 			resources = new ArrayList<PositionedStack>();
-			if (aRecipe.mInput1 != null)
-				resources.add(new PositionedStack(aRecipe.mInput1, 34 - sOffsetX, 16 - sOffsetY));
-			if (aRecipe.mInput2 != null)
-				resources.add(new PositionedStack(aRecipe.mInput2, 34 - sOffsetX, 34 - sOffsetY));
+			if (aRecipe.getRepresentativeInput1() != null)
+				resources.add(new PositionedStack(aRecipe.getRepresentativeInput1(), 34 - sOffsetX, 16 - sOffsetY));
+			if (aRecipe.getRepresentativeInput2() != null)
+				resources.add(new PositionedStack(aRecipe.getRepresentativeInput2(), 34 - sOffsetX, 34 - sOffsetY));
 
 			products = new ArrayList<PositionedStack>();
-			if (aRecipe.mOutput1 != null)
-				products.add(new PositionedStack(aRecipe.mOutput1, 86 - sOffsetX, 25 - sOffsetY));
-			if (aRecipe.mOutput2 != null)
-				products.add(new PositionedStack(aRecipe.mOutput2,104 - sOffsetX, 25 - sOffsetY));
-			if (aRecipe.mOutput3 != null)
-				products.add(new PositionedStack(aRecipe.mOutput3,122 - sOffsetX, 25 - sOffsetY));
+			if (aRecipe.getOutput(0) != null)
+				products.add(new PositionedStack(aRecipe.getOutput(0), 86 - sOffsetX, 25 - sOffsetY));
+			if (aRecipe.getOutput(1) != null)
+				products.add(new PositionedStack(aRecipe.getOutput(1),104 - sOffsetX, 25 - sOffsetY));
+			if (aRecipe.getOutput(2) != null)
+				products.add(new PositionedStack(aRecipe.getOutput(2),122 - sOffsetX, 25 - sOffsetY));
 			
 			mDuration = aRecipe.mDuration;
 			mEUt = aRecipe.mEUt;

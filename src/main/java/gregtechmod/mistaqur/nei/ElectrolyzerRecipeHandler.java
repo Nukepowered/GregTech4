@@ -18,20 +18,20 @@ public class ElectrolyzerRecipeHandler extends GT_RecipeHandler {
 
 		public CachedElectrolyzerRecipe(GT_Recipe aRecipe) {
 			resources = new ArrayList<PositionedStack>();
-			if (aRecipe.mInput1 != null)
-				resources.add(new PositionedStack(aRecipe.mInput1, 80 - sOffsetX, 46 - sOffsetY));
-			if (aRecipe.mInput2 != null)
-				resources.add(new PositionedStack(aRecipe.mInput2, 50 - sOffsetX, 46 - sOffsetY));
+			if (aRecipe.getRepresentativeInput1() != null)
+				resources.add(new PositionedStack(aRecipe.getRepresentativeInput1(), 80 - sOffsetX, 46 - sOffsetY));
+			if (aRecipe.getRepresentativeInput2() != null)
+				resources.add(new PositionedStack(aRecipe.getRepresentativeInput2(), 50 - sOffsetX, 46 - sOffsetY));
 
 			products = new ArrayList<PositionedStack>();
-			if (aRecipe.mOutput1 != null)
-				products.add(new PositionedStack(aRecipe.mOutput1, 50 - sOffsetX, 16 - sOffsetY));
-			if (aRecipe.mOutput2 != null)
-				products.add(new PositionedStack(aRecipe.mOutput2, 70 - sOffsetX, 16 - sOffsetY));
-			if (aRecipe.mOutput3 != null)
-				products.add(new PositionedStack(aRecipe.mOutput3, 90 - sOffsetX, 16 - sOffsetY));
-			if (aRecipe.mOutput4 != null)
-				products.add(new PositionedStack(aRecipe.mOutput4,110 - sOffsetX, 16 - sOffsetY));
+			if (aRecipe.getOutput(0) != null)
+				products.add(new PositionedStack(aRecipe.getOutput(0), 50 - sOffsetX, 16 - sOffsetY));
+			if (aRecipe.getOutput(1) != null)
+				products.add(new PositionedStack(aRecipe.getOutput(1), 70 - sOffsetX, 16 - sOffsetY));
+			if (aRecipe.getOutput(2) != null)
+				products.add(new PositionedStack(aRecipe.getOutput(2), 90 - sOffsetX, 16 - sOffsetY));
+			if (aRecipe.getOutput(3) != null)
+				products.add(new PositionedStack(aRecipe.getOutput(3),110 - sOffsetX, 16 - sOffsetY));
 
 			mDuration = aRecipe.mDuration;
 			mEUt = aRecipe.mEUt;

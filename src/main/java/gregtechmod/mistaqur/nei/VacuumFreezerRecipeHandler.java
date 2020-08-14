@@ -18,12 +18,12 @@ public class VacuumFreezerRecipeHandler extends GT_RecipeHandler {
 
 		public CachedVacuumFreezerRecipe(GT_Recipe aRecipe) {
 			resources = new ArrayList<PositionedStack>();
-			if (aRecipe.mInput1 != null)
-				resources.add(new PositionedStack(aRecipe.mInput1, 54 - sOffsetX, 25 - sOffsetY));
+			if (aRecipe.getRepresentativeInput1() != null)
+				resources.add(new PositionedStack(aRecipe.getRepresentativeInput1(), 54 - sOffsetX, 25 - sOffsetY));
 			
 			products = new ArrayList<PositionedStack>();
-			if (aRecipe.mOutput1 != null)
-				products.add(new PositionedStack(aRecipe.mOutput1, 106 - sOffsetX, 25 - sOffsetY));
+			if (aRecipe.getOutput(0) != null)
+				products.add(new PositionedStack(aRecipe.getOutput(0), 106 - sOffsetX, 25 - sOffsetY));
 			
 			mDuration = aRecipe.mDuration;
 			mEUt = aRecipe.mEUt;

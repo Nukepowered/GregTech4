@@ -18,14 +18,14 @@ public class ChemicalRecipeHandler extends GT_RecipeHandler {
 
 		public CachedChemicalReactorRecipe(GT_Recipe aRecipe) {
 			resources = new ArrayList<PositionedStack>();
-			if (aRecipe.mInput1 != null)
-				resources.add(new PositionedStack(aRecipe.mInput1, 70 - sOffsetX, 16 - sOffsetY));
-			if (aRecipe.mInput2 != null)
-				resources.add(new PositionedStack(aRecipe.mInput2, 90 - sOffsetX, 16 - sOffsetY));
+			if (aRecipe.getRepresentativeInput1() != null)
+				resources.add(new PositionedStack(aRecipe.getRepresentativeInput1(), 70 - sOffsetX, 16 - sOffsetY));
+			if (aRecipe.getRepresentativeInput2() != null)
+				resources.add(new PositionedStack(aRecipe.getRepresentativeInput2(), 90 - sOffsetX, 16 - sOffsetY));
 			
 			products = new ArrayList<PositionedStack>();
-			if (aRecipe.mOutput1 != null)
-				products.add(new PositionedStack(aRecipe.mOutput1, 80 - sOffsetX, 46 - sOffsetY));
+			if (aRecipe.getOutput(0) != null)
+				products.add(new PositionedStack(aRecipe.getOutput(0), 80 - sOffsetX, 46 - sOffsetY));
 			
 			mDuration = aRecipe.mDuration;
 			mEUt = aRecipe.mEUt;

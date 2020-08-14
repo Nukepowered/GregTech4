@@ -20,14 +20,14 @@ public class FusionRecipeHandler extends GT_RecipeHandler {
 		
 		public CachedFusionRecipe(GT_Recipe irecipe) {
 			resources = new ArrayList<PositionedStack>();
-			if (irecipe.mInput1 != null)
-				resources.add(new PositionedStack(irecipe.mInput1, 48 - sOffsetX, 17 - sOffsetY));
-			if (irecipe.mInput2 != null)
-				resources.add(new PositionedStack(irecipe.mInput2, 48 - sOffsetX, 53 - sOffsetY));
+			if (irecipe.getRepresentativeInput1() != null)
+				resources.add(new PositionedStack(irecipe.getRepresentativeInput1(), 48 - sOffsetX, 17 - sOffsetY));
+			if (irecipe.getRepresentativeInput2() != null)
+				resources.add(new PositionedStack(irecipe.getRepresentativeInput2(), 48 - sOffsetX, 53 - sOffsetY));
 			
 			products = new ArrayList<PositionedStack>();
-			if (irecipe.mOutput1 != null)
-				products.add(new PositionedStack(irecipe.mOutput1, 108 - sOffsetX, 35 - sOffsetY));
+			if (irecipe.getOutput(0) != null)
+				products.add(new PositionedStack(irecipe.getOutput(0), 108 - sOffsetX, 35 - sOffsetY));
 			
 			mDuration = irecipe.mDuration;
 			mEUt = irecipe.mEUt;

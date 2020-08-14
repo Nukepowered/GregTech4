@@ -18,20 +18,20 @@ public class DistillationRecipeHandler extends GT_RecipeHandler {
 
 		public CachedDistillationRecipe(GT_Recipe aRecipe) {
 			resources = new ArrayList<PositionedStack>();
-			if (aRecipe.mInput1 != null)
-				resources.add(new PositionedStack(aRecipe.mInput1, 62 - sOffsetX, 41 - sOffsetY));
-			if (aRecipe.mInput2 != null)
-				resources.add(new PositionedStack(aRecipe.mInput2, 62 - sOffsetX, 59 - sOffsetY));
+			if (aRecipe.getRepresentativeInput1() != null)
+				resources.add(new PositionedStack(aRecipe.getRepresentativeInput1(), 62 - sOffsetX, 41 - sOffsetY));
+			if (aRecipe.getRepresentativeInput2() != null)
+				resources.add(new PositionedStack(aRecipe.getRepresentativeInput2(), 62 - sOffsetX, 59 - sOffsetY));
 			
 			products = new ArrayList<PositionedStack>();
-			if (aRecipe.mOutput1 != null)
-				products.add(new PositionedStack(aRecipe.mOutput1, 98 - sOffsetX,  5 - sOffsetY));
-			if (aRecipe.mOutput2 != null)
-				products.add(new PositionedStack(aRecipe.mOutput2, 98 - sOffsetX, 23 - sOffsetY));
-			if (aRecipe.mOutput3 != null)
-				products.add(new PositionedStack(aRecipe.mOutput3, 98 - sOffsetX, 41 - sOffsetY));
-			if (aRecipe.mOutput4 != null)
-				products.add(new PositionedStack(aRecipe.mOutput4, 98 - sOffsetX, 59 - sOffsetY));
+			if (aRecipe.getOutput(0) != null)
+				products.add(new PositionedStack(aRecipe.getOutput(0), 98 - sOffsetX,  5 - sOffsetY));
+			if (aRecipe.getOutput(1) != null)
+				products.add(new PositionedStack(aRecipe.getOutput(1), 98 - sOffsetX, 23 - sOffsetY));
+			if (aRecipe.getOutput(2) != null)
+				products.add(new PositionedStack(aRecipe.getOutput(2), 98 - sOffsetX, 41 - sOffsetY));
+			if (aRecipe.getOutput(3) != null)
+				products.add(new PositionedStack(aRecipe.getOutput(3), 98 - sOffsetX, 59 - sOffsetY));
 			
 			mDuration = aRecipe.mDuration;
 			mEUt = aRecipe.mEUt;

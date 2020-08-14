@@ -18,20 +18,20 @@ public class CentrifugeRecipeHandler extends GT_RecipeHandler {
 
 		public CachedCentrifugeRecipe(GT_Recipe aRecipe) {
 			resources = new ArrayList<PositionedStack>();
-			if (aRecipe.mInput1 != null)
-				resources.add(new PositionedStack(aRecipe.mInput1, 80 - sOffsetX, 35 - sOffsetY + 7));
-			if (aRecipe.mInput2 != null)
-				resources.add(new PositionedStack(aRecipe.mInput2, 50 - sOffsetX, 5 - sOffsetY + 7));
+			if (aRecipe.getRepresentativeInput1() != null)
+				resources.add(new PositionedStack(aRecipe.getRepresentativeInput1(), 80 - sOffsetX, 35 - sOffsetY + 7));
+			if (aRecipe.getRepresentativeInput2() != null)
+				resources.add(new PositionedStack(aRecipe.getRepresentativeInput2(), 50 - sOffsetX, 5 - sOffsetY + 7));
 
 			products = new ArrayList<PositionedStack>();
-			if (aRecipe.mOutput1 != null)
-				products.add(new PositionedStack(aRecipe.mOutput1, 80 - sOffsetX, 5 - sOffsetY + 7));
-			if (aRecipe.mOutput2 != null)
-				products.add(new PositionedStack(aRecipe.mOutput2, 110 - sOffsetX, 35 - sOffsetY + 7));
-			if (aRecipe.mOutput3 != null)
-				products.add(new PositionedStack(aRecipe.mOutput3, 80 - sOffsetX, 65 - sOffsetY + 7));
-			if (aRecipe.mOutput4 != null)
-				products.add(new PositionedStack(aRecipe.mOutput4, 50 - sOffsetX, 35 - sOffsetY + 7));
+			if (aRecipe.getOutput(0) != null)
+				products.add(new PositionedStack(aRecipe.getOutput(0), 80 - sOffsetX, 5 - sOffsetY + 7));
+			if (aRecipe.getOutput(1) != null)
+				products.add(new PositionedStack(aRecipe.getOutput(1), 110 - sOffsetX, 35 - sOffsetY + 7));
+			if (aRecipe.getOutput(2) != null)
+				products.add(new PositionedStack(aRecipe.getOutput(2), 80 - sOffsetX, 65 - sOffsetY + 7));
+			if (aRecipe.getOutput(3) != null)
+				products.add(new PositionedStack(aRecipe.getOutput(3), 50 - sOffsetX, 35 - sOffsetY + 7));
 
 			mDuration = aRecipe.mDuration;
 		}
