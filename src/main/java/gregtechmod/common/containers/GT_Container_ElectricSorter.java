@@ -5,8 +5,8 @@ import gregtechmod.api.gui.GT_ContainerMetaTile_Machine;
 import gregtechmod.api.gui.GT_Slot_Holo;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.util.GT_Utility;
-import gregtechmod.common.tileentities.GT_MetaTileEntity_ElectricBufferSmall;
-import gregtechmod.common.tileentities.GT_MetaTileEntity_ElectricSorter;
+import gregtechmod.common.tileentities.automation.GT_MetaTileEntity_ElectricBufferSmall;
+import gregtechmod.common.tileentities.automation.GT_MetaTileEntity_ElectricSorter;
 
 import java.util.Iterator;
 
@@ -20,8 +20,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_Container_ElectricSorter extends GT_ContainerMetaTile_Machine {
 
-	public GT_Container_ElectricSorter(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-		super(aInventoryPlayer, aTileEntity, aID);
+	public GT_Container_ElectricSorter(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+		super(aInventoryPlayer, aTileEntity);
 	}
 
     public void addSlots(InventoryPlayer aInventoryPlayer) {

@@ -4,7 +4,7 @@ import gregtechmod.GT_Mod;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.items.GT_Generic_Item;
 import gregtechmod.api.util.GT_Utility;
-import gregtechmod.common.tileentities.GT_TileEntity_Sonictron;
+import gregtechmod.common.tileentities.deprecated.GT_TileEntity_Sonictron;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

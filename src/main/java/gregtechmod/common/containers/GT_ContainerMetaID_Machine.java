@@ -1,7 +1,7 @@
 package gregtechmod.common.containers;
 
 import gregtechmod.api.gui.GT_Container;
-import gregtechmod.common.tileentities.GT_TileEntityMetaID_Machine;
+import gregtechmod.common.tileentities.deprecated.GT_TileEntityMetaID_Machine;
 
 import java.util.Iterator;
 

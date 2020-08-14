@@ -3,7 +3,7 @@ package gregtechmod.common.containers;
 import gregtechmod.api.gui.GT_ContainerMetaTile_Machine;
 import gregtechmod.api.gui.GT_Slot_Output;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
-import gregtechmod.common.tileentities.GT_MetaTileEntity_VacuumFreezer;
+import gregtechmod.common.tileentities.machines.multi.GT_MetaTileEntity_VacuumFreezer;
 
 import java.util.Iterator;
 
@@ -15,8 +15,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_Container_VacuumFreezer extends GT_ContainerMetaTile_Machine {
 	
-	public GT_Container_VacuumFreezer(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-		super(aInventoryPlayer, aTileEntity, aID);
+	public GT_Container_VacuumFreezer(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+		super(aInventoryPlayer, aTileEntity);
 	}
 	
     public void addSlots(InventoryPlayer aInventoryPlayer) {

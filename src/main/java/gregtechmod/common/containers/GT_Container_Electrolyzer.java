@@ -4,7 +4,7 @@ import gregtechmod.api.gui.GT_ContainerMetaTile_Machine;
 import gregtechmod.api.gui.GT_Slot_Holo;
 import gregtechmod.api.gui.GT_Slot_Output;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
-import gregtechmod.common.tileentities.GT_MetaTileEntity_Electrolyzer;
+import gregtechmod.common.tileentities.machines.GT_MetaTileEntity_Electrolyzer;
 
 import java.util.Iterator;
 
@@ -16,8 +16,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_Container_Electrolyzer extends GT_ContainerMetaTile_Machine {
 
-	public GT_Container_Electrolyzer(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-		super(aInventoryPlayer, aTileEntity, aID);
+	public GT_Container_Electrolyzer(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+		super(aInventoryPlayer, aTileEntity);
 	}
 
     public void addSlots(InventoryPlayer aInventoryPlayer) {

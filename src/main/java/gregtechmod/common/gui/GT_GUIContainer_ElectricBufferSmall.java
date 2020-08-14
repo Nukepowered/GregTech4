@@ -8,8 +8,8 @@ import net.minecraft.entity.player.InventoryPlayer;
 
 public class GT_GUIContainer_ElectricBufferSmall extends GT_GUIContainerMetaTile_Machine {
 	
-    public GT_GUIContainer_ElectricBufferSmall(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-        super(new GT_Container_ElectricBufferSmall(aInventoryPlayer, aTileEntity, aID), aTileEntity, aID, GregTech_API.GUI_PATH + "ElectricBufferSmall.png");
+    public GT_GUIContainer_ElectricBufferSmall(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+        super(new GT_Container_ElectricBufferSmall(aInventoryPlayer, aTileEntity), GregTech_API.GUI_PATH + "ElectricBufferSmall.png");
     }
     
     @Override

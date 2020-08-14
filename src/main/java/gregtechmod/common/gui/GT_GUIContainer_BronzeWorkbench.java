@@ -8,8 +8,8 @@ import net.minecraft.entity.player.InventoryPlayer;
 
 public class GT_GUIContainer_BronzeWorkbench extends GT_GUIContainerMetaTile_Machine {
 	
-    public GT_GUIContainer_BronzeWorkbench(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-        super(new GT_Container_BronzeWorkbench(aInventoryPlayer, aTileEntity, aID), aTileEntity, aID, GregTech_API.GUI_PATH + "BronzeCraftingTable.png");
+    public GT_GUIContainer_BronzeWorkbench(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+        super(new GT_Container_BronzeWorkbench(aInventoryPlayer, aTileEntity), GregTech_API.GUI_PATH + "BronzeCraftingTable.png");
     }
     
     @Override

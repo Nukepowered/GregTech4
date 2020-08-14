@@ -3,7 +3,7 @@ package gregtechmod.common.containers;
 import gregtechmod.api.gui.GT_ContainerMetaTile_Machine;
 import gregtechmod.api.gui.GT_Slot_Holo;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
-import gregtechmod.common.tileentities.GT_MetaTileEntity_Teleporter;
+import gregtechmod.common.tileentities.machines.GT_MetaTileEntity_Teleporter;
 
 import java.util.Iterator;
 
@@ -15,8 +15,8 @@ import net.minecraft.item.ItemStack;
 
 public class GT_Container_Teleporter extends GT_ContainerMetaTile_Machine {
 	
-	public GT_Container_Teleporter(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-		super(aInventoryPlayer, aTileEntity, aID);
+	public GT_Container_Teleporter(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+		super(aInventoryPlayer, aTileEntity);
 	}
 	
 	@Override

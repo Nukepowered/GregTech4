@@ -10,8 +10,8 @@ import net.minecraft.item.ItemStack;
 
 public class GT_Container_MaintenanceHatch extends GT_ContainerMetaTile_Machine {
 	
-	public GT_Container_MaintenanceHatch(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-		super(aInventoryPlayer, aTileEntity, aID);
+	public GT_Container_MaintenanceHatch(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+		super(aInventoryPlayer, aTileEntity);
 	}
 	
     public void addSlots(InventoryPlayer aInventoryPlayer) {

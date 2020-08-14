@@ -2,7 +2,7 @@ package gregtechmod.common.containers;
 
 import gregtechmod.api.gui.GT_ContainerMetaTile_Machine;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
-import gregtechmod.common.tileentities.GT_MetaTileEntity_Boiler_Bronze;
+import gregtechmod.common.tileentities.machines.steam.GT_MetaTileEntity_Boiler_Bronze;
 
 import java.util.Iterator;
 
@@ -14,8 +14,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_Container_BronzeBoiler extends GT_ContainerMetaTile_Machine {
 
-	public GT_Container_BronzeBoiler(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-		super(aInventoryPlayer, aTileEntity, aID);
+	public GT_Container_BronzeBoiler(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+		super(aInventoryPlayer, aTileEntity);
 	}
 
     public void addSlots(InventoryPlayer aInventoryPlayer) {
@@ -39,7 +39,6 @@ public class GT_Container_BronzeBoiler extends GT_ContainerMetaTile_Machine {
 	public void detectAndSendChanges() {
         super.detectAndSendChanges();
     	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
-    	
     	mTemperature = ((GT_MetaTileEntity_Boiler_Bronze)mTileEntity.getMetaTileEntity()).mTemperature;
     	mProcessingEnergy = ((GT_MetaTileEntity_Boiler_Bronze)mTileEntity.getMetaTileEntity()).mProcessingEnergy;
     	mSteamAmount = ((GT_MetaTileEntity_Boiler_Bronze)mTileEntity.getMetaTileEntity()).mSteam == null?0:((GT_MetaTileEntity_Boiler_Bronze)mTileEntity.getMetaTileEntity()).mSteam.amount;

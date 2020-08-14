@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -21,20 +22,15 @@ import shedar.mods.ic2.nuclearcontrol.api.IPanelDataSource;
 import shedar.mods.ic2.nuclearcontrol.api.IRemoteSensor;
 import shedar.mods.ic2.nuclearcontrol.api.PanelSetting;
 import shedar.mods.ic2.nuclearcontrol.api.PanelString;
-import shedar.mods.ic2.nuclearcontrol.utils.StringUtils;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_SensorCard_Item extends GT_Generic_Item implements IRemoteSensor, IPanelDataSource {
 	
-    public static final int DISPLAY_MAIN = 1;
-    public static final int DISPLAY_SECOND = 2;
-    public static final int DISPLAY_TERTIARY = 4;
     public static final UUID CARD_TYPE = new UUID(0, 41);
-    private byte stringCound = 0; // TODO rewrite this
     
 	public GT_SensorCard_Item(String aName) {
-		super(aName, "Insert into Display Panel");
+		super(aName, "Insert into Display Panel"); // TODO localiztion
 		setMaxStackSize(1);
 	}
 	
@@ -65,50 +61,48 @@ public class GT_SensorCard_Item extends GT_Generic_Item implements IRemoteSensor
 	}
 	
 	@Override
-	public CardState update(World world, ICardWrapper card, int maxRange) {
-        ChunkCoordinates target = card.getTarget();
-        if (target == null) return CardState.INVALID_CARD;
-        TileEntity tTileEntity = world.getTileEntity(target.posX, target.posY, target.posZ);
-        if (tTileEntity != null && tTileEntity instanceof IGregTechDeviceInformation && ((IGregTechDeviceInformation)tTileEntity).isGivingInformation()) {
-            String[] data = ((IGregTechDeviceInformation)tTileEntity).getInfoData();
-            for (int i = 0; i < data.length; i++) {
-            	card.setString("mString" + i, data[i]);
-            }
-            return CardState.OK;
-        } else {
-            return CardState.NO_TARGET;
-        }
+	public CardState update(World world, ICardWrapper aCard, int maxRange) {
+		ChunkCoordinates target = aCard.getTarget();
+		TileEntity tTileEntity = world.getTileEntity(target.posX, target.posY, target.posZ);
+		if (tTileEntity != null && tTileEntity instanceof IGregTechDeviceInformation && ((IGregTechDeviceInformation) tTileEntity).isGivingInformation()) {
+			String[] tInfoData = ((IGregTechDeviceInformation) tTileEntity).getInfoData();
+
+			for (int i = 0; i < tInfoData.length; ++i) {
+				aCard.setString("mString" + i, tInfoData[i]);
+			}
+
+			return CardState.OK;
+		} else {
+			return CardState.NO_TARGET;
+		}
 	}
 	
 	@Override
-	public List<PanelString> getStringData(int displaySettings, ICardWrapper card, boolean showLabels) {
-        List<PanelString> result = new LinkedList<PanelString>();
+	public List<PanelString> getStringData(int displaySettings, ICardWrapper aCard, boolean showLabels) {
+        LinkedList<PanelString> rList = new LinkedList<>();
+
+        for(int i = 0; i < 8; ++i) {
+           if((displaySettings & 1 << i) != 0) {
+              PanelString line = new PanelString();
+              line.textLeft = I18n.format(aCard.getString("mString" + i));
+              rList.add(line);
+           }
+        }
+
+        return rList;
         
-        if((displaySettings & DISPLAY_MAIN) != 0)  {
-            PanelString line = new PanelString();
-        	line.textLeft = card.getString("mString1");
-            result.add(line);
-        }
-        if((displaySettings & DISPLAY_SECOND) != 0) {
-            PanelString line = new PanelString();
-        	line.textLeft = line.textLeft = StringUtils.getFormatted("sensor.progress", card.getString("mString2"), showLabels);
-            result.add(line);
-        }
-        if((displaySettings & DISPLAY_TERTIARY) != 0) {
-            PanelString line = new PanelString();
-        	line.textLeft = StringUtils.getFormatted("sensor.eut", card.getString("mString3"), showLabels);
-            result.add(line);
-        }
-        return result;
+//        	line.textLeft = StringUtils.getFormatted("sensor.eut", card.getString("mString3"), showLabels);
 	}
 	
 	@Override
     public List<PanelSetting> getSettingsList() {
-        List<PanelSetting> result = new ArrayList<PanelSetting>(3);
-        result.add(new PanelSetting("Primary", DISPLAY_MAIN, CARD_TYPE));
-        result.add(new PanelSetting("Secondary", DISPLAY_SECOND, CARD_TYPE));
-        result.add(new PanelSetting("Tertiary", DISPLAY_TERTIARY, CARD_TYPE));
-        return result;
+	      ArrayList<PanelSetting> rList = new ArrayList<>(30);
+
+	      for(int i = 0; i < 8; ++i) {
+	         rList.add(new PanelSetting("" + (i + 1), 1 << i, this.getCardType()));
+	      }
+
+	      return rList;
     }
 	
 	@Override

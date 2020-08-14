@@ -9,8 +9,8 @@ import net.minecraft.util.StatCollector;
 
 public class GT_GUIContainer_Electrolyzer extends GT_GUIContainerMetaTile_Machine {
 	
-    public GT_GUIContainer_Electrolyzer(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-        super(new GT_Container_Electrolyzer(aInventoryPlayer, aTileEntity, aID), aTileEntity, aID, GregTech_API.GUI_PATH + "Electrolyzer.png");
+    public GT_GUIContainer_Electrolyzer(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+        super(new GT_Container_Electrolyzer(aInventoryPlayer, aTileEntity), GregTech_API.GUI_PATH + "Electrolyzer.png");
     }
     
     @Override

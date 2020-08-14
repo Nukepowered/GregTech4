@@ -5,7 +5,7 @@ import gregtechmod.api.gui.GT_Slot_Holo;
 import gregtechmod.api.gui.GT_Slot_Output;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.util.GT_Utility;
-import gregtechmod.common.tileentities.GT_MetaTileEntity_ElectricAutoWorkbench;
+import gregtechmod.common.tileentities.automation.GT_MetaTileEntity_ElectricAutoWorkbench;
 
 import java.util.Iterator;
 
@@ -19,8 +19,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_Container_ElectricAutoWorkbench extends GT_ContainerMetaTile_Machine {
 
-	public GT_Container_ElectricAutoWorkbench(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-		super(aInventoryPlayer, aTileEntity, aID);
+	public GT_Container_ElectricAutoWorkbench(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+		super(aInventoryPlayer, aTileEntity);
 	}
 
     public void addSlots(InventoryPlayer aInventoryPlayer) {

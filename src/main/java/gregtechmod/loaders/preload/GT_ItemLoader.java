@@ -31,6 +31,7 @@ import gregtechmod.api.util.GT_FoodStat;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
+import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.items.GT_Dataorb_Item;
 import gregtechmod.common.items.GT_Debug_Item;
 import gregtechmod.common.items.GT_Destructopack_Item;
@@ -636,12 +637,10 @@ public class GT_ItemLoader implements Runnable {
 		
 		GT_Log.log.info("GT_Mod: Register Regular Items.");
 		GT_Items.Display_Fluid.set( (GregTech_API.sItemList[15] = new GT_FluidDisplayItem("GregTech_FluidDisplay")));
-//		GT_Items.NC_SensorCard.set( (GregTech_API.sItemList[16] = (GT_Generic_Item) GT_Utility.callConstructor("gregtechmod.common.items.GT_SensorCard_Item", 0, (Object) null, false,
-//				new Object[] { Integer.valueOf(16]), "GregTech_Sensorcard", "GregTech Sensor Card" })));
-//		if (GregTech_API.sItemList[16] == null) {
-//			GT_Items.NC_SensorCard.set( (GregTech_API.sItemList[16] = new GT_Generic_Item(16],
-//					"GregTech_Sensorcard", "GregTech Sensor Card", "Nuclear Control not installed", false)));
-//		} // TODO SENSOR CARD 
+		GT_Items.NC_SensorCard.set( (GregTech_API.sItemList[16] = (GT_Generic_Item) GT_Utility.callConstructor("gregtechmod.common.items.GT_SensorCard_Item", 0, (Object) null, false, "GregTech_Sensorcard")));
+		if (GregTech_API.sItemList[16] == null) {
+			GT_Items.NC_SensorCard.set( (GregTech_API.sItemList[16] = new GT_Generic_Item("GregTech_Sensorcard", "Nuclear Control not installed")));
+		}
 		
 		GT_Items.NC_SensorKit.set((GregTech_API.sItemList[17] = new GT_SensorKit_Item("GregTech_Sensorkit")));
 	    GT_Items.Armor_Cheat.set(GregTech_API.sItemList[18] = GregTech_API.constructElectricArmorItem("Ultimate_Cheat_Armor", 1000000000, Integer.MAX_VALUE, 1, 10, -1, 100.0D, true, 1, tArmorID1));

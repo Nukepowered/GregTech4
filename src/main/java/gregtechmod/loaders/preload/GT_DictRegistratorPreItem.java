@@ -1,6 +1,5 @@
 package gregtechmod.loaders.preload;
 
-import gregtechmod.GT_Mod;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
