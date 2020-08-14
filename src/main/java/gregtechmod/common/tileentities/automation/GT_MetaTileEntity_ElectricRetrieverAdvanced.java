@@ -9,6 +9,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -168,41 +170,37 @@ public class GT_MetaTileEntity_ElectricRetrieverAdvanced extends MetaTileEntity 
 
             if(temp) {
                super.doTickProfilingInThisTick = false;
-               LinkedHashMap var13 = GT_Utility.sortMapByValuesAcending(GT_Utility.scanPipes((GT_MetaPipeEntity_Item)((GT_MetaPipeEntity_Item)tConnectedPipe.getMetaTileEntity()), new HashMap(), 0L, true));
-               ArrayList var14 = new ArrayList();
-               Iterator i$ = var13.keySet().iterator();
+               LinkedHashMap<GT_MetaPipeEntity_Item, Long> pipes = GT_Utility.sortMapByValuesAcending(GT_Utility.scanPipes((GT_MetaPipeEntity_Item) tConnectedPipe.getMetaTileEntity(), new HashMap<>(), 0, true));
+               List<GT_MetaPipeEntity_Item> pipes1 = new ArrayList<>();
 
-               while(i$.hasNext()) {
-                  GT_MetaPipeEntity_Item tPipe = (GT_MetaPipeEntity_Item)i$.next();
-                  if(!temp) {
-                     GT_MetaPipeEntity_Item var16;
-                     for(Iterator var15 = var14.iterator(); var15.hasNext(); ++var16.mTransferredItems) {
-                        var16 = (GT_MetaPipeEntity_Item)var15.next();
-                     }
-
-                     return;
-                  }
-
-                  var14.add(tPipe);
-
-                  for(byte tSide = 0; temp && tSide < 6; ++tSide) {
-                     if(tPipe.getBaseMetaTileEntity().getCoverBehaviorAtSide(tSide).letsItemsIn(tSide, tPipe.getBaseMetaTileEntity().getCoverIDAtSide(tSide), tPipe.getBaseMetaTileEntity().getCoverDataAtSide(tSide), tPipe.getBaseMetaTileEntity())) {
-                        IInventory tTileEntity = tPipe.getBaseMetaTileEntity().getIInventoryAtSide(tSide);
-                        if(tTileEntity != tInventory) {
-                           int i = 0;
-
-                           for(boolean tCosts = false; temp && i < 9; ++i) {
-                              if(tNeedsItems[i]) {
-                                 int var17 = GT_Utility.moveOneItemStackIntoSlot(tTileEntity, tInventory, GT_Utility.getOppositeSide(tSide), this.mTargetSlots[i], Arrays.asList(new ItemStack[]{super.mInventory[i]}), false, (byte)super.mInventory[i].stackSize, this.mPartialRequests?1:(byte)super.mInventory[i].stackSize, (byte)64, (byte)1) * 20;
-                                 if(var17 > 0) {
-                                    this.getBaseMetaTileEntity().decreaseStoredEnergyUnits(var17, true);
-                                    temp = false;
-                                 }
-                              }
-                           }
-                        }
-                     }
-                  }
+               for (GT_MetaPipeEntity_Item tPipe : pipes.keySet()) {
+            	   if (!temp) {
+            		   GT_MetaPipeEntity_Item tmpPipe;
+                       for(Iterator<GT_MetaPipeEntity_Item> iter = pipes1.iterator(); iter.hasNext(); ++tmpPipe.mTransferredItems) {
+                    	   tmpPipe = iter.next();
+                       }
+                       
+                       return;
+            	   }
+            	   
+            	   pipes1.add(tPipe);
+            	   
+            	   for (byte tSide = 0; temp && tSide < 6; ++tSide) {
+            		   if (tPipe.getBaseMetaTileEntity().getCoverBehaviorAtSide(tSide).letsItemsIn(tSide, tPipe.getBaseMetaTileEntity().getCoverIDAtSide(tSide), tPipe.getBaseMetaTileEntity().getCoverDataAtSide(tSide), tPipe.getBaseMetaTileEntity())) {
+            			   IInventory tTileEntity = tPipe.getBaseMetaTileEntity().getIInventoryAtSide(tSide);
+            			   if (tTileEntity != tInventory) {
+            				   for (int i = 0; temp && i < 9; ++i) {
+            					   if (tNeedsItems[i]) {
+                                     int itemsMoved = GT_Utility.moveOneItemStackIntoSlot(tTileEntity, tInventory, GT_Utility.getOppositeSide(tSide), this.mTargetSlots[i], Arrays.asList(new ItemStack[]{super.mInventory[i]}), false, (byte)super.mInventory[i].stackSize, this.mPartialRequests?1:(byte)super.mInventory[i].stackSize, (byte)64, (byte)1) * 20;
+                                     if(itemsMoved > 0) {
+                                        this.getBaseMetaTileEntity().decreaseStoredEnergyUnits(itemsMoved, true);
+                                        temp = false;
+                                     }
+            					   }
+            				   }
+            			   }
+            		   }
+            	   }
                }
             }
          }

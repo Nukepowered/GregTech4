@@ -128,7 +128,7 @@ public class GT_MetaTileEntity_ElectricTypeFilter extends GT_MetaTileEntity_Elec
             super.mInventory[9] = null;
          } else {
             super.mInventory[9] = GT_Utility.copyAmount(1L, new Object[]{this.mPrefix.mPrefixedItems.get(this.mRotationIndex = (this.mRotationIndex + 1) % this.mPrefix.mPrefixedItems.size())});
-            super.mInventory[9].setItemName(this.mPrefix.toString());
+            super.mInventory[9].setStackDisplayName(this.mPrefix.toString());
          }
       }
 

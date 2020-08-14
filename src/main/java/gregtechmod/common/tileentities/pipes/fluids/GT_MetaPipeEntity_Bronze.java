@@ -33,10 +33,4 @@ public class GT_MetaPipeEntity_Bronze extends GT_MetaPipeEntity_Fluid {
 	public int getFluidCapacityPerTick() {
 		return 120;
 	}
-
-	@Override
-	public void markDirty() {
-		// TODO Auto-generated method stub
-		
-	}
 }

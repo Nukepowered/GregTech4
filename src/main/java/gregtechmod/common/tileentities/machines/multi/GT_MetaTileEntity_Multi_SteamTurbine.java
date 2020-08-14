@@ -1,6 +1,7 @@
 package gregtechmod.common.tileentities.machines.multi;
 
 import gregtechmod.api.GregTech_API;
+import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Dynamo;
@@ -36,13 +37,7 @@ public class GT_MetaTileEntity_Multi_SteamTurbine extends GT_MetaTileEntity_Mult
 	
 	@Override
 	public boolean isCorrectMachinePart(ItemStack aStack) {
-		return
-		GT_Utility.areStacksEqual(aStack, GregTech_API.getGregTechItem(80, 1, GregTech_API.ITEM_WILDCARD_DAMAGE)) ||
-		GT_Utility.areStacksEqual(aStack, GregTech_API.getGregTechItem(81, 1, GregTech_API.ITEM_WILDCARD_DAMAGE)) ||
-		GT_Utility.areStacksEqual(aStack, GregTech_API.getGregTechItem(82, 1, GregTech_API.ITEM_WILDCARD_DAMAGE)) ||
-		GT_Utility.areStacksEqual(aStack, GregTech_API.getGregTechItem(83, 1, GregTech_API.ITEM_WILDCARD_DAMAGE)) ||
-		GT_Utility.areStacksEqual(aStack, GregTech_API.getGregTechItem(84, 1, GregTech_API.ITEM_WILDCARD_DAMAGE)) ||
-		GT_Utility.areStacksEqual(aStack, GT_ModHandler.getRCItem("part.turbine.rotor", 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+		return this.getMaxEfficiency(aStack) > 0;
 	}
 	
 	@Override
@@ -55,16 +50,18 @@ public class GT_MetaTileEntity_Multi_SteamTurbine extends GT_MetaTileEntity_Mult
 		if (depleteInput(GT_ModHandler.getSteam(1600))) {
 			mEUt = 800;
 			mMaxProgresstime = 1;
-			if (GT_Utility.areStacksEqual(aStack, GregTech_API.getGregTechItem(80, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) {
-				mEfficiencyIncrease = mMaxProgresstime *   10;
-			} else if (GT_Utility.areStacksEqual(aStack, GregTech_API.getGregTechItem(82, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) {
-				mEfficiencyIncrease = mMaxProgresstime *   50;
-			} else if (GT_Utility.areStacksEqual(aStack, GregTech_API.getGregTechItem(83, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) {
-				mEfficiencyIncrease = mMaxProgresstime *   15;
-			} else if (GT_Utility.areStacksEqual(aStack, GregTech_API.getGregTechItem(84, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) {
-				mEfficiencyIncrease = mMaxProgresstime *  100;
+			if (GT_Items.Component_Turbine_Bronze.isStackEqual(aStack, true, true)) {
+				this.mEfficiencyIncrease = this.mMaxProgresstime * 10;
+			} else if (GT_Items.Component_Turbine_Steel.isStackEqual(aStack, true, true)) {
+				this.mEfficiencyIncrease = this.mMaxProgresstime * 20;
+			} else if (GT_Items.Component_Turbine_Magnalium.isStackEqual(aStack, true, true)) {
+				this.mEfficiencyIncrease = this.mMaxProgresstime * 50;
+			} else if (GT_Items.Component_Turbine_TungstenSteel.isStackEqual(aStack, true, true)) {
+				this.mEfficiencyIncrease = this.mMaxProgresstime * 15;
+			} else if (GT_Items.Component_Turbine_Carbon.isStackEqual(aStack, true, true)) {
+				this.mEfficiencyIncrease = this.mMaxProgresstime * 100;
 			} else {
-				mEfficiencyIncrease = mMaxProgresstime *   20;
+				this.mEfficiencyIncrease = this.mMaxProgresstime * 20;
 			}
 			addOutput(GT_ModHandler.getWater(10));
 			return true;
@@ -134,11 +131,11 @@ public class GT_MetaTileEntity_Multi_SteamTurbine extends GT_MetaTileEntity_Mult
 	
 	@Override
 	public int getMaxEfficiency(ItemStack aStack) {
-		if (GT_Utility.areStacksEqual(aStack, GregTech_API.getGregTechItem(80, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) return  6000;
-		if (GT_Utility.areStacksEqual(aStack, GregTech_API.getGregTechItem(81, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) return  8000;
-		if (GT_Utility.areStacksEqual(aStack, GregTech_API.getGregTechItem(82, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) return 10000;
-		if (GT_Utility.areStacksEqual(aStack, GregTech_API.getGregTechItem(83, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) return  9000;
-		if (GT_Utility.areStacksEqual(aStack, GregTech_API.getGregTechItem(84, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) return 12500;
+		if (GT_Items.Component_Turbine_Bronze.isStackEqual(aStack, true, true)) return  6000;
+		if (GT_Items.Component_Turbine_Steel.isStackEqual(aStack, true, true)) return  8000;
+		if (GT_Items.Component_Turbine_Magnalium.isStackEqual(aStack, true, true)) return 10000;
+		if (GT_Items.Component_Turbine_TungstenSteel.isStackEqual(aStack, true, true)) return  9000;
+		if (GT_Items.Component_Turbine_Carbon.isStackEqual(aStack, true, true)) return 12500;
 		if (GT_Utility.areStacksEqual(aStack, GT_ModHandler.getRCItem("part.turbine.rotor", 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) return 8000;
 		return 0;
 	}
@@ -160,5 +157,9 @@ public class GT_MetaTileEntity_Multi_SteamTurbine extends GT_MetaTileEntity_Mult
 	@Override
 	public String getDescription() {
 		return "Consumes 1600 Liters of Steam per Tick";
+	}
+	@Override
+	public int getAmountOfOutputs() {
+		return 0;
 	}
 }

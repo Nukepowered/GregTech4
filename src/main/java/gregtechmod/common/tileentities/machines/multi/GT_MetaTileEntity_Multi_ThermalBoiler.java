@@ -1,6 +1,7 @@
 package gregtechmod.common.tileentities.machines.multi;
 
 import gregtechmod.api.GregTech_API;
+import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Input;
@@ -39,21 +40,21 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends GT_MetaTileEntity_Mul
 	
 	@Override
 	public int getDamageToComponent(ItemStack aStack) {
-		return GT_Utility.areStacksEqual(aStack, GregTech_API.getGregTechItem(85, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))?1:0;
+		return GT_Utility.areStacksEqual(aStack, GT_Items.Component_LavaFilter.getWildcard(1)) ? 1 : 0;
 	}
 	
 	@Override
 	public boolean checkRecipe(ItemStack aStack) {
 		for (GT_Recipe tRecipe : GT_Recipe.sHotFuels) {
-			if (depleteInput(tRecipe.mInput1)) {
+			if (depleteInput(tRecipe.getRepresentativeInput(0))) {
 				mEUt = 400;
 				mMaxProgresstime = (tRecipe.mStartEU * 2) / 5;
 				mEfficiencyIncrease = mMaxProgresstime * 30;
-				if (tRecipe.mOutput1 != null) mOutputItem1 = GT_Utility.copy(tRecipe.mOutput1);
-				if (GT_Utility.areStacksEqual(aStack, GregTech_API.getGregTechItem(85, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) {
-					if (tRecipe.mOutput2 != null && getBaseMetaTileEntity().getRandomNumber(1000) < 100) mOutputItem1 = GT_Utility.copy(tRecipe.mOutput2); else
-					if (tRecipe.mOutput3 != null && getBaseMetaTileEntity().getRandomNumber( 900) <  50) mOutputItem1 = GT_Utility.copy(tRecipe.mOutput3); else
-					if (tRecipe.mOutput4 != null && getBaseMetaTileEntity().getRandomNumber( 850) <  25) mOutputItem1 = GT_Utility.copy(tRecipe.mOutput4);
+				if (tRecipe.getOutput(0) != null) mOutputItems = new ItemStack[] { GT_Utility.copy(tRecipe.getOutput(0)) };
+				if (GT_Utility.areStacksEqual(aStack, GT_Items.Component_LavaFilter.getWildcard(1))) {
+					if (tRecipe.getOutput(1) != null && getBaseMetaTileEntity().getRandomNumber(1000) < 100) mOutputItems = new ItemStack[] { GT_Utility.copy(tRecipe.getOutput(1)) }; else
+					if (tRecipe.getOutput(2) != null && getBaseMetaTileEntity().getRandomNumber( 900) <  50) mOutputItems = new ItemStack[] { GT_Utility.copy(tRecipe.getOutput(2)) }; else
+					if (tRecipe.getOutput(3) != null && getBaseMetaTileEntity().getRandomNumber( 850) <  25) mOutputItems = new ItemStack[] { GT_Utility.copy(tRecipe.getOutput(3)) };
 				}
 				return true;
 			}
@@ -149,5 +150,9 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends GT_MetaTileEntity_Mul
 	@Override
 	public String getDescription() {
 		return "Converts Heat into Steam";
+	}
+	@Override
+	public int getAmountOfOutputs() {
+		return 1;
 	}
 }

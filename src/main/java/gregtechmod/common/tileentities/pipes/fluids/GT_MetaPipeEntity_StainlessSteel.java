@@ -33,10 +33,4 @@ public class GT_MetaPipeEntity_StainlessSteel extends GT_MetaPipeEntity_Fluid {
 	public int getFluidCapacityPerTick() {
 		return 360;
 	}
-
-	@Override
-	public void markDirty() {
-		// TODO Auto-generated method stub
-		
-	}
 }

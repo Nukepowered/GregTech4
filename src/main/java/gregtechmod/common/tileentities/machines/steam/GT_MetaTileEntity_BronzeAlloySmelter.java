@@ -31,11 +31,11 @@ public class GT_MetaTileEntity_BronzeAlloySmelter extends GT_MetaTileEntity_Basi
     public void checkRecipe() {
 		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 3, 4, (byte)64, (byte)1, (byte)64, (byte)1);
     	if (mInventory[1] != null || mInventory[2] != null) {
-    		GT_Recipe tRecipe = GT_Recipe.findEqualAlloySmelterRecipe(mInventory[1], mInventory[2]);
-    		if (tRecipe != null && spaceForOutput(tRecipe.mOutput1, null) && tRecipe.isRecipeInputEqual(true, true, mInventory[1], mInventory[2])) {
+    		GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(true, false, GT_Recipe.sAlloySmelterRecipes, mInventory[1], mInventory[2]);
+    		if (tRecipe != null && spaceForOutput(tRecipe.getOutput(0), null) && tRecipe.isRecipeInputEqual(true, true, mInventory[1], mInventory[2])) {
         		mEUt = tRecipe.mEUt;
     			mMaxProgresstime = tRecipe.mDuration * 2;
-    			mOutputItem1 = GT_Utility.copy(tRecipe.mOutput1);
+    			mOutputItem1 = GT_Utility.copy(tRecipe.getOutput(0));
     			return;
     		}
     	}

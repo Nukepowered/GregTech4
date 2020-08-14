@@ -206,7 +206,7 @@ public class GT_MetaTileEntity_Boiler_Steel extends GT_MetaTileEntity_BasicTank 
 	@Override
     public void doSound(byte aIndex, double aX, double aY, double aZ) {
 		if (aIndex == 1) {
-			GT_Utility.doSoundAtClient(GregTech_API.sSoundList.get(4), 1.0F, aX, aY, aZ);
+			GT_Utility.doSoundAtClient(GregTech_API.sSoundList.get(4),2 , 1.0F, aX, aY, aZ);
 	        for (int l = 0; l < 8; ++l) getBaseMetaTileEntity().getWorld().spawnParticle("largesmoke", aX - 0.5 + Math.random(), aY, aZ - 0.5 + Math.random(), 0, 0, 0);
 		}
 	}

@@ -28,12 +28,12 @@ public class GT_MetaTileEntity_Lathe extends GT_MetaTileEntity_BasicMachine {
     public void checkRecipe() {
 		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 1, 2, (byte)64, (byte)1, (byte)64, (byte)1);
 		if (mInventory[2] != null && mInventory[2].stackSize > 0) {
-    		GT_Recipe tRecipe = GT_Recipe.findEqualLatheRecipe(mInventory[2], null);
-    		if (tRecipe != null && spaceForOutput(tRecipe.mOutput1, tRecipe.mOutput2) && tRecipe.isRecipeInputEqual(true, true, mInventory[2], null)) {
+    		GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sLatheRecipes, mInventory[2]);
+    		if (tRecipe != null && spaceForOutput(tRecipe.getOutput(0), tRecipe.getOutput(1)) && tRecipe.isRecipeInputEqual(true, true, mInventory[2], null)) {
         		mEUt = tRecipe.mEUt;
     			mMaxProgresstime = tRecipe.mDuration;
-    			if (tRecipe.mOutput1 != null) mOutputItem1 = GT_Utility.copy(tRecipe.mOutput1);
-    			if (tRecipe.mOutput2 != null) mOutputItem2 = GT_Utility.copy(tRecipe.mOutput2);
+    			if (tRecipe.getOutput(0) != null) mOutputItem1 = GT_Utility.copy(tRecipe.getOutput(0));
+    			if (tRecipe.getOutput(1) != null) mOutputItem2 = GT_Utility.copy(tRecipe.getOutput(1));
     			return;
     		}
     	}
