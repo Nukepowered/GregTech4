@@ -2,7 +2,10 @@ package gregtechmod.common;
 
 import gregtechmod.GT_Mod;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.common.render.GT_MetaGenerated_Item_Renderer;
 import gregtechmod.common.render.GT_Renderer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -10,16 +13,29 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 public class GT_Client extends GT_Proxy {
 	public static GT_Renderer mRenderer = new GT_Renderer();
 	
+	@Override
 	public boolean isServerSide() {
 		return true;
 	}
 	
+	@Override
 	public boolean isClientSide() {
 		return true;
 	}
 	
-	public boolean isBukkitSide() {
-		return false;
+	@Override
+	public boolean registerRenderers() {
+		new GT_MetaGenerated_Item_Renderer();
+		return true;
+	}
+	
+	@Override
+	public EntityPlayer getThePlayer() {
+		try {
+			return Minecraft.getMinecraft().thePlayer;
+		} catch (Throwable e) {
+			return null;
+		}
 	}
 	
 	@Override

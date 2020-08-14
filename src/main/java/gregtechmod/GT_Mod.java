@@ -41,27 +41,22 @@ import gregtechmod.common.items.GT_MetaStone1_Item;
 import gregtechmod.common.network.GT_ConnectionHandler;
 import gregtechmod.common.network.GT_PacketHandler;
 import gregtechmod.common.render.GT_Block_Renderer;
-import gregtechmod.common.tileentities.GT_TileEntity_ComputerCube;
-import gregtechmod.common.tileentities.GT_TileEntity_LightSource;
-import gregtechmod.common.tileentities.GT_TileEntity_PlayerDetector;
-import gregtechmod.common.tileentities.GT_TileEntity_Sonictron;
-import gregtechmod.common.tileentities.GT_TileEntity_Superconductor;
+import gregtechmod.loaders.load.GT_CoverBehaviorLoader;
+import gregtechmod.loaders.load.GT_ItemIterator;
+import gregtechmod.loaders.load.GT_LiquidAndFuelLoader;
+import gregtechmod.loaders.load.GT_SonictronLoader;
 import gregtechmod.loaders.misc.GT_CoverLoader;
 import gregtechmod.loaders.misc.GT_TooEasyModeLoader;
 import gregtechmod.loaders.postload.GT_BlockResistanceLoader;
 import gregtechmod.loaders.postload.GT_BookAndLootLoader;
-import gregtechmod.loaders.postload.GT_CoverBehaviorLoader;
 import gregtechmod.loaders.postload.GT_CraftingRecipeLoader;
 import gregtechmod.loaders.postload.GT_CropLoader;
-import gregtechmod.loaders.postload.GT_ItemIterator;
 import gregtechmod.loaders.postload.GT_ItemMaxStacksizeLoader;
-import gregtechmod.loaders.postload.GT_LiquidAndFuelLoader;
 import gregtechmod.loaders.postload.GT_MachineRecipeLoader;
 import gregtechmod.loaders.postload.GT_MinableRegistrator;
 import gregtechmod.loaders.postload.GT_RecyclerBlacklistLoader;
 import gregtechmod.loaders.postload.GT_ScrapboxDropLoader;
 import gregtechmod.loaders.postload.GT_SeedFlowerIterator;
-import gregtechmod.loaders.postload.GT_SonictronLoader;
 import gregtechmod.loaders.postload.GT_Worldgenloader;
 import gregtechmod.loaders.preload.GT_CircuitBehaviorLoader;
 import gregtechmod.loaders.preload.GT_DictRegistratorPostItem;
@@ -491,7 +486,7 @@ public class GT_Mod implements IGT_Mod {
             new GT_CoverBehaviorLoader().run();
             new GT_SonictronLoader().run();
             
-//            gregtechproxy.registerRenderers(); // TODO
+            gregtechproxy.registerRenderers();
 			for (FluidContainerData tGregTech : FluidContainerRegistry.getRegisteredFluidContainerData()) {
 				if (tGregTech.filledContainer.getItem() == Items.potionitem) {
 					tGregTech.fluid.amount = 0;

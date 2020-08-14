@@ -1,11 +1,6 @@
 package gregtechmod.loaders.preload;
 
-import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Dynamo;
-import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_EnergyInput;
-import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Input;
-import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Maintenance;
-import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Muffler;
-import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Output;
+import gregtechmod.api.metatileentity.*;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.common.tileentities.*;
 

@@ -13,10 +13,6 @@ public class GT_Server extends GT_Proxy {
 		return false;
 	}
 	
-	public boolean isBukkitSide() {
-		return false;
-	}
-	
 	@Override
 	public void doSonictronSound(ItemStack aStack, World aWorld, double aX, double aY, double aZ) {
 		
