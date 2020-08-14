@@ -1,7 +1,7 @@
 package gregtechmod.common.blocks;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.common.tileentities.GT_TileEntity_LightSource;
+import gregtechmod.common.tileentities.deprecated.GT_TileEntity_LightSource;
 
 import java.util.List;
 import java.util.Random;

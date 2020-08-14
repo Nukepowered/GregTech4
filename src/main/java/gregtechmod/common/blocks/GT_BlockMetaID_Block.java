@@ -4,8 +4,8 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.util.GT_Config;
 import gregtechmod.api.util.GT_OreDictUnificator;
-import gregtechmod.common.tileentities.GT_MetaTileEntity_Multi_GasTurbine;
-import gregtechmod.common.tileentities.GT_MetaTileEntity_Multi_SteamTurbine;
+import gregtechmod.common.tileentities.machines.multi.GT_MetaTileEntity_Multi_SteamTurbine;
+import gregtechmod.common.tileentities.machines.multi.GT_MetaTileEntity_Multi_GasTurbine;
 
 import java.util.List;
 import java.util.Random;
