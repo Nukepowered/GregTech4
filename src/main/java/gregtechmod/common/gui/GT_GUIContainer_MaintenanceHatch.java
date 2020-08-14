@@ -8,8 +8,8 @@ import net.minecraft.entity.player.InventoryPlayer;
 
 public class GT_GUIContainer_MaintenanceHatch extends GT_GUIContainerMetaTile_Machine {
 	
-    public GT_GUIContainer_MaintenanceHatch(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-        super(new GT_Container_MaintenanceHatch(aInventoryPlayer, aTileEntity, aID), aTileEntity, aID, GregTech_API.GUI_PATH + "Maintenance.png");
+    public GT_GUIContainer_MaintenanceHatch(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+        super(new GT_Container_MaintenanceHatch(aInventoryPlayer, aTileEntity), GregTech_API.GUI_PATH + "Maintenance.png");
     }
     
     @Override

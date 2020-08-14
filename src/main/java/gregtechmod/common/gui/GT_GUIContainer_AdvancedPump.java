@@ -9,8 +9,8 @@ import net.minecraft.util.StatCollector;
 
 public class GT_GUIContainer_AdvancedPump extends GT_GUIContainerMetaTile_Machine {
 	
-    public GT_GUIContainer_AdvancedPump(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-        super(new GT_Container_AdvancedPump(aInventoryPlayer, aTileEntity, aID), aTileEntity, aID, GregTech_API.GUI_PATH + "AdvPump.png");
+    public GT_GUIContainer_AdvancedPump(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+        super(new GT_Container_AdvancedPump(aInventoryPlayer, aTileEntity), GregTech_API.GUI_PATH + "AdvPump.png");
     }
     
     @Override

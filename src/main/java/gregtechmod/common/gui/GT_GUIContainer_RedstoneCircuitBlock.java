@@ -4,13 +4,14 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.gui.GT_GUIContainerMetaTile_Machine;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.util.GT_CircuitryBehavior;
+import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.containers.GT_Container_RedstoneCircuitBlock;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GT_GUIContainer_RedstoneCircuitBlock extends GT_GUIContainerMetaTile_Machine {
 	
-    public GT_GUIContainer_RedstoneCircuitBlock(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-        super(new GT_Container_RedstoneCircuitBlock(aInventoryPlayer, aTileEntity, aID), aTileEntity, aID, GregTech_API.GUI_PATH + "RedstoneCircuitBlock.png");
+    public GT_GUIContainer_RedstoneCircuitBlock(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+        super(new GT_Container_RedstoneCircuitBlock(aInventoryPlayer, aTileEntity), GregTech_API.GUI_PATH + "RedstoneCircuitBlock.png");
     }
     
     @Override
@@ -27,13 +28,13 @@ public class GT_GUIContainer_RedstoneCircuitBlock extends GT_GUIContainerMetaTil
     		
     		String tString;
     		tString = tCircuit.getDataDisplay(((GT_Container_RedstoneCircuitBlock)mContainer).mData, 0);
-    		fontRenderer.drawString(tString==null?toNumber(((GT_Container_RedstoneCircuitBlock)mContainer).mData[0]):tString, 99, 33, 16448255);
+    		fontRenderer.drawString(tString==null?GT_Utility.parseNumberToString(((GT_Container_RedstoneCircuitBlock)mContainer).mData[0]):tString, 99, 33, 16448255);
     		tString = tCircuit.getDataDisplay(((GT_Container_RedstoneCircuitBlock)mContainer).mData, 1);
-    		fontRenderer.drawString(tString==null?toNumber(((GT_Container_RedstoneCircuitBlock)mContainer).mData[1]):tString, 99, 44, 16448255);
+    		fontRenderer.drawString(tString==null?GT_Utility.parseNumberToString(((GT_Container_RedstoneCircuitBlock)mContainer).mData[1]):tString, 99, 44, 16448255);
     		tString = tCircuit.getDataDisplay(((GT_Container_RedstoneCircuitBlock)mContainer).mData, 2);
-    		fontRenderer.drawString(tString==null?toNumber(((GT_Container_RedstoneCircuitBlock)mContainer).mData[2]):tString, 99, 55, 16448255);
+    		fontRenderer.drawString(tString==null?GT_Utility.parseNumberToString(((GT_Container_RedstoneCircuitBlock)mContainer).mData[2]):tString, 99, 55, 16448255);
     		tString = tCircuit.getDataDisplay(((GT_Container_RedstoneCircuitBlock)mContainer).mData, 3);
-    		fontRenderer.drawString(tString==null?toNumber(((GT_Container_RedstoneCircuitBlock)mContainer).mData[3]):tString, 99, 66, 16448255);
+    		fontRenderer.drawString(tString==null?GT_Utility.parseNumberToString(((GT_Container_RedstoneCircuitBlock)mContainer).mData[3]):tString, 99, 66, 16448255);
     	}
     }
     

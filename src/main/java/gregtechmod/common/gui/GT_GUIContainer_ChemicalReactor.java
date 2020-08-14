@@ -9,8 +9,8 @@ import net.minecraft.util.StatCollector;
 
 public class GT_GUIContainer_ChemicalReactor extends GT_GUIContainerMetaTile_Machine {
 	
-    public GT_GUIContainer_ChemicalReactor(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-        super(new GT_Container_ChemicalReactor(aInventoryPlayer, aTileEntity, aID), aTileEntity, aID, GregTech_API.GUI_PATH + "ChemicalReactor.png");
+    public GT_GUIContainer_ChemicalReactor(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+        super(new GT_Container_ChemicalReactor(aInventoryPlayer, aTileEntity), GregTech_API.GUI_PATH + "ChemicalReactor.png");
     }
     
     @Override

@@ -8,8 +8,8 @@ import net.minecraft.entity.player.InventoryPlayer;
 
 public class GT_GUIContainer_BronzeBlastFurnace extends GT_GUIContainerMetaTile_Machine {
 	
-    public GT_GUIContainer_BronzeBlastFurnace(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-        super(new GT_Container_BronzeBlastFurnace(aInventoryPlayer, aTileEntity, aID), aTileEntity, aID, GregTech_API.GUI_PATH + "BronzeBlastFurnace.png");
+    public GT_GUIContainer_BronzeBlastFurnace(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+        super(new GT_Container_BronzeBlastFurnace(aInventoryPlayer, aTileEntity), GregTech_API.GUI_PATH + "BronzeBlastFurnace.png");
     }
     
     @Override

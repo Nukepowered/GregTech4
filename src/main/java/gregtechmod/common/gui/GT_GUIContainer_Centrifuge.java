@@ -11,8 +11,8 @@ import net.minecraft.util.StatCollector;
 
 public class GT_GUIContainer_Centrifuge extends GT_GUIContainerMetaTile_Machine {
 	
-    public GT_GUIContainer_Centrifuge(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-        super(new GT_Container_Centrifuge(aInventoryPlayer, aTileEntity, aID), aTileEntity, aID, GregTech_API.GUI_PATH + "Centrifuge.png");
+    public GT_GUIContainer_Centrifuge(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+        super(new GT_Container_Centrifuge(aInventoryPlayer, aTileEntity), GregTech_API.GUI_PATH + "Centrifuge.png");
     }
     
     @Override

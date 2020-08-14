@@ -9,8 +9,8 @@ import net.minecraft.util.StatCollector;
 
 public class GT_GUIContainer_BlastFurnace extends GT_GUIContainerMetaTile_Machine {
 	
-    public GT_GUIContainer_BlastFurnace(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-        super(new GT_Container_BlastFurnace(aInventoryPlayer, aTileEntity, aID), aTileEntity, aID, GregTech_API.GUI_PATH + "Blast.png");
+    public GT_GUIContainer_BlastFurnace(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+        super(new GT_Container_BlastFurnace(aInventoryPlayer, aTileEntity), GregTech_API.GUI_PATH + "Blast.png");
     }
     
     @Override

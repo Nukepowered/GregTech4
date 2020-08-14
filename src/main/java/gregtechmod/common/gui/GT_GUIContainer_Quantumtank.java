@@ -4,6 +4,7 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.gui.GT_Container_BasicTank;
 import gregtechmod.api.gui.GT_GUIContainerMetaTile_Machine;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
+import gregtechmod.api.util.GT_Utility;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -11,8 +12,8 @@ import net.minecraft.util.StatCollector;
 
 public class GT_GUIContainer_Quantumtank extends GT_GUIContainerMetaTile_Machine {
 	
-    public GT_GUIContainer_Quantumtank(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-        super(new GT_Container_BasicTank(aInventoryPlayer, aTileEntity, aID), aTileEntity, aID, GregTech_API.GUI_PATH + "BasicTank.png");
+    public GT_GUIContainer_Quantumtank(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+        super(new GT_Container_BasicTank(aInventoryPlayer, aTileEntity), GregTech_API.GUI_PATH + "BasicTank.png");
     }
     
     @Override
@@ -22,7 +23,7 @@ public class GT_GUIContainer_Quantumtank extends GT_GUIContainerMetaTile_Machine
         fontRenderer.drawString("Quantum Tank", 8, 6, 4210752);
         if (mContainer != null) {
         	fontRenderer.drawString("Liquid Amount", 10, 20, 16448255);
-        	fontRenderer.drawString(toNumber(((GT_Container_BasicTank)mContainer).mContent), 10, 30, 16448255);
+        	fontRenderer.drawString(GT_Utility.parseNumberToString(((GT_Container_BasicTank)mContainer).mContent), 10, 30, 16448255);
         }
     }
 

@@ -8,8 +8,8 @@ import net.minecraft.entity.player.InventoryPlayer;
 
 public class GT_GUIContainer_ElectricInventoryManager extends GT_GUIContainerMetaTile_Machine {
 	
-    public GT_GUIContainer_ElectricInventoryManager(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-        super(new GT_Container_ElectricInventoryManager(aInventoryPlayer, aTileEntity, aID), aTileEntity, aID, GregTech_API.GUI_PATH + "InventoryManager.png");
+    public GT_GUIContainer_ElectricInventoryManager(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+        super(new GT_Container_ElectricInventoryManager(aInventoryPlayer, aTileEntity), GregTech_API.GUI_PATH + "InventoryManager.png");
     }
     
     @Override
