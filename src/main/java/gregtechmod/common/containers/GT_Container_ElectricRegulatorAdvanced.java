@@ -4,7 +4,7 @@ import gregtechmod.api.gui.GT_ContainerMetaTile_Machine;
 import gregtechmod.api.gui.GT_Slot_Holo;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.util.GT_Utility;
-import gregtechmod.common.tileentities.GT_MetaTileEntity_ElectricRegulatorAdvanced;
+import gregtechmod.common.tileentities.automation.GT_MetaTileEntity_ElectricRegulatorAdvanced;
 
 import java.util.Iterator;
 
@@ -18,8 +18,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_Container_ElectricRegulatorAdvanced extends GT_ContainerMetaTile_Machine {
 
-	public GT_Container_ElectricRegulatorAdvanced(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-		super(aInventoryPlayer, aTileEntity, aID);
+	public GT_Container_ElectricRegulatorAdvanced(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+		super(aInventoryPlayer, aTileEntity);
 	}
 
     public void addSlots(InventoryPlayer aInventoryPlayer) {

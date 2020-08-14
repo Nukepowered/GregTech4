@@ -3,7 +3,7 @@ package gregtechmod.common.containers;
 import gregtechmod.GT_Mod;
 import gregtechmod.api.gui.GT_Slot_Holo;
 import gregtechmod.api.util.GT_Utility;
-import gregtechmod.common.tileentities.GT_TileEntity_Sonictron;
+import gregtechmod.common.tileentities.deprecated.GT_TileEntity_Sonictron;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;

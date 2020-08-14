@@ -7,8 +7,8 @@ import net.minecraft.inventory.Slot;
 
 public class GT_Container_1by1 extends GT_ContainerMetaTile_Machine {
 	
-	public GT_Container_1by1(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-		super(aInventoryPlayer, aTileEntity, aID);
+	public GT_Container_1by1(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+		super(aInventoryPlayer, aTileEntity);
 	}
 	
 	@Override

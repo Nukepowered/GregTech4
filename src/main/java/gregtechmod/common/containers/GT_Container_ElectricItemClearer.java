@@ -4,7 +4,7 @@ import gregtechmod.api.gui.GT_ContainerMetaTile_Machine;
 import gregtechmod.api.gui.GT_Slot_Holo;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.util.GT_Utility;
-import gregtechmod.common.tileentities.GT_MetaTileEntity_ElectricBufferSmall;
+import gregtechmod.common.tileentities.automation.GT_MetaTileEntity_ElectricBufferSmall;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
@@ -12,8 +12,8 @@ import net.minecraft.item.ItemStack;
 
 public class GT_Container_ElectricItemClearer extends GT_ContainerMetaTile_Machine {
 
-	public GT_Container_ElectricItemClearer(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-		super(aInventoryPlayer, aTileEntity, aID);
+	public GT_Container_ElectricItemClearer(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+		super(aInventoryPlayer, aTileEntity);
 	}
 
     public void addSlots(InventoryPlayer aInventoryPlayer) {

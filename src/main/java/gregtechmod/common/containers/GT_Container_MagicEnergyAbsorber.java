@@ -4,7 +4,7 @@ import gregtechmod.api.gui.GT_ContainerMetaTile_Machine;
 import gregtechmod.api.gui.GT_Slot_Holo;
 import gregtechmod.api.gui.GT_Slot_Output;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
-import gregtechmod.common.tileentities.GT_MetaTileEntity_MagicEnergyAbsorber;
+import gregtechmod.common.tileentities.energy.production.GT_MetaTileEntity_MagicEnergyAbsorber;
 
 import java.util.Iterator;
 
@@ -18,8 +18,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_Container_MagicEnergyAbsorber extends GT_ContainerMetaTile_Machine {
 
-	public GT_Container_MagicEnergyAbsorber(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, int aID) {
-		super(aInventoryPlayer, aTileEntity, aID);
+	public GT_Container_MagicEnergyAbsorber(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+		super(aInventoryPlayer, aTileEntity);
 	}
 
     public void addSlots(InventoryPlayer aInventoryPlayer) {
