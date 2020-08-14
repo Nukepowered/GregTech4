@@ -26,19 +26,19 @@ public class GT_MetaTileEntityLoader implements Runnable {
 	@Override
 	public void run() {
 		GT_Log.log.info("GT_Mod: Register MetaTileEntities.");
-//		new GT_MetaTileEntity_ElectricAutoWorkbench		( 16, "GT_E_Craftingtable");
-//		new GT_MetaTileEntity_Translocator				( 17, "GT_Translocator");
-//		new GT_MetaTileEntity_ElectricBufferSmall		( 18, "GT_E_Buffer_Small");
-//		new GT_MetaTileEntity_ElectricBufferLarge		( 19, "GT_E_Buffer_Large");
-//		new GT_MetaTileEntity_AdvancedTranslocator		( 20, "GT_Adv_Translocator");
-//		new GT_MetaTileEntity_ElectricBufferAdvanced	( 21, "GT_Adv_Buffer");
-//		new GT_MetaTileEntity_RockBreaker				( 22, "GT_RockBreaker");
-//		new GT_MetaTileEntity_ElectricSorter			( 23, "GT_E_Sorter");
-//		new GT_MetaTileEntity_ElectricItemClearer		( 24, "GT_E_ItemClearer");
-//		new GT_MetaTileEntity_Electrolyzer				( 25, "GT_Electrolyzer");
-//		new GT_MetaTileEntity_CropHarvestor				( 26, "GT_Harvestor");
-//		new GT_MetaTileEntity_Scrapboxinator			( 27, "GT_Scrapboxinator");
-//		new GT_MetaTileEntity_Grinder					( 28, "GT_Grinder");
+		new GT_MetaTileEntity_ElectricAutoWorkbench		( 16, "GT_E_Craftingtable");
+		new GT_MetaTileEntity_Translocator				( 17, "GT_Translocator");
+		new GT_MetaTileEntity_ElectricBufferSmall		( 18, "GT_E_Buffer_Small");
+		new GT_MetaTileEntity_ElectricBufferLarge		( 19, "GT_E_Buffer_Large");
+		new GT_MetaTileEntity_AdvancedTranslocator		( 20, "GT_Adv_Translocator");
+		new GT_MetaTileEntity_ElectricBufferAdvanced	( 21, "GT_Adv_Buffer");
+		new GT_MetaTileEntity_RockBreaker				( 22, "GT_RockBreaker");
+		new GT_MetaTileEntity_ElectricSorter			( 23, "GT_E_Sorter");
+		new GT_MetaTileEntity_ElectricItemClearer		( 24, "GT_E_ItemClearer");
+		new GT_MetaTileEntity_Electrolyzer				( 25, "GT_Electrolyzer");
+		new GT_MetaTileEntity_CropHarvestor				( 26, "GT_Harvestor");
+		new GT_MetaTileEntity_Scrapboxinator			( 27, "GT_Scrapboxinator");
+		new GT_MetaTileEntity_Grinder					( 28, "GT_Grinder");
 //		new GT_MetaTileEntity_BlastFurnace				( 29, "GT_BlastFurnace");
 //		new GT_MetaTileEntity_Quantumtank				( 30, "GT_QuantumTank");
 //		new GT_MetaTileEntity_ImplosionCompressor		( 31, "GT_ImplosionCompressor");

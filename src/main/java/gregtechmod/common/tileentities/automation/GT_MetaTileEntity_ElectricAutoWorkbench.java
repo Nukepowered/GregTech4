@@ -103,7 +103,7 @@ public class GT_MetaTileEntity_ElectricAutoWorkbench extends GT_MetaTileEntity_B
 
 	@Override
 	public String getDescription() {
-		return "Automatic Crafting Table Mk III";
+		return "Automatic Crafting Table Mk III"; // TODO locale
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -181,19 +181,19 @@ public class GT_MetaTileEntity_ElectricAutoWorkbench extends GT_MetaTileEntity_B
 						tTempStack = GT_Utility.copy(mInventory[mCurrentSlot]);
 						tTempStack.stackSize = 1;
 						tRecipe[0] = tTempStack;
-						if (GT_ModHandler.getAllRecipeOutput(tRecipe, getBaseMetaTileEntity().getWorld()) == null) {
+						if (GT_ModHandler.getAllRecipeOutput(getBaseMetaTileEntity().getWorld(), tRecipe) == null) {
 							tRecipe[1] = tTempStack;
 							tRecipe[3] = tTempStack;
 							tRecipe[4] = tTempStack;
 						} else break;
-						if (GT_ModHandler.getAllRecipeOutput(tRecipe, getBaseMetaTileEntity().getWorld()) == null) {
+						if (GT_ModHandler.getAllRecipeOutput(getBaseMetaTileEntity().getWorld(), tRecipe) == null) {
 							tRecipe[2] = tTempStack;
 							tRecipe[5] = tTempStack;
 							tRecipe[6] = tTempStack;
 							tRecipe[7] = tTempStack;
 							tRecipe[8] = tTempStack;
 						} else break;
-						if (GT_ModHandler.getAllRecipeOutput(tRecipe, getBaseMetaTileEntity().getWorld()) == null) {
+						if (GT_ModHandler.getAllRecipeOutput(getBaseMetaTileEntity().getWorld(), tRecipe) == null) {
 							if (mInventory[18] == null) {
 								mInventory[18] = mInventory[mCurrentSlot];
 								mInventory[mCurrentSlot] = null;
@@ -214,7 +214,7 @@ public class GT_MetaTileEntity_ElectricAutoWorkbench extends GT_MetaTileEntity_B
 						tTempStack = GT_Utility.copy(mInventory[mCurrentSlot]);
 						tTempStack.stackSize = 1;
 						tRecipe[0] = tTempStack;
-						if (GT_ModHandler.getAllRecipeOutput(tRecipe, getBaseMetaTileEntity().getWorld()) == null) {
+						if (GT_ModHandler.getAllRecipeOutput(getBaseMetaTileEntity().getWorld(), tRecipe) == null) {
 							if (mInventory[18] == null) {
 								mInventory[18] = mInventory[mCurrentSlot];
 								mInventory[mCurrentSlot] = null;
@@ -238,7 +238,7 @@ public class GT_MetaTileEntity_ElectricAutoWorkbench extends GT_MetaTileEntity_B
 						tRecipe[1] = tTempStack;
 						tRecipe[3] = tTempStack;
 						tRecipe[4] = tTempStack;
-						if (GT_ModHandler.getAllRecipeOutput(tRecipe, getBaseMetaTileEntity().getWorld()) == null) {
+						if (GT_ModHandler.getAllRecipeOutput(getBaseMetaTileEntity().getWorld(), tRecipe) == null) {
 							if (mInventory[18] == null) {
 								mInventory[18] = mInventory[mCurrentSlot];
 								mInventory[mCurrentSlot] = null;
@@ -267,7 +267,7 @@ public class GT_MetaTileEntity_ElectricAutoWorkbench extends GT_MetaTileEntity_B
 						tRecipe[6] = tTempStack;
 						tRecipe[7] = tTempStack;
 						tRecipe[8] = tTempStack;
-						if (GT_ModHandler.getAllRecipeOutput(tRecipe, getBaseMetaTileEntity().getWorld()) == null) {
+						if (GT_ModHandler.getAllRecipeOutput(getBaseMetaTileEntity().getWorld(), tRecipe) == null) {
 							if (mInventory[18] == null) {
 								mInventory[18] = mInventory[mCurrentSlot];
 								mInventory[mCurrentSlot] = null;
@@ -317,7 +317,7 @@ public class GT_MetaTileEntity_ElectricAutoWorkbench extends GT_MetaTileEntity_B
 							tRecipe[1] = tTempStack;
 							tRecipe[3] = tTempStack;
 							tRecipe[4] = tTempStack;
-							if (GT_ModHandler.getAllRecipeOutput(tRecipe, getBaseMetaTileEntity().getWorld()) == null) {
+							if (GT_ModHandler.getAllRecipeOutput(getBaseMetaTileEntity().getWorld(), tRecipe) == null) {
 								if (mInventory[18] == null) {
 									mInventory[18] = mInventory[mCurrentSlot];
 									mInventory[mCurrentSlot] = null;
@@ -337,7 +337,7 @@ public class GT_MetaTileEntity_ElectricAutoWorkbench extends GT_MetaTileEntity_B
 							tRecipe[6] = tTempStack;
 							tRecipe[7] = tTempStack;
 							tRecipe[8] = tTempStack;
-							if (GT_ModHandler.getAllRecipeOutput(tRecipe, getBaseMetaTileEntity().getWorld()) == null) {
+							if (GT_ModHandler.getAllRecipeOutput(getBaseMetaTileEntity().getWorld(), tRecipe) == null) {
 								if (mInventory[18] == null) {
 									mInventory[18] = mInventory[mCurrentSlot];
 									mInventory[mCurrentSlot] = null;
@@ -374,7 +374,7 @@ public class GT_MetaTileEntity_ElectricAutoWorkbench extends GT_MetaTileEntity_B
 						tRecipe[6] = tTempStack;
 						tRecipe[7] = tTempStack;
 						tRecipe[8] = tTempStack;
-						if (GT_ModHandler.getAllRecipeOutput(tRecipe, getBaseMetaTileEntity().getWorld()) == null) {
+						if (GT_ModHandler.getAllRecipeOutput(getBaseMetaTileEntity().getWorld(), tRecipe) == null) {
 							if (mInventory[18] == null) {
 								mInventory[18] = mInventory[mCurrentSlot];
 								mInventory[mCurrentSlot] = null;
@@ -398,7 +398,7 @@ public class GT_MetaTileEntity_ElectricAutoWorkbench extends GT_MetaTileEntity_B
 							if (mInventory[i] != null && mInventory[i].getItem() == tTempStack.getItem() && mInventory[mCurrentSlot].getItemDamage()+mInventory[i].getItemDamage()>tTempStack.getMaxDamage()) {
 								tRecipe[0] = tTempStack;
 								tRecipe[1] = GT_Utility.copy(mInventory[i]);
-								if (GT_ModHandler.getAllRecipeOutput(tRecipe, getBaseMetaTileEntity().getWorld()) == null) {
+								if (GT_ModHandler.getAllRecipeOutput(getBaseMetaTileEntity().getWorld(), tRecipe) == null) {
 									if (mInventory[18] == null) {
 										mInventory[18] = mInventory[mCurrentSlot];
 										mInventory[mCurrentSlot] = null;
@@ -418,7 +418,7 @@ public class GT_MetaTileEntity_ElectricAutoWorkbench extends GT_MetaTileEntity_B
 							}
 							break;
 						}
-						for (byte i = 0, j = 0; i < 18 && j < 9 && (j < 2 || GT_ModHandler.getAllRecipeOutput(tRecipe, getBaseMetaTileEntity().getWorld()) == null); i++) {
+						for (byte i = 0, j = 0; i < 18 && j < 9 && (j < 2 || GT_ModHandler.getAllRecipeOutput(getBaseMetaTileEntity().getWorld(), tRecipe) == null); i++) {
 							tRecipe[j] = mInventory[(mCurrentSlot+i)%18];
 							if (tRecipe[j] != null) {
 								tRecipe[j] = GT_Utility.copy(tRecipe[j]);
@@ -431,7 +431,7 @@ public class GT_MetaTileEntity_ElectricAutoWorkbench extends GT_MetaTileEntity_B
 					}
 				}
 				
-				if (tOutput == null) tOutput = GT_ModHandler.getAllRecipeOutput(tRecipe, getBaseMetaTileEntity().getWorld());
+				if (tOutput == null) tOutput = GT_ModHandler.getAllRecipeOutput(getBaseMetaTileEntity().getWorld(), tRecipe);
 				
 				if (tOutput != null || mMode == 0) mInventory[28] = tOutput;
 				

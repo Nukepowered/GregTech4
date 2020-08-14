@@ -31,13 +31,13 @@ public class GT_MetaTileEntity_Scrapboxinator extends GT_MetaTileEntity_Electric
 		if (getBaseMetaTileEntity().isAllowedToWork() && getBaseMetaTileEntity().isServerSide() && getBaseMetaTileEntity().getUniversalEnergyStored() >= 500 && (getBaseMetaTileEntity().getTimer()%200 == 0 || (mSuccess > 0 && getBaseMetaTileEntity().getTimer()%5 == 0) || mSuccess >= 20)) {
 			if (mInventory[0] == null && mInventory[1] != null && mInventory[1].stackSize > 0) {
 				if (GT_Utility.areStacksEqual(mInventory[1], GT_ModHandler.getIC2Item("scrapBox", 1))) {
-					mInventory[0] = GT_ModHandler.getRandomScrapboxDrop(getBaseMetaTileEntity().getWorld());
+					mInventory[0] = GT_ModHandler.getRandomScrapboxDrop();
 					getBaseMetaTileEntity().decrStackSize(1, 1);
 					getBaseMetaTileEntity().decreaseStoredEnergyUnits(100, true);
 					mSuccess = 30;
 				} else if (GT_Utility.areStacksEqual(mInventory[1], GT_ModHandler.getIC2Item("scrap", 1))) {
 					if (mInventory[1].stackSize > 8) {
-						mInventory[0] = GT_ModHandler.getRandomScrapboxDrop(getBaseMetaTileEntity().getWorld());
+						mInventory[0] = GT_ModHandler.getRandomScrapboxDrop();
 						getBaseMetaTileEntity().decrStackSize(1, 9);
 						getBaseMetaTileEntity().decreaseStoredEnergyUnits(200, true);
 						mSuccess = 30;

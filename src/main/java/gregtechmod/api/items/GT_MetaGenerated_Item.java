@@ -338,11 +338,7 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 	
 	@Override
     public final String getUnlocalizedName(ItemStack aStack) {
-//    	return getUnlocalizedName() + "." + getDamage(aStack);
-//		this.get
-		int damage = aStack.getItemDamage();
-		return getDefaultLocalization(mGeneratedPrefixList[damage / 1000], GregTech_API.sGeneratedMaterials[damage % 1000], damage);
-//		return "kek" + getDamage(aStack);
+    	return getUnlocalizedName() + "." + getDamage(aStack);
     }
 	
 	@Override

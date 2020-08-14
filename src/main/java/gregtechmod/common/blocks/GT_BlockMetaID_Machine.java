@@ -13,11 +13,11 @@ import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.GT_FluidRegistry;
 import gregtechmod.common.items.GT_MetaItem_Component;
 import gregtechmod.common.render.GT_Block_Renderer;
-import gregtechmod.common.tileentities.GT_TileEntityMetaID_Machine;
-import gregtechmod.common.tileentities.GT_TileEntity_ComputerCube;
-import gregtechmod.common.tileentities.GT_TileEntity_PlayerDetector;
-import gregtechmod.common.tileentities.GT_TileEntity_Sonictron;
-import gregtechmod.common.tileentities.GT_TileEntity_Superconductor;
+import gregtechmod.common.tileentities.deprecated.GT_TileEntityMetaID_Machine;
+import gregtechmod.common.tileentities.deprecated.GT_TileEntity_ComputerCube;
+import gregtechmod.common.tileentities.deprecated.GT_TileEntity_PlayerDetector;
+import gregtechmod.common.tileentities.deprecated.GT_TileEntity_Sonictron;
+import gregtechmod.common.tileentities.deprecated.GT_TileEntity_Superconductor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -609,28 +609,24 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 	@Override
 	public boolean onBlockActivated(World aWorld, int aX, int aY, int aZ, EntityPlayer aPlayer, int aSide, float par1, float par2, float par3) {
 		TileEntity tTileEntity = aWorld.getTileEntity(aX, aY, aZ);
-		
-	    if (tTileEntity == null || aPlayer.isSneaking()) return false;
+		if (tTileEntity != null && !aPlayer.isSneaking()) {
+			if (!aWorld.isRemote && tTileEntity instanceof GT_TileEntityMetaID_Machine) {
+				if (((GT_TileEntityMetaID_Machine) tTileEntity).isUseableByPlayer(aPlayer)) {
+					((GT_TileEntityMetaID_Machine) tTileEntity).openGUI(aPlayer, aWorld.getBlockMetadata(aX, aY, aZ));
+				}
 
-		if (!aWorld.isRemote && tTileEntity instanceof GT_TileEntityMetaID_Machine) {
-		    if (!((GT_TileEntityMetaID_Machine)tTileEntity).isUseableByPlayer(aPlayer)) return true;
-		    
-		    int tMetaData = aWorld.getBlockMetadata(aX, aY, aZ), tGuiID = tMetaData;
-		    
-		    if (tMetaData == 13)
-		    	((GT_TileEntity_PlayerDetector)tTileEntity).rightClick(aPlayer);
-		    else
-		    	((GT_TileEntityMetaID_Machine)tTileEntity).openGUI(aPlayer, tGuiID);
-		    return true;
+				return true;
+			} else {
+				return tTileEntity instanceof IGregTechTileEntity
+						? (((IGregTechTileEntity) tTileEntity).getTimer() < 50L ? false
+								: (!aWorld.isRemote && !((IGregTechTileEntity) tTileEntity).isUseableByPlayer(aPlayer) ? true
+										: ((IGregTechTileEntity) tTileEntity).onRightclick(aPlayer, (byte) aSide, par1,
+												par2, par3)))
+						: false;
+			}
+		} else {
+			return false;
 		}
-		
-		if (tTileEntity instanceof IGregTechTileEntity) {
-		    if (((IGregTechTileEntity)tTileEntity).getTimer() < 50) return false;
-		    if (!aWorld.isRemote && !((IGregTechTileEntity)tTileEntity).isUseableByPlayer(aPlayer)) return true;
-		    return ((IGregTechTileEntity)tTileEntity).onRightclick(aPlayer, (byte)aSide, par1, par2, par3);
-		}
-		
-		return false;
 	}
 	
 	@Override
