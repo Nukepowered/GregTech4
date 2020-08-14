@@ -1,13 +1,10 @@
 package gregtechmod.common.tileentities.machines.basic;
 
-import gregtechmod.api.enums.GT_OreDictNames;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
-import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Recipe;
 import gregtechmod.api.util.GT_Utility;
-import gregtechmod.common.GT_OreDictHandler;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class GT_MetaTileEntity_Wiremill extends GT_MetaTileEntity_BasicMachine {
@@ -16,11 +13,9 @@ public class GT_MetaTileEntity_Wiremill extends GT_MetaTileEntity_BasicMachine {
 		super(aID, mName);
 	}
 	
-	public GT_MetaTileEntity_Wiremill() {
-		
-	}
+	public GT_MetaTileEntity_Wiremill() {}
 	
-	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 136);}
+	@Override public void onRightclick(EntityPlayer aPlayer) {getBaseMetaTileEntity().openGUI(aPlayer, 136);}
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
@@ -29,29 +24,18 @@ public class GT_MetaTileEntity_Wiremill extends GT_MetaTileEntity_BasicMachine {
 	
 	@Override
     public void checkRecipe() {
-		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 1, 2, (byte)64, (byte)1, (byte)64, (byte)1);
-		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 3, 4, (byte)64, (byte)1, (byte)64, (byte)1);
-    	if (mInventory[2] != null && mInventory[2].stackSize > 0) {
-    		if (mInventory[2].stackSize > 2 && GT_Utility.areStacksEqual(mInventory[2], GT_ModHandler.getIC2Item("copperCableItem", 1)) && spaceForOutput(mOutputItem1 = GT_Utility.copy(1, GT_ModHandler.mFineCopper), null)) {
-    			mEUt = 1;
-    			mMaxProgresstime = 400;
-        		mInventory[2].stackSize -= 3;
-        		return;
-    		}
-    		if (mInventory[2].stackSize > 5 && GT_Utility.areStacksEqual(mInventory[2], GT_ModHandler.getIC2Item("ironCableItem", 1)) && spaceForOutput(mOutputItem1 = GT_Utility.copy(1, GT_ModHandler.mFineIron), null)) {
-    			mEUt = 2;
-    			mMaxProgresstime = 400;
-        		mInventory[2].stackSize -= 6;
-        		return;
-    		}
-    		GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sWiremillRecipes, mInventory[2], null);
-    		if (tRecipe != null && spaceForOutput(tRecipe.getOutput(0), null) && tRecipe.isRecipeInputEqual(true, true, mInventory[2], null)) {
-        		mEUt = tRecipe.mEUt;
-    			mMaxProgresstime = tRecipe.mDuration;
-    			mOutputItem1 = GT_Utility.copy(tRecipe.getOutput(0));
-    			return;
-    		}
-    	}
+		GT_Utility.moveStackFromSlotAToSlotB(this.getBaseMetaTileEntity(), this.getBaseMetaTileEntity(), 1, 2, (byte) 64, (byte) 1, (byte) 64, (byte) 1);
+		GT_Utility.moveStackFromSlotAToSlotB(this.getBaseMetaTileEntity(), this.getBaseMetaTileEntity(), 3, 4, (byte) 64, (byte) 1, (byte) 64, (byte) 1);
+		if (super.mInventory[2] != null && super.mInventory[2].stackSize > 0) {
+			GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(true, false, GT_Recipe.sWiremillRecipes, mInventory[2]);
+			if (tRecipe != null && this.spaceForOutput(tRecipe.getOutput(0), null) && tRecipe.isRecipeInputEqual(true, true, mInventory[2])) {
+				super.mEUt = tRecipe.mEUt;
+				super.mMaxProgresstime = tRecipe.mDuration;
+				super.mOutputItem1 = tRecipe.getOutput(0);
+				return;
+			}
+		}
+
 		mOutputItem1 = null;
     }
 	

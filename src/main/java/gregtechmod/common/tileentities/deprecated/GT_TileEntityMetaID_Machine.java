@@ -201,18 +201,8 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	}
 	
 	@Override
-	public String getMainInfo() {
-		return "";
-	}
-
-	@Override
-	public String getSecondaryInfo() {
-		return "";
-	}
-
-	@Override
-	public String getTertiaryInfo() {
-		return "";
+	public String[] getInfoData() {
+		return new String[0];
 	}
 
 	@Override
@@ -1330,5 +1320,35 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	@Override
 	public int getSourceTier() {
 		return getTier();
+	}
+
+	@Override
+	public boolean isUniversalEnergyStored(int aEnergyAmount) {
+		return this.getUniversalEnergyStored() >= aEnergyAmount;
+	}
+
+	@Override
+	public boolean isMufflerUpgradable() {
+		return false;
+	}
+
+	@Override
+	public boolean addMufflerUpgrade() {
+		return false;
+	}
+
+	@Override
+	public boolean hasMufflerUpgrade() {
+		return false;
+	}
+
+	@Override
+	public int setMetaTileID(short aID) {
+		return 0;
+	}
+
+	@Override
+	public float getBlastResistance(byte aSide) {
+		return 10.0F;
 	}
 }

@@ -3,16 +3,17 @@ package gregtechmod.common.tileentities.storage;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
-import gregtechmod.api.util.GT_LanguageManager;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
+@SuppressWarnings("unused")
 public class GT_MetaTileEntity_TradeOMat extends MetaTileEntity {
 
    public int mPerformedTrades = 0;
    public boolean mIsWorking = true;
+
    private static final short SLOT_ENERGY = 66;
    private static final short HOLO_SLOT_MONEY = 64;
    private static final short HOLO_SLOT_OBJECT = 65;
@@ -298,10 +299,12 @@ public class GT_MetaTileEntity_TradeOMat extends MetaTileEntity {
    public float getExplosionResistance(byte aSide) {
       return GT_Utility.isDebugItem(super.mInventory[66])?Float.MAX_VALUE:10.0F;
    }
+   
    //TODO:Localization
-//   public String[] getInfoData() {
-////      return !GT_Utility.isStackInvalid(super.mInventory[65]) && !GT_Utility.isStackInvalid(super.mInventory[64])?new String[]{"Performed Trades: " + this.mPerformedTrades, "Stock: " + (GT_Utility.isDebugItem(super.mInventory[66])?"Infinite":Integer.valueOf(this.getAmountOffered())), "Received: " + this.getAmountMoney(), "Selling: " + super.mInventory[65].stackSize + " \\\\" + GT_LanguageManager.getTranslateableItemStackName(super.mInventory[65]), "Buying: " + super.mInventory[64].stackSize + " \\\\" + GT_LanguageManager.getTranslateableItemStackName(super.mInventory[64]), "For: " + super.mInventory[65].stackSize + " \\\\" + GT_LanguageManager.getTranslateableItemStackName(super.mInventory[65]), "For: " + super.mInventory[64].stackSize + " \\\\" + GT_LanguageManager.getTranslateableItemStackName(super.mInventory[64])}:new String[0];
-//   }
+   public String[] getInfoData() {
+//      return !GT_Utility.isStackInvalid(super.mInventory[65]) && !GT_Utility.isStackInvalid(super.mInventory[64])?new String[]{"Performed Trades: " + this.mPerformedTrades, "Stock: " + (GT_Utility.isDebugItem(super.mInventory[66])?"Infinite":Integer.valueOf(this.getAmountOffered())), "Received: " + this.getAmountMoney(), "Selling: " + super.mInventory[65].stackSize + " \\\\" + GT_LanguageManager.getTranslateableItemStackName(super.mInventory[65]), "Buying: " + super.mInventory[64].stackSize + " \\\\" + GT_LanguageManager.getTranslateableItemStackName(super.mInventory[64]), "For: " + super.mInventory[65].stackSize + " \\\\" + GT_LanguageManager.getTranslateableItemStackName(super.mInventory[65]), "For: " + super.mInventory[64].stackSize + " \\\\" + GT_LanguageManager.getTranslateableItemStackName(super.mInventory[64])}:new String[0];
+	   return new String[0];
+   }
 
    public boolean isGivingInformation() {
       return true;

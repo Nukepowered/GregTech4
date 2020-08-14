@@ -1,7 +1,7 @@
 package gregtechmod.common.tileentities.deprecated;
 
 import gregtechmod.GT_Mod;
-import gregtechmod.api.GregTech_API;
+import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.util.GT_LanguageManager;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
@@ -85,8 +85,8 @@ public class GT_TileEntity_Sonictron extends GT_TileEntityMetaID_Machine {
     public boolean isAccessible(EntityPlayer aPlayer) {
     	ItemStack tStack = aPlayer.getCurrentEquippedItem();
     	if (tStack == null) return true;
-    	if (tStack.isItemEqual(GregTech_API.getGregTechItem(32, 1, 0))) return false;
-    	if (tStack.isItemEqual(GregTech_API.getGregTechItem(43, 1, 0))) return false;
+    	if (GT_Items.Tool_Sonictron.isStackEqual(tStack, true, true)) return false;
+    	if (GT_Items.Tool_DataOrb.isStackEqual(tStack, true, true)) return false;
     	return true;
     }
     
