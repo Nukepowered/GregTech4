@@ -1,8 +1,26 @@
 package gregtechmod.loaders.preload;
 
+import gregtechmod.api.enums.GT_Items;
+import gregtechmod.api.enums.Materials;
+import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.metatileentity.*;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.common.tileentities.*;
+import gregtechmod.common.tileentities.automation.*;
+import gregtechmod.common.tileentities.deprecated.*;
+import gregtechmod.common.tileentities.energy.production.*;
+import gregtechmod.common.tileentities.energy.storage.*;
+import gregtechmod.common.tileentities.frames.*;
+import gregtechmod.common.tileentities.machines.*;
+import gregtechmod.common.tileentities.machines.basic.*;
+import gregtechmod.common.tileentities.machines.multi.*;
+import gregtechmod.common.tileentities.machines.steam.*;
+import gregtechmod.common.tileentities.pipes.*;
+import gregtechmod.common.tileentities.pipes.fluids.*;
+import gregtechmod.common.tileentities.pipes.items.*;
+import gregtechmod.common.tileentities.redstone.*;
+import gregtechmod.common.tileentities.storage.*;
+import gregtechmod.common.tileentities.storage.GT_MetaTileEntity_BronzeCraftingTable;
 
 public class GT_MetaTileEntityLoader implements Runnable {
 	@Override
@@ -40,7 +58,7 @@ public class GT_MetaTileEntityLoader implements Runnable {
 //		new GT_MetaTileEntity_Safe						( 45, "GT_Safe");
 //		new GT_MetaTileEntity_ElectricInventoryManager	( 46, "GT_InventoryManager");
 //		new GT_MetaTileEntity_AdvancedPump				( 47, "GT_Pump");
-//		new GT_MetaTileEntity_Barrel					( 48, "GT_Barrel");
+//		new GT_MetaTileEntity_DigitalChest				( 48, "GT_Barrel");
 //		new GT_MetaTileEntity_QuantumChest				( 49, "GT_QuantumChest");
 //		new GT_MetaTileEntity_Macerator					( 50, "GT_Macerator");
 //		new GT_MetaTileEntity_Extractor					( 51, "GT_Extractor");
@@ -67,7 +85,10 @@ public class GT_MetaTileEntityLoader implements Runnable {
 //		new GT_MetaTileEntity_Shelf_FileCabinet			( 72, "GT_Shelf_FileCabinet");
 //		new GT_MetaTileEntity_Shelf_Desk				( 73, "GT_Shelf_Desk");
 //		new GT_MetaTileEntity_Shelf_Compartment			( 74, "GT_Shelf_Compartment");
-//		
+//		new GT_MetaTileEntity_DigitalTank				( 75, "GT_DigitalTank");
+//	    new GT_MetaTileEntity_TradeOMat					( 76, "GT_TradeOMat");
+//	    new GT_MetaTileEntity_PlayerDetector			( 77, "GT_PlayerDetector");
+		
 //		new GT_MetaTileEntity_RedstoneStrengthScale		( 78, "GT_RedstoneScaleBlock");
 //		new GT_MetaTileEntity_MachineBox				( 79, "GT_MachineBox");
 //		new GT_MetaTileEntity_FusionComputer			( 80, "GT_Fusion_Computer");
@@ -87,47 +108,69 @@ public class GT_MetaTileEntityLoader implements Runnable {
 //		new GT_MetaTileEntity_Hatch_Dynamo				( 94, "GT_Dynamo_Hatch");
 //		new GT_MetaTileEntity_Hatch_EnergyInput			( 95, "GT_Energy_Hatch");
 //		new GT_MetaTileEntity_Hatch_Muffler				( 96, "GT_Muffler_Hatch");
-//		
+//		new GT_MetaTileEntity_Hatch_InputBus			( 97, "GT_Input_Bus");
+//	    new GT_MetaTileEntity_Hatch_OutputBus			( 98, "GT_Output_Bus");
+		
 //		new GT_MetaTileEntity_AESU						(100, "GT_AESU");
 //		new GT_MetaTileEntity_IDSU						(101, "GT_IDSU");
 //		new GT_MetaTileEntity_Lightningrod				(102, "GT_Lightningrod");
 //		new GT_MetaTileEntity_Supercondensator			(103, "GT_Supercondensator");
-//		
+//		new GT_MetaTileEntity_HighEnergyCharger			(104, "GT_HighEnergyCharger");
+		
 //		new GT_MetaTileEntity_Multi_GasTurbine			(108, "GT_Multi_GasTurbine");
 //		new GT_MetaTileEntity_Multi_SteamTurbine		(109, "GT_Multi_SteamTurbine");
 //		new GT_MetaTileEntity_Multi_ThermalBoiler		(110, "GT_Multi_ThermalBoiler");
 //		new GT_MetaTileEntity_Lathe						(111, "GT_Lathe");
 //		new GT_MetaTileEntity_AdvancedCraftingTable		(112, "GT_ProjectTable");
 //		new GT_MetaTileEntity_PlateCutter				(113, "GT_Cutter");
-//		
-//		new GT_MetaTileEntity_BronzeCraftingTable		(128, "GT_BronzeTable");
-//		new GT_MetaTileEntity_Boiler_Bronze				(129, "GT_BronzeBoiler");
-//		new GT_MetaTileEntity_BronzeMacerator			(130, "GT_BronzeMacerator");
-//		new GT_MetaTileEntity_BronzeFurnace				(131, "GT_BronzeFurnace");
-//		new GT_MetaTileEntity_BronzeAlloySmelter		(132, "GT_BronzeAlloySmelter");
-//		new GT_MetaTileEntity_BronzeSteamHammer			(133, "GT_BronzeSteamHammer");
-//		new GT_MetaTileEntity_BronzeCompressor			(134, "GT_BronzeCompressor");
-//		new GT_MetaTileEntity_BronzeExtractor			(135, "GT_BronzeExtractor");
-//		new GT_MetaTileEntity_BronzeBlastFurnace		(136, "GT_BronzeBlastFurnace");
-//		new GT_MetaTileEntity_Boiler_Steel				(137, "GT_SteelBoiler");
-//		new GT_MetaTileEntity_SteelFurnace				(138, "GT_SteelFurnace"); // TODO MTE
+//	    new GT_MetaTileEntity_Scanner					(114, "GT_Scanner");
+//	    new GT_MetaTileEntity_Extruder					(115, "GT_Extruder");
+//	    new GT_MetaTileEntity_ElectricRetrieverAdvanced	(116, "GT_RetrieverAdvanced");
+		
+//	    new GT_MetaTileEntity_ElectricTypeFilter		(126, "GT_E_T_Filter");
+//	    new GT_MetaTileEntity_ElectricFilter			(127, "GT_E_Filter");
+		
+//		GT_Items.Machine_Bronze_CraftingTable.set(	new GT_MetaTileEntity_BronzeCraftingTable	(128, "GT_BronzeTable"			).getStackForm(1));
+//		GT_Items.Machine_Bronze_Boiler.set(			new GT_MetaTileEntity_Boiler_Bronze			(129, "GT_BronzeBoiler"			).getStackForm(1));
+//		GT_Items.Machine_Bronze_Macerator.set(		new GT_MetaTileEntity_BronzeMacerator		(130, "GT_BronzeMacerator"		).getStackForm(1));
+//		GT_Items.Machine_Bronze_Furnace.set(		new GT_MetaTileEntity_BronzeFurnace			(131, "GT_BronzeFurnace"		).getStackForm(1));
+//		GT_Items.Machine_Bronze_AlloySmelter.set(	new GT_MetaTileEntity_BronzeAlloySmelter	(132, "GT_BronzeAlloySmelter"	).getStackForm(1));
+//		GT_Items.Machine_Bronze_Hammer.set(			new GT_MetaTileEntity_BronzeSteamHammer		(133, "GT_BronzeSteamHammer"	).getStackForm(1));
+//		GT_Items.Machine_Bronze_Compressor.set(		new GT_MetaTileEntity_BronzeCompressor		(134, "GT_BronzeCompressor"		).getStackForm(1));
+//		GT_Items.Machine_Bronze_Extractor.set(		new GT_MetaTileEntity_BronzeExtractor		(135, "GT_BronzeExtractor"		).getStackForm(1));
+//		GT_Items.Machine_Bronze_BlastFurnace.set(	new GT_MetaTileEntity_BronzeBlastFurnace	(136, "GT_BronzeBlastFurnace"	).getStackForm(1));
+//		GT_Items.Machine_Steel_Boiler.set(			new GT_MetaTileEntity_Boiler_Steel			(137, "GT_SteelBoiler"			).getStackForm(1));
+//		GT_Items.Machine_Steel_Furnace.set(			new GT_MetaTileEntity_SteelFurnace			(138, "GT_SteelFurnace"			).getStackForm(1)); // TODO MTE
 		
 		//---------------------------------------------------------------------------------------------------------------
 		
-//		new GT_MetaPipeEntity_Bronze					(1800, "GT_Pipe_Bronze");
-//		new GT_MetaPipeEntity_Steel						(1801, "GT_Pipe_Steel");
-//		new GT_MetaPipeEntity_StainlessSteel			(1802, "GT_Pipe_StainlessSteel");
-//		new GT_MetaPipeEntity_TungstenSteel				(1803, "GT_Pipe_TungstenSteel");
-//		
-//		new GT_MetaPipeEntity_Bronze_Large				(1850, "GT_Pipe_Bronze_Large");
-//		new GT_MetaPipeEntity_Steel_Large				(1851, "GT_Pipe_Steel_Large");
-//		new GT_MetaPipeEntity_StainlessSteel_Large		(1852, "GT_Pipe_StainlessSteel_Large");
-//		new GT_MetaPipeEntity_TungstenSteel_Large		(1853, "GT_Pipe_TungstenSteel_Large");
-//		
-//		new GT_MetaPipeEntity_Brass						(1900, "GT_Pipe_Brass");
-//		new GT_MetaPipeEntity_Electrum					(1901, "GT_Pipe_Electrum");
-//		
-//		new GT_MetaPipeEntity_Brass_Large				(1950, "GT_Pipe_Brass_Large");
-//		new GT_MetaPipeEntity_Electrum_Large			(1951, "GT_Pipe_Electrum_Large");
+//		GT_Items.Frame_Iron.set(				new GT_MetaPipeEntity_Frame_Iron			(1750, "GT_Frame_Iron"					).getStackForm(1));
+//	    GT_Items.Frame_Aluminium.set(			new GT_MetaPipeEntity_Frame_Aluminium		(1751, "GT_Frame_Aluminium"				).getStackForm(1));
+//	    GT_Items.Frame_Steel.set(				new GT_MetaPipeEntity_Frame_Steel			(1752, "GT_Frame_Steel"					).getStackForm(1));
+//	    GT_Items.Frame_StainlessSteel.set(		new GT_MetaPipeEntity_Frame_StainlessSteel	(1753, "GT_Frame_StainlessSteel"		).getStackForm(1));
+//	    GT_Items.Frame_TungstenSteel.set(		new GT_MetaPipeEntity_Frame_TungstenSteel	(1754, "GT_Frame_TungstenSteel"			).getStackForm(1));
+		
+//	    GT_Items.Pipe_Bronze_Medium.set(		new GT_MetaPipeEntity_Bronze				(1800, "GT_Pipe_Bronze"					).getStackForm(1)).registerOre(OrePrefixes.pipeMedium.get(Materials.Bronze));
+//	    GT_Items.Pipe_Steel_Medium.set(			new GT_MetaPipeEntity_Steel					(1801, "GT_Pipe_Steel"					).getStackForm(1)).registerOre(OrePrefixes.pipeMedium.get(Materials.Steel));
+//	    GT_Items.Pipe_StainlessSteel_Medium.set(new GT_MetaPipeEntity_StainlessSteel		(1802, "GT_Pipe_StainlessSteel"			).getStackForm(1)).registerOre(OrePrefixes.pipeMedium.get(Materials.StainlessSteel));
+//	    GT_Items.Pipe_TungstenSteel_Medium.set(	new GT_MetaPipeEntity_TungstenSteel			(1803, "GT_Pipe_TungstenSteel"			).getStackForm(1)).registerOre(OrePrefixes.pipeMedium.get(Materials.TungstenSteel));
+		
+//	    GT_Items.Pipe_Bronze_Small.set(			new GT_MetaPipeEntity_Bronze_Small			(1825, "GT_Pipe_Bronze_Small"			).getStackForm(1)).registerOre(OrePrefixes.pipeSmall.get(Materials.Bronze));
+//	    GT_Items.Pipe_Steel_Small.set(			new GT_MetaPipeEntity_Steel_Small			(1826, "GT_Pipe_Steel_Small"			).getStackForm(1)).registerOre(OrePrefixes.pipeSmall.get(Materials.Steel));
+//	    GT_Items.Pipe_StainlessSteel_Small.set(	new GT_MetaPipeEntity_StainlessSteel_Small	(1827, "GT_Pipe_StainlessSteel_Small"	).getStackForm(1)).registerOre(OrePrefixes.pipeSmall.get(Materials.StainlessSteel));
+//	    GT_Items.Pipe_TungstenSteel_Small.set(	new GT_MetaPipeEntity_TungstenSteel_Small	(1828, "GT_Pipe_TungstenSteel_Small"	).getStackForm(1)).registerOre(OrePrefixes.pipeSmall.get(Materials.TungstenSteel));
+	    
+//	    GT_Items.Pipe_Bronze_Large.set(			new GT_MetaPipeEntity_Bronze_Large			(1850, "GT_Pipe_Bronze_Large"			).getStackForm(1)).registerOre(OrePrefixes.pipeLarge.get(Materials.Bronze));
+//	    GT_Items.Pipe_Steel_Large.set(			new GT_MetaPipeEntity_Steel_Large			(1851, "GT_Pipe_Steel_Large"			).getStackForm(1)).registerOre(OrePrefixes.pipeLarge.get(Materials.Steel));
+//	    GT_Items.Pipe_StainlessSteel_Large.set(	new GT_MetaPipeEntity_StainlessSteel_Large	(1852, "GT_Pipe_StainlessSteel_Large"	).getStackForm(1)).registerOre(OrePrefixes.pipeLarge.get(Materials.StainlessSteel));
+//	    GT_Items.Pipe_TungstenSteel_Large.set(	new GT_MetaPipeEntity_TungstenSteel_Large	(1853, "GT_Pipe_TungstenSteel_Large"	).getStackForm(1)).registerOre(OrePrefixes.pipeLarge.get(Materials.TungstenSteel));
+		
+//	    GT_Items.Pipe_Brass_Medium.set(			new GT_MetaPipeEntity_Brass					(1900, "GT_Pipe_Brass"					).getStackForm(1)).registerOre(OrePrefixes.pipeMedium.get(Materials.Brass));
+//	    GT_Items.Pipe_Electrum_Medium.set(		new GT_MetaPipeEntity_Electrum				(1901, "GT_Pipe_Electrum"				).getStackForm(1)).registerOre(OrePrefixes.pipeMedium.get(Materials.Electrum));
+//	    GT_Items.Pipe_Platinum_Medium.set(		new GT_MetaPipeEntity_Platinum				(1902, "GT_Pipe_Platinum"				).getStackForm(1)).registerOre(OrePrefixes.pipeMedium.get(Materials.Platinum));
+	    
+//	    GT_Items.Pipe_Brass_Large.set(			new GT_MetaPipeEntity_Brass_Large			(1950, "GT_Pipe_Brass_Large"			).getStackForm(1)).registerOre(OrePrefixes.pipeLarge.get(Materials.Brass));
+//	    GT_Items.Pipe_Electrum_Large.set(		new GT_MetaPipeEntity_Electrum_Large		(1951, "GT_Pipe_Electrum_Large"			).getStackForm(1)).registerOre(OrePrefixes.pipeLarge.get(Materials.Brass));
+//	    GT_Items.Pipe_Platinum_Large.set(		new GT_MetaPipeEntity_Platinum_Large		(1952, "GT_Pipe_Platinum_Large"			).getStackForm(1)).registerOre(OrePrefixes.pipeLarge.get(Materials.Platinum));
 	}
 }
