@@ -26,10 +26,10 @@ public class GT_Container_AESU_Meta extends GT_ContainerMetaTile_Machine {
         addSlotToContainer(new GT_Slot_Holo(mTileEntity, 2, 107, 41, false, false, 1));
         addSlotToContainer(new GT_Slot_Holo(mTileEntity, 2, 107, 59, false, false, 1));
         
-        addSlotToContainer(new GT_Slot_Armor(this, aInventoryPlayer, 36, 152, 59, 3));
-        addSlotToContainer(new GT_Slot_Armor(this, aInventoryPlayer, 37, 152, 41, 2));
-        addSlotToContainer(new GT_Slot_Armor(this, aInventoryPlayer, 38, 152, 23, 1));
-        addSlotToContainer(new GT_Slot_Armor(this, aInventoryPlayer, 39, 152,  5, 0));
+        addSlotToContainer(new GT_Slot_Armor(aInventoryPlayer, 36, 152, 59, 3, aInventoryPlayer.player));
+        addSlotToContainer(new GT_Slot_Armor(aInventoryPlayer, 37, 152, 41, 2, aInventoryPlayer.player));
+        addSlotToContainer(new GT_Slot_Armor(aInventoryPlayer, 38, 152, 23, 1, aInventoryPlayer.player));
+        addSlotToContainer(new GT_Slot_Armor(aInventoryPlayer, 39, 152,  5, 0, aInventoryPlayer.player));
     }
 	
 	@Override

@@ -22,10 +22,10 @@ public class GT_Container_IDSU_Meta extends GT_ContainerMetaTile_Machine {
         addSlotToContainer(new Slot(mTileEntity, 0, 128,  14));
         addSlotToContainer(new Slot(mTileEntity, 1, 128,  50));
         
-        addSlotToContainer(new GT_Slot_Armor(this, aInventoryPlayer, 36, 152, 59, 3));
-        addSlotToContainer(new GT_Slot_Armor(this, aInventoryPlayer, 37, 152, 41, 2));
-        addSlotToContainer(new GT_Slot_Armor(this, aInventoryPlayer, 38, 152, 23, 1));
-        addSlotToContainer(new GT_Slot_Armor(this, aInventoryPlayer, 39, 152,  5, 0));
+        addSlotToContainer(new GT_Slot_Armor(aInventoryPlayer, 36, 152, 59, 3, aInventoryPlayer.player));
+        addSlotToContainer(new GT_Slot_Armor(aInventoryPlayer, 37, 152, 41, 2, aInventoryPlayer.player));
+        addSlotToContainer(new GT_Slot_Armor(aInventoryPlayer, 38, 152, 23, 1, aInventoryPlayer.player));
+        addSlotToContainer(new GT_Slot_Armor(aInventoryPlayer, 39, 152,  5, 0, aInventoryPlayer.player));
     }
 	
     public int mPlayerHash;

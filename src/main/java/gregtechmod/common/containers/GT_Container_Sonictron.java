@@ -11,8 +11,8 @@ import net.minecraft.item.ItemStack;
 
 public class GT_Container_Sonictron extends GT_ContainerMetaID_Machine {
 	
-	public GT_Container_Sonictron(InventoryPlayer aInventoryPlayer, GT_TileEntity_Sonictron aTileEntity, int aID) {
-		super(aInventoryPlayer, aTileEntity, aID);
+	public GT_Container_Sonictron(InventoryPlayer aInventoryPlayer, GT_TileEntity_Sonictron aTileEntity) {
+		super(aInventoryPlayer, aTileEntity);
 	}
 
     public void addSlots(InventoryPlayer aInventoryPlayer) {

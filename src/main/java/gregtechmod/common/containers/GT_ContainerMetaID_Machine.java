@@ -13,12 +13,12 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_ContainerMetaID_Machine extends GT_Container {
 
-    protected GT_TileEntityMetaID_Machine mTileEntity;
+	protected GT_TileEntityMetaID_Machine mOldTileEntity;
+    public int mEnergy, mStorage, mOutput, mInput, mID;
     
-    public GT_ContainerMetaID_Machine (InventoryPlayer aInventoryPlayer, GT_TileEntityMetaID_Machine aTileEntity, int aID) {
+    public GT_ContainerMetaID_Machine (InventoryPlayer aInventoryPlayer, GT_TileEntityMetaID_Machine aTileEntity) {
         super(aInventoryPlayer, aTileEntity);
-    	mTileEntity = aTileEntity;
-        mID = aID;
+        mOldTileEntity = aTileEntity;
         
         addSlots(aInventoryPlayer);
         
@@ -27,18 +27,18 @@ public class GT_ContainerMetaID_Machine extends GT_Container {
         detectAndSendChanges();
     }
     
-    public int mEnergy, mStorage, mOutput, mInput, mID;
+
     
     @SuppressWarnings("rawtypes")
 	@Override
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
     	if (mTileEntity.getWorld().isRemote) return;
-        mStorage = mTileEntity.maxEUStore();
-    	mEnergy = mTileEntity.getStored();
-    	mOutput = mTileEntity.maxEUOutput();
-    	mInput = mTileEntity.maxEUInput();
-    	
+        mStorage = mOldTileEntity.maxEUStore();
+    	mEnergy = mOldTileEntity.getStored();
+    	mOutput = mOldTileEntity.maxEUOutput();
+    	mInput = mOldTileEntity.maxEUInput();
+    	 
         Iterator var2 = this.crafters.iterator();
         while (var2.hasNext()) {
             ICrafting var1 = (ICrafting)var2.next();
