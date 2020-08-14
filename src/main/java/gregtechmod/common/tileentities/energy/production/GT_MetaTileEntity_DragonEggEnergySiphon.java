@@ -68,9 +68,9 @@ public class GT_MetaTileEntity_DragonEggEnergySiphon extends MetaTileEntity {
 	
 	@Override
 	public void onConfigLoad(GT_Config aConfig) {
-    	sDragonEggEnergyPerTick	= aConfig.addAdvConfig(GT_ConfigCategories.machineconfig, "DragonEggEnergySiphon.EnergyPerTick", 1024);
-    	sAllowMultipleEggs		= aConfig.addAdvConfig(GT_ConfigCategories.machineconfig, "DragonEggEnergySiphon.AllowMultipleEggs", false);
-    	sAllowFlux				= aConfig.addAdvConfig(GT_ConfigCategories.machineconfig, "DragonEggEnergySiphon.OutputFlux", true);
+    	sDragonEggEnergyPerTick	= aConfig.get(GT_ConfigCategories.machineconfig, "DragonEggEnergySiphon.EnergyPerTick", 1024);
+    	sAllowMultipleEggs		= aConfig.get(GT_ConfigCategories.machineconfig, "DragonEggEnergySiphon.AllowMultipleEggs", false);
+    	sAllowFlux				= aConfig.get(GT_ConfigCategories.machineconfig, "DragonEggEnergySiphon.OutputFlux", true);
 	}
 	
 	@Override
@@ -191,18 +191,6 @@ public class GT_MetaTileEntity_DragonEggEnergySiphon extends MetaTileEntity {
     	return false;
     }
     
-	@Override
-	public String getMainInfo() {
-		return getBaseMetaTileEntity().isActive()?"Active":"Inactive";
-	}
-	@Override
-	public String getSecondaryInfo() {
-		return "Output: " + sDragonEggEnergyPerTick + " EU/t";
-	}
-	@Override
-	public String getTertiaryInfo() {
-		return "";
-	}
 	@Override
 	public boolean isGivingInformation() {
 		return true;

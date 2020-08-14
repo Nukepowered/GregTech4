@@ -29,11 +29,11 @@ public class GT_MetaTileEntity_Bender extends GT_MetaTileEntity_BasicMachine {
 		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 1, 2, (byte)64, (byte)1, (byte)64, (byte)1);
 		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 3, 4, (byte)64, (byte)1, (byte)64, (byte)1);
     	if (mInventory[2] != null && mInventory[2].stackSize > 0) {
-    		GT_Recipe tRecipe = GT_Recipe.findEqualBenderRecipe(mInventory[2], null);
-    		if (tRecipe != null && spaceForOutput(tRecipe.mOutput1, null) && tRecipe.isRecipeInputEqual(true, true, mInventory[2], null)) {
+    		GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sBenderRecipes, mInventory[2], null);
+    		if (tRecipe != null && spaceForOutput(tRecipe.getOutput(0), null) && tRecipe.isRecipeInputEqual(true, true, mInventory[2], null)) {
         		mEUt = tRecipe.mEUt;
     			mMaxProgresstime = tRecipe.mDuration;
-    			mOutputItem1 = GT_Utility.copy(tRecipe.mOutput1);
+    			mOutputItem1 = GT_Utility.copy(tRecipe.getOutput(0));
     			return;
     		}
     	}

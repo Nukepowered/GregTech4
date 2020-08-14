@@ -154,11 +154,11 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity {
     
     private boolean checkRecipe() {
     	if (!mMachine) return false;
-    	GT_Recipe tRecipe = GT_Recipe.findEqualFusionRecipe(getPrimaryInput(), getSecondaryInput());
-    	if (tRecipe != null && consumeInput(tRecipe.mInput1, tRecipe.mInput2, getBaseMetaTileEntity().isActive()?0:tRecipe.mStartEU)) {
+    	GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sFusionRecipes, getPrimaryInput(), getSecondaryInput());
+    	if (tRecipe != null && consumeInput(tRecipe.mInputs[0], tRecipe.mInputs[1], getBaseMetaTileEntity().isActive()?0:tRecipe.mStartEU)) {
     		mMaxProgresstime = tRecipe.mDuration;
 		    mEUt = tRecipe.mEUt;
-		    mOutputItem1 = GT_Utility.copy(tRecipe.mOutput1);
+		    mOutputItem1 = GT_Utility.copy(tRecipe.getOutput(0));
 		    return true;
     	}
     	return false;
@@ -280,17 +280,10 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity {
 	}
 	
 	@Override
-	public String getMainInfo() {
-		return "Progress:";
+	public String[] getInfoData() {
+		return new String[] { "Progress:", this.mProgresstime / 20 + "secs", this.mMaxProgresstime / 20 + "secs" };
 	}
-	@Override
-	public String getSecondaryInfo() {
-		return (mProgresstime/20)+"secs";
-	}
-	@Override
-	public String getTertiaryInfo() {
-		return "/"+(mMaxProgresstime/20)+"secs";
-	}
+	
 	@Override
 	public boolean isGivingInformation() {
 		return true;

@@ -143,23 +143,23 @@ public class GT_MetaTileEntity_ImplosionCompressor extends MetaTileEntity {
     }
     
     private boolean spaceForOutput(GT_Recipe aRecipe) {
-    	if (mInventory[2] == null || aRecipe.mOutput1 == null || (mInventory[2].stackSize + aRecipe.mOutput1.stackSize <= mInventory[2].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[2], aRecipe.mOutput1)))
-    	if (mInventory[3] == null || aRecipe.mOutput2 == null || (mInventory[3].stackSize + aRecipe.mOutput2.stackSize <= mInventory[3].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[3], aRecipe.mOutput2)))
+    	if (mInventory[2] == null || aRecipe.getOutput(0) == null || (mInventory[2].stackSize + aRecipe.getOutput(0).stackSize <= mInventory[2].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[2], aRecipe.getOutput(0))))
+    	if (mInventory[3] == null || aRecipe.getOutput(1) == null || (mInventory[3].stackSize + aRecipe.getOutput(1).stackSize <= mInventory[3].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[3], aRecipe.getOutput(1))))
     		return true;
     	return false;
     }
     
     private boolean checkRecipe() {
     	if (!mMachine) return false;
-    	GT_Recipe tRecipe = GT_Recipe.findEqualImplosionRecipe(mInventory[0], mInventory[1]);
+    	GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sImplosionRecipes, mInventory[0], mInventory[1]);
     	if (tRecipe != null) {
     		if (spaceForOutput(tRecipe) && tRecipe.isRecipeInputEqual(true, true, mInventory[0], mInventory[1])) {
 	        	if (mInventory[0] != null) if (mInventory[0].stackSize == 0) mInventory[0] = null;
 	        	if (mInventory[1] != null) if (mInventory[1].stackSize == 0) mInventory[1] = null;
 	        	mMaxProgresstime = tRecipe.mDuration;
 	        	mEUt = tRecipe.mEUt;
-	        	mOutputItem1 = GT_Utility.copy(tRecipe.mOutput1);
-	        	mOutputItem2 = GT_Utility.copy(tRecipe.mOutput2);
+	        	mOutputItem1 = GT_Utility.copy(tRecipe.getOutput(0));
+	        	mOutputItem2 = GT_Utility.copy(tRecipe.getOutput(1));
 	        	return true;
     		}
     	}
@@ -189,21 +189,14 @@ public class GT_MetaTileEntity_ImplosionCompressor extends MetaTileEntity {
 	
 	@Override
     public void doSound(byte aIndex, double aX, double aY, double aZ) {
-		GT_Utility.doSoundAtClient(GregTech_API.sSoundList.get(5), 1.0F, aX, aY, aZ);
+		GT_Utility.doSoundAtClient(GregTech_API.sSoundList.get(5), 5, 1.0F, aX, aY, aZ);
 	}
 	
 	@Override
-	public String getMainInfo() {
-		return "Progress:";
+	public String[] getInfoData() {
+		return new String[] { "Progress:", this.mProgresstime / 20 + "secs", this.mMaxProgresstime / 20 + "secs" };
 	}
-	@Override
-	public String getSecondaryInfo() {
-		return (mProgresstime/20)+"secs";
-	}
-	@Override
-	public String getTertiaryInfo() {
-		return "/"+(mMaxProgresstime/20)+"secs";
-	}
+	
 	@Override
 	public boolean isGivingInformation() {
 		return true;

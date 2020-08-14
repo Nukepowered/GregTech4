@@ -65,18 +65,18 @@ public class GT_MetaTileEntity_MagicEnergyConverter extends GT_MetaTileEntity_Ba
     		}
     		if (mInventory[0] != null && getBaseMetaTileEntity().getUniversalEnergyStored() < (getBaseMetaTileEntity().getOutputVoltage() * 10 + getMinimumStoredEU())) {
     			for (int i = 0; i < GT_Recipe.sMagicFuels.size(); i++) {
-    				if (GT_Utility.areStacksEqual(mInventory[0], GT_Recipe.sMagicFuels.get(i).mInput1)) {
+    				if (GT_Utility.areStacksEqual(mInventory[0], GT_Recipe.sMagicFuels.get(i).mInputs[0])) {
     					if (GT_Utility.getFluidForFilledItem(mInventory[0]) == null) {
-    						if (GT_Recipe.sMagicFuels.get(i).mOutput1 != null) {
+    						if (GT_Recipe.sMagicFuels.get(i).getOutput(0) != null) {
     							if (mInventory[1] == null) {
     								if (getBaseMetaTileEntity().increaseStoredEnergyUnits(GT_Recipe.sMagicFuels.get(i).mStartEU*1000, true)) {
     									getBaseMetaTileEntity().decrStackSize(0, 1);
-    									mInventory[1] = GT_Utility.copy(GT_Recipe.sMagicFuels.get(i).mOutput1);
+    									mInventory[1] = GT_Utility.copy(GT_Recipe.sMagicFuels.get(i).getOutput(0));
     								}
-    							} else if (GT_Utility.areStacksEqual(mInventory[1], GT_Recipe.sMagicFuels.get(i).mOutput1) && mInventory[1].stackSize + GT_Recipe.sMagicFuels.get(i).mOutput1.stackSize <= mInventory[1].getMaxStackSize()) {
+    							} else if (GT_Utility.areStacksEqual(mInventory[1], GT_Recipe.sMagicFuels.get(i).getOutput(0)) && mInventory[1].stackSize + GT_Recipe.sMagicFuels.get(i).getOutput(0).stackSize <= mInventory[1].getMaxStackSize()) {
     								if (getBaseMetaTileEntity().increaseStoredEnergyUnits(GT_Recipe.sMagicFuels.get(i).mStartEU*1000, true)) {
         								getBaseMetaTileEntity().decrStackSize(0, 1);
-        	    						mInventory[1].stackSize += GT_Recipe.sMagicFuels.get(i).mOutput1.stackSize;
+        	    						mInventory[1].stackSize += GT_Recipe.sMagicFuels.get(i).getOutput(0).stackSize;
     								}
     							}
     						} else {
@@ -132,7 +132,7 @@ public class GT_MetaTileEntity_MagicEnergyConverter extends GT_MetaTileEntity_Ba
     	if (aFluid == null) return 0;
     	FluidStack tFluid;
     	for (int i = 0; i < GT_Recipe.sMagicFuels.size(); i++) {
-    		if ((tFluid = GT_Utility.getFluidForFilledItem(GT_Recipe.sMagicFuels.get(i).mInput1)) != null) if (aFluid.isFluidEqual(tFluid)) return GT_Recipe.sMagicFuels.get(i).mStartEU;
+    		if ((tFluid = GT_Utility.getFluidForFilledItem(GT_Recipe.sMagicFuels.get(i).mInputs[0])) != null) if (aFluid.isFluidEqual(tFluid)) return GT_Recipe.sMagicFuels.get(i).mStartEU;
         }
     	return 0;
     }

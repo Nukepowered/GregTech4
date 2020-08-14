@@ -186,10 +186,10 @@ public class GT_MetaTileEntity_DistillationTower extends MetaTileEntity {
     }
     
     private boolean spaceForOutput(GT_Recipe aRecipe) {
-    	if (mInventory[2] == null || aRecipe.mOutput1 == null || (mInventory[2].stackSize + aRecipe.mOutput1.stackSize <= mInventory[2].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[2], aRecipe.mOutput1)))
-    	if (mInventory[3] == null || aRecipe.mOutput2 == null || (mInventory[3].stackSize + aRecipe.mOutput2.stackSize <= mInventory[3].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[3], aRecipe.mOutput2)))
-    	if (mInventory[4] == null || aRecipe.mOutput3 == null || (mInventory[4].stackSize + aRecipe.mOutput3.stackSize <= mInventory[4].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[4], aRecipe.mOutput3)))
-    	if (mInventory[5] == null || aRecipe.mOutput4 == null || (mInventory[5].stackSize + aRecipe.mOutput4.stackSize <= mInventory[5].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[5], aRecipe.mOutput4)))
+    	if (mInventory[2] == null || aRecipe.getOutput(0) == null || (mInventory[2].stackSize + aRecipe.getOutput(0).stackSize <= mInventory[2].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[2], aRecipe.getOutput(0))))
+    	if (mInventory[3] == null || aRecipe.getOutput(1) == null || (mInventory[3].stackSize + aRecipe.getOutput(1).stackSize <= mInventory[3].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[3], aRecipe.getOutput(1))))
+    	if (mInventory[4] == null || aRecipe.getOutput(2) == null || (mInventory[4].stackSize + aRecipe.getOutput(2).stackSize <= mInventory[4].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[4], aRecipe.getOutput(2))))
+    	if (mInventory[5] == null || aRecipe.getOutput(3) == null || (mInventory[5].stackSize + aRecipe.getOutput(3).stackSize <= mInventory[5].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[5], aRecipe.getOutput(3))))
     		return true;
     	return false;
     }
@@ -197,7 +197,7 @@ public class GT_MetaTileEntity_DistillationTower extends MetaTileEntity {
     private boolean checkRecipe() {
     	if (!mMachine) return false;
     	
-    	GT_Recipe tRecipe = GT_Recipe.findEqualDistillationRecipe(mInventory[0], mInventory[1]);
+    	GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sDistillationRecipes, mInventory[0], mInventory[1]);
     	
     	if (tRecipe != null) {
     		if (spaceForOutput(tRecipe)) {
@@ -208,10 +208,10 @@ public class GT_MetaTileEntity_DistillationTower extends MetaTileEntity {
 		        	mMaxProgresstime = tRecipe.mDuration;
 		        	mEUt = tRecipe.mEUt;
 
-		        	mOutputItem1 = GT_Utility.copy(tRecipe.mOutput1);
-		        	mOutputItem2 = GT_Utility.copy(tRecipe.mOutput2);
-		        	mOutputItem3 = GT_Utility.copy(tRecipe.mOutput3);
-		        	mOutputItem4 = GT_Utility.copy(tRecipe.mOutput4);
+		        	mOutputItem1 = GT_Utility.copy(tRecipe.getOutput(0));
+		        	mOutputItem2 = GT_Utility.copy(tRecipe.getOutput(1));
+		        	mOutputItem3 = GT_Utility.copy(tRecipe.getOutput(2));
+		        	mOutputItem4 = GT_Utility.copy(tRecipe.getOutput(3));
 		        	return true;
     			}
     		}
@@ -229,17 +229,10 @@ public class GT_MetaTileEntity_DistillationTower extends MetaTileEntity {
 	}
 	
 	@Override
-	public String getMainInfo() {
-		return "Progress:";
+	public String[] getInfoData() {
+		return new String[] { "Progress:", this.mProgresstime / 20 + "secs", this.mMaxProgresstime / 20 + "secs" };
 	}
-	@Override
-	public String getSecondaryInfo() {
-		return (mProgresstime/20)+"secs";
-	}
-	@Override
-	public String getTertiaryInfo() {
-		return "/"+(mMaxProgresstime/20)+"secs";
-	}
+	
 	@Override
 	public boolean isGivingInformation() {
 		return true;

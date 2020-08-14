@@ -60,7 +60,7 @@ public class GT_MetaTileEntity_TesseractTerminal extends MetaTileEntity {
 	
 	@Override
 	public void onConfigLoad(GT_Config aConfig) {
-		sInterDimensionalTesseractAllowed = aConfig.addAdvConfig(GT_ConfigCategories.machineconfig, "Tesseract.Interdimensional", true);
+		sInterDimensionalTesseractAllowed = aConfig.get(GT_ConfigCategories.machineconfig, "Tesseract.Interdimensional", true);
 	}
 	
 	@Override
@@ -150,24 +150,8 @@ public class GT_MetaTileEntity_TesseractTerminal extends MetaTileEntity {
 	}
 	
 	@Override
-	public String getMainInfo() {
-		GT_MetaTileEntity_TesseractGenerator tTileEntity = getTesseract(mFrequency, false);
-		if (tTileEntity != null && getBaseMetaTileEntity().isAllowedToWork()) if (tTileEntity.isSendingInformation()) return tTileEntity.getMainInfo();
-		return "Tesseract Terminal";
-	}
-	
-	@Override
-	public String getSecondaryInfo() {
-		GT_MetaTileEntity_TesseractGenerator tTileEntity = getTesseract(mFrequency, false);
-		if (tTileEntity != null && getBaseMetaTileEntity().isAllowedToWork()) if (tTileEntity.isSendingInformation()) return tTileEntity.getSecondaryInfo();
-		return "Freq: " + mFrequency;
-	}
-	
-	@Override
-	public String getTertiaryInfo() {
-		GT_MetaTileEntity_TesseractGenerator tTileEntity = getTesseract(mFrequency, false);
-		if (tTileEntity != null && getBaseMetaTileEntity().isAllowedToWork()) if (tTileEntity.isSendingInformation()) return tTileEntity.getTertiaryInfo();
-		return getTesseract(mFrequency, false)!=null?"Active":"Inactive";
+	public String[] getInfoData() {
+		return new String[] { "Tesseract Terminal", "Freq: " + mFrequency, getTesseract(mFrequency, false)!=null?"Active":"Inactive"};
 	}
 	
 	@Override

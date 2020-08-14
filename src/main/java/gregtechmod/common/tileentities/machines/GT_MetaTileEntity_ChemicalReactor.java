@@ -106,13 +106,13 @@ public class GT_MetaTileEntity_ChemicalReactor extends MetaTileEntity {
     }
     
     private boolean spaceForOutput(GT_Recipe aRecipe) {
-    	if (mInventory[2] == null || aRecipe.mOutput1 == null || (mInventory[2].stackSize + aRecipe.mOutput1.stackSize <= mInventory[2].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[2], aRecipe.mOutput1)))
+    	if (mInventory[2] == null || aRecipe.getOutput(0) == null || (mInventory[2].stackSize + aRecipe.getOutput(0).stackSize <= mInventory[2].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[2], aRecipe.getOutput(0))))
     		return true;
     	return false;
     }
     
     private boolean checkRecipe() {
-    	GT_Recipe tRecipe = GT_Recipe.findEqualChemicalRecipe(mInventory[0], mInventory[1]);
+    	GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sChemicalRecipes, mInventory[0], mInventory[1]);
     	
     	if (tRecipe != null) {
     		if (spaceForOutput(tRecipe) && tRecipe.isRecipeInputEqual(true, true, mInventory[0], mInventory[1])) {
@@ -121,7 +121,7 @@ public class GT_MetaTileEntity_ChemicalReactor extends MetaTileEntity {
 	        	
 	        	mMaxProgresstime = tRecipe.mDuration;
 	        	mEUt = tRecipe.mEUt;
-	        	mOutputItem1 = GT_Utility.copy(tRecipe.mOutput1);
+	        	mOutputItem1 = GT_Utility.copy(tRecipe.getOutput(0));
 	        	return true;
     		}
     	}
@@ -138,17 +138,10 @@ public class GT_MetaTileEntity_ChemicalReactor extends MetaTileEntity {
 	}
 	
 	@Override
-	public String getMainInfo() {
-		return "Progress:";
+	public String[] getInfoData() {
+		return new String[] { "Progress:", this.mProgresstime / 20 + "secs", this.mMaxProgresstime / 20 + "secs" };
 	}
-	@Override
-	public String getSecondaryInfo() {
-		return (mProgresstime/20)+"secs";
-	}
-	@Override
-	public String getTertiaryInfo() {
-		return "/"+(mMaxProgresstime/20)+"secs";
-	}
+	
 	@Override
 	public boolean isGivingInformation() {
 		return true;

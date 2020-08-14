@@ -78,8 +78,8 @@ public class GT_MetaTileEntity_MagicEnergyAbsorber extends MetaTileEntity {
 	
 	@Override
 	public void onConfigLoad(GT_Config aConfig) {
-    	sEnergyPerEnderCrystal	= aConfig.addAdvConfig(GT_ConfigCategories.machineconfig, "MagicEnergyAbsorber.EnergyPerTick.EnderCrystal", 32);
-    	sEnergyFromVis			= aConfig.addAdvConfig(GT_ConfigCategories.machineconfig, "MagicEnergyAbsorber.EnergyPerVis", 12800);
+    	sEnergyPerEnderCrystal	= aConfig.get(GT_ConfigCategories.machineconfig, "MagicEnergyAbsorber.EnergyPerTick.EnderCrystal", 32);
+    	sEnergyFromVis			= aConfig.get(GT_ConfigCategories.machineconfig, "MagicEnergyAbsorber.EnergyPerVis", 12800);
 	}
 	
 	@Override

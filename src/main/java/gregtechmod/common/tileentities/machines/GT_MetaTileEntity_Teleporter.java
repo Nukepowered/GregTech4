@@ -90,7 +90,7 @@ public class GT_MetaTileEntity_Teleporter extends MetaTileEntity {
 	
 	@Override
 	public void onConfigLoad(GT_Config aConfig) {
-		sInterDimensionalTeleportAllowed = aConfig.addAdvConfig(GT_ConfigCategories.machineconfig, "Teleporter.Interdimensional", true);
+		sInterDimensionalTeleportAllowed = aConfig.get(GT_ConfigCategories.machineconfig, "Teleporter.Interdimensional", true);
 	}
 	
 	@Override
@@ -210,18 +210,8 @@ public class GT_MetaTileEntity_Teleporter extends MetaTileEntity {
 	}
 	
 	@Override
-	public String getMainInfo() {
-		return "Charge: " + mCharge;
-	}
-	
-	@Override
-	public String getSecondaryInfo() {
-		return "X: " + mTargetX + "  Y: " + mTargetY + "  Z: " + mTargetZ;
-	}
-	
-	@Override
-	public String getTertiaryInfo() {
-		return "Dimension: " + mTargetD;
+	public String[] getInfoData() {
+		return new String[] { "Charge: " + mCharge, "X: " + mTargetX + "  Y: " + mTargetY + "  Z: " + mTargetZ, "Dimension: " + mTargetD};
 	}
 	
 	@Override

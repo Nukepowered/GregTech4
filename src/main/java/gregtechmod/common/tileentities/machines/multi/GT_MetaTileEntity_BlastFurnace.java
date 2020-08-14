@@ -195,8 +195,8 @@ public class GT_MetaTileEntity_BlastFurnace extends MetaTileEntity {
     }
     
     private boolean spaceForOutput(GT_Recipe aRecipe) {
-    	if (mInventory[2] == null || aRecipe.mOutput1 == null || (mInventory[2].stackSize + aRecipe.mOutput1.stackSize <= mInventory[2].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[2], aRecipe.mOutput1)))
-    	if (mInventory[3] == null || aRecipe.mOutput2 == null || (mInventory[3].stackSize + aRecipe.mOutput2.stackSize <= mInventory[3].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[3], aRecipe.mOutput2)))
+    	if (mInventory[2] == null || aRecipe.getOutput(0) == null || (mInventory[2].stackSize + aRecipe.mOutputs[0].stackSize <= mInventory[2].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[2], aRecipe.getOutput(0))))
+    	if (mInventory[3] == null || aRecipe.getOutput(1) == null || (mInventory[3].stackSize + aRecipe.mOutputs[1].stackSize <= mInventory[3].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[3], aRecipe.getOutput(1))))
     		return true;
     	return false;
     }
@@ -204,7 +204,7 @@ public class GT_MetaTileEntity_BlastFurnace extends MetaTileEntity {
     private boolean checkRecipe() {
     	if (!mMachine) return false;
     	
-    	GT_Recipe tRecipe = GT_Recipe.findEqualBlastRecipe(mInventory[0], mInventory[1]);
+    	GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sBlastRecipes, mInventory[0], mInventory[1]);
 
     	if (tRecipe != null) {
     		if (mHeatCapacity >= tRecipe.mStartEU && spaceForOutput(tRecipe) && tRecipe.isRecipeInputEqual(true, true, mInventory[0], mInventory[1])) {
@@ -213,8 +213,8 @@ public class GT_MetaTileEntity_BlastFurnace extends MetaTileEntity {
 	        	
 	        	mMaxProgresstime = tRecipe.mDuration;
 	        	mEUt = tRecipe.mEUt;
-	        	mOutputItem1 = GT_Utility.copy(tRecipe.mOutput1);
-	        	mOutputItem2 = GT_Utility.copy(tRecipe.mOutput2);
+	        	mOutputItem1 = GT_Utility.copy(tRecipe.mOutputs[0]);
+	        	mOutputItem2 = GT_Utility.copy(tRecipe.mOutputs[1]);
 	        	return true;
     		}
     	}
@@ -232,17 +232,10 @@ public class GT_MetaTileEntity_BlastFurnace extends MetaTileEntity {
 	}
 	
 	@Override
-	public String getMainInfo() {
-		return "Progress:";
+	public String[] getInfoData() {
+		return new String[] { "Progress:", this.mProgresstime / 20 + "secs", this.mMaxProgresstime / 20 + "secs" };
 	}
-	@Override
-	public String getSecondaryInfo() {
-		return (mProgresstime/20)+"secs";
-	}
-	@Override
-	public String getTertiaryInfo() {
-		return "/"+(mMaxProgresstime/20)+"secs";
-	}
+	
 	@Override
 	public boolean isGivingInformation() {
 		return true;

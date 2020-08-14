@@ -28,11 +28,11 @@ public class GT_MetaTileEntity_Assembler extends GT_MetaTileEntity_BasicMachine 
     public void checkRecipe() {
 		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 3, 4, (byte)64, (byte)1, (byte)64, (byte)1);
     	if (mInventory[1] != null || mInventory[2] != null) {
-    		GT_Recipe tRecipe = GT_Recipe.findEqualAssemblerRecipe(mInventory[1], mInventory[2]);
-    		if (tRecipe != null && spaceForOutput(tRecipe.mOutput1, null) && tRecipe.isRecipeInputEqual(true, true, mInventory[1], mInventory[2])) {
+    		GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sAssemblerRecipes, mInventory[1], mInventory[2]);
+    		if (tRecipe != null && spaceForOutput(tRecipe.getOutput(0), null) && tRecipe.isRecipeInputEqual(true, true, mInventory[1], mInventory[2])) {
         		mEUt = tRecipe.mEUt;
     			mMaxProgresstime = tRecipe.mDuration;
-    			mOutputItem1 = GT_Utility.copy(tRecipe.mOutput1);
+    			mOutputItem1 = GT_Utility.copy(tRecipe.getOutput(0));
     			return;
     		}
     	}

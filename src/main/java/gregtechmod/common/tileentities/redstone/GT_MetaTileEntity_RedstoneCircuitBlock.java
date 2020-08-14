@@ -238,7 +238,7 @@ public class GT_MetaTileEntity_RedstoneCircuitBlock extends MetaTileEntity imple
 	}
 	
 	@Override
-	public byte getMetaAtSide(byte aSide) {
+	public byte getMetaIDAtSide(byte aSide) {
 		return getBaseMetaTileEntity().getMetaIDAtSide(aSide);
 	}
 	

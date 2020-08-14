@@ -126,7 +126,7 @@ public class GT_MetaTileEntity_TradeOMat extends MetaTileEntity {
 
    public boolean onRightclick(EntityPlayer aPlayer, byte aSide, float aX, float aY, float aZ) {
       if(aSide == this.getBaseMetaTileEntity().getFrontFacing()) {
-         if(this.getBaseMetaTileEntity().getOwnerName().equalsIgnoreCase(aPlayer.username)) {
+         if(this.getBaseMetaTileEntity().getOwnerName().equalsIgnoreCase(aPlayer.getGameProfile().getName())) {
             float[] tCoords = GT_Utility.getClickedFacingCoords(aSide, aX, aY, aZ);
             switch((byte)((byte)((int)(tCoords[0] * 2.0F)) + 2 * (byte)((int)(tCoords[1] * 2.0F)))) {
             case 0:
@@ -143,7 +143,7 @@ public class GT_MetaTileEntity_TradeOMat extends MetaTileEntity {
 
          return this.getBaseMetaTileEntity().openGUI(aPlayer, 177);
       } else if(aSide == this.getBaseMetaTileEntity().getBackFacing()) {
-         if(this.getBaseMetaTileEntity().getOwnerName().equalsIgnoreCase(aPlayer.username)) {
+         if(this.getBaseMetaTileEntity().getOwnerName().equalsIgnoreCase(aPlayer.getGameProfile().getName())) {
             this.getBaseMetaTileEntity().openGUI(aPlayer, 178);
          }
 
@@ -178,7 +178,7 @@ public class GT_MetaTileEntity_TradeOMat extends MetaTileEntity {
                   super.mInventory[27] = null;
                }
 
-               super.mInventory[0] = GT_Utility.copy(new Object[]{super.mInventory[65]});
+               super.mInventory[0] = GT_Utility.copy((ItemStack[]) new Object[]{super.mInventory[65]});
             }
 
             this.mIsWorking = true;
@@ -298,10 +298,10 @@ public class GT_MetaTileEntity_TradeOMat extends MetaTileEntity {
    public float getExplosionResistance(byte aSide) {
       return GT_Utility.isDebugItem(super.mInventory[66])?Float.MAX_VALUE:10.0F;
    }
-
-   public String[] getInfoData() {
-      return !GT_Utility.isStackInvalid(super.mInventory[65]) && !GT_Utility.isStackInvalid(super.mInventory[64])?new String[]{"Performed Trades: " + this.mPerformedTrades, "Stock: " + (GT_Utility.isDebugItem(super.mInventory[66])?"Infinite":Integer.valueOf(this.getAmountOffered())), "Received: " + this.getAmountMoney(), "Selling: " + super.mInventory[65].stackSize + " \\\\" + GT_LanguageManager.getTranslateableItemStackName(super.mInventory[65]), "Buying: " + super.mInventory[64].stackSize + " \\\\" + GT_LanguageManager.getTranslateableItemStackName(super.mInventory[64]), "For: " + super.mInventory[65].stackSize + " \\\\" + GT_LanguageManager.getTranslateableItemStackName(super.mInventory[65]), "For: " + super.mInventory[64].stackSize + " \\\\" + GT_LanguageManager.getTranslateableItemStackName(super.mInventory[64])}:new String[0];
-   }
+   //TODO:Localization
+//   public String[] getInfoData() {
+////      return !GT_Utility.isStackInvalid(super.mInventory[65]) && !GT_Utility.isStackInvalid(super.mInventory[64])?new String[]{"Performed Trades: " + this.mPerformedTrades, "Stock: " + (GT_Utility.isDebugItem(super.mInventory[66])?"Infinite":Integer.valueOf(this.getAmountOffered())), "Received: " + this.getAmountMoney(), "Selling: " + super.mInventory[65].stackSize + " \\\\" + GT_LanguageManager.getTranslateableItemStackName(super.mInventory[65]), "Buying: " + super.mInventory[64].stackSize + " \\\\" + GT_LanguageManager.getTranslateableItemStackName(super.mInventory[64]), "For: " + super.mInventory[65].stackSize + " \\\\" + GT_LanguageManager.getTranslateableItemStackName(super.mInventory[65]), "For: " + super.mInventory[64].stackSize + " \\\\" + GT_LanguageManager.getTranslateableItemStackName(super.mInventory[64])}:new String[0];
+//   }
 
    public boolean isGivingInformation() {
       return true;

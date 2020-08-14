@@ -81,8 +81,8 @@ public class GT_MetaTileEntity_TesseractGenerator extends MetaTileEntity {
 	
 	@Override
 	public void onConfigLoad(GT_Config aConfig) {
-		TESSERACT_ENERGY_COST				= aConfig.addAdvConfig(GT_ConfigCategories.machineconfig, "Tesseract.EnergyPerTick",  8);
-		TESSERACT_ENERGY_COST_DIMENSIONAL	= aConfig.addAdvConfig(GT_ConfigCategories.machineconfig, "Tesseract.InterDimensionalEnergyPerTick", 32);
+		TESSERACT_ENERGY_COST				= aConfig.get(GT_ConfigCategories.machineconfig, "Tesseract.EnergyPerTick",  8);
+		TESSERACT_ENERGY_COST_DIMENSIONAL	= aConfig.get(GT_ConfigCategories.machineconfig, "Tesseract.InterDimensionalEnergyPerTick", 32);
 	}
 	
 	@Override
@@ -175,24 +175,8 @@ public class GT_MetaTileEntity_TesseractGenerator extends MetaTileEntity {
 	}
 	
 	@Override
-	public String getMainInfo() {
-		TileEntity tTileEntity = getBaseMetaTileEntity().getTileEntityAtSide(getBaseMetaTileEntity().getBackFacing());
-		if (tTileEntity != null && getBaseMetaTileEntity().isAllowedToWork() && tTileEntity instanceof IGregTechDeviceInformation) if (((IGregTechDeviceInformation)tTileEntity).isGivingInformation()) return ((IGregTechDeviceInformation)tTileEntity).getMainInfo();
-		return "Tesseract Generator";
-	}
-	
-	@Override
-	public String getSecondaryInfo() {
-		TileEntity tTileEntity = getBaseMetaTileEntity().getTileEntityAtSide(getBaseMetaTileEntity().getBackFacing());
-		if (tTileEntity != null && getBaseMetaTileEntity().isAllowedToWork() && tTileEntity instanceof IGregTechDeviceInformation) if (((IGregTechDeviceInformation)tTileEntity).isGivingInformation()) return ((IGregTechDeviceInformation)tTileEntity).getSecondaryInfo();
-		return "Freq: " + mFrequency;
-	}
-	
-	@Override
-	public String getTertiaryInfo() {
-		TileEntity tTileEntity = getBaseMetaTileEntity().getTileEntityAtSide(getBaseMetaTileEntity().getBackFacing());
-		if (tTileEntity != null && getBaseMetaTileEntity().isAllowedToWork() && tTileEntity instanceof IGregTechDeviceInformation) if (((IGregTechDeviceInformation)tTileEntity).isGivingInformation()) return ((IGregTechDeviceInformation)tTileEntity).getTertiaryInfo();
-		return sTesseractGenerators.get(mFrequency)==this?"Active":"Inactive";
+	public String[] getInfoData() {
+		return new String[] { "Tesseract Generator", "Freq: " + mFrequency, sTesseractGenerators.get(mFrequency)==this?"Active":"Inactive" };
 	}
 	
 	@Override

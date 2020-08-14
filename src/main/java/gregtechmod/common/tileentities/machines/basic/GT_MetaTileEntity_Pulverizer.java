@@ -107,11 +107,6 @@ public class GT_MetaTileEntity_Pulverizer extends GT_MetaTileEntity_BasicMachine
 	    	}
     	}
     }
-	
-	@Override
-    public boolean needsImmidiateOutput() {
-    	return true;
-    }
     
 	@Override
 	public int getFrontFacingInactive() {
