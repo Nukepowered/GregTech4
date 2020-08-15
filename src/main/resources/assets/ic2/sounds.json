@@ -1,14 +1,26 @@
 {	
-	"ChainsawIdle":  {
+	"tools.Wrench":  {
         "category": "player",
-        "sounds": [
-			{ "name":"ic2:tools/chainsaw/ChainsawIdle" }
+        "sounds":  [
+			{ "name":"ic2:tools/Wrench" }
         ]
     },
-	"ChainsawStop":  {
+	"tools.RubberTrampoline":  {
         "category": "player",
-        "sounds": [
-			{ "name":"ic2:tools/chainsaw/ChainsawStop" }
+        "sounds":  [
+			{ "name":"ic2:tools/RubberTrampoline" }
+        ]
+    },
+	"tools.Painter":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/Painter" }
+        ]
+    },
+	"tools.BatteryUse":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/BatteryUse" }
         ]
     },
 	"tools.chainsaw.ChainsawUseOne":  {
@@ -23,22 +35,94 @@
 			{ "name":"ic2:tools/chainsaw/ChainsawUseTwo" }
         ]
     },
-	"tools.drill.DrillHard":  {
-        "category": "player",
-        "sounds":  [
-			{ "name":"ic2:tools/drill/DrillHard" }
-        ]
-    },
 	"tools.drill.DrillSoft":  {
         "category": "player",
         "sounds":  [
 			{ "name":"ic2:tools/drill/DrillSoft" }
         ]
     },
-	"DrillUseLoop":  {
+	"tools.drill.DrillHard":  {
         "category": "player",
         "sounds":  [
-			{ "name":"ic2:tools/drill/DrillUseLoop" }
+			{ "name":"ic2:tools/drill/DrillHard" }
+        ]
+    },
+	"tools.ODScanner":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:tools/ODScanner" }
+        ]
+    },
+	"machines.ExtractorOp":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:machines/ExtractorOp" }
+        ]
+    },
+	"machines.MaceratorOp":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:machines/MaceratorOp" }
+        ]
+    },
+	"machines.InductionLoop":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:machines/InductionLoop" }
+        ]
+    },
+	"machines.CompressorOp":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:machines/CompressorOp" }
+        ]
+    },
+	"machines.RecyclerOp":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:machines/RecyclerOp" }
+        ]
+    },
+	"machines.MinerOp":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:machines/MinerOp" }
+        ]
+    },
+	"machines.PumpOp":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:machines/PumpOp" }
+        ]
+    },
+	"machines.ElectroFurnaceLoop":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:machines/ElectroFurnaceLoop" }
+        ]
+    },
+	"machines.MachineOverload":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:machines/MachineOverload" }
+        ]
+    },
+	"machines.InterruptOne":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:machines/InterruptOne" }
+        ]
+    },
+	"machines.KaChing":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:machines/KaChing" }
+        ]
+    },
+	"machines.MagnetizerLoop":  {
+        "category": "player",
+        "sounds":  [
+			{ "name":"ic2:machines/MagnetizerLoop" }
         ]
     },
 	"JetpackFire":  {
@@ -125,12 +209,6 @@
 			{ "name":"ic2:tools/quantumsuit/QuantumsuitBoots" }
         ]
     },
-	"tools.BatteryUse":  {
-        "category": "player",
-        "sounds":  [
-			{ "name":"ic2:tools/BatteryUse" }
-        ]
-    },
 	"Dynamiteomote":  {
         "category": "player",
         "sounds":  [
@@ -149,34 +227,10 @@
 			{ "name":"ic2:tools/NukeExplosion" }
         ]
     },
-	"tools.ODScanner":  {
-        "category": "player",
-        "sounds":  [
-			{ "name":"ic2:tools/ODScanner" }
-        ]
-    },
-	"tools.Painter":  {
-        "category": "player",
-        "sounds":  [
-			{ "name":"ic2:tools/Painter" }
-        ]
-    },
-	"tools.RubberTrampoline":  {
-        "category": "player",
-        "sounds":  [
-			{ "name":"ic2:tools/RubberTrampoline" }
-        ]
-    },
 	"Treetap":  {
         "category": "player",
         "sounds":  [
 			{ "name":"ic2:tools/Treetap" }
-        ]
-    },
-	"tools.Wrench":  {
-        "category": "player",
-        "sounds":  [
-			{ "name":"ic2:tools/Wrench" }
         ]
     }
 }

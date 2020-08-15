@@ -567,9 +567,7 @@ public class GT_OreDictHandler {
 				if (GT_OreDictUnificator.isBlacklisted(tEvent.getKey().Ore)) {
 					continue;
 				}
-				if (!tEvent.getValue().equals("UNKNOWN_MOD_ID") && GregTech_API.sUnification.get(
-						GT_ConfigCategories.specialunificationtargets + "." + tEvent.getValue(), tEvent.getKey().Name,
-						false)) {
+				if (!tEvent.getValue().equals("UNKNOWN_MOD_ID") && GregTech_API.sUnification.get(GT_ConfigCategories.specialunificationtargets + "." + tEvent.getValue(), tEvent.getKey().Name, false)) {
 					GT_OreDictUnificator.set(tEvent.getKey().Name, tEvent.getKey().Ore, true, true);
 				} else {
 					GT_OreDictUnificator.set(tEvent.getKey().Name, tEvent.getKey().Ore, false, true);
@@ -583,9 +581,7 @@ public class GT_OreDictHandler {
 				if (GT_OreDictUnificator.isBlacklisted(tEvent.getKey().Ore)) {
 					continue;
 				}
-				if (!tEvent.getValue().equals("UNKNOWN_MOD_ID") && GregTech_API.sUnification.get(
-						GT_ConfigCategories.specialunificationtargets + "." + tEvent.getValue(), tEvent.getKey().Name,
-						false)) {
+				if (!tEvent.getValue().equals("UNKNOWN_MOD_ID") && GregTech_API.sUnification.get(GT_ConfigCategories.specialunificationtargets + "." + tEvent.getValue(), tEvent.getKey().Name, false)) {
 					GT_OreDictUnificator.set(tEvent.getKey().Name, tEvent.getKey().Ore, true, true);
 				} else {
 					GT_OreDictUnificator.set(tEvent.getKey().Name, tEvent.getKey().Ore, false, true);
@@ -593,45 +589,6 @@ public class GT_OreDictHandler {
 			}
 		}
 		
-		
-//		for (Map.Entry<OreRegisterEvent, String> tEvent : this.mEvents.entrySet()) {
-//			if (!(tEvent.getKey().Ore.getItem() instanceof GT_MetaGenerated_Item)) {
-//				final OrePrefixes tPrefix = OrePrefixes.getOrePrefix(tEvent.getKey().Name);
-//				if (tPrefix == null || !tPrefix.mIsUnificatable) {
-//					continue;
-//				}
-//				GT_OreDictUnificator.addAssociation(tEvent.getKey().Name, tEvent.getKey().Ore);
-//				if (GT_OreDictUnificator.isBlacklisted(tEvent.getKey().Ore)) {
-//					continue;
-//				}
-//				if (!tEvent.getValue().equals("UNKNOWN_MOD_ID") && GregTech_API.sUnification.get(
-//						GT_ConfigCategories.specialunificationtargets + "." + tEvent.getValue(), tEvent.getKey().Name,
-//						false)) {
-//					GT_OreDictUnificator.set(tEvent.getKey().Name, tEvent.getKey().Ore, true, true);
-//				} else {
-//					GT_OreDictUnificator.set(tEvent.getKey().Name, tEvent.getKey().Ore, false, true);
-//				}
-//			}
-//		}
-//		for (Map.Entry<OreRegisterEvent, String> tEvent : this.mEvents.entrySet()) {
-//			if (tEvent.getKey().Ore.getItem() instanceof GT_MetaGenerated_Item) {
-//				final OrePrefixes tPrefix = OrePrefixes.getOrePrefix(tEvent.getKey().Name);
-//				if (tPrefix == null || !tPrefix.mIsUnificatable) {
-//					continue;
-//				}
-//				GT_OreDictUnificator.addAssociation(tEvent.getKey().Name, tEvent.getKey().Ore);
-//				if (GT_OreDictUnificator.isBlacklisted(tEvent.getKey().Ore)) {
-//					continue;
-//				}
-//				if (!tEvent.getValue().equals("UNKNOWN_MOD_ID") && GregTech_API.sUnification.get(
-//						GT_ConfigCategories.specialunificationtargets + "." + tEvent.getValue(), tEvent.getKey().Name,
-//						false)) {
-//					GT_OreDictUnificator.set(tEvent.getKey().Name, tEvent.getKey().Ore, true, true);
-//				} else {
-//					GT_OreDictUnificator.set(tEvent.getKey().Name, tEvent.getKey().Ore, false, true);
-//				}
-//			}
-//		}
 		GregTech_API.sUnification.mConfig.save();
 		GT_Recipe.reInit();
 	}
