@@ -300,7 +300,7 @@ public class GT_Utility {
 	}
 	
 	public static void sendChatToPlayer(EntityPlayer aPlayer, IChatComponent aChatMessage) {
-		if (aPlayer != null && aPlayer instanceof EntityPlayerMP && aChatMessage != null) {
+		if (aPlayer != null && aChatMessage != null) {
 			aPlayer.addChatMessage(aChatMessage);
 		}
 	}
