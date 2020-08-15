@@ -1,7 +1,9 @@
 package gregtechmod.loaders.postload;
 
 import gregtechmod.GT_Mod;
-import gregtechmod.api.GregTech_API;
+import gregtechmod.api.enums.GT_Items;
+import gregtechmod.api.enums.Materials;
+import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
@@ -30,7 +32,7 @@ public class GT_BookAndLootLoader implements Runnable {
         }
         
         ItemStack tStack;
-        
+        // TODO locale	
         tStack = GT_Utility.getWrittenBook("GregTech Manual I (Edition 3)", "Gregorius Techneticies", new String[] {
         		  "So, this is probably your first time using a Product of GregTech Intergalactical, so you might ask yourself where to begin with? This World is very complex, and you may want to aquire a few basic Resources first."
         		, "You need many Resources to start with, as there are: Wood, Sticky Resin or Slimeballs, Sand, Clay, Silk, Food, Iron, Copper, Tin, Flint, Redstone, Coal (or another good Fuel for the Oven) and a bunch of Cobblestones would also be very useful."
@@ -354,74 +356,79 @@ public class GT_BookAndLootLoader implements Runnable {
         		});
         if (tStack != null) {
         ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_Utility.copy(tStack)							, 1, 1,   2));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_Utility.copy(tStack)							, 1, 1,   2));
         ChestGenHooks.addItem(ChestGenHooks.STRONGHOLD_LIBRARY		, new WeightedRandomChestContent(GT_Utility.copy(tStack)							, 1, 1,  10));
         tStack = null;
         }
         
-        ChestGenHooks.addItem(ChestGenHooks.BONUS_CHEST				, new WeightedRandomChestContent(GregTech_API.getGregTechItem(124, 1, 0)			, 1, 1,   1));
-        ChestGenHooks.addItem(ChestGenHooks.BONUS_CHEST				, new WeightedRandomChestContent(GregTech_API.getGregTechItem(125, 1, 0)			, 1, 1,   1));
-        ChestGenHooks.addItem(ChestGenHooks.BONUS_CHEST				, new WeightedRandomChestContent(GregTech_API.getGregTechItem(126, 1, 0)			, 1, 1,   1));
-        ChestGenHooks.addItem(ChestGenHooks.BONUS_CHEST				, new WeightedRandomChestContent(GregTech_API.getGregTechItem(127, 1, 0)			, 1, 1,   1));
+        ChestGenHooks.addItem(ChestGenHooks.BONUS_CHEST				, new WeightedRandomChestContent(GT_Items.Tool_Sword_Flint			.get(1)			, 1, 1,   1));
+        ChestGenHooks.addItem(ChestGenHooks.BONUS_CHEST				, new WeightedRandomChestContent(GT_Items.Tool_Pickaxe_Flint		.get(1)			, 1, 1,   1));
+        ChestGenHooks.addItem(ChestGenHooks.BONUS_CHEST				, new WeightedRandomChestContent(GT_Items.Tool_Shovel_Flint			.get(1)			, 1, 1,   1));
+        ChestGenHooks.addItem(ChestGenHooks.BONUS_CHEST				, new WeightedRandomChestContent(GT_Items.Tool_Axe_Flint			.get(1)			, 1, 1,   1));
+        ChestGenHooks.addItem(ChestGenHooks.BONUS_CHEST				, new WeightedRandomChestContent(GT_Items.Bottle_Purple_Drink		.get(1)			, 8, 16,  2));
         
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get("ingotSilver"			, 1), 1, 6, 120));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get("ingotLead"			, 1), 1, 6,  30));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get("ingotSteel"			, 1), 1, 6,  60));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get("ingotBronze"			, 1), 1, 6,  60));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemEmerald"			, 1), 1, 6,  20));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemRuby"				, 1), 1, 6,  20));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemSapphire"			, 1), 1, 6,  20));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemGreenSapphire"	, 1), 1, 6,  20));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemOlivine"			, 1), 1, 6,  20));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemGarnetRed"		, 1), 1, 6,  40));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemGarnetYellow"		, 1), 1, 6,  40));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get("dustManganese"		, 1), 1, 3,  60));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get("dustChrome"			, 1), 1, 3,  40));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GregTech_API.getGregTechItem(91, 1, 0)				, 1, 1,  20));
-        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GregTech_API.getGregTechItem(95, 1, 0)				, 1, 1,  20));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_Items.Spray_Ice					.get(1)			, 1, 1, 20));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_Items.Spray_Pepper				.get(1)			, 1, 1, 20));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_Items.Bottle_Purple_Drink		.get(1)			, 8, 16, 80));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Silver		, 1), 1, 6, 120));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Lead			, 1), 1, 6,  30));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Steel		, 1), 1, 6,  60));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Bronze		, 1), 1, 6,  60));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem, Materials.Emerald		, 1), 1, 6,  20));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem, Materials.Ruby			, 1), 1, 6,  20));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem, Materials.Sapphire		, 1), 1, 6,  20));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem, Materials.GreenSapphire	, 1), 1, 6,  20));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem, Materials.Olivine		, 1), 1, 6,  20));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem, Materials.GarnetRed		, 1), 1, 6,  40));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem, Materials.GarnetYellow	, 1), 1, 6,  40));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Manganese		, 1), 1, 3,  60));
+        ChestGenHooks.addItem(ChestGenHooks.DUNGEON_CHEST			, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Chrome		, 1), 1, 3,  40));
         
-        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_DESERT_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get("ingotSilver"			, 1), 4,16,  12));
-        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_DESERT_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get("ingotPlatinum"		, 1), 2, 8,   4));
-        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_DESERT_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemRuby"				, 1), 2, 8,   2));
-        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_DESERT_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemSapphire"			, 1), 2, 8,   2));
-        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_DESERT_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemGreenSapphire"	, 1), 2, 8,   2));
-        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_DESERT_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemOlivine"			, 1), 2, 8,   2));
-        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_DESERT_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemGarnetRed"		, 1), 2, 8,   4));
-        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_DESERT_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemGarnetYellow"		, 1), 2, 8,   4));
+        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_DESERT_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Silver		, 1), 4,16,  12));
+        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_DESERT_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Platinum		, 1), 2, 8,   4));
+        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_DESERT_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem, Materials.Ruby			, 1), 2, 8,   2));
+        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_DESERT_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem, Materials.Sapphire		, 1), 2, 8,   2));
+        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_DESERT_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem, Materials.GreenSapphire	, 1), 2, 8,   2));
+        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_DESERT_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem, Materials.Olivine		, 1), 2, 8,   2));
+        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_DESERT_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem, Materials.GarnetRed		, 1), 2, 8,   4));
+        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_DESERT_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem, Materials.GarnetYellow	, 1), 2, 8,   4));
         
-        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get("ingotBronze"			, 1), 4,16,  12));
-        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemRuby"				, 1), 2, 8,   2));
-        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemSapphire"			, 1), 2, 8,   2));
-        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemGreenSapphire"	, 1), 2, 8,   2));
-        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemOlivine"			, 1), 2, 8,   2));
-        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemGarnetRed"		, 1), 2, 8,   4));
-        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemGarnetYellow"		, 1), 2, 8,   4));
+        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_CHEST	, new WeightedRandomChestContent(GT_Items.Coin_Gold_Ancient.get(				  1),16,64,  10));
+        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_CHEST	, new WeightedRandomChestContent(GT_Items.ZPM.getWithCharge(1, 	  Integer.MAX_VALUE), 1, 1,   1));
+        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.ingot	, Materials.Bronze			 , 1), 4, 16, 12));
+        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem	, Materials.Ruby		 	, 1), 2,  8,  2));
+        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem	, Materials.Sapphire	 	, 1), 2, 8,   2));
+        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem	, Materials.GreenSapphire	, 1), 2, 8,   2));
+        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem	, Materials.Olivine		 	, 1), 2, 8,   2));
+        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem	, Materials.GarnetRed		, 1), 2, 8,   4));
+        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_CHEST	, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem	, Materials.GarnetYellow	, 1), 2, 8,   4));
         
-        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_DISPENSER, new WeightedRandomChestContent(new ItemStack(Items.fire_charge			, 1), 2, 8,  30));
+        ChestGenHooks.addItem(ChestGenHooks.PYRAMID_JUNGLE_DISPENSER, new WeightedRandomChestContent(new ItemStack(Items.fire_charge				, 1), 2, 8,  30));
         
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get("ingotSilver"			, 1), 1, 4,  12));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get("ingotLead"			, 1), 1, 4,   3));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get("ingotSteel"			, 1), 1, 4,   6));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get("ingotBronze"			, 1), 1, 4,   6));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemEmerald"			, 1), 1, 4,   2));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemRuby"				, 1), 1, 4,   2));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemSapphire"			, 1), 1, 4,   2));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemGreenSapphire"	, 1), 1, 4,   2));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemOlivine"			, 1), 1, 4,   2));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemGarnetRed"		, 1), 1, 4,   4));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get("gemGarnetYellow"		, 1), 1, 4,   4));
-        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GregTech_API.getGregTechItem(91, 1, 0)				, 1, 1,  20));
+        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_Items.Spray_Ice.get(						  1), 1, 1,  20));
+        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.ingot	, Materials.Silver			, 1), 1, 4,  12));
+        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.ingot	, Materials.Lead			, 1), 1, 4,   3));
+        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.ingot	, Materials.Steel			, 1), 1, 4,   6));
+        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.ingot	, Materials.Bronze			, 1), 1, 4,   6));
+        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem	, Materials.Emerald			, 1), 1, 4,   2));
+        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem	, Materials.Ruby			, 1), 1, 4,   2));
+        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem	, Materials.Sapphire		, 1), 1, 4,   2));
+        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem	, Materials.GreenSapphire	, 1), 1, 4,   2));
+        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem	, Materials.Olivine			, 1), 1, 4,   2));
+        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem	, Materials.GarnetRed		, 1), 1, 4,   4));
+        ChestGenHooks.addItem(ChestGenHooks.MINESHAFT_CORRIDOR		, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.gem	, Materials.GarnetYellow	, 1), 1, 4,   4));
         
-        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH		, new WeightedRandomChestContent(GT_OreDictUnificator.get("dustChrome"			, 1), 1, 4,   6));
-        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH		, new WeightedRandomChestContent(GT_OreDictUnificator.get("dustManganese"		, 1), 1, 4,  12));
-        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH		, new WeightedRandomChestContent(GT_OreDictUnificator.get("ingotSteel"			, 1), 4,12,  12));
-        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH		, new WeightedRandomChestContent(GT_OreDictUnificator.get("ingotBronze"			, 1), 4,12,  12));
-        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH		, new WeightedRandomChestContent(GT_OreDictUnificator.get("ingotBrass"			, 1), 4,12,  12));
+        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH		, new WeightedRandomChestContent(GT_Items.McGuffium_239.get(										  1), 1, 1,   1));
+        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH		, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.dust	, Materials.Chrome		, 1), 1, 4,   6));
+        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH		, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.dust	, Materials.Manganese	, 1), 1, 4,  12));
+        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH		, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.ingot	, Materials.Steel		, 1), 4,12,  12));
+        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH		, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.ingot	, Materials.Bronze		, 1), 4,12,  12));
+        ChestGenHooks.addItem(ChestGenHooks.VILLAGE_BLACKSMITH		, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.ingot	, Materials.Brass		, 1), 4,12,  12));
         
-        ChestGenHooks.addItem(ChestGenHooks.STRONGHOLD_CROSSING		, new WeightedRandomChestContent(GT_OreDictUnificator.get("dustChrome"			, 1), 1, 8,   6));
-        ChestGenHooks.addItem(ChestGenHooks.STRONGHOLD_CROSSING		, new WeightedRandomChestContent(GT_OreDictUnificator.get("dustManganese"		, 1), 1, 8,  12));
-        ChestGenHooks.addItem(ChestGenHooks.STRONGHOLD_CROSSING		, new WeightedRandomChestContent(GT_OreDictUnificator.get("ingotSteel"			, 1), 8,32,  12));
-        ChestGenHooks.addItem(ChestGenHooks.STRONGHOLD_CROSSING		, new WeightedRandomChestContent(GT_OreDictUnificator.get("ingotBronze"			, 1), 8,32,  12));
-        ChestGenHooks.addItem(ChestGenHooks.STRONGHOLD_CROSSING		, new WeightedRandomChestContent(GregTech_API.getGregTechItem(95, 1, 0)				, 1, 1,  20));
+        ChestGenHooks.addItem(ChestGenHooks.STRONGHOLD_CROSSING		, new WeightedRandomChestContent(GT_Items.McGuffium_239.get(										  1), 1, 1,  10));
+        ChestGenHooks.addItem(ChestGenHooks.STRONGHOLD_CROSSING		, new WeightedRandomChestContent(GT_Items.Spray_Pepper.get(											  1), 1, 1,  20));
+        ChestGenHooks.addItem(ChestGenHooks.STRONGHOLD_CROSSING		, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.dust	, Materials.Chrome		, 1), 1, 8,   6));
+        ChestGenHooks.addItem(ChestGenHooks.STRONGHOLD_CROSSING		, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.dust	, Materials.Manganese	, 1), 1, 8,  12));
+        ChestGenHooks.addItem(ChestGenHooks.STRONGHOLD_CROSSING		, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.ingot	, Materials.Steel		, 1), 8,32,  12));
+        ChestGenHooks.addItem(ChestGenHooks.STRONGHOLD_CROSSING		, new WeightedRandomChestContent(GT_OreDictUnificator.get(OrePrefixes.ingot	, Materials.Bronze		, 1), 8,32,  12));
 	}
 }
