@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 
 public class GT_IntegratedCircuit_Item extends GT_Generic_Item {
 
-   public GT_IntegratedCircuit_Item( String aUnlocalized) {
+   public GT_IntegratedCircuit_Item(String aUnlocalized) {
       super(aUnlocalized, "");
       this.setHasSubtypes(true);
       this.setMaxDamage(0);

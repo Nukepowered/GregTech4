@@ -18,6 +18,7 @@ import gregtechmod.common.GT_DummyWorld;
 import gregtechmod.common.GT_GUIHandler;
 import gregtechmod.common.GT_OreDictHandler;
 import gregtechmod.common.GT_Proxy;
+import gregtechmod.common.GT_RecipeAdder;
 import gregtechmod.common.GT_TickHandler;
 import gregtechmod.common.GT_Worldgenerator;
 import gregtechmod.common.blocks.GT_BlockMetaID_Block;
@@ -50,8 +51,10 @@ import gregtechmod.loaders.misc.GT_CoverLoader;
 import gregtechmod.loaders.misc.GT_TooEasyModeLoader;
 import gregtechmod.loaders.postload.GT_BlockResistanceLoader;
 import gregtechmod.loaders.postload.GT_BookAndLootLoader;
+import gregtechmod.loaders.postload.GT_CraftingRecipeLoader;
 import gregtechmod.loaders.postload.GT_CropLoader;
 import gregtechmod.loaders.postload.GT_ItemMaxStacksizeLoader;
+import gregtechmod.loaders.postload.GT_MinableRegistrator;
 import gregtechmod.loaders.postload.GT_ScrapboxDropLoader;
 import gregtechmod.loaders.postload.GT_SeedFlowerIterator;
 import gregtechmod.loaders.postload.GT_Worldgenloader;
@@ -60,6 +63,7 @@ import gregtechmod.loaders.preload.GT_DictRegistratorPostItem;
 import gregtechmod.loaders.preload.GT_DictRegistratorPreItem;
 import gregtechmod.loaders.preload.GT_ItemLoader;
 import gregtechmod.loaders.preload.GT_MetaTileEntityLoader;
+import gregtechmod.loaders.preload.GT_OreProcessingLoader;
 import ic2.api.recipe.RecipeOutput;
 import ic2.api.recipe.Recipes;
 import mods.railcraft.api.core.items.TagList;
@@ -213,7 +217,7 @@ public class GT_Mod implements IGT_Mod {
             GT_Log.log.catching(e);
         }
 		GregTech_API.gregtechmod = this;
-//		GregTech_API.sRecipeAdder = new GT_RecipeAdder();  // FIXME !!!
+		GregTech_API.sRecipeAdder = new GT_RecipeAdder();
 		GregTech_API.sDummyWorld = new GT_DummyWorld();
 		GregTech_API.sGTCoverload.add(new GT_CoverLoader());
         GT_OreDictHandler.instance.registerHandler();
@@ -313,44 +317,46 @@ public class GT_Mod implements IGT_Mod {
     	
     	GT_Log.log.info("GT_Mod: Preload-Phase started!");
     	GregTech_API.sPreloadStarted = true;
+    	
         GT_Log.log.info("GT_Mod: Getting required Items of other Mods.");
-        GT_Items.TE_Slag.set(GT_ModHandler.getTEItem("slag", 1L));
-        GT_Items.TE_Slag_Rich.set(GT_ModHandler.getTEItem("slagRich", 1L));
-        GT_Items.TE_Rockwool.set(GT_ModHandler.getTEItem("rockwool", 1L));
-        GT_Items.TE_Hardened_Glass.set(GT_ModHandler.getTEItem("glassHardened", 1L));
-        GT_Items.Cell_Empty.set(GT_ModHandler.getIC2Item("cell", 1L, GT_ModHandler.getIC2Item("cellEmpty", 1L, GT_ModHandler.getIC2Item("emptyCell", 1L))));
-        GT_Items.Cell_Water.set(GT_ModHandler.getIC2Item("waterCell", 1L, GT_ModHandler.getIC2Item("cellWater", 1L)));
-        GT_Items.Cell_Lava.set(GT_ModHandler.getIC2Item("lavaCell", 1L, GT_ModHandler.getIC2Item("cellLava", 1L)));
-        GT_Items.Cell_Air.set(GT_ModHandler.getIC2Item("airCell", 1L, GT_ModHandler.getIC2Item("cellAir", 1L, GT_ModHandler.getIC2Item("cellOxygen", 1L))));
-        GT_Items.IC2_Fuel_Can_Empty.set(GT_ModHandler.getIC2Item("fuelCan", 1L, GT_ModHandler.getIC2Item("fuelCanEmpty", 1L, GT_ModHandler.getIC2Item("emptyFuelCan", 1L))));
-        GT_Items.IC2_Fuel_Can_Filled.set(GT_ModHandler.getIC2Item("filledFuelCan", 1L));
-        GT_Items.IC2_Mixed_Metal_Ingot.set(GT_ModHandler.getIC2Item("mixedMetalIngot", 1L));
-        GT_Items.IC2_Fertilizer.set(GT_ModHandler.getIC2Item("fertilizer", 1L));
-        GT_Items.IC2_Resin.set(GT_ModHandler.getIC2Item("resin", 1L));
-        GT_Items.IC2_Crop_Seeds.set(GT_ModHandler.getIC2Item("cropSeed", 1L));
-        GT_Items.IC2_Grin_Powder.set(GT_ModHandler.getIC2Item("grinPowder", 1L));
-        GT_Items.IC2_Energium_Dust.set(GT_ModHandler.getIC2Item("energiumDust", 1L));
-        GT_Items.IC2_Scrap.set(GT_ModHandler.getIC2Item("scrap", 1L));
-        GT_Items.IC2_Scrapbox.set(GT_ModHandler.getIC2Item("scrapBox", 1L));
-        GT_Items.IC2_Fuel_Rod_Empty.set(GT_ModHandler.getIC2Item("fuelRod", 1L));
-        GT_Items.IC2_Food_Can_Empty.set(GT_ModHandler.getIC2Item("tinCan", 1L));
-        GT_Items.IC2_Food_Can_Filled.set(GT_ModHandler.getIC2Item("filledTinCan", 1L, 0));
-        GT_Items.IC2_Food_Can_Spoiled.set(GT_ModHandler.getIC2Item("filledTinCan", 1L, 1));
-        GT_Items.IC2_Industrial_Diamond.set(GT_ModHandler.getIC2Item("industrialDiamond", 1L, new ItemStack(Items.diamond, 1)));
-        GT_Items.IC2_Compressed_Coal_Ball.set(GT_ModHandler.getIC2Item("compressedCoalBall", 1L));
-        GT_Items.IC2_Compressed_Coal_Chunk.set(GT_ModHandler.getIC2Item("coalChunk", 1L));
-        GT_Items.Tool_Sword_Bronze.set(GT_ModHandler.getIC2Item("bronzeSword", 1L));
-        GT_Items.Tool_Pickaxe_Bronze.set(GT_ModHandler.getIC2Item("bronzePickaxe", 1L));
-        GT_Items.Tool_Shovel_Bronze.set(GT_ModHandler.getIC2Item("bronzeShovel", 1L));
-        GT_Items.Tool_Axe_Bronze.set(GT_ModHandler.getIC2Item("bronzeAxe", 1L));
-        GT_Items.Tool_Hoe_Bronze.set(GT_ModHandler.getIC2Item("bronzeHoe", 1L));
-        GT_Items.Tool_Hammer_Forge.set(GT_ModHandler.getIC2Item("ForgeHammer", 1L));
-        GT_Items.Credit_Iron.set(GT_ModHandler.getIC2Item("coin", 1L));
-        GT_Items.Circuit_Basic.set(GT_ModHandler.getIC2Item("electronicCircuit", 1L));
-        GT_Items.Circuit_Advanced.set(GT_ModHandler.getIC2Item("advancedCircuit", 1L));
-        GT_Items.Upgrade_Overclocker.set(GT_ModHandler.getIC2Item("overclockerUpgrade", 1L));
-        GT_Items.Upgrade_Transformer.set(GT_ModHandler.getIC2Item("transformerUpgrade", 1L));
-        GT_Items.Upgrade_Battery.set(GT_ModHandler.getIC2Item("energyStorageUpgrade", 1L));
+        GT_Items.TE_Slag					.set(GT_ModHandler.getTEItem("slag", 1L));
+        GT_Items.TE_Slag_Rich				.set(GT_ModHandler.getTEItem("slagRich", 1L));
+        GT_Items.TE_Rockwool				.set(GT_ModHandler.getTEItem("rockwool", 1L));
+        GT_Items.TE_Hardened_Glass			.set(GT_ModHandler.getTEItem("glassHardened", 1L));
+        GT_Items.Cell_Empty					.set(GT_ModHandler.getIC2Item("cell", 1L, GT_ModHandler.getIC2Item("cellEmpty", 1L, GT_ModHandler.getIC2Item("emptyCell", 1L))));
+        GT_Items.Cell_Water					.set(GT_ModHandler.getIC2Item("waterCell", 1L, GT_ModHandler.getIC2Item("cellWater", 1L)));
+        GT_Items.Cell_Lava					.set(GT_ModHandler.getIC2Item("lavaCell", 1L, GT_ModHandler.getIC2Item("cellLava", 1L)));
+        GT_Items.Cell_Air					.set(GT_ModHandler.getIC2Item("airCell", 1L, GT_ModHandler.getIC2Item("cellAir", 1L, GT_ModHandler.getIC2Item("cellOxygen", 1L))));
+        GT_Items.IC2_Fuel_Can_Empty			.set(GT_ModHandler.getIC2Item("fuelCan", 1L, GT_ModHandler.getIC2Item("fuelCanEmpty", 1L, GT_ModHandler.getIC2Item("emptyFuelCan", 1L))));
+        GT_Items.IC2_Fuel_Can_Filled		.set(GT_ModHandler.getIC2Item("filledFuelCan", 1L));
+        GT_Items.IC2_Mixed_Metal_Ingot		.set(GT_ModHandler.getIC2Item("mixedMetalIngot", 1L));
+        GT_Items.IC2_Fertilizer				.set(GT_ModHandler.getIC2Item("fertilizer", 1L));
+        GT_Items.IC2_Resin					.set(GT_ModHandler.getIC2Item("resin", 1L));
+        GT_Items.IC2_Crop_Seeds				.set(GT_ModHandler.getIC2Item("cropSeed", 1L));
+        GT_Items.IC2_Grin_Powder			.set(GT_ModHandler.getIC2Item("grinPowder", 1L));
+        GT_Items.IC2_Energium_Dust			.set(GT_ModHandler.getIC2Item("energiumDust", 1L));
+        GT_Items.IC2_Scrap					.set(GT_ModHandler.getIC2Item("scrap", 1L));
+        GT_Items.IC2_Scrapbox				.set(GT_ModHandler.getIC2Item("scrapBox", 1L));
+        GT_Items.IC2_Fuel_Rod_Empty			.set(GT_ModHandler.getIC2Item("fuelRod", 1L));
+        GT_Items.IC2_Food_Can_Empty			.set(GT_ModHandler.getIC2Item("tinCan", 1L));
+        GT_Items.IC2_Food_Can_Filled		.set(GT_ModHandler.getIC2Item("filledTinCan", 1L, 0));
+        GT_Items.IC2_Food_Can_Spoiled		.set(GT_ModHandler.getIC2Item("filledTinCan", 1L, 1));
+        GT_Items.IC2_Industrial_Diamond		.set(GT_ModHandler.getIC2Item("industrialDiamond", 1L, new ItemStack(Items.diamond, 1)));
+        GT_Items.IC2_Compressed_Coal_Ball	.set(GT_ModHandler.getIC2Item("compressedCoalBall", 1L));
+        GT_Items.IC2_Compressed_Coal_Chunk	.set(GT_ModHandler.getIC2Item("coalChunk", 1L));
+        GT_Items.Tool_Sword_Bronze			.set(GT_ModHandler.getIC2Item("bronzeSword", 1L));
+        GT_Items.Tool_Pickaxe_Bronze		.set(GT_ModHandler.getIC2Item("bronzePickaxe", 1L));
+        GT_Items.Tool_Shovel_Bronze			.set(GT_ModHandler.getIC2Item("bronzeShovel", 1L));
+        GT_Items.Tool_Axe_Bronze			.set(GT_ModHandler.getIC2Item("bronzeAxe", 1L));
+        GT_Items.Tool_Hoe_Bronze			.set(GT_ModHandler.getIC2Item("bronzeHoe", 1L));
+        GT_Items.Tool_Hammer_Forge			.set(GT_ModHandler.getIC2Item("ForgeHammer", 1L));
+        GT_Items.Credit_Iron				.set(GT_ModHandler.getIC2Item("coin", 1L));
+        GT_Items.Circuit_Basic				.set(GT_ModHandler.getIC2Item("electronicCircuit", 1L));
+        GT_Items.Circuit_Advanced			.set(GT_ModHandler.getIC2Item("advancedCircuit", 1L));
+        GT_Items.Upgrade_Overclocker		.set(GT_ModHandler.getIC2Item("overclockerUpgrade", 1L));
+        GT_Items.Upgrade_Transformer		.set(GT_ModHandler.getIC2Item("transformerUpgrade", 1L));
+        
+        GT_Items.Upgrade_Battery			.set(GT_ModHandler.getIC2Item("energyStorageUpgrade", 1L));
         GT_Log.log.info("GT_Mod: Setting Configs");
 		if (tConfig1.get("general", "TooEasyMode", false).getBoolean(false)) GregTech_API.sAfterGTPostload.add(new GT_TooEasyModeLoader());
     	GregTech_API.DEBUG_MODE									= tConfig1.get("general", "Debug", false).getBoolean(false);
@@ -472,10 +478,10 @@ public class GT_Mod implements IGT_Mod {
 			GT_Log.log.error("GT_Mod: Fatal Error ocurred while initializing TileEntities, crashing Minecraft.");
 			throw new RuntimeException("");
 		} else {
-//			new GT_OreProcessingLoader().run(); TODO RECIPES
+			new GT_OreProcessingLoader().run();
             new GT_MetaTileEntityLoader().run();
-            new GT_DictRegistratorPreItem().run();
             new GT_ItemLoader().run();
+            new GT_DictRegistratorPreItem().run();
             new GT_DictRegistratorPostItem().run();
             new GT_CircuitBehaviorLoader().run();
             new GT_CoverBehaviorLoader().run();
@@ -492,8 +498,7 @@ public class GT_Mod implements IGT_Mod {
 			if(sSortToTheEnd) {
 				try {
 					GT_Log.log.info("GT_Mod: Sorting GregTech to the end of the Mod List for further processing.");
-					LoadController controller = (LoadController) GT_Utility.getFieldContent(Loader.instance(),
-							"modController", true, true);
+					LoadController controller = (LoadController) GT_Utility.getFieldContent(Loader.instance(), "modController", true, true);
 					List<ModContainer> mods = controller.getActiveModList();
 					ArrayList<ModContainer> sorted = new ArrayList<>();
 					ModContainer mod = null;
@@ -596,20 +601,20 @@ public class GT_Mod implements IGT_Mod {
         }
     	
 		if (sSortToTheEnd) {
-//			GT_OreDictHandler.instance.registerUnificationEntries(); // TODO OREDICT
+			GT_OreDictHandler.instance.registerUnificationEntries();
 		} else {
-			(new GT_ItemIterator()).run();
-//			GT_OreDictHandler.instance.registerUnificationEntries();
-			(new GT_LiquidAndFuelLoader()).run();
+			new GT_ItemIterator().run();
+			GT_OreDictHandler.instance.registerUnificationEntries();
+			new GT_LiquidAndFuelLoader().run();
 		}
         
 		new GT_BookAndLootLoader().run();
 		new GT_ItemMaxStacksizeLoader().run();
 		new GT_BlockResistanceLoader().run();
 //		new GT_RecyclerBlacklistLoader().run();
-//		new GT_MinableRegistrator().run();
+		new GT_MinableRegistrator().run();
 		new GT_SeedFlowerIterator().run();
-//		new GT_CraftingRecipeLoader().run();
+		new GT_CraftingRecipeLoader().run();
 //		new GT_MachineRecipeLoader().run();
 		new GT_ScrapboxDropLoader().run();
 //      new GT_UUMRecipeLoader().run();
@@ -617,9 +622,8 @@ public class GT_Mod implements IGT_Mod {
 		new GT_Worldgenloader().run();
 //      new GT_RecyclingRecipeLoader().run();
 		
-//		new GT_ItemIterator().run(); // TODO looks like removed in 408
-//		new GT_LiquidAndFuelLoader().run();
-//      new GT_SonictronLoader().run();
+		new GT_ItemIterator().run();
+		new GT_LiquidAndFuelLoader().run();
 
 //		GT_RecipeRegistrator.registerUsagesForMaterials(new ItemStack(Blocks.planks, 1), GT_OreDictUnificator.get(OrePrefixes.dust, (Object)Materials.Wood, 1L), (String)null, false, true, false);
 //        GT_Log.log.info("GT_Mod: Activating OreDictionary Handler, this can take some time, as it scans the whole OreDictionary");
@@ -1020,7 +1024,7 @@ public class GT_Mod implements IGT_Mod {
             
             items.removeIf(item -> item == null);
             for (ItemStack item : items) {
-            	if (/*GT_OreDictHandler.instance.mRegisteredStacks.contains(item)*/ true) { // TODO
+            	if (GT_OreDictHandler.instance.mRegisteredStacks.contains(item)) {
             		GT_Log.log.error("GT-ERR-01: @ " + item.getUnlocalizedName() + "   " + item.getDisplayName());
             		GT_Log.log.error("A Recipe used an OreDict Item as Output directly, without copying it before!!! This is a typical CallByReference/CallByValue Error");
             		GT_Log.log.error("Said Item will be renamed to make the invalid Recipe visible, so that you can report it properly.");

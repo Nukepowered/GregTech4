@@ -113,19 +113,7 @@ public class GT_MetaMachine_Item extends ItemBlock {
 	
     @SideOnly(Side.CLIENT)
     @Override
-    public void registerIcons(IIconRegister aIconRegister) {
-		GT_Log.log.info("GT_Mod: Setting up Icon Register for Items");
-    	GregTech_API.sItemIcons = aIconRegister;
-    	
-    	GT_Log.log.info("GT_Mod: Starting Item Icon Load Phase Clientside");
-    	for (Runnable tRunnable : GregTech_API.sGTItemIconload) {
-    		try {
-    			tRunnable.run();
-    		} catch(Throwable e) {
-    			GT_Log.log.catching(e);
-    		}
-    	}
-    }
+    public void registerIcons(IIconRegister aIconRegister) {}
     
     @Override
     public boolean onItemUseFirst(ItemStack stack, EntityPlayer player, World world, int x, int y, int z, int side, float hitX, float hitY, float hitZ) {

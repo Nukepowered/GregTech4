@@ -19,6 +19,7 @@ import ic2.api.recipe.RecipeOutput;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -55,8 +56,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
-
-import com.ibm.icu.text.DecimalFormat;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
@@ -894,7 +893,7 @@ public class GT_Utility {
 	 * Converts a Number to a String
 	 */
     public static <T extends Number> String parseNumberToString(T aNumber) {
-    	return new DecimalFormat("###,###.###").format(aNumber);
+    	return new DecimalFormat("###,###.##").format(aNumber);
     }
     
     public static NBTTagCompound getNBTContainingBoolean(NBTTagCompound aNBT, Object aTag, boolean aValue) {

@@ -87,11 +87,11 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 //				GT_LanguageManager.addStringLocalization(getUnlocalizedName() + "." + i + ".tooltip", tMaterial.getToolTip(tPrefix.mMaterialAmount / GregTech_API.MATERIAL_UNIT));
 				String tOreName = getOreDictString(tPrefix, tMaterial);
 				tPrefix = OrePrefixes.getOrePrefix(tOreName);
-//				if (tPrefix != null && tPrefix.mIsUnificatable) {
-//					GT_OreDictUnificator.set(tOreName, new ItemStack(this, 1, i));
-//				} else {
+				if (tPrefix != null && tPrefix.mIsUnificatable) {
+					GT_OreDictUnificator.set(tOreName, new ItemStack(this, 1, i));
+				} else {
 					GT_OreDictUnificator.registerOre(tOreName, new ItemStack(this, 1, i));
-//				}
+				}
 			}
 		}
 	}
@@ -344,6 +344,18 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 	@Override
     @SideOnly(Side.CLIENT)
     public final void registerIcons(IIconRegister aIconRegister) {
+		GT_Log.log.info("GT_Mod: Setting up Icon Register for Items");
+    	GregTech_API.sItemIcons = aIconRegister;
+    	
+    	GT_Log.log.info("GT_Mod: Starting Item Icon Load Phase Clientside");
+    	for (Runnable tRunnable : GregTech_API.sGTItemIconload) {
+    		try {
+    			tRunnable.run();
+    		} catch(Throwable e) {
+    			GT_Log.log.catching(e);
+    		}
+    	}
+		
 		for (short i = 0, j = (short)mEnabledItems.length(); i < j; i++) if (mEnabledItems.get(i)) {
 			for (byte k = 1; k < mIconList[i].length; k++) {
 				mIconList[i][k] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_ITEM + (GT_Config.system?"troll":getUnlocalizedName() + "/" + i + "/" + k));

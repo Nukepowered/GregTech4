@@ -632,7 +632,7 @@ public class GT_ItemLoader implements Runnable {
 		}
 		
 		GregTech_API.sItemList[9] = new GT_MetaGenerated_Item_02();
-		GT_Items.Circuit_Integrated.set((GregTech_API.sItemList[10] = new GT_IntegratedCircuit_Item("Integrated Circuit")));
+		GT_Items.Circuit_Integrated.set((GregTech_API.sItemList[10] = new GT_IntegratedCircuit_Item("GregTech_Integrated_Circuit")));
 		GT_OreDictUnificator.addToBlacklist(GT_Items.Circuit_Integrated.getWildcard(1));
 		
 		GT_Log.log.info("GT_Mod: Register Regular Items.");
