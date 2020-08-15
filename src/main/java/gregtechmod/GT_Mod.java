@@ -54,9 +54,13 @@ import gregtechmod.loaders.postload.GT_BookAndLootLoader;
 import gregtechmod.loaders.postload.GT_CraftingRecipeLoader;
 import gregtechmod.loaders.postload.GT_CropLoader;
 import gregtechmod.loaders.postload.GT_ItemMaxStacksizeLoader;
+import gregtechmod.loaders.postload.GT_MachineRecipeLoader;
 import gregtechmod.loaders.postload.GT_MinableRegistrator;
+import gregtechmod.loaders.postload.GT_RecyclerBlacklistLoader;
+import gregtechmod.loaders.postload.GT_RecyclingRecipeLoader;
 import gregtechmod.loaders.postload.GT_ScrapboxDropLoader;
 import gregtechmod.loaders.postload.GT_SeedFlowerIterator;
+import gregtechmod.loaders.postload.GT_UUMRecipeLoader;
 import gregtechmod.loaders.postload.GT_Worldgenloader;
 import gregtechmod.loaders.preload.GT_CircuitBehaviorLoader;
 import gregtechmod.loaders.preload.GT_DictRegistratorPostItem;
@@ -611,19 +615,16 @@ public class GT_Mod implements IGT_Mod {
 		new GT_BookAndLootLoader().run();
 		new GT_ItemMaxStacksizeLoader().run();
 		new GT_BlockResistanceLoader().run();
-//		new GT_RecyclerBlacklistLoader().run();
+		new GT_RecyclerBlacklistLoader().run();
 		new GT_MinableRegistrator().run();
 		new GT_SeedFlowerIterator().run();
 		new GT_CraftingRecipeLoader().run();
-//		new GT_MachineRecipeLoader().run();
+		new GT_MachineRecipeLoader().run();
 		new GT_ScrapboxDropLoader().run();
-//      new GT_UUMRecipeLoader().run();
+		new GT_UUMRecipeLoader().run();
 		new GT_CropLoader().run();
 		new GT_Worldgenloader().run();
-//      new GT_RecyclingRecipeLoader().run();
-		
-		new GT_ItemIterator().run();
-		new GT_LiquidAndFuelLoader().run();
+		new GT_RecyclingRecipeLoader().run();
 
 //		GT_RecipeRegistrator.registerUsagesForMaterials(new ItemStack(Blocks.planks, 1), GT_OreDictUnificator.get(OrePrefixes.dust, (Object)Materials.Wood, 1L), (String)null, false, true, false);
 //        GT_Log.log.info("GT_Mod: Activating OreDictionary Handler, this can take some time, as it scans the whole OreDictionary");
