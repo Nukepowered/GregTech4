@@ -85,7 +85,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	        aNBT.setString		("mOwnerName"		, mOwnerName);
 	    	aNBT.setBoolean		("mLockUpgrade"		, mLockUpgrade);
 	    	aNBT.setBoolean		("mMuffler"			, mMuffler);
-	    	aNBT.setBoolean		("mMJConverter"		, mRFConverter);
+	    	aNBT.setBoolean		("mRFConverter"		, mRFConverter);
 	    	aNBT.setBoolean		("mSteamConverter"	, mSteamConverter);
 	    	aNBT.setBoolean		("mActive"			, mActive);
 	    	aNBT.setBoolean		("mRedstone"		, mRedstone);
@@ -521,6 +521,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	@Override
 	public void onDataPacket(NetworkManager manager, S35PacketUpdateTileEntity packet) {
 		NBTTagCompound data = packet.func_148857_g();
+		mRFConverter = data.getBoolean("oRFUpgrade");
 		this.receiveMetaTileEntityData(data.getShort("mID"),
 				data.getIntArray("mCoverSides"),
 				data.getByte("oTextureData"),
@@ -537,6 +538,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 		data.setByte("oTextureData", oTextureData = (byte)((getFrontFacing() & 7) | (mActive ? 8 : 0) | (mRedstone ? 16 : 0) | (mLockUpgrade ? 32 : 0)));
         data.setByte("oUpdateData", oUpdateData = hasValidMetaTileEntity() ? mMetaTileEntity.getUpdateData() : 0);
         data.setByte("oColor", oColor = mColor);
+        data.setBoolean("oRFUpgrade", mRFConverter);
         data.setByte("oRedstoneData", oRedstoneData = (byte)(
         		((mSidedRedstone[0] > 0) ? 1 : 0)  |
         		((mSidedRedstone[1] > 0) ? 2 : 0)  |
@@ -566,6 +568,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
         		((mSidedRedstone[4] > 0) ? 16 : 0) |
         		((mSidedRedstone[5] > 0) ? 32 : 0)));
 		tOut.aColorData = (oColor = mColor);
+		tOut.aRFUpgrade = mRFConverter;
 		oLightValue = oLightValueClient = -1;
 		return tOut;
 	}
@@ -654,8 +657,8 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 			tList.add("Is" + (mMetaTileEntity.isAccessAllowed(aPlayer)?" ":" not ") + "accessible for you");
 		}
 		if (aLogLevel > 0) {
-			if (getRFCapacity() > 0 && hasRFConverterUpgrade()) tList.add(getStoredRF() + " of " + getRFCapacity() + " MJ");
-			if (getSteamCapacity() > 0 && hasSteamEngineUpgrade()) tList.add(getStoredSteam() + " of " + getSteamCapacity() + " Steam");
+			if (getRFCapacity() > 0 && hasRFConverterUpgrade()) tList.add("RF energy strored: " + getStoredRF() + " of " + getRFCapacity() + " RF");
+			if (getSteamCapacity() > 0 && hasSteamEngineUpgrade()) tList.add("Steam stored: " + getStoredSteam() + " of " + getSteamCapacity() + " Steam");
 			tList.add("Machine is " + (mActive?"active":"inactive"));
 			if (mNeedsBatteryUpgrade && isBatteryUpgradable(10000, (byte)1)) tList.add("WARNING: Requires more Energy Capacity to work! Add Battery Upgrades!");
 			if (!mHasEnoughEnergy) tList.add("ATTENTION: This Device consumes Energy at a higher Rate than you input. You could insert more to speed up the process.");
@@ -709,14 +712,14 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	@Override public boolean isActive() {return mActive;}
     @Override public void setActive(boolean aActive) {mActive = aActive;}
 	@Override public long getTimer() {return mTickTimer;}
-	@Override public boolean decreaseStoredEnergyUnits(int aEnergy, boolean aIgnoreTooLessEnergy) {if (!hasValidMetaTileEntity()) return false; if (getUniversalEnergyCapacity() < aEnergy) mNeedsBatteryUpgrade = true; return mHasEnoughEnergy = decreaseStoredMJ(aEnergy, false) || decreaseStoredSteam(aEnergy, false) || decreaseStoredEU(aEnergy, aIgnoreTooLessEnergy) || (aIgnoreTooLessEnergy && (decreaseStoredMJ(aEnergy, true) || decreaseStoredSteam(aEnergy, true)));}
+	@Override public boolean decreaseStoredEnergyUnits(int aEnergy, boolean aIgnoreTooLessEnergy) {if (!hasValidMetaTileEntity()) return false; if (getUniversalEnergyCapacity() < aEnergy) mNeedsBatteryUpgrade = true; return mHasEnoughEnergy = decreaseStoredRF(aEnergy * 8, false) || decreaseStoredSteam(aEnergy, false) || decreaseStoredEU(aEnergy, aIgnoreTooLessEnergy) || (aIgnoreTooLessEnergy && (decreaseStoredRF(aEnergy * 8, true) || decreaseStoredSteam(aEnergy, true)));}
 	@Override public boolean increaseStoredEnergyUnits(int aEnergy, boolean aIgnoreTooMuchEnergy) {if (!hasValidMetaTileEntity()) return false; if (getStoredEU() < getEUCapacity() || aIgnoreTooMuchEnergy) {setStoredEU(mMetaTileEntity.getEUVar() + aEnergy); return true;} return false;}
 	@Override public boolean inputEnergyFrom(byte aSide) {if (aSide == 6) return true; if (isServerSide()) return (aSide>=0&&aSide<6?mActiveEUInputs [aSide]:false)&&!mReleaseEnergy; return isEnergyInputSide (aSide);}
 	@Override public boolean outputsEnergyTo(byte aSide) {if (aSide == 6) return true; if (isServerSide()) return (aSide>=0&&aSide<6?mActiveEUOutputs[aSide]:false)|| mReleaseEnergy; return isEnergyOutputSide(aSide);}
 	@Override public int getOutputAmperage() {if (hasValidMetaTileEntity() && mMetaTileEntity.isElectric()) return mMetaTileEntity.maxEUPulses()==1&&mMetaTileEntity.isTransformingLowEnergy()&&mTransformers>0?4:mMetaTileEntity.maxEUPulses(); return 0;}
 	@Override public int getOutputVoltage() {if (hasValidMetaTileEntity() && mMetaTileEntity.isElectric() && mMetaTileEntity.isEnetOutput()) return mMetaTileEntity.maxEUOutput() * (mTransformers>0?(int)Math.pow(4, mTransformers-(mMetaTileEntity.isTransformingLowEnergy()?1:0)):1); return 0;}
 	@Override public int getInputVoltage() {if (hasValidMetaTileEntity() && mMetaTileEntity.isElectric()) return mMetaTileEntity.maxEUInput()*(int)Math.pow(4, mTransformers); return mMetaTileEntity.isElectric()?Integer.MAX_VALUE:0;}
-	@Override public boolean increaseStoredRF(int aEnergy, boolean aIgnoreTooMuchEnergy) {if (!hasValidMetaTileEntity()) return false; if (mMetaTileEntity.getRFVar() < getRFCapacity()	|| aIgnoreTooMuchEnergy) {setStoredMJ(mMetaTileEntity.getRFVar() + aEnergy); return true;} return false;}
+	@Override public boolean increaseStoredRF(int aEnergy, boolean aIgnoreTooMuchEnergy) {if (!hasValidMetaTileEntity()) return false; if (mMetaTileEntity.getRFVar() < getRFCapacity()	|| aIgnoreTooMuchEnergy) {setStoredRF(mMetaTileEntity.getRFVar() + aEnergy); return true;} return false;}
 	@Override public boolean increaseStoredSteam(int aEnergy, boolean aIgnoreTooMuchEnergy) {if (!hasValidMetaTileEntity()) return false; if (mMetaTileEntity.getSteamVar() < getSteamCapacity() || aIgnoreTooMuchEnergy) {setStoredSteam(mMetaTileEntity.getSteamVar() + aEnergy); return true;} return false;}
 	@Override public String getDescription() {if (hasValidMetaTileEntity()) return mMetaTileEntity.getDescription(); return "";}
     @Override public boolean isValidSlot(int aIndex) {if (hasValidMetaTileEntity()) return mMetaTileEntity.isValidSlot(aIndex); return false;}
@@ -737,10 +740,10 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
     protected boolean hasValidMetaTileEntity() {return mMetaTileEntity != null && mMetaTileEntity.getBaseMetaTileEntity() == this;}
     
     public boolean setStoredEU			(int aEnergy) {if (!hasValidMetaTileEntity()) return false; if (aEnergy < 0) aEnergy = 0; mMetaTileEntity.setEUVar		(aEnergy); return true;}
-    public boolean setStoredMJ			(int aEnergy) {if (!hasValidMetaTileEntity()) return false; if (aEnergy < 0) aEnergy = 0; mMetaTileEntity.setRFVar		(aEnergy); return true;}
+    public boolean setStoredRF			(int aEnergy) {if (!hasValidMetaTileEntity()) return false; if (aEnergy < 0) aEnergy = 0; mMetaTileEntity.setRFVar		(aEnergy); return true;}
     public boolean setStoredSteam		(int aEnergy) {if (!hasValidMetaTileEntity()) return false; if (aEnergy < 0) aEnergy = 0; mMetaTileEntity.setSteamVar	(aEnergy); return true;}
     public boolean decreaseStoredEU		(int aEnergy, boolean aIgnoreTooLessEnergy)	{if (!hasValidMetaTileEntity()) return false; if (mMetaTileEntity.getEUVar()	- aEnergy >= 0	|| aIgnoreTooLessEnergy) {setStoredEU	(mMetaTileEntity.getEUVar()		- aEnergy); if (mMetaTileEntity.getEUVar()		< 0) {setStoredEU	(0); return false;} return true;} return false;}
-    public boolean decreaseStoredMJ		(int aEnergy, boolean aIgnoreTooLessEnergy)	{if (!hasValidMetaTileEntity()) return false; if (mMetaTileEntity.getRFVar()	- aEnergy >= 0	|| aIgnoreTooLessEnergy) {setStoredMJ	(mMetaTileEntity.getRFVar()		- aEnergy); if (mMetaTileEntity.getRFVar() 		< 0) {setStoredMJ	(0); return false;} return true;} return false;}
+    public boolean decreaseStoredRF		(int aEnergy, boolean aIgnoreTooLessEnergy)	{if (!hasValidMetaTileEntity()) return false; if (mMetaTileEntity.getRFVar()	- aEnergy >= 0	|| aIgnoreTooLessEnergy) {setStoredRF	(mMetaTileEntity.getRFVar()		- aEnergy); if (mMetaTileEntity.getRFVar() 		< 0) {setStoredRF	(0); return false;} return true;} return false;}
     public boolean decreaseStoredSteam	(int aEnergy, boolean aIgnoreTooLessEnergy)	{if (!hasValidMetaTileEntity()) return false; if (mMetaTileEntity.getSteamVar()	- aEnergy >= 0	|| aIgnoreTooLessEnergy) {setStoredSteam(mMetaTileEntity.getSteamVar()	- aEnergy); if (mMetaTileEntity.getSteamVar()	< 0) {setStoredSteam(0); return false;} return true;} return false;}
 	
     public boolean playerOwnsThis(EntityPlayer aPlayer, boolean aCheckPrecicely) {if (!hasValidMetaTileEntity()) return false; if (aCheckPrecicely || unbreakable() || privateAccess() || mOwnerName.equals("")) if (mOwnerName.equals("")&&isServerSide()) setOwnerName(aPlayer.getDisplayName()); else if (privateAccess() && !aPlayer.getDisplayName().equals("Player") && !mOwnerName.equals("Player") && !mOwnerName.equals(aPlayer.getDisplayName())) return false; return true;}
@@ -777,7 +780,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 		NBTTagCompound tNBT = new NBTTagCompound();
 		if (mMuffler			) tNBT.setBoolean	("mMuffler"			, mMuffler);
     	if (mLockUpgrade		) tNBT.setBoolean	("mLockUpgrade"		, mLockUpgrade);
-    	if (mRFConverter		) tNBT.setBoolean	("mMJConverter"		, mRFConverter);
+    	if (mRFConverter		) tNBT.setBoolean	("mRFConverter"		, mRFConverter);
     	if (mSteamConverter		) tNBT.setBoolean	("mSteamConverter"	, mSteamConverter);
 		if (mColor				> 0) tNBT.setByte	("mColor"			, mColor);
 		if (mTransformers		> 0) tNBT.setByte	("mTransformers"	, mTransformers);
@@ -1190,19 +1193,27 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	
 	@Override
 	public boolean addMufflerUpgrade() {
-		if (isMufflerUpgradable()) return mMuffler = true;
+		if (isMufflerUpgradable()) {
+			issueBlockUpdate();
+			return mMuffler = true;
+		}
 		return false;
 	}
 	
 	@Override
 	public boolean addRFConverterUpgrade() {
-		if (isRFConverterUpgradable()) return mRFConverter = true;
+		if (isRFConverterUpgradable()) {
+			getWorld().markBlockForUpdate(xCoord, yCoord, zCoord);
+			issueBlockUpdate();
+			return mRFConverter = true;
+		}
 		return false;
 	}
 	
 	@Override
 	public boolean addOverclockerUpgrade() {
 		if (isOverclockerUpgradable()) {
+			issueBlockUpdate();
 			mOverclockers++;
 			return true;
 		}
@@ -1212,6 +1223,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	@Override
 	public boolean addTransformerUpgrade() {
 		if (isTransformerUpgradable()) {
+			issueBlockUpdate();
 			mTransformers++;
 			return true;
 		}
@@ -1222,6 +1234,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	public boolean addBatteryUpgrade(int aStorage, byte aTier) {
 		mNeedsBatteryUpgrade = false;
 		if (isBatteryUpgradable(aStorage, aTier)) {
+			issueBlockUpdate();
 			mUpgradedStorage+=aStorage;
 			mOtherUpgrades++;
 			return true;

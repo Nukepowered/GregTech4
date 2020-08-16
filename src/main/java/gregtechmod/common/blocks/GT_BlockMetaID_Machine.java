@@ -652,9 +652,10 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 	public boolean onBlockActivated(World aWorld, int aX, int aY, int aZ, EntityPlayer aPlayer, int aSide, float par1, float par2, float par3) {
 		TileEntity tTileEntity = aWorld.getTileEntity(aX, aY, aZ);
 		if (tTileEntity != null && !aPlayer.isSneaking()) {
-			if (!aWorld.isRemote && tTileEntity instanceof GT_TileEntityMetaID_Machine) {
+			if (!aWorld.isRemote && tTileEntity instanceof GT_TileEntityMetaID_Machine) { 
 				if (((GT_TileEntityMetaID_Machine) tTileEntity).isUseableByPlayer(aPlayer)) {
 					((GT_TileEntityMetaID_Machine) tTileEntity).openGUI(aPlayer, aWorld.getBlockMetadata(aX, aY, aZ));
+					return true;
 				}
 
 				return true;

@@ -376,9 +376,8 @@ public class GT_Mod implements IGT_Mod {
     	if (tConfig1.get("general", "disable_STDOUT", false).getBoolean(false)) System.out.close();
     	if (tConfig1.get("general", "disable_STDERR", false).getBoolean(false)) System.err.close();
         
-        GregTech_API.UE_ENERGY_COMPATIBILITY 					= tConfig1.get("compatibility", "UniversalElectricity.Energy", true).getBoolean(true);
         GregTech_API.IC_ENERGY_COMPATIBILITY 					= tConfig1.get("compatibility", "Industrialcraft.Energy", true).getBoolean(true);
-        GregTech_API.BC_ENERGY_COMPATIBILITY					= tConfig1.get("compatibility", "Buildcraft.Energy", true).getBoolean(true);
+        GregTech_API.RF_ENERGY_COMPATIBILITY					= tConfig1.get("compatibility", "Cofh.Energy", true).getBoolean(true);
         
         GregTech_API.sMachineExplosions 						= tConfig1.get("machines", "machines_explosion_damage", true).getBoolean(false);
         GregTech_API.sMachineFlammable 							= tConfig1.get("machines", "machines_flammable", true).getBoolean(false);

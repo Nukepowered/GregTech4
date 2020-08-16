@@ -61,7 +61,7 @@ public class GregTech_API {
 	public static Object sBlockIcons, sItemIcons;
 	
 	/** Configured Booleans */
-	public static boolean DEBUG_MODE = false, SECONDARY_DEBUG_MODE = false, IC_ENERGY_COMPATIBILITY = true, UE_ENERGY_COMPATIBILITY = true, BC_ENERGY_COMPATIBILITY = true;
+	public static boolean DEBUG_MODE = false, SECONDARY_DEBUG_MODE = false, IC_ENERGY_COMPATIBILITY = true, RF_ENERGY_COMPATIBILITY = true;
 	
 	/** The Configuration Objects */
 	public static GT_Config sRecipeFile = null, sMachineFile = null, sWorldgenFile = null, sMaterialProperties = null, sUnification = null, sSpecialFile = null;
@@ -468,7 +468,7 @@ public class GregTech_API {
 		return new gregtechmod.api.items.GT_Tool_Item(aUnlocalized, "item.bug.tooltip", aMaxDamage, 0, false);
 	}
 	
-	private static Class<?> sBaseMetaTileEntityClass = null;
+	private static Class<? extends BaseMetaTileEntity> sBaseMetaTileEntityClass = null;
 	
 	/**
 	 * This gives you a new BaseMetaTileEntity. As some Interfaces are not always loaded (Buildcraft, Univeral Electricity) I have to use Invocation at the Constructor of the BaseMetaTileEntity
@@ -476,25 +476,13 @@ public class GregTech_API {
 	public static BaseMetaTileEntity constructBaseMetaTileEntity() {
 		if (sBaseMetaTileEntityClass == null) {
 			try {
-				if (UE_ENERGY_COMPATIBILITY && BC_ENERGY_COMPATIBILITY && IC_ENERGY_COMPATIBILITY) return (BaseMetaTileEntity)(sBaseMetaTileEntityClass = Class.forName("gregtechmod.api.metatileentity.BaseMetaTileEntityICUEMJ")).newInstance();
+				if (RF_ENERGY_COMPATIBILITY && IC_ENERGY_COMPATIBILITY) return (sBaseMetaTileEntityClass = gregtechmod.api.metatileentity.BaseMetaTileEntityICRF.class).newInstance();
 			} catch(Throwable e) {/*Do nothing*/}
 			try {
-				if (BC_ENERGY_COMPATIBILITY && IC_ENERGY_COMPATIBILITY) return (BaseMetaTileEntity)(sBaseMetaTileEntityClass = Class.forName("gregtechmod.api.metatileentity.BaseMetaTileEntityICMJ")).newInstance();
+				if (IC_ENERGY_COMPATIBILITY) return (sBaseMetaTileEntityClass = gregtechmod.api.metatileentity.BaseMetaTileEntityIC.class).newInstance();
 			} catch(Throwable e) {/*Do nothing*/}
 			try {
-				if (UE_ENERGY_COMPATIBILITY && IC_ENERGY_COMPATIBILITY) return (BaseMetaTileEntity)(sBaseMetaTileEntityClass = Class.forName("gregtechmod.api.metatileentity.BaseMetaTileEntityICUE")).newInstance();
-			} catch(Throwable e) {/*Do nothing*/}
-			try {
-				if (IC_ENERGY_COMPATIBILITY) return (BaseMetaTileEntity)(sBaseMetaTileEntityClass = Class.forName("gregtechmod.api.metatileentity.BaseMetaTileEntityIC")).newInstance();
-			} catch(Throwable e) {/*Do nothing*/}
-			try {
-				if (UE_ENERGY_COMPATIBILITY && BC_ENERGY_COMPATIBILITY) return (BaseMetaTileEntity)(sBaseMetaTileEntityClass = Class.forName("gregtechmod.api.metatileentity.BaseMetaTileEntityUEMJ")).newInstance();
-			} catch(Throwable e) {/*Do nothing*/}
-			try {
-				if (UE_ENERGY_COMPATIBILITY) return (BaseMetaTileEntity)(sBaseMetaTileEntityClass = Class.forName("gregtechmod.api.metatileentity.BaseMetaTileEntityUE")).newInstance();
-			} catch(Throwable e) {/*Do nothing*/}
-			try {
-				if (BC_ENERGY_COMPATIBILITY) return (BaseMetaTileEntity)(sBaseMetaTileEntityClass = Class.forName("gregtechmod.api.metatileentity.BaseMetaTileEntityMJ")).newInstance();
+				if (RF_ENERGY_COMPATIBILITY) return (sBaseMetaTileEntityClass = gregtechmod.api.metatileentity.BaseMetaTileEntityRF.class).newInstance();
 			} catch(Throwable e) {/*Do nothing*/}
 			try {
 				return (BaseMetaTileEntity)(sBaseMetaTileEntityClass = BaseMetaTileEntity.class).newInstance();
