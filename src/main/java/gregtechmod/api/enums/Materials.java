@@ -8,7 +8,9 @@ import gregtechmod.api.util.GT_Utility;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
+import com.google.common.collect.ImmutableMap;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -554,6 +556,8 @@ public enum Materials {
 	@Deprecated Wolframium			(Tungsten, false),
 	@Deprecated Wolfram				(Tungsten, false),
 	@Deprecated WrougtIron			(WroughtIron, false);
+		
+	public static final Map<String, Materials> exceptions;
 	
 	static {
 		Thorium			.add(SubTag.ENCHANTMENT_GLOW);
@@ -829,12 +833,37 @@ public enum Materials {
 		
 		FoolsRuby.mChemicalFormula = Ruby.mChemicalFormula;
 		Naquadah.mChemicalFormula = "Nq";
+		
+		ImmutableMap.Builder<String, Materials> builder = new ImmutableMap.Builder<>();
+		
+		builder.put("Brick"				, Clay			);
+		builder.put("BrickNether"		, NetherBrick	);
+		builder.put("GlassColorless"	, SiliconDioxide);
+		builder.put("Glass"				, SiliconDioxide);
+		builder.put("GlassBlack"		, SiliconDioxide);
+		builder.put("GlassRed"			, SiliconDioxide);
+		builder.put("GlassGreen"		, SiliconDioxide);
+		builder.put("GlassBrown"		, SiliconDioxide);
+		builder.put("GlassBlue"			, SiliconDioxide);
+		builder.put("GlassPurple"		, SiliconDioxide);
+		builder.put("GlassCyan"			, SiliconDioxide);
+		builder.put("GlassLightGray"	, SiliconDioxide);
+		builder.put("GlassGray"			, SiliconDioxide);
+		builder.put("GlassPink"			, SiliconDioxide);
+		builder.put("GlassLime"			, SiliconDioxide);
+		builder.put("GlassYellow"		, SiliconDioxide);
+		builder.put("GlassLightBlue"	, SiliconDioxide);
+		builder.put("GlassMagenta"		, SiliconDioxide);
+		builder.put("GlassOrange"		, SiliconDioxide);
+		builder.put("GlassWhite"		, SiliconDioxide);
+		
+		exceptions = builder.build();
 	}
 	
 	public static Materials get(String aMaterialName) {
 		Object tObject = GT_Utility.getFieldContent(Materials.class, aMaterialName, false, false);
 		if (tObject != null && tObject instanceof Materials) return (Materials)tObject;
-		return _NULL;
+		return exceptions.containsKey(aMaterialName) ? exceptions.get(aMaterialName) : _NULL;
 	}
 	
 	public static Materials getRealMaterial(String aMaterialName) {
@@ -847,7 +876,7 @@ public enum Materials {
 			if (tMaterial.mBlastFurnaceRequired) tMaterial.mBlastFurnaceRequired = aConfiguration.get(GT_ConfigCategories.Materials.blastfurnacerequirements, tString, true);
 			if (tMaterial.mAmplificationValue > 0) tMaterial.mAmplificationValue = aConfiguration.get(GT_ConfigCategories.Materials.UUM_MaterialCost, tString, tMaterial.mAmplificationValue);
 			if (tMaterial.mUUMEnergy > 0) tMaterial.mUUMEnergy = aConfiguration.get(GT_ConfigCategories.Materials.UUM_EnergyCost, tString, tMaterial.mUUMEnergy);
-//			if (tMaterial.mBlastFurnaceRequired && aConfiguration.get(GT_ConfigCategories.Materials.blastinductionsmelter, tString, tMaterial.mBlastFurnaceTemp < 1500)) GT_ModHandler.ThermalExpansion.addSmelterBlastOre(tMaterial); // TODO: recipe
+//			if (tMaterial.mBlastFurnaceRequired && aConfiguration.get(GT_ConfigCategories.Materials.blastinductionsmelter, tString, tMaterial.mBlastFurnaceTemp < 1500)) GT_ModHandler.ThermalExpansion.addSmelterBlastOre(tMaterial); // TODO: blast recipe
 		}
 	}
 	

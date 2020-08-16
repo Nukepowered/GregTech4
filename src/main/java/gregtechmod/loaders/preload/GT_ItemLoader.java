@@ -2,6 +2,7 @@ package gregtechmod.loaders.preload;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -68,10 +69,10 @@ import net.minecraft.potion.Potion;
 public class GT_ItemLoader implements Runnable {
 	@Override
 	public void run() {
-        GT_Log.log.info("GT_Mod: Register Armor Textures.");
+        GT_Log.log.info("Register Armor Textures.");
 		int tArmorID1 = GT_Mod.gregtechproxy.addArmor("lapotronpack"), tArmorID2 = GT_Mod.gregtechproxy.addArmor("lithiumbatpack"), tArmorID3 = GT_Mod.gregtechproxy.addArmor("cloakingdevice");
 		
-        GT_Log.log.info("GT_Mod: Register Meta-ID Items.");
+        GT_Log.log.info("Register Meta-ID Items.");
 		GregTech_API.sItemList[ 0] = new GT_MetaItem_Material	("GT_Materials");
 		GregTech_API.sItemList[ 1] = new GT_MetaItem_Dust		("GT_Dusts");
 		GregTech_API.sItemList[ 2] = new GT_MetaItem_Cell		("GT_Cells");
@@ -81,7 +82,7 @@ public class GT_ItemLoader implements Runnable {
 		GregTech_API.sItemList[ 6] = new GT_MetaItem_DirtyDust	("GT_DirtyDusts");
 		GregTech_API.sItemList[ 7] = new GT_MetaItem_TinyDust	("GT_TinyDusts");
 		
-        GT_Log.log.info("GT_Mod: Adding All Sub-Items with their OreDict and LiquidDict Entries.");
+        GT_Log.log.info("Adding All Sub-Items with their OreDict and LiquidDict Entries.");
         GT_Items.Credit_Copper.set(		GT_MetaItem_Material.addItem( 0, "Copper Credit"	, null, "0.125 Credits"	, false)); // TODO: LOCALE
         GT_Items.Credit_Silver.set(		GT_MetaItem_Material.addItem( 1, "Silver Credit"	, null, "8 Credits"		, false));
         GT_Items.Credit_Gold.set(		GT_MetaItem_Material.addItem( 2, "Gold Credit"		, null, "64 Credits"	, false));
@@ -635,11 +636,11 @@ public class GT_ItemLoader implements Runnable {
 		GT_Items.Circuit_Integrated.set((GregTech_API.sItemList[10] = new GT_IntegratedCircuit_Item("GregTech_Integrated_Circuit")));
 		GT_OreDictUnificator.addToBlacklist(GT_Items.Circuit_Integrated.getWildcard(1));
 		
-		GT_Log.log.info("GT_Mod: Register Regular Items.");
-		GT_Items.Display_Fluid.set( (GregTech_API.sItemList[15] = new GT_FluidDisplayItem("GregTech_FluidDisplay")));
-		GT_Items.NC_SensorCard.set( (GregTech_API.sItemList[16] = (GT_Generic_Item) GT_Utility.callConstructor("gregtechmod.common.items.GT_SensorCard_Item", 0, (Object) null, false, "GregTech_Sensorcard")));
+		GT_Log.log.info("Register Regular Items.");
+		GT_Items.Display_Fluid.set((GregTech_API.sItemList[15] = new GT_FluidDisplayItem("GregTech_FluidDisplay")));
+		GT_Items.NC_SensorCard.set((GregTech_API.sItemList[16] = (GT_Generic_Item) GT_Utility.callConstructor("gregtechmod.common.items.GT_SensorCard_Item", 0, (Object) null, false, "GregTech_Sensorcard")));
 		if (GregTech_API.sItemList[16] == null) {
-			GT_Items.NC_SensorCard.set( (GregTech_API.sItemList[16] = new GT_Generic_Item("GregTech_Sensorcard", "Nuclear Control not installed")));
+			GT_Items.NC_SensorCard.set((GregTech_API.sItemList[16] = new GT_Generic_Item("GregTech_Sensorcard", "Nuclear Control not installed")));
 		}
 		
 		GT_Items.NC_SensorKit.set((GregTech_API.sItemList[17] = new GT_SensorKit_Item("GregTech_Sensorkit")));
@@ -786,7 +787,9 @@ public class GT_ItemLoader implements Runnable {
 	    GT_Items.Tool_Hammer_Plastic.set((GregTech_API.sItemList[142] = new GT_SoftHammer_Item("GT_Hammer_Plastic", 1280, 5)));
 
 	    
-		GT_Log.log.info("GT_Mod: Register items"); 
+		GT_Log.log.info("Register items"); 
+		ArrayList<Item> gtItems = new ArrayList<>(Arrays.asList(GregTech_API.sItemList));
+		gtItems.removeIf(i -> i == null);
 		for (Item item : GregTech_API.sItemList) {
 			if (item != null) {
 				GameRegistry.registerItem(item, item.getUnlocalizedName());
@@ -794,19 +797,19 @@ public class GT_ItemLoader implements Runnable {
 		}
 		
 		
-        GT_Log.log.info("GT_Mod: Hiding certain Items from NEI.");
+        GT_Log.log.info("Hiding certain Items from NEI.");
 		try {
 			Class.forName("codechicken.nei.api.API");
 			codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sBlockList[3]));
-			codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[4]));
-			codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[5]));
-			codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[6]));
-			codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[7]));
-			codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[15]));
-			codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[16]));
-			codechicken.nei.api.API.hideItem(GT_ModHandler.getIC2Item("wrench", 1L));
-			codechicken.nei.api.API.hideItem(GT_ModHandler.getIC2Item("electricWrench", 1L));
-			codechicken.nei.api.API.hideItem(GT_ModHandler.getIC2Item("chainsaw", 1L));
+			codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[ 4], 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+			codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[ 5], 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+			codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[ 6], 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+			codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[ 7], 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+			codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[15], 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+			codechicken.nei.api.API.hideItem(new ItemStack(GregTech_API.sItemList[16], 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+			codechicken.nei.api.API.hideItem(GT_ModHandler.getIC2Item("wrench", 1));
+			codechicken.nei.api.API.hideItem(GT_ModHandler.getIC2Item("electricWrench", 1));
+			codechicken.nei.api.API.hideItem(GT_ModHandler.getIC2Item("chainsaw", 1));
 		} catch (Throwable e) {
 			if (GregTech_API.DEBUG_MODE) {
 				GT_Log.log.catching(e);

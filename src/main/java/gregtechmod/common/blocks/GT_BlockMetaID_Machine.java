@@ -877,14 +877,14 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
     }
     
 	@Override
-	public TileEntity createNewTileEntity(World aWorld, int meta) { // TODO: there wasnt meta before
+	public TileEntity createNewTileEntity(World aWorld, int meta) {
 		return GregTech_API.constructBaseMetaTileEntity();
 	}
 	
 	@Override
 	public TileEntity createTileEntity(World aWorld, int aMeta) {
 		switch(aMeta) {
-		case  0: return GregTech_API.constructBaseMetaTileEntity(); // TODO
+		case  0: return GregTech_API.constructBaseMetaTileEntity();
 		case  1: return new BaseMetaPipeEntity();
 		case  2: return new BaseMetaPipeEntity();
 		case  3: return new BaseMetaPipeEntity();
