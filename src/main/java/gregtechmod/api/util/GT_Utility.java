@@ -732,7 +732,7 @@ public class GT_Utility {
 		sBookCount++;
 		ItemStack rStack = new ItemStack(Items.written_book, 1);
         NBTTagCompound tNBT = new NBTTagCompound();
-        rStack.setStackDisplayName(aTitle);
+        tNBT.setString("title", aTitle);
         tNBT.setString("author", aAuthor);
         NBTTagList tNBTList = new NBTTagList();
         for (byte i = 0; i < aPages.length; i++) {
