@@ -756,7 +756,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	}
 
 	@Override
-	public boolean isMJConverterUpgradable() {
+	public boolean isRFConverterUpgradable() {
 		return false;
 	}
 
@@ -771,7 +771,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	}
 	
 	@Override
-	public boolean hasMJConverterUpgrade() {
+	public boolean hasRFConverterUpgrade() {
 		return false;
 	}
 
@@ -888,7 +888,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	}
 	
 	@Override
-	public boolean increaseStoredMJ(int aEnergy, boolean aIgnoreTooMuchEnergy) {
+	public boolean increaseStoredRF(int aEnergy, boolean aIgnoreTooMuchEnergy) {
 		return false;
 	}
 
@@ -920,7 +920,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	}
 	
 	@Override
-	public boolean addMJConverterUpgrade() {
+	public boolean addRFConverterUpgrade() {
 		return false;
 	}
 	
@@ -1035,7 +1035,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	}
 
 	@Override
-	public int getStoredMJ() {
+	public int getStoredRF() {
 		return 0;
 	}
 
@@ -1090,7 +1090,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	}
 	
 	@Override
-	public int getMJCapacity() {
+	public int getRFCapacity() {
 		return 0;
 	}
 	

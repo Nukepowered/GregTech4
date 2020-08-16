@@ -20,7 +20,7 @@ public class GT_MetaTileEntity_ElectricItemClearer extends GT_MetaTileEntity_Ele
 	@Override public boolean isBatteryUpgradable()					{return true;}
 	@Override public boolean isSimpleMachine()						{return false;}
     @Override public int maxEUStore()								{return 10000;}
-    @Override public int maxMJStore()								{return maxEUStore();}
+    @Override public int maxRFStore()								{return maxEUStore();}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 108);}
     
 	@Override

@@ -30,7 +30,7 @@ public class GT_MetaTileEntity_ElectricTypeSorter extends GT_MetaTileEntity_Elec
 	@Override public boolean isBatteryUpgradable()					{return true;}
 	@Override public boolean isSimpleMachine()						{return true;}
     @Override public int maxEUStore()								{return 10000;}
-    @Override public int maxMJStore()								{return maxEUStore();}
+    @Override public int maxRFStore()								{return maxEUStore();}
 	@Override public int getMinimumStoredEU()						{return 2000;}
     @Override public boolean isValidSlot(int aIndex)				{return aIndex<1;}
     @Override public boolean isOutputFacing(byte aSide)				{return mTargetDirection == aSide || getBaseMetaTileEntity().getBackFacing() == aSide;}

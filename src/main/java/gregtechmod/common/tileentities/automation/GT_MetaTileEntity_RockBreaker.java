@@ -24,7 +24,7 @@ public class GT_MetaTileEntity_RockBreaker extends GT_MetaTileEntity_ElectricBuf
 	@Override public boolean isSimpleMachine()						{return false;}
 	@Override public int getMinimumStoredEU()						{return 1000+(int)Math.pow(4, getBaseMetaTileEntity().getOverclockerUpgradeCount())*100;}
 	@Override public int maxEUStore()								{return 10000;}
-    @Override public int maxMJStore()								{return maxEUStore();}
+    @Override public int maxRFStore()								{return maxEUStore();}
 	@Override public int getInvSize()								{return 3;}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 106);}
 	

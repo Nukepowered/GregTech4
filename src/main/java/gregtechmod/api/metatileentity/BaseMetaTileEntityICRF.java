@@ -9,8 +9,8 @@ import net.minecraftforge.common.util.ForgeDirection;
  * 
  * This file contains all the needed 'implements' of the Interfaces for the Industrial Craft Stuff.
  */
-public class BaseMetaTileEntityIC extends BaseMetaTileEntity implements IIC2TileEntity {
-	public BaseMetaTileEntityIC() {
+public class BaseMetaTileEntityICRF extends BaseMetaTileEntityRF implements IIC2TileEntity {
+	public BaseMetaTileEntityICRF() {
 		super();
 	}
 	

@@ -43,7 +43,7 @@ public class GT_MetaTileEntity_ElectricFilter extends GT_MetaTileEntity_Electric
       return 10000;
    }
 
-   public int maxMJStore() {
+   public int maxRFStore() {
       return this.maxEUStore();
    }
 

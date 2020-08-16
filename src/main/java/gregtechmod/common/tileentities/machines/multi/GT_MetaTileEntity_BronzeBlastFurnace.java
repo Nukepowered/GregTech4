@@ -42,7 +42,7 @@ public class GT_MetaTileEntity_BronzeBlastFurnace extends MetaTileEntity {
 	@Override public int maxEUInput()								{return 0;}
     @Override public int maxEUOutput()								{return 0;}
     @Override public int maxEUStore()								{return 0;}
-    @Override public int maxMJStore()								{return 0;}
+    @Override public int maxRFStore()								{return 0;}
     @Override public int maxSteamStore()							{return 0;}
 	@Override public int getInvSize()								{return 4;}
 	@Override public boolean isAccessAllowed(EntityPlayer aPlayer)	{return true;}

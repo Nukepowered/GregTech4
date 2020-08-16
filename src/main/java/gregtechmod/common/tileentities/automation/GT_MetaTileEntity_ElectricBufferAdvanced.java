@@ -27,7 +27,7 @@ public class GT_MetaTileEntity_ElectricBufferAdvanced extends GT_MetaTileEntity_
 	@Override public int maxEUInput()								{return 128;}
     @Override public int maxEUPulses()								{return 4;}
     @Override public int maxEUStore()								{return 10000;}
-    @Override public int maxMJStore()								{return maxEUStore();}
+    @Override public int maxRFStore()								{return maxEUStore();}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 105);}
     
 	@Override

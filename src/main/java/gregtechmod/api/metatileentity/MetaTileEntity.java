@@ -268,17 +268,17 @@ public abstract class MetaTileEntity implements IMetaTileEntity {
 	}
 	
     /**
-     * This is used to set the internal MJ Energy to the given Parameter.
+     * This is used to set the internal RF Energy to the given Parameter.
      */
-	public void setMJVar(int aMJ) {
-		((BaseMetaTileEntity)mBaseMetaTileEntity).mStoredMJ = aMJ;
+	public void setRFVar(int aRF) {
+		((BaseMetaTileEntity)mBaseMetaTileEntity).mStoredRF = aRF;
 	}
 	
     /**
-     * This is used to get the internal MJ Energy.
+     * This is used to get the internal RF Energy.
      */
-	public int getMJVar() {
-		return ((BaseMetaTileEntity)mBaseMetaTileEntity).mStoredMJ;
+	public int getRFVar() {
+		return ((BaseMetaTileEntity)mBaseMetaTileEntity).mStoredRF;
 	}
 
     /**
@@ -301,9 +301,9 @@ public abstract class MetaTileEntity implements IMetaTileEntity {
     public int maxSteamStore()  {return 0;}
     
     /**
-     * @return the amount of MJ, which can be stored in this Device. Default is 0 EU.
+     * @return the amount of RF, which can be stored in this Device. Default is 0 EU.
      */
-    public int maxMJStore()  {return 0;}
+    public int maxRFStore()  {return 0;}
     
 	/**
 	 * @return the amount of EU, which this Device stores before starting to emit Energy.

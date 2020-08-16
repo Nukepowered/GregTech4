@@ -23,7 +23,7 @@ public class GT_MetaTileEntity_Scrapboxinator extends GT_MetaTileEntity_Electric
 	@Override public boolean isSimpleMachine()						{return false;}
 	@Override public int getMinimumStoredEU()						{return 2000;}
 	@Override public int maxEUStore()								{return 10000;}
-    @Override public int maxMJStore()								{return maxEUStore();}
+    @Override public int maxRFStore()								{return maxEUStore();}
 	@Override public int getInvSize()								{return 3;}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 111);}
 	

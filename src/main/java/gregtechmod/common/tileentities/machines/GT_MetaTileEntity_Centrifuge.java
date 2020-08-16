@@ -37,7 +37,7 @@ public class GT_MetaTileEntity_Centrifuge extends GT_MetaTileEntity_BasicTank {
 	@Override public boolean isInputFacing(byte aSide)				{return true;}
     @Override public int maxEUInput()								{return 32;}
     @Override public int maxEUStore()								{return 10000;}
-    @Override public int maxMJStore()								{return maxEUStore();}
+    @Override public int maxRFStore()								{return maxEUStore();}
     @Override public int maxSteamStore()							{return maxEUStore();}
 	@Override public int getInvSize()								{return 7;}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 146);}

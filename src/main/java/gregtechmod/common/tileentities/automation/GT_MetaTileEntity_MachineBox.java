@@ -35,7 +35,7 @@ public class GT_MetaTileEntity_MachineBox extends GT_MetaTileEntity_BasicTank {
 	@Override public int maxEUInput()								{return 32;}
     @Override public int maxEUOutput()								{return 32;}
     @Override public int maxEUStore()								{return 10000;}
-    @Override public int maxMJStore()								{return maxEUStore();}
+    @Override public int maxRFStore()								{return maxEUStore();}
     @Override public int maxSteamStore()							{return maxEUStore();}
 	@Override public boolean isValidSlot(int aIndex)				{return aIndex < 1;}
 	@Override public int getInvSize()								{return 2;}

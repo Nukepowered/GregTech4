@@ -35,7 +35,7 @@ public class GT_MetaTileEntity_ElectricInventoryManager extends MetaTileEntity {
     @Override public int maxEUOutput()								{return 32;}
     @Override public int maxEUPulses()								{return 4;}
     @Override public int maxEUStore()								{return 100000;}
-    @Override public int maxMJStore()								{return maxEUStore();}
+    @Override public int maxRFStore()								{return maxEUStore();}
     @Override public int maxSteamStore()							{return maxEUStore();}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 129);}
 	@Override public boolean isValidSlot(int aIndex)				{return aIndex<3;}

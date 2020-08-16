@@ -6,7 +6,7 @@ package gregtechmod.api.metatileentity;
  * 
  * This file contains all the needed 'implements' of the Interfaces for the Michael Jackson Stuff.
  */
-public class BaseMetaTileEntityMJ extends BaseMetaTileEntity /*implements IBCTileEntity*/ {
+public class BaseMetaTileEntityRF extends BaseMetaTileEntity /*implements IEnergyHandler*/ {
 	/*
 	IPowerProvider mProvider;
 	

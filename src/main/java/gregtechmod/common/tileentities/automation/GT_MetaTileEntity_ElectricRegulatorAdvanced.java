@@ -29,7 +29,7 @@ public class GT_MetaTileEntity_ElectricRegulatorAdvanced extends GT_MetaTileEnti
 	@Override public int maxEUInput()								{return 128;}
     @Override public int maxEUPulses()								{return 4;}
     @Override public int maxEUStore()								{return 10000;}
-    @Override public int maxMJStore()								{return maxEUStore();}
+    @Override public int maxRFStore()								{return maxEUStore();}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 123);}
 	@Override public boolean isValidSlot(int aIndex)				{return aIndex<9;}
 	@Override public boolean isInputFacing(byte aSide)				{return !isOutputFacing(aSide);}

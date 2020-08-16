@@ -31,7 +31,7 @@ public class GT_MetaTileEntity_ChemicalReactor extends MetaTileEntity {
 	@Override public boolean isInputFacing(byte aSide)				{return true;}
     @Override public int maxEUInput()								{return 32;}
     @Override public int maxEUStore()								{return 10000;}
-    @Override public int maxMJStore()								{return maxEUStore();}
+    @Override public int maxRFStore()								{return maxEUStore();}
     @Override public int maxSteamStore()							{return maxEUStore();}
 	@Override public int getInvSize()								{return 3;}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 124);}

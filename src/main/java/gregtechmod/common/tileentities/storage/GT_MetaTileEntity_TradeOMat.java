@@ -101,7 +101,7 @@ public class GT_MetaTileEntity_TradeOMat extends MetaTileEntity {
       return 2000;
    }
 
-   public int maxMJStore() {
+   public int maxRFStore() {
       return this.maxEUStore();
    }
 

@@ -45,7 +45,7 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 	@Override public int maxEUInput()								{return getElectricTier()>0?GregTech_API.VOLTAGES[getElectricTier()]:0;}
     @Override public int maxEUOutput()								{return bOutput&&getElectricTier()>0?GregTech_API.VOLTAGES[getElectricTier()]:0;}
     @Override public int maxEUStore()								{return getElectricTier()*getElectricTier()*2000;}
-    @Override public int maxMJStore()								{return maxEUStore();}
+    @Override public int maxRFStore()								{return maxEUStore();}
     @Override public int maxSteamStore()							{return maxEUStore();}
 	@Override public int getInvSize()								{return 6;}
 	@Override public int dechargerSlotStartIndex()					{return 5;}

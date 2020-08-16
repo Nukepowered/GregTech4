@@ -39,8 +39,8 @@ public class GT_ContainerMetaTile_Machine extends GT_Container {
     	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
         mStorage = mTileEntity.getEUCapacity();
     	mEnergy = mTileEntity.getStoredEU();
-        mMJStorage = mTileEntity.getMJCapacity();
-    	mMJ = mTileEntity.getStoredMJ();
+        mMJStorage = mTileEntity.getRFCapacity();
+    	mMJ = mTileEntity.getStoredRF();
         mSteamStorage = mTileEntity.getSteamCapacity();
     	mSteam = mTileEntity.getStoredSteam();
     	mOutput = mTileEntity.getOutputVoltage();

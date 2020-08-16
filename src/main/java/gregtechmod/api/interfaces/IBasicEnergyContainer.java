@@ -88,24 +88,24 @@ public interface IBasicEnergyContainer {
 	public int getEUCapacity();
 	
 	/**
-	 * returns the amount of MJ contained in this Block, in EU units!
+	 * returns the amount of RF contained in this Block, in EU units!
 	 */
-	public int getStoredMJ();
+	public int getStoredRF();
 	
 	/**
-	 * returns the amount of MJ containable in this Block, in EU units!
+	 * returns the amount of RF containable in this Block, in EU units!
 	 */
-	public int getMJCapacity();
+	public int getRFCapacity();
 	
 	/**
-	 * Increases stored Energy. Energy Base Value is in EU, even though it's MJ!
+	 * Increases stored Energy. Energy Base Value is in EU, even though it's RF!
 	 * @param aEnergy The Energy to add to the Machine.
 	 * @param aIgnoreTooMuchEnergy if it shall ignore if it has too much Energy.
 	 * @return if it was successful
 	 * 
-	 * And yes, you can't directly decrease the MJ of a Machine. That is done by decreaseStoredEnergyUnits
+	 * And yes, you can't directly decrease the RF of a Machine. That is done by decreaseStoredEnergyUnits
 	 */
-	public boolean increaseStoredMJ(int aEnergy, boolean aIgnoreTooMuchEnergy);
+	public boolean increaseStoredRF(int aEnergy, boolean aIgnoreTooMuchEnergy);
 	
 	/**
 	 * returns the amount of Steam contained in this Block, in EU units!

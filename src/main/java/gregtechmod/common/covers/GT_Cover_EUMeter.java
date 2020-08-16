@@ -30,9 +30,9 @@ public class GT_Cover_EUMeter extends GT_CoverBehavior {
 				aTileEntity.setOutputRedstoneSignal(aSide, aCoverVariable%2==0?(byte)0:15);
 			}
 		} else if (aCoverVariable < 6) {
-			tScale = aTileEntity.getMJCapacity()/15;
+			tScale = aTileEntity.getRFCapacity()/15;
 			if (tScale > 0) {
-				aTileEntity.setOutputRedstoneSignal(aSide, aCoverVariable%2==0?(byte)(aTileEntity.getStoredMJ()/tScale):(byte)(15-(aTileEntity.getStoredMJ()/tScale)));
+				aTileEntity.setOutputRedstoneSignal(aSide, aCoverVariable%2==0?(byte)(aTileEntity.getStoredRF()/tScale):(byte)(15-(aTileEntity.getStoredRF()/tScale)));
 			} else {
 				aTileEntity.setOutputRedstoneSignal(aSide, aCoverVariable%2==0?(byte)0:15);
 			}

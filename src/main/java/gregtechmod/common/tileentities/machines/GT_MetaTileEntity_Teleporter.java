@@ -51,7 +51,7 @@ public class GT_MetaTileEntity_Teleporter extends MetaTileEntity {
 	@Override public boolean isInputFacing(byte aSide)				{return true;}
 	@Override public int maxEUInput()								{return GregTech_API.VOLTAGE_ULTIMATE;}
     @Override public int maxEUStore()								{return 10000000;}
-    @Override public int maxMJStore()								{return 10000000;}
+    @Override public int maxRFStore()								{return 10000000;}
     @Override public int maxSteamStore()							{return 10000000;}
 	@Override public boolean isValidSlot(int aIndex)				{return false;}
 	@Override public int getInvSize()								{return 1;}

@@ -479,14 +479,14 @@ public class BaseMetaPipeEntity extends BaseTileEntity implements IGregTechTileE
 	@Override public int getOutputAmperage() {return 0;}
 	@Override public int getOutputVoltage() {return 0;}
 	@Override public int getInputVoltage() {return 0;}
-	@Override public boolean increaseStoredMJ(int aEnergy, boolean aIgnoreTooMuchEnergy) {return false;}
+	@Override public boolean increaseStoredRF(int aEnergy, boolean aIgnoreTooMuchEnergy) {return false;}
 	@Override public boolean increaseStoredSteam(int aEnergy, boolean aIgnoreTooMuchEnergy) {return false;}
 	@Override public String getDescription() {if (hasValidMetaTileEntity()) return mMetaTileEntity.getDescription(); return "";}
     @Override public boolean isValidSlot(int aIndex) {if (hasValidMetaTileEntity()) return mMetaTileEntity.isValidSlot(aIndex); return false;}
-    @Override public int getUniversalEnergyStored() {return Math.max(Math.max(getStoredEU(), getStoredMJ()), getStoredSteam());}
-	@Override public int getUniversalEnergyCapacity() {return Math.max(Math.max(getEUCapacity(), getMJCapacity()), getSteamCapacity());}
-	@Override public int getStoredMJ() {return 0;}
-    @Override public int getMJCapacity() {return 0;}
+    @Override public int getUniversalEnergyStored() {return Math.max(Math.max(getStoredEU(), getStoredRF()), getStoredSteam());}
+	@Override public int getUniversalEnergyCapacity() {return Math.max(Math.max(getEUCapacity(), getRFCapacity()), getSteamCapacity());}
+	@Override public int getStoredRF() {return 0;}
+    @Override public int getRFCapacity() {return 0;}
     @Override public int getStoredEU() {return 0;}
     @Override public int getEUCapacity() {return 0;}
     @Override public int getStoredSteam() {return 0;}
@@ -702,7 +702,7 @@ public class BaseMetaPipeEntity extends BaseTileEntity implements IGregTechTileE
 	}
 	
 	@Override
-	public boolean isMJConverterUpgradable() {
+	public boolean isRFConverterUpgradable() {
 		return false;
 	}
 	
@@ -722,7 +722,7 @@ public class BaseMetaPipeEntity extends BaseTileEntity implements IGregTechTileE
 	}
 	
 	@Override
-	public boolean hasMJConverterUpgrade() {
+	public boolean hasRFConverterUpgrade() {
 		return false;
 	}
 	
@@ -790,7 +790,7 @@ public class BaseMetaPipeEntity extends BaseTileEntity implements IGregTechTileE
 	}
 	
 	@Override
-	public boolean addMJConverterUpgrade() {
+	public boolean addRFConverterUpgrade() {
 		return false;
 	}
 	

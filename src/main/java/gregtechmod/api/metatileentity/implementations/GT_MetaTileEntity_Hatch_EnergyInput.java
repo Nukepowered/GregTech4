@@ -25,7 +25,7 @@ public class GT_MetaTileEntity_Hatch_EnergyInput extends MetaTileEntity {
 	@Override public int getInvSize()								{return 0;}
     @Override public int maxEUInput()								{return GregTech_API.VOLTAGE_EXTREME;}
     @Override public int maxEUStore()								{return 100000;}
-    @Override public int maxMJStore()								{return maxEUStore();}
+    @Override public int maxRFStore()								{return maxEUStore();}
     @Override public int maxSteamStore()							{return maxEUStore();}
 	
 	@Override

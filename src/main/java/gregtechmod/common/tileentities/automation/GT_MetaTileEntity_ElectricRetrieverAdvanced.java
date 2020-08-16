@@ -77,7 +77,7 @@ public class GT_MetaTileEntity_ElectricRetrieverAdvanced extends MetaTileEntity 
       return 10000;
    }
 
-   public int maxMJStore() {
+   public int maxRFStore() {
       return this.maxEUStore();
    }
 
