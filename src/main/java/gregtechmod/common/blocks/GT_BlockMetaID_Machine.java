@@ -48,7 +48,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugableBlock {
-	public static IIcon mIcons[] = new IIcon[390];
+	public static IIcon mIcons[] = new IIcon[420];
 	
 	public GT_BlockMetaID_Machine() {
         super(new GT_MachineMaterial());
@@ -67,14 +67,16 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 		
 		mIcons[   0] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine");
 		mIcons[   2] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_logo");
-		mIcons[   3] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_logo_bottom");
+		
 		mIcons[  11] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_uum");
 		mIcons[  12] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_lesu");
 		mIcons[  13] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_lesu_lv_out");
 		mIcons[  14] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_lesu_mv_out");
 		mIcons[  15] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_lesu_hv_out");
+		
 		mIcons[  30] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_matterfab");
 		mIcons[  31] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_matterfab_active");
+		
 		mIcons[  70] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_grinder");
 		mIcons[  71] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_connector");
 		mIcons[  72] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_fire");
@@ -84,6 +86,7 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 		mIcons[  76] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_water");
 		mIcons[  77] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_ice");
 		mIcons[  78] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_oil");
+		
 		mIcons[ 109] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_pump");
 		mIcons[ 110] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_miningpipe");
 		mIcons[ 111] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_vent_rotating");
@@ -103,13 +106,19 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 		mIcons[ 125] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_pipe_yellow_redstone");
 		mIcons[ 126] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_cropharvesting_redstone");
 		mIcons[ 127] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_scrapbox_redstone");
+		
 		mIcons[ 212] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_pipe_magenta");
 		mIcons[ 213] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_pipe_cyan");
+		
 		mIcons[ 220] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_pipe_magenta_redstone");
 		mIcons[ 221] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_pipe_cyan_redstone");
+		
 		mIcons[ 258] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_vent");
+		
 		mIcons[ 270] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_teleporter");
 		mIcons[ 271] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_teleporter_active");
+		
+		mIcons[ 308] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_pump_side");
 		mIcons[ 310] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_mv_out");
 		mIcons[ 312] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_dimensional");
 		
@@ -194,6 +203,17 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 		mIcons[ 206] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_sorter_up_redstone");
 		mIcons[ 207] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_regulator_up_redstone");
 		
+		mIcons[ 390] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_filter_back");
+		mIcons[ 391] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_filter_right");
+		mIcons[ 392] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_filter_down");
+		mIcons[ 393] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_filter_left");
+		mIcons[ 394] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_filter_up");
+		mIcons[ 395] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_filter_back_redstone");
+		mIcons[ 396] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_filter_right_redstone");
+		mIcons[ 397] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_filter_down_redstone");
+		mIcons[ 398] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_filter_left_redstone");
+		mIcons[ 399] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_filter_up_redstone");
+		
 		mIcons[   4] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_screen_square");
 		mIcons[   6] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_screen_lightning");
 		mIcons[   7] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/adv_machine_screen_crafting");
@@ -269,6 +289,8 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 		mIcons[ 297] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/machine_top_gear_active");
 		mIcons[ 302] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/machine_top_dieselmotor2");
 		mIcons[ 303] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/machine_top_dieselmotor2_active");
+		mIcons[ 405] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/machine_top_extruder");
+	    mIcons[ 406] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/machine_top_extruder_active");
 		
 		mIcons[  32] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/machine_bottom");
 		mIcons[  38] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/machine_bottom_pipe");
@@ -304,6 +326,7 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 		mIcons[ 217] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/machine_side_shelf_paper");
 		mIcons[ 218] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/machine_side_shelf_books");
 		mIcons[ 219] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/machine_side_shelf_cans");
+		
 		mIcons[ 222] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/machine_side_desk");
 		mIcons[ 223] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/machine_side_cabinet");
 		mIcons[ 224] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/machine_side_controlpanel");
@@ -338,6 +361,9 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 		mIcons[ 305] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/machine_side_lathe_active");
 		mIcons[ 306] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/machine_side_cutter");
 		mIcons[ 307] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/machine_side_cutter_active");
+		mIcons[ 309] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/machine_side_tradomat");
+	    mIcons[ 407] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/machine_side_extruder");
+	    mIcons[ 408] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/machine_side_extruder_active");
 		
 		mIcons[  96] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/superconductor_0");
 		mIcons[  97] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/superconductor_1");
@@ -450,6 +476,14 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 		mIcons[ 361] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/steel_side_furnace_active");
 		mIcons[ 362] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/steel_side_furnace_side");
 		
+		mIcons[   3] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/frame_iron");
+	    mIcons[ 387] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/frame_aluminium");
+	    mIcons[ 388] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/frame_steel");
+	    mIcons[ 389] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/frame_stainlesssteel");
+	    mIcons[ 400] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/frame_tungstensteel");
+	    mIcons[ 368] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/concrete_foam");
+	    mIcons[ 369] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/concrete_white");
+		
 		mIcons[ 364] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/pipe_bronze");
 		mIcons[ 365] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/pipe_bronze_connected");
 		mIcons[ 366] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/pipe_steel");
@@ -468,9 +502,17 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 		mIcons[ 381] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/pipe_tungstensteel");
 		mIcons[ 382] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/pipe_tungstensteel_connected");
 		mIcons[ 383] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/pipe_tungstensteel_connected_large");
-		
-		mIcons[ 368] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/concrete_foam");
-		mIcons[ 369] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/concrete_white");
+		mIcons[ 384] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/pipe_platinum");
+	    mIcons[ 385] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/pipe_platinum_connected");
+	    mIcons[ 386] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/pipe_platinum_connected_large");
+	    mIcons[ 401] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/pipe_bronze_connected_small");
+	    mIcons[ 402] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/pipe_steel_connected_small");
+	    mIcons[ 403] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/pipe_stainlesssteel_connected_small");
+	    mIcons[ 404] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/pipe_tungstensteel_connected_small");
+	    mIcons[ 409] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/high_voltage_charger_bottom");
+	    mIcons[ 410] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/high_voltage_charger_side");
+	    mIcons[ 411] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/high_voltage_charger_top");
+	    mIcons[ 412] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/high_voltage_charger_top_active");
 		
 		GT_Log.log.info("GT_Mod: Setting up Icon Register for Blocks");
 		GregTech_API.sBlockIcons = aIconRegister;
@@ -517,7 +559,7 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
     	}
     	
 		if (GregTech_API.DEBUG_MODE) {
-			GT_Log.log.debug("GT_Mod: Dumping out free spaces in the Machine Icon List: ");
+			GT_Log.log.debug("Dumping out free spaces in the Machine Icon List: ");
 			for (int i = 0; i < mIcons.length; i++) if (mIcons[i] == null) GT_Log.log.debug("Free Machine-Icon-ID at: " + i);
 		}
 	}
@@ -546,10 +588,10 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 		if (rIcon == null) {
 			if (tIndex >= 0 && tIndex < mIcons.length) {
 				rIcon = mIcons[tIndex];
-				if (rIcon == null) System.err.println("GregTech: Missing Texture for index: " + tIndex);
+				if (rIcon == null) GT_Log.log.error(" Missing Texture for index: " + tIndex);
 			} else {
 				if (tIndex != -2)
-					System.err.println("GregTech: Invalid Texture Index: " + tIndex);
+					GT_Log.log.error("Invalid Texture Index: " + tIndex);
 			}
 		}
 		
