@@ -63,13 +63,9 @@ public class GT_Container_TradeOMat_Settings extends GT_ContainerMetaTile_Machin
             return;
         }
         this.mPerformedTrades = ((GT_MetaTileEntity_TradeOMat)this.mTileEntity.getMetaTileEntity()).mPerformedTrades;
-        
-        /*Iterator var2 = crafters.iterator();
-        while (var2.hasNext()) {
-            ICrafting var1 = (ICrafting)var2.next();
-            for (int i = 0; i < 9; i++) var1.sendProgressBarUpdate(this, 100+i, mTargetSlots[i]);
-        }*/
-        Iterator var2 = crafters.iterator();
+
+        @SuppressWarnings("rawtypes")
+		Iterator var2 = crafters.iterator();
         while (var2.hasNext()) {
         	ICrafting var3 = (ICrafting)var2.next();
             var3.sendProgressBarUpdate((Container)this, 100, this.mPerformedTrades & 0xFFFF);

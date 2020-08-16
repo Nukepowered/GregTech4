@@ -115,7 +115,9 @@ public class GT_Container_ElectricRetrieverAdvanced extends GT_ContainerMetaTile
         for (int i = 0; i < 9; ++i) {
             this.mTargetSlots[i] = ((GT_MetaTileEntity_ElectricRetrieverAdvanced)this.mTileEntity.getMetaTileEntity()).mTargetSlots[i];
         }
-        Iterator var2 = crafters.iterator();
+        
+        @SuppressWarnings("rawtypes")
+		Iterator var2 = crafters.iterator();
         while (var2.hasNext()) {
             ICrafting var1 = (ICrafting)var2.next();
             for (int i = 0; i < 9; i++) var1.sendProgressBarUpdate(this, 100+i, mTargetSlots[i]);
