@@ -19,7 +19,10 @@ public class BenderRecipeHandler extends GT_RecipeHandler {
 		public CachedBenderRecipe(GT_Recipe aRecipe) {
 			resources = new ArrayList<PositionedStack>();
 			if (aRecipe.getRepresentativeInput1() != null)
-				resources.add(new PositionedStack(aRecipe.getRepresentativeInput1(), 53 - sOffsetX, 25 - sOffsetY));
+				resources.add(new PositionedStack(aRecipe.getRepresentativeInput1(), 35 - sOffsetX, 25 - sOffsetY));
+			
+			if (aRecipe.getRepresentativeInput2() != null)
+				super.resources.add(new PositionedStack(aRecipe.getRepresentativeInput2(), 53 - sOffsetX, 25 - sOffsetY));
 			
 			products = new ArrayList<PositionedStack>();
 			if (aRecipe.getOutput(0) != null)
@@ -79,5 +82,7 @@ public class BenderRecipeHandler extends GT_RecipeHandler {
 		drawText(30, 80, new StringBuilder().append("EU: ").append(toNumber(time*((CachedBenderRecipe)arecipes.get(recipe)).mEUt)).toString(), 0xFF000000, false);
 		drawText(30, 90, new StringBuilder().append("Time: ").append(toNumber(time/20)).append(" secs").toString(), 0xFF000000, false);
 		drawText(30,100, new StringBuilder().append("MaxEnergy: ").append(toNumber(((CachedBenderRecipe)arecipes.get(recipe)).mEUt)).append(" EU/t").toString(), 0xFF000000, false);
+	    drawText(30, 110, "Circuits optional", -16777216, false);
+	    drawText(30, 120, "but recommended!", -16777216, false);
 	}
 }

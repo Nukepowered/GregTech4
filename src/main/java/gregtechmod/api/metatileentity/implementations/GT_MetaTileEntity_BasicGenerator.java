@@ -39,7 +39,6 @@ public abstract class GT_MetaTileEntity_BasicGenerator extends GT_MetaTileEntity
     @Override
     public void onPostTick() {
     	if (getBaseMetaTileEntity().isServerSide() && getBaseMetaTileEntity().isAllowedToWork() && getBaseMetaTileEntity().getTimer()%10==0) {
-    		List<GT_Recipe> kek = getRecipes();
     		if (mFluid == null) {
     			if (getBaseMetaTileEntity().getUniversalEnergyStored() < getBaseMetaTileEntity().getOutputVoltage() + getMinimumStoredEU()) {
     				mInventory[getStackDisplaySlot()] = null;

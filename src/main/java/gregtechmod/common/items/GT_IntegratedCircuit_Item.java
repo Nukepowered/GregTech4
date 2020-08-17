@@ -4,6 +4,8 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import gregtechmod.api.items.GT_Generic_Item;
 import java.util.List;
+
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -24,7 +26,7 @@ public class GT_IntegratedCircuit_Item extends GT_Generic_Item {
 
    public void addAdditionalToolTips(List<String> aList, ItemStack aStack) {
       super.addAdditionalToolTips(aList, aStack); // TODO: LOCALE
-//      aList.add(GT_LanguageManager.addStringLocalization(this.getUnlocalizedName() + ".configuration", "Configuration: ") + getConfigurationString(this.getDamage(aStack)));
+      aList.add(I18n.format("Configuration: %s", getConfigurationString(this.getDamage(aStack))));
    }
    
    @SideOnly(Side.CLIENT)

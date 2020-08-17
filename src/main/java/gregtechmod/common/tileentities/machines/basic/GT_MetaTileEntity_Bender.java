@@ -1,5 +1,6 @@
 package gregtechmod.common.tileentities.machines.basic;
 
+import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
@@ -26,18 +27,36 @@ public class GT_MetaTileEntity_Bender extends GT_MetaTileEntity_BasicMachine {
 	
 	@Override
     public void checkRecipe() {
-		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 1, 2, (byte)64, (byte)1, (byte)64, (byte)1);
-		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 3, 4, (byte)64, (byte)1, (byte)64, (byte)1);
-    	if (mInventory[2] != null && mInventory[2].stackSize > 0) {
-    		GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sBenderRecipes, mInventory[2], null);
-    		if (tRecipe != null && spaceForOutput(tRecipe.getOutput(0), null) && tRecipe.isRecipeInputEqual(true, true, mInventory[2], null)) {
-        		mEUt = tRecipe.mEUt;
-    			mMaxProgresstime = tRecipe.mDuration;
-    			mOutputItem1 = GT_Utility.copy(tRecipe.getOutput(0));
-    			return;
-    		}
-    	}
-		mOutputItem1 = null;
+		GT_Utility.moveStackFromSlotAToSlotB(this.getBaseMetaTileEntity(), this.getBaseMetaTileEntity(), 3, 4, (byte) 64, (byte) 1, (byte) 64, (byte) 1);
+		if (GT_Utility.isStackValid(mInventory[1])) {
+			GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sBenderRecipes, mInventory[1], mInventory[2]);
+			if (tRecipe != null && this.spaceForOutput(tRecipe.getOutput(0), null) && tRecipe.isRecipeInputEqual(true, true, mInventory[1], mInventory[2])) {
+				mEUt = tRecipe.mEUt;
+				mMaxProgresstime = tRecipe.mDuration;
+				mOutputItem1 = tRecipe.getOutput(0);
+				return;
+			}
+
+			if (GT_Utility.isStackInvalid(mInventory[2])) {
+				for (int i = 64; i > 0; --i) {
+					tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sBenderRecipes, mInventory[1], GT_Items.Circuit_Integrated.getWithDamage(0, (long) i));
+					if (tRecipe != null && this.spaceForOutput(tRecipe.getOutput(0), null) && tRecipe.isRecipeInputEqual(true, true, super.mInventory[1], GT_Items.Circuit_Integrated.getWithDamage(0L, (long) i))) {
+						mEUt = tRecipe.mEUt;
+						mMaxProgresstime = tRecipe.mDuration;
+						mOutputItem1 = tRecipe.getOutput(0);
+						return;
+					}
+
+					tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sBenderRecipes, GT_Items.Circuit_Integrated.getWithDamage(0L, (long) i), mInventory[1]);
+					if (tRecipe != null && this.spaceForOutput(tRecipe.getOutput(0), null) && tRecipe.isRecipeInputEqual(true, true, GT_Items.Circuit_Integrated.getWithDamage(0L, (long) i), mInventory[1])) {
+						mEUt = tRecipe.mEUt;
+						mMaxProgresstime = tRecipe.mDuration;
+						mOutputItem1 = tRecipe.getOutput(0);
+						return;
+					}
+				}
+			}
+		}
     }
 	
 	@Override
