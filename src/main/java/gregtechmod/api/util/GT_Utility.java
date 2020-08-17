@@ -40,10 +40,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
-import net.minecraft.network.play.server.S07PacketRespawn;
-import net.minecraft.network.play.server.S1DPacketEntityEffect;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.AxisAlignedBB;
@@ -59,7 +56,6 @@ import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
 
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.gameevent.PlayerEvent;
 
 /**
  * NEVER INCLUDE THIS FILE IN YOUR MOD!!!
@@ -1153,25 +1149,8 @@ public class GT_Utility {
 			
 			if (aEntity instanceof EntityPlayerMP) {
 				EntityPlayerMP aPlayer = (EntityPlayerMP)aEntity;
-				int fromDim = aPlayer.dimension;
-		        aPlayer.dimension = aDimension;
-		        aPlayer.playerNetServerHandler.sendPacket(new S07PacketRespawn(aPlayer.dimension, aPlayer.worldObj.difficultySetting, tTargetWorld.getWorldInfo().getTerrainType(), aPlayer.theItemInWorldManager.getGameType()));
-		        tOriginalWorld.removePlayerEntityDangerously(aPlayer);
-		        aPlayer.isDead = false;
-		        aPlayer.setWorld(tTargetWorld);
-		        MinecraftServer.getServer().getConfigurationManager().func_72375_a(aPlayer, tOriginalWorld);
-		        aPlayer.playerNetServerHandler.setPlayerLocation(aX+0.5, aY+0.5, aZ+0.5, aPlayer.rotationYaw, aPlayer.rotationPitch);
-		        aPlayer.theItemInWorldManager.setWorld(tTargetWorld);
-		        MinecraftServer.getServer().getConfigurationManager().updateTimeAndWeatherForPlayer(aPlayer, tTargetWorld);
-		        MinecraftServer.getServer().getConfigurationManager().syncPlayerInventory(aPlayer);
-		        @SuppressWarnings("unchecked")
-				Iterator<PotionEffect> tIterator = aPlayer.getActivePotionEffects().iterator();
-		        while (tIterator.hasNext()) {
-		            PotionEffect potioneffect = tIterator.next();
-		            aPlayer.playerNetServerHandler.sendPacket(new S1DPacketEntityEffect(aPlayer.getEntityId(), potioneffect));
-		        }
-		        aPlayer.playerNetServerHandler.setPlayerLocation(aX+0.5, aY+0.5, aZ+0.5, aPlayer.rotationYaw, aPlayer.rotationPitch);
-		        MinecraftForge.EVENT_BUS.post(new PlayerEvent.PlayerChangedDimensionEvent(aPlayer, fromDim, aDimension));
+				aPlayer.mcServer.getConfigurationManager().transferPlayerToDimension(aPlayer, aDimension);
+				aPlayer.playerNetServerHandler.setPlayerLocation(aX+0.5, aY+0.5, aZ+0.5, aPlayer.rotationYaw, aPlayer.rotationPitch);
 			} else {
 				aEntity.setPosition(aX+0.5, aY+0.5, aZ+0.5);
 				aEntity.worldObj.removeEntity(aEntity);

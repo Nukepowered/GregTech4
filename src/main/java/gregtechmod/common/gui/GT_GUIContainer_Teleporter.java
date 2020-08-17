@@ -8,6 +8,8 @@ import gregtechmod.common.containers.GT_Container_Teleporter;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.world.WorldProvider;
+import net.minecraftforge.common.DimensionManager;
 
 public class GT_GUIContainer_Teleporter extends GT_GUIContainerMetaTile_Machine {
 	
@@ -23,8 +25,16 @@ public class GT_GUIContainer_Teleporter extends GT_GUIContainerMetaTile_Machine 
         	fontRenderer.drawString("X: "   + GT_Utility.parseNumberToString(((GT_Container_Teleporter)mContainer).mTargetX), 46, 16, 16448255);
         	fontRenderer.drawString("Y: "   + GT_Utility.parseNumberToString(((GT_Container_Teleporter)mContainer).mTargetY), 46, 24, 16448255);
         	fontRenderer.drawString("Z: "   + GT_Utility.parseNumberToString(((GT_Container_Teleporter)mContainer).mTargetZ), 46, 32, 16448255);
-        	if (((GT_Container_Teleporter)mContainer).mEgg>0)
-        	fontRenderer.drawString("Dim: " + GT_Utility.parseNumberToString(((GT_Container_Teleporter)mContainer).mTargetD), 46, 40, 16448255);
+        	if (((GT_Container_Teleporter)mContainer).mEgg>0) {
+        		int sID = ((GT_Container_Teleporter)mContainer).mTargetD;
+        		String dimName = null;
+        		if (DimensionManager.isDimensionRegistered(sID)) {
+        			WorldProvider w = DimensionManager.createProviderFor(sID);
+        			dimName = w == null ? String.format("[ID=%d]", sID) : w.getDimensionName();
+        		} else dimName = String.format("[ID=%d]", sID);
+        		
+        		fontRenderer.drawSplitString("Dim: \n" + dimName, 46, 40, 90, 16448255);
+        	}
         }
     }
     

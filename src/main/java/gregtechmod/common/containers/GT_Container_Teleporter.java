@@ -5,13 +5,17 @@ import gregtechmod.api.gui.GT_Slot_Holo;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.common.tileentities.machines.GT_MetaTileEntity_Teleporter;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.DimensionManager;
 
 public class GT_Container_Teleporter extends GT_ContainerMetaTile_Machine {
 	
@@ -58,7 +62,7 @@ public class GT_Container_Teleporter extends GT_ContainerMetaTile_Machine {
 	    		((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetZ -= (aShifthold==1?512:64);
 	        	return null;
 	    	case 3:
-	    		((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetD -= (aShifthold==1?16:8);
+	    		((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetD = this.getNextWorldId(aShifthold==1?16:8, true);
 	        	return null;
 	    	case 4:
 	    		((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetX -= (aShifthold==1?16:1);
@@ -70,7 +74,7 @@ public class GT_Container_Teleporter extends GT_ContainerMetaTile_Machine {
 	    		((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetZ -= (aShifthold==1?16:1);
 	        	return null;
 	    	case 7:
-	    		((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetD -= (aShifthold==1?4:1);
+	    		((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetD = this.getNextWorldId(aShifthold==1?4:1, true);
 	        	return null;
 	    	case 8:
 	    		((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetX += (aShifthold==1?512:64);
@@ -82,7 +86,7 @@ public class GT_Container_Teleporter extends GT_ContainerMetaTile_Machine {
 	    		((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetZ += (aShifthold==1?512:64);
 	        	return null;
 	    	case 11:
-	    		((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetD += (aShifthold==1?16:8);
+	    		((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetD = this.getNextWorldId(aShifthold==1?16:8, false);
 	        	return null;
 	    	case 12:
 	    		((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetX += (aShifthold==1?16:1);
@@ -94,12 +98,37 @@ public class GT_Container_Teleporter extends GT_ContainerMetaTile_Machine {
 	    		((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetZ += (aShifthold==1?16:1);
 	        	return null;
 	    	case 15:
-	    		((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetD += (aShifthold==1?4:1);
+	    		((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetD = this.getNextWorldId(aShifthold==1?4:1, false);
 	        	return null;
 	    	}
     	}
 	    return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
     }
+	
+	private int getNextWorldId(int intValue, boolean desc) {
+		int currentDim = ((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetD + (intValue * (desc ? -1 : 1));
+		List<Integer> IDs = Arrays.asList(DimensionManager.getIDs());
+		IDs.sort(Comparator.naturalOrder());
+		
+		while (!DimensionManager.isDimensionRegistered(currentDim)) {
+			if (desc) {
+				if (currentDim < IDs.get(0)) {
+					currentDim = IDs.get(IDs.size() - 1);
+					break;
+				}
+			} else {
+				if (currentDim > IDs.get(IDs.size() - 1)) {
+					currentDim = IDs.get(0);
+					break;
+				}
+			}
+			
+			
+			currentDim = desc ? currentDim-1 : currentDim+1;
+		}
+		
+		return currentDim;
+	}
 	
 	public int mTargetX = 0, mTargetY = 0, mTargetZ = 0, mTargetD = 0, mEgg = 0;
 	
