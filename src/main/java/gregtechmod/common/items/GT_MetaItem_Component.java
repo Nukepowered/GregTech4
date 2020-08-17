@@ -23,7 +23,7 @@ public class GT_MetaItem_Component extends GT_MetaItem_Abstract {
 			instance.mToolTipList[aMeta] = aToolTip;
 			instance.mStackList[aMeta] = new ItemStack(instance, 1, aMeta);
 			if (aMaterial != null && !aMaterial.equals("")) {
-				GT_OreDictUnificator.registerOre(aMaterial, instance.getUnunifiedStack(aMeta, 1));
+				GT_OreDictUnificator.registerOreLater(aMaterial, instance.getUnunifiedStack(aMeta, 1));
 			}
 
 			return instance.getUnunifiedStack(aMeta, 1);

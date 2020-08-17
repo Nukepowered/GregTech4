@@ -26,9 +26,9 @@ public class GT_MetaItem_Material extends GT_MetaItem_Abstract {
 		instance.mStackList[aMeta] = new ItemStack(instance, 1, aMeta);
 		if (aMaterial != null && aPrefix != null) {
 			if (aPrefix.mIsUnificatable)
-				GT_OreDictUnificator.add(aPrefix.get((aMaterial instanceof MaterialStack)?((MaterialStack)aMaterial).mMaterial:aMaterial), instance.getUnunifiedStack(aMeta, 1));
+				GT_OreDictUnificator.addLater(aPrefix, ((aMaterial instanceof MaterialStack)?((MaterialStack)aMaterial).mMaterial:aMaterial), instance.getUnunifiedStack(aMeta, 1));
 			else
-				GT_OreDictUnificator.registerOre(aPrefix.get((aMaterial instanceof MaterialStack)?((MaterialStack)aMaterial).mMaterial:aMaterial), instance.getUnunifiedStack(aMeta, 1));
+				GT_OreDictUnificator.registerOreLater(aPrefix.get((aMaterial instanceof MaterialStack)?((MaterialStack)aMaterial).mMaterial:aMaterial), instance.getUnunifiedStack(aMeta, 1));
 		}
 		return instance.getUnunifiedStack(aMeta, 1);
 	}

@@ -3,7 +3,6 @@ package gregtechmod.api.items;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_ToolDictNames;
 import gregtechmod.api.util.GT_ModHandler;
-import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 
 import java.util.Arrays;
@@ -25,7 +24,7 @@ public class GT_Wrench_Item extends GT_Tool_Item {
 	public GT_Wrench_Item(String aUnlocalized, int aMaxDamage, int aEntityDamage, int aDischargedGTID) {
 		super(aUnlocalized, "item.GT_Wrech.tooltip", aMaxDamage, aEntityDamage, true, -1, aDischargedGTID);
 		GregTech_API.registerWrench(new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-		GT_OreDictUnificator.registerOre(GT_ToolDictNames.craftingToolWrench, new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+		registerAtOreDictWildcard(GT_ToolDictNames.craftingToolWrench);
 		addToEffectiveList(EntityIronGolem.class.getName());
 		addToEffectiveList("EntityTFTowerGolem");
 		addToEffectiveList("EntityGolemBase");

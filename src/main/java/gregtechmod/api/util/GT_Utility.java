@@ -660,7 +660,7 @@ public class GT_Utility {
     
 	public static FluidStack getFluidForFilledItem(ItemStack aStack) {
 		if (isStackInvalid(aStack)) return null;
-		if (aStack.getItem() instanceof IFluidContainerItem) return ((IFluidContainerItem)aStack.getItem()).drain(copyAmount(1, aStack), Integer.MAX_VALUE, true);
+		if (aStack.getItem() instanceof IFluidContainerItem) return ((IFluidContainerItem) aStack.getItem()).drain(aStack, Integer.MAX_VALUE, false);
 		FluidStack rFluid = FluidContainerRegistry.getFluidForFilledItem(aStack);
 		if (rFluid != null) return rFluid.copy();
 		return null;
@@ -981,11 +981,26 @@ public class GT_Utility {
 	}
 	
 	public static ItemStack copyAmount(long aAmount, Object... aStacks) {
-		ItemStack rStack = copy((ItemStack[])aStacks);
+		ItemStack rStack = copy(GT_Utility.cast(aStacks));
+		
 		if (isStackInvalid(rStack)) return null;
 		if (aAmount > 64) aAmount = 64; else if (aAmount == -1) aAmount = 111; else if (aAmount < 0) aAmount = 0;
 		rStack.stackSize = (byte)aAmount;
 		return rStack;
+	}
+	
+	public static ItemStack[] cast(Object...objects) {
+		Objects.requireNonNull(objects);
+		ItemStack[] result = new ItemStack[objects.length];
+		try {
+			for (int i  = 0; i < objects.length; i++)
+				result[i] = (ItemStack) objects[i];
+		} catch (ClassCastException e) {
+			GT_Log.log.throwing(e);
+			throw new IllegalArgumentException("Array can not contain not ItemStacks!");
+		}
+		
+		return result;
 	}
 	
 	public static ItemStack copyMetaData(long aMetaData, ItemStack... aStacks) {
@@ -1013,7 +1028,7 @@ public class GT_Utility {
 	}
 	
 	public static ItemStack mul(long aMultiplier, Object... aStacks) {
-		return GT_Utility.mul(aMultiplier, (ItemStack[])aStacks);
+		return GT_Utility.mul(aMultiplier, GT_Utility.cast(aStacks));
 	}
 	
 	/**

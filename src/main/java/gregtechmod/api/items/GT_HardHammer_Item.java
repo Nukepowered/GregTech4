@@ -23,7 +23,7 @@ public class GT_HardHammer_Item extends GT_Tool_Item {
 	public GT_HardHammer_Item(String aUnlocalized, int aMaxDamage, int aEntityDamage) {
 		super(aUnlocalized, "item.GT_Hammer.tooltip", aMaxDamage, aEntityDamage, true);
 		GregTech_API.registerHardHammer(new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-		GT_OreDictUnificator.registerOre(GT_ToolDictNames.craftingToolHardHammer, new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+		registerAtOreDict(GT_ToolDictNames.craftingToolHardHammer, GregTech_API.ITEM_WILDCARD_DAMAGE);
 		addToEffectiveList(EntityIronGolem.class.getName());
 		addToEffectiveList("EntityTFTowerGolem");
 		addToEffectiveList("EntityGolemBase");

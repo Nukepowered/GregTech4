@@ -291,7 +291,11 @@ public enum OrePrefixes {
 	}
 	
 	public void processOre(Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
-		if (aMaterial != null && (aMaterial != Materials._NULL || mIsSelfReferencing || !mIsMaterialBased) && GT_Utility.isStackValid(aStack)) for (IOreRecipeRegistrator tRegistrator : mOreProcessing) tRegistrator.registerOre(this, aMaterial, aOreDictName, aModName, GT_Utility.copyAmount(1, aStack));
+		if (aMaterial != null && (aMaterial != Materials._NULL || mIsSelfReferencing || !mIsMaterialBased) && GT_Utility.isStackValid(aStack)) {
+			for (IOreRecipeRegistrator tRegistrator : mOreProcessing) {
+				tRegistrator.registerOre(this, aMaterial, aOreDictName, aModName, GT_Utility.copyAmount(1, aStack));
+			}
+		}
 	}
 	
 	public final String mLocalizedMaterialPre, mLocalizedMaterialPost;

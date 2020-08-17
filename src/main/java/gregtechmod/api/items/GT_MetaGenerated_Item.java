@@ -88,9 +88,9 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 				String tOreName = getOreDictString(tPrefix, tMaterial);
 				tPrefix = OrePrefixes.getOrePrefix(tOreName);
 				if (tPrefix != null && tPrefix.mIsUnificatable) {
-					GT_OreDictUnificator.set(tOreName, new ItemStack(this, 1, i));
+					GT_OreDictUnificator.setLater(tOreName, new ItemStack(this, 1, i));
 				} else {
-					GT_OreDictUnificator.registerOre(tOreName, new ItemStack(this, 1, i));
+					registerAtOreDict(tOreName, (short)i);
 				}
 			}
 		}

@@ -486,14 +486,15 @@ public class GT_Mod implements IGT_Mod {
 			GT_Log.log.error("GT_Mod: Fatal Error ocurred while initializing TileEntities, crashing Minecraft.");
 			throw new RuntimeException("");
 		} else {
-			new GT_OreProcessingLoader().run();
             new GT_MetaTileEntityLoader().run();
             new GT_ItemLoader().run();
+			new GT_OreProcessingLoader().run();
             new GT_DictRegistratorPreItem().run();
             new GT_DictRegistratorPostItem().run();
             new GT_CircuitBehaviorLoader().run();
             new GT_CoverBehaviorLoader().run();
             new GT_SonictronLoader().run();
+        	GT_OreDictUnificator.activateUnificator();
             
             gregtechproxy.registerRenderers();
 			for (FluidContainerData tGregTech : FluidContainerRegistry.getRegisteredFluidContainerData()) {
@@ -561,7 +562,13 @@ public class GT_Mod implements IGT_Mod {
     	checkVersions();
         GT_Log.log.info("GT_Mod: Beginning Load-Phase.");
     	GregTech_API.sLoadStarted = true;
-
+    	
+		if (sSortToTheEnd) {
+			new GT_ItemIterator().run();
+			GT_OreDictHandler.instance.registerUnificationEntries();
+			new GT_LiquidAndFuelLoader().run();
+		}
+    	
 		for (FluidContainerData tGregTech : FluidContainerRegistry.getRegisteredFluidContainerData()) {
 			if (tGregTech.filledContainer.getItem() == Items.potionitem) {
 				tGregTech.fluid.amount = 0;

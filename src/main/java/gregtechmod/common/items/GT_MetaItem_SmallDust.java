@@ -24,7 +24,7 @@ public class GT_MetaItem_SmallDust extends GT_MetaItem_Abstract {
 		instance.mGlowList[aMeta] = aGlow;
 		instance.mStackList[aMeta] = new ItemStack(instance, 1, aMeta);
 		if (aMaterial != null) {
-			GT_OreDictUnificator.add(OrePrefixes.dustSmall.get(aMaterial), instance.getUnunifiedStack(aMeta, 1));
+			GT_OreDictUnificator.addLater(OrePrefixes.dustSmall, aMaterial, instance.getUnunifiedStack(aMeta, 1));
 		}
 		GT_MetaItem_TinyDust.addItem(aMeta, aName, aMaterial, aGlow);
 		return instance.getUnunifiedStack(aMeta, 1);

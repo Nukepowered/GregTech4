@@ -18,17 +18,13 @@ import gregtechmod.api.util.GT_Utility;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Spliterator;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.function.Consumer;
-
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.ModContainer;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -46,7 +42,7 @@ public class GT_OreDictHandler {
 	public  final List<ItemStack> mRegisteredStacks = new ArrayList<>();
 	private boolean mActivated = false;
 	
-	@EventHandler
+	@SubscribeEvent
     public void registerOre(OreRegisterEvent aEvent) {
 		if (GT_Mod.mDoNotInit || aEvent == null || aEvent.Ore == null || aEvent.Ore.getItem() == null || aEvent.Name == null || aEvent.Name.equals("") || mIgnoredNames.contains(aEvent.Name)) return;
 		
@@ -511,24 +507,20 @@ public class GT_OreDictHandler {
 	/**
 	 * Gets called during the PostLoad-Phase
 	 */
+
     public void activateHandler() {
     	mActivated = true;
     	long time = System.currentTimeMillis();
-    	Spliterator<Entry<OreRegisterEvent, String>> splt = mEvents.entrySet().spliterator();
-    	Spliterator<Entry<OreRegisterEvent, String>> splt1 = splt.trySplit();
-    	ExecutorService serv = Executors.newFixedThreadPool(2);
-    	Consumer<Spliterator<Entry<OreRegisterEvent, String>>> toExecute = sp -> {
-    		while (sp.tryAdvance(tEvent -> {
-    			this.registerRecipes(tEvent.getKey(), tEvent.getValue());
-	    	}));
-    	};
     	
-    	serv.submit(() -> toExecute.accept(splt));
-    	if (splt1 != null) serv.submit(() -> toExecute.accept(splt1));
-    	serv.shutdown(); 
-    	while (!serv.isTerminated()) try {
-    		Thread.sleep(50);
-    	} catch (InterruptedException ingored) {}
+    	int counter = mEvents.size();
+    	GT_Log.log.warn("There is " + counter + " events to be registered");
+    	Iterator<Entry<OreRegisterEvent, String>> iter = mEvents.entrySet().iterator();
+    	
+    	while (iter.hasNext()) {
+    		if (GregTech_API.DEBUG_MODE) GT_Log.log.warn("Events left: " + counter--);
+    		Entry<OreRegisterEvent, String> temp = iter.next();
+    		this.registerRecipes(temp.getKey(), temp.getValue());
+    	}
 		
 		GT_Log.log.warn(String.format("Time spent for oredict iterating: %.3f seconds", (System.currentTimeMillis() - time) / 1000.0D));
     }

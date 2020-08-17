@@ -154,11 +154,6 @@ public class GT_Tool_Item extends GT_Generic_Item {
 		return this;
 	}
 	
-	public final GT_Tool_Item registerAtOreDict(Object aName) {
-		GT_OreDictUnificator.registerOre(aName, new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-		return this;
-	}
-	
 	public void setMode(ItemStack aStack, int aMode) {
         NBTTagCompound tNBT = aStack.getTagCompound();
         if (tNBT == null) {

@@ -30,9 +30,13 @@ public class GT_Generic_Item extends Item {
 //		if (GT_Utility.isStringValid(aEnglishTooltip)) GT_LanguageManager.addStringLocalization(mTooltip = getUnlocalizedName() + ".tooltip_main", aEnglishTooltip, aWriteToolTipIntoLangFile); else mTooltip = null;
 	}
 	
-	public final GT_Generic_Item registerAtOreDict(String aName, short aDamage) {
-		GT_OreDictUnificator.registerOre(aName, new ItemStack(this, 1, aDamage));
+	public final GT_Generic_Item registerAtOreDict(Object aName, short aDamage) {
+		GT_OreDictUnificator.registerOreLater(aName, new ItemStack(this, 1, aDamage));
 		return this;
+	}
+	
+	public final GT_Generic_Item registerAtOreDictWildcard(Object aName) {
+		return registerAtOreDict(aName, GregTech_API.ITEM_WILDCARD_DAMAGE);
 	}
 	
 	@Override

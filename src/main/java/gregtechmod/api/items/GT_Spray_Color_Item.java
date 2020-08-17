@@ -4,7 +4,6 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.Dyes;
 import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.util.GT_ModHandler;
-import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class GT_Spray_Color_Item extends GT_Tool_Item {
 	
 	public GT_Spray_Color_Item(String aUnlocalized, int aMaxDamage, int aEntityDamage, byte aColorMeta) {
 		super(aUnlocalized, "item.GT_Spray_Color_Item.tooltip_1", aMaxDamage, aEntityDamage, true);
-		GT_OreDictUnificator.registerOre(Dyes.get(mColorMeta = aColorMeta), new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+		registerAtOreDictWildcard(Dyes.get(mColorMeta = aColorMeta));
 		setCraftingSound(GregTech_API.sSoundList.get(102));
 		setBreakingSound(GregTech_API.sSoundList.get(102));
 		setEntityHitSound(GregTech_API.sSoundList.get(102));

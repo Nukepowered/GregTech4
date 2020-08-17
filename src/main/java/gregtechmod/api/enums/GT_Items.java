@@ -1,10 +1,7 @@
 package gregtechmod.api.enums;
 
-import java.util.Objects;
-
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IItemContainer;
-import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
@@ -330,28 +327,28 @@ public enum GT_Items implements IItemContainer {
 	@Override
 	public ItemStack get(long aAmount, Object... aReplacements) {
 		if (mHasNotBeenSet) throw new IllegalAccessError("The Enum '" + toString() + "' has not been set to an Item at this time!");
-		if (GT_Utility.isStackInvalid(mStack)) return GT_Utility.copyAmount(aAmount, this.cast(aReplacements));
+		if (GT_Utility.isStackInvalid(mStack)) return GT_Utility.copyAmount(aAmount, GT_Utility.cast(aReplacements));
 		return GT_Utility.copyAmount(aAmount, GT_OreDictUnificator.get(mStack));
 	}
 	
 	@Override
 	public ItemStack getWildcard(long aAmount, Object... aReplacements) {
 		if (mHasNotBeenSet) throw new IllegalAccessError("The Enum '" + toString() + "' has not been set to an Item at this time!");
-		if (GT_Utility.isStackInvalid(mStack)) return GT_Utility.copyAmount(aAmount, this.cast(aReplacements));
+		if (GT_Utility.isStackInvalid(mStack)) return GT_Utility.copyAmount(aAmount, GT_Utility.cast(aReplacements));
 		return GT_Utility.copyAmountAndMetaData(aAmount, GregTech_API.ITEM_WILDCARD_DAMAGE, GT_OreDictUnificator.get(mStack));
 	}
 	
 	@Override
 	public ItemStack getUndamaged(long aAmount, Object... aReplacements) {
 		if (mHasNotBeenSet) throw new IllegalAccessError("The Enum '" + toString() + "' has not been set to an Item at this time!");
-		if (GT_Utility.isStackInvalid(mStack)) return GT_Utility.copyAmount(aAmount, this.cast(aReplacements));
+		if (GT_Utility.isStackInvalid(mStack)) return GT_Utility.copyAmount(aAmount, GT_Utility.cast(aReplacements));
 		return GT_Utility.copyAmountAndMetaData(aAmount, 0, GT_OreDictUnificator.get(mStack));
 	}
 	
 	@Override
 	public ItemStack getAlmostBroken(long aAmount, Object... aReplacements) {
 		if (mHasNotBeenSet) throw new IllegalAccessError("The Enum '" + toString() + "' has not been set to an Item at this time!");
-		if (GT_Utility.isStackInvalid(mStack)) return GT_Utility.copyAmount(aAmount, this.cast(aReplacements));
+		if (GT_Utility.isStackInvalid(mStack)) return GT_Utility.copyAmount(aAmount, GT_Utility.cast(aReplacements));
 		return GT_Utility.copyAmountAndMetaData(aAmount, mStack.getMaxDamage()-1, GT_OreDictUnificator.get(mStack));
 	}
 	
@@ -366,7 +363,7 @@ public enum GT_Items implements IItemContainer {
 	@Override
 	public ItemStack getWithDamage(long aAmount, long aMetaValue, Object... aReplacements) {
 		if (mHasNotBeenSet) throw new IllegalAccessError("The Enum '" + toString() + "' has not been set to an Item at this time!");
-		if (GT_Utility.isStackInvalid(mStack)) return GT_Utility.copyAmount(aAmount, this.cast(aReplacements));
+		if (GT_Utility.isStackInvalid(mStack)) return GT_Utility.copyAmount(aAmount, GT_Utility.cast(aReplacements));
 		return GT_Utility.copyAmountAndMetaData(aAmount, aMetaValue, GT_OreDictUnificator.get(mStack));
 	}
 	
@@ -382,19 +379,5 @@ public enum GT_Items implements IItemContainer {
 		if (mHasNotBeenSet) throw new IllegalAccessError("The Enum '" + toString() + "' has not been set to an Item at this time!");
 		for (Object tOreName : aOreNames) GT_OreDictUnificator.registerOre(tOreName, getWildcard(1));
 		return this;
-	}
-	
-	private ItemStack[] cast(Object...objects) {
-		Objects.requireNonNull(objects);
-		ItemStack[] result = new ItemStack[objects.length];
-		try {
-			for (int i  = 0; i < objects.length; i++)
-				result[i] = (ItemStack) objects[i];
-		} catch (ClassCastException e) {
-			GT_Log.log.throwing(e);
-			throw new IllegalArgumentException("Array can not contain not ItemStacks!");
-		}
-		
-		return result;
 	}
 }
