@@ -538,7 +538,7 @@ public class GT_ItemLoader implements Runnable {
 		GT_MetaGenerated_Item_01 tMetaGenerated;
 		GregTech_API.sItemList[8] = tMetaGenerated = new GT_MetaGenerated_Item_01();
 		tMetaGenerated.setBurnValue(17000 + Materials.Wood.mMetaItemSubID, 1600);
-		GT_Items.Credit_Greg_Copper.set(tMetaGenerated.addItem(0, "0.125 Credits", null));
+		GT_Items.Credit_Greg_Copper.set(tMetaGenerated.addItem(0, "0.125 Credits", null)); // TODO locale, put locale key here
 		GT_Items.Credit_Greg_Cupronickel.set(tMetaGenerated.addItem(1, "1 Credit", null));
 		GT_Items.Credit_Greg_Silver.set(tMetaGenerated.addItem(2, "8 Credits", null));
 		GT_Items.Credit_Greg_Gold.set(tMetaGenerated.addItem(3, "64 Credits", null));

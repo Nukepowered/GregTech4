@@ -27,10 +27,6 @@ public class GT_MetaGenerated_Item_02 extends GT_MetaGenerated_Item {
       super("GregTech_MetaGenerated_Item_02", new OrePrefixes[]{OrePrefixes.toolHeadSword, OrePrefixes.toolHeadPickaxe, OrePrefixes.toolHeadShovel, OrePrefixes.toolHeadAxe, OrePrefixes.toolHeadHoe, OrePrefixes.toolHeadHammer, OrePrefixes.toolHeadFile, OrePrefixes.toolHeadSaw, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, OrePrefixes.gearGt});
    }
 
-   public String getDefaultLocalization(OrePrefixes aPrefix, Materials aMaterial, int aMetaData) {
-      return super.getDefaultLocalization(aPrefix, aMaterial, aMetaData);
-   }
-
    public IIconContainer getIconContainer(int aMetaData, Materials aMaterial) {
       return aMaterial.mIconSet[32 + aMetaData / 1000];
    }

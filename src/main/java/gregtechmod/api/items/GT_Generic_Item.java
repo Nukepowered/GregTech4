@@ -26,8 +26,6 @@ public class GT_Generic_Item extends Item {
 		this.mTooltip = aTooltipKey;
 		setUnlocalizedName(aUnlocalized);
 		setCreativeTab(GregTech_API.TAB_GREGTECH);
-		// TODO
-//		if (GT_Utility.isStringValid(aEnglishTooltip)) GT_LanguageManager.addStringLocalization(mTooltip = getUnlocalizedName() + ".tooltip_main", aEnglishTooltip, aWriteToolTipIntoLangFile); else mTooltip = null;
 	}
 	
 	public final GT_Generic_Item registerAtOreDict(Object aName, short aDamage) {

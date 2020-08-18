@@ -518,8 +518,13 @@ public class GT_OreDictHandler {
     	
     	while (iter.hasNext()) {
     		Entry<OreRegisterEvent, String> temp = iter.next();
-    		ItemStack ore = temp.getKey().Ore;
-    		bar.step(ore.getItem().getUnlocalizedName());
+    		String oreName = temp.getKey().Ore.getItem().getUnlocalizedName();
+    		
+    		try {
+    			oreName = temp.getKey().Ore.getDisplayName();
+    		} catch (Throwable e) {}
+    		
+    		bar.step(oreName);
     		this.registerRecipes(temp.getKey(), temp.getValue());
     	}
 		

@@ -81,7 +81,7 @@ public class GT_MetaTileEntity_Boiler_Bronze extends GT_MetaTileEntity_BasicTank
     	aNBT.setInteger("mProcessingEnergy", mProcessingEnergy);
 		if (mSteam != null) {
 			try {
-				aNBT.setTag("mSteam", mSteam.writeToNBT(new NBTTagCompound())); // TODO "mSteam"
+				aNBT.setTag("mSteam", mSteam.writeToNBT(new NBTTagCompound()));
 			} catch(Throwable e) {}
 		}
 	}

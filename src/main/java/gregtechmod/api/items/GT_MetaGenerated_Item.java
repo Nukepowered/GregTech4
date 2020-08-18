@@ -61,6 +61,7 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 	public final HashMap<Short, IFoodStat> mFoodStats = new HashMap<Short, IFoodStat>();
 	public final HashMap<Short, Integer[]> mElectricStats = new HashMap<Short, Integer[]>();
 	public final HashMap<Short, Short> mBurnValues = new HashMap<Short, Short>();
+	public final HashMap<Short, String> mMetaTooltip = new HashMap<Short, String>();
 	
 	/**
 	 * Creates the Item using these Parameters.
@@ -76,15 +77,12 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
         setMaxDamage(0);
         
         sInstances.put(getUnlocalizedName(), this);
-        //TODO: add localization
         for (int i = 0; i < 32000; i++) {
 			OrePrefixes tPrefix = mGeneratedPrefixList[i / 1000];
 			if (tPrefix == null) continue;
 			Materials tMaterial = GregTech_API.sGeneratedMaterials[i % 1000];
 			if (tMaterial == null) continue;
 			if (doesMaterialAllowGeneration(tPrefix, tMaterial)) {
-//				GT_LanguageManager.addStringLocalization(getUnlocalizedName() + "." + i + ".name", getDefaultLocalization(tPrefix, tMaterial, i));
-//				GT_LanguageManager.addStringLocalization(getUnlocalizedName() + "." + i + ".tooltip", tMaterial.getToolTip(tPrefix.mMaterialAmount / GregTech_API.MATERIAL_UNIT));
 				String tOreName = getOreDictString(tPrefix, tMaterial);
 				tPrefix = OrePrefixes.getOrePrefix(tOreName);
 				if (tPrefix != null && tPrefix.mIsUnificatable) {
@@ -106,6 +104,17 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 	 */
 	public String getDefaultLocalization(OrePrefixes aPrefix, Materials aMaterial, int aMetaData) {
 		return aPrefix.mLocalizedMaterialPre + aMaterial.mDefaultLocalName + aPrefix.mLocalizedMaterialPost;
+		/*	TODO LOCALE META ITEMS
+		 *  there should be by keys, like for prefix cell = "%s Cell", where %s - Material translation
+		 *  
+		 *  For materials enum - 
+		 *  mDefaultLocalName = "materials.<material_name>" - "Aluminium" exmp.
+		 *  
+		 *  For OrePrefixes - shold be only mLocalizedMaterial, only ONE! Without any Pre, Post, where
+		 *  mLocalizedMaterial = "oreprefixes.<prefix>" - "%s Cell" exmp.
+		 *  
+		 * 	return StatCollector.translateToLocalFormatted(key, args);
+		 */
 	}
 	
 	/**
@@ -179,16 +188,14 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 	 * @param aOreDictNames The OreDict Names you want to give the Item.
 	 * @return An ItemStack containing the newly created Item.
 	 */
-	//TODO: add localization
 	public final ItemStack addItem(int aID, String aToolTip, IFoodStat aFoodBehavior, Object... aOreDictNames) {
 		if (aToolTip == null) aToolTip = "";
 		if (aID >= 0 && aID < mEnabledItems.size()) {
+			mMetaTooltip.put(Short.valueOf((short)(32000+aID)), aToolTip);
 			mEnabledItems.set(aID);
-//			GT_LanguageManager.addStringLocalization(getUnlocalizedName() + "." + (32000+aID) + ".name", aEnglish);
-//			GT_LanguageManager.addStringLocalization(getUnlocalizedName() + "." + (32000+aID) + ".tooltip", aToolTip);
 			setFoodBehavior(32000+aID, aFoodBehavior);
 			ItemStack rStack = new ItemStack(this, 1, 32000+aID);
-			for (Object tOreDictName : aOreDictNames) GT_OreDictUnificator.registerOre(tOreDictName, rStack);
+			for (Object tOreDictName : aOreDictNames) GT_OreDictUnificator.registerOreLater(tOreDictName, rStack);
 			return rStack;
 		}
 		return null;
@@ -405,9 +412,25 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
     }
     
 	@Override
+	public String getItemStackDisplayName(ItemStack aStack) {
+		try {
+			int aMetaData = getDamage(aStack);
+			Materials tMaterial = GregTech_API.sGeneratedMaterials[aMetaData % 1000];
+			OrePrefixes prefix = mGeneratedPrefixList[aMetaData / 1000];
+			return getDefaultLocalization(prefix, tMaterial, aMetaData);
+		} catch (Throwable e) {
+			return super.getItemStackDisplayName(aStack);
+		}
+	}
+	
+	@Override
 	@SuppressWarnings({ "unchecked", "rawtypes" })
     public final void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean aF3_H) {
-		if (GT_Utility.isStringValid(mTooltip)) aList.add(I18n.format(mTooltip));
+		
+		String mTooltip = mMetaTooltip.get(Short.valueOf((short)aStack.getItemDamage()));
+		if (GT_Utility.isStackValid(mTooltip)) {
+			aList.add(I18n.format(mTooltip));
+		}
 		
 		Integer[] tStats = mElectricStats.get((short)aStack.getItemDamage());
 		if (tStats != null) {
@@ -421,6 +444,18 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 					aList.add(tCharge + " / " + tStats[0] + " EU - Voltage: " + GregTech_API.VOLTAGES[tStats[2]>0?tStats[2]<GregTech_API.VOLTAGES.length?tStats[2]:GregTech_API.VOLTAGES.length-1:1]);
 				}
 			}
+		}
+		
+		try {
+			int aMetaData = getDamage(aStack);
+			OrePrefixes pref = mGeneratedPrefixList[aMetaData / 1000];
+			Materials tMaterial = GregTech_API.sGeneratedMaterials[aMetaData % 1000];
+			if (pref.mIsMaterialBased)
+				aList.add(tMaterial.mChemicalFormula);
+		} catch (Throwable e) {} 
+
+		if (aList.size() <= 1) {
+			if (GT_Utility.isStringValid(mTooltip)) aList.add(I18n.format(mTooltip));
 		}
 	}
 	
