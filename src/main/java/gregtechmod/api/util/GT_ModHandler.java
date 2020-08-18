@@ -92,6 +92,10 @@ public class GT_ModHandler {
 		return FluidRegistry.getFluidStack("steam", (int)aAmount);
 	}
 	
+	public static FluidStack getIC2Steam(long aAmount) {
+		return FluidRegistry.getFluidStack("ic2steam", (int)aAmount);
+	}
+	
 	public static ItemStack getEmptyFuelCan(long aAmount) {
 		return GT_Items.IC2_Fuel_Can_Empty.get(aAmount);
 	}
