@@ -344,7 +344,7 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
     }
 	
 	@Override
-    public final String getUnlocalizedName(ItemStack aStack) {
+    public String getUnlocalizedName(ItemStack aStack) {
     	return getUnlocalizedName() + "." + getDamage(aStack);
     }
 	

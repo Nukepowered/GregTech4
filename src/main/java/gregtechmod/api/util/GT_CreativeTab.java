@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 public class GT_CreativeTab extends CreativeTabs {
 
 	public GT_CreativeTab() {
-		super("GregTech");
+		super("gregtech");
 	}
 	
 	@Override
