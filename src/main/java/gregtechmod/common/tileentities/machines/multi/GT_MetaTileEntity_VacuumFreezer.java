@@ -176,6 +176,6 @@ public class GT_MetaTileEntity_VacuumFreezer extends MetaTileEntity {
 	}
 	@Override
 	public String getDescription() {
-		return "Cools down anything";
+		return "metatileentity.GT_VacuumFreezer.tooltip";
 	}
 }

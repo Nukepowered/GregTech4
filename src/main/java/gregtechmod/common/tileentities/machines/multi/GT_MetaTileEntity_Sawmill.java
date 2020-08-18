@@ -233,7 +233,7 @@ public class GT_MetaTileEntity_Sawmill extends MetaTileEntity {
 	}
 	@Override
 	public String getDescription() {
-		return "Get mo Planks for ya Logs";
+		return "metatileentity.GT_Sawmill.tooltip";
 	}
 	
 	@Override

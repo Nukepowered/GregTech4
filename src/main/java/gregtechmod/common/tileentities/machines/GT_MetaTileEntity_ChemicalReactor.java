@@ -148,7 +148,7 @@ public class GT_MetaTileEntity_ChemicalReactor extends MetaTileEntity {
 	}
 	@Override
 	public String getDescription() {
-		return "Let 2 chemical Substances react together with this!";
+		return "metatileentity.GT_ChemicalReactor.tooltip";
 	}
 	
 	@Override

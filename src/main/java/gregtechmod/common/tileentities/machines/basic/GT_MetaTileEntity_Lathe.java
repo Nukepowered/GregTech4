@@ -51,6 +51,6 @@ public class GT_MetaTileEntity_Lathe extends GT_MetaTileEntity_BasicMachine {
 	
 	@Override
 	public String getDescription() {
-		return "Produces Metal Rods more efficiently";
+		return "metatileentity.GT_Lathe.tooltip";
 	}
 }

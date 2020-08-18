@@ -248,7 +248,7 @@ public class GT_MetaTileEntity_Centrifuge extends GT_MetaTileEntity_BasicTank {
 	}
 	@Override
 	public String getDescription() {
-		return "And round and round and round it goes";
+		return "metatileentity.GT_Centrifuge.tooltip";
 	}
 	
 	@Override

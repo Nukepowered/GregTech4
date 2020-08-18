@@ -254,7 +254,7 @@ public class GT_MetaTileEntity_BronzeBlastFurnace extends MetaTileEntity {
 	}
 	@Override
 	public String getDescription() {
-		return "To get your first Steel";
+		return "metatileentity.GT_BronzeBlastFurnace.tooltip";
 	}
 	
 	@Override

@@ -88,6 +88,6 @@ public class GT_MetaTileEntity_E_Furnace extends GT_MetaTileEntity_BasicMachine 
 	
 	@Override
 	public String getDescription() {
-		return "Not like using a Commodore 64";
+		return "metatileentity.GT_E_Furnace.tooltip";
 	}
 }

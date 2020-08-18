@@ -242,7 +242,7 @@ public class GT_MetaTileEntity_BlastFurnace extends MetaTileEntity {
 	}
 	@Override
 	public String getDescription() {
-		return "You'll have a Blast!";
+		return "metatileentity.GT_BlastFurnace.tooltip";
 	}
 	
 	@Override

@@ -70,6 +70,6 @@ public class GT_MetaTileEntity_Bender extends GT_MetaTileEntity_BasicMachine {
 	}
 	@Override
 	public String getDescription() {
-		return "Boo, he's bad! We want BENDER!!!";
+		return "metatileentity.GT_Bender.tooltip";
 	}
 }

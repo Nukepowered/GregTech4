@@ -59,6 +59,6 @@ public class GT_MetaTileEntity_SteelFurnace extends GT_MetaTileEntity_BasicMachi
 	
 	@Override
 	public String getDescription() {
-		return "Better than Bronze Furnii";
+		return "metatileentity.GT_SteelFurnace.tooltip";
 	}
 }

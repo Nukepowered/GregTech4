@@ -49,6 +49,6 @@ public class GT_MetaTileEntity_BronzeExtractor extends GT_MetaTileEntity_BasicMa
 	
 	@Override
 	public String getDescription() {
-		return "Steam powered Extractor";
+		return "metatileentity.GT_BronzeExtractor.tooltipr";
 	}
 }

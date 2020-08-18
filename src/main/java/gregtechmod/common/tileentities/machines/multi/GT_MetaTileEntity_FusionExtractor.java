@@ -50,7 +50,7 @@ public class GT_MetaTileEntity_FusionExtractor extends GT_MetaTileEntity_BasicTa
 
 	@Override
 	public String getDescription() {
-		return "Extracts your fused Materials out of the Coils";
+		return "metatileentity.GT_Fusion_Extractor.tooltip";
 	}
 	
 	@Override

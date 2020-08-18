@@ -292,7 +292,7 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity {
 	}
 	@Override
 	public String getDescription() {
-		return "FUUUUUUU-SION, HAH!";
+		return "metatileentity.GT_Fusion_Computer.tooltip";
 	}
 	
 	@Override

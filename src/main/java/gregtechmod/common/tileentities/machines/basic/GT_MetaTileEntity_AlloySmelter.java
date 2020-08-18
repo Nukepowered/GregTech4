@@ -98,6 +98,6 @@ public class GT_MetaTileEntity_AlloySmelter extends GT_MetaTileEntity_BasicMachi
 	
 	@Override
 	public String getDescription() {
-		return "HighTech combination Smelter";
+		return "metatileentity.GT_AlloySmelter.tooltip";
 	}
 }

@@ -91,7 +91,7 @@ public class GT_MetaTileEntity_FusionInjector extends GT_MetaTileEntity_BasicTan
 	
 	@Override
 	public String getDescription() {
-		return "To inject your fusable Fluids into the Coils";
+		return "metatilentity.GT_Fusion_Injector.tooltip";
 	}
 	
 	@Override

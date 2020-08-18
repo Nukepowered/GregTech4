@@ -59,7 +59,7 @@ public class GT_MetaTileEntity_Recycler extends GT_MetaTileEntity_BasicMachine {
 	
 	@Override
 	public String getDescription() {
-		return "compress, burn, obliterate and filter EVERYTHING";
+		return "metatileentity.GT_Recycler.tooltip";
 	}
 	
 	@Override

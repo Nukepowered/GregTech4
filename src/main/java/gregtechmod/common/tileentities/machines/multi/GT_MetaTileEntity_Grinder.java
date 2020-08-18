@@ -281,7 +281,7 @@ public class GT_MetaTileEntity_Grinder extends GT_MetaTileEntity_BasicTank {
 	
 	@Override
 	public String getDescription() {
-		return "Ultimaceratron 42b";
+		return "metatilentity.GT_Grinder.tooltip";
 	}
 	
 	@Override public int getTankPressure() {return -100;}

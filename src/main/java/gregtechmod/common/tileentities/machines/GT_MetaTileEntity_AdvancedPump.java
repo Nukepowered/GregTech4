@@ -268,7 +268,7 @@ public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank 
 	
 	@Override
 	public String getDescription() {
-		return "The best way of emptying Oceans!";
+		return "metatileentity.GT_Pump.tooltip";
 	}
 	
 	@Override

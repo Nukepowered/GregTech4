@@ -239,7 +239,7 @@ public class GT_MetaTileEntity_DistillationTower extends MetaTileEntity {
 	}
 	@Override
 	public String getDescription() {
-		return "Like a Refinery, but with byproducts, and more Energy Efficient";
+		return "metatileentity.GT_DistillationTower.tooltip";
 	}
 	
 	@Override

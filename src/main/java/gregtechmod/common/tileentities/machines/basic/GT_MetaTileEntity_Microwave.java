@@ -97,6 +97,6 @@ public class GT_MetaTileEntity_Microwave extends GT_MetaTileEntity_BasicMachine 
 	
 	@Override
 	public String getDescription() {
-		return "Did you really read the instruction Manual?";
+		return "metatileentity.GT_Microwave.tooltip";
 	}
 }

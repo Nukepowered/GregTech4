@@ -66,6 +66,6 @@ public class GT_MetaTileEntity_Extractor extends GT_MetaTileEntity_BasicMachine 
 	
 	@Override
 	public String getDescription() {
-		return "Dejuicer-Device of Doom - D123";
+		return "metatileentity.GT_Extractor.tooltip";
 	}
 }

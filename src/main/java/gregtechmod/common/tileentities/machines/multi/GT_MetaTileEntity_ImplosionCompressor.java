@@ -203,6 +203,6 @@ public class GT_MetaTileEntity_ImplosionCompressor extends MetaTileEntity {
 	}
 	@Override
 	public String getDescription() {
-		return "Over 9000 Gibbl!";
+		return "metatileentity.GT_ImplosionCompressor.tooltip";
 	}
 }

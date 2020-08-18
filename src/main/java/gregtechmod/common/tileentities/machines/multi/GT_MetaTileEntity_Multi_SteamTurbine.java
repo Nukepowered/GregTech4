@@ -156,7 +156,7 @@ public class GT_MetaTileEntity_Multi_SteamTurbine extends GT_MetaTileEntity_Mult
 	
 	@Override
 	public String getDescription() {
-		return "Consumes 1600 Liters of Steam per Tick";
+		return "metatileentity.GT_Multi_SteamTurbine.tooltip";
 	}
 	@Override
 	public int getAmountOfOutputs() {

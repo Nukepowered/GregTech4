@@ -252,7 +252,7 @@ public class GT_MetaTileEntity_Electrolyzer extends GT_MetaTileEntity_BasicTank 
 	
 	@Override
 	public String getDescription() {
-		return "Give your Water a shocking Experience with this Device";
+		return "metatileentity.GT_Electrolyzer.tooltip";
 	}
 	
 	@Override public int getTankPressure() {return -100;}

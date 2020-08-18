@@ -239,7 +239,7 @@ public class GT_MetaTileEntity_Teleporter extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Teleport long distances with this little device.";
+		return "metatileentity.GT_Teleporter.tooltip";
 	}
 	
 	@Override

@@ -179,6 +179,6 @@ public class GT_MetaTileEntity_Printer extends GT_MetaTileEntity_BasicMachine {
 	
 	@Override
 	public String getDescription() {
-		return "It can copy Books and paint Stuff";
+		return "metatileentity.GT_Printer.tooltip";
 	}
 }

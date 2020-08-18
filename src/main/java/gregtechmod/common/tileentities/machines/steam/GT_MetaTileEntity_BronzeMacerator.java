@@ -86,6 +86,6 @@ public class GT_MetaTileEntity_BronzeMacerator extends GT_MetaTileEntity_BasicMa
 	
 	@Override
 	public String getDescription() {
-		return "Grinding up Ores and also gives byproducts";
+		return "metatileentity.GT_BronzeMacerator.tooltip";
 	}
 }

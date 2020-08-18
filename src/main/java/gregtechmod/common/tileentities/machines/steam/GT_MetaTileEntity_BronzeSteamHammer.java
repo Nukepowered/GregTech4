@@ -79,6 +79,6 @@ public class GT_MetaTileEntity_BronzeSteamHammer extends GT_MetaTileEntity_Basic
 	
 	@Override
 	public String getDescription() {
-		return "Hammers Ingots into Plates";
+		return "metatileentity.GT_BronzeSteamHammer.tooltip";
 	}
 }

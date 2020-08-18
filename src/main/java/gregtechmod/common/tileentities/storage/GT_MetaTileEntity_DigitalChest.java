@@ -258,9 +258,9 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
       return this.mItemCount + (super.mInventory[0] == null?0:super.mInventory[0].stackSize) + (super.mInventory[1] == null?0:super.mInventory[1].stackSize) + (super.mInventory[2] == null?0:super.mInventory[2].stackSize);
    }
 //TODO: lozalication
-//   public String[] getInfoData() {
-//      return this.getStoredItem() == null?new String[]{"", "", "Max: " + (this.getMaxItemCount() + 192)}:new String[]{GT_LanguageManager.getTranslateableItemStackName(this.getStoredItem()), "" + this.getItemCount(), "Max: " + (this.getMaxItemCount() + 192)};
-//   }
+   public String[] getInfoData() {
+      return this.getStoredItem() == null?new String[]{"", "", "Max: " + (this.getMaxItemCount() + 192)}:new String[]{this.getStoredItem().getItem().getUnlocalizedName(), "" + this.getItemCount(), "Max: " + (this.getMaxItemCount() + 192)};
+   }
 
    public boolean isGivingInformation() {
       return true;

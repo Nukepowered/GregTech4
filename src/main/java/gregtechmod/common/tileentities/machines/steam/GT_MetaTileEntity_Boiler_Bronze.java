@@ -221,7 +221,7 @@ public class GT_MetaTileEntity_Boiler_Bronze extends GT_MetaTileEntity_BasicTank
 	
 	@Override
 	public String getDescription() {
-		return "An early way to get Steam Power";
+		return "metatileentity.GT_BronzeBoiler.tooltipr";
 	}
 	
 	@Override

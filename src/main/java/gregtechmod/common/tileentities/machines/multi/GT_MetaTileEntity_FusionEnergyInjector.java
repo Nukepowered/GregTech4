@@ -58,7 +58,7 @@ public class GT_MetaTileEntity_FusionEnergyInjector extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Stores 10kk EU for the Fusion Reactor";
+		return "metatileentity.GT_Fusion_Energy.tooltip";
 	}
 	
 	@Override

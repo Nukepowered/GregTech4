@@ -221,7 +221,7 @@ public class GT_MetaTileEntity_Boiler_Steel extends GT_MetaTileEntity_BasicTank 
 	
 	@Override
 	public String getDescription() {
-		return "Faster than the Bronze Boiler";
+		return "metatileentity.GT_SteelBoiler.tooltip";
 	}
 	
 	@Override
