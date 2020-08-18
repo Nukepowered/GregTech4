@@ -496,6 +496,18 @@ public class GT_Mod implements IGT_Mod {
             new GT_SonictronLoader().run();
         	GT_OreDictUnificator.activateUnificator();
             
+    		GT_Log.log.info("Registering tools");
+    		for (Runnable toRun : GregTech_API.sToolsRegiter) {
+    			if (toRun != null) {
+    				try {
+    					toRun.run();
+    				} catch (Throwable e) {
+    					GT_Log.log.catching(e);
+    				}
+    			}
+    		}
+    		GregTech_API.sToolsRegiter.clear();
+        	
             gregtechproxy.registerRenderers();
 			for (FluidContainerData tGregTech : FluidContainerRegistry.getRegisteredFluidContainerData()) {
 				if (tGregTech.filledContainer.getItem() == Items.potionitem) {

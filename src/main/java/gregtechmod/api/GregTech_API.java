@@ -55,7 +55,20 @@ public class GregTech_API {
 	public static IGT_RecipeAdder sRecipeAdder;
 	
 	/** These Lists are getting executed at their respective timings. Useful if you have to do things right before/after I do them, without having to control the load order. Add your "Commands" in the Constructor or in a static Code Block of your Mods Main Class. These are not Threaded, I just use a native Java Interface for their execution. Implement just the Method run() and everything should work */
-	public static List<Runnable> sBeforeGTPreload = new ArrayList<Runnable>(), sAfterGTPreload = new ArrayList<Runnable>(), sBeforeGTLoad = new ArrayList<Runnable>(), sAfterGTLoad = new ArrayList<Runnable>(), sBeforeGTPostload = new ArrayList<Runnable>(), sAfterGTPostload = new ArrayList<Runnable>(), sBeforeGTServerstart = new ArrayList<Runnable>(), sAfterGTServerstart = new ArrayList<Runnable>(), sBeforeGTServerstop = new ArrayList<Runnable>(), sAfterGTServerstop = new ArrayList<Runnable>(), sGTCoverload = new ArrayList<Runnable>(), sGTBlockIconload = new ArrayList<Runnable>(), sGTItemIconload = new ArrayList<Runnable>();
+	public static List<Runnable> sBeforeGTPreload = new ArrayList<Runnable>(),
+			sAfterGTPreload = new ArrayList<Runnable>(),
+			sBeforeGTLoad = new ArrayList<Runnable>(),
+			sAfterGTLoad = new ArrayList<Runnable>(),
+			sBeforeGTPostload = new ArrayList<Runnable>(),
+			sAfterGTPostload = new ArrayList<Runnable>(),
+			sBeforeGTServerstart = new ArrayList<Runnable>(),
+			sAfterGTServerstart = new ArrayList<Runnable>(),
+			sBeforeGTServerstop = new ArrayList<Runnable>(),
+			sAfterGTServerstop = new ArrayList<Runnable>(),
+			sGTCoverload = new ArrayList<Runnable>(),
+			sGTBlockIconload = new ArrayList<Runnable>(),
+			sGTItemIconload = new ArrayList<Runnable>(),
+			sToolsRegiter = new ArrayList<Runnable>();
 	
 	/** The Icon Registers from Blocks and Items. They will get set right before the corresponding Icon Load Phase as executed in the Runnable List above. */
 	public static Object sBlockIcons, sItemIcons;
@@ -639,9 +652,12 @@ public class GregTech_API {
 	 * Contains all sanity Checks for Tools, like preventing one Tool from being registered for multiple purposes as controls would override each other.
 	 */
 	public static boolean registerTool(ItemStack aTool, Collection<Integer> aToolList) {
-		if (aTool == null || GT_Utility.isItemStackInList(aTool, sToolList) || (!aTool.getItem().isDamageable() && !GT_ModHandler.isElectricItem(aTool))) return false;
-		aToolList.add(GT_Utility.stackToInt(GT_Utility.copyMetaData(GregTech_API.ITEM_WILDCARD_DAMAGE, aTool)));
-		sToolList.add(GT_Utility.stackToInt(GT_Utility.copyMetaData(GregTech_API.ITEM_WILDCARD_DAMAGE, aTool)));
+		sToolsRegiter.add(() -> {
+			if (aTool == null || GT_Utility.isItemStackInList(aTool, sToolList) || (!aTool.getItem().isDamageable() && !GT_ModHandler.isElectricItem(aTool))) return;
+			aToolList.add(GT_Utility.stackToInt(GT_Utility.copyMetaData(GregTech_API.ITEM_WILDCARD_DAMAGE, aTool)));
+			sToolList.add(GT_Utility.stackToInt(GT_Utility.copyMetaData(GregTech_API.ITEM_WILDCARD_DAMAGE, aTool)));
+		});
+
 		return true;
 	}
 	

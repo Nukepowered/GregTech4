@@ -868,7 +868,14 @@ public class GT_Utility {
 	
 	public static boolean isItemStackInList(ItemStack aStack, Collection<Integer> aList) {
 		if (isStackInvalid(aStack) || aList == null) return false;
-		return aList.contains(stackToInt(aStack)) || aList.contains(stackToWildcard(aStack));
+		
+		int a = stackToInt(aStack);
+		int b = stackToWildcard(aStack);
+		boolean x = aList.contains(a);
+		boolean y = aList.contains(b);
+		
+		
+		return x || y;
 	}
 
 	public static boolean isOpaqueBlock(World aWorld, int aX, int aY, int aZ) {

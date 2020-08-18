@@ -796,7 +796,6 @@ public class GT_ItemLoader implements Runnable {
 			}
 		}
 		
-		
         GT_Log.log.info("Hiding certain Items from NEI.");
 		try {
 			Class.forName("codechicken.nei.api.API");
