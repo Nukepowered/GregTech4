@@ -26,6 +26,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -103,18 +104,11 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 	 * @return the Localized Name when default LangFiles are used.
 	 */
 	public String getDefaultLocalization(OrePrefixes aPrefix, Materials aMaterial, int aMetaData) {
-		return aPrefix.mLocalizedMaterialPre + aMaterial.mDefaultLocalName + aPrefix.mLocalizedMaterialPost;
-		/*	TODO LOCALE META ITEMS
-		 *  there should be by keys, like for prefix cell = "%s Cell", where %s - Material translation
-		 *  
-		 *  For materials enum - 
-		 *  mDefaultLocalName = "materials.<material_name>" - "Aluminium" exmp.
-		 *  
-		 *  For OrePrefixes - shold be only mLocalizedMaterial, only ONE! Without any Pre, Post, where
-		 *  mLocalizedMaterial = "oreprefixes.<prefix>" - "%s Cell" exmp.
-		 *  
-		 * 	return StatCollector.translateToLocalFormatted(key, args);
-		 */
+		if (StatCollector.canTranslate(aPrefix.mUnlocalizedName)) {
+			return StatCollector.translateToLocalFormatted(aPrefix.mUnlocalizedName, StatCollector.translateToLocal(aMaterial.getUnlocalizedName()));
+		}
+		
+		return StatCollector.canTranslate(aMaterial.getUnlocalizedName()) ? StatCollector.translateToLocal(aMaterial.getUnlocalizedName()) : "";
 	}
 	
 	/**
