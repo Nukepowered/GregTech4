@@ -907,7 +907,7 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 	@Override
     public void getSubBlocks(Item item, CreativeTabs par2CreativeTabs, List par3List) {
         for (int i = 4; i < GregTech_API.mMetaTileList.length; ++i)
-        	if (i < 16 && createTileEntity(null, i) != null)
+        	if (i < 16 && i != 13 && createTileEntity(null, i) != null)
         		par3List.add(new ItemStack(item, 1, i));
         	else
         		if (i > 15 && GregTech_API.mMetaTileList[i] != null)
