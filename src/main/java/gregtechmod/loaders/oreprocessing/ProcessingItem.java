@@ -3,6 +3,7 @@ package gregtechmod.loaders.oreprocessing;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
+import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_RecipeRegistrator;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.item.ItemStack;
@@ -29,7 +30,7 @@ public class ProcessingItem implements IOreRecipeRegistrator {
             } else if(aOreDictName.equals("itemUranium")) {
                GT_RecipeRegistrator.registerBasicReverseMaceratingAndSmelting(GT_Utility.copyAmount(1L, new Object[]{aStack}), Materials.Uranium, 3628800L);
             } else if(!aOreDictName.equals("itemRubber")) {
-               System.out.println("Item Name: " + aOreDictName + " !!!Unknown Item detected!!! Please report to GregTech Intergalactical for additional compatiblity. This is not an Error, it\'s just an Information.");
+               GT_Log.log.warn("Item Name: " + aOreDictName + " !!!Unknown Item detected!!! Please report to GregTech Intergalactical for additional compatiblity. This is not an Error, it\'s just an Information.");
             }
          } else {
             GT_RecipeRegistrator.registerBasicReverseMaceratingAndSmelting(GT_Utility.copyAmount(1L, new Object[]{aStack}), Materials.Aluminium, 3628800L);

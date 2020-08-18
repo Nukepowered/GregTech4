@@ -7,6 +7,7 @@ import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.enums.SubTag;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
+import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
@@ -115,7 +116,7 @@ public class ProcessingDust implements IOreRecipeRegistrator {
          GregTech_API.sRecipeAdder.addCannerRecipe(aStack, new ItemStack(Items.water_bucket, 1), new ItemStack(Items.milk_bucket, 1), (ItemStack)null, 100, 1);
          break;
       case 4:
-         System.err.println("Quicksilver Dust?, To melt that, you don\'t even need a Furnace...");
+         GT_Log.log.error("Quicksilver Dust?, To melt that, you don\'t even need a Furnace...");
          break;
       case 5:
       case 6:

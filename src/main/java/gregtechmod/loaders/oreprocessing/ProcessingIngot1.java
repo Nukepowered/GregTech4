@@ -6,6 +6,7 @@ import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.enums.SubTag;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
+import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_RecipeRegistrator;
@@ -55,7 +56,7 @@ public class ProcessingIngot1 implements IOreRecipeRegistrator {
       }
 
       if(aMaterial == Materials.Mercury) {
-         System.err.println("Quicksilver Ingots?, Don\'t tell me there is an Armor made of that highly toxic and very likely to be melting Material!");
+         GT_Log.log.error("Quicksilver Ingots?, Don\'t tell me there is an Armor made of that highly toxic and very likely to be melting Material!");
       }
 
    }
