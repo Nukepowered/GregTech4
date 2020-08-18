@@ -60,7 +60,7 @@ public class GT_Generic_Item extends Item {
 	@Override
     public void addInformation(ItemStack aStack, EntityPlayer aPlayer, @SuppressWarnings("rawtypes") List aList, boolean aF3_H) {
 		if (getMaxDamage() > 0 && !getHasSubtypes()) aList.add((aStack.getMaxDamage() - getDamage(aStack)) + " / " + aStack.getMaxDamage());
-	    if (GT_Utility.isStackValid(mTooltip)) aList.add(I18n.format(mTooltip));
+	    if (GT_Utility.isStringValid(mTooltip)) aList.add(I18n.format(mTooltip));
 	    if (GT_ModHandler.isElectricItem(aStack)) aList.add("Tier: " + getTier(aStack));
 	    addAdditionalToolTips(aList, aStack);
 	}

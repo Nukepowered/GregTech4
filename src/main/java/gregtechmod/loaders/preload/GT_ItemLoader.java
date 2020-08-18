@@ -1,10 +1,12 @@
 package gregtechmod.loaders.preload;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import gregtechmod.GT_Mod;
@@ -571,12 +573,19 @@ public class GT_ItemLoader implements Runnable {
 		tMetaGenerated.setBurnValue(32000 + tLastID1, 100);
 		
 		try {
+			Map<String, ItemStack> toChange = new HashMap<>();
+			toChange.put("aurelia", GT_Items.Crop_Drop_Aurelia.get(1));
+			toChange.put("ferru", GT_Items.Crop_Drop_Ferru.get(1));
+			
 			Class<?> cropsCl = Class.forName("ic2.api.crops.Crops");
-			Field mDrop = Class.forName("ic2.core.crop.Ic2CropCard").getDeclaredField("mDrop");
 			Object instance = cropsCl.getField("instance").get(null);
-			List<?> crops = new ArrayList<>((Collection<?>) cropsCl.getMethod("getCrops").invoke(instance));
-			mDrop.set(crops.get(13), GT_Items.Crop_Drop_Ferru.get(1));
-			mDrop.set(crops.get(14), GT_Items.Crop_Drop_Aurelia.get(1));
+			Method getCrop = cropsCl.getMethod("getCropCard", String.class, String.class);
+			for (Entry<String, ItemStack> entry : toChange.entrySet()) {
+				Object crop = getCrop.invoke(instance, "IC2", entry.getKey());
+				Field mDrop = crop.getClass().getDeclaredField("mDrop");
+				mDrop.setAccessible(true);
+				mDrop.set(crop, entry.getValue());
+			}
 		} catch (Throwable e) {
 			if (GregTech_API.DEBUG_MODE) {
 				GT_Log.log.catching(e);
@@ -620,7 +629,7 @@ public class GT_ItemLoader implements Runnable {
 			tMetaGenerated.addItem(700, "A very simple Circuit", null, new Object[] { OrePrefixes.circuit.get(Materials.Primitive) });
 			tMetaGenerated.addItem(701, "A basic Circuit", null, new Object[] { OrePrefixes.circuit.get(Materials.Basic) });
 			tMetaGenerated.addItem(702, "A good Circuit", null, new Object[] { OrePrefixes.circuit.get(Materials.Good) });
-			tMetaGenerated.addItem(703, "An advanced Circuit", null, new Object[] { OrePrefixes.circuit.get(Materials.Advanced) });
+			tMetaGenerated.addItem(703, "An advanced Circuit", null, new Object[] { OrePrefixes.circuit.get(Materials.Advanced) }); // TODO locale
 			tMetaGenerated.addItem(704, "A Data Storage Chip", null, new Object[] { OrePrefixes.circuit.get(Materials.Data) });
 			tMetaGenerated.addItem(705, "A Processor", null, new Object[] { OrePrefixes.circuit.get(Materials.Elite) });
 			tMetaGenerated.addItem(706, "A High Voltage Processor", null, new Object[] { OrePrefixes.circuit.get(Materials.Master) });
@@ -640,7 +649,7 @@ public class GT_ItemLoader implements Runnable {
 		GT_Items.Display_Fluid.set((GregTech_API.sItemList[15] = new GT_FluidDisplayItem("GregTech_FluidDisplay")));
 		GT_Items.NC_SensorCard.set((GregTech_API.sItemList[16] = (GT_Generic_Item) GT_Utility.callConstructor("gregtechmod.common.items.GT_SensorCard_Item", 0, (Object) null, false, "GregTech_Sensorcard")));
 		if (GregTech_API.sItemList[16] == null) {
-			GT_Items.NC_SensorCard.set((GregTech_API.sItemList[16] = new GT_Generic_Item("GregTech_Sensorcard", "Nuclear Control not installed")));
+			GT_Items.NC_SensorCard.set((GregTech_API.sItemList[16] = new GT_Generic_Item("GregTech_Sensorcard", "Nuclear Control not installed"))); // TODO locae
 		}
 		
 		GT_Items.NC_SensorKit.set((GregTech_API.sItemList[17] = new GT_SensorKit_Item("GregTech_Sensorkit")));
@@ -727,7 +736,7 @@ public class GT_ItemLoader implements Runnable {
 	    GT_Items.Component_Turbine_Magnalium.set((GregTech_API.sItemList[82] = new GT_Durable_Item("GT_Turbine_Magnalium", "Turbine Efficiency: 100%", 10000)));
 	    GT_Items.Component_Turbine_TungstenSteel.set((GregTech_API.sItemList[83] = new GT_Durable_Item("GT_Turbine_Tungstensteel", "Turbine Efficiency:  90%", 30000)));
 	    GT_Items.Component_Turbine_Carbon.set((GregTech_API.sItemList[84] = new GT_Durable_Item("GT_Turbine_Carbon", "Turbine Efficiency: 125%", 2500)));
-	    GT_Items.Component_LavaFilter.set((GregTech_API.sItemList[85] = new GT_Durable_Item("GT_Lava_Filter", "Filters Lava in Thermal Boilers", 100)));
+	    GT_Items.Component_LavaFilter.set((GregTech_API.sItemList[85] = new GT_Durable_Item("GT_Lava_Filter", "Filters Lava in Thermal Boilers", 100))); // TODO locale
 	    GT_Items.Tool_File_Iron.set((GregTech_API.sItemList[86] = new GT_File_Item("GT_File_Iron", 128, 2)));
 	    GT_Items.Tool_File_Bronze.set((GregTech_API.sItemList[87] = new GT_File_Item("GT_File_Bronze", 256, 3)));
 	    GT_Items.Tool_File_Steel.set((GregTech_API.sItemList[88] = new GT_File_Item("GT_File_Steel", 1280, 3)));

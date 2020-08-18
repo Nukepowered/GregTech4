@@ -207,24 +207,6 @@ public class GT_Mod implements IGT_Mod {
     public GT_Mod() {
     	checkVersions();
     	if (GregTech_API.isGregTechLoaded()) throw new GT_ItsNotMyFaultException("Why did you install my Addon twice? Remove the second gregtechmod.zip out of your mods-Folder, you need only one of them.");
-    	try {
-            Class.forName("ic2.core.IC2").getField("enableOreDictCircuit").set(null, true);
-        }
-        catch (Throwable e) {
-        	GT_Log.log.catching(e);
-        }
-        try {
-            Class.forName("ic2.core.IC2").getField("enableCraftingBucket").set(null, false);
-        }
-        catch (Throwable e) {
-        	GT_Log.log.catching(e);
-        }
-        try {
-            Class.forName("ic2.core.IC2").getField("enableEnergyInStorageBlockItems").set(null, false);
-        }
-        catch (Throwable e) {
-            GT_Log.log.catching(e);
-        }
 		GregTech_API.gregtechmod = this;
 		GregTech_API.sRecipeAdder = new GT_RecipeAdder();
 		GregTech_API.sDummyWorld = new GT_DummyWorld();
@@ -332,12 +314,12 @@ public class GT_Mod implements IGT_Mod {
         GT_Items.TE_Slag_Rich				.set(GT_ModHandler.getTEItem("slagRich", 1L));
         GT_Items.TE_Rockwool				.set(GT_ModHandler.getTEItem("rockwool", 1L));
         GT_Items.TE_Hardened_Glass			.set(GT_ModHandler.getTEItem("glassHardened", 1L));
-        GT_Items.Cell_Empty					.set(GT_ModHandler.getIC2Item("cell", 1L, GT_ModHandler.getIC2Item("cellEmpty", 1L, GT_ModHandler.getIC2Item("emptyCell", 1L))));
-        GT_Items.Cell_Water					.set(GT_ModHandler.getIC2Item("waterCell", 1L, GT_ModHandler.getIC2Item("cellWater", 1L)));
-        GT_Items.Cell_Lava					.set(GT_ModHandler.getIC2Item("lavaCell", 1L, GT_ModHandler.getIC2Item("cellLava", 1L)));
-        GT_Items.Cell_Air					.set(GT_ModHandler.getIC2Item("airCell", 1L, GT_ModHandler.getIC2Item("cellAir", 1L, GT_ModHandler.getIC2Item("cellOxygen", 1L))));
-        GT_Items.IC2_Fuel_Can_Empty			.set(GT_ModHandler.getIC2Item("fuelCan", 1L, GT_ModHandler.getIC2Item("fuelCanEmpty", 1L, GT_ModHandler.getIC2Item("emptyFuelCan", 1L))));
-        GT_Items.IC2_Fuel_Can_Filled		.set(GT_ModHandler.getIC2Item("filledFuelCan", 1L));
+        GT_Items.Cell_Empty					.set(GT_ModHandler.getIC2Item("cell", 1L, GT_ModHandler.getIC2Item("cell", 1L, GT_ModHandler.getIC2Item("cell", 1L))));
+        GT_Items.Cell_Water					.set(GT_ModHandler.getIC2Item("waterCell", 1L, GT_ModHandler.getIC2Item("waterCell", 1L)));
+        GT_Items.Cell_Lava					.set(GT_ModHandler.getIC2Item("lavaCell", 1L, GT_ModHandler.getIC2Item("lavaCell", 1L)));
+        GT_Items.Cell_Air					.set(GT_ModHandler.getIC2Item("airCell", 1L, GT_ModHandler.getIC2Item("airCell", 1L, GT_ModHandler.getIC2Item("cellOxygen", 1L))));
+        GT_Items.IC2_Fuel_Can_Empty			.set(GT_ModHandler.getIC2Item("fuelCan", 1L, GT_ModHandler.getIC2Item("fuelCanEmpty", 1L, GT_ModHandler.getIC2Item("emptyFuelCan", 1L)))); // not anymore
+        GT_Items.IC2_Fuel_Can_Filled		.set(GT_ModHandler.getIC2Item("filledFuelCan", 1L)); // not anymore
         GT_Items.IC2_Mixed_Metal_Ingot		.set(GT_ModHandler.getIC2Item("mixedMetalIngot", 1L));
         GT_Items.IC2_Fertilizer				.set(GT_ModHandler.getIC2Item("fertilizer", 1L));
         GT_Items.IC2_Resin					.set(GT_ModHandler.getIC2Item("resin", 1L));
@@ -1141,10 +1123,9 @@ public class GT_Mod implements IGT_Mod {
 				GT_Log.log.info("*");
 				
 				@SuppressWarnings("unchecked")
-				Iterator<Integer> itemIDs = Item.itemRegistry.iterator(); // TODO possible crush
-				while (itemIDs.hasNext()) {
-					int ID = itemIDs.next();
-					Item item = (Item) Item.itemRegistry.getObjectById(ID);
+				Iterator<Item> items = Item.itemRegistry.iterator();
+				while (items.hasNext()) {
+					Item item = items.next();
 					GT_Log.log.info(item.getUnlocalizedName());
 					if (item.getHasSubtypes()) {
 						try {

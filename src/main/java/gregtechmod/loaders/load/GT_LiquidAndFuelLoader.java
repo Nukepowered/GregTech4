@@ -34,7 +34,7 @@ public class GT_LiquidAndFuelLoader implements Runnable {
         Materials.Water.mFluid = Materials.Ice.mFluid = GT_ModHandler.getWater(1000);
         Materials.Lava.mFluid = GT_ModHandler.getLava(1000);
         Materials.ConstructionFoam.mFluid = GT_Utility.getFluidForFilledItem(GT_ModHandler.getIC2Item("CFCell", 1));
-        Materials.UUMatter.mFluid = GT_Utility.getFluidForFilledItem(GT_ModHandler.getIC2Item("UuMatterCell", 1));
+        Materials.UUMatter.mFluid = GT_Utility.getFluidForFilledItem(GT_ModHandler.getIC2Item("uuMatterCell", 1));
         
         if (null != (tLiquid = FluidRegistry.getFluidStack("oil"			, 1000))) {Materials.Oil.mFluid								= tLiquid.copy(); FluidContainerRegistry.registerFluidContainer(new FluidContainerData(tLiquid, tStack = GT_MetaItem_Cell.instance.getUnunifiedStack(17, 1), GT_ModHandler.getEmptyCell(1))); GT_ModHandler.addLiquidTransposerRecipe(GT_ModHandler.getEmptyCell(1), tLiquid, tStack, 160);}
 		if (null != (tLiquid = FluidRegistry.getFluidStack("fuel"			, 1000))) {Materials.Fuel.mFluid							= tLiquid.copy(); FluidContainerRegistry.registerFluidContainer(new FluidContainerData(tLiquid, tStack = GT_MetaItem_Cell.instance.getUnunifiedStack(18, 1), GT_ModHandler.getEmptyCell(1))); GT_ModHandler.addLiquidTransposerRecipe(GT_ModHandler.getEmptyCell(1), tLiquid, tStack, 160);}
@@ -74,8 +74,6 @@ public class GT_LiquidAndFuelLoader implements Runnable {
 		
         GT_Log.log.info("GT_Mod: Initializing various Fuels.");
         new GT_Recipe(new ItemStack(Items.lava_bucket), new ItemStack(Blocks.obsidian), GT_OreDictUnificator.get("ingotCopper", 1), GT_OreDictUnificator.get("ingotTin", 1), GT_OreDictUnificator.get("ingotElectrum", 1), 30, 2);
-        
-        GregTech_API.sRecipeAdder.addFuel(GT_ModHandler.getIC2Item("reactorHeatpack", 1)	, GT_ModHandler.getEmptyCell(1),  30, 2);
 		
         GregTech_API.sRecipeAdder.addFuel(new ItemStack(Items.experience_bottle, 1)					, null,     10, 5);
         GregTech_API.sRecipeAdder.addFuel(new ItemStack(Items.ghast_tear, 1)					, null,    500, 5);

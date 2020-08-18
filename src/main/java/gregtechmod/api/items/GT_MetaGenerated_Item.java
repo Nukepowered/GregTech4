@@ -422,7 +422,7 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
     public final void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean aF3_H) {
 		
 		String mTooltip = mMetaTooltip.get(Short.valueOf((short)aStack.getItemDamage()));
-		if (GT_Utility.isStackValid(mTooltip)) {
+		if (GT_Utility.isStringValid(mTooltip)) {
 			aList.add(I18n.format(mTooltip));
 		}
 		
