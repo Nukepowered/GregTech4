@@ -33,7 +33,7 @@ public class GT_GUIContainer_IDSU_Meta extends GT_GUIContainerMetaTile_Machine {
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
         
         if (mContainer != null) {
-        	int tScale = mContainer.mEnergy/Math.max(1, mContainer.mStorage/116);
+        	int tScale = (int)(116 * (mContainer.mEnergy * 1.0D / mContainer.mStorage));
     		drawTexturedModalRect(x + 8, y + 73, 0, 251, tScale, 5);
         }
     }

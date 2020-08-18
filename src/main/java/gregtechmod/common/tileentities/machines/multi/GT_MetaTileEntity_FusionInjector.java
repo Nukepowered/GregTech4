@@ -1,5 +1,6 @@
 package gregtechmod.common.tileentities.machines.multi;
 
+import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicTank;
@@ -46,13 +47,13 @@ public class GT_MetaTileEntity_FusionInjector extends GT_MetaTileEntity_BasicTan
     }
     
     public ItemStack getMaterial() {
-    	if (mInventory[0] == null) {
-    		ItemStack tStack = GT_Utility.fillFluidContainer(mFluid, GT_ModHandler.getEmptyCell(1));
+    	if (mInventory[getInputSlot()] == null) {
+    		ItemStack tStack = GT_Utility.fillFluidContainer(mFluid, GT_Items.Cell_Empty.get(1));
     		if (tStack == null) return null;
     		tStack.stackSize = mFluid.amount / GT_Utility.getFluidForFilledItem(tStack).amount;
     		return tStack;
     	}
-    	return mInventory[0];
+    	return mInventory[getInputSlot()];
     }
     
     public boolean consumeMaterial(ItemStack aStack) {

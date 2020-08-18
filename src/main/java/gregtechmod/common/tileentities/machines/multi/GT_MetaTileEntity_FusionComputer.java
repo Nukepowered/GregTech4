@@ -154,7 +154,9 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity {
     
     private boolean checkRecipe() {
     	if (!mMachine) return false;
-    	GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sFusionRecipes, getPrimaryInput(), getSecondaryInput());
+    	ItemStack input1 =  getPrimaryInput();
+    	ItemStack input2 = getSecondaryInput();
+    	GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sFusionRecipes, input1, input2);
     	if (tRecipe != null && consumeInput(tRecipe.mInputs[0], tRecipe.mInputs[1], getBaseMetaTileEntity().isActive()?0:tRecipe.mStartEU)) {
     		mMaxProgresstime = tRecipe.mDuration;
 		    mEUt = tRecipe.mEUt;
