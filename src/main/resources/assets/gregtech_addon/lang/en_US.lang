@@ -1176,418 +1176,418 @@ material.Ytterbium=Ytterbium
 material.Yttrium=Yttrium
 material.Zinc=Zinc
 
-material.Adamantium
-material.Adamite
-material.Adluorite
-material.Agate
-material.Alduorite
-material.Amber
-material.Ammonium
-material.Amordrine
-material.Andesite
-material.Angmallen
-material.Ardite
-material.Aredrite
-material.Atlarus
-material.Bitumen
-material.Black
-material.Blizz
-material.Blueschist
-material.Bluestone
-material.Bloodstone
-material.Blutonium
-material.Carmot
-material.Celenegil
-material.CertusQuartz
-material.Ceruclase
-material.Citrine
-material.CobaltHexahydrate
-material.ConstructionFoam
-material.Chalk
-material.Chert
-material.Chimerite
-material.Coral
-material.CrudeOil
-material.Chrysocolla
-material.CrystalFlux
-material.Cyanite
-material.Dacite
-material.DarkIron
-material.DarkStone
-material.Demonite
-material.Desh
-material.Desichalkos
-material.Dilithium
-material.Draconic
-material.Duranium
-material.Eclogite
-material.ElectrumFlux
-material.Emery
-material.Enderium
-material.Energized
-material.Epidote
-material.Eximite
-material.FieryBlood
-material.Firestone
-material.Fluorite
-material.FoolsRuby
-material.Force
-material.Forcicium
-material.Forcillium
-material.Gabbro
-material.Glowstone
-material.Gneiss
-material.Graphite
-material.Greenschist
-material.Greenstone
-material.Greywacke
-material.Haderoth
-material.Hematite
-material.Hepatizon
-material.HSLA
-material.Ignatius
-material.Infernal
-material.Infuscolium
-material.InfusedGold
-material.InfusedAir
-material.InfusedFire
-material.InfusedEarth
-material.InfusedWater
-material.InfusedVis
-material.InfusedDull
-material.InfusedEntropy
-material.InfusedOrder
-material.Inolashite
-material.Invisium
-material.Jade
-material.Jasper
-material.Kalendrite
-material.Komatiite
-material.Lava
-material.Lemurite
-material.Limestone
-material.Lodestone
-material.Luminite
-material.Magma
-material.Mawsitsit
-material.Mercassium
-material.MeteoricIron
-material.MeteoricSteel
-material.Meteorite
-material.Meutoite
-material.Migmatite
-material.Mimichite
-material.Monazite
-material.Moonstone
-material.Naquadah
-material.NaquadahAlloy
-material.Nether
-material.NetherBrick
-material.NetherQuartz
-material.NetherStar
-material.Nikolite
-material.ObsidianFlux
-material.Oilsands
-material.Onyx
-material.Orichalcum
-material.Osmonium
-material.Oureclase
-material.Painite
-material.Peanutwood
-material.Petroleum
-material.Pewter
-material.Pitchblende
-material.Phoenixite
-material.Potash
-material.Prometheum
-material.Quartzite
-material.Quicklime
-material.Randomite
-material.RefinedGlowstone
-material.RefinedObsidian
-material.Rhyolite
-material.Rubracium
-material.RyuDragonRyder
-material.Sand
-material.Sanguinite
-material.Siltstone
-material.Soapstone
-material.Spinel
-material.Starconium
-material.Sugilite
-material.Sunstone
-material.Tar
-material.Tartarite
-material.Tapazite
-material.Thyrium
-material.Tourmaline
-material.Tritanium
-material.Turquoise
-material.UUMatter
-material.Void
-material.Voidstone
-material.Vulcanite
-material.Vyroxeres
-material.Wimalite
-material.Yellorite
-material.Yellorium
-material.Zectium
+material.Adamantium=Adamantium
+material.Adamite=Adamite
+material.Adluorite=Adluorite
+material.Agate=Agate
+material.Alduorite=Alduorite
+material.Amber=Amber
+material.Ammonium=Ammonium
+material.Amordrine=Amordrine
+material.Andesite=Andesite
+material.Angmallen=Angmallen
+material.Ardite=Ardite
+material.Aredrite=Aredrite
+material.Atlarus=Atlarus
+material.Bitumen=Bitumen
+material.Black=Black
+material.Blizz=Blizz
+material.Blueschist=Blueschist
+material.Bluestone=Bluestone
+material.Bloodstone=Bloodstone
+material.Blutonium=Blutonium
+material.Carmot=Carmot
+material.Celenegil=Celenegil
+material.CertusQuartz=Certus Quartz
+material.Ceruclase=Ceruclase
+material.Citrine=Citrine
+material.CobaltHexahydrate=Cobalt Hexahydrate
+material.ConstructionFoam=Construction Foam
+material.Chalk=Chalk
+material.Chert=Chert
+material.Chimerite=Chimerite
+material.Coral=Coral
+material.CrudeOil=Crude Oil
+material.Chrysocolla=Chrysocolla
+material.CrystalFlux=Flux Crystal
+material.Cyanite=Cyanite
+material.Dacite=Dacite
+material.DarkIron=Dark Iron
+material.DarkStone=Dark Stone
+material.Demonite=Demonite
+material.Desh=Desh
+material.Desichalkos=Desichalkos
+material.Dilithium=Dilithium
+material.Draconic=Draconic
+material.Duranium=Duranium
+material.Eclogite=Eclogite
+material.ElectrumFlux=Fluxed Electrum
+material.Emery=Emery
+material.Enderium=Enderium
+material.Energized=Energized
+material.Epidote=Epidote
+material.Eximite=Eximite
+material.FieryBlood=Fiery Blood
+material.Firestone=Firestone
+material.Fluorite=Fluorite
+material.FoolsRuby=Ruby
+material.Force=Force
+material.Forcicium=Forcicium
+material.Forcillium=Forcillium
+material.Gabbro=Gabbro
+material.Glowstone=Glowstone
+material.Gneiss=Gneiss
+material.Graphite=Graphite
+material.Greenschist=Green Schist
+material.Greenstone=Greenstone
+material.Greywacke=Greywacke
+material.Haderoth=Haderoth
+material.Hematite=Hematite
+material.Hepatizon=Hepatizon
+material.HSLA=HSLA Steel
+material.Ignatius=Ignatius
+material.Infernal=Infernal
+material.Infuscolium=Infuscolium
+material.InfusedGold=Infused Gold
+material.InfusedAir=Infused Air
+material.InfusedFire=Infused Fire
+material.InfusedEarth=Infused Earth
+material.InfusedWater=Infused Water
+material.InfusedVis=Infused Vis
+material.InfusedDull=Infused Dull
+material.InfusedEntropy=Infused Entropy
+material.InfusedOrder=Infused Order
+material.Inolashite=Inolashite
+material.Invisium=Invisium
+material.Jade=Jade
+material.Jasper=Jasper
+material.Kalendrite=Kalendrite
+material.Komatiite=Komatiite
+material.Lava=Lava
+material.Lemurite=Lemurite
+material.Limestone=Limestone
+material.Lodestone=Lodestone
+material.Luminite=Luminite
+material.Magma=Magma
+material.Mawsitsit=Mawsitsit
+material.Mercassium=Mercassium
+material.MeteoricIron=Meteoric Iron
+material.MeteoricSteel=Meteoric Steel
+material.Meteorite=Meteorite
+material.Meutoite=Meutoite
+material.Migmatite=Migmatite
+material.Mimichite=Mimichite
+material.Monazite=Monazite
+material.Moonstone=Moonstone
+material.Naquadah=Naquadah
+material.NaquadahAlloy=Naquadah Alloy
+material.Nether=Nether
+material.NetherBrick=Nether Brick
+material.NetherQuartz=Nether Quartz
+material.NetherStar=Nether Star
+material.Nikolite=Nikolite
+material.ObsidianFlux=Fluxed Obsidian
+material.Oilsands=Oilsands
+material.Onyx=Onyx
+material.Orichalcum=Orichalcum
+material.Osmonium=Osmonium
+material.Oureclase=Oureclase
+material.Painite=Painite
+material.Peanutwood=Peanut Wood
+material.Petroleum=Petroleum
+material.Pewter=Pewter
+material.Pitchblende=Pitchblende
+material.Phoenixite=Phoenixite
+material.Potash=Potash
+material.Prometheum=Prometheum
+material.Quartzite=Quartzite
+material.Quicklime=Quicklime
+material.Randomite=Randomite
+material.RefinedGlowstone=Refined Glowstone
+material.RefinedObsidian=Refined Obsidian
+material.Rhyolite=Rhyolite
+material.Rubracium=Rubracium
+material.RyuDragonRyder=Ryu Dragon Ryder
+material.Sand=Sand
+material.Sanguinite=Sanguinite
+material.Siltstone=Siltstone
+material.Soapstone=Soapstone
+material.Spinel=Spinel
+material.Starconium=Starconium
+material.Sugilite=Sugilite
+material.Sunstone=Sunstone
+material.Tar=Tar
+material.Tartarite=Tartarite
+material.Tapazite=Tapazite
+material.Thyrium=Thyrium
+material.Tourmaline=Tourmaline
+material.Tritanium=Tritanium
+material.Turquoise=Turquoise
+material.UUMatter=UUMatter
+material.Void=Void
+material.Voidstone=Voidstone
+material.Vulcanite=Vulcanite
+material.Vyroxeres=Vyroxeres
+material.Wimalite=Wimalite
+material.Yellorite=Yellorite
+material.Yellorium=Yellorium
+material.Zectium=Zectium
 
-material.Advanced
-material.Basic
-material.Antimatter
-material.BioFuel
-material.Biomass
-material.Chocolate
-material.Cluster
-material.CoalFuel
-material.Coffee
-material.Creosote
-material.Data
-material.Elite
-material.Ethanol
-material.Fuel
-material.Good
-material.Gunpowder
-material.Infinite
-material.LimePure
-material.Master
-material.Meat
-material.MeatRaw
-material.MeatCooked
-material.Milk
-material.Mud
-material.Oil
-material.Paper
-material.Peat
-material.Primitive
-material.Quantum
-material.Red
-material.Reinforced
-material.SeedOil
-material.Stone
-material.TNT
-material.Ultimate
-material.Unstable
-material.Unstableingot
-material.Wheat
-material.Wood
+material.Advanced=Advanced
+material.Basic=Basic
+material.Antimatter=Antimatter
+material.BioFuel=Biofuel
+material.Biomass=Biomass
+material.Chocolate=Chocolate
+material.Cluster=Cluster
+material.CoalFuel=Coalfuel
+material.Coffee=Coffee
+material.Creosote=Creosote
+material.Data=Data
+material.Elite=Elite
+material.Ethanol=Ethanol
+material.Fuel=Diesel
+material.Good=Good
+material.Gunpowder=Gunpowder
+material.Infinite=Infinite
+material.LimePure=Pure Lime
+material.Master=Master
+material.Meat=Meat
+material.MeatRaw=Raw Meat
+material.MeatCooked=Cooked Meat
+material.Milk=Milk
+material.Mud=Mud
+material.Oil=Oil
+material.Paper=Paper
+material.Peat=Peat
+material.Primitive=Primitive
+material.Quantum=Quantum
+material.Red=Red
+material.Reinforced=Reinforced
+material.SeedOil=Seed Oil
+material.Stone=Stone
+material.TNT=TNT
+material.Ultimate=Ultimate
+material.Unstable=Unstable
+material.Unstableingot=Unstable
+material.Wheat=Wheat
+material.Wood=Wood
 
-material.AluminiumBrass
-material.Osmiridium
-material.Sunnarium
-material.Endstone
-material.Netherrack
-material.SoulSand
+material.AluminiumBrass=Aluminium Brass
+material.Osmiridium=Osmiridium
+material.Sunnarium=Sunnarium
+material.Endstone=Endstone
+material.Netherrack=Netherrack
+material.SoulSand=Soulsand
 
-material.Almandine
-material.Andradite
-material.Asbestos
-material.Ash
-material.BandedIron
-material.BatteryAlloy
-material.Bauxite
-material.BlueTopaz
-material.Bone
-material.Brass
-material.Bronze
-material.BrownLimonite
-material.Calcite
-material.Cassiterite
-material.CassiteriteSand
-material.Celestine
-material.Chalcopyrite
-material.Charcoal
-material.Chromite
-material.Cinnabar
-material.Clay
-material.Coal
-material.Cobaltite
-material.Cooperite
-material.Cupronickel
-material.DarkAsh
-material.DeepIron
-material.Diamond
-material.Electrum
-material.Emerald
-material.Galena
-material.Garnierite
-material.Glyceryl
-material.GreenSapphire
-material.Grossular
-material.Ice
-material.Ilmenite
-material.Invar
-material.Kanthal
-material.Lazurite
-material.LiveRoot
-material.Magnalium
-material.Magnesite
-material.Magnetite
-material.Methane
-material.Molybdenite
-material.Nichrome
-material.NitroCarbon
-material.NitrogenDioxide
-material.Obsidian
-material.Phosphate
-material.PigIron
-material.Plastic
-material.Powellite
-material.Pumice
-material.Pyrite
-material.Pyrolusite
-material.Pyrope
-material.RockSalt
-material.Rubber
-material.Ruby
-material.Salt
-material.Saltpeter
-material.Sapphire
-material.Scheelite
-material.SiliconDioxide
-material.Sodalite
-material.SodiumPersulfate
-material.SodiumSulfide
-material.SolderingAlloy
-material.Spessartine
-material.Sphalerite
-material.StainlessSteel
-material.Steel
-material.Stibnite
-material.SulfuricAcid
-material.Tanzanite
-material.Tetrahedrite
-material.Topaz
-material.Tungstate
-material.Ultimet
-material.Uraninite
-material.Uvarovite
-material.Water
-material.Wulfenite
-material.WroughtIron
-material.YellowLimonite
+material.Almandine=Almandine
+material.Andradite=Andradite
+material.Asbestos=Asbestos
+material.Ash=Ashes
+material.BandedIron=Banded Iron
+material.BatteryAlloy=Battery Alloy
+material.Bauxite=Bauxite
+material.BlueTopaz=Blue Topaz
+material.Bone=Bone
+material.Brass=Brass
+material.Bronze=Bronze
+material.BrownLimonite=Brown Limonite
+material.Calcite=Calcite
+material.Cassiterite=Cassiterite
+material.CassiteriteSand=Cassiterite Sand
+material.Celestine=Celestine
+material.Chalcopyrite=Chalcopyrite
+material.Charcoal=Charcoal
+material.Chromite=Chromite
+material.Cinnabar=Cinnabar
+material.Clay=Clay
+material.Coal=Coal
+material.Cobaltite=Cobaltite
+material.Cooperite=Cooperite
+material.Cupronickel=Cupronickel
+material.DarkAsh=Dark Ashes
+material.DeepIron=Deep Iron
+material.Diamond=Diamond
+material.Electrum=Electrum
+material.Emerald=Emerald
+material.Galena=Galena
+material.Garnierite=Garnierite
+material.Glyceryl=Glyceryl
+material.GreenSapphire=Green Sapphire
+material.Grossular=Grossular
+material.Ice=Ice
+material.Ilmenite=Ilmenite
+material.Invar=Invar
+material.Kanthal=Kanthal
+material.Lazurite=Lazurite
+material.LiveRoot=Liveroot
+material.Magnalium=Magnalium
+material.Magnesite=Magnesite
+material.Magnetite=Magnetite
+material.Methane=Methane
+material.Molybdenite=Molybdenite
+material.Nichrome=Nichrome
+material.NitroCarbon=Nitro-Carbon
+material.NitrogenDioxide=Nitrogen Dioxide
+material.Obsidian=Obsidian
+material.Phosphate=Phosphate
+material.PigIron=Pig Iron
+material.Plastic=Plastic
+material.Powellite=Powellite
+material.Pumice=Pumice
+material.Pyrite=Pyrite
+material.Pyrolusite=Pyrolusite
+material.Pyrope=Pyrope
+material.RockSalt=Rock Salt
+material.Rubber=Rubber
+material.Ruby=Ruby
+material.Salt=Salt
+material.Saltpeter=Saltpeter
+material.Sapphire=Sapphire
+material.Scheelite=Scheelite
+material.SiliconDioxide=Silicon Dioxide
+material.Sodalite=Sodalite
+material.SodiumPersulfate=Sodium Persulfate
+material.SodiumSulfide=Sodium Sulfide
+material.SolderingAlloy=Soldering Alloy
+material.Spessartine=Spessartine
+material.Sphalerite=Sphalerite
+material.StainlessSteel=Stainless Steel
+material.Steel=Steel
+material.Stibnite=Stibnite
+material.SulfuricAcid=Sulfuric Acid
+material.Tanzanite=Tanzanite
+material.Tetrahedrite=Tetrahedrite
+material.Topaz=Topaz
+material.Tungstate=Tungstate
+material.Ultimet=Ultimet
+material.Uraninite=Uraninite
+material.Uvarovite=Uvarovite
+material.Water=Water
+material.Wulfenite=Wulfenite
+material.WroughtIron=Wrought Iron
+material.YellowLimonite=Yellow Limonite
 
-material.Perlite
-material.Borax
-material.Lignite
-material.Olivine
-material.Opal
-material.Amethyst
-material.Redstone
-material.Lapis
-material.Blaze
-material.EnderPearl
-material.EnderEye
-material.Flint
-material.Diatomite
-material.VolcanicAsh
-material.Niter
-material.Pyrotheum
-material.HydratedCoal
-material.Apatite
-material.Alumite
-material.Manyullyn
-material.IronWood
-material.ShadowIron
-material.ShadowSteel
-material.SteelLeaf
-material.BlackSteel
-material.DamascusSteel
-material.TungstenSteel
-material.NitroCoalFuel
-material.NitroFuel
-material.AstralSilver
-material.Midasium
-material.Mithril
-material.BlueAlloy
-material.RedAlloy
-material.CobaltBrass
-material.Phosphorus
-material.Basalt
-material.GarnetRed
-material.GarnetYellow
-material.Marble
-material.Sugar
-material.Thaumium
-material.Vinteum
-material.Vis
-material.Redrock
-material.PotassiumFeldspar
-material.Biotite
-material.GraniteBlack
-material.GraniteRed
-material.Chrysotile
-material.VanadiumMagnetite
-material.BasalticMineralSand
-material.GraniticMineralSand
-material.GarnetSand
-material.QuartzSand
-material.Bastnasite
-material.Pentlandite
-material.Spodumene
-material.Pollucite
-material.Tantalite
-material.Lepidolite
-material.Glauconite
-material.Vermiculite
-material.Bentonite
-material.FullersEarth
-material.Malachite
-material.Mirabilite
-material.Mica
-material.Trona
-material.Barite
-material.Gypsum
-material.Alunite
-material.Dolomite
-material.Wollastonite
-material.Zeolite
-material.Kyanite
-material.Kaolinite
-material.Talc
+material.Perlite=Perlite
+material.Borax=Borax
+material.Lignite=Lignite Coal
+material.Olivine=Olivine
+material.Opal=Opal
+material.Amethyst=Amethyst
+material.Redstone=Redstone
+material.Lapis=Lapis
+material.Blaze=Blaze
+material.EnderPearl=Enderpearl
+material.EnderEye=Endereye
+material.Flint=Flint
+material.Diatomite=Diatomite
+material.VolcanicAsh=Volcanic Ashes
+material.Niter=Niter
+material.Pyrotheum=Pyrotheum
+material.HydratedCoal=Hydrated Coal
+material.Apatite=Apatite
+material.Alumite=Alumite
+material.Manyullyn=Manyullyn
+material.IronWood=Ironwood
+material.ShadowIron=Shadowiron
+material.ShadowSteel=Shadowsteel
+material.SteelLeaf=Steelleaf
+material.BlackSteel=Black Steel
+material.DamascusSteel=Damascus Steel
+material.TungstenSteel=Tungstensteel
+material.NitroCoalFuel=Nitro-Coalfuel
+material.NitroFuel=Nitro-Diesel
+material.AstralSilver=Astral Silver
+material.Midasium=Midasium
+material.Mithril=Mithril
+material.BlueAlloy=Blue Alloy
+material.RedAlloy=Red Alloy
+material.CobaltBrass=Cobalt Brass
+material.Phosphorus=Phosphorus
+material.Basalt=Basalt
+material.GarnetRed=Red Garnet
+material.GarnetYellow=Yellow Garnet
+material.Marble=Marble
+material.Sugar=Sugar
+material.Thaumium=Thaumium
+material.Vinteum=Vinteum
+material.Vis=Vis
+material.Redrock=Redrock
+material.PotassiumFeldspar=Potassium Feldspar
+material.Biotite=Biotite
+material.GraniteBlack=Black Granite
+material.GraniteRed=Red Granite
+material.Chrysotile=Chrysotile
+material.VanadiumMagnetite=Vanadium Magnetite
+material.BasalticMineralSand=Basaltic Mineral Sand
+material.GraniticMineralSand=Granitic Mineral Sand
+material.GarnetSand=Garnet Sand
+material.QuartzSand=Quartz Sand
+material.Bastnasite=Bastnasite
+material.Pentlandite=Pentlandite
+material.Spodumene=Spodumene
+material.Pollucite=Pollucite
+material.Tantalite=Tantalite
+material.Lepidolite=Lepidolite
+material.Glauconite=Glauconite
+material.Vermiculite=Vermiculite
+material.Bentonite=Bentonite
+material.FullersEarth=Fullers Earth
+material.Malachite=Malachite
+material.Mirabilite=Mirabilite
+material.Mica=Mica
+material.Trona=Trona
+material.Barite=Barite
+material.Gypsum=Gypsum
+material.Alunite=Alunite
+material.Dolomite=Dolomite
+material.Wollastonite=Wollastonite
+material.Zeolite=Zeolite
+material.Kyanite=Kyanite
+material.Kaolinite=Kaolinite
+material.Talc=Talc
 
-oreprefixes.oreNether
-oreprefixes.oreDense
-oreprefixes.oreEnd
-oreprefixes.ore
-oreprefixes.crushedCentrifuged
-oreprefixes.crushedPurified
-oreprefixes.crushed
-oreprefixes.ingotQuintuple
-oreprefixes.ingotQuadruple
-oreprefixes.ingotTriple
-oreprefixes.ingotDouble
-oreprefixes.ingotHot
-oreprefixes.ingot
-oreprefixes.gem
-oreprefixes.dustTiny
-oreprefixes.dustSmall
-oreprefixes.dustImpure
+oreprefixes.oreNether=Nether %s Ore
+oreprefixes.oreDense=Dense %s Ore
+oreprefixes.oreEnd=End %s Ore
+oreprefixes.ore=%s Ore
+oreprefixes.crushedCentrifuged=Centrifuged %s Ore
+oreprefixes.crushedPurified=Purified Crushed %s Ore
+oreprefixes.crushed=Crushed %s Ore
+oreprefixes.ingotQuintuple=Quintuple %s Ingot
+oreprefixes.ingotQuadruple=Quadruple %s Ingot
+oreprefixes.ingotTriple=Triple %s Ingot
+oreprefixes.ingotDouble=Double %s Ingot
+oreprefixes.ingotHot=Hot %s Ingot
+oreprefixes.ingot=%s Ingot
+oreprefixes.gem=
+oreprefixes.dustTiny=Tiny Pile of %s Dust
+oreprefixes.dustSmall=Small Pile of %s Dust
+oreprefixes.dustImpure=Impure Pile of %s Dust
 oreprefixes.dustRefined
-oreprefixes.dustPure
-oreprefixes.dust
-oreprefixes.nugget
-oreprefixes.plateAlloy
-oreprefixes.plateDense
-oreprefixes.plateQuintuple
-oreprefixes.plateQuadruple
-oreprefixes.plateTriple
-oreprefixes.plateDouble
-oreprefixes.plate
-oreprefixes.block
-oreprefixes.stick
-oreprefixes.lense
-oreprefixes.round
-oreprefixes.bolt
-oreprefixes.screw
-oreprefixes.ring
-oreprefixes.cellPlasma
-oreprefixes.cell
-oreprefixes.bucket
-oreprefixes.bottle
-oreprefixes.capsule
-oreprefixes.crystal
+oreprefixes.dustPure=Pure Pile of %s Dust
+oreprefixes.dust=%s Dust
+oreprefixes.nugget=%s Nugget
+oreprefixes.plateAlloy=%s Alloy Plate
+oreprefixes.plateDense=Dense %s Plate
+oreprefixes.plateQuintuple=Quintuple %s Plate
+oreprefixes.plateQuadruple=Quadruple %s Plate
+oreprefixes.plateTriple=Triple %s Plate
+oreprefixes.plateDouble=Double %s Plate
+oreprefixes.plate=%s Plate
+oreprefixes.block=Block of %s
+oreprefixes.stick=%s Rod
+oreprefixes.lense=%s Lens
+oreprefixes.round=%s Round
+oreprefixes.bolt=%s Bolt
+oreprefixes.screw=%s Screw
+oreprefixes.ring=%s Ring
+oreprefixes.cellPlasma=%s Plasma Cell
+oreprefixes.cell=%s Cell
+oreprefixes.bucket=%s Bucket
+oreprefixes.bottle=%s Bottle
+oreprefixes.capsule=% Capsule
+oreprefixes.crystal=%s Crystal
 oreprefixes.craftingTool
 oreprefixes.crafting
 oreprefixes.craft
@@ -1621,15 +1621,15 @@ oreprefixes.armorChestplate
 oreprefixes.armorLeggins
 oreprefixes.armorBoots
 oreprefixes.armor
-oreprefixes.toolHeadSword
-oreprefixes.toolHeadPickaxe
-oreprefixes.toolHeadShovel
-oreprefixes.toolHeadAxe
-oreprefixes.toolHeadHoe
-oreprefixes.toolHeadFile
-oreprefixes.toolHeadHammer
-oreprefixes.toolHeadSaw
-oreprefixes.toolHeadScrewdriver
+oreprefixes.toolHeadSword=%s Sword Blade
+oreprefixes.toolHeadPickaxe=%s Pickaxe Head
+oreprefixes.toolHeadShovel=%s Shovel Head
+oreprefixes.toolHeadAxe=%s Axe Head
+oreprefixes.toolHeadHoe=%s Hoe Head
+oreprefixes.toolHeadFile=%s File Head
+oreprefixes.toolHeadHammer=%s Hammer Head
+oreprefixes.toolHeadSaw=%s Saw Blade
+oreprefixes.toolHeadScrewdriver=%s Screwdriver Tip
 oreprefixes.toolSword
 oreprefixes.toolPickaxe
 oreprefixes.toolShovel
@@ -1637,13 +1637,13 @@ oreprefixes.toolAxe
 oreprefixes.toolHoe
 oreprefixes.toolShears
 oreprefixes.tool
-oreprefixes.pipeTiny
-oreprefixes.pipeSmall
-oreprefixes.pipeMedium
-oreprefixes.pipeLarge
-oreprefixes.pipeHuge
-oreprefixes.pipe
-oreprefixes.gearGt
+oreprefixes.pipeTiny=Tiny %s Pipe
+oreprefixes.pipeSmall=Small %s Pipe
+oreprefixes.pipeMedium=Medium %s Pipe
+oreprefixes.pipeLarge=Large %s Pipe
+oreprefixes.pipeHuge=Huge %s Pipe
+oreprefixes.pipe=%s Pipe
+oreprefixes.gearGt=%s Gear
 
 oreprefixes.batterySingleuse
 oreprefixes.battery
