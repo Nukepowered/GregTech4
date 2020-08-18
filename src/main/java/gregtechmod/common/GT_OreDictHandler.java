@@ -24,6 +24,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModContainer;
+import cpw.mods.fml.common.ProgressManager;
+import cpw.mods.fml.common.ProgressManager.ProgressBar;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -31,6 +33,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.OreDictionary.OreRegisterEvent;
 
+@SuppressWarnings("deprecation")
 public class GT_OreDictHandler {
 	public static final GT_OreDictHandler instance = new GT_OreDictHandler();
 	
@@ -507,21 +510,21 @@ public class GT_OreDictHandler {
 	/**
 	 * Gets called during the PostLoad-Phase
 	 */
-
     public void activateHandler() {
     	mActivated = true;
     	long time = System.currentTimeMillis();
-    	
-    	int counter = mEvents.size();
-    	GT_Log.log.warn("There is " + counter + " events to be registered");
+    	ProgressBar bar  = ProgressManager.push("Handling OreDict", mEvents.size(), false);
     	Iterator<Entry<OreRegisterEvent, String>> iter = mEvents.entrySet().iterator();
     	
     	while (iter.hasNext()) {
-    		if (GregTech_API.DEBUG_MODE) GT_Log.log.warn("Events left: " + counter--);
     		Entry<OreRegisterEvent, String> temp = iter.next();
+    		ItemStack ore = temp.getKey().Ore;
+    		bar.step(ore.getItem().getUnlocalizedName());
     		this.registerRecipes(temp.getKey(), temp.getValue());
     	}
 		
+    	ProgressManager.pop(bar);
+    	mEvents.clear();
 		GT_Log.log.warn(String.format("Time spent for oredict iterating: %.3f seconds", (System.currentTimeMillis() - time) / 1000.0D));
     }
     
