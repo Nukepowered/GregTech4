@@ -7,8 +7,11 @@ import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.IFluidHandler;
 
-public class GT_MetaTileEntity_Hatch_Output extends GT_MetaTileEntity_BasicTank {
+public class GT_MetaTileEntity_Hatch_Output extends GT_MetaTileEntity_BasicTank implements IFluidHandler{
 	
 	public byte mMode = 0;
 	
@@ -58,7 +61,26 @@ public class GT_MetaTileEntity_Hatch_Output extends GT_MetaTileEntity_BasicTank 
 		if (aSide==1) return 29;
     	return 40;
 	}
+	//New code: auto-liquid pushing
+	@Override
+	public void onPostTick() {
+		super.onPostTick();
+		if (getBaseMetaTileEntity().isServerSide()) {
+				if (this.mMode == 8 && this.mFluid != null && getBaseMetaTileEntity().getTileEntityAtSide(getBaseMetaTileEntity().getFrontFacing()) != null && getBaseMetaTileEntity().getITankContainerAtSide(getBaseMetaTileEntity().getFrontFacing()).canFill(ForgeDirection.UNKNOWN, this.mFluid.getFluid())) {
+					int filled = this.mFluid.amount == 0 ? 0 : getBaseMetaTileEntity().getITankContainerAtSide(getBaseMetaTileEntity().getFrontFacing()).fill(ForgeDirection.UNKNOWN, this.mFluid, false);
+					if (filled > 0) {
+						getBaseMetaTileEntity().getITankContainerAtSide(getBaseMetaTileEntity().getFrontFacing()).fill(ForgeDirection.UNKNOWN, this.mFluid, true);
+						this.mFluid.amount-=filled;
+					}
+			}
+		}
+	}
 	
+	@Override
+	public boolean canFill(ForgeDirection aSide, Fluid aFluid) {
+		return aSide == ForgeDirection.getOrientation(getBaseMetaTileEntity().getFrontFacing()) ? false : true;
+	}
+	//End of new code
 	@Override
 	public String getDescription() {
 		return "Use Screwdriver to specify Output Type";
@@ -87,7 +109,7 @@ public class GT_MetaTileEntity_Hatch_Output extends GT_MetaTileEntity_BasicTank 
 	@Override
 	public void onScrewdriverRightClick(byte aSide, EntityPlayer aPlayer, float aX, float aY, float aZ) {
 		if (!getBaseMetaTileEntity().getCoverBehaviorAtSide(aSide).isGUIClickable(aSide, getBaseMetaTileEntity().getCoverIDAtSide(aSide), getBaseMetaTileEntity().getCoverDataAtSide(aSide), getBaseMetaTileEntity())) return;
-		mMode = (byte)((mMode + 1) % 8);
+		mMode = (byte)((mMode + 1) % 9);
 		switch (mMode) {
 		case 0: GT_Utility.sendChatToPlayer(aPlayer, "Outputs Liquids, Steam and Items"); break;
 		case 1: GT_Utility.sendChatToPlayer(aPlayer, "Outputs Steam and Items"); break;
@@ -97,6 +119,7 @@ public class GT_MetaTileEntity_Hatch_Output extends GT_MetaTileEntity_BasicTank 
 		case 5: GT_Utility.sendChatToPlayer(aPlayer, "Outputs only Items"); break;
 		case 6: GT_Utility.sendChatToPlayer(aPlayer, "Outputs only Liquids"); break;
 		case 7: GT_Utility.sendChatToPlayer(aPlayer, "Outputs nothing"); break;
+		case 8: GT_Utility.sendChatToPlayer(aPlayer, "Auto-output Liquids"); break;
 		}
 	}
 	
