@@ -444,8 +444,11 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 			int aMetaData = getDamage(aStack);
 			OrePrefixes pref = mGeneratedPrefixList[aMetaData / 1000];
 			Materials tMaterial = GregTech_API.sGeneratedMaterials[aMetaData % 1000];
-			if (pref.mIsMaterialBased)
-				aList.add(tMaterial.mChemicalFormula);
+			if (pref.mIsMaterialBased && pref.mIsUnificatable) {
+				String toolTip = tMaterial.getToolTip(false);
+				if (GT_Utility.isStringValid(toolTip)) aList.add(toolTip);
+			}
+				
 		} catch (Throwable e) {} 
 
 		if (aList.size() <= 1) {

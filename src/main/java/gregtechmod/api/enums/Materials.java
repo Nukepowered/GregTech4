@@ -923,6 +923,16 @@ public enum Materials {
 		return mDensity;
 	}
 	
+	public String getLowIndex(long mAmount) {
+		char[] chars = Long.toString(mAmount).toCharArray();
+		for (int i = 0; i < chars.length; i++) {
+			int index = Integer.parseInt(chars[i] + "");
+			chars[i] = ElementStack.formulaNumbers[index];
+		}
+		
+		return String.valueOf(chars);
+	}
+	
 	public String getToolTip() {
 		return getToolTip(1, false);
 	}
@@ -938,7 +948,7 @@ public enum Materials {
 	public String getToolTip(long aMultiplier, boolean aShowQuestionMarks) {
 		if (!aShowQuestionMarks && mChemicalFormula.equals("?")) return "";
 		if (getDensity() * aMultiplier >= GregTech_API.MATERIAL_UNIT * 2 && !mMaterialList.isEmpty()) {
-			return ((mElement != null || (mMaterialList.size() < 2 && mMaterialList.get(0).mAmount == 1))?mChemicalFormula:"(" + mChemicalFormula + ")") + ((getDensity() * aMultiplier) / GregTech_API.MATERIAL_UNIT);
+			return ((mElement != null || (mMaterialList.size() < 2 && mMaterialList.get(0).mAmount == 1))?mChemicalFormula:"(" + mChemicalFormula + ")") + this.getLowIndex((getDensity() * aMultiplier) / GregTech_API.MATERIAL_UNIT);
 		}
 		return mChemicalFormula;
 	}

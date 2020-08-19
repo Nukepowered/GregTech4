@@ -13,6 +13,16 @@ public class MaterialStack implements Cloneable {
 		return new MaterialStack(mMaterial, aAmount);
 	}
 	
+	public String getLowIndex() {
+		char[] chars = Long.toString(mAmount).toCharArray();
+		for (int i = 0; i < chars.length; i++) {
+			int index = Integer.parseInt(chars[i] + "");
+			chars[i] = ElementStack.formulaNumbers[index];
+		}
+		
+		return String.valueOf(chars);
+	}
+	
 	@Override
 	public MaterialStack clone() {
 		return new MaterialStack(mMaterial, mAmount);
@@ -29,7 +39,7 @@ public class MaterialStack implements Cloneable {
 	
 	@Override
 	public String toString() {
-		return (mMaterial.mMaterialList.size() > 1 && mAmount > 1 ? "(" : "") + mMaterial.getToolTip(true) + (mMaterial.mMaterialList.size() > 1 && mAmount > 1 ? ")" : "") + (mAmount > 1 ? mAmount : "");
+		return (mMaterial.mMaterialList.size() > 1 && mAmount > 1 ? "(" : "") + mMaterial.getToolTip(true) + (mMaterial.mMaterialList.size() > 1 && mAmount > 1 ? ")" : "") + (mAmount > 1 ? this.getLowIndex() : "");
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 package gregtechmod.api.enums;
 
 public class ElementStack implements Cloneable {
+	public static final char[] formulaNumbers = new char[] { '₀', '₁', '₂', '₃', '₄', '₅', '₆', '₇', '₈', '₉' };
+	
 	public int mAmount;
 	public Element mElement;
 	
@@ -11,6 +13,16 @@ public class ElementStack implements Cloneable {
 	
 	public ElementStack copy(int aAmount) {
 		return new ElementStack(mElement, aAmount);
+	}
+	
+	public String getLowIndex() {
+		char[] chars = Integer.toString(mAmount).toCharArray();
+		for (int i = 0; i < chars.length; i++) {
+			int index = Integer.parseInt(chars[i] + "");
+			chars[i] = formulaNumbers[index];
+		}
+		
+		return String.valueOf(chars);
 	}
 	
 	@Override
@@ -29,7 +41,7 @@ public class ElementStack implements Cloneable {
 	
 	@Override
 	public String toString() {
-		return mElement.toString()+mAmount;
+		return mElement.toString() + this.getLowIndex();
 	}
 
 	@Override
