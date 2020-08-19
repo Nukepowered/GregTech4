@@ -1,6 +1,9 @@
 package gregtechmod.common;
 
 import gregtechmod.api.enums.Materials;
+import gregtechmod.api.enums.OrePrefixes;
+import gregtechmod.api.util.GT_OreDictUnificator;
+
 import java.util.ArrayList;
 
 import net.minecraft.item.ItemStack;
@@ -37,5 +40,9 @@ public class GT_FluidRegistry {
 		}
 		
 		if (aFullContainer != null && aEmptyContainer != null) FluidContainerRegistry.registerFluidContainer(new FluidStack(tFluid, 1000), aFullContainer, aEmptyContainer);
+	}
+	
+	public static void addFluid(String aName, String aLocalized, Materials aMaterial, OrePrefixes aPrefix, int aState, ItemStack aEmptyContainer) {
+		addFluid(aName, aLocalized, aMaterial, aState, GT_OreDictUnificator.get(aPrefix, aMaterial, 1), aEmptyContainer);
 	}
 }

@@ -38,7 +38,7 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity {
     @Override public boolean isValidSlot(int aIndex) 				{return false;}
 	@Override public boolean isFacingValid(byte aFacing)			{return aFacing > 1;}
 	@Override public int getInvSize()								{return 1;}
-    @Override public int maxEUStore()								{return 160000000;}
+    @Override public int maxEUStore()								{return mEnergyInjectors.size() * 10000000;}
     @Override public int getEUVar()									{return getStoredEU();}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 143);}
 	@Override public boolean isAccessAllowed(EntityPlayer aPlayer)	{return true;}

@@ -651,7 +651,9 @@ public class GT_Utility {
     	if (aStack.getItem() instanceof IFluidContainerItem) {
 			return FluidStack.areFluidStackTagsEqual(aFluid, ((IFluidContainerItem)aStack.getItem()).getFluid(aStack = copyAmount(1, aStack)));
     	}
-    	return FluidContainerRegistry.containsFluid(aStack, aFluid);
+    	
+    	FluidStack tFluid = FluidContainerRegistry.getFluidForFilledItem(aStack);
+    	return tFluid != null && tFluid.amount <= aFluid.amount && tFluid.isFluidEqual(aFluid);
     }
     
 	public static FluidStack getFluidForFilledItem(ItemStack aStack) {
