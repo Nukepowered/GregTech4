@@ -151,7 +151,14 @@ public class GregTech_API {
 	public static final Map<Integer, String> sSoundList = new HashMap<Integer, String>();
 	
 	/** The List of Tools, which can be used. Accepts regular damageable Items and Electric Items */
-	public static final List<Integer> sToolList = new ArrayList<Integer>(), sCrowbarList = new ArrayList<Integer>(), sScrewdriverList = new ArrayList<Integer>(), sWrenchList = new ArrayList<Integer>(), sSoftHammerList = new ArrayList<Integer>(), sHardHammerList = new ArrayList<Integer>(), sSolderingToolList = new ArrayList<Integer>(), sSolderingMetalList = new ArrayList<Integer>();
+	public static final List<Integer> sToolList = new ArrayList<Integer>(),
+			sCrowbarList = new ArrayList<Integer>(),
+			sScrewdriverList = new ArrayList<Integer>(),
+			sWrenchList = new ArrayList<Integer>(),
+			sSoftHammerList = new ArrayList<Integer>(),
+			sHardHammerList = new ArrayList<Integer>(),
+			sSolderingToolList = new ArrayList<Integer>(),
+			sSolderingMetalList = new ArrayList<Integer>();
 	
 	/** 
 	 * The List of Dimensions, which are Whitelisted for the Teleporter. This list should not contain other Planets.
