@@ -676,7 +676,13 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	@Override public boolean getRedstone() {return getRedstone((byte)0)||getRedstone((byte)1)||getRedstone((byte)2)||getRedstone((byte)3)||getRedstone((byte)4)||getRedstone((byte)5);}
 	@Override public boolean getRedstone(byte aSide) {return getInternalInputRedstoneSignal(aSide) > 0;}
     
-    public IIcon getCoverTexture(byte aSide) {return GregTech_API.sCovers.get(getCoverIDAtSide(aSide));}
+    public IIcon getCoverTexture(byte aSide) {
+    	
+    	IIcon icon1 =  Blocks.bedrock.getIcon(0, 0);
+    	IIcon icon = GregTech_API.sCovers.get(getCoverIDAtSide(aSide));
+    	
+    	return icon;
+    }
 	
 	@Override public boolean isGivingInformation() {if (hasValidMetaTileEntity()) return mMetaTileEntity.isGivingInformation(); return false;}
 	@Override public boolean isValidFacing(byte aSide) {if (hasValidMetaTileEntity()) return mMetaTileEntity.isFacingValid(aSide); return false;}

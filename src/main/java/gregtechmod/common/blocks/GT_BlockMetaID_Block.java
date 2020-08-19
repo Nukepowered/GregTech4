@@ -50,14 +50,16 @@ public class GT_BlockMetaID_Block extends Block {
     	for (int i = 0; i < mIconSteamTurbine		.length; i++) mIconSteamTurbine			[i] = par1IconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + (GT_Config.system?"troll":"tile.SteamTurbine/SteamTurbine" + (i+1)));
     	for (int i = 0; i < mIconSteamTurbineActive	.length; i++) mIconSteamTurbineActive	[i] = par1IconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + (GT_Config.system?"troll":"tile.SteamTurbine/SteamTurbineActive" + (i+1)));
     	
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateSilver")			, mIcons[ 3]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateRuby")			, mIcons[ 4]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateSapphire")		, mIcons[ 5]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateAluminium")		, mIcons[ 7]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateTitanium")		, mIcons[ 8]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateChrome")			, mIcons[ 9]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateSteel")			, mIcons[11]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateBrass")			, mIcons[12]);
+    	if(GregTech_API.sPostloadFinished) {
+	    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateSilver")			, mIcons[ 3]);
+	    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateRuby")			, mIcons[ 4]);
+	    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateSapphire")		, mIcons[ 5]);
+	    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateAluminium")		, mIcons[ 7]);
+	    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateTitanium")		, mIcons[ 8]);
+	    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateChrome")			, mIcons[ 9]);
+	    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateSteel")			, mIcons[11]);
+	    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateBrass")			, mIcons[12]);
+    	}
 	}
 	
 	@Override

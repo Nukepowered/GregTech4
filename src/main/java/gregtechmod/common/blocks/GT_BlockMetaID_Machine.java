@@ -514,54 +514,56 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 	    mIcons[ 411] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/high_voltage_charger_top");
 	    mIcons[ 412] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/high_voltage_charger_top_active");
 		
-		GT_Log.log.info("GT_Mod: Setting up Icon Register for Blocks");
-		GregTech_API.sBlockIcons = aIconRegister;
-		
-		GT_Log.log.info("GT_Mod: Registering MetaTileEntity specific Textures");
-		for (IMetaTileEntity tMetaTileEntity : GregTech_API.mMetaTileList) {
+	    if (GregTech_API.sPostloadFinished) {
+	    	GT_Log.log.info("GT_Mod: Setting up Icon Register for Blocks");
+			GregTech_API.sBlockIcons = aIconRegister;
+			
+			GT_Log.log.info("GT_Mod: Registering MetaTileEntity specific Textures");
+			for (IMetaTileEntity tMetaTileEntity : GregTech_API.mMetaTileList) {
+				try {
+					if (tMetaTileEntity != null) tMetaTileEntity.registerIcons(aIconRegister);
+				} catch(Throwable e) {
+					GT_Log.log.catching(e);
+				}
+			}
+			
+			GT_Log.log.info("GT_Mod: Registering Crop specific Textures");
 			try {
-				if (tMetaTileEntity != null) tMetaTileEntity.registerIcons(aIconRegister);
+				for (gregtechmod.api.util.GT_BaseCrop tCrop : gregtechmod.api.util.GT_BaseCrop.sCropList) {
+					tCrop.registerSprites(aIconRegister);
+				}
 			} catch(Throwable e) {
 				GT_Log.log.catching(e);
 			}
-		}
-		
-		GT_Log.log.info("GT_Mod: Registering Crop specific Textures");
-		try {
-			for (gregtechmod.api.util.GT_BaseCrop tCrop : gregtechmod.api.util.GT_BaseCrop.sCropList) {
-				tCrop.registerSprites(aIconRegister);
+			
+			GT_Log.log.info("GT_Mod: Loading Fluid Icons");
+	    	for (Fluid tFluid : GT_FluidRegistry.sFluids) {
+	    		tFluid.setIcons(aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + "fluids/" + tFluid.getUnlocalizedName()));
+	    	}
+	    	
+	    	GT_Log.log.info("GT_Mod: Starting Cover Load Phase Clientside");
+	    	for (Runnable tRunnable : GregTech_API.sGTCoverload) {
+	    		try {
+	    			tRunnable.run();
+	    		} catch(Throwable e) {
+	    			GT_Log.log.catching(e);
+	    		}
+	    	}
+	    	
+	    	GT_Log.log.info("GT_Mod: Starting Block Icon Load Phase Clientside");
+	    	for (Runnable tRunnable : GregTech_API.sGTBlockIconload) {
+	    		try {
+	    			tRunnable.run();
+	    		} catch(Throwable e) {
+	    			GT_Log.log.catching(e);
+	    		}
+	    	}
+	    	
+			if (GregTech_API.DEBUG_MODE) {
+				GT_Log.log.debug("Dumping out free spaces in the Machine Icon List: ");
+				for (int i = 0; i < mIcons.length; i++) if (mIcons[i] == null) GT_Log.log.debug("Free Machine-Icon-ID at: " + i);
 			}
-		} catch(Throwable e) {
-			GT_Log.log.catching(e);
-		}
-		
-		GT_Log.log.info("GT_Mod: Loading Fluid Icons");
-    	for (Fluid tFluid : GT_FluidRegistry.sFluids) {
-    		tFluid.setIcons(aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + "fluids/" + tFluid.getUnlocalizedName()));
-    	}
-    	
-    	GT_Log.log.info("GT_Mod: Starting Cover Load Phase Clientside");
-    	for (Runnable tRunnable : GregTech_API.sGTCoverload) {
-    		try {
-    			tRunnable.run();
-    		} catch(Throwable e) {
-    			GT_Log.log.catching(e);
-    		}
-    	}
-    	
-    	GT_Log.log.info("GT_Mod: Starting Block Icon Load Phase Clientside");
-    	for (Runnable tRunnable : GregTech_API.sGTBlockIconload) {
-    		try {
-    			tRunnable.run();
-    		} catch(Throwable e) {
-    			GT_Log.log.catching(e);
-    		}
-    	}
-    	
-		if (GregTech_API.DEBUG_MODE) {
-			GT_Log.log.debug("Dumping out free spaces in the Machine Icon List: ");
-			for (int i = 0; i < mIcons.length; i++) if (mIcons[i] == null) GT_Log.log.debug("Free Machine-Icon-ID at: " + i);
-		}
+	    }
 	}
 	
 	@Override
