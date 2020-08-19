@@ -70,6 +70,19 @@ public class GT_Utility {
 	public static final List<Character> sLowerCasedCharacters = Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
 	
 	public static final DecimalFormat sFormat = new DecimalFormat("###,###.##", new DecimalFormatSymbols(Locale.ENGLISH));
+    
+	public static String toIndexNumbers(String string) {
+        char[] charArray = string.toCharArray();
+        for (int i = 0; i < charArray.length; i++) {
+            int relativeIndex = charArray[i] - '0';
+            if (relativeIndex >= 0 && relativeIndex <= 9) {
+                int newChar = '\u2080' + relativeIndex;
+                charArray[i] = (char) newChar;
+            }
+        }
+        
+        return new String(charArray);
+    }
 	
 	public static Field getPublicField(Object aObject, String aField) {
 		Field rField = null;

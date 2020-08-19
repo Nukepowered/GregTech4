@@ -1,5 +1,7 @@
 package gregtechmod.api.enums;
 
+import gregtechmod.api.util.GT_Utility;
+
 public class MaterialStack implements Cloneable {
 	public long mAmount;
 	public Materials mMaterial;
@@ -11,16 +13,6 @@ public class MaterialStack implements Cloneable {
 	
 	public MaterialStack copy(long aAmount) {
 		return new MaterialStack(mMaterial, aAmount);
-	}
-	
-	public String getLowIndex() {
-		char[] chars = Long.toString(mAmount).toCharArray();
-		for (int i = 0; i < chars.length; i++) {
-			int index = Integer.parseInt(chars[i] + "");
-			chars[i] = ElementStack.formulaNumbers[index];
-		}
-		
-		return String.valueOf(chars);
 	}
 	
 	@Override
@@ -39,7 +31,7 @@ public class MaterialStack implements Cloneable {
 	
 	@Override
 	public String toString() {
-		return (mMaterial.mMaterialList.size() > 1 && mAmount > 1 ? "(" : "") + mMaterial.getToolTip(true) + (mMaterial.mMaterialList.size() > 1 && mAmount > 1 ? ")" : "") + (mAmount > 1 ? this.getLowIndex() : "");
+		return (mMaterial.mMaterialList.size() > 1 && mAmount > 1 ? "(" : "") + mMaterial.getToolTip(true) + (mMaterial.mMaterialList.size() > 1 && mAmount > 1 ? ")" : "") + (mAmount > 1 ? GT_Utility.toIndexNumbers(Long.toString(mAmount)) : "");
 	}
 
 	@Override
