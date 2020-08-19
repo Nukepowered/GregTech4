@@ -625,8 +625,6 @@ public class GT_ItemLoader implements Runnable {
 	    GT_Items.Reactor_Coolant_He_1.set(GregTech_API.sItemList[34] = GregTech_API.constructCoolantCellItem("60k_Helium_Coolantcell", '\uea60'));
 	    GT_Items.Reactor_Coolant_He_3.set(GregTech_API.sItemList[35] = GregTech_API.constructCoolantCellItem("180k_Helium_Coolantcell", 180000));
 	    GT_Items.Reactor_Coolant_He_6.set(GregTech_API.sItemList[36] = GregTech_API.constructCoolantCellItem("360k_Helium_Coolantcell", 360000));
-	    GregTech_API.sItemList[37] = GregTech_API.constructElectricEnergyStorageItem("Lapotronic_Energyorb", 100000000, 8192, 5, 37, 37);
-	    GT_ModHandler.addShapelessCraftingRecipe(GT_Items.Energy_LapotronicOrb.get(1), new Object[]{new ItemStack(GregTech_API.sItemList[37], 1, 32767)});
 	    GT_Items.Armor_Cloaking.set(GregTech_API.sItemList[38] = GregTech_API.constructElectricArmorItem("Cloaking_Device", 100000000, 8192, 5, 0, 512, 0.0D, false, 1, tArmorID3));
 	    GT_Items.Tool_Jackhammer_Bronze.set((GregTech_API.sItemList[39] = GregTech_API.constructElectricDrillItem("Bronze_Jack_Hammer", 10, 0, 2, 8.0F, 50, -1).setElectricTier(1).setBlockBreakSound(GregTech_API.sSoundList.get(107)).setEntityHitSound(GregTech_API.sSoundList.get(107))));
         
@@ -664,8 +662,6 @@ public class GT_ItemLoader implements Runnable {
 			}
 		}
 		
-		GT_Items.Energy_Lithium_Empty.set(GregTech_API.sItemList[56] = GregTech_API.constructElectricEnergyStorageItem("Lithium_Battery_Empty", 100000, 128, 1, 56, 57).setMaxStackSize(16).setMaxDamage(0));
-		GT_Items.Energy_Lithium.set(GregTech_API.sItemList[57] = GregTech_API.constructElectricEnergyStorageItem("Lithium_Battery", 100000, 128, 1, 56, 57));
 		GT_Items.Armor_LithiumPack.set(GregTech_API.sItemList[58] = GregTech_API.constructElectricArmorItem("Lithium_Batpack", 600000, 128, 1, 0, 0, 0.0D, true, 1, tArmorID2));
 		GT_Items.Reactor_Coolant_NaK_1.set(GregTech_API.sItemList[60] = GregTech_API.constructCoolantCellItem("60k_NaK_Coolantcell", '\uea60'));
 		GT_Items.Reactor_Coolant_NaK_3.set(GregTech_API.sItemList[61] = GregTech_API.constructCoolantCellItem("180k_NaK_Coolantcell", 180000));

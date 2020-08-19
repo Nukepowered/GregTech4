@@ -25,8 +25,6 @@ public class GT_DictRegistratorPostItem implements Runnable {
 	    GT_OreDictUnificator.registerOre(OrePrefixes.circuit, Materials.Ultimate	, GT_Items.Tool_DataOrb.getWildcard(1L));
 	    GT_OreDictUnificator.registerOre(OrePrefixes.circuit, Materials.Basic		, GT_Items.Circuit_Integrated.getWildcard(1L));
 	    
-	    GT_OreDictUnificator.registerOre(OrePrefixes.battery, Materials.Lithium		, GT_Items.Energy_Lithium.getWildcard(1L));
-	    GT_OreDictUnificator.registerOre(OrePrefixes.battery, Materials.Lithium		, GT_Items.Energy_Lithium_Empty.getWildcard(1L));
 	    GT_OreDictUnificator.registerOre(OrePrefixes.battery, Materials.Basic		, GT_ModHandler.getIC2Item("reBattery", 1L));
 	    GT_OreDictUnificator.registerOre(OrePrefixes.battery, Materials.Basic		, GT_ModHandler.getIC2Item("chargedReBattery", 1L, 32767));
 	    GT_OreDictUnificator.registerOre(OrePrefixes.battery, Materials.Advanced	, GT_ModHandler.getIC2Item("advBattery", 1L, 32767));

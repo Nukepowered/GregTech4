@@ -222,8 +222,6 @@ public enum GT_Items implements IItemContainer {
 	Armor_LapotronicPack,
 	Armor_ForceField,
 	Energy_LapotronicOrb,
-	Energy_Lithium,
-	Energy_Lithium_Empty,
 	Reactor_Coolant_He_1,
 	Reactor_Coolant_He_3,
 	Reactor_Coolant_He_6,
