@@ -31,12 +31,14 @@ public class GT_Scanner_Item extends GT_Generic_Item implements IElectricItem {
         return true;
     }
     
-    @SuppressWarnings({ "unchecked", "unused" })
+    @Override
+    @SuppressWarnings({ "unchecked", "rawtypes" })
 	@SideOnly(Side.CLIENT)
-    public void getSubItems(int var1, CreativeTabs var2, @SuppressWarnings("rawtypes") List var3) {
+    public void getSubItems(Item item, CreativeTabs var2, List items) {
         ItemStack tCharged = new ItemStack(this, 1), tUncharged = new ItemStack(this, 1, getMaxDamage());
         GT_ModHandler.chargeElectricItem(tCharged, Integer.MAX_VALUE, 1, true, false);
-        var3.add(tCharged);
+        items.add(tCharged);
+        items.add(tUncharged);
     }
     
 	@Override

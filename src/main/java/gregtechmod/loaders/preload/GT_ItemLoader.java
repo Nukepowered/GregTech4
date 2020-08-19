@@ -645,7 +645,7 @@ public class GT_ItemLoader implements Runnable {
 		GT_Items.Tool_Rockcutter.set((GregTech_API.sItemList[46] = GregTech_API.constructElectricDrillItem("Rockcutter", 10, 0, 5, 3.0F, 1000, -1).setElectricTier(1).addToMaterialList(Material.anvil).addToMaterialList(Material.iron).addToMaterialList(Material.rock).setToolClasses(new String[]{"pickaxe"}).setSilkyness(3)));
 	    
 		try {
-			GT_Items.Tool_Teslastaff.set( (GregTech_API.sItemList[47] = new GT_Teslastaff_Item("Teslastaff")));
+			GT_Items.Tool_Teslastaff.set((GregTech_API.sItemList[47] = new GT_Teslastaff_Item("Teslastaff")));
 		} catch (Throwable e) {
 			if (GregTech_API.DEBUG_MODE) {
 				GT_Log.log.catching(e);

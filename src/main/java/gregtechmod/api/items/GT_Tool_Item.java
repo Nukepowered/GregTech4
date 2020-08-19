@@ -228,13 +228,19 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	@Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(Item item, CreativeTabs var2, @SuppressWarnings("rawtypes") List aList) {
-		if (GT_ModHandler.isElectricItem(new ItemStack(this, 1))) {
-	        ItemStack tCharged = new ItemStack(this, 1);
-	        GT_ModHandler.chargeElectricItem(tCharged, Integer.MAX_VALUE, Integer.MAX_VALUE, true, false);
-	        aList.add(tCharged);
-	        return;
+		if (GT_ModHandler.isElectricItem(new ItemStack(item, 1))) {
+			ItemStack tCharged = new ItemStack(item, 1);
+			if (item instanceof GT_EmptyTool_Item) {
+				tCharged.setItemDamage(tCharged.getMaxDamage());
+			} else {
+				GT_ModHandler.chargeElectricItem(tCharged, Integer.MAX_VALUE, Integer.MAX_VALUE, true, false);
+			}
+			
+			aList.add(tCharged);
+			return;
 		}
-		aList.add(new ItemStack(this, 1));
+		
+		aList.add(new ItemStack(item, 1));
     }
 	
 	@Override

@@ -43,7 +43,7 @@ public class GT_Teslastaff_Item extends ItemTool implements IElectricItem {
 	@SuppressWarnings("unchecked")
 	@Override
     public void addInformation(ItemStack aStack, EntityPlayer aPlayer, @SuppressWarnings("rawtypes") List aList, boolean aF3_H) {
-		aList.add("No warranty!");
+		aList.add("No warranty!"); // TODO locale
     }
 	
     @Override
@@ -64,13 +64,14 @@ public class GT_Teslastaff_Item extends ItemTool implements IElectricItem {
         return true;
     }
     
-    @SuppressWarnings("unchecked")
+    @Override
 	@SideOnly(Side.CLIENT)
-    public void getSubItems(int var1, CreativeTabs var2, @SuppressWarnings("rawtypes") List var3) {
-        ItemStack tCharged = new ItemStack(this, 1), tUncharged = new ItemStack(this, 1, getMaxDamage());
+    @SuppressWarnings("unchecked")
+    public void getSubItems(Item item, CreativeTabs tab, @SuppressWarnings("rawtypes") List items) {
+        ItemStack tCharged = new ItemStack(item, 1), tUncharged = new ItemStack(item, 1, getMaxDamage());
         ElectricItem.manager.charge(tCharged, Integer.MAX_VALUE, Integer.MAX_VALUE, true, false);
-        var3.add(tCharged);
-        var3.add(tUncharged);
+        items.add(tCharged);
+        items.add(tUncharged);
     }
     
 	@Override
