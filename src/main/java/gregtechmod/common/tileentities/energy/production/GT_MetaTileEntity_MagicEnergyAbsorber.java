@@ -227,7 +227,7 @@ public class GT_MetaTileEntity_MagicEnergyAbsorber extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Absorbs Magic Energy and disenchants Items";
+		return "metatileentity.GT_MagicAbsorber.tooltip";
 	}
 	
 	@Override

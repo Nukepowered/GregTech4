@@ -34,6 +34,6 @@ public class GT_MetaTileEntity_ThermalGenerator extends GT_MetaTileEntity_BasicG
 
 	@Override
 	public String getDescription() {
-		return "Generates Energy from Lava at " + this.getEfficiency() + "% Efficiency"; // TODO locale
+		return "metatileentity.GT_ThermalGenerator.tooltip"; // TODO locale
 	}
 }

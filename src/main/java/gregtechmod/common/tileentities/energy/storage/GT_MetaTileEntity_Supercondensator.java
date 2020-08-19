@@ -57,7 +57,7 @@ public class GT_MetaTileEntity_Supercondensator extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "To output massive amounts of Energy in a short period of time.";
+		return "metatileentity.GT_Supercondensator.tooltip";
 	}
 	
 	@Override

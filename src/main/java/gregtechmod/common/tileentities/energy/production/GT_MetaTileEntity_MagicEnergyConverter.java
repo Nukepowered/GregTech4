@@ -40,7 +40,7 @@ public class GT_MetaTileEntity_MagicEnergyConverter extends GT_MetaTileEntity_Ba
 
 	@Override
 	public String getDescription() {
-		return "A Generator running off Magic Fuel (" + this.getEfficiency() + "%)";
+		return "metatileentity.GT_MagicConverter.tooltip";
 	}
     
     @Override

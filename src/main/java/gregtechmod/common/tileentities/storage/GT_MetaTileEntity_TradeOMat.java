@@ -311,6 +311,6 @@ public class GT_MetaTileEntity_TradeOMat extends MetaTileEntity {
    }
 
    public String getDescription() {
-      return "Electric Trading Machine";
+      return "metatileentity.GT_TradeOMat.tooltip";
    }
 }

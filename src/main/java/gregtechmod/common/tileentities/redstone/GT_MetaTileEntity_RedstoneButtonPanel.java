@@ -170,7 +170,7 @@ public class GT_MetaTileEntity_RedstoneButtonPanel extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Rightclick with Screwdriver to change Button Design";
+		return "metatileentity.GT_RedstoneButtonPanel.tooltip";
 	}
 	
 	@Override

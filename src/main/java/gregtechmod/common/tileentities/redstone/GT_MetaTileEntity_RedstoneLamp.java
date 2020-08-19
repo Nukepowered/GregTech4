@@ -57,7 +57,7 @@ public class GT_MetaTileEntity_RedstoneLamp extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Redstone Controlled Lamp";
+		return "metatileentity.GT_RedstoneLamp.tooltip";
 	}
 	
 	@Override

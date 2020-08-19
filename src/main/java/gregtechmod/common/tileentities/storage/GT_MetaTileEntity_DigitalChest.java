@@ -267,7 +267,7 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
    }
 
    public String getDescription() {
-      return "To lock the saved Item as Filter, use Rubber Hammer on it.";
+      return "metatileentity.GT_Barrel.tooltip";
    }
 
    public boolean isDigitalChest() {

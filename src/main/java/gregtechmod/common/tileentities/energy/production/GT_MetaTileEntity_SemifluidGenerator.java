@@ -34,6 +34,6 @@ public class GT_MetaTileEntity_SemifluidGenerator extends GT_MetaTileEntity_Basi
 
 	@Override
 	public String getDescription() {
-		return "Makes Energy of more dense Fluids (" + this.getEfficiency() + "%)"; // TODO locale
+		return "metatileentity.GT_SemifluidGenerator.tooltip"; // TODO locale
 	}
 }

@@ -33,6 +33,6 @@ public class GT_MetaTileEntity_GasTurbine extends GT_MetaTileEntity_BasicGenerat
 
 	@Override
 	public String getDescription() {
-		return "Generate Power from Flatulence, uhh I mean Methane (" + this.getEfficiency() + "%)";
+		return "metatileentity.GT_Multi_GasTurbine.tooltip";
 	}
 }

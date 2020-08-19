@@ -209,7 +209,7 @@ public class GT_MetaTileEntity_RedstoneCircuitBlock extends MetaTileEntity imple
 	
 	@Override
 	public String getDescription() {
-		return "Computes Redstone";
+		return "metatileentity.GT_RedstoneCircuitBlock.tooltip";
 	}
 	
 	@Override

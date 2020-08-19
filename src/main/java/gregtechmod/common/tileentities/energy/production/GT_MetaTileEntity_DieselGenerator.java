@@ -39,7 +39,7 @@ public class GT_MetaTileEntity_DieselGenerator extends GT_MetaTileEntity_BasicGe
 	
 	@Override
 	public String getDescription() {
-		return "The burning Fuel as " + this.getEfficiency() + "% Efficiency";
+		return "metatileentity.GT_DieselGenerator.tooltip";
 	}
 	
 	@Override

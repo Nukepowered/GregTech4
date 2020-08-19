@@ -86,7 +86,7 @@ public class GT_MetaTileEntity_AESU extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Adjustable Energy Storage Unit";
+		return "metatileentity.GT_AESU.tooltip";
 	}
 	
 	@Override

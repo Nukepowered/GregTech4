@@ -74,7 +74,7 @@ public class GT_MetaTileEntity_QuantumTank extends GT_MetaTileEntity_BasicTank {
    }
 
    public String getDescription() {
-      return "With a capacity of 488.28125 Chunks!";
+      return "metatileentity.GT_QuantumTank.tooltip";
    }
 
    public int getCapacity() {

@@ -120,7 +120,7 @@ public class GT_MetaTileEntity_ChargerBox extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "For storing Energy using Batteries and similar";
+		return "metatileentity.GT_ChargerBox.tooltip";
 	}
 	
 	@Override

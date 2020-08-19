@@ -198,7 +198,7 @@ public class GT_MetaTileEntity_DragonEggEnergySiphon extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Harness the teleportation Power of the Dragon Egg!";
+		return "metatileentity.GT_DragonEggEnergySiphon.tooltip";
 	}
 	
     @Override

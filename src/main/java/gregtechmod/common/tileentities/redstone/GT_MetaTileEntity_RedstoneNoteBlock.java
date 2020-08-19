@@ -78,7 +78,7 @@ public class GT_MetaTileEntity_RedstoneNoteBlock extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Rotate to switch Notes";
+		return "metatileentity.GT_RedstoneNoteBlock.tooltip";
 	}
 	
 	@Override

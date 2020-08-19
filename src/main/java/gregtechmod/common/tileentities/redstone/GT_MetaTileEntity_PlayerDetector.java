@@ -194,7 +194,7 @@ public class GT_MetaTileEntity_PlayerDetector extends MetaTileEntity {
    }
 
    public String getDescription() {
-      return "Player Proximity Sensor";
+      return "tile.BlockMetaID_Machine.Playerdetector.tooltip";
    }
 
    public boolean allowPullStack(int aIndex, byte aSide, ItemStack aStack) {
