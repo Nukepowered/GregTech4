@@ -388,43 +388,7 @@ public class GT_ItemLoader implements Runnable {
 		GT_MetaItem_SmallDust.addItem(250, "Glowstone Dust"		, Materials.Glowstone		, false);
 		GT_MetaItem_SmallDust.addItem(251, "Blaze Powder"		, Materials.Blaze			, false);
 		
-//		GT_MetaItem_Cell.addItem(  0, "Hydrogen Cell"			, "molecule_1h"			, false, Materials.Hydrogen);
-//		GT_MetaItem_Cell.addItem(  1, "Deuterium Cell"			, "molecule_1d"			, false, Materials.Deuterium);
-//		GT_MetaItem_Cell.addItem(  2, "Tritium Cell"			, "molecule_1t"			, false, Materials.Tritium);
-//		GT_MetaItem_Cell.addItem(  3, "Helium Cell"				, "molecule_1he"		, false, Materials.Helium);
 		GT_MetaItem_Cell.addItem(  4, "Wolframium Cell"			, "molecule_1w"			, false, Materials.Tungsten);
-//		GT_MetaItem_Cell.addItem(  5, "Lithium Cell"			, "molecule_1li"		, false, Materials.Lithium);
-//		GT_MetaItem_Cell.addItem(  6, "Helium-3 Cell"			, "molecule_1he3"		, false, Materials.Helium_3);
-//		GT_MetaItem_Cell.addItem(  7, "Silicon Cell"			, "molecule_1si"		, false, Materials.Silicon);
-//		GT_MetaItem_Cell.addItem(  8, "Carbon Cell"				, "molecule_1c"			, false, Materials.Carbon);
-//		GT_MetaItem_Cell.addItem(  9, "Methane Cell"			, "molecule_1me"		, false, Materials.Methane);
-//		GT_MetaItem_Cell.addItem( 10, "Berylium Cell"			, "molecule_1be"		, false, Materials.Beryllium);
-//		GT_MetaItem_Cell.addItem( 11, "Calcium Cell"			, "molecule_1ca"		, false, Materials.Calcium);
-//		GT_MetaItem_Cell.addItem( 12, "Sodium Cell"				, "molecule_1na"		, false, Materials.Sodium);
-//		GT_MetaItem_Cell.addItem( 13, "Chlorine Cell"			, "molecule_1cl"		, false, Materials.Chlorine);
-//		GT_MetaItem_Cell.addItem( 14, "Potassium Cell"			, "molecule_1k"			, false, Materials.Potassium);
-//		GT_MetaItem_Cell.addItem( 15, "Nitrogen Cell"			, "molecule_1n"			, false, Materials.Nitrogen);
-//		GT_MetaItem_Cell.addItem( 16, "Mercury Cell"			, "molecule_1hg"		, false, Materials.Mercury);
-//		GT_MetaItem_Cell.addItem( 17, "Oil Cell"				, ""					, false, Materials.Oil);
-//		GT_MetaItem_Cell.addItem( 18, "Diesel Cell"				, ""					, false, Materials.Fuel);
-//		GT_MetaItem_Cell.addItem( 19, "Ethanol Cell"			, ""					, false, Materials.Ethanol);
-//		GT_MetaItem_Cell.addItem( 20, "Biomass Cell"			, ""					, false, Materials.Biomass);
-		
-//		GT_MetaItem_Cell.addItem( 22, "Nitro-Diesel Cell"		, ""					, false, Materials.NitroFuel);
-//		GT_MetaItem_Cell.addItem( 23, "Ice Cell"				, ""					, false, Materials.Ice);
-//		GT_MetaItem_Cell.addItem( 24, "Seed Oil Cell"			, ""					, false, Materials.SeedOil);
-		
-//		GT_MetaItem_Cell.addItem( 32, "Sodium Persulfate Cell"	, "molecule_2na_2s_8o"	, false, Materials.SodiumPersulfate);
-//		GT_MetaItem_Cell.addItem( 33, "Calcium Carbonate Cell"	, "molecule_1ca_1c_3o"	, false, Materials.Calcite);
-//		GT_MetaItem_Cell.addItem( 34, "Glyceryl Cell"			, "molecule_3c_5h_3n_9o", false, Materials.Glyceryl);
-//		GT_MetaItem_Cell.addItem( 35, "Nitro-Coalfuel Cell"		, ""					, false, Materials.NitroCoalFuel);
-//		GT_MetaItem_Cell.addItem( 36, "Sulfur Cell"				, "molecule_1s"			, false, Materials.Sulfur);
-//		GT_MetaItem_Cell.addItem( 37, "Sodium Sulfide Cell"		, "molecule_1na_1s"		, false, Materials.SodiumSulfide);
-//		GT_MetaItem_Cell.addItem( 38, "Nitrogen Dioxide Cell"	, "molecule_1n_2o"		, false, Materials.NitrogenDioxide);
-//		GT_MetaItem_Cell.addItem( 39, "Nitrocarbon Cell"		, "molecule_1n_1c"		, false, Materials.NitroCarbon);
-//		GT_MetaItem_Cell.addItem( 40, "Sulfuric Acid Cell"		, "molecule_2h_1s_4o"	, false, Materials.SulfuricAcid);
-		
-//		GT_MetaItem_Cell.addItem(131, "Helium Plasma Cell"		, "plasma_1he"			, true , Materials.Helium);
 		
 		GT_Items.Spray_Empty.set(GT_MetaItem_Component.addItem(56, "Empty Spray Can", "", "Used for making Sprays and storing Colors"));
 		
