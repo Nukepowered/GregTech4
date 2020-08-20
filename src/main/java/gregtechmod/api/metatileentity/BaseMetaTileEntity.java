@@ -818,7 +818,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 					setColorization((byte)(getColorization() >= 16 ? -2 : -1));
 					return true;
 				}
-				if (GT_Utility.isItemStackInList(aPlayer.inventory.getCurrentItem(), GregTech_API.sWrenchList)) {
+				if (GT_Utility.isItemStackInList(aPlayer.inventory.getCurrentItem(), GregTech_API.sWrenchList, true)) {
 					byte tSide = GT_Utility.determineWrenchingSide(aSide, aX, aY, aZ);
 					if (!isValidFacing(tSide) || tSide == getFrontFacing()) {
 						if (mMetaTileEntity.isWrenchable()) {
@@ -837,7 +837,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 					return true;
 				}
 				
-				if (GT_Utility.isItemStackInList(aPlayer.inventory.getCurrentItem(), GregTech_API.sScrewdriverList)) {
+				if (GT_Utility.isItemStackInList(aPlayer.inventory.getCurrentItem(), GregTech_API.sScrewdriverList, true)) {
 					if (GT_ModHandler.damageOrDechargeItem(aPlayer.inventory.getCurrentItem(), 1, 200, aPlayer)) {
 						if (getCoverIDAtSide(aSide) == -2 && mMetaTileEntity.allowCoverOnSide(aSide, -1)) setCoverIDAtSide(aSide, -1); else
 						if (getCoverIDAtSide(aSide) == -1 && mMetaTileEntity.allowCoverOnSide(aSide, -2)) setCoverIDAtSide(aSide, -2); else
@@ -849,7 +849,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 					return true;
 				}
 				
-				if (GT_Utility.isItemStackInList(aPlayer.inventory.getCurrentItem(), GregTech_API.sHardHammerList)) {
+				if (GT_Utility.isItemStackInList(aPlayer.inventory.getCurrentItem(), GregTech_API.sHardHammerList, true)) {
 					if (GT_ModHandler.damageOrDechargeItem(aPlayer.inventory.getCurrentItem(), 1, 1000, aPlayer)) {
 						mInputDisabled = !mInputDisabled;
 						if (mInputDisabled) mOutputDisabled = !mOutputDisabled;
@@ -859,7 +859,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 					return true;
 				}
 				
-				if (GT_Utility.isItemStackInList(aPlayer.inventory.getCurrentItem(), GregTech_API.sSoftHammerList)) {
+				if (GT_Utility.isItemStackInList(aPlayer.inventory.getCurrentItem(), GregTech_API.sSoftHammerList, true)) {
 					if (GT_ModHandler.damageOrDechargeItem(aPlayer.inventory.getCurrentItem(), 1, 1000, aPlayer)) {
 						mWorks = !mWorks;
 						GT_Utility.sendChatToPlayer(aPlayer, "Machine Processing: " + (isAllowedToWork()?"Enabled":"Disabled"));
@@ -868,7 +868,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 					return true;
 				}
 				
-				if (GT_Utility.isItemStackInList(aPlayer.inventory.getCurrentItem(), GregTech_API.sSolderingToolList)) {
+				if (GT_Utility.isItemStackInList(aPlayer.inventory.getCurrentItem(), GregTech_API.sSolderingToolList, true)) {
 					byte tSide = GT_Utility.determineWrenchingSide(aSide, aX, aY, aZ);
 					if (GT_ModHandler.useSolderingIron(aPlayer.inventory.getCurrentItem(), aPlayer)) {
 						mStrongRedstone ^= (1 << tSide);
@@ -879,7 +879,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 				}
 				
 				if (getCoverIDAtSide(aSide) == 0) {
-					if (GT_Utility.isItemStackInList(aPlayer.inventory.getCurrentItem(), GregTech_API.sCovers.keySet())) {
+					if (GT_Utility.isItemStackInIntList(aPlayer.inventory.getCurrentItem(), GregTech_API.sCovers.keySet())) {
 						if (GregTech_API.getCoverBehavior(aPlayer.inventory.getCurrentItem()).isCoverPlaceable(aSide, GT_Utility.stackToInt(aPlayer.inventory.getCurrentItem()), this) && mMetaTileEntity.allowCoverOnSide(aSide, GT_Utility.stackToInt(aPlayer.inventory.getCurrentItem()))) {
 							setCoverItemAtSide(aSide, aPlayer.inventory.getCurrentItem());
 							if (!aPlayer.capabilities.isCreativeMode) aPlayer.inventory.getCurrentItem().stackSize--;
@@ -888,7 +888,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 						return true;
 					}
 				} else {
-					if (GT_Utility.isItemStackInList(aPlayer.inventory.getCurrentItem(), GregTech_API.sCrowbarList)) {
+					if (GT_Utility.isItemStackInList(aPlayer.inventory.getCurrentItem(), GregTech_API.sCrowbarList, true)) {
 						if (GT_ModHandler.damageOrDechargeItem(aPlayer.inventory.getCurrentItem(), 1, 1000, aPlayer)) {
 							GT_Utility.sendSoundToPlayers(worldObj, GregTech_API.sSoundList.get(0), 1.0F, -1, xCoord, yCoord, zCoord);
 							dropCover(aSide, aSide, false);

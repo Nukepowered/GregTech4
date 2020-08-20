@@ -881,16 +881,18 @@ public class GT_Utility {
 		return GT_Items.Armor_Cheat.isStackEqual(aStack, true, true) || areStacksEqual(GT_ModHandler.getIC2Item("debug", 1), aStack, true);
 	}
 	
-	public static boolean isItemStackInList(ItemStack aStack, Collection<Integer> aList) {
+	public static boolean isItemStackInIntList(ItemStack aStack, Collection<Integer> aList) {
 		if (isStackInvalid(aStack) || aList == null) return false;
-		
-		int a = stackToInt(aStack);
-		int b = stackToWildcard(aStack);
-		boolean x = aList.contains(a);
-		boolean y = aList.contains(b);
-		
-		
-		return x || y;
+		return aList.contains(stackToInt(aStack)) || aList.contains(stackToWildcard(aStack));
+	}
+	
+	public static boolean isItemStackInList(ItemStack aStack, Collection<ItemStackKey> aList) {
+		return isItemStackInList(aStack, aList, false);
+	}
+	
+	public static boolean isItemStackInList(ItemStack aStack, Collection<ItemStackKey> aList, boolean wildcard) {
+		if (isStackInvalid(aStack) || aList == null) return false;
+		return aList.contains(ItemStackKey.from(aStack, true));
 	}
 
 	public static boolean isOpaqueBlock(World aWorld, int aX, int aY, int aZ) {

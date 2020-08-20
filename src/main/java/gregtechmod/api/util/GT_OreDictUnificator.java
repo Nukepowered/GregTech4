@@ -27,7 +27,7 @@ public class GT_OreDictUnificator {
 	private static final HashMap<String, ItemStack> sName2OreMap = new HashMap<String, ItemStack>();
 	private static final HashMap<ItemStack, String> sToRegister = new HashMap<ItemStack, String>();
 	private static final HashMap<Integer, String> sItemhash2NameMap = new HashMap<Integer, String>();
-	private static final ArrayList<Integer> sBlackList = new ArrayList<Integer>();
+	private static final ArrayList<ItemStackKey> sBlackList = new ArrayList<ItemStackKey>();
 	
 	private static int isRegisteringOre = 0, isAddingOre = 0;
 	
@@ -48,7 +48,7 @@ public class GT_OreDictUnificator {
 	 * Useful if you have things like the Industrial Diamond, which is better than regular Diamond, but also placeable in absolutely all Diamond Recipes.
 	 */
 	public static void addToBlacklist(ItemStack aStack) {
-		if (GT_Utility.isStackValid(aStack)) sBlackList.add(GT_Utility.stackToInt(aStack));
+		if (GT_Utility.isStackValid(aStack)) sBlackList.add(ItemStackKey.from(aStack));
 	}
 	
 	public static boolean isBlacklisted(ItemStack aStack) {

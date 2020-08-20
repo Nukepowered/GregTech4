@@ -151,14 +151,14 @@ public class GregTech_API {
 	public static final Map<Integer, String> sSoundList = new HashMap<Integer, String>();
 	
 	/** The List of Tools, which can be used. Accepts regular damageable Items and Electric Items */
-	public static final List<Integer> sToolList = new ArrayList<Integer>(),
-			sCrowbarList = new ArrayList<Integer>(),
-			sScrewdriverList = new ArrayList<Integer>(),
-			sWrenchList = new ArrayList<Integer>(),
-			sSoftHammerList = new ArrayList<Integer>(),
-			sHardHammerList = new ArrayList<Integer>(),
-			sSolderingToolList = new ArrayList<Integer>(),
-			sSolderingMetalList = new ArrayList<Integer>();
+	public static final List<ItemStackKey> sToolList = new ArrayList<ItemStackKey>(),
+			sCrowbarList = new ArrayList<ItemStackKey>(),
+			sScrewdriverList = new ArrayList<ItemStackKey>(),
+			sWrenchList = new ArrayList<ItemStackKey>(),
+			sSoftHammerList = new ArrayList<ItemStackKey>(),
+			sHardHammerList = new ArrayList<ItemStackKey>(),
+			sSolderingToolList = new ArrayList<ItemStackKey>(),
+			sSolderingMetalList = new ArrayList<ItemStackKey>();
 	
 	/** 
 	 * The List of Dimensions, which are Whitelisted for the Teleporter. This list should not contain other Planets.
@@ -658,15 +658,29 @@ public class GregTech_API {
 	 * Generic Function to add Tools to the Lists.
 	 * Contains all sanity Checks for Tools, like preventing one Tool from being registered for multiple purposes as controls would override each other.
 	 */
-	public static boolean registerTool(ItemStack aTool, Collection<Integer> aToolList) {
-		sToolsRegiter.add(() -> {
-			if (aTool == null || GT_Utility.isItemStackInList(aTool, sToolList) || (!aTool.getItem().isDamageable() && !GT_ModHandler.isElectricItem(aTool))) return;
-			aToolList.add(GT_Utility.stackToInt(GT_Utility.copyMetaData(GregTech_API.ITEM_WILDCARD_DAMAGE, aTool)));
-			sToolList.add(GT_Utility.stackToInt(GT_Utility.copyMetaData(GregTech_API.ITEM_WILDCARD_DAMAGE, aTool)));
-		});
-
-		return true;
+	public static boolean registerTool(ItemStack aTool, Collection<ItemStackKey> aToolList) {
+		if (aTool != null && aTool.getItem() != null) {
+			ItemStackKey toolKey = ItemStackKey.from(aTool, true);
+			if (!aToolList.contains(toolKey) && (aTool.getItem().isDamageable() || GT_ModHandler.isElectricItem(aTool))) {
+				aToolList.add(toolKey);
+				sToolList.add(toolKey);
+				return true;
+			}
+		}
+		
+		return false;
 	}
+	
+
+//	public static boolean registerTool(ItemStack aTool, Collection<Integer> aToolList) {
+//		sToolsRegiter.add(() -> {
+//			if (aTool == null || GT_Utility.isItemStackInList(aTool, sToolList) || (!aTool.getItem().isDamageable() && !GT_ModHandler.isElectricItem(aTool))) return;
+//			aToolList.add(GT_Utility.stackToInt(GT_Utility.copyMetaData(GregTech_API.ITEM_WILDCARD_DAMAGE, aTool)));
+//			sToolList.add(GT_Utility.stackToInt(GT_Utility.copyMetaData(GregTech_API.ITEM_WILDCARD_DAMAGE, aTool)));
+//		});
+//
+//		return true;
+//	}
 	
 	/**
 	 * Adds Biomes to the Biome Lists for World Generation

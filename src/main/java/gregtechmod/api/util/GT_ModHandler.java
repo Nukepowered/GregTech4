@@ -1431,12 +1431,12 @@ public class GT_ModHandler {
 	 */
 	public static boolean useSolderingIron(ItemStack aStack, EntityLivingBase aPlayer) {
 		if (aPlayer == null || aStack == null) return false;
-		if (GT_Utility.isItemStackInList(aStack, GregTech_API.sSolderingToolList)) {
+		if (GT_Utility.isItemStackInList(aStack, GregTech_API.sSolderingToolList, true)) {
 			if (aPlayer instanceof EntityPlayer) {
 				EntityPlayer tPlayer = (EntityPlayer)aPlayer;
 				if (tPlayer.capabilities.isCreativeMode) return true;
 				for (int i = 0; i < tPlayer.inventory.mainInventory.length; i++) {
-					if (GT_Utility.isItemStackInList(tPlayer.inventory.mainInventory[i], GregTech_API.sSolderingMetalList)) {
+					if (GT_Utility.isItemStackInList(tPlayer.inventory.mainInventory[i], GregTech_API.sSolderingMetalList, true)) {
 						if (damageOrDechargeItem(aStack, 1, 1000, tPlayer)) {
 							if (tPlayer.inventory.mainInventory[i].getItemDamage() >= tPlayer.inventory.mainInventory[i].getMaxDamage()) tPlayer.inventory.mainInventory[i] = null;
 						    if (damageOrDechargeItem(tPlayer.inventory.mainInventory[i], 1, 1000, tPlayer)) {
