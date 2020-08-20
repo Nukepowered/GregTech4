@@ -125,7 +125,7 @@ public class GT_Block_Renderer implements ISimpleBlockRenderingHandler {
 			if (tIsCovered[0] && tIsCovered[1] && tIsCovered[2] && tIsCovered[3] && tIsCovered[4] && tIsCovered[5]) return aRenderer.renderStandardBlock(aBlock, aX, aY, aZ);
 			
 			for (byte i = 0; i < 6; i++) {
-				tCovers[i] = aBlock.getBlockTextureFromSide(i);
+				tCovers[i] = aBlock.getIcon(aWorld, aX, aY, aZ, i);//.getBlockTextureFromSide(i);
 				tIcons[i] = tTileEntity.getUncoveredIcon(i, (byte)1);
 				if (tIcons[i] == null) {
 					int tIndex = tTileEntity.getUncoveredIndex(i, (byte)1);
