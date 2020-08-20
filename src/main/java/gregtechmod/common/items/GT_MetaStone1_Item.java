@@ -27,7 +27,7 @@ public class GT_MetaStone1_Item extends ItemBlock {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
     public void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean par4) {
-		if (aStack.getItemDamage() % 8 > 2) aList.add("Mobs can't spawn on this Block");
+		if (aStack.getItemDamage() % 8 > 2) aList.add("block.deny_mobs_spawn.tooltip");
     }
 	
 	@Override

@@ -24,7 +24,7 @@ public class GT_Cover_Valve extends GT_CoverBehavior {
 			if (tTank2 != null) {
 				IFluidHandler tTank1 = (IFluidHandler)aTileEntity;
 				if (aCoverVariable%2 == 0) {
-					FluidStack tLiquid = tTank1.drain(ForgeDirection.getOrientation(aSide), 1000, false);
+					FluidStack tLiquid = tTank1.drain(ForgeDirection.getOrientation(aSide), 4000, false);
 					if (tLiquid != null) {
 						tLiquid = tLiquid.copy();
 						tLiquid.amount = tTank2.fill(ForgeDirection.getOrientation(aSide).getOpposite(), tLiquid, false);

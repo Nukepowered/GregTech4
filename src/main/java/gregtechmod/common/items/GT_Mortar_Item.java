@@ -9,7 +9,7 @@ public class GT_Mortar_Item extends GT_Generic_Item {
 	ItemStack mBrokenItem;
 	
 	public GT_Mortar_Item(String aName, int aMaxDamage, ItemStack aBrokenItem) {
-		super(aName, "Used to turn Ingots into Dust");
+		super(aName, "item.GT_Mortar_Item.tooltip");
 		setMaxDamage(aMaxDamage-1);
 		setMaxStackSize(1);
 		setNoRepair();

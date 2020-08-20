@@ -43,7 +43,7 @@ public class GT_Teslastaff_Item extends ItemTool implements IElectricItem {
 	@SuppressWarnings("unchecked")
 	@Override
     public void addInformation(ItemStack aStack, EntityPlayer aPlayer, @SuppressWarnings("rawtypes") List aList, boolean aF3_H) {
-		aList.add("No warranty!"); // TODO locale
+		aList.add("item.GT_Teslastaff.tooltip");
     }
 	
     @Override

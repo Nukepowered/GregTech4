@@ -21,7 +21,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class GT_Scanner_Item extends GT_Generic_Item implements IElectricItem {
 	
     public GT_Scanner_Item(String aName) {
-		super(aName, "Tricorder");
+		super(aName, "item.GT_Scanner.tooltip");
 		setMaxStackSize(1);
 		setMaxDamage(100);
 		setNoRepair();

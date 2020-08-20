@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 public class GT_Destructopack_Item extends GT_Generic_Item {
 	
 	public GT_Destructopack_Item(String aName) {
-		super(aName, "Mobile Trash Bin");
+		super(aName, "item.GT_Destructopack.tooltip");
 		setMaxStackSize(1);
 		setNoRepair();
 	}
