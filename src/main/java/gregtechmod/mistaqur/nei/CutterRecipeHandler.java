@@ -7,6 +7,7 @@ import gregtechmod.common.gui.GT_GUIContainer_BasicMachine_Cutter;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import codechicken.nei.PositionedStack;
@@ -64,7 +65,7 @@ public class CutterRecipeHandler extends GT_RecipeHandler {
 	}
 	
 	@Override
-	public ArrayList<GT_Recipe> getRecipeList() {
+	public List<GT_Recipe> getRecipeList() {
 		return GT_Recipe.sCutterRecipes;
 	}
 	

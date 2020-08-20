@@ -30,10 +30,10 @@ public class ProcessingOreSmelting implements IOreRecipeRegistrator {
    public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
       if(!aMaterial.contains(SubTag.NO_SMELTING)) {
          if(!aMaterial.mBlastFurnaceRequired && !aMaterial.mDirectSmelting.mBlastFurnaceRequired) {
-            switch(ProcessingOreSmelting.NamelessClass1425840077.$SwitchMap$gregtechmod$api$enums$OrePrefixes[aPrefix.ordinal()]) {
-            case 1:
-            case 2:
-            case 3:
+            switch(aPrefix) {
+            case crushed:
+            case crushedPurified:
+            case crushedCentrifuged:
                ItemStack tStack = GT_OreDictUnificator.get(OrePrefixes.nugget, (Object)aMaterial.mDirectSmelting, 10L);
                if(tStack == null) {
                   tStack = GT_OreDictUnificator.get(OrePrefixes.ingot, (Object)aMaterial.mDirectSmelting, 1L);
@@ -53,34 +53,5 @@ public class ProcessingOreSmelting implements IOreRecipeRegistrator {
          }
       }
 
-   }
-
-   // $FF: synthetic class
-   static class NamelessClass1425840077 {
-
-      // $FF: synthetic field
-      static final int[] $SwitchMap$gregtechmod$api$enums$OrePrefixes = new int[OrePrefixes.values().length];
-
-
-      static {
-         try {
-            $SwitchMap$gregtechmod$api$enums$OrePrefixes[OrePrefixes.crushed.ordinal()] = 1;
-         } catch (NoSuchFieldError var3) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$OrePrefixes[OrePrefixes.crushedPurified.ordinal()] = 2;
-         } catch (NoSuchFieldError var2) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$OrePrefixes[OrePrefixes.crushedCentrifuged.ordinal()] = 3;
-         } catch (NoSuchFieldError var1) {
-            ;
-         }
-
-      }
    }
 }

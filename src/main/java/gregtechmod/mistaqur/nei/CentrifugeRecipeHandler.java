@@ -7,6 +7,7 @@ import gregtechmod.common.gui.GT_GUIContainer_Centrifuge;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import codechicken.nei.PositionedStack;
@@ -77,7 +78,7 @@ public class CentrifugeRecipeHandler extends GT_RecipeHandler {
 	}
 	
 	@Override
-	public ArrayList<GT_Recipe> getRecipeList() {
+	public List<GT_Recipe> getRecipeList() {
 		return GT_Recipe.sCentrifugeRecipes;
 	}
 	
