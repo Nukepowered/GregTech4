@@ -504,14 +504,14 @@ public class GT_ItemLoader implements Runnable {
 		GT_MetaGenerated_Item_01 tMetaGenerated;
 		GregTech_API.sItemList[8] = tMetaGenerated = new GT_MetaGenerated_Item_01();
 		tMetaGenerated.setBurnValue(17000 + Materials.Wood.mMetaItemSubID, 1600);
-		GT_Items.Credit_Greg_Copper.set(tMetaGenerated.addItem(0, "credit_copper", "0.125 Credits", null)); // TODO locale, put locale key here, where credit_copper, additional locale name, check in game
+		GT_Items.Credit_Greg_Copper.set(tMetaGenerated.addItem(0, "credit_copper", "0.125 Credits", null)); // TODO LOCALE TOOLTIPS SUKA BLAT'
 		GT_Items.Credit_Greg_Cupronickel.set(tMetaGenerated.addItem(1, "credit_bronze", "1 Credit", null));
 		GT_Items.Credit_Greg_Silver.set(tMetaGenerated.addItem(2,"credit_silver", "8 Credits", null));
 		GT_Items.Credit_Greg_Gold.set(tMetaGenerated.addItem(3, "credit_gold", "64 Credits", null));
 		GT_Items.Credit_Greg_Platinum.set(tMetaGenerated.addItem(4, "credit_diamond", "512 Credits", null));
-		GT_Items.Credit_Greg_Osmium.set(tMetaGenerated.addItem(5, "credit_osmium", "4096 Credits", null));
-		GT_Items.Credit_Greg_Naquadah.set(tMetaGenerated.addItem(6, "credit_naquadah", "32768 Credits", null));
-		GT_Items.Credit_Greg_Neutronium.set(tMetaGenerated.addItem(7, "credit_iridium", "262144 Credits", null));
+		GT_Items.Credit_Greg_Osmium.set(tMetaGenerated.addItem(5, "credit_osmium", "4,096 Credits", null));
+		GT_Items.Credit_Greg_Naquadah.set(tMetaGenerated.addItem(6, "credit_naquadah", "32,768 Credits", null));
+		GT_Items.Credit_Greg_Neutronium.set(tMetaGenerated.addItem(7, "credit_iridium", "262,144 Credits", null));
 		GT_Items.Coin_Gold_Ancient.set(tMetaGenerated.addItem(8, "ancient_coin", "Found in ancient Ruins", null));
 		GT_Items.Coin_Doge.set(tMetaGenerated.addItem(9, "doge_coin", "wow much coin how money so crypto plz mine v rich very currency wow", null));
 		GT_Items.Coin_Chocolate.set(tMetaGenerated.addItem(10, "chocolate_coin", "Wrapped in Gold", new GT_FoodStat(1, 0.1F, EnumAction.eat, GT_OreDictUnificator.get(OrePrefixes.nugget, (Object) Materials.Gold, 1L), true, false, new int[] { Potion.moveSpeed.id, 200, 1, 100 })));
