@@ -85,11 +85,11 @@ public class GT_ItemLoader implements Runnable {
 		GregTech_API.sItemList[ 7] = new GT_MetaItem_TinyDust	("GT_TinyDusts");
 		
         GT_Log.log.info("Adding All Sub-Items with their OreDict and LiquidDict Entries.");
-        GT_Items.Credit_Copper.set(		GT_MetaItem_Material.addItem( 0, "Copper Credit"	, null, "0.125 Credits"	, false)); // TODO: LOCALE
-        GT_Items.Credit_Silver.set(		GT_MetaItem_Material.addItem( 1, "Silver Credit"	, null, "8 Credits"		, false));
-        GT_Items.Credit_Gold.set(		GT_MetaItem_Material.addItem( 2, "Gold Credit"		, null, "64 Credits"	, false));
-        GT_Items.Credit_Platinum.set(	GT_MetaItem_Material.addItem( 3, "Platinum Credit"	, null, "512 Credits"	, false));
-        GT_Items.Credit_Osmium.set(		GT_MetaItem_Material.addItem(12, "Osmium Credit"	, null, "4096 Credits"	, false));
+        GT_Items.Credit_Copper.set(		GT_MetaItem_Material.addItem( 0, "item.copper_credit.name"	, null, "item.copper_credit.tooltip"	, false));
+        GT_Items.Credit_Silver.set(		GT_MetaItem_Material.addItem( 1, "item.silver_credit.name"	, null, "item.silver_credit.tooltip"		, false));
+        GT_Items.Credit_Gold.set(		GT_MetaItem_Material.addItem( 2, "item.gold_credit.name"		, null, "item.gold_credit.tooltip"	, false));
+        GT_Items.Credit_Platinum.set(	GT_MetaItem_Material.addItem( 3, "item.platinum_credit.tooltip"	, null, "item.platinum_credit.tooltip"	, false));
+        GT_Items.Credit_Osmium.set(		GT_MetaItem_Material.addItem(12, "item.osmium_credit.tooltip"	, null, "item.osmium_credit.tooltip"	, false));
 		GT_MetaItem_Material.addItem(  4, "Iridium Alloy Ingot"		, null, null, false);
 		GT_MetaItem_Material.addItem(  5, "Hot Tungstensteel Ingot"	, OrePrefixes.ingotHot	, Materials.TungstenSteel	, false);
 		GT_MetaItem_Material.addItem(  6, "Tungstensteel Ingot"		, OrePrefixes.ingot		, Materials.TungstenSteel	, false);
@@ -504,36 +504,36 @@ public class GT_ItemLoader implements Runnable {
 		GT_MetaGenerated_Item_01 tMetaGenerated;
 		GregTech_API.sItemList[8] = tMetaGenerated = new GT_MetaGenerated_Item_01();
 		tMetaGenerated.setBurnValue(17000 + Materials.Wood.mMetaItemSubID, 1600);
-		GT_Items.Credit_Greg_Copper.set(tMetaGenerated.addItem(0, "credit_copper", "0.125 Credits", null)); // TODO LOCALE TOOLTIPS SUKA BLAT'
-		GT_Items.Credit_Greg_Cupronickel.set(tMetaGenerated.addItem(1, "credit_bronze", "1 Credit", null));
-		GT_Items.Credit_Greg_Silver.set(tMetaGenerated.addItem(2,"credit_silver", "8 Credits", null));
-		GT_Items.Credit_Greg_Gold.set(tMetaGenerated.addItem(3, "credit_gold", "64 Credits", null));
-		GT_Items.Credit_Greg_Platinum.set(tMetaGenerated.addItem(4, "credit_diamond", "512 Credits", null));
-		GT_Items.Credit_Greg_Osmium.set(tMetaGenerated.addItem(5, "credit_osmium", "4,096 Credits", null));
-		GT_Items.Credit_Greg_Naquadah.set(tMetaGenerated.addItem(6, "credit_naquadah", "32,768 Credits", null));
-		GT_Items.Credit_Greg_Neutronium.set(tMetaGenerated.addItem(7, "credit_iridium", "262,144 Credits", null));
-		GT_Items.Coin_Gold_Ancient.set(tMetaGenerated.addItem(8, "ancient_coin", "Found in ancient Ruins", null));
-		GT_Items.Coin_Doge.set(tMetaGenerated.addItem(9, "doge_coin", "wow much coin how money so crypto plz mine v rich very currency wow", null));
-		GT_Items.Coin_Chocolate.set(tMetaGenerated.addItem(10, "chocolate_coin", "Wrapped in Gold", new GT_FoodStat(1, 0.1F, EnumAction.eat, GT_OreDictUnificator.get(OrePrefixes.nugget, (Object) Materials.Gold, 1L), true, false, new int[] { Potion.moveSpeed.id, 200, 1, 100 })));
-		GT_Items.Bottle_Purple_Drink.set(tMetaGenerated.addItem(100, "purple_drink", "How about Lemonade. Or some Ice Tea? I got Purple Drink!", new GT_FoodStat(8, 0.2F, EnumAction.drink, GT_OreDictUnificator.get(OrePrefixes.bottle, (Object) Materials.Empty, 1L), false, false, new int[] { Potion.moveSlowdown.id, 400, 0, 100 })));
-		GT_Items.Food_Potato_On_Stick.set(tMetaGenerated.addItem(200, "potato_stick", "Totally looks like a Crab Claw", new GT_FoodStat(1, 0.3F, EnumAction.eat, new ItemStack(Items.stick, 1), false, false, new int[0])));
-		GT_Items.Food_Potato_On_Stick_Roasted.set(tMetaGenerated.addItem(201, "roasted_potato_stick", "Totally looks like a Crab Claw", new GT_FoodStat(6, 0.6F, EnumAction.eat, new ItemStack(Items.stick, 1), false, false, new int[0])));
-		GT_Items.Shape_Mold_Plate.set(tMetaGenerated.addItem(301, "mold_plates", "Mold for making Plates", null));
-		GT_Items.Shape_Mold_Casing.set(tMetaGenerated.addItem(302, "mold_casings", "Mold for making Item Casings", null));
-		GT_Items.Shape_Mold_Gear.set(tMetaGenerated.addItem(303, "mold_gears", "Mold for making Gears", null));
-		GT_Items.Fuel_Can_Plastic_Empty.set(tMetaGenerated.addItem(400, "fuel_can_empty", "Used to store Fuels", null));
-		GT_Items.Fuel_Can_Plastic_Filled.set(tMetaGenerated.addItem(401, "fuel_can_full", "Burns well in Diesel Generators", null));
-		GT_Items.Crop_Drop_Plumbilia.set(tMetaGenerated.addItem(500, "source_lead", "Source of Lead", null));
-		GT_Items.Crop_Drop_Argentia.set(tMetaGenerated.addItem(501, "source_silver", "Source of Silver", null));
-		GT_Items.Crop_Drop_Indigo.set(tMetaGenerated.addItem(502, "source_blue_dye", "Used for Blue Dye", null));
-		GT_Items.Crop_Drop_Ferru.set(tMetaGenerated.addItem(503, "source_iron", "Source of Iron", null));
-		GT_Items.Crop_Drop_Aurelia.set(tMetaGenerated.addItem(504, "source_gold", "Source of Gold", null));
-		GT_Items.Crop_Drop_OilBerry.set(tMetaGenerated.addItem(510, "berry_oil", "Oil in Berry form", null));
-		GT_Items.Crop_Drop_BobsYerUncleRanks.set(tMetaGenerated.addItem(511, "source_emeralds", "Source of Emeralds", null));
-		GT_Items.Crop_Drop_MilkWart.set(tMetaGenerated.addItem(520, "source_milk", "Source of Milk", null));
-		GT_Items.Crop_Drop_Coppon.set(tMetaGenerated.addItem(530, "coppon_fiber", "ORANGE WOOOOOOOL!!!", null));
+		GT_Items.Credit_Greg_Copper.set(tMetaGenerated.addItem(0, "credit_copper", "item.GregTech_MetaGenerated_Item_01.credit_copper.tooltip", null));
+		GT_Items.Credit_Greg_Cupronickel.set(tMetaGenerated.addItem(1, "credit_bronze", "item.GregTech_MetaGenerated_Item_01.credit_bronze.tooltip", null));
+		GT_Items.Credit_Greg_Silver.set(tMetaGenerated.addItem(2,"credit_silver", "item.GregTech_MetaGenerated_Item_01.credit_silver.tooltip", null));
+		GT_Items.Credit_Greg_Gold.set(tMetaGenerated.addItem(3, "credit_gold", "item.GregTech_MetaGenerated_Item_01.credit_gold.tooltip", null));
+		GT_Items.Credit_Greg_Platinum.set(tMetaGenerated.addItem(4, "credit_diamond", "item.GregTech_MetaGenerated_Item_01.credit_diamond.tooltip", null));
+		GT_Items.Credit_Greg_Osmium.set(tMetaGenerated.addItem(5, "credit_osmium", "item.GregTech_MetaGenerated_Item_01.credit_osmium.tooltip", null));
+		GT_Items.Credit_Greg_Naquadah.set(tMetaGenerated.addItem(6, "credit_naquadah", "item.GregTech_MetaGenerated_Item_01.credit_naquadah.tooltip", null));
+		GT_Items.Credit_Greg_Neutronium.set(tMetaGenerated.addItem(7, "credit_iridium", "item.GregTech_MetaGenerated_Item_01.credit_iridium.tooltip", null));
+		GT_Items.Coin_Gold_Ancient.set(tMetaGenerated.addItem(8, "ancient_coin", "item.GregTech_MetaGenerated_Item_01.ancient_coin.tooltip", null));
+		GT_Items.Coin_Doge.set(tMetaGenerated.addItem(9, "doge_coin", "item.GregTech_MetaGenerated_Item_01.doge_coin.tooltip", null));
+		GT_Items.Coin_Chocolate.set(tMetaGenerated.addItem(10, "chocolate_coin", "item.GregTech_MetaGenerated_Item_01.chocolate_coin.tooltip", new GT_FoodStat(1, 0.1F, EnumAction.eat, GT_OreDictUnificator.get(OrePrefixes.nugget, (Object) Materials.Gold, 1L), true, false, new int[] { Potion.moveSpeed.id, 200, 1, 100 })));
+		GT_Items.Bottle_Purple_Drink.set(tMetaGenerated.addItem(100, "purple_drink", "item.GregTech_MetaGenerated_Item_01.purple_drink.tooltip", new GT_FoodStat(8, 0.2F, EnumAction.drink, GT_OreDictUnificator.get(OrePrefixes.bottle, (Object) Materials.Empty, 1L), false, false, new int[] { Potion.moveSlowdown.id, 400, 0, 100 })));
+		GT_Items.Food_Potato_On_Stick.set(tMetaGenerated.addItem(200, "potato_stick", "item.GregTech_MetaGenerated_Item_01.potato_stick.tooltip", new GT_FoodStat(1, 0.3F, EnumAction.eat, new ItemStack(Items.stick, 1), false, false, new int[0])));
+		GT_Items.Food_Potato_On_Stick_Roasted.set(tMetaGenerated.addItem(201, "roasted_potato_stick", "item.GregTech_MetaGenerated_Item_01.potato_stick.tooltip", new GT_FoodStat(6, 0.6F, EnumAction.eat, new ItemStack(Items.stick, 1), false, false, new int[0])));
+		GT_Items.Shape_Mold_Plate.set(tMetaGenerated.addItem(301, "mold_plates", "item.GregTech_MetaGenerated_Item_01.mold_plates.tooltip", null));
+		GT_Items.Shape_Mold_Casing.set(tMetaGenerated.addItem(302, "mold_casings", "item.GregTech_MetaGenerated_Item_01.mold_casings.tooltip", null));
+		GT_Items.Shape_Mold_Gear.set(tMetaGenerated.addItem(303, "mold_gears", "item.GregTech_MetaGenerated_Item_01.mold_gears.tooltip", null));
+		GT_Items.Fuel_Can_Plastic_Empty.set(tMetaGenerated.addItem(400, "fuel_can_empty", "item.GregTech_MetaGenerated_Item_01.fuel_can_empty.tooltip", null));
+		GT_Items.Fuel_Can_Plastic_Filled.set(tMetaGenerated.addItem(401, "fuel_can_full", "item.GregTech_MetaGenerated_Item_01.fuel_can_full.tooltip", null));
+		GT_Items.Crop_Drop_Plumbilia.set(tMetaGenerated.addItem(500, "source_lead", "item.GregTech_MetaGenerated_Item_01.source_lead.tooltip", null));
+		GT_Items.Crop_Drop_Argentia.set(tMetaGenerated.addItem(501, "source_silver", "item.GregTech_MetaGenerated_Item_01.source_silver.tooltip", null));
+		GT_Items.Crop_Drop_Indigo.set(tMetaGenerated.addItem(502, "source_blue_dye", "item.GregTech_MetaGenerated_Item_01.source_blue_dye.tooltip", null));
+		GT_Items.Crop_Drop_Ferru.set(tMetaGenerated.addItem(503, "source_iron", "item.GregTech_MetaGenerated_Item_01.source_iron.tooltip", null));
+		GT_Items.Crop_Drop_Aurelia.set(tMetaGenerated.addItem(504, "source_gold", "item.GregTech_MetaGenerated_Item_01.source_gold.tooltip", null));
+		GT_Items.Crop_Drop_OilBerry.set(tMetaGenerated.addItem(510, "berry_oil", "item.GregTech_MetaGenerated_Item_01.berry_oil.tooltip", null));
+		GT_Items.Crop_Drop_BobsYerUncleRanks.set(tMetaGenerated.addItem(511, "source_emeralds", "item.GregTech_MetaGenerated_Item_01.source_emeralds.tooltip", null));
+		GT_Items.Crop_Drop_MilkWart.set(tMetaGenerated.addItem(520, "source_milk", "item.GregTech_MetaGenerated_Item_01.source_milk.tooltip", null));
+		GT_Items.Crop_Drop_Coppon.set(tMetaGenerated.addItem(530, "coppon_fiber", "item.GregTech_MetaGenerated_Item_01.coppon_fiber.tooltip", null));
 		short tLastID1 = 540;
-		GT_Items.Crop_Drop_Tine.set(tMetaGenerated.addItem(540, "source_tin", "Source of Tin", null));
+		GT_Items.Crop_Drop_Tine.set(tMetaGenerated.addItem(540, "source_tin", "item.GregTech_MetaGenerated_Item_01.source_tin.tooltip", null));
 		tMetaGenerated.setBurnValue(32000 + tLastID1, 100);
 		
 		try {
@@ -556,31 +556,31 @@ public class GT_ItemLoader implements Runnable {
 			}
 		}
 		
-		GT_Items.Battery_Hull_LV.set(tMetaGenerated.addItem(600, "hull_battery_lv", "An empty LV Battery Hull", null));
-		GT_Items.Battery_Hull_MV.set(tMetaGenerated.addItem(601, "hull_battery_mv", "An empty MV Battery Hull", null));
+		GT_Items.Battery_Hull_LV.set(tMetaGenerated.addItem(600, "hull_battery_lv", "item.GregTech_MetaGenerated_Item_01.hull_battery_lv.tooltip", null));
+		GT_Items.Battery_Hull_MV.set(tMetaGenerated.addItem(601, "hull_battery_mv", "item.GregTech_MetaGenerated_Item_01.hull_battery_mv.tooltip", null));
 		tLastID1 = 610;
-		GT_Items.Battery_SU_LV_SulfuricAcid.set(tMetaGenerated.addItem(610, "battery_lv_acid", "Single Use", null, new Object[] { OrePrefixes.batterySingleuse.get(Materials.SulfuricAcid) }));
+		GT_Items.Battery_SU_LV_SulfuricAcid.set(tMetaGenerated.addItem(610, "battery_lv_acid", "item.singleuse.tooltip", null, new Object[] { OrePrefixes.batterySingleuse.get(Materials.SulfuricAcid) }));
 		tMetaGenerated.setElectricStats(32000 + tLastID1, 12000, 32, 1, -2);
 		tLastID1 = 611;
-		GT_Items.Battery_SU_LV_Mercury.set(tMetaGenerated.addItem(611, "battery_lv_mercury", "Single Use", null, new Object[] { OrePrefixes.batterySingleuse.get(Materials.Mercury) }));
+		GT_Items.Battery_SU_LV_Mercury.set(tMetaGenerated.addItem(611, "battery_lv_mercury", "item.singleuse.tooltip", null, new Object[] { OrePrefixes.batterySingleuse.get(Materials.Mercury) }));
 		tMetaGenerated.setElectricStats(32000 + tLastID1, 32000, 32, 1, -2);
 		tLastID1 = 618;
-		GT_Items.Battery_RE_LV_Lithium.set(tMetaGenerated.addItem(618, "battery_lv_lithium", "Reusable", null, new Object[] { OrePrefixes.battery.get(Materials.Lithium) }));
+		GT_Items.Battery_RE_LV_Lithium.set(tMetaGenerated.addItem(618, "battery_lv_lithium", "item.reusable.tooltip", null, new Object[] { OrePrefixes.battery.get(Materials.Lithium) }));
 		tMetaGenerated.setElectricStats(32000 + tLastID1, 100000, 32, 1, -3);
 		tLastID1 = 619;
-		GT_Items.Battery_RE_LV_Sodium.set(tMetaGenerated.addItem(619, "battery_lv_sodium", "Reusable", null, new Object[] { OrePrefixes.battery.get(Materials.Sodium) }));
+		GT_Items.Battery_RE_LV_Sodium.set(tMetaGenerated.addItem(619, "battery_lv_sodium", "item.reusable.tooltip", null, new Object[] { OrePrefixes.battery.get(Materials.Sodium) }));
 		tMetaGenerated.setElectricStats(32000 + tLastID1, '\uc350', 32, 1, -3);
 		tLastID1 = 620;
-		GT_Items.Battery_SU_MV_SulfuricAcid.set(tMetaGenerated.addItem(620, "battery_mv_acid", "Single Use", null));
+		GT_Items.Battery_SU_MV_SulfuricAcid.set(tMetaGenerated.addItem(620, "battery_mv_acid", "item.singleuse.tooltip", null));
 		tMetaGenerated.setElectricStats(32000 + tLastID1, '\ubb80', 128, 2, -2);
 		tLastID1 = 621;
-		GT_Items.Battery_SU_MV_Mercury.set(tMetaGenerated.addItem(621, "battery_mv_mercury", "Single Use", null));
+		GT_Items.Battery_SU_MV_Mercury.set(tMetaGenerated.addItem(621, "battery_mv_mercury", "item.singleuse.tooltip", null));
 		tMetaGenerated.setElectricStats(32000 + tLastID1, 128000, 128, 2, -2);
 		tLastID1 = 628;
-		GT_Items.Battery_RE_MV_Lithium.set(tMetaGenerated.addItem(628, "battery_mv_lithium", "Reusable", null));
+		GT_Items.Battery_RE_MV_Lithium.set(tMetaGenerated.addItem(628, "battery_mv_lithium", "item.reusable.tooltip", null));
 		tMetaGenerated.setElectricStats(32000 + tLastID1, 400000, 128, 2, -3);
 		tLastID1 = 629;
-		GT_Items.Battery_RE_MV_Sodium.set(tMetaGenerated.addItem(629, "battery_mv_sodium", "Reusable", null));
+		GT_Items.Battery_RE_MV_Sodium.set(tMetaGenerated.addItem(629, "battery_mv_sodium", "item.reusable.tooltip", null));
 		tMetaGenerated.setElectricStats(32000 + tLastID1, 200000, 128, 2, -3);
 		tLastID1 = 697;
 		GT_Items.Energy_LapotronicOrb.set(tMetaGenerated.addItem(697, "lapotronic_orb", "", null, new Object[] { OrePrefixes.battery.get(Materials.Ultimate) }));
@@ -590,19 +590,19 @@ public class GT_ItemLoader implements Runnable {
 		tMetaGenerated.setElectricStats(32000 + tLastID1, 2000000000, 131072, 7, -2);
 		GT_Items.McGuffium_239.set(tMetaGenerated.addItem(765, "mc_guffim_239", "Useful for any kind of Plot", null));
 		if (GregTech_API.DEBUG_MODE) {
-			tMetaGenerated.addItem(700, "A very simple Circuit", null, new Object[] { OrePrefixes.circuit.get(Materials.Primitive) });
-			tMetaGenerated.addItem(701, "A basic Circuit", null, new Object[] { OrePrefixes.circuit.get(Materials.Basic) });
-			tMetaGenerated.addItem(702, "A good Circuit", null, new Object[] { OrePrefixes.circuit.get(Materials.Good) });
-			tMetaGenerated.addItem(703, "An advanced Circuit", null, new Object[] { OrePrefixes.circuit.get(Materials.Advanced) }); // TODO locale
-			tMetaGenerated.addItem(704, "A Data Storage Chip", null, new Object[] { OrePrefixes.circuit.get(Materials.Data) });
-			tMetaGenerated.addItem(705, "A Processor", null, new Object[] { OrePrefixes.circuit.get(Materials.Elite) });
-			tMetaGenerated.addItem(706, "A High Voltage Processor", null, new Object[] { OrePrefixes.circuit.get(Materials.Master) });
-			tMetaGenerated.addItem(707, "A High Capacity Data Storage", null, new Object[] { OrePrefixes.circuit.get(Materials.Ultimate) });
-			tMetaGenerated.addItem(710, "A basic Board", null, new Object[] { OrePrefixes.circuitBoard.get(Materials.Basic) });
-			tMetaGenerated.addItem(711, "An advanced Board", null, new Object[] { OrePrefixes.circuitBoard.get(Materials.Advanced) });
-			tMetaGenerated.addItem(712, "A Processor Board", null, new Object[] { OrePrefixes.circuitBoard.get(Materials.Elite) });
-			tMetaGenerated.addItem(715, "Advanced Circuit Parts", null, new Object[] { OrePrefixes.circuitPart.get(Materials.Advanced) });
-			tMetaGenerated.addItem(720, "A piece of Super Conductor", null, new Object[] { GT_OreDictNames.craftingSuperconductor });
+			tMetaGenerated.addItem(700, "item.GT_Circuit.simple.tooltip", null, new Object[] { OrePrefixes.circuit.get(Materials.Primitive) });
+			tMetaGenerated.addItem(701, "item.GT_Circuit.basic.tooltip", null, new Object[] { OrePrefixes.circuit.get(Materials.Basic) });
+			tMetaGenerated.addItem(702, "item.GT_Circuit.good.tooltip", null, new Object[] { OrePrefixes.circuit.get(Materials.Good) });
+			tMetaGenerated.addItem(703, "item.GT_Circuit.advanced.tooltip", null, new Object[] { OrePrefixes.circuit.get(Materials.Advanced) });
+			tMetaGenerated.addItem(704, "item.GT_Circuit.data.tooltip", null, new Object[] { OrePrefixes.circuit.get(Materials.Data) });
+			tMetaGenerated.addItem(705, "item.GT_Circuit.processor.tooltip", null, new Object[] { OrePrefixes.circuit.get(Materials.Elite) });
+			tMetaGenerated.addItem(706, "item.GT_Circuit.HV_processor.tooltip", null, new Object[] { OrePrefixes.circuit.get(Materials.Master) });
+			tMetaGenerated.addItem(707, "item.GT_Circuit.HV_data.tooltip", null, new Object[] { OrePrefixes.circuit.get(Materials.Ultimate) });
+			tMetaGenerated.addItem(710, "item.GT_Circuit.basic_board.tooltip", null, new Object[] { OrePrefixes.circuitBoard.get(Materials.Basic) });
+			tMetaGenerated.addItem(711, "item.GT_Circuit.advanced_board.tooltip", null, new Object[] { OrePrefixes.circuitBoard.get(Materials.Advanced) });
+			tMetaGenerated.addItem(712, "item.GT_Circuit.processor_board.tooltip", null, new Object[] { OrePrefixes.circuitBoard.get(Materials.Elite) });
+			tMetaGenerated.addItem(715, "item.GT_Circuit.advanced_parts.tooltip", null, new Object[] { OrePrefixes.circuitPart.get(Materials.Advanced) });
+			tMetaGenerated.addItem(720, "item.GT_Circuit.superconductor_parts.tooltip", null, new Object[] { GT_OreDictNames.craftingSuperconductor });
 		}
 		
 		GregTech_API.sItemList[9] = new GT_MetaGenerated_Item_02();
@@ -613,13 +613,13 @@ public class GT_ItemLoader implements Runnable {
 		GT_Items.Display_Fluid.set((GregTech_API.sItemList[15] = new GT_FluidDisplayItem("GregTech_FluidDisplay")));
 		GT_Items.NC_SensorCard.set((GregTech_API.sItemList[16] = (GT_Generic_Item) GT_Utility.callConstructor("gregtechmod.common.items.GT_SensorCard_Item", 0, (Object) null, false, "GregTech_Sensorcard")));
 		if (GregTech_API.sItemList[16] == null) {
-			GT_Items.NC_SensorCard.set((GregTech_API.sItemList[16] = new GT_Generic_Item("GregTech_Sensorcard", "Nuclear Control not installed"))); // TODO locae
+			GT_Items.NC_SensorCard.set((GregTech_API.sItemList[16] = new GT_Generic_Item("GregTech_Sensorcard", "util.missIC2NC")));
 		}
 		
 		GT_Items.NC_SensorKit.set((GregTech_API.sItemList[17] = new GT_SensorKit_Item("GregTech_Sensorkit")));
 	    GT_Items.Armor_Cheat.set(GregTech_API.sItemList[18] = GregTech_API.constructElectricArmorItem("Ultimate_Cheat_Armor", 1000000000, Integer.MAX_VALUE, 1, 10, -1, 100.0D, true, 1, tArmorID1));
 	    GT_Items.Tool_Mortar_Iron.set((GregTech_API.sItemList[30] = new GT_Mortar_Item("Iron_Mortar", 64, GT_OreDictUnificator.get(OrePrefixes.dust, (Object)Materials.Iron, 1L))));
-	    GT_Items.Tool_Mortar_Wood.set((GregTech_API.sItemList[31] = new GT_Generic_Item("Flint_Mortar", "Used to turn Ingots into Dust")));
+	    GT_Items.Tool_Mortar_Wood.set((GregTech_API.sItemList[31] = new GT_Generic_Item("Flint_Mortar", "item.Flint_Mortar.tooltip_main")));
 	    GT_Items.Tool_Sonictron.set((GregTech_API.sItemList[32] = new GT_Sonictron_Item( "Sonictron")));
 	    GT_Items.Tool_Destructopack.set((GregTech_API.sItemList[33] = new GT_Destructopack_Item("Destructopack")));
 	    GT_Items.Reactor_Coolant_He_1.set(GregTech_API.sItemList[34] = GregTech_API.constructCoolantCellItem("60k_Helium_Coolantcell", '\uea60'));
@@ -691,12 +691,12 @@ public class GT_ItemLoader implements Runnable {
 	    GT_Items.Tool_SolderingIron_Electric.set((GregTech_API.sItemList[77] = GregTech_API.constructElectricSolderingToolItem("GT_SolderingTool", 10, 0, 114)));
 	    GT_Items.Tool_SolderingMaterial_Tin.set((GregTech_API.sItemList[78] = new GT_SolderingMetal_Item("GT_SolderingTin", 50, 0)));
 	    GT_Items.Tool_SolderingMaterial_Lead.set((GregTech_API.sItemList[79] = new GT_SolderingMetal_Item("GT_SolderingLead", 10, 0)));
-	    GT_Items.Component_Turbine_Bronze.set((GregTech_API.sItemList[80] = new GT_Durable_Item("GT_Turbine_Bronze", "Turbine Efficiency:  60%", 15000)));
-	    GT_Items.Component_Turbine_Steel.set((GregTech_API.sItemList[81] = new GT_Durable_Item("GT_Turbine_Steel", "Turbine Efficiency:  80%", 10000)));
-	    GT_Items.Component_Turbine_Magnalium.set((GregTech_API.sItemList[82] = new GT_Durable_Item("GT_Turbine_Magnalium", "Turbine Efficiency: 100%", 10000)));
-	    GT_Items.Component_Turbine_TungstenSteel.set((GregTech_API.sItemList[83] = new GT_Durable_Item("GT_Turbine_Tungstensteel", "Turbine Efficiency:  90%", 30000)));
-	    GT_Items.Component_Turbine_Carbon.set((GregTech_API.sItemList[84] = new GT_Durable_Item("GT_Turbine_Carbon", "Turbine Efficiency: 125%", 2500)));
-	    GT_Items.Component_LavaFilter.set((GregTech_API.sItemList[85] = new GT_Durable_Item("GT_Lava_Filter", "Filters Lava in Thermal Boilers", 100))); // TODO locale
+	    GT_Items.Component_Turbine_Bronze.set((GregTech_API.sItemList[80] = new GT_Durable_Item("GT_Turbine_Bronze", "item.GT_Turbine_Bronze.tooltip_main", 15000)));
+	    GT_Items.Component_Turbine_Steel.set((GregTech_API.sItemList[81] = new GT_Durable_Item("GT_Turbine_Steel", "item.GT_Turbine_Steel.tooltip_main", 10000)));
+	    GT_Items.Component_Turbine_Magnalium.set((GregTech_API.sItemList[82] = new GT_Durable_Item("GT_Turbine_Magnalium", "item.GT_Turbine_Magnalium.tooltip_main", 10000)));
+	    GT_Items.Component_Turbine_TungstenSteel.set((GregTech_API.sItemList[83] = new GT_Durable_Item("GT_Turbine_Tungstensteel", "item.GT_Turbine_Tungstensteel.tooltip_main", 30000)));
+	    GT_Items.Component_Turbine_Carbon.set((GregTech_API.sItemList[84] = new GT_Durable_Item("GT_Turbine_Carbon", "item.GT_Turbine_Carbon.tooltip_main", 2500)));
+	    GT_Items.Component_LavaFilter.set((GregTech_API.sItemList[85] = new GT_Durable_Item("GT_Lava_Filter", "item.GT_Lava_Filter.tooltip_main", 100)));
 	    GT_Items.Tool_File_Iron.set((GregTech_API.sItemList[86] = new GT_File_Item("GT_File_Iron", 128, 2)));
 	    GT_Items.Tool_File_Bronze.set((GregTech_API.sItemList[87] = new GT_File_Item("GT_File_Bronze", 256, 3)));
 	    GT_Items.Tool_File_Steel.set((GregTech_API.sItemList[88] = new GT_File_Item("GT_File_Steel", 1280, 3)));
