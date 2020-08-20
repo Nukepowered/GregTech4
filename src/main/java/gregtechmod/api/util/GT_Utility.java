@@ -391,28 +391,6 @@ public class GT_Utility {
 				return 0;
 			}
 		}
-		
-		ForgeDirection tDirection = ForgeDirection.getOrientation(aGrabFrom);
-		if (aTileEntity1 instanceof TileEntity && tDirection != ForgeDirection.UNKNOWN && tDirection.getOpposite() == ForgeDirection.getOrientation(aPutTo)) {
-			int tX = ((TileEntity)aTileEntity1).xCoord + tDirection.offsetX, tY = ((TileEntity)aTileEntity1).yCoord + tDirection.offsetY, tZ = ((TileEntity)aTileEntity1).zCoord + tDirection.offsetZ;
-			if (!hasBlockHitBox(((TileEntity)aTileEntity1).getWorldObj(), tX, tY, tZ)) {
-				for (int i = 0; i < aGrabSlots.length; i++) {
-					if (listContainsItem(aFilter, aTileEntity1.getStackInSlot(aGrabSlots[i]), true, aInvertFilter)) {
-						if (isAllowedToTakeFromSlot(aTileEntity1, aGrabSlots[i], (byte)aGrabFrom, aTileEntity1.getStackInSlot(aGrabSlots[i]))) {
-							if (Math.max(aMinMoveAtOnce, aMinTargetStackSize) <= aTileEntity1.getStackInSlot(aGrabSlots[i]).stackSize) {
-								ItemStack tStack = copyAmount(Math.min(aTileEntity1.getStackInSlot(aGrabSlots[i]).stackSize, Math.min(aMaxMoveAtOnce, aMaxTargetStackSize)), aTileEntity1.getStackInSlot(aGrabSlots[i]));
-								EntityItem tEntity = new EntityItem(((TileEntity)aTileEntity1).getWorldObj(), tX+0.5, tY+0.5, tZ+0.5, tStack);
-								tEntity.motionX = tEntity.motionY = tEntity.motionZ = 0;
-								((TileEntity)aTileEntity1).getWorldObj().spawnEntityInWorld(tEntity);
-								aTileEntity1.decrStackSize(aGrabSlots[i], tStack.stackSize);
-								aTileEntity1.markDirty();
-								return (byte)tStack.stackSize;
-							}
-						}
-					}
-				}
-			}
-		}
 		return 0;
 	}
 	
