@@ -1,5 +1,6 @@
 package gregtechmod.api.metatileentity;
 
+import java.lang.ref.SoftReference;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.interfaces.IHasWorldObjectAndCoords;
@@ -33,10 +34,18 @@ public abstract class BaseTileEntity extends TileEntity implements IHasWorldObje
 	 * 
 	 * "this" means that there is no TileEntity, while "null" means that it doesn't know if there is even a TileEntity and still needs to check that if needed.
 	 */
-	private final TileEntity[] mBufferedTileEntities = new TileEntity[6];
+	@SuppressWarnings({ "unchecked"})
+	private final SoftReference<TileEntity> mBufferedTileEntities[] = new SoftReference[6];
 	
     private final void clearNullMarkersFromTileEntityBuffer() {
-    	for (int i = 0; i < mBufferedTileEntities.length; i++) if (mBufferedTileEntities[i] == this) mBufferedTileEntities[i] = null;
+    	for (int i = 0; i < mBufferedTileEntities.length; i++) {
+    		SoftReference<TileEntity> reference = mBufferedTileEntities[i];
+    		if (reference != null && reference.get() != null) {
+    			if (reference.get() == this || reference.get().isInvalid()) {
+    				mBufferedTileEntities[i] = null;
+    			}
+    		}
+    	}
     }
     
 	@Override public final World getWorld () {return      worldObj;}
@@ -130,22 +139,18 @@ public abstract class BaseTileEntity extends TileEntity implements IHasWorldObje
     
     @Override
     public final TileEntity getTileEntityAtSide(byte aSide) {
-    	if (aSide < 0 || aSide >= 6 || mBufferedTileEntities[aSide] == this) return null;
-    	if (mBufferedTileEntities[aSide] == null) {
-    		mBufferedTileEntities[aSide] = getTileEntity(getOffsetX(aSide, 1), getOffsetY(aSide, 1), getOffsetZ(aSide, 1));
-    		if (mBufferedTileEntities[aSide] == null) {
-    			mBufferedTileEntities[aSide] = this;
-    			return null;
+    	if (aSide >= 0 && aSide < 6) {
+    		SoftReference<TileEntity> reference = mBufferedTileEntities[aSide];
+    		if (reference != null && reference.get() != null && !reference.get().isInvalid()) {
+    			if (reference.get() == this || reference.isEnqueued()) this.clearNullMarkersFromTileEntityBuffer();
+    			return reference.get();
+    		} else {
+    			TileEntity tile = getTileEntity(getOffsetX(aSide, 1), getOffsetY(aSide, 1), getOffsetZ(aSide, 1));
+    			mBufferedTileEntities[aSide] = new SoftReference<TileEntity>(tile);
+    			return tile;
     		}
-    		return mBufferedTileEntities[aSide];
-		}
-		if (mBufferedTileEntities[aSide].isInvalid()) {
-			mBufferedTileEntities[aSide] = null;
-			return getTileEntityAtSide(aSide);
-		}
-		if (mBufferedTileEntities[aSide].xCoord == getOffsetX(aSide, 1) && mBufferedTileEntities[aSide].yCoord == getOffsetY(aSide, 1) && mBufferedTileEntities[aSide].zCoord == getOffsetZ(aSide, 1)) {
-			return mBufferedTileEntities[aSide];
-		}
+    	}
+    	
     	return null;
     }
     

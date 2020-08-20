@@ -386,7 +386,7 @@ public class GT_CraftingRecipeLoader implements Runnable {
     	if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.gregtechrecipes, "digitalchest", true)) {
     		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,48), new Object[] {"AAA", "ADA", "ASA", 'D', OrePrefixes.circuit.get(Materials.Ultimate), 'S', GT_OreDictNames.craftingMonitorTier02, 'A', OrePrefixes.plate.get(Materials.Iron)});
     		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,48), new Object[] {"AAA", "ADA", "ASA", 'D', OrePrefixes.circuit.get(Materials.Ultimate), 'S', GT_OreDictNames.craftingMonitorTier02, 'A', OrePrefixes.plate.get(Materials.Aluminium)});
-    		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,48), new Object[] {"AAA", "ADA", "ASA", 'D', OrePrefixes.circuit.get(Materials.Ultimate), 'S', GT_OreDictNames.craftingMonitorTier02, 'A', GT_OreDictNames.craftingPlateSteel});
+    		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,75), new Object[] {"AAA", "ADA", "ASA", 'D', OrePrefixes.circuit.get(Materials.Ultimate), 'S', GT_OreDictNames.craftingMonitorTier02, 'A', GT_OreDictNames.craftingPlateSteel});
     	}
     	
     	if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.gregtechrecipes, "quantumchest", true)) {

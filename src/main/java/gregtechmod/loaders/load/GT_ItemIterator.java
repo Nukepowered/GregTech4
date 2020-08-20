@@ -142,7 +142,7 @@ public class GT_ItemIterator implements Runnable {
 					}
 				} catch (Throwable e) {}
 				try {
-					if (tItem instanceof IToolWrench) {
+					if (tItem instanceof IToolWrench && !(tItem instanceof IToolCrowbar)) {
 						if (!tItem.isDamageable() && !GT_ModHandler.isElectricItem(new ItemStack(tItem, 1, 0))) {
 							if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "infiniteDurabilityBCWrenches", false) && GT_ModHandler.removeRecipeByOutput(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) {
 								GT_Log.log.info("GT_Mod: Removed infinite BC Wrench: " + tName);
