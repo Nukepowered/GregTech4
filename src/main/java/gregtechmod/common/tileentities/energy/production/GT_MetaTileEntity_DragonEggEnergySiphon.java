@@ -29,7 +29,7 @@ public class GT_MetaTileEntity_DragonEggEnergySiphon extends MetaTileEntity {
 	public static boolean sAllowMultipleEggs = false, sAllowFlux = true;
 	private SoftReference<TileNode> cachedNode = new SoftReference<>(null);
 	
-	public static GT_MetaTileEntity_DragonEggEnergySiphon mActiveSiphon = null;
+	public static SoftReference<GT_MetaTileEntity_DragonEggEnergySiphon> mActiveSiphon = new SoftReference<>(null);
 	
 	public GT_MetaTileEntity_DragonEggEnergySiphon(int aID, String mName) {
 		super(aID, mName);
@@ -75,17 +75,17 @@ public class GT_MetaTileEntity_DragonEggEnergySiphon extends MetaTileEntity {
 	
 	@Override
 	public void onServerStart() {
-    	mActiveSiphon = null;
+		mActiveSiphon.clear();
 	}
 	
 	@Override
 	public void onServerStop() {
-    	mActiveSiphon = null;
+		mActiveSiphon.clear();
     }
 	
     @Override
     public void onFirstTick() {
-    	mActiveSiphon = null;
+    	mActiveSiphon.clear();
     }
     
 	@Override
@@ -134,14 +134,14 @@ public class GT_MetaTileEntity_DragonEggEnergySiphon extends MetaTileEntity {
 	        			}
     				}
     			}
-    			if (mActiveSiphon != this && !sAllowMultipleEggs)
-    				if (mActiveSiphon == null || mActiveSiphon.getBaseMetaTileEntity() == null || mActiveSiphon.getBaseMetaTileEntity().isInvalidTileEntity() || !mActiveSiphon.hasEgg())
-    					mActiveSiphon = this;
+    			if (mActiveSiphon.get() != this && !sAllowMultipleEggs)
+    				if (mActiveSiphon.get() == null || mActiveSiphon.get().getBaseMetaTileEntity() == null || mActiveSiphon.get().getBaseMetaTileEntity().isInvalidTileEntity() || !mActiveSiphon.get().hasEgg())
+    					mActiveSiphon  = new SoftReference<>(this);
     				else
     					getBaseMetaTileEntity().doExplosion(Integer.MAX_VALUE);
     		} else {
-    			if (mActiveSiphon == this) {
-    				mActiveSiphon = null;
+    			if (mActiveSiphon.get() == this) {
+    				mActiveSiphon.clear();
     			}
     		}
     	}
@@ -203,8 +203,8 @@ public class GT_MetaTileEntity_DragonEggEnergySiphon extends MetaTileEntity {
 	
     @Override
 	public void inValidate() {
-		if (mActiveSiphon == this) {
-			mActiveSiphon = null;
+		if (mActiveSiphon.get() == this) {
+			mActiveSiphon.clear();
 		}
     }
     
