@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidEvent;
 import net.minecraftforge.fluids.FluidStack;
@@ -221,6 +222,6 @@ public abstract class GT_MetaPipeEntity_Fluid extends MetaPipeEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Fluid Capacity: " + (getFluidCapacityPerTick()*20) + "L/sec";  // TODO locale
+		return StatCollector.translateToLocalFormatted("pipes.fluid.capacity", getFluidCapacityPerTick() * 20);
 	}
 }

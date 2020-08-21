@@ -113,7 +113,7 @@ public class GT_MetaTileEntity_ElectricBufferSmall extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "A small directable Hopper with an inbuilt Energy Conduit!"; // TODO locale
+		return "metatileentity.GT_E_Buffer_Small.tooltip";
 	}
 	
 	@Override

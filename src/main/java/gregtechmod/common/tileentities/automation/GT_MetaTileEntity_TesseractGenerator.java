@@ -17,6 +17,7 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -165,7 +166,9 @@ public class GT_MetaTileEntity_TesseractGenerator extends MetaTileEntity {
 				mFrequency+=512;
 				break;
 			}
-			GT_Utility.sendChatToPlayer(aPlayer, "Frequency: " + mFrequency + (sTesseractGenerators.get(mFrequency) != null && sTesseractGenerators.get(mFrequency) != this?EnumChatFormatting.RED+" (Occupied)":"")); // TODO locale
+			
+			int type = sTesseractGenerators.get(mFrequency) != null && sTesseractGenerators.get(mFrequency) != this ? 2 : 1;
+			GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.GT_Tesseract.message." + type, mFrequency));
 		}
 	}
 	
@@ -176,7 +179,7 @@ public class GT_MetaTileEntity_TesseractGenerator extends MetaTileEntity {
 	
 	@Override
 	public String[] getInfoData() {
-		return new String[] { "Tesseract Generator", "Freq: " + mFrequency, sTesseractGenerators.get(mFrequency)==this?"Active":"Inactive" }; // TODO locale
+		return new String[] { "Tesseract Generator", "Freq: " + mFrequency, sTesseractGenerators.get(mFrequency)==this?"Active":"Inactive" }; // TODO REWORK LOCALE
 	}
 	
 	@Override

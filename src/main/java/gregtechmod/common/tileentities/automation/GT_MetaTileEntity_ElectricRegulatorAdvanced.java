@@ -92,7 +92,7 @@ public class GT_MetaTileEntity_ElectricRegulatorAdvanced extends GT_MetaTileEnti
 	
 	@Override
 	public String getDescription() {
-		return "Lets you save up to 8 additional Machines when used correctly!"; // TODO locale
+		return "metatileentity.GT_RegulatorAdvanced.tooltip";
 	}
 	
 	@Override

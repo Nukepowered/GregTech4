@@ -49,7 +49,7 @@ public class GT_MetaTileEntity_ElectricBufferAdvanced extends GT_MetaTileEntity_
 	
 	@Override
 	public String getDescription() {
-		return "A Buffer, which lets you specify the target Slot!"; // TODO locale
+		return "metatileentity.GT_Adv_Buffer.tooltip";
 	}
 	
 	public void onPostTick() {

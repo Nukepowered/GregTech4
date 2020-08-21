@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -79,17 +80,17 @@ public class GT_EnergyArmor_Item extends ItemArmor implements ISpecialArmor {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
     public void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean aF3_H) {
 		aList.add("Tier: " + mTier);
-		if ((mSpecials &    1) != 0) aList.add("Rebreather"); // TODO locale
-		if ((mSpecials &    2) != 0) aList.add("Inertia Damper");
-		if ((mSpecials &    4) != 0) aList.add("Food Replicator");
-		if ((mSpecials &    8) != 0) aList.add("Medicine Module");
-		if ((mSpecials &   16) != 0) aList.add("Lamp");
-		if ((mSpecials &   32) != 0) aList.add("Solarpanel");
-		if ((mSpecials &   64) != 0) aList.add("Extinguisher Module");
-		if ((mSpecials &  128) != 0) aList.add("Jump Booster");
-		if ((mSpecials &  256) != 0) aList.add("Speed Booster");
-		if ((mSpecials &  512) != 0) aList.add("Invisibility Field");
-		if ((mSpecials & 1024) != 0) aList.add("Infinite Charge");
+		if ((mSpecials &    1) != 0) aList.add(I18n.format("item.armor.capability.tooltip_1"));
+		if ((mSpecials &    2) != 0) aList.add(I18n.format("item.armor.capability.tooltip_2"));
+		if ((mSpecials &    4) != 0) aList.add(I18n.format("item.armor.capability.tooltip_3"));
+		if ((mSpecials &    8) != 0) aList.add(I18n.format("item.armor.capability.tooltip_4"));
+		if ((mSpecials &   16) != 0) aList.add(I18n.format("item.armor.capability.tooltip_5"));
+		if ((mSpecials &   32) != 0) aList.add(I18n.format("item.armor.capability.tooltip_6"));
+		if ((mSpecials &   64) != 0) aList.add(I18n.format("item.armor.capability.tooltip_7"));
+		if ((mSpecials &  128) != 0) aList.add(I18n.format("item.armor.capability.tooltip_8"));
+		if ((mSpecials &  256) != 0) aList.add(I18n.format("item.armor.capability.tooltip_9"));
+		if ((mSpecials &  512) != 0) aList.add(I18n.format("item.armor.capability.tooltip_10"));
+		if ((mSpecials & 1024) != 0) aList.add(I18n.format("item.armor.capability.tooltip_11"));
     }
 	
     private static void setCharge(ItemStack aStack) {

@@ -148,6 +148,6 @@ public class GT_MetaTileEntity_ElectricSorter extends GT_MetaTileEntity_Electric
 	
 	@Override
 	public String getDescription() {
-		return "The Sorter will put matching Items into the Blue Side."; // TODO locale
+		return "metatileentity.GT_E_Sorter.tooltip";
 	}
 }

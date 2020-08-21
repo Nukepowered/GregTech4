@@ -10,6 +10,8 @@ import java.util.Iterator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.IChatComponent;
 
 public class GT_MetaTileEntity_PlayerDetector extends MetaTileEntity {
 
@@ -120,19 +122,19 @@ public class GT_MetaTileEntity_PlayerDetector extends MetaTileEntity {
       }
 
       this.mMode = (byte)((this.mMode + 1) % 3);
-      String tMessage1 = null;
+      IChatComponent tMessage = null;
       switch(this.mMode) {
       case 0:
-         tMessage1 = "Detects all Players"; // TODO locale
+         tMessage = new ChatComponentTranslation("tile.BlockMetaID_Machine.Playerdetector.message.1");
          break;
       case 1:
-         tMessage1 = "Detects only " + this.mDetectedPlayer; // TODO locale
+         tMessage = new ChatComponentTranslation("tile.BlockMetaID_Machine.Playerdetector.message.2", mDetectedPlayer);
          break;
       case 2:
-         tMessage1 = "Detects all Players except " + this.mDetectedPlayer; // TODO locale
+         tMessage = new ChatComponentTranslation("tile.BlockMetaID_Machine.Playerdetector.message.3", mDetectedPlayer);
       }
 
-      GT_Utility.sendChatToPlayer(aPlayer, tMessage1);
+      GT_Utility.sendChatToPlayer(aPlayer, tMessage);
       return true;
    }
 

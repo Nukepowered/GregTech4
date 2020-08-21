@@ -84,7 +84,7 @@ public class GT_MetaTileEntity_AdvancedTranslocator extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "No matter how often you click that dang Button, the second Facing WON'T CHANGE!!!"; // TODO locale
+		return "metatileentity.GT_Adv_Translocator.tooltip";
 	}
 	
 	@Override

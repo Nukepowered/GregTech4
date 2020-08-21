@@ -44,7 +44,7 @@ public class GT_MetaTileEntity_ElectricBufferLarge extends GT_MetaTileEntity_Ele
 	
 	@Override
 	public String getDescription() {
-		return "A chest-sized Buffer!"; // TODO locale
+		return "metatileentity.GT_E_Buffer_Large.tooltip";
 	}
 	
 	@Override

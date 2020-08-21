@@ -221,7 +221,7 @@ public class GT_MetaTileEntity_ElectricRetrieverAdvanced extends MetaTileEntity 
    }
 
    public String getDescription() {
-      return "Retrieves and Regulates Items through a GT Pipe System!"; // TODO locale
+      return "metatileentity.GT_RetrieverAdvanced.tooltip";
    }
 
    public int getTextureIndex(byte aSide, byte aFacing, boolean aActive, boolean aRedstone) {

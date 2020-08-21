@@ -5,6 +5,7 @@ import gregtechmod.api.metatileentity.MetaTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 
 public class GT_MetaTileEntity_AESU extends MetaTileEntity {
 	
@@ -33,7 +34,7 @@ public class GT_MetaTileEntity_AESU extends MetaTileEntity {
 	@Override public boolean isValidSlot(int aIndex)				{return aIndex < 2;}
 	@Override public int getInvSize()								{return 3;}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 150);}
-    @Override public String getSpecialVoltageToolTip()				{return "Max EU/p OUT: 0 - 8192 (Adjustable)";} // TODO locale
+    @Override public String getSpecialVoltageToolTip()				{return StatCollector.translateToLocal("metatileentity.TileEntity_EUp_OUT.AESU.tooltip");}
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
