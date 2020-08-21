@@ -20,7 +20,7 @@ public class GT_MetaItem_Material extends GT_MetaItem_Abstract {
 		return instance.mStackList;
 	}
 	
-	public static ItemStack addItem(int aMeta, String aName, OrePrefixes aPrefix, Object aMaterial, boolean aGlowing) {		
+	public static ItemStack addItem(int aMeta, OrePrefixes aPrefix, Object aMaterial, boolean aGlowing) {		
 		instance.mToolTipList[aMeta] = aMaterial==null?"":(aMaterial instanceof Materials)?((Materials)aMaterial).getToolTip(aPrefix.mMaterialAmount / GregTech_API.MATERIAL_UNIT):aMaterial.toString();
 		instance.mGlowList[aMeta] = aGlowing;
 		instance.mStackList[aMeta] = new ItemStack(instance, 1, aMeta);

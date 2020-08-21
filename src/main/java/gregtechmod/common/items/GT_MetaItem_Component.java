@@ -16,7 +16,7 @@ public class GT_MetaItem_Component extends GT_MetaItem_Abstract {
 		return instance.mStackList;
 	}
 	
-	public static ItemStack addItem(int aMeta, String aName, Object aMaterial, String aToolTip) {
+	public static ItemStack addItem(int aMeta, Object aMaterial, String aToolTip) {
 		if (instance.mStackList[aMeta] != null) {
 			throw new IllegalArgumentException("" + aMeta);
 		} else {

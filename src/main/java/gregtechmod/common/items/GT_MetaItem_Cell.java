@@ -20,7 +20,7 @@ public class GT_MetaItem_Cell extends GT_MetaItem_Abstract {
 		return instance.mStackList;
 	}
 	
-	public static ItemStack addItem(int aMeta, String aName, String aOreDictName, boolean aPlasma, Materials aMaterial) {
+	public static ItemStack addItem(int aMeta, String aOreDictName, boolean aPlasma, Materials aMaterial) {
 		instance.mToolTipList[aMeta] = aMaterial.getToolTip(OrePrefixes.cell.mMaterialAmount / GregTech_API.MATERIAL_UNIT);
 		
 		instance.mStackList[aMeta] = new ItemStack(instance, 1, aMeta);

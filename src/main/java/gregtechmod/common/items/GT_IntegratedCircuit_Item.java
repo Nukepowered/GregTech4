@@ -53,7 +53,6 @@ public class GT_IntegratedCircuit_Item extends GT_Generic_Item {
       }
    }
 
-   @SuppressWarnings("unused")
    private static String getConfigurationString(int aMetaData) {
       return getModeString(aMetaData) + " " + (byte)(aMetaData & 255);
    }
