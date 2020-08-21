@@ -77,7 +77,8 @@ public class GregTech_API {
 	public static boolean DEBUG_MODE = false, SECONDARY_DEBUG_MODE = false, IC_ENERGY_COMPATIBILITY = true, RF_ENERGY_COMPATIBILITY = true;
 	
 	/** The Configuration Objects */
-	public static GT_Config sRecipeFile = null, sMachineFile = null, sWorldgenFile = null, sMaterialProperties = null, sUnification = null, sSpecialFile = null;
+	public static GT_Config sMachineFile = null, sWorldgenFile = null, sMaterialProperties = null, sUnification = null, sSpecialFile = null;
+	public static GT_Config.JsonWrapper sRecipeFile = null;
 	
 	/** Because Minecraft changed it from -1 to that Value */
 	public static final short ITEM_WILDCARD_DAMAGE = OreDictionary.WILDCARD_VALUE;

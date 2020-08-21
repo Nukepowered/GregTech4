@@ -1,6 +1,7 @@
 package gregtechmod;
 
 import gregtechmod.api.GregTech_API;
+import gregtechmod.api.enums.Element;
 import gregtechmod.api.enums.GT_ConfigCategories;
 import gregtechmod.api.enums.GT_ItemTextures;
 import gregtechmod.api.enums.GT_Items;
@@ -10,8 +11,14 @@ import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IGT_Mod;
 import gregtechmod.api.interfaces.IMetaTileEntity;
 import gregtechmod.api.metatileentity.BaseMetaPipeEntity;
+import gregtechmod.api.metatileentity.BaseMetaTileEntity;
+import gregtechmod.api.metatileentity.MetaPipeEntity;
+import gregtechmod.api.metatileentity.MetaTileEntity;
+import gregtechmod.api.util.GT_CircuitryBehavior;
 import gregtechmod.api.util.GT_Config;
+import gregtechmod.api.util.GT_CoverBehavior;
 import gregtechmod.api.util.GT_ItsNotMyFaultException;
+import gregtechmod.api.util.GT_LanguageManager;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
@@ -183,25 +190,25 @@ public class GT_Mod implements IGT_Mod {
     public static String sMessage = "";
     private boolean tNothingRegistered = true;
     
-    private static final void checkVersions() { // Will uncomment in the end
-//    	if (   VERSION != GregTech_API			.VERSION
-//            || VERSION != BaseMetaTileEntity	.VERSION
-//            || VERSION != BaseMetaPipeEntity	.VERSION
-//            || VERSION != MetaTileEntity		.VERSION
-//            || VERSION != MetaPipeEntity		.VERSION
-//    	    || VERSION != GT_CircuitryBehavior	.VERSION
-//    	    || VERSION != GT_CoverBehavior		.VERSION
-//    		|| VERSION != GT_Config				.VERSION
-//    		|| VERSION != GT_LanguageManager	.VERSION
-//    		|| VERSION != GT_ModHandler			.VERSION
-//    		|| VERSION != GT_OreDictUnificator	.VERSION
-//    		|| VERSION != GT_Recipe				.VERSION
-//    		|| VERSION != GT_Utility			.VERSION
-//    	    || VERSION != GT_RecipeRegistrator	.VERSION
-//    		|| VERSION != Element				.VERSION
-//    		|| VERSION != Materials				.VERSION
-//    		|| VERSION != OrePrefixes			.VERSION)
-//    		throw new GT_ItsNotMyFaultException("One of your Mods included GregTech-API Files inside it's download, mention this to the Mod Author, who does this bad thing, and tell him/her to use reflection. I have added a Version check, to prevent Authors from breaking my Mod that way.");
+    private static final void checkVersions() {
+    	if (   VERSION != GregTech_API			.VERSION
+            || VERSION != BaseMetaTileEntity	.VERSION
+            || VERSION != BaseMetaPipeEntity	.VERSION
+            || VERSION != MetaTileEntity		.VERSION
+            || VERSION != MetaPipeEntity		.VERSION
+    	    || VERSION != GT_CircuitryBehavior	.VERSION
+    	    || VERSION != GT_CoverBehavior		.VERSION
+    		|| VERSION != GT_Config				.VERSION
+    		|| VERSION != GT_LanguageManager	.VERSION
+    		|| VERSION != GT_ModHandler			.VERSION
+    		|| VERSION != GT_OreDictUnificator	.VERSION
+    		|| VERSION != GT_Recipe				.VERSION
+    		|| VERSION != GT_Utility			.VERSION
+    	    || VERSION != GT_RecipeRegistrator	.VERSION
+    		|| VERSION != Element				.VERSION
+    		|| VERSION != Materials				.VERSION
+    		|| VERSION != OrePrefixes			.VERSION)
+    		throw new GT_ItsNotMyFaultException("One of your Mods included GregTech-API Files inside it's download, mention this to the Mod Author, who does this bad thing, and tell him/her to use reflection. I have added a Version check, to prevent Authors from breaking my Mod that way.");
     }
     
     public GT_Mod() {
@@ -252,17 +259,17 @@ public class GT_Mod implements IGT_Mod {
     	File tFile = new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "GregTech.cfg");
     	Configuration tConfig1 = new Configuration(tFile);
     	tConfig1.load();
-		GregTech_API.sRecipeFile = new GT_Config(new Configuration(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "DynamicConfig.cfg")));
+		GregTech_API.sRecipeFile = new GT_Config.JsonWrapper(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "DynamicConfig.json"));
 		GregTech_API.sMachineFile = new GT_Config(new Configuration(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "MachineStats.cfg")));
 		GregTech_API.sWorldgenFile = new GT_Config(new Configuration(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "WorldGeneration.cfg")));
 		GregTech_API.sMaterialProperties = new GT_Config(new Configuration(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "MaterialProperties.cfg")));
 		GregTech_API.sUnification = new GT_Config(new Configuration(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "Unification.cfg")));
 		GregTech_API.sSpecialFile = new GT_Config(new Configuration(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "Other.cfg")));
-
+		
     	mDoNotInit = (!tFile.getAbsolutePath().toLowerCase().contains("voltz")) && (tFile.getAbsolutePath().toLowerCase().contains(".technic") || tFile.getAbsolutePath().toLowerCase().contains("tekkit"));
     	if (mDoNotInit) {
-            GT_Log.log.warn("GT_Mod: Detected Technic Launcher.");
-            GT_Log.log.warn("GT_Mod: Errored.");
+            GT_Log.log.warn("Detected Technic Launcher.");
+            GT_Log.log.warn("Errored.");
     		/**
     		 * Hello Tekkit user. I'm well aware that you decompiled my Addon to get it into Tekkit.
     		 * However, I will not change this Code, even though I know about that.
@@ -846,6 +853,7 @@ public class GT_Mod implements IGT_Mod {
     	GregTech_API.sAfterGTLoad = null;
     	GregTech_API.sBeforeGTPostload = null;
     	GregTech_API.sAfterGTPostload = null;
+    	GregTech_API.sRecipeFile.save();
     }
 	
     	/*
