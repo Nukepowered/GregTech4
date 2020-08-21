@@ -107,29 +107,29 @@ public class GT_OreDictUnificator {
 		isAddingOre--;
 	}
 	
-	public static ItemStack getFirstOre(Object aName, long aAmount) {
+	public static synchronized ItemStack getFirstOre(Object aName, long aAmount) {
 		if (GT_Utility.isStringInvalid(aName)) return null;
 		if (GT_Utility.isStackValid(sName2OreMap.get(aName.toString()))) return GT_Utility.copyAmount(aAmount, sName2OreMap.get(aName.toString()));
 		return GT_Utility.copyAmount(aAmount, getOres(aName).toArray(new ItemStack[0]));
 	}
 	
-	public static ItemStack get(Object aName, long aAmount) {
+	public static synchronized ItemStack get(Object aName, long aAmount) {
 		return get(aName, null, aAmount, true, true);
 	}
 	
-	public static ItemStack get(Object aName, ItemStack aReplacement, long aAmount) {
+	public static synchronized ItemStack get(Object aName, ItemStack aReplacement, long aAmount) {
 		return get(aName, aReplacement, aAmount, true, true);
 	}
 	
-	public static ItemStack get(OrePrefixes aPrefix, Object aMaterial, long aAmount) {
+	public static synchronized ItemStack get(OrePrefixes aPrefix, Object aMaterial, long aAmount) {
 		return get(aPrefix, aMaterial, null, aAmount);
 	}
 	
-	public static ItemStack get(OrePrefixes aPrefix, Object aMaterial, ItemStack aReplacement, long aAmount) {
+	public static synchronized ItemStack get(OrePrefixes aPrefix, Object aMaterial, ItemStack aReplacement, long aAmount) {
 		return get(aPrefix.get(aMaterial), aReplacement, aAmount, false, true);
 	}
 	
-	public static ItemStack get(Object aName, ItemStack aReplacement, long aAmount, boolean aMentionPossibleTypos, boolean aNoInvalidAmounts) {
+	public static synchronized ItemStack get(Object aName, ItemStack aReplacement, long aAmount, boolean aMentionPossibleTypos, boolean aNoInvalidAmounts) {
 		if (aNoInvalidAmounts && aAmount < 1) return null;
 		if (!sName2OreMap.containsKey(aName.toString()) && aMentionPossibleTypos) GT_Log.log.error("Unknown Key for Unification, Typo? " + aName);
 		return GT_Utility.copyAmount(aAmount, sName2OreMap.get(aName.toString()), getFirstOre(aName, aAmount), aReplacement);
@@ -246,14 +246,14 @@ public class GT_OreDictUnificator {
     /**
      * @return a Copy of the OreDictionary.getOres() List
      */
-    public static ArrayList<ItemStack> getOres(OrePrefixes aPrefix, Object aMaterial) {
+    public static synchronized ArrayList<ItemStack> getOres(OrePrefixes aPrefix, Object aMaterial) {
     	return getOres(aPrefix.get(aMaterial));
     }
     
     /**
      * @return a Copy of the OreDictionary.getOres() List
      */
-    public static ArrayList<ItemStack> getOres(Object aOreName) {
+    public static synchronized ArrayList<ItemStack> getOres(Object aOreName) {
     	String aName = aOreName==null?"":aOreName.toString();
     	ArrayList<ItemStack> rList = new ArrayList<ItemStack>();
     	if (GT_Utility.isStringValid(aName)) rList.addAll(OreDictionary.getOres(aName));

@@ -40,9 +40,10 @@ public class ProcessingIngot1 implements IOreRecipeRegistrator {
 
       GT_ModHandler.addCraftingRecipe(GT_OreDictUnificator.get(OrePrefixes.stick, (Object)aMaterial, 1L), new Object[]{"F", "I", Character.valueOf('F'), GT_ToolDictNames.craftingToolFile, Character.valueOf('I'), aOreDictName});
       GregTech_API.sRecipeAdder.addLatheRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), GT_OreDictUnificator.get(OrePrefixes.stick, (Object)aMaterial, 1L), GT_OreDictUnificator.get(OrePrefixes.dustSmall, (Object)aMaterial, 2L), Math.max(aMaterial.getMass() * 5, 1), 16);
-      if(!aMaterial.contains(SubTag.NO_SMELTING) && GT_ModHandler.getSmeltingOutput(aStack, false, (ItemStack)null) == null && GT_OreDictUnificator.get(OrePrefixes.nugget, (Object)aMaterial, 1L) != null && !GT_ModHandler.addSmeltingRecipe(aStack, GT_OreDictUnificator.get(OrePrefixes.nugget, (Object)aMaterial, 9L))) {
-         GT_ModHandler.addShapelessCraftingRecipe(GT_OreDictUnificator.get(OrePrefixes.nugget, (Object)aMaterial, 9L), new Object[]{aOreDictName});
-      }
+      
+	  if(!aMaterial.contains(SubTag.NO_SMELTING) && GT_ModHandler.getSmeltingOutput(aStack, false, (ItemStack)null) == null && GT_OreDictUnificator.get(OrePrefixes.nugget, (Object)aMaterial, 1L) != null && !GT_ModHandler.addSmeltingRecipe(aStack, GT_OreDictUnificator.get(OrePrefixes.nugget, (Object)aMaterial, 9L))) {
+		  GT_ModHandler.addShapelessCraftingRecipe(GT_OreDictUnificator.get(OrePrefixes.nugget, (Object)aMaterial, 9L), new Object[]{aOreDictName});
+	  }
 
       ItemStack tStack;
       if(null != (tStack = GT_OreDictUnificator.get(OrePrefixes.dust, (Object)aMaterial, 1L))) {
@@ -58,6 +59,5 @@ public class ProcessingIngot1 implements IOreRecipeRegistrator {
       if(aMaterial == Materials.Mercury) {
          GT_Log.log.error("Quicksilver Ingots?, Don\'t tell me there is an Armor made of that highly toxic and very likely to be melting Material!");
       }
-
    }
 }

@@ -32,6 +32,7 @@ public class ProcessingLog implements IOreRecipeRegistrator {
          GT_ModHandler.addPulverisationRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), GT_OreDictUnificator.get(OrePrefixes.dust, (Object)Materials.Wood, 6L), GT_OreDictUnificator.get(OrePrefixes.dust, (Object)Materials.Wood, 1L), 80, false);
       }
 
+      
       if(GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "wood2charcoalsmelting", false) && GT_Utility.areStacksEqual(GT_ModHandler.getSmeltingOutput(GT_Utility.copyAmount(1L, new Object[]{aStack}), false, (ItemStack)null), new ItemStack(Items.coal, 1, 1))) {
          GT_ModHandler.removeFurnaceSmelting(GT_Utility.copyAmount(1L, new Object[]{aStack}));
       }

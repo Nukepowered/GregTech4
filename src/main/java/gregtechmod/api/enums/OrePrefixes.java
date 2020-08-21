@@ -302,7 +302,7 @@ public enum OrePrefixes {
 	public final boolean mIsUnificatable, mIsMaterialBased, mIsSelfReferencing, mIsContainer, mDontUnificateActively;
 	public OrePrefixes mPrefixInto = this;
 	private final ArrayList<Materials> mNotGeneratedItems = new ArrayList<Materials>(), mIgnoredMaterials = new ArrayList<Materials>();
-	private final ArrayList<IOreRecipeRegistrator> mOreProcessing = new ArrayList<IOreRecipeRegistrator>();
+	public final ArrayList<IOreRecipeRegistrator> mOreProcessing = new ArrayList<IOreRecipeRegistrator>();
 	
 	/**
 	 * Used to determine the amount of Material this Prefix contains.
@@ -353,8 +353,11 @@ public enum OrePrefixes {
 	}
 	
 	public static OrePrefixes getPrefix(String aPrefixName, OrePrefixes aReplacement) {
-		Object tObject = GT_Utility.getFieldContent(OrePrefixes.class, aPrefixName, false, false);
-		if (tObject != null && tObject instanceof OrePrefixes) return (OrePrefixes)tObject;
+		try {
+			OrePrefixes value = OrePrefixes.valueOf(aPrefixName);
+			if (value != null) return value;
+		} catch (IllegalArgumentException e) {}
+		
 		return aReplacement;
 	}
 	

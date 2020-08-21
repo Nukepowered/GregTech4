@@ -861,8 +861,11 @@ public enum Materials {
 	}
 	
 	public static Materials get(String aMaterialName) {
-		Object tObject = GT_Utility.getFieldContent(Materials.class, aMaterialName, false, false);
-		if (tObject != null && tObject instanceof Materials) return (Materials)tObject;
+		try {
+			Materials result = Materials.valueOf(aMaterialName);
+			if (result != null) return result;
+		} catch (IllegalArgumentException e) {}
+		
 		return exceptions.containsKey(aMaterialName) ? exceptions.get(aMaterialName) : _NULL;
 	}
 	
