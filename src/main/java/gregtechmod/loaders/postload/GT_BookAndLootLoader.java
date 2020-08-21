@@ -32,7 +32,6 @@ public class GT_BookAndLootLoader implements Runnable {
         }
         
         ItemStack tStack;
-        // TODO locale	
         tStack = GT_Utility.getWrittenBook("book.gt_manual_1.title", "book.gt_manual_1.author", new String[] {
         		  "book.gt_manual_1.page.1"
         		, "book.gt_manual_1.page.2"

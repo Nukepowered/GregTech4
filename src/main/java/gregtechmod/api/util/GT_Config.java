@@ -143,7 +143,9 @@ public class GT_Config {
 							Files.delete(config.toPath());
 							this.load();
 						}
-					} catch (IOException e) {}
+					} catch (IOException e) {
+						this.object = new JsonObject();
+					}
 				} else {
 					if (config.createNewFile()) {
 						FileWriter writer = new FileWriter(config);
