@@ -49,7 +49,7 @@ public class GT_Container_RockBreaker extends GT_ContainerMetaTile_Machine {
 		    	if (((GT_MetaTileEntity_ElectricBufferSmall)mTileEntity.getMetaTileEntity()).bInvert)
 				    GT_Utility.sendChatToPlayer(aPlayer, "Invert Redstone");
 			    else
-			    	GT_Utility.sendChatToPlayer(aPlayer, "Don't invert Redstone"); // TODO locale
+			    	GT_Utility.sendChatToPlayer(aPlayer, "Don't invert Redstone");
 		    	return null;
 		    }
     	}

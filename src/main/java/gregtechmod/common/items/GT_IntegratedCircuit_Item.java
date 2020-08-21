@@ -25,8 +25,8 @@ public class GT_IntegratedCircuit_Item extends GT_Generic_Item {
    }
 
    public void addAdditionalToolTips(List<String> aList, ItemStack aStack) {
-      super.addAdditionalToolTips(aList, aStack); // TODO: LOCALE
-      aList.add(I18n.format("Configuration: %s", getConfigurationString(this.getDamage(aStack))));
+      super.addAdditionalToolTips(aList, aStack);
+      aList.add(I18n.format("util.GT_IntegratedCircuit.configuration", getConfigurationString(this.getDamage(aStack))));
    }
    
    @SideOnly(Side.CLIENT)

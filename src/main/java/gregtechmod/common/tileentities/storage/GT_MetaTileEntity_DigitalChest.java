@@ -12,6 +12,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.StatCollector;
 
 public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
 
@@ -257,9 +258,15 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
    private int getItemCount() {
       return this.mItemCount + (super.mInventory[0] == null?0:super.mInventory[0].stackSize) + (super.mInventory[1] == null?0:super.mInventory[1].stackSize) + (super.mInventory[2] == null?0:super.mInventory[2].stackSize);
    }
-//TODO: lozalication
    public String[] getInfoData() {
-      return this.getStoredItem() == null?new String[]{"", "", "Max: " + (this.getMaxItemCount() + 192)}:new String[]{this.getStoredItem().getItem().getUnlocalizedName(), "" + this.getItemCount(), "Max: " + (this.getMaxItemCount() + 192)};
+      return this.getStoredItem() == null?new String[]{
+    		  ""
+    		, ""
+    		, StatCollector.translateToLocalFormatted("util.GT_DigitalChest.max", this.getMaxItemCount() + 192)
+    		} : new String[] {
+    		 this.getStoredItem().getItem().getUnlocalizedName()
+    		, "" + this.getItemCount()
+    		, StatCollector.translateToLocalFormatted("util.GT_DigitalChest.max", this.getMaxItemCount() + 192)};
    }
 
    public boolean isGivingInformation() {

@@ -103,7 +103,7 @@ public class GT_MetaTileEntity_ElectricAutoWorkbench extends GT_MetaTileEntity_B
 
 	@Override
 	public String getDescription() {
-		return "Automatic Crafting Table Mk III"; // TODO locale
+		return "metatileentity.GT_E_Craftingtable.tooltip";
 	}
 	
 	@SuppressWarnings("deprecation")

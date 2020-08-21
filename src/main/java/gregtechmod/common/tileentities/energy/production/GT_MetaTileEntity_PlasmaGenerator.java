@@ -36,6 +36,6 @@ public class GT_MetaTileEntity_PlasmaGenerator extends GT_MetaTileEntity_BasicGe
 
 	@Override
 	public String getDescription() {
-		return "metatileentity.GT_PlasmaGenerator.tooltip"; // TODO locale
+		return "metatileentity.GT_PlasmaGenerator.tooltip";
 	}
 }
