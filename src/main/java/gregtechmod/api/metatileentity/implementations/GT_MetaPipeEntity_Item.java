@@ -181,7 +181,7 @@ public abstract class GT_MetaPipeEntity_Item extends MetaPipeEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Item Capacity: "+getMaxPipeCapacity()+" Stacks/sec";
+		return "Item Capacity: "+getMaxPipeCapacity()+" Stacks/sec";  // TODO locale
 	}
 
 	private boolean isInventoryEmpty() {

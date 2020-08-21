@@ -61,7 +61,7 @@ public class GT_MetaTileEntity_Hatch_Output extends GT_MetaTileEntity_BasicTank 
 	
 	@Override
 	public String getDescription() {
-		return "Use Screwdriver to specify Output Type";
+		return "Use Screwdriver to specify Output Type"; // TODO locale
 	}
 	
 	@Override

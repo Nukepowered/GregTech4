@@ -165,7 +165,7 @@ public class GT_MetaTileEntity_TesseractGenerator extends MetaTileEntity {
 				mFrequency+=512;
 				break;
 			}
-			GT_Utility.sendChatToPlayer(aPlayer, "Frequency: " + mFrequency + (sTesseractGenerators.get(mFrequency) != null && sTesseractGenerators.get(mFrequency) != this?EnumChatFormatting.RED+" (Occupied)":""));
+			GT_Utility.sendChatToPlayer(aPlayer, "Frequency: " + mFrequency + (sTesseractGenerators.get(mFrequency) != null && sTesseractGenerators.get(mFrequency) != this?EnumChatFormatting.RED+" (Occupied)":"")); // TODO locale
 		}
 	}
 	
@@ -176,7 +176,7 @@ public class GT_MetaTileEntity_TesseractGenerator extends MetaTileEntity {
 	
 	@Override
 	public String[] getInfoData() {
-		return new String[] { "Tesseract Generator", "Freq: " + mFrequency, sTesseractGenerators.get(mFrequency)==this?"Active":"Inactive" };
+		return new String[] { "Tesseract Generator", "Freq: " + mFrequency, sTesseractGenerators.get(mFrequency)==this?"Active":"Inactive" }; // TODO locale
 	}
 	
 	@Override
@@ -387,7 +387,7 @@ public class GT_MetaTileEntity_TesseractGenerator extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Generates a Tesseract for the attached Inventory";
+		return "Generates a Tesseract for the attached Inventory"; // TODO locale
 	}
 	
 	@Override

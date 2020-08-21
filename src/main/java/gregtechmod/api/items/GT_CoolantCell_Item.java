@@ -43,7 +43,7 @@ public class GT_CoolantCell_Item extends GT_Generic_Item {
 	@Override
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
 		super.addAdditionalToolTips(aList, aStack);
-		aList.add("Stored Heat: " + getHeatOfStack(aStack));
+		aList.add("Stored Heat: " + getHeatOfStack(aStack)); // TODO locale
 	}
 	
     protected static int getHeatOfStack(ItemStack aStack) {

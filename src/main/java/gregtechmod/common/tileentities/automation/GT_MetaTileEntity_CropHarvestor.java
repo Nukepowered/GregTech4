@@ -65,7 +65,7 @@ public class GT_MetaTileEntity_CropHarvestor extends GT_MetaTileEntity_ElectricB
 	
 	@Override
 	public String getDescription() {
-		return "Harvests the Cropsticks in front of it";
+		return "Harvests the Cropsticks in front of it"; // TODO locale
 	}
 	
 	@Override

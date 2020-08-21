@@ -108,7 +108,7 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 			return StatCollector.translateToLocalFormatted(aPrefix.mUnlocalizedName, StatCollector.translateToLocal(aMaterial.getUnlocalizedName()));
 		}
 		
-		return StatCollector.canTranslate(aMaterial.getUnlocalizedName()) ? StatCollector.translateToLocal(aMaterial.getUnlocalizedName()) : "";
+		return StatCollector.canTranslate(aMaterial.getUnlocalizedName()) ? StatCollector.translateToLocal(aMaterial.getUnlocalizedName()) : getUnlocalizedName();
 	}
 	
 	/**

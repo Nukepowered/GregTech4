@@ -223,7 +223,7 @@ public class GT_MetaTileEntity_Teleporter extends MetaTileEntity {
 	
 	@Override
 	public String[] getInfoData() {
-		return new String[] { "Charge: " + mCharge, "X: " + mTargetX + "  Y: " + mTargetY + "  Z: " + mTargetZ, "Dimension: " + mTargetD};
+		return new String[] { "Charge: " + mCharge, "X: " + mTargetX + "  Y: " + mTargetY + "  Z: " + mTargetZ, "Dimension: " + mTargetD}; // TODO locale
 	}
 	
 	@Override

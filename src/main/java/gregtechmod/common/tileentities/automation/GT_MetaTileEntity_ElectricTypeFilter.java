@@ -139,7 +139,7 @@ public class GT_MetaTileEntity_ElectricTypeFilter extends GT_MetaTileEntity_Elec
    }
 
    public String getDescription() {
-      return "A Buffer, which uses OrePrefixes to filter";
+      return "A Buffer, which uses OrePrefixes to filter"; // TODO locale
    }
 
    public int getTextureIndex(byte aSide, byte aFacing, boolean aActive, boolean aRedstone) {

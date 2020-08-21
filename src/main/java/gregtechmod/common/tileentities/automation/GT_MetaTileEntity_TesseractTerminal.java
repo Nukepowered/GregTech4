@@ -327,7 +327,7 @@ public class GT_MetaTileEntity_TesseractTerminal extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Accesses Tesseracts remotely";
+		return "Accesses Tesseracts remotely"; // TODO locale
 	}
 	
 	@Override

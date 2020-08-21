@@ -56,9 +56,12 @@ public class GT_MetaItem_Abstract extends Item {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
     public void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean aF3_H) {
-		if (aStack.getItemDamage() >= 0 && aStack.getItemDamage() < MAXIMUM_META_IDS && !mToolTipList[aStack.getItemDamage()].equals("")) {
+		if (aStack.getItemDamage() >= 0 && aStack.getItemDamage() < MAXIMUM_META_IDS) {
 			String tooltip = mToolTipList[aStack.getItemDamage()];
-			aList.add(I18n.format(GT_Utility.isStringInvalid(tooltip) ? getUnlocalizedName() + ".tooltip" : tooltip));
+			tooltip = tooltip != null ? tooltip : String.format("%s.%s.tooltip", getUnlocalizedName(), aStack.getItemDamage());
+			if (!tooltip.isEmpty()) {
+				aList.add(I18n.format(tooltip));
+			}
 		}
     }
 	

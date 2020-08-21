@@ -123,13 +123,13 @@ public class GT_MetaTileEntity_PlayerDetector extends MetaTileEntity {
       String tMessage1 = null;
       switch(this.mMode) {
       case 0:
-         tMessage1 = "Detects all Players";
+         tMessage1 = "Detects all Players"; // TODO locale
          break;
       case 1:
-         tMessage1 = "Detects only " + this.mDetectedPlayer;
+         tMessage1 = "Detects only " + this.mDetectedPlayer; // TODO locale
          break;
       case 2:
-         tMessage1 = "Detects all Players except " + this.mDetectedPlayer;
+         tMessage1 = "Detects all Players except " + this.mDetectedPlayer; // TODO locale
       }
 
       GT_Utility.sendChatToPlayer(aPlayer, tMessage1);

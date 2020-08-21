@@ -50,7 +50,7 @@ public class GT_MetaTileEntity_Hatch_Dynamo extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Generating electric Energy from Multiblocks";
+		return "Generating electric Energy from Multiblocks"; // TODO locale
 	}
 	
 	@Override

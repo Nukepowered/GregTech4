@@ -33,7 +33,7 @@ public class GT_MetaTileEntity_AESU extends MetaTileEntity {
 	@Override public boolean isValidSlot(int aIndex)				{return aIndex < 2;}
 	@Override public int getInvSize()								{return 3;}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 150);}
-    @Override public String getSpecialVoltageToolTip()				{return "Max EU/p OUT: 0 - 8192 (Adjustable)";}
+    @Override public String getSpecialVoltageToolTip()				{return "Max EU/p OUT: 0 - 8192 (Adjustable)";} // TODO locale
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {

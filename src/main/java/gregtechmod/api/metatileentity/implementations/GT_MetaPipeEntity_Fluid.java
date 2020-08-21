@@ -221,6 +221,6 @@ public abstract class GT_MetaPipeEntity_Fluid extends MetaPipeEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Fluid Capacity: " + (getFluidCapacityPerTick()*20) + "L/sec";
+		return "Fluid Capacity: " + (getFluidCapacityPerTick()*20) + "L/sec";  // TODO locale
 	}
 }

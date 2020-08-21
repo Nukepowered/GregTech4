@@ -588,7 +588,7 @@ public class GT_ItemLoader implements Runnable {
 		tLastID1 = 698;
 		GT_Items.ZPM.set(tMetaGenerated.addItem(698, "zpm", "", null));
 		tMetaGenerated.setElectricStats(32000 + tLastID1, 2000000000, 131072, 7, -2);
-		GT_Items.McGuffium_239.set(tMetaGenerated.addItem(765, "mc_guffim_239", "Useful for any kind of Plot", null));
+		GT_Items.McGuffium_239.set(tMetaGenerated.addItem(765, "mc_guffim_239", "Useful for any kind of Plot", null)); // TODO locale
 		if (GregTech_API.DEBUG_MODE) {
 			tMetaGenerated.addItem(700, "item.GT_Circuit.simple.tooltip", null, new Object[] { OrePrefixes.circuit.get(Materials.Primitive) });
 			tMetaGenerated.addItem(701, "item.GT_Circuit.basic.tooltip", null, new Object[] { OrePrefixes.circuit.get(Materials.Basic) });

@@ -122,7 +122,7 @@ public class GT_MetaTileEntity_Translocator extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Moves Items from A to B";
+		return "Moves Items from A to B"; // TODO locale
 	}
 	
 	@Override

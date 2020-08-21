@@ -49,7 +49,7 @@ public class GT_MetaTileEntity_Hatch_OutputBus extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Better Output Hatch for the providing Multiblocks";
+		return "Better Output Hatch for the providing Multiblocks"; // TODO locale
 	}
 	
 	@Override

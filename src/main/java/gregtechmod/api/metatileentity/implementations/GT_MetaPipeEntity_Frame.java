@@ -14,7 +14,7 @@ public abstract class GT_MetaPipeEntity_Frame extends MetaPipeEntity {
 		
 	}
 	
-	@Override public String getDescription() {return "Just something you can put a Cover or CFoam on.";}
+	@Override public String getDescription() {return "Just something you can put a Cover or CFoam on.";}  // TODO locale
 	@Override public int getTextureIndex(byte aSide, byte aConnections, boolean aActive, boolean aRedstone) {return 3;}
 	
 	@Override public final boolean isSimpleMachine()				{return true;}

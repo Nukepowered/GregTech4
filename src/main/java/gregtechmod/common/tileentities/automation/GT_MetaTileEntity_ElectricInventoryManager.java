@@ -205,7 +205,7 @@ public class GT_MetaTileEntity_ElectricInventoryManager extends MetaTileEntity {
 
 	@Override
 	public String getDescription() {
-		return "It's simpler than you think. I promise.";
+		return "It's simpler than you think. I promise."; // TODO locale
 	}
 	
 	@Override

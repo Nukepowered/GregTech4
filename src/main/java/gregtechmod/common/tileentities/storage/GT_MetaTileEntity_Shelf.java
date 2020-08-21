@@ -110,7 +110,7 @@ public class GT_MetaTileEntity_Shelf extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Decorative Item Storage";
+		return "Decorative Item Storage"; // TODO locale
 	}
 	
 	@Override

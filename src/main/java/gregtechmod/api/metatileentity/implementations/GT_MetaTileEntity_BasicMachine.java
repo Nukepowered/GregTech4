@@ -324,7 +324,7 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 	
 	@Override
 	public String[] getInfoData() {
-		return new String[] {"Progress:", (mProgresstime/20)+"secs", (mMaxProgresstime/20)+"secs"};
+		return new String[] {"Progress:", (mProgresstime/20)+"secs", (mMaxProgresstime/20)+"secs"}; // TODO locale
 	}
 	
 	@Override
@@ -336,7 +336,7 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 	public void onScrewdriverRightClick(byte aSide, EntityPlayer aPlayer, float aX, float aY, float aZ) {
 		if (aSide == getBaseMetaTileEntity().getFrontFacing()) {
 			bAlloyInputFromOutputSide = !bAlloyInputFromOutputSide;
-			GT_Utility.sendChatToPlayer(aPlayer, bAlloyInputFromOutputSide?"Input from Output Side allowed":"Input from Output Side forbidden");
+			GT_Utility.sendChatToPlayer(aPlayer, bAlloyInputFromOutputSide?"Input from Output Side allowed":"Input from Output Side forbidden");  // TODO locale
 		}
 	}
 	

@@ -49,7 +49,7 @@ public class GT_MetaTileEntity_ElectricItemClearer extends GT_MetaTileEntity_Ele
 	
 	@Override
 	public String getDescription() {
-		return "Clears out a 3x3x3 in front of it";
+		return "Clears out a 3x3x3 in front of it"; // TODO locale
 	}
 	
 	@Override

@@ -49,7 +49,7 @@ public class GT_MetaTileEntity_Hatch_InputBus extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Better Input Hatch for more complex Multiblocks";
+		return "Better Input Hatch for more complex Multiblocks"; // TODO locale
 	}
 	
 	@Override

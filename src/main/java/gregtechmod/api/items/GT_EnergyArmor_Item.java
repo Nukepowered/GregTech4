@@ -79,7 +79,7 @@ public class GT_EnergyArmor_Item extends ItemArmor implements ISpecialArmor {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
     public void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean aF3_H) {
 		aList.add("Tier: " + mTier);
-		if ((mSpecials &    1) != 0) aList.add("Rebreather");
+		if ((mSpecials &    1) != 0) aList.add("Rebreather"); // TODO locale
 		if ((mSpecials &    2) != 0) aList.add("Inertia Damper");
 		if ((mSpecials &    4) != 0) aList.add("Food Replicator");
 		if ((mSpecials &    8) != 0) aList.add("Medicine Module");

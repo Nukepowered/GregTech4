@@ -221,7 +221,7 @@ public class GT_MetaTileEntity_Boiler_Bronze extends GT_MetaTileEntity_BasicTank
 	
 	@Override
 	public String getDescription() {
-		return "metatileentity.GT_BronzeBoiler.tooltipr";
+		return "metatileentity.GT_BronzeBoiler.tooltip";
 	}
 	
 	@Override
