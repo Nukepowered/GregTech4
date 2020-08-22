@@ -313,10 +313,10 @@ public class GT_Mod implements IGT_Mod {
             bufferedLog.forEach(line -> GT_Log.ore.println(line));
          } catch (Throwable e) {}
     	
-    	GT_Log.log.info("GT_Mod: Preload-Phase started!");
+    	GT_Log.log.info("Preload-Phase started!");
     	GregTech_API.sPreloadStarted = true;
     	
-        GT_Log.log.info("GT_Mod: Getting required Items of other Mods.");
+        GT_Log.log.info("Getting required Items of other Mods.");
         GT_Items.TE_Slag					.set(GT_ModHandler.getTEItem("slag", 1L));
         GT_Items.TE_Slag_Rich				.set(GT_ModHandler.getTEItem("slagRich", 1L));
         GT_Items.TE_Rockwool				.set(GT_ModHandler.getTEItem("rockwool", 1L));
@@ -355,7 +355,7 @@ public class GT_Mod implements IGT_Mod {
         GT_Items.Upgrade_Transformer		.set(GT_ModHandler.getIC2Item("transformerUpgrade", 1L));
         
         GT_Items.Upgrade_Battery			.set(GT_ModHandler.getIC2Item("energyStorageUpgrade", 1L));
-        GT_Log.log.info("GT_Mod: Setting Configs");
+        GT_Log.log.info("Setting Configs");
 		if (tConfig1.get("general", "TooEasyMode", false).getBoolean(false)) GregTech_API.sAfterGTPostload.add(new GT_TooEasyModeLoader());
     	GregTech_API.DEBUG_MODE									= tConfig1.get("general", "Debug", false).getBoolean(false);
     	GregTech_API.SECONDARY_DEBUG_MODE						= tConfig1.get("general", "Debug2", false).getBoolean(false);
@@ -413,10 +413,10 @@ public class GT_Mod implements IGT_Mod {
         GT_Config.system = (Calendar.getInstance().get(2) + 1 == 4 && Calendar.getInstance().get(5) >= 1 && Calendar.getInstance().get(5) <= 2);
         Materials.init(GregTech_API.sMaterialProperties);
         
-        GT_Log.log.info("GT_Mod: Saving Configs");
+        GT_Log.log.info("Saving Configs");
         tConfig1.save();
         
-    	GT_Log.log.info("GT_Mod: Removing all original Scrapbox Drops.");
+    	GT_Log.log.info("Removing all original Scrapbox Drops.");
         try {
         	GT_Utility.getField("ic2.core.item.ItemScrapbox$Drop", "topChance", true, true).set(null, 0);
         	((List)GT_Utility.getFieldContent(GT_Utility.getFieldContent("ic2.api.recipe.Recipes", "scrapboxDrops", true, true), "drops", true, true)).clear();
@@ -424,28 +424,28 @@ public class GT_Mod implements IGT_Mod {
         	if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);
         }
         
-    	GT_Log.log.info("GT_Mod: Adding Scrap with a Weight of 200.0F to the Scrapbox Drops.");
+    	GT_Log.log.info("Adding Scrap with a Weight of 200.0F to the Scrapbox Drops.");
         GT_ModHandler.addScrapboxDrop(200.0F, GT_ModHandler.getIC2Item("scrap", 1));
         
         if (isClientSide()) {
-	        GT_Log.log.info("GT_Mod: Register BlockRenderer");
+	        GT_Log.log.info("Register BlockRenderer");
 		    new GT_Block_Renderer();
-	        GT_Log.log.info("GT_Mod: Downloading Cape List.");
+	        GT_Log.log.info("Downloading Cape List.");
 		    try {new Thread(new Runnable() {@Override public void run() {try {
-				Scanner tScanner = new Scanner(new URL("https://dl.dropbox.com/u/88825306/CapeList.txt").openStream());
+				Scanner tScanner = new Scanner(new URL("http://gregtech.mechaenetia.com/com/gregoriust/gregtech/supporterlist.txt").openStream());
 				while (tScanner.hasNextLine()) {
 				    String tName = tScanner.nextLine();
 				    if (!GT_Mod.mGregTechCapeList.contains(tName.toLowerCase())) GT_Mod.mGregTechCapeList.add(tName.toLowerCase());
 				}
 			} catch(Throwable e) {}}}).start();} catch(Throwable e) {}
-	        GT_Log.log.info("GT_Mod: Downloading News.");
+	        GT_Log.log.info("Downloading News.");
 		    try {new Thread(new Runnable() {@Override public void run() {try {
-				Scanner tScanner = new Scanner(new URL("https://dl.dropboxusercontent.com/u/88825306/Message.txt").openStream());
+				Scanner tScanner = new Scanner(new URL("http://gregtech.mechaenetia.com/com/gregoriust/gregtech/message.txt").openStream());
 			    while (tScanner.hasNextLine()) sMessage += tScanner.nextLine() + " ";
 			} catch(Throwable e) {}}}).start();} catch(Throwable e) {}
 		}
         
-        GT_Log.log.info("GT_Mod: Adding Blocks.");
+        GT_Log.log.info("Adding Blocks.");
 		GameRegistry.registerBlock(GregTech_API.sBlockList[0] = new GT_BlockMetaID_Block  (), GT_MetaBlock_Item.class	, GregTech_API.sBlockList[0].getUnlocalizedName());
 		GameRegistry.registerBlock(GregTech_API.sBlockList[1] = new GT_BlockMetaID_Machine(), GT_MetaMachine_Item.class	, GregTech_API.sBlockList[1].getUnlocalizedName());
 		GameRegistry.registerBlock(GregTech_API.sBlockList[2] = new GT_BlockMetaID_Ore	  (), GT_MetaOre_Item.class		, GregTech_API.sBlockList[2].getUnlocalizedName());
@@ -457,22 +457,22 @@ public class GT_Mod implements IGT_Mod {
 		GregTech_API.registerMachineBlock(GregTech_API.sBlockList[1], new boolean[]{true});
 		GregTech_API.registerMachineBlock(GregTech_API.sBlockList[4], new boolean[]{false, false, false, false, false, false, false, false, true, true, false, false, false, true});
        
-		GT_Log.log.info("GT_Mod: Register the few old TileEntities.");
+		GT_Log.log.info("Register the few old TileEntities.");
 		GameRegistry.registerTileEntity(GT_TileEntity_ComputerCube.class	, "GregTech_Computercube");
 		GameRegistry.registerTileEntity(GT_TileEntity_Sonictron.class		, "Sonictron");
 		GameRegistry.registerTileEntity(GT_TileEntity_Superconductor.class	, "Superconductorwire");
 		GameRegistry.registerTileEntity(GT_TileEntity_PlayerDetector.class	, "Playerdetector");
 		GameRegistry.registerTileEntity(GT_TileEntity_LightSource.class		, "GT_LightSource");
 		
-		GT_Log.log.info("GT_Mod: Registering the BaseMetaTileEntity.");
+		GT_Log.log.info("Registering the BaseMetaTileEntity.");
 		GameRegistry.registerTileEntity(GregTech_API.constructBaseMetaTileEntity().getClass(), "MetatileEntity");
 		
-		GT_Log.log.info("GT_Mod: Registering the BaseMetaPipeEntity.");
+		GT_Log.log.info("Registering the BaseMetaPipeEntity.");
 		GameRegistry.registerTileEntity(BaseMetaPipeEntity.class, "MetaPipeEntity");
 		
-		GT_Log.log.info("GT_Mod: Testing BaseMetaTileEntity.");
+		GT_Log.log.info("Testing BaseMetaTileEntity.");
 		if (GregTech_API.constructBaseMetaTileEntity() == null) {
-			GT_Log.log.error("GT_Mod: Fatal Error ocurred while initializing TileEntities, crashing Minecraft.");
+			GT_Log.log.error("Fatal Error ocurred while initializing TileEntities, crashing Minecraft.");
 			throw new RuntimeException("");
 		} else {
             new GT_MetaTileEntityLoader().run();
@@ -507,7 +507,7 @@ public class GT_Mod implements IGT_Mod {
             
 			if(sSortToTheEnd) {
 				try {
-					GT_Log.log.info("GT_Mod: Sorting GregTech to the end of the Mod List for further processing.");
+					GT_Log.log.info("Sorting GregTech to the end of the Mod List for further processing.");
 					LoadController controller = (LoadController) GT_Utility.getFieldContent(Loader.instance(), "modController", true, true);
 					List<ModContainer> mods = controller.getActiveModList();
 					ArrayList<ModContainer> sorted = new ArrayList<>();
@@ -538,7 +538,7 @@ public class GT_Mod implements IGT_Mod {
     	new GT_ConnectionHandler().run();
 
         GregTech_API.sPreloadFinished = true;
-        GT_Log.log.info("GT_Mod: Preload-Phase finished!");
+        GT_Log.log.info("Preload-Phase finished!");
     	for (Runnable tRunnable : GregTech_API.sAfterGTPreload) {
     		try {
     			tRunnable.run();
@@ -561,7 +561,7 @@ public class GT_Mod implements IGT_Mod {
     	}
     	
     	checkVersions();
-        GT_Log.log.info("GT_Mod: Beginning Load-Phase.");
+        GT_Log.log.info("Beginning Load-Phase.");
     	GregTech_API.sLoadStarted = true;
     	
 		if (sSortToTheEnd) {
@@ -578,7 +578,7 @@ public class GT_Mod implements IGT_Mod {
 		}
 		
     	GregTech_API.sLoadFinished = true;
-        GT_Log.log.info("GT_Mod: Load-Phase finished!");
+        GT_Log.log.info("Load-Phase finished!");
     	for (Runnable tRunnable : GregTech_API.sAfterGTLoad) {
     		try {
     			tRunnable.run();
@@ -602,10 +602,10 @@ public class GT_Mod implements IGT_Mod {
     	
     	checkVersions();
     	
-        GT_Log.log.info("GT_Mod: Beginning PostLoad-Phase.");
+        GT_Log.log.info("Beginning PostLoad-Phase.");
     	GregTech_API.sPostloadStarted = true;
 		
-    	GT_Log.log.info("GT_Mod: Adding Configs specific for MetaTileEntities");
+    	GT_Log.log.info("Adding Configs specific for MetaTileEntities");
         for(IMetaTileEntity tRunnable : GregTech_API.mMetaTileList) {
            try {
               if(tRunnable != null) {
@@ -639,13 +639,13 @@ public class GT_Mod implements IGT_Mod {
 		new GT_RecyclingRecipeLoader().run();
 
         GT_RecipeRegistrator.registerUsagesForMaterials(new ItemStack(Blocks.planks, 1), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Wood, 1L), null, false, true, false);
-        GT_Log.log.info("GT_Mod: Activating OreDictionary Handler, this can take some time, as it scans the whole OreDictionary");
+        GT_Log.log.info("Activating OreDictionary Handler, this can take some time, as it scans the whole OreDictionary");
         
         GT_Log.log.info("If your Log stops here, you were too impatient. Wait a bit more next time, before killing Minecraft with the Task Manager.");
         GT_OreDictHandler.instance.activateHandler();
         GT_Log.log.info("Congratulations, you have been waiting long enough. Have a Cake.");
         
-        GT_Log.log.info("GT_Mod: Adding Stone related Recipes");
+        GT_Log.log.info("Adding Stone related Recipes");
         GT_ModHandler.addSmeltingRecipe(new ItemStack(GregTech_API.sBlockList[5]	, 1		, 0)			, new ItemStack(GregTech_API.sBlockList[5]	, 1	, 7	));
         GT_ModHandler.addSmeltingRecipe(new ItemStack(GregTech_API.sBlockList[5]	, 1		, 1)			, new ItemStack(GregTech_API.sBlockList[5]	, 1	, 0	));
         GT_ModHandler.addSmeltingRecipe(new ItemStack(GregTech_API.sBlockList[5]	, 1		, 2)			, new ItemStack(GregTech_API.sBlockList[5]	, 1	, 0	));
@@ -755,11 +755,11 @@ public class GT_Mod implements IGT_Mod {
         
         GameRegistry.addRecipe((IRecipe)new ShapedOreRecipe(new ItemStack(Blocks.wooden_pressure_plate, 1, 0), new Object[] { "PP", 'P', "plankWood" }));
 		/*
-		GT_Log.log.info("GT_Mod: Adding Default Description Set of the Computer Cube");
+		GT_Log.log.info("Adding Default Description Set of the Computer Cube");
 		GT_ComputercubeDescription.addStandardDescriptions();
 		*/
         if (sNerfedWoodenTools) {
-    		GT_Log.log.info("GT_Mod: Nerfing Wood Tool Durability");
+    		GT_Log.log.info("Nerfing Wood Tool Durability");
         	Items.wooden_sword.setMaxDamage(12);
         	Items.stone_pickaxe.setMaxDamage(12);
         	Items.wooden_shovel.setMaxDamage(12);
@@ -768,7 +768,7 @@ public class GT_Mod implements IGT_Mod {
         }
         
         if (sNerfedStoneTools) {
-    		GT_Log.log.info("GT_Mod: Nerfing Stone Tool Durability");
+    		GT_Log.log.info("Nerfing Stone Tool Durability");
         	Items.stone_sword.setMaxDamage(48);
         	Items.stone_pickaxe.setMaxDamage(48);
         	Items.stone_shovel.setMaxDamage(48);
@@ -777,7 +777,7 @@ public class GT_Mod implements IGT_Mod {
         }
         
 		if (!isClientSide()) {
-			GT_Log.log.info("GT_Mod: Starting Cover Load Phase Serverside");
+			GT_Log.log.info("Starting Cover Load Phase Serverside");
 			GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateSilver")			, "");
 	    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateRuby")			, "");
 	    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateSapphire")		, "");
@@ -819,15 +819,15 @@ public class GT_Mod implements IGT_Mod {
 			}
 		}
 		
-        GT_Log.log.info("GT_Mod: Adding buffered Recipes.");
+        GT_Log.log.info("Adding buffered Recipes.");
         GT_ModHandler.stopBufferingCraftingRecipes();
         
     	GregTech_API.sPostloadFinished = true;
-        GT_Log.log.info("GT_Mod: PostLoad-Phase finished!");
+        GT_Log.log.info("PostLoad-Phase finished!");
         
         if (GregTech_API.DEBUG_MODE) {
 	        try {
-	        	GT_Log.log.info("GT_Mod: Printing registered Channels");
+	        	GT_Log.log.info("Printing registered Channels");
 	        	EnumMap<Side, Map<String, FMLEmbeddedChannel>> channels = ReflectionHelper.getPrivateValue(NetworkRegistry.class, NetworkRegistry.INSTANCE, new String[] {"channels"});
 	        	if (channels != null) {
 	        		Map<String, FMLEmbeddedChannel> serverChannel = channels.get(Side.SERVER);
@@ -846,7 +846,7 @@ public class GT_Mod implements IGT_Mod {
     		}
     	}
     	
-    	GT_Log.log.info("GT_Mod: Loading finished, deallocating temporary Init Variables.");
+    	GT_Log.log.info("Loading finished, deallocating temporary Init Variables.");
     	GregTech_API.sBeforeGTPreload = null;
     	GregTech_API.sAfterGTPreload = null;
     	GregTech_API.sBeforeGTLoad = null;
@@ -912,7 +912,7 @@ public class GT_Mod implements IGT_Mod {
             	}
             }
 
-            GT_Log.log.info("GT_Mod: ServerStart-Phase started!");
+            GT_Log.log.info("ServerStart-Phase started!");
             mUniverse = null;
             GT_TickHandler.isFirstTick = true;
             NetworkRegistry.INSTANCE.registerGuiHandler(GregTech_API.gregtechmod, new GT_GUIHandler());
@@ -926,9 +926,9 @@ public class GT_Mod implements IGT_Mod {
 				}
 			}
             
-            GT_Log.log.info("GT_Mod: Unificating outputs of all known Recipe Types.");
+            GT_Log.log.info("Unificating outputs of all known Recipe Types.");
             ArrayList<ItemStack> items = new ArrayList<ItemStack>();
-            GT_Log.log.info("GT_Mod: IC2 Machines");
+            GT_Log.log.info("IC2 Machines");
             
             for (RecipeOutput recipeOut : Recipes.cannerBottle.getRecipes().values()) {
             	for (ItemStack recipeItem : recipeOut.items) {
@@ -984,7 +984,7 @@ public class GT_Mod implements IGT_Mod {
             	}
             }
 
-            GT_Log.log.info("GT_Mod: Dungeon Loot");
+            GT_Log.log.info("Dungeon Loot");
             for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("dungeonChest").getItems(new Random())) {
             	items.add(chestContent.theItemId);
             }
@@ -1025,7 +1025,7 @@ public class GT_Mod implements IGT_Mod {
             	items.add(chestContent.theItemId);
             }
 
-            GT_Log.log.info("GT_Mod: Smelting");
+            GT_Log.log.info("Smelting");
             @SuppressWarnings("unchecked")
             List<ItemStack> furnItems = new ArrayList<>(FurnaceRecipes.smelting().getSmeltingList().values());
             for (ItemStack item : furnItems) {
@@ -1033,7 +1033,7 @@ public class GT_Mod implements IGT_Mod {
             }
 
             if(sCraftingUnification) {
-               GT_Log.log.info("GT_Mod: Crafting Recipes");
+               GT_Log.log.info("Crafting Recipes");
                @SuppressWarnings("unchecked")
                List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
                for (IRecipe recipe : recipes) {
@@ -1064,7 +1064,7 @@ public class GT_Mod implements IGT_Mod {
             	}
             }
 
-			GT_Log.log.info("GT_Mod: ServerStart-Phase finished!");
+			GT_Log.log.info("ServerStart-Phase finished!");
 			for (Runnable toRun : GregTech_API.sAfterGTServerstart) {
 				try {
 					toRun.run();
