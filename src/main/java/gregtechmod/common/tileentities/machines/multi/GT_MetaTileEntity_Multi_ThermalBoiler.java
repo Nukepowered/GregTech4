@@ -66,8 +66,7 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends GT_MetaTileEntity_Mul
 	public boolean onRunningTick(ItemStack aStack) {
 		if (mEUt > 0) {
 			int tGeneratedEU = (int)(((long)mEUt * 2 * mEfficiency) / 10000);
-			// removed from if: && depleteInput(GT_ModHandler.getWater((tGeneratedEU + 160) / 160))
-			if (tGeneratedEU > 0) { 
+			if (tGeneratedEU > 0 && depleteInput(GT_ModHandler.getWater((tGeneratedEU + 160) / 160))) { 
 				addOutput(GT_ModHandler.getSteam(tGeneratedEU));
 			}
 			return true;
