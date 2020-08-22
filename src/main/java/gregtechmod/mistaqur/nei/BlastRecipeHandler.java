@@ -51,7 +51,7 @@ public class BlastRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return "Industrial Blast Furnace";
+		return "Industrial Blast Furnace";  // TODO Locale
 	}
 	
 	@Override

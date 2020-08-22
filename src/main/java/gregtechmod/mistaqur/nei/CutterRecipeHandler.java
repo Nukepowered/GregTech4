@@ -46,7 +46,7 @@ public class CutterRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return "Plate Cutting Machine";
+		return "Plate Cutting Machine";  // TODO Locale
 	}
 	
 	@Override

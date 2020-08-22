@@ -51,7 +51,7 @@ public class FusionRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return "Fusion Reactor";
+		return "Fusion Reactor";  // TODO Locale
 	}
 	
 	@Override

@@ -54,7 +54,7 @@ public class DistillationRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return "Distillation Tower";
+		return "Distillation Tower";  // TODO Locale
 	}
 	
 	@Override

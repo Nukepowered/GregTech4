@@ -48,7 +48,7 @@ public class LatheRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return "Lathe";
+		return "Lathe";  // TODO Locale
 	}
 	
 	@Override

@@ -52,7 +52,7 @@ public class SawmillRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return "Industrial Sawmill";
+		return "Industrial Sawmill";  // TODO Locale
 	}
 	
 	@Override

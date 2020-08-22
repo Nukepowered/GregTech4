@@ -50,7 +50,7 @@ public class CannerRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return "Automatic Canning Machine";
+		return "Automatic Canning Machine";  // TODO Locale
 	}
 	
 	@Override

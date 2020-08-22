@@ -24,7 +24,7 @@ public class ExtruderRecipeHandler extends GT_RecipeHandler {
 	}
 
 	public String getRecipeName() {
-		return "Extruder";
+		return "Extruder";  // TODO Locale
 	}
 
 	public String getRecipeId() {

@@ -46,7 +46,7 @@ public class WiremillRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return "Wiremill";
+		return "Wiremill";  // TODO Locale
 	}
 	
 	@Override

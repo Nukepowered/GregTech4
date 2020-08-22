@@ -59,7 +59,7 @@ public class CentrifugeRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return "Industrial Centrifuge";
+		return "Industrial Centrifuge";  // TODO Locale
 	}
 	
 	@Override

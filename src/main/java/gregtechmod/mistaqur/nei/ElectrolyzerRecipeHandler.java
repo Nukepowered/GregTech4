@@ -54,7 +54,7 @@ public class ElectrolyzerRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return "Industrial Electrolyzer";
+		return "Industrial Electrolyzer";  // TODO Locale
 	}
 	
 	@Override

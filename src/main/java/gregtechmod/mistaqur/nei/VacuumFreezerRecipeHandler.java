@@ -46,7 +46,7 @@ public class VacuumFreezerRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return "Vacuum Freezer";
+		return "Vacuum Freezer";  // TODO Locale
 	}
 	
 	@Override

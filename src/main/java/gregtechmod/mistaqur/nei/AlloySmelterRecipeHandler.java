@@ -83,7 +83,7 @@ public class AlloySmelterRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return "Alloy Smelter";
+		return "Alloy Smelter"; // TODO Locale
 	}
 	
 	@Override

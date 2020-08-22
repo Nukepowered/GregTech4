@@ -51,7 +51,7 @@ public class ImplosionRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return "Implosion Compressor";
+		return "Implosion Compressor";  // TODO Locale
 	}
 	
 	@Override

@@ -53,8 +53,8 @@ public class GrinderRecipeHandler extends GT_RecipeHandler {
 	}
 	
 	@Override
-	public String getRecipeName() {
-		return "Industrial Grinder";
+	public String getRecipeName() { 
+		return "Industrial Grinder";  // TODO Locale
 	}
 	
 	@Override

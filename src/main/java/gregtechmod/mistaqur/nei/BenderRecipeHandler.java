@@ -49,7 +49,7 @@ public class BenderRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return "Plate Bending Machine";
+		return "Plate Bending Machine";  // TODO Locale
 	}
 	
 	@Override

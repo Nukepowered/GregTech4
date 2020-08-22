@@ -48,7 +48,7 @@ public class ChemicalRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return "Chemical Reactor";
+		return "Chemical Reactor";  // TODO Locale
 	}
 	
 	@Override

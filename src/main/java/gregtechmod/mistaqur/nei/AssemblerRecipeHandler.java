@@ -48,7 +48,7 @@ public class AssemblerRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return "Assembling Machine";
+		return "Assembling Machine";  // TODO Locale
 	}
 	
 	@Override
