@@ -75,6 +75,6 @@ public class GT_MetaTileEntity_Scrapboxinator extends GT_MetaTileEntity_Electric
 	
 	@Override
 	public String getDescription() {
-		return "Makes Scrapboxes and Scrap into random Stuff!"; // TODO locale
+		return "metatileentity.GT_Scrapboxinator.tooltip";
 	}
 }

@@ -100,6 +100,6 @@ public class GT_MetaTileEntity_RockBreaker extends GT_MetaTileEntity_ElectricBuf
 	
 	@Override
 	public String getDescription() {
-		return "Electric Cobble Generator Mk VI"; // TODO locale
+		return "metatileentity.GT_RockBreaker.tooltip";
 	}
 }

@@ -46,7 +46,7 @@ public class GT_MetaTileEntity_Hatch_Input extends GT_MetaTileEntity_BasicTank {
 	
 	@Override
 	public String getDescription() {
-		return "For inputting Materials into Multiblocks"; // TODO locale
+		return "metatileentity.GT_Input_Hatch.tooltip";
 	}
 	
 	@Override

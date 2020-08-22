@@ -51,7 +51,7 @@ public class GT_MetaTileEntity_Hatch_EnergyInput extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Energy Injector for Multiblocks"; // TODO locale
+		return "metatileentity.GT_Energy_Hatch.tooltip";
 	}
 	
 	@Override

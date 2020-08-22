@@ -81,7 +81,7 @@ public class GT_MetaTileEntity_Hatch_Maintenance extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "For maintaining Multiblocks"; // TODO locale
+		return "metatileentity.GT_Maintenance_Hatch.tooltip";
 	}
 	
 	@Override

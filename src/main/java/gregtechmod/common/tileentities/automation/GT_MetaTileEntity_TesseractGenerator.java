@@ -390,7 +390,7 @@ public class GT_MetaTileEntity_TesseractGenerator extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Generates a Tesseract for the attached Inventory"; // TODO locale
+		return "metatileentity.GT_Tesseract_Generator.tooltip";
 	}
 	
 	@Override

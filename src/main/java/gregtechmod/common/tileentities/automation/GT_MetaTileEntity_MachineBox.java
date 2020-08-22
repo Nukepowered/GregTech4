@@ -6,13 +6,10 @@ import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicTan
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumChatFormatting;
 
 public class GT_MetaTileEntity_MachineBox extends GT_MetaTileEntity_BasicTank {
 	
 	public byte mTier = 0;
-	// TODO locale
-	public static final String DESCRIPTIONTEXT = EnumChatFormatting.RESET + "You just need " + EnumChatFormatting.DARK_PURPLE + "I" + EnumChatFormatting.LIGHT_PURPLE + "m" + EnumChatFormatting.DARK_RED + "a" + EnumChatFormatting.RED + "g" + EnumChatFormatting.YELLOW + "i" + EnumChatFormatting.GREEN + "n" + EnumChatFormatting.AQUA + "a" + EnumChatFormatting.DARK_AQUA + "t" + EnumChatFormatting.BLUE + "i" + EnumChatFormatting.DARK_BLUE + "o" + EnumChatFormatting.DARK_PURPLE + "n" + EnumChatFormatting.RESET + " to use this.";
 	
 	public GT_MetaTileEntity_MachineBox(int aID, String mName) {
 		super(aID, mName);
@@ -104,7 +101,7 @@ public class GT_MetaTileEntity_MachineBox extends GT_MetaTileEntity_BasicTank {
 	
 	@Override
 	public String getDescription() {
-		return DESCRIPTIONTEXT;
+		return "metatileentity.GT_MachineBox.tooltip";
 	}
 	
 	@Override

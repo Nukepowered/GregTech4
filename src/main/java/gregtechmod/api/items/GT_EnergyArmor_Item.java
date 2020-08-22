@@ -79,7 +79,7 @@ public class GT_EnergyArmor_Item extends ItemArmor implements ISpecialArmor {
 	@Override
 	@SuppressWarnings({ "rawtypes", "unchecked" })
     public void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean aF3_H) {
-		aList.add("Tier: " + mTier);
+		aList.add(I18n.format("item.electric.tier.tooltip", mTier));
 		if ((mSpecials &    1) != 0) aList.add(I18n.format("item.armor.capability.tooltip_1"));
 		if ((mSpecials &    2) != 0) aList.add(I18n.format("item.armor.capability.tooltip_2"));
 		if ((mSpecials &    4) != 0) aList.add(I18n.format("item.armor.capability.tooltip_3"));

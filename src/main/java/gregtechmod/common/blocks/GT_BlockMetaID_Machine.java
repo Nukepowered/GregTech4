@@ -610,7 +610,7 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 		
 		try {
 			if (aMeta > 0 && aMeta < 16) {
-				tIndex = ((GT_TileEntityMetaID_Machine)createTileEntity(null, aMeta)).getTexture(aSide, aMeta); // TODO textures
+				tIndex = ((GT_TileEntityMetaID_Machine)createTileEntity(null, aMeta)).getTexture(aSide, aMeta);
 			} else if (GregTech_API.mMetaTileList[aMeta] != null) {
 				rIcon = GregTech_API.mMetaTileList[aMeta].getTextureIcon((byte)aSide, (byte)4, true, false);
 				if (rIcon == null) tIndex = GregTech_API.mMetaTileList[aMeta].getTextureIndex((byte)aSide, (byte)4, true, false);

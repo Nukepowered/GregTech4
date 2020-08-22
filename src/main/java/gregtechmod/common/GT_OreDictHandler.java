@@ -526,9 +526,10 @@ public class GT_OreDictHandler {
     	for (OrePrefixes prefix : tasks.keySet()) {
 	    	service.submit(() -> {
 	    		try {
-	    			bar.step("prefix: " + prefix.toString());
 		    		this.processTask(prefix, new ArrayList<>(tasks.get(prefix)));
+		    		bar.step("prefix: " + prefix.toString());
 	    		} catch (Throwable e) {
+	    			bar.step("ERRORRED");
 	    			GT_Log.log.throwing(e);
 	    		}
 	    	});

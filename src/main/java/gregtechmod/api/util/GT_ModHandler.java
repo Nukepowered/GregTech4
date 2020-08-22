@@ -949,10 +949,13 @@ public class GT_ModHandler {
 			} catch(Throwable e) {GT_Log.log.catching(e);}
 		}
 		for (int i = 0; i < sBufferRecipeList.size(); i++) {
+			IRecipe recipe = null;
 			try {
-				if (sBufferRecipeList.get(i).matches(aCrafting, GregTech_API.sDummyWorld)) {
-					rReturn = sBufferRecipeList.get(i).getCraftingResult(aCrafting);
-					sBufferRecipeList.remove(i--);
+				if ((recipe = sBufferRecipeList.get(i)) != null) {
+					if (recipe.matches(aCrafting, GregTech_API.sDummyWorld)) {
+						rReturn = sBufferRecipeList.get(i).getCraftingResult(aCrafting);
+						sBufferRecipeList.remove(i--);
+					}
 				}
 			} catch(Throwable e) {GT_Log.log.catching(e);}
 		}
