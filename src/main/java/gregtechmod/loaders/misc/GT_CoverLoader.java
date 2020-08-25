@@ -56,9 +56,9 @@ public class GT_CoverLoader implements Runnable {
 		
 		for (byte i = 0; i < 16; i++) {
 			if (GregTech_API.gregtechmod.isClientSide()) {
-				GregTech_API.registerCover(new ItemStack(Blocks.wool, 1, i), Blocks.wool.getIcon(0, i));
+				GregTech_API.registerCover(new ItemStack(Blocks.carpet, 1, i), Blocks.wool.getIcon(0, i));
 			} else {
-				GregTech_API.registerCover(new ItemStack(Blocks.wool, 1, i), (IIcon)null);
+				GregTech_API.registerCover(new ItemStack(Blocks.carpet, 1, i), (IIcon)null);
 			}
 		}
 		
