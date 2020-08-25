@@ -33,6 +33,6 @@ public class GT_MetaTileEntity_GasTurbine extends GT_MetaTileEntity_BasicGenerat
 
 	@Override
 	public String getDescription() {
-		return "metatileentity.GT_Multi_GasTurbine.tooltip";
+		return "metatileentity.GT_GasTurbine.tooltip";
 	}
 }
