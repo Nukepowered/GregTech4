@@ -11,7 +11,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
-import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -61,7 +60,7 @@ public class GT_Generic_Item extends Item {
 	@Override
     public void addInformation(ItemStack aStack, EntityPlayer aPlayer, @SuppressWarnings("rawtypes") List aList, boolean aF3_H) {
 		if (getMaxDamage() > 0 && !getHasSubtypes()) aList.add((aStack.getMaxDamage() - getDamage(aStack)) + " / " + aStack.getMaxDamage());
-	    if (GT_Utility.isStringValid(mTooltip)) aList.add(StatCollector.translateToLocal(mTooltip));
+	    if (GT_Utility.isStringValid(mTooltip)) aList.add(I18n.format(mTooltip));
 	    if (GT_ModHandler.isElectricItem(aStack)) aList.add(I18n.format("item.electric.tier.tooltip", getTier(aStack)));
 	    addAdditionalToolTips(aList, aStack);
 	}
