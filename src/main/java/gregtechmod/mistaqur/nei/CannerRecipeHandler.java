@@ -7,6 +7,7 @@ import gregtechmod.common.gui.GT_GUIContainer_BasicMachine_Canner;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import codechicken.nei.PositionedStack;
@@ -49,7 +50,7 @@ public class CannerRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return "Automatic Canning Machine";
+		return "Automatic Canning Machine";  // TODO Locale
 	}
 	
 	@Override
@@ -68,7 +69,7 @@ public class CannerRecipeHandler extends GT_RecipeHandler {
 	}
 	
 	@Override
-	public ArrayList<GT_Recipe> getRecipeList() {
+	public List<GT_Recipe> getRecipeList() {
 		return GT_Recipe.sCannerRecipes;
 	}
 	

@@ -38,7 +38,7 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity {
     @Override public boolean isValidSlot(int aIndex) 				{return false;}
 	@Override public boolean isFacingValid(byte aFacing)			{return aFacing > 1;}
 	@Override public int getInvSize()								{return 1;}
-    @Override public int maxEUStore()								{return 160000000;}
+    @Override public int maxEUStore()								{return mEnergyInjectors.size() * 10000000;}
     @Override public int getEUVar()									{return getStoredEU();}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 143);}
 	@Override public boolean isAccessAllowed(EntityPlayer aPlayer)	{return true;}
@@ -154,7 +154,9 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity {
     
     private boolean checkRecipe() {
     	if (!mMachine) return false;
-    	GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sFusionRecipes, getPrimaryInput(), getSecondaryInput());
+    	ItemStack input1 =  getPrimaryInput();
+    	ItemStack input2 = getSecondaryInput();
+    	GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sFusionRecipes, input1, input2);
     	if (tRecipe != null && consumeInput(tRecipe.mInputs[0], tRecipe.mInputs[1], getBaseMetaTileEntity().isActive()?0:tRecipe.mStartEU)) {
     		mMaxProgresstime = tRecipe.mDuration;
 		    mEUt = tRecipe.mEUt;
@@ -290,7 +292,7 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity {
 	}
 	@Override
 	public String getDescription() {
-		return "FUUUUUUU-SION, HAH!";
+		return "metatileentity.GT_Fusion_Computer.tooltip";
 	}
 	
 	@Override

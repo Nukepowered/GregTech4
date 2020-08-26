@@ -46,7 +46,7 @@ public class GT_MetaTileEntity_RedstoneCircuitBlock extends MetaTileEntity imple
     @Override public int maxEUOutput()								{return bOutput?32:0;}
     @Override public int getInvSize()								{return 5;}
     @Override public int maxEUStore()								{return 1000;}
-    @Override public int maxMJStore()								{return maxEUStore();}
+    @Override public int maxRFStore()								{return maxEUStore();}
     @Override public int maxSteamStore()							{return maxEUStore();}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 147);}
 	@Override public boolean isAccessAllowed(EntityPlayer aPlayer)	{return true;}
@@ -209,7 +209,7 @@ public class GT_MetaTileEntity_RedstoneCircuitBlock extends MetaTileEntity imple
 	
 	@Override
 	public String getDescription() {
-		return "Computes Redstone";
+		return "metatileentity.GT_RedstoneCircuitBlock.tooltip";
 	}
 	
 	@Override

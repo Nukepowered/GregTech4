@@ -132,6 +132,6 @@ public class GT_BaseCrop extends CropCard {
 
 	@Override
 	public int getOptimalHavestSize(ICropTile crop) {
-		return (byte)mAfterHarvestSize; //TODO: Этого метода раньше не было, проверь ту хню, что я тут написал
+		return (byte)mAfterHarvestSize;
 	}
 }

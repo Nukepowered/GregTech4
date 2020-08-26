@@ -61,7 +61,7 @@ public class GT_MetaTileEntity_BronzeCraftingTable extends GT_MetaTileEntity_Adv
 	
 	@Override
 	public String getDescription() {
-		return "For the smaller Projects";
+		return "metatileentity.GT_BronzeTable.tooltip";
 	}
 	
 	@Override

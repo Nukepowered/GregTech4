@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -92,7 +93,8 @@ public class GT_MetaTileEntity_TesseractTerminal extends MetaTileEntity {
 				mFrequency+=1;
 				break;
 			}
-			GT_Utility.sendChatToPlayer(aPlayer, "Frequency: " + mFrequency + (getTesseract(mFrequency, false)==null?"":EnumChatFormatting.GREEN+" (Connected)"));
+			
+			GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.GT_Tesseract.message." + (getTesseract(mFrequency, false) == null ? 1 : 3), mFrequency));
 		}
 		
 		return true;
@@ -327,7 +329,7 @@ public class GT_MetaTileEntity_TesseractTerminal extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Accesses Tesseracts remotely";
+		return "metatileentity.GT_Tesseract_Terminal.tooltip";
 	}
 	
 	@Override

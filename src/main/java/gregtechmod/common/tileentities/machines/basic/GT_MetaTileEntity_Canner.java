@@ -57,6 +57,6 @@ public class GT_MetaTileEntity_Canner extends GT_MetaTileEntity_BasicMachine {
 	}
 	@Override
 	public String getDescription() {
-		return "Unmobile Food Canning Machine GTA4";
+		return "metatileentity.GT_Canner.tooltip";
 	}
 }

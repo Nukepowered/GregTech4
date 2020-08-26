@@ -8,6 +8,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.StatCollector;
 
 /**
  * NEVER INCLUDE THIS FILE IN YOUR MOD!!!
@@ -45,7 +47,7 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 	@Override public int maxEUInput()								{return getElectricTier()>0?GregTech_API.VOLTAGES[getElectricTier()]:0;}
     @Override public int maxEUOutput()								{return bOutput&&getElectricTier()>0?GregTech_API.VOLTAGES[getElectricTier()]:0;}
     @Override public int maxEUStore()								{return getElectricTier()*getElectricTier()*2000;}
-    @Override public int maxMJStore()								{return maxEUStore();}
+    @Override public int maxRFStore()								{return maxEUStore();}
     @Override public int maxSteamStore()							{return maxEUStore();}
 	@Override public int getInvSize()								{return 6;}
 	@Override public int dechargerSlotStartIndex()					{return 5;}
@@ -324,7 +326,11 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 	
 	@Override
 	public String[] getInfoData() {
-		return new String[] {"Progress:", (mProgresstime/20)+"secs", (mMaxProgresstime/20)+"secs"};
+		return new String[] {
+				StatCollector.translateToLocalFormatted("sensor.progress.percentage", (mProgresstime * 100.0D / mMaxProgresstime)),
+				StatCollector.translateToLocalFormatted("sensor.progress.secs", mProgresstime / 20),
+				StatCollector.translateToLocalFormatted("sensor.progress.secs", mMaxProgresstime / 20)
+		};
 	}
 	
 	@Override
@@ -336,7 +342,7 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 	public void onScrewdriverRightClick(byte aSide, EntityPlayer aPlayer, float aX, float aY, float aZ) {
 		if (aSide == getBaseMetaTileEntity().getFrontFacing()) {
 			bAlloyInputFromOutputSide = !bAlloyInputFromOutputSide;
-			GT_Utility.sendChatToPlayer(aPlayer, bAlloyInputFromOutputSide?"Input from Output Side allowed":"Input from Output Side forbidden");
+			GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation(bAlloyInputFromOutputSide ? "metatileentity.machines.input_allow" : "metatileentity.machines.input_deny"));
 		}
 	}
 	

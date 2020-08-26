@@ -50,6 +50,6 @@ public class GT_MetaTileEntity_PlateCutter extends GT_MetaTileEntity_BasicMachin
 	
 	@Override
 	public String getDescription() {
-		return "Slices Blocks into Plates";
+		return "metatileentity.GT_Cutter.tooltip";
 	}
 }

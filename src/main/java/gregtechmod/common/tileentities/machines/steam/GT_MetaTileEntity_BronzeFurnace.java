@@ -59,6 +59,6 @@ public class GT_MetaTileEntity_BronzeFurnace extends GT_MetaTileEntity_BasicMach
 	
 	@Override
 	public String getDescription() {
-		return "Just a Steam powered Furnace";
+		return "metatileentity.GT_BronzeFurnace.tooltip";
 	}
 }

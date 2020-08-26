@@ -21,7 +21,7 @@ public class GT_MetaTileEntity_ElectricBufferLarge extends GT_MetaTileEntity_Ele
 	@Override public boolean isBatteryUpgradable()					{return true;}
 	@Override public boolean isSimpleMachine()						{return true;}
     @Override public int maxEUStore()								{return 10000;}
-    @Override public int maxMJStore()								{return maxEUStore();}
+    @Override public int maxRFStore()								{return maxEUStore();}
 	@Override public int getInvSize()								{return 28;}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 103);}
     
@@ -44,7 +44,7 @@ public class GT_MetaTileEntity_ElectricBufferLarge extends GT_MetaTileEntity_Ele
 	
 	@Override
 	public String getDescription() {
-		return "A chest-sized Buffer!";
+		return "metatileentity.GT_E_Buffer_Large.tooltip";
 	}
 	
 	@Override

@@ -2,8 +2,6 @@ package gregtechmod.common.items;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.items.GT_Generic_Item;
-import gregtechmod.api.util.GT_Utility;
-
 import java.util.List;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -11,6 +9,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import cpw.mods.fml.relauncher.Side;
@@ -46,15 +45,16 @@ public class GT_FluidDisplayItem extends GT_Generic_Item {
 	    if (aStack != null) {
 		    Fluid tFluid = FluidRegistry.getFluid(aStack.getItemDamage());
 		    if (tFluid != null) {
-		    	return GT_Utility.capitalizeString(tFluid.getUnlocalizedName().replaceAll("fluid.", "").replaceAll("tile.", ""));
+		    	return tFluid.getUnlocalizedName();
 		    }
 	    }
+
         return "";
     }
 	
 	@Override
     public String getItemStackDisplayName(ItemStack aStack) {
-        return getUnlocalizedName(aStack);
+		return StatCollector.translateToLocal(getUnlocalizedName(aStack));
     }
 	
 	@SuppressWarnings("rawtypes")

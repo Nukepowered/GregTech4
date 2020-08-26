@@ -20,6 +20,7 @@ public class GT_TileEntityPacket extends GT_Packet {
 	public byte aUpdateData;
 	public byte aRedstoneData;
 	public byte aColorData;
+	public boolean aRFUpgrade;
 	
 	@Override
 	public void fromBytes(ByteBuf buf) {
@@ -33,6 +34,7 @@ public class GT_TileEntityPacket extends GT_Packet {
 		aUpdateData = buf.readByte();
 		aRedstoneData = buf.readByte();
 		aColorData = buf.readByte();
+		aRFUpgrade = buf.readBoolean();
 		super.fromBytes(buf);
 	}
 
@@ -48,13 +50,14 @@ public class GT_TileEntityPacket extends GT_Packet {
 		buf.writeByte(aUpdateData);
 		buf.writeByte(aRedstoneData);
 		buf.writeByte(aColorData);
+		buf.writeBoolean(aRFUpgrade);
 		super.toBytes(buf);
 	}
 	
 	@Override
 	public String toString() {
-		return String.format("GT_TileEntityPacket[x=%d, y=%d, z=%d, ID=%d, TextureData=%d, UpdateData=%d, RedstoneData=%d, ColorData=%d, CoverData=%s]",
-				aX, aY, aZ, (int)aID, (int)aTextureData, (int)aUpdateData, (int)aRedstoneData, (int)aColorData,
+		return String.format("GT_TileEntityPacket[x=%d, y=%d, z=%d, ID=%d, TextureData=%d, UpdateData=%d, RedstoneData=%d, ColorData=%d, RFUpgrade=%s, CoverData=%s]",
+				aX, aY, aZ, (int)aID, (int)aTextureData, (int)aUpdateData, (int)aRedstoneData, (int)aColorData, aRFUpgrade,
 				Arrays.stream(aCovers).mapToObj(i -> new Integer(i)).collect(Collectors.toList()).toString());
 	}
 }

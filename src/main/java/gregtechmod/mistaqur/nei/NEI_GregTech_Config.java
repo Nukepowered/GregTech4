@@ -29,8 +29,9 @@ public class NEI_GregTech_Config implements IConfigureNEI {
 		new AssemblerRecipeHandler();
 		new LatheRecipeHandler();
 		new CutterRecipeHandler();
+		new ExtruderRecipeHandler();
 		/*
-		new DieselFuelsHandler();
+		new DieselFuelsHandler(); // TODO NEI overlays
 		new TurbineFuelsHandler();
 		new HotFuelsHandler();
 		new DenseLiquidFuelsHandler();

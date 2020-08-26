@@ -77,7 +77,7 @@ public class GT_MetaTileEntity_ElectricRetrieverAdvanced extends MetaTileEntity 
       return 10000;
    }
 
-   public int maxMJStore() {
+   public int maxRFStore() {
       return this.maxEUStore();
    }
 
@@ -221,7 +221,7 @@ public class GT_MetaTileEntity_ElectricRetrieverAdvanced extends MetaTileEntity 
    }
 
    public String getDescription() {
-      return "Retrieves and Regulates Items through a GT Pipe System!";
+      return "metatileentity.GT_RetrieverAdvanced.tooltip";
    }
 
    public int getTextureIndex(byte aSide, byte aFacing, boolean aActive, boolean aRedstone) {

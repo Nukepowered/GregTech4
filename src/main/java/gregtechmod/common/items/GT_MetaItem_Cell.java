@@ -20,7 +20,7 @@ public class GT_MetaItem_Cell extends GT_MetaItem_Abstract {
 		return instance.mStackList;
 	}
 	
-	public static ItemStack addItem(int aMeta, String aName, String aOreDictName, boolean aPlasma, Materials aMaterial) {
+	public static ItemStack addItem(int aMeta, String aOreDictName, boolean aPlasma, Materials aMaterial) {
 		instance.mToolTipList[aMeta] = aMaterial.getToolTip(OrePrefixes.cell.mMaterialAmount / GregTech_API.MATERIAL_UNIT);
 		
 		instance.mStackList[aMeta] = new ItemStack(instance, 1, aMeta);
@@ -28,9 +28,9 @@ public class GT_MetaItem_Cell extends GT_MetaItem_Abstract {
 		GT_ModHandler.addExtractionRecipe(instance.getUnunifiedStack(aMeta, 1), GT_ModHandler.getEmptyCell(1));
 		
 		if (aPlasma)
-			GT_OreDictUnificator.add(OrePrefixes.cellPlasma, aMaterial, instance.getUnunifiedStack(aMeta, 1));
+			GT_OreDictUnificator.addLater(OrePrefixes.cellPlasma, aMaterial, instance.getUnunifiedStack(aMeta, 1));
 		else
-			GT_OreDictUnificator.add(OrePrefixes.cell, aMaterial, instance.getUnunifiedStack(aMeta, 1));
+			GT_OreDictUnificator.addLater(OrePrefixes.cell, aMaterial, instance.getUnunifiedStack(aMeta, 1));
 		
 		return instance.getUnunifiedStack(aMeta, 1);
 	}

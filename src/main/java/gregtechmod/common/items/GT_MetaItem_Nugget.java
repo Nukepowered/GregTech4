@@ -25,7 +25,7 @@ public class GT_MetaItem_Nugget extends GT_MetaItem_Abstract {
 		
 		instance.mStackList[aMeta] = new ItemStack(instance, 1, aMeta);
 		if (aMaterial != null) {
-			GT_OreDictUnificator.add(OrePrefixes.nugget.get(aMaterial), instance.getUnunifiedStack(aMeta, 1));
+			GT_OreDictUnificator.addLater(OrePrefixes.nugget, aMaterial, instance.getUnunifiedStack(aMeta, 1));
 		}
 		return instance.getUnunifiedStack(aMeta, 1);
 	}

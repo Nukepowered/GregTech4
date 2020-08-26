@@ -26,13 +26,15 @@ public class GT_Generic_Item extends Item {
 		this.mTooltip = aTooltipKey;
 		setUnlocalizedName(aUnlocalized);
 		setCreativeTab(GregTech_API.TAB_GREGTECH);
-		// TODO
-//		if (GT_Utility.isStringValid(aEnglishTooltip)) GT_LanguageManager.addStringLocalization(mTooltip = getUnlocalizedName() + ".tooltip_main", aEnglishTooltip, aWriteToolTipIntoLangFile); else mTooltip = null;
 	}
 	
-	public final GT_Generic_Item registerAtOreDict(String aName, short aDamage) {
-		GT_OreDictUnificator.registerOre(aName, new ItemStack(this, 1, aDamage));
+	public final GT_Generic_Item registerAtOreDict(Object aName, short aDamage) {
+		GT_OreDictUnificator.registerOreLater(aName, new ItemStack(this, 1, aDamage));
 		return this;
+	}
+	
+	public final GT_Generic_Item registerAtOreDictWildcard(Object aName) {
+		return registerAtOreDict(aName, GregTech_API.ITEM_WILDCARD_DAMAGE);
 	}
 	
 	@Override
@@ -56,10 +58,10 @@ public class GT_Generic_Item extends Item {
 	
 	@SuppressWarnings("unchecked")
 	@Override
-    public void addInformation(ItemStack aStack, EntityPlayer aPlayer, @SuppressWarnings("rawtypes") List aList, boolean aF3_H) {
-		if (getMaxDamage() > 0 && !getHasSubtypes()) aList.add((aStack.getMaxDamage() - getDamage(aStack)) + " / " + aStack.getMaxDamage());
-	    if (mTooltip != null) aList.add(I18n.format(mTooltip));
-	    if (GT_ModHandler.isElectricItem(aStack)) aList.add("Tier: " + getTier(aStack));
+    public void addInformation(ItemStack aStack, EntityPlayer aPlayer, @SuppressWarnings("rawtypes") List aList, boolean advanced) {
+		if (getMaxDamage() > 0 && !getHasSubtypes() && advanced) aList.add((aStack.getMaxDamage() - getDamage(aStack)) + " / " + aStack.getMaxDamage());
+	    if (GT_Utility.isStringValid(mTooltip)) aList.add(I18n.format(mTooltip));
+	    if (GT_ModHandler.isElectricItem(aStack)) aList.add(I18n.format("item.electric.tier.tooltip", getTier(aStack)));
 	    addAdditionalToolTips(aList, aStack);
 	}
 	

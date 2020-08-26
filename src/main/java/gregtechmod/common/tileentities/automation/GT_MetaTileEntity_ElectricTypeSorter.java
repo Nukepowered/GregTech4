@@ -10,6 +10,8 @@ import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.IChatComponent;
 
 public class GT_MetaTileEntity_ElectricTypeSorter extends GT_MetaTileEntity_ElectricBufferSmall {
 	
@@ -30,7 +32,7 @@ public class GT_MetaTileEntity_ElectricTypeSorter extends GT_MetaTileEntity_Elec
 	@Override public boolean isBatteryUpgradable()					{return true;}
 	@Override public boolean isSimpleMachine()						{return true;}
     @Override public int maxEUStore()								{return 10000;}
-    @Override public int maxMJStore()								{return maxEUStore();}
+    @Override public int maxRFStore()								{return maxEUStore();}
 	@Override public int getMinimumStoredEU()						{return 2000;}
     @Override public boolean isValidSlot(int aIndex)				{return aIndex<1;}
     @Override public boolean isOutputFacing(byte aSide)				{return mTargetDirection == aSide || getBaseMetaTileEntity().getBackFacing() == aSide;}
@@ -65,11 +67,14 @@ public class GT_MetaTileEntity_ElectricTypeSorter extends GT_MetaTileEntity_Elec
 	public void onScrewdriverRightClick(byte aSide, EntityPlayer aPlayer, float aX, float aY, float aZ) {
 		if (aSide == getBaseMetaTileEntity().getBackFacing() || aSide == mTargetDirection) {
 			mTargetStackSize=(byte)((mTargetStackSize+1)%64);
+			IChatComponent message = null;
 			if (mTargetStackSize == 0) {
-				GT_Utility.sendChatToPlayer(aPlayer, "Do not regulate Item Stack Size");
+				message = new ChatComponentTranslation("metatileentity.GT_E_T_Filter.message.1");
 			} else {
-				GT_Utility.sendChatToPlayer(aPlayer, "Regulate Item Stack Size to: " + mTargetStackSize);
+				message = new ChatComponentTranslation("metatileentity.GT_E_T_Filter.message.2", mTargetStackSize);
 			}
+			
+			GT_Utility.sendChatToPlayer(aPlayer, message);
 		}
 	}
 	
@@ -117,7 +122,7 @@ public class GT_MetaTileEntity_ElectricTypeSorter extends GT_MetaTileEntity_Elec
 	
 	@Override
 	public String getDescription() {
-		return "Like the regular Sorter, but with special Item Types instead of Filter Items";
+		return "metatileentity.GT_E_T_Sorter.tooltip";
 	}
 	
 	@Override

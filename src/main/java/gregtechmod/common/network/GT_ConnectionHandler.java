@@ -33,12 +33,14 @@ public class GT_ConnectionHandler implements Runnable {
 		EntityPlayerMP aPlayer = handler.playerEntity;
 		if (aPlayer == null) return; 
 		String aUserName = aPlayer.getDisplayName();
-		if (!GT_Mod.mAlreadyPlayed || aUserName.equalsIgnoreCase("richardg867") || aUserName.equalsIgnoreCase("The_DnK")) {
+		if (!GT_Mod.mAlreadyPlayed || aUserName.equalsIgnoreCase("richardg867")) {
 			handler.sendPacket(new S02PacketChat(new ChatComponentText("GregTech is known for massivly changing the Tech Tree of modded Minecraft. Please make sure to look up Recipes via NEI (you will definetly need NEI), before complaining about missing Recipes. I needed to change some Recipes to prevent exploits and to improve the Tech Tree, even for regular unmodded Minecraft Recipes. Most of them are Configurable, so don't complain.")));
 			handler.sendPacket(new S02PacketChat(new ChatComponentText("~ Gregorius Techneticies")));
 			if (aUserName.equalsIgnoreCase("richardg867")) {
 				handler.sendPacket(new S02PacketChat(new ChatComponentText("Is that enough of a disclaimer for you RichardG?")));
 			}
+			
+			GT_Mod.mAlreadyPlayed = true;
 		}
 		if (GT_Mod.sMessage != null && GT_Mod.sMessage.length() > 5 && GregTech_API.sSpecialFile.get(GT_ConfigCategories.news, GT_Mod.sMessage, true)) {
 			handler.sendPacket(new S02PacketChat(new ChatComponentText(GT_Mod.sMessage)));

@@ -20,6 +20,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.util.*;
 import java.util.Map.Entry;
 
@@ -39,10 +40,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
-import net.minecraft.network.play.server.S07PacketRespawn;
-import net.minecraft.network.play.server.S1DPacketEntityEffect;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.AxisAlignedBB;
@@ -58,7 +56,6 @@ import net.minecraftforge.fluids.*;
 import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
 
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.gameevent.PlayerEvent;
 
 /**
  * NEVER INCLUDE THIS FILE IN YOUR MOD!!!
@@ -71,6 +68,21 @@ public class GT_Utility {
 	public static final List<Character> sNumberedCharacters   = Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
 	public static final List<Character> sUpperCasedCharacters = Arrays.asList('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
 	public static final List<Character> sLowerCasedCharacters = Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z');
+	
+	public static final DecimalFormat sFormat = new DecimalFormat("###,###.##", new DecimalFormatSymbols(Locale.ENGLISH));
+    
+	public static String toIndexNumbers(String string) {
+        char[] charArray = string.toCharArray();
+        for (int i = 0; i < charArray.length; i++) {
+            int relativeIndex = charArray[i] - '0';
+            if (relativeIndex >= 0 && relativeIndex <= 9) {
+                int newChar = '\u2080' + relativeIndex;
+                charArray[i] = (char) newChar;
+            }
+        }
+        
+        return new String(charArray);
+    }
 	
 	public static Field getPublicField(Object aObject, String aField) {
 		Field rField = null;
@@ -379,28 +391,6 @@ public class GT_Utility {
 				return 0;
 			}
 		}
-		
-		ForgeDirection tDirection = ForgeDirection.getOrientation(aGrabFrom);
-		if (aTileEntity1 instanceof TileEntity && tDirection != ForgeDirection.UNKNOWN && tDirection.getOpposite() == ForgeDirection.getOrientation(aPutTo)) {
-			int tX = ((TileEntity)aTileEntity1).xCoord + tDirection.offsetX, tY = ((TileEntity)aTileEntity1).yCoord + tDirection.offsetY, tZ = ((TileEntity)aTileEntity1).zCoord + tDirection.offsetZ;
-			if (!hasBlockHitBox(((TileEntity)aTileEntity1).getWorldObj(), tX, tY, tZ)) {
-				for (int i = 0; i < aGrabSlots.length; i++) {
-					if (listContainsItem(aFilter, aTileEntity1.getStackInSlot(aGrabSlots[i]), true, aInvertFilter)) {
-						if (isAllowedToTakeFromSlot(aTileEntity1, aGrabSlots[i], (byte)aGrabFrom, aTileEntity1.getStackInSlot(aGrabSlots[i]))) {
-							if (Math.max(aMinMoveAtOnce, aMinTargetStackSize) <= aTileEntity1.getStackInSlot(aGrabSlots[i]).stackSize) {
-								ItemStack tStack = copyAmount(Math.min(aTileEntity1.getStackInSlot(aGrabSlots[i]).stackSize, Math.min(aMaxMoveAtOnce, aMaxTargetStackSize)), aTileEntity1.getStackInSlot(aGrabSlots[i]));
-								EntityItem tEntity = new EntityItem(((TileEntity)aTileEntity1).getWorldObj(), tX+0.5, tY+0.5, tZ+0.5, tStack);
-								tEntity.motionX = tEntity.motionY = tEntity.motionZ = 0;
-								((TileEntity)aTileEntity1).getWorldObj().spawnEntityInWorld(tEntity);
-								aTileEntity1.decrStackSize(aGrabSlots[i], tStack.stackSize);
-								aTileEntity1.markDirty();
-								return (byte)tStack.stackSize;
-							}
-						}
-					}
-				}
-			}
-		}
 		return 0;
 	}
 	
@@ -652,12 +642,14 @@ public class GT_Utility {
     	if (aStack.getItem() instanceof IFluidContainerItem) {
 			return FluidStack.areFluidStackTagsEqual(aFluid, ((IFluidContainerItem)aStack.getItem()).getFluid(aStack = copyAmount(1, aStack)));
     	}
-    	return FluidContainerRegistry.containsFluid(aStack, aFluid);
+    	
+    	FluidStack tFluid = FluidContainerRegistry.getFluidForFilledItem(aStack);
+    	return tFluid != null && tFluid.amount <= aFluid.amount && tFluid.isFluidEqual(aFluid);
     }
     
 	public static FluidStack getFluidForFilledItem(ItemStack aStack) {
 		if (isStackInvalid(aStack)) return null;
-		if (aStack.getItem() instanceof IFluidContainerItem) return ((IFluidContainerItem)aStack.getItem()).drain(copyAmount(1, aStack), Integer.MAX_VALUE, true);
+		if (aStack.getItem() instanceof IFluidContainerItem) return ((IFluidContainerItem) aStack.getItem()).drain(aStack, Integer.MAX_VALUE, false);
 		FluidStack rFluid = FluidContainerRegistry.getFluidForFilledItem(aStack);
 		if (rFluid != null) return rFluid.copy();
 		return null;
@@ -729,7 +721,7 @@ public class GT_Utility {
 		sBookCount++;
 		ItemStack rStack = new ItemStack(Items.written_book, 1);
         NBTTagCompound tNBT = new NBTTagCompound();
-        rStack.setStackDisplayName(aTitle);
+        tNBT.setString("title", aTitle);
         tNBT.setString("author", aAuthor);
         NBTTagList tNBTList = new NBTTagList();
         for (byte i = 0; i < aPages.length; i++) {
@@ -867,9 +859,18 @@ public class GT_Utility {
 		return GT_Items.Armor_Cheat.isStackEqual(aStack, true, true) || areStacksEqual(GT_ModHandler.getIC2Item("debug", 1), aStack, true);
 	}
 	
-	public static boolean isItemStackInList(ItemStack aStack, Collection<Integer> aList) {
+	public static boolean isItemStackInIntList(ItemStack aStack, Collection<Integer> aList) {
 		if (isStackInvalid(aStack) || aList == null) return false;
 		return aList.contains(stackToInt(aStack)) || aList.contains(stackToWildcard(aStack));
+	}
+	
+	public static boolean isItemStackInList(ItemStack aStack, Collection<ItemStackKey> aList) {
+		return isItemStackInList(aStack, aList, false);
+	}
+	
+	public static boolean isItemStackInList(ItemStack aStack, Collection<ItemStackKey> aList, boolean wildcard) {
+		if (isStackInvalid(aStack) || aList == null) return false;
+		return aList.contains(ItemStackKey.from(aStack, true));
 	}
 
 	public static boolean isOpaqueBlock(World aWorld, int aX, int aY, int aZ) {
@@ -893,7 +894,7 @@ public class GT_Utility {
 	 * Converts a Number to a String
 	 */
     public static <T extends Number> String parseNumberToString(T aNumber) {
-    	return new DecimalFormat("###,###.##").format(aNumber);
+    	return sFormat.format(aNumber);
     }
     
     public static NBTTagCompound getNBTContainingBoolean(NBTTagCompound aNBT, Object aTag, boolean aValue) {
@@ -978,11 +979,26 @@ public class GT_Utility {
 	}
 	
 	public static ItemStack copyAmount(long aAmount, Object... aStacks) {
-		ItemStack rStack = copy((ItemStack[])aStacks);
+		ItemStack rStack = copy(GT_Utility.cast(aStacks));
+		
 		if (isStackInvalid(rStack)) return null;
 		if (aAmount > 64) aAmount = 64; else if (aAmount == -1) aAmount = 111; else if (aAmount < 0) aAmount = 0;
 		rStack.stackSize = (byte)aAmount;
 		return rStack;
+	}
+	
+	public static ItemStack[] cast(Object...objects) {
+		Objects.requireNonNull(objects);
+		ItemStack[] result = new ItemStack[objects.length];
+		try {
+			for (int i  = 0; i < objects.length; i++)
+				result[i] = (ItemStack) objects[i];
+		} catch (ClassCastException e) {
+			GT_Log.log.throwing(e);
+			throw new IllegalArgumentException("Array can not contain not ItemStacks!");
+		}
+		
+		return result;
 	}
 	
 	public static ItemStack copyMetaData(long aMetaData, ItemStack... aStacks) {
@@ -1010,7 +1026,7 @@ public class GT_Utility {
 	}
 	
 	public static ItemStack mul(long aMultiplier, Object... aStacks) {
-		return GT_Utility.mul(aMultiplier, (ItemStack[])aStacks);
+		return GT_Utility.mul(aMultiplier, GT_Utility.cast(aStacks));
 	}
 	
 	/**
@@ -1135,25 +1151,8 @@ public class GT_Utility {
 			
 			if (aEntity instanceof EntityPlayerMP) {
 				EntityPlayerMP aPlayer = (EntityPlayerMP)aEntity;
-				int fromDim = aPlayer.dimension;
-		        aPlayer.dimension = aDimension;
-		        aPlayer.playerNetServerHandler.sendPacket(new S07PacketRespawn(aPlayer.dimension, aPlayer.worldObj.difficultySetting, tTargetWorld.getWorldInfo().getTerrainType(), aPlayer.theItemInWorldManager.getGameType()));
-		        tOriginalWorld.removePlayerEntityDangerously(aPlayer);
-		        aPlayer.isDead = false;
-		        aPlayer.setWorld(tTargetWorld);
-		        MinecraftServer.getServer().getConfigurationManager().func_72375_a(aPlayer, tOriginalWorld);
-		        aPlayer.playerNetServerHandler.setPlayerLocation(aX+0.5, aY+0.5, aZ+0.5, aPlayer.rotationYaw, aPlayer.rotationPitch);
-		        aPlayer.theItemInWorldManager.setWorld(tTargetWorld);
-		        MinecraftServer.getServer().getConfigurationManager().updateTimeAndWeatherForPlayer(aPlayer, tTargetWorld);
-		        MinecraftServer.getServer().getConfigurationManager().syncPlayerInventory(aPlayer);
-		        @SuppressWarnings("unchecked")
-				Iterator<PotionEffect> tIterator = aPlayer.getActivePotionEffects().iterator();
-		        while (tIterator.hasNext()) {
-		            PotionEffect potioneffect = tIterator.next();
-		            aPlayer.playerNetServerHandler.sendPacket(new S1DPacketEntityEffect(aPlayer.getEntityId(), potioneffect));
-		        }
-		        aPlayer.playerNetServerHandler.setPlayerLocation(aX+0.5, aY+0.5, aZ+0.5, aPlayer.rotationYaw, aPlayer.rotationPitch);
-		        MinecraftForge.EVENT_BUS.post(new PlayerEvent.PlayerChangedDimensionEvent(aPlayer, fromDim, aDimension));
+				aPlayer.mcServer.getConfigurationManager().transferPlayerToDimension(aPlayer, aDimension);
+				aPlayer.playerNetServerHandler.setPlayerLocation(aX+0.5, aY+0.5, aZ+0.5, aPlayer.rotationYaw, aPlayer.rotationPitch);
 			} else {
 				aEntity.setPosition(aX+0.5, aY+0.5, aZ+0.5);
 				aEntity.worldObj.removeEntity(aEntity);

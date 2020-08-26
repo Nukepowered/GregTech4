@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 
 public class GT_Spray_Hydration_Item extends GT_Tool_Item {
 	public GT_Spray_Hydration_Item(String aUnlocalized, int aMaxDamage, int aEntityDamage) {
-		super(aUnlocalized, "To hydrate Crops and similar", aMaxDamage, aEntityDamage, true);
+		super(aUnlocalized, "item.GT_Spray_Hydration.tooltip", aMaxDamage, aEntityDamage, true);
 		setCraftingSound(GregTech_API.sSoundList.get(102));
 		setBreakingSound(GregTech_API.sSoundList.get(102));
 		setEntityHitSound(GregTech_API.sSoundList.get(102));

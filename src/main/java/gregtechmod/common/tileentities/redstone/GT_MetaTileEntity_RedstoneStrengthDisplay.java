@@ -103,7 +103,7 @@ public class GT_MetaTileEntity_RedstoneStrengthDisplay extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Displays Redstone Strength";
+		return "metatileentity.GT_RedstoneDisplayBlock.tooltip";
 	}
 	
 	@Override

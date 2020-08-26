@@ -86,7 +86,7 @@ public class GT_MetaTileEntity_Lightningrod extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Generates Power during Thunderstorms";
+		return "tile.BlockMetaID_Machine.Lightningrod.tooltip";
 	}
 	
 	@Override

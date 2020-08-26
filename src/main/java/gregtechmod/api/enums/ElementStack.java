@@ -1,6 +1,9 @@
 package gregtechmod.api.enums;
 
+import gregtechmod.api.util.GT_Utility;
+
 public class ElementStack implements Cloneable {
+	
 	public int mAmount;
 	public Element mElement;
 	
@@ -29,7 +32,7 @@ public class ElementStack implements Cloneable {
 	
 	@Override
 	public String toString() {
-		return mElement.toString()+mAmount;
+		return mElement.toString() + GT_Utility.toIndexNumbers(Integer.toString(mAmount));
 	}
 
 	@Override

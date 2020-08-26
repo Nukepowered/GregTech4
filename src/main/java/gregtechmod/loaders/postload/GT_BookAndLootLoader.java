@@ -32,7 +32,6 @@ public class GT_BookAndLootLoader implements Runnable {
         }
         
         ItemStack tStack;
-        // TODO locale	
         tStack = GT_Utility.getWrittenBook("GregTech Manual I (Edition 3)", "Gregorius Techneticies", new String[] {
         		  "So, this is probably your first time using a Product of GregTech Intergalactical, so you might ask yourself where to begin with? This World is very complex, and you may want to aquire a few basic Resources first."
         		, "You need many Resources to start with, as there are: Wood, Sticky Resin or Slimeballs, Sand, Clay, Silk, Food, Iron, Copper, Tin, Flint, Redstone, Coal (or another good Fuel for the Oven) and a bunch of Cobblestones would also be very useful."

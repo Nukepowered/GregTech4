@@ -30,7 +30,7 @@ public class GT_SensorCard_Item extends GT_Generic_Item implements IRemoteSensor
     public static final UUID CARD_TYPE = new UUID(0, 41);
     
 	public GT_SensorCard_Item(String aName) {
-		super(aName, "Insert into Display Panel"); // TODO localiztion
+		super(aName, "item.GT_SensorCard.tooltip");
 		setMaxStackSize(1);
 	}
 	

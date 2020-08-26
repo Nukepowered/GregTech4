@@ -5,6 +5,7 @@ import gregtechmod.api.enums.GT_ConfigCategories;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_Config;
+import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityHanging;
@@ -21,6 +22,7 @@ import net.minecraft.entity.item.EntityMinecart;
 import net.minecraft.entity.item.EntityTNTPrimed;
 import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.entity.projectile.EntityFishHook;
@@ -29,6 +31,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraftforge.common.DimensionManager;
 
 public class GT_MetaTileEntity_Teleporter extends MetaTileEntity {
 	
@@ -51,7 +54,7 @@ public class GT_MetaTileEntity_Teleporter extends MetaTileEntity {
 	@Override public boolean isInputFacing(byte aSide)				{return true;}
 	@Override public int maxEUInput()								{return GregTech_API.VOLTAGE_ULTIMATE;}
     @Override public int maxEUStore()								{return 10000000;}
-    @Override public int maxMJStore()								{return 10000000;}
+    @Override public int maxRFStore()								{return 10000000;}
     @Override public int maxSteamStore()							{return 10000000;}
 	@Override public boolean isValidSlot(int aIndex)				{return false;}
 	@Override public int getInvSize()								{return 1;}
@@ -148,9 +151,18 @@ public class GT_MetaTileEntity_Teleporter extends MetaTileEntity {
 								if (tEntity instanceof EntityLiving) {
 									((EntityLiving)tEntity).setPositionAndUpdate(mTargetX+0.5, mTargetY+0.5, mTargetZ+0.5);
 								} else {
-									tEntity.setPosition(mTargetX+0.5, mTargetY+0.5, mTargetZ+0.5);
+									if (tEntity instanceof EntityPlayer) {
+										((EntityPlayerMP) tEntity).playerNetServerHandler.setPlayerLocation(mTargetX+0.5, mTargetY+0.5, mTargetZ+0.5, tEntity.rotationYaw, tEntity.rotationPitch);
+									} else {
+										tEntity.setPosition(mTargetX+0.5, mTargetY+0.5, mTargetZ+0.5);
+									}
 								}
 							}
+							
+							GT_Log.log.warn(String.format("Teleported %s from (%s %s %s, DIM: %s) to (%s %s %s, DIM: %s)", 
+									tEntity.toString(), 
+									getBaseMetaTileEntity().getXCoord(), getBaseMetaTileEntity().getYCoord(), getBaseMetaTileEntity().getZCoord(), getBaseMetaTileEntity().getWorld().provider.getDimensionName(),
+									mTargetX, mTargetY, mTargetZ, DimensionManager.createProviderFor(mTargetD).getDimensionName()));
 						} else {
 							int tCharge = getBaseMetaTileEntity().getUniversalEnergyStored();
 							if (tCharge > 0 && mCharge + tCharge > 0) {
@@ -211,7 +223,7 @@ public class GT_MetaTileEntity_Teleporter extends MetaTileEntity {
 	
 	@Override
 	public String[] getInfoData() {
-		return new String[] { "Charge: " + mCharge, "X: " + mTargetX + "  Y: " + mTargetY + "  Z: " + mTargetZ, "Dimension: " + mTargetD};
+		return new String[] { "Charge: " + mCharge, "X: " + mTargetX + "  Y: " + mTargetY + "  Z: " + mTargetZ, "Dimension: " + mTargetD}; // TODO REWORK LOCALE
 	}
 	
 	@Override
@@ -227,7 +239,7 @@ public class GT_MetaTileEntity_Teleporter extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Teleport long distances with this little device.";
+		return "metatileentity.GT_Teleporter.tooltip";
 	}
 	
 	@Override

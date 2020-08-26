@@ -1,140 +1,48 @@
 package gregtechmod.common.items;
 
+import java.util.HashMap;
+
 import gregtechmod.api.enums.Dyes;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
+import gregtechmod.api.interfaces.IFoodStat;
 import gregtechmod.api.interfaces.IIconContainer;
 import gregtechmod.api.items.GT_MetaGenerated_Item;
+import net.minecraft.item.ItemStack;
 
 public class GT_MetaGenerated_Item_01 extends GT_MetaGenerated_Item {
-
+   
+   private final HashMap<Integer, String> sUnlocalizedNames = new HashMap<>();
+	
    public GT_MetaGenerated_Item_01() {
       super("GregTech_MetaGenerated_Item_01", new OrePrefixes[]{OrePrefixes.dustTiny, OrePrefixes.dustSmall, OrePrefixes.dust, OrePrefixes.dustImpure, OrePrefixes.dustPure, OrePrefixes.crushed, OrePrefixes.crushedPurified, OrePrefixes.crushedCentrifuged, OrePrefixes.gem, OrePrefixes.nugget, null, OrePrefixes.ingot, OrePrefixes.ingotHot, OrePrefixes.ingotDouble, OrePrefixes.ingotTriple, OrePrefixes.ingotQuadruple, OrePrefixes.ingotQuintuple, OrePrefixes.plate, OrePrefixes.plateDouble, OrePrefixes.plateTriple, OrePrefixes.plateQuadruple, OrePrefixes.plateQuintuple, OrePrefixes.plateDense, OrePrefixes.stick, OrePrefixes.lense, OrePrefixes.round, OrePrefixes.bolt, OrePrefixes.screw, OrePrefixes.ring, null, OrePrefixes.cell, OrePrefixes.cellPlasma});
    }
-
-   public String getDefaultLocalization(OrePrefixes aPrefix, Materials aMaterial, int aMetaData) {
-      switch(aMaterial) {
-      case Wheat:
-         if(aPrefix.name().startsWith("dust")) {
-            return aPrefix.mLocalizedMaterialPre + "Flour";
-         }
-         break;
-      case Ice:
-         if(aPrefix.name().startsWith("dust")) {
-            return aPrefix.mLocalizedMaterialPre + "crushed Ice";
-         }
-         break;
-      case Wood:
-         if(aPrefix.name().startsWith("dust")) {
-            return aPrefix.mLocalizedMaterialPre + aMaterial.mDefaultLocalName + " Pulp";
-         }
-
-         if(aPrefix.name().startsWith("nugget")) {
-            return aPrefix.mLocalizedMaterialPre + aMaterial.mDefaultLocalName + " Chip";
-         }
-         break;
-      case Plastic:
-      case Rubber:
-         if(aPrefix.name().startsWith("dust")) {
-            return aPrefix.mLocalizedMaterialPre + aMaterial.mDefaultLocalName + " Pulp";
-         }
-
-         if(aPrefix.name().startsWith("plate")) {
-            return aPrefix.mLocalizedMaterialPre + aMaterial.mDefaultLocalName + " Sheet";
-         }
-
-         if(aPrefix.name().startsWith("ingot")) {
-            return aPrefix.mLocalizedMaterialPre + aMaterial.mDefaultLocalName + " Bar";
-         }
-
-         if(aPrefix.name().startsWith("nugget")) {
-            return aPrefix.mLocalizedMaterialPre + aMaterial.mDefaultLocalName + " Chip";
-         }
-         break;
-      case SteelLeaf:
-         if(aPrefix.name().startsWith("ingot")) {
-            return aPrefix.mLocalizedMaterialPre + aMaterial.mDefaultLocalName;
-         }
-      case Blaze:
-      case Milk:
-      case Chocolate:
-      case Coffee:
-         if(aPrefix.name().startsWith("dust")) {
-            return aPrefix.mLocalizedMaterialPre + aMaterial.mDefaultLocalName + " Powder";
-         }
-         break;
-      case Paper:
-         if(aPrefix.name().startsWith("dust")) {
-            return aPrefix.mLocalizedMaterialPre + "Chad";
-         }
-
-         if(aPrefix == OrePrefixes.plate) {
-            return "Sheet of Paper";
-         }
-
-         if(aPrefix == OrePrefixes.plateDouble) {
-            return "Paperboard";
-         }
-
-         if(aPrefix == OrePrefixes.plateTriple) {
-            return "Carton";
-         }
-
-         if(aPrefix == OrePrefixes.plateQuadruple) {
-            return "Cardboard";
-         }
-
-         if(aPrefix == OrePrefixes.plateQuintuple) {
-            return "Thick Cardboard";
-         }
-
-         if(aPrefix == OrePrefixes.plateDense) {
-            return "Strong Cardboard";
-         }
-         break;
-      case Ash:
-      case DarkAsh:
-      case Gunpowder:
-      case Sugar:
-      case Salt:
-      case RockSalt:
-      case VolcanicAsh:
-         if(aPrefix.name().startsWith("dust")) {
-            return aPrefix.mLocalizedMaterialPre + aMaterial.mDefaultLocalName;
-         }
-         break;
-      case Vermiculite:
-      case Bentonite:
-      case Kaolinite:
-      case Talc:
-      case BasalticMineralSand:
-      case GraniticMineralSand:
-      case CassiteriteSand:
-      case GarnetSand:
-      case QuartzSand:
-      case Pitchblende:
-      case FullersEarth:
-         if(aPrefix.name().startsWith("dust")) {
-            return aPrefix.mLocalizedMaterialPre + aMaterial.mDefaultLocalName;
-         }
-
-         if(aPrefix == OrePrefixes.crushedCentrifuged) {
-            return aPrefix.mLocalizedMaterialPre + aMaterial.mDefaultLocalName;
-         }
-
-         if(aPrefix == OrePrefixes.crushedPurified) {
-            return aPrefix.mLocalizedMaterialPre + aMaterial.mDefaultLocalName;
-         }
-
-         if(aPrefix == OrePrefixes.crushed) {
-            return "Ground " + aMaterial.mDefaultLocalName;
-         }
-      default: break;
-      }
-
-      return super.getDefaultLocalization(aPrefix, aMaterial, aMetaData);
+   
+   public final ItemStack addItem(int aID, String aUnlocalizedName, String aToolTip, IFoodStat aFoodBehavior, Object... aOreDictNames) {
+	   ItemStack aStack = addItem(aID, aToolTip, aFoodBehavior, aOreDictNames);
+	   if (aStack != null) {
+		   sUnlocalizedNames.put(32000+aID, aUnlocalizedName);
+	   }
+	   
+	   return aStack;
    }
-
+   
+   @Override
+   public String getUnlocalizedName(ItemStack aStack) {
+	   String subName = null;
+	   
+	   try {
+		   int aMeta = aStack.getItemDamage();
+		   subName = sUnlocalizedNames.get(aMeta);
+	   } catch (Throwable e) {}
+	   
+	   if (subName == null || subName.isEmpty()) {
+		   return getUnlocalizedName() + "." + getDamage(aStack);
+	   } else {
+		   return getUnlocalizedName() + "." + subName;
+	   }
+   }
+   
    public String getOreDictString(OrePrefixes aPrefix, Materials aMaterial) {
       return aMaterial == Materials.Wood && aPrefix == OrePrefixes.plate?"plankWood":super.getOreDictString(aPrefix, aMaterial);
    }

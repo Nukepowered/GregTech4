@@ -96,6 +96,6 @@ public class GT_MetaTileEntity_Safe extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "This is completly 'Safe', except against Explosions";
+		return "metatileentity.GT_Safe.tooltip";
 	}
 }

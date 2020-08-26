@@ -24,7 +24,7 @@ public class GT_MetaTileEntity_FusionEnergyInjector extends MetaTileEntity {
 	@Override public boolean isInputFacing(byte aSide)				{return true;}
     @Override public int maxEUInput()								{return 8192;}
     @Override public int maxEUStore()								{return 10000000;}
-    @Override public int maxMJStore()								{return maxEUStore();}
+    @Override public int maxRFStore()								{return maxEUStore();}
     @Override public int maxSteamStore()							{return maxEUStore();}
 	@Override public int getInvSize()								{return 0;}
 	@Override public boolean isAccessAllowed(EntityPlayer aPlayer)	{return true;}
@@ -58,7 +58,7 @@ public class GT_MetaTileEntity_FusionEnergyInjector extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Stores 10kk EU for the Fusion Reactor";
+		return "metatileentity.GT_Fusion_Energy.tooltip";
 	}
 	
 	@Override

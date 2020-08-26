@@ -59,11 +59,11 @@ public class GT_MetaTileEntity_Hatch_Maintenance extends MetaTileEntity {
 	
 	public void onToolClick(ItemStack aStack, EntityLivingBase aPlayer) {
 		if (aStack == null || aPlayer == null) return;
-		if (GT_Utility.isItemStackInList(aStack, GregTech_API.sWrenchList)			&& GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) mWrench = true;
-		if (GT_Utility.isItemStackInList(aStack, GregTech_API.sScrewdriverList)		&& GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) mScrewdriver = true;
-		if (GT_Utility.isItemStackInList(aStack, GregTech_API.sSoftHammerList)		&& GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) mSoftHammer = true;
-		if (GT_Utility.isItemStackInList(aStack, GregTech_API.sHardHammerList)		&& GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) mHardHammer = true;
-		if (GT_Utility.isItemStackInList(aStack, GregTech_API.sCrowbarList)			&& GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) mCrowbar = true;
+		if (GT_Utility.isItemStackInList(aStack, GregTech_API.sWrenchList, true)			&& GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) mWrench = true;
+		if (GT_Utility.isItemStackInList(aStack, GregTech_API.sScrewdriverList, true)		&& GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) mScrewdriver = true;
+		if (GT_Utility.isItemStackInList(aStack, GregTech_API.sSoftHammerList, true)		&& GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) mSoftHammer = true;
+		if (GT_Utility.isItemStackInList(aStack, GregTech_API.sHardHammerList, true)		&& GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) mHardHammer = true;
+		if (GT_Utility.isItemStackInList(aStack, GregTech_API.sCrowbarList, true)			&& GT_ModHandler.damageOrDechargeItem(aStack, 1, 1000, aPlayer)) mCrowbar = true;
 		if (GT_ModHandler.useSolderingIron(aStack, aPlayer)) mSolderingTool = true;
 		if (GT_OreDictUnificator.isItemStackInstanceOf(aStack, "craftingDuctTape")) {
 			mDuctTape = mWrench = mScrewdriver = mSoftHammer = mHardHammer = mCrowbar = mSolderingTool = true;
@@ -81,7 +81,7 @@ public class GT_MetaTileEntity_Hatch_Maintenance extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "For maintaining Multiblocks";
+		return "metatileentity.GT_Maintenance_Hatch.tooltip";
 	}
 	
 	@Override

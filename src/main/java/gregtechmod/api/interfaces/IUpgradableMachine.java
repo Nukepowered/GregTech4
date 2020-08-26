@@ -15,9 +15,9 @@ public interface IUpgradableMachine extends IMachineProgress {
 	boolean isMufflerUpgradable();
 	
 	/**
-	 * Accepts MJ-Converter Upgrades
+	 * Accepts RF-Converter Upgrades
 	 */
-	boolean isMJConverterUpgradable();
+	boolean isRFConverterUpgradable();
 	
 	/**
 	 * Accepts Steam-Converter Upgrades
@@ -46,9 +46,9 @@ public interface IUpgradableMachine extends IMachineProgress {
 	boolean addMufflerUpgrade();
 	
 	/**
-	 * Adds MJ-Converter Upgrade
+	 * Adds RF-Converter Upgrade
 	 */
-	boolean addMJConverterUpgrade();
+	boolean addRFConverterUpgrade();
 	
 	/**
 	 * Adds MJ-Converter Upgrade
@@ -78,7 +78,7 @@ public interface IUpgradableMachine extends IMachineProgress {
 	/**
 	 * Does this Machine have an MJ-Converter
 	 */
-	boolean hasMJConverterUpgrade();
+	boolean hasRFConverterUpgrade();
 	
 	/**
 	 * Does this Machine have a Steam-Converter

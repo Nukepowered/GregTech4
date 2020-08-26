@@ -32,7 +32,7 @@ public class GT_MetaTileEntity_VacuumFreezer extends MetaTileEntity {
 	@Override public boolean isInputFacing(byte aSide)				{return true;}
     @Override public int maxEUInput()								{return 128;}
     @Override public int maxEUStore()								{return 10000;}
-    @Override public int maxMJStore()								{return maxEUStore();}
+    @Override public int maxRFStore()								{return maxEUStore();}
     @Override public int maxSteamStore()							{return maxEUStore();}
 	@Override public int getInvSize()								{return 2;}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 122);}
@@ -167,7 +167,7 @@ public class GT_MetaTileEntity_VacuumFreezer extends MetaTileEntity {
 	
 	@Override
 	public String[] getInfoData() {
-		return new String[] { "Progress:", this.mProgresstime / 20 + "secs", this.mMaxProgresstime / 20 + "secs" };
+		return new String[] { "Progress:", this.mProgresstime / 20 + "secs", this.mMaxProgresstime / 20 + "secs" }; // TODO REWORK LOCALE
 	}
 	
 	@Override
@@ -176,6 +176,6 @@ public class GT_MetaTileEntity_VacuumFreezer extends MetaTileEntity {
 	}
 	@Override
 	public String getDescription() {
-		return "Cools down anything";
+		return "metatileentity.GT_VacuumFreezer.tooltip";
 	}
 }

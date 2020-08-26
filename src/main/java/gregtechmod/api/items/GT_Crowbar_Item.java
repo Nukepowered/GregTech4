@@ -3,7 +3,6 @@ package gregtechmod.api.items;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_ToolDictNames;
 import gregtechmod.api.util.GT_ModHandler;
-import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public class GT_Crowbar_Item extends GT_Tool_Item {
 	public GT_Crowbar_Item(String aUnlocalized, int aMaxDamage, int aEntityDamage) {
 		super(aUnlocalized, "item.GT_Crowbar.tooltip_main", aMaxDamage, aEntityDamage, true, -1, -1, 5, 20.0F);
 		GregTech_API.registerCrowbar(new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-		GT_OreDictUnificator.registerOre(GT_ToolDictNames.craftingToolCrowbar, new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+		registerAtOreDict(GT_ToolDictNames.craftingToolCrowbar, GregTech_API.ITEM_WILDCARD_DAMAGE);
 		addToBlockList(Blocks.rail);
 		addToBlockList(Blocks.golden_rail);
 		addToBlockList(Blocks.detector_rail);

@@ -43,7 +43,7 @@ public class GT_MetaTileEntity_ElectricFilter extends GT_MetaTileEntity_Electric
       return 10000;
    }
 
-   public int maxMJStore() {
+   public int maxRFStore() {
       return this.maxEUStore();
    }
 
@@ -88,7 +88,7 @@ public class GT_MetaTileEntity_ElectricFilter extends GT_MetaTileEntity_Electric
    }
 
    public String getDescription() {
-      return "A Filter, which also buffers Items!";
+      return "metatileentity.GT_E_Filter.tooltip";
    }
 
    public int getTextureIndex(byte aSide, byte aFacing, boolean aActive, boolean aRedstone) {

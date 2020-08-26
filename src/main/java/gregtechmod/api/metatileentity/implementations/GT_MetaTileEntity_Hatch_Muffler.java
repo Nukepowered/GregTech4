@@ -43,7 +43,7 @@ public class GT_MetaTileEntity_Hatch_Muffler extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Outputs the Pollution (Pollution might come later)";
+		return "metatileentity.GT_Muffler_Hatch.tooltip";
 	}
 	
 	public boolean polluteEnvironment() {

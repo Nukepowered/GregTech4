@@ -4,6 +4,7 @@ import gregtechmod.api.util.GT_LanguageManager;
 import ic2.api.energy.tile.IEnergyConductor;
 import ic2.api.energy.tile.IEnergyTile;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class GT_TileEntity_Superconductor extends GT_TileEntityMetaID_Machine implements IEnergyConductor {
 	
@@ -15,6 +16,13 @@ public class GT_TileEntity_Superconductor extends GT_TileEntityMetaID_Machine im
     public boolean isInputFacing(short aDirection)  	{return true;}
     public int maxEUInput()            					{return Integer.MAX_VALUE;}
     public int maxEUOutput()           					{return Integer.MAX_VALUE;}
+    
+    @Override public double injectEnergy(ForgeDirection directionFrom, double aAmount, double voltage) { return 0;}
+    @Override public int getStored() {return 0;}
+    @Override public void setStored(int energy) {}
+    @Override public int addEnergy(int amount) {return 0;}
+    @Override public int getCapacity() {return 0;}
+    @Override public int getOutput() {return 0;}
     
     @Override public String getInventoryName() {return GT_LanguageManager.mNameList1[12];}
 

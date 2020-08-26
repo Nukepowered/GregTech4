@@ -15,6 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityDispenser;
 import net.minecraft.tileentity.TileEntityHopper;
+import net.minecraft.util.StatCollector;
 
 public abstract class GT_MetaPipeEntity_Item extends MetaPipeEntity {
 	
@@ -181,7 +182,7 @@ public abstract class GT_MetaPipeEntity_Item extends MetaPipeEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Item Capacity: "+getMaxPipeCapacity()+" Stacks/sec";
+		return StatCollector.translateToLocalFormatted("pipes.item.capacity", getMaxPipeCapacity());
 	}
 
 	private boolean isInventoryEmpty() {

@@ -55,16 +55,30 @@ public class GregTech_API {
 	public static IGT_RecipeAdder sRecipeAdder;
 	
 	/** These Lists are getting executed at their respective timings. Useful if you have to do things right before/after I do them, without having to control the load order. Add your "Commands" in the Constructor or in a static Code Block of your Mods Main Class. These are not Threaded, I just use a native Java Interface for their execution. Implement just the Method run() and everything should work */
-	public static List<Runnable> sBeforeGTPreload = new ArrayList<Runnable>(), sAfterGTPreload = new ArrayList<Runnable>(), sBeforeGTLoad = new ArrayList<Runnable>(), sAfterGTLoad = new ArrayList<Runnable>(), sBeforeGTPostload = new ArrayList<Runnable>(), sAfterGTPostload = new ArrayList<Runnable>(), sBeforeGTServerstart = new ArrayList<Runnable>(), sAfterGTServerstart = new ArrayList<Runnable>(), sBeforeGTServerstop = new ArrayList<Runnable>(), sAfterGTServerstop = new ArrayList<Runnable>(), sGTCoverload = new ArrayList<Runnable>(), sGTBlockIconload = new ArrayList<Runnable>(), sGTItemIconload = new ArrayList<Runnable>();
+	public static List<Runnable> sBeforeGTPreload = new ArrayList<Runnable>(),
+			sAfterGTPreload = new ArrayList<Runnable>(),
+			sBeforeGTLoad = new ArrayList<Runnable>(),
+			sAfterGTLoad = new ArrayList<Runnable>(),
+			sBeforeGTPostload = new ArrayList<Runnable>(),
+			sAfterGTPostload = new ArrayList<Runnable>(),
+			sBeforeGTServerstart = new ArrayList<Runnable>(),
+			sAfterGTServerstart = new ArrayList<Runnable>(),
+			sBeforeGTServerstop = new ArrayList<Runnable>(),
+			sAfterGTServerstop = new ArrayList<Runnable>(),
+			sGTCoverload = new ArrayList<Runnable>(),
+			sGTBlockIconload = new ArrayList<Runnable>(),
+			sGTItemIconload = new ArrayList<Runnable>(),
+			sToolsRegiter = new ArrayList<Runnable>();
 	
 	/** The Icon Registers from Blocks and Items. They will get set right before the corresponding Icon Load Phase as executed in the Runnable List above. */
 	public static Object sBlockIcons, sItemIcons;
 	
 	/** Configured Booleans */
-	public static boolean DEBUG_MODE = false, SECONDARY_DEBUG_MODE = false, IC_ENERGY_COMPATIBILITY = true, UE_ENERGY_COMPATIBILITY = true, BC_ENERGY_COMPATIBILITY = true;
+	public static boolean DEBUG_MODE = false, SECONDARY_DEBUG_MODE = false, IC_ENERGY_COMPATIBILITY = true, RF_ENERGY_COMPATIBILITY = true;
 	
 	/** The Configuration Objects */
-	public static GT_Config sRecipeFile = null, sMachineFile = null, sWorldgenFile = null, sMaterialProperties = null, sUnification = null, sSpecialFile = null;
+	public static GT_Config sMachineFile = null, sWorldgenFile = null, sMaterialProperties = null, sUnification = null, sSpecialFile = null;
+	public static GT_Config.JsonWrapper sRecipeFile = null;
 	
 	/** Because Minecraft changed it from -1 to that Value */
 	public static final short ITEM_WILDCARD_DAMAGE = OreDictionary.WILDCARD_VALUE;
@@ -138,7 +152,14 @@ public class GregTech_API {
 	public static final Map<Integer, String> sSoundList = new HashMap<Integer, String>();
 	
 	/** The List of Tools, which can be used. Accepts regular damageable Items and Electric Items */
-	public static final List<Integer> sToolList = new ArrayList<Integer>(), sCrowbarList = new ArrayList<Integer>(), sScrewdriverList = new ArrayList<Integer>(), sWrenchList = new ArrayList<Integer>(), sSoftHammerList = new ArrayList<Integer>(), sHardHammerList = new ArrayList<Integer>(), sSolderingToolList = new ArrayList<Integer>(), sSolderingMetalList = new ArrayList<Integer>();
+	public static final List<ItemStackKey> sToolList = new ArrayList<ItemStackKey>(),
+			sCrowbarList = new ArrayList<ItemStackKey>(),
+			sScrewdriverList = new ArrayList<ItemStackKey>(),
+			sWrenchList = new ArrayList<ItemStackKey>(),
+			sSoftHammerList = new ArrayList<ItemStackKey>(),
+			sHardHammerList = new ArrayList<ItemStackKey>(),
+			sSolderingToolList = new ArrayList<ItemStackKey>(),
+			sSolderingMetalList = new ArrayList<ItemStackKey>();
 	
 	/** 
 	 * The List of Dimensions, which are Whitelisted for the Teleporter. This list should not contain other Planets.
@@ -468,7 +489,7 @@ public class GregTech_API {
 		return new gregtechmod.api.items.GT_Tool_Item(aUnlocalized, "item.bug.tooltip", aMaxDamage, 0, false);
 	}
 	
-	private static Class<?> sBaseMetaTileEntityClass = null;
+	private static Class<? extends BaseMetaTileEntity> sBaseMetaTileEntityClass = null;
 	
 	/**
 	 * This gives you a new BaseMetaTileEntity. As some Interfaces are not always loaded (Buildcraft, Univeral Electricity) I have to use Invocation at the Constructor of the BaseMetaTileEntity
@@ -476,25 +497,13 @@ public class GregTech_API {
 	public static BaseMetaTileEntity constructBaseMetaTileEntity() {
 		if (sBaseMetaTileEntityClass == null) {
 			try {
-				if (UE_ENERGY_COMPATIBILITY && BC_ENERGY_COMPATIBILITY && IC_ENERGY_COMPATIBILITY) return (BaseMetaTileEntity)(sBaseMetaTileEntityClass = Class.forName("gregtechmod.api.metatileentity.BaseMetaTileEntityICUEMJ")).newInstance();
+				if (RF_ENERGY_COMPATIBILITY && IC_ENERGY_COMPATIBILITY) return (sBaseMetaTileEntityClass = gregtechmod.api.metatileentity.BaseMetaTileEntityICRF.class).newInstance();
 			} catch(Throwable e) {/*Do nothing*/}
 			try {
-				if (BC_ENERGY_COMPATIBILITY && IC_ENERGY_COMPATIBILITY) return (BaseMetaTileEntity)(sBaseMetaTileEntityClass = Class.forName("gregtechmod.api.metatileentity.BaseMetaTileEntityICMJ")).newInstance();
+				if (IC_ENERGY_COMPATIBILITY) return (sBaseMetaTileEntityClass = gregtechmod.api.metatileentity.BaseMetaTileEntityIC.class).newInstance();
 			} catch(Throwable e) {/*Do nothing*/}
 			try {
-				if (UE_ENERGY_COMPATIBILITY && IC_ENERGY_COMPATIBILITY) return (BaseMetaTileEntity)(sBaseMetaTileEntityClass = Class.forName("gregtechmod.api.metatileentity.BaseMetaTileEntityICUE")).newInstance();
-			} catch(Throwable e) {/*Do nothing*/}
-			try {
-				if (IC_ENERGY_COMPATIBILITY) return (BaseMetaTileEntity)(sBaseMetaTileEntityClass = Class.forName("gregtechmod.api.metatileentity.BaseMetaTileEntityIC")).newInstance();
-			} catch(Throwable e) {/*Do nothing*/}
-			try {
-				if (UE_ENERGY_COMPATIBILITY && BC_ENERGY_COMPATIBILITY) return (BaseMetaTileEntity)(sBaseMetaTileEntityClass = Class.forName("gregtechmod.api.metatileentity.BaseMetaTileEntityUEMJ")).newInstance();
-			} catch(Throwable e) {/*Do nothing*/}
-			try {
-				if (UE_ENERGY_COMPATIBILITY) return (BaseMetaTileEntity)(sBaseMetaTileEntityClass = Class.forName("gregtechmod.api.metatileentity.BaseMetaTileEntityUE")).newInstance();
-			} catch(Throwable e) {/*Do nothing*/}
-			try {
-				if (BC_ENERGY_COMPATIBILITY) return (BaseMetaTileEntity)(sBaseMetaTileEntityClass = Class.forName("gregtechmod.api.metatileentity.BaseMetaTileEntityMJ")).newInstance();
+				if (RF_ENERGY_COMPATIBILITY) return (sBaseMetaTileEntityClass = gregtechmod.api.metatileentity.BaseMetaTileEntityRF.class).newInstance();
 			} catch(Throwable e) {/*Do nothing*/}
 			try {
 				return (BaseMetaTileEntity)(sBaseMetaTileEntityClass = BaseMetaTileEntity.class).newInstance();
@@ -650,12 +659,29 @@ public class GregTech_API {
 	 * Generic Function to add Tools to the Lists.
 	 * Contains all sanity Checks for Tools, like preventing one Tool from being registered for multiple purposes as controls would override each other.
 	 */
-	public static boolean registerTool(ItemStack aTool, Collection<Integer> aToolList) {
-		if (aTool == null || GT_Utility.isItemStackInList(aTool, sToolList) || (!aTool.getItem().isDamageable() && !GT_ModHandler.isElectricItem(aTool))) return false;
-		aToolList.add(GT_Utility.stackToInt(GT_Utility.copyMetaData(GregTech_API.ITEM_WILDCARD_DAMAGE, aTool)));
-		sToolList.add(GT_Utility.stackToInt(GT_Utility.copyMetaData(GregTech_API.ITEM_WILDCARD_DAMAGE, aTool)));
-		return true;
+	public static boolean registerTool(ItemStack aTool, Collection<ItemStackKey> aToolList) {
+		if (aTool != null && aTool.getItem() != null) {
+			ItemStackKey toolKey = ItemStackKey.from(aTool, true);
+			if (!aToolList.contains(toolKey) && (aTool.getItem().isDamageable() || GT_ModHandler.isElectricItem(aTool))) {
+				aToolList.add(toolKey);
+				sToolList.add(toolKey);
+				return true;
+			}
+		}
+		
+		return false;
 	}
+	
+
+//	public static boolean registerTool(ItemStack aTool, Collection<Integer> aToolList) {
+//		sToolsRegiter.add(() -> {
+//			if (aTool == null || GT_Utility.isItemStackInList(aTool, sToolList) || (!aTool.getItem().isDamageable() && !GT_ModHandler.isElectricItem(aTool))) return;
+//			aToolList.add(GT_Utility.stackToInt(GT_Utility.copyMetaData(GregTech_API.ITEM_WILDCARD_DAMAGE, aTool)));
+//			sToolList.add(GT_Utility.stackToInt(GT_Utility.copyMetaData(GregTech_API.ITEM_WILDCARD_DAMAGE, aTool)));
+//		});
+//
+//		return true;
+//	}
 	
 	/**
 	 * Adds Biomes to the Biome Lists for World Generation

@@ -5,6 +5,7 @@ import gregtechmod.api.util.GT_Utility;
 
 import java.util.List;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
@@ -44,7 +45,7 @@ public abstract class GT_MetaTileEntity_BasicGenerator extends GT_MetaTileEntity
     				mInventory[getStackDisplaySlot()] = null;
     			} else {
     				if (mInventory[getStackDisplaySlot()] == null) mInventory[getStackDisplaySlot()] = new ItemStack(Blocks.fire, 1);
-    				mInventory[getStackDisplaySlot()].setStackDisplayName("Generating: " + (getBaseMetaTileEntity().getUniversalEnergyStored() - getMinimumStoredEU()) + " EU"); // TODO localization
+    				mInventory[getStackDisplaySlot()].setStackDisplayName(I18n.format("metatileentity.GT_MetaTileEntity_BasicGenerator.tooltip", getBaseMetaTileEntity().getUniversalEnergyStored() - getMinimumStoredEU()));
     			}
     		} else {
     			int tFuelValue = getFuelValue(mFluid);

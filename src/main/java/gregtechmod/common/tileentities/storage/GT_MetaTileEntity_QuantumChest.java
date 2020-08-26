@@ -37,7 +37,7 @@ public class GT_MetaTileEntity_QuantumChest extends GT_MetaTileEntity_DigitalChe
    }
 
    public String getDescription() {
-      return "2 Milliards, uhhm I mean Billions, Items to store here!";
+      return "tile.BlockMetaID_Machine.Quantumchest.tooltip";
    }
 
 }

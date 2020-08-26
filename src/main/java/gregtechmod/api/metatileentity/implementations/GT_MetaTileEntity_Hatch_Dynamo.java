@@ -25,7 +25,7 @@ public class GT_MetaTileEntity_Hatch_Dynamo extends MetaTileEntity {
 	@Override public int getMinimumStoredEU()						{return 512;}
     @Override public int maxEUOutput()								{return Math.max(0, Math.min(getEUVar() - getMinimumStoredEU(), GregTech_API.VOLTAGE_EXTREME));}
     @Override public int maxEUStore()								{return GregTech_API.VOLTAGE_EXTREME * 4 + getMinimumStoredEU();}
-    @Override public String getSpecialVoltageToolTip()				{return "Max EU/p OUT: 0 - 2048 (depends on generated Energy)";}
+    @Override public String getSpecialVoltageToolTip()				{return "metatileentity.TileEntity_EUp_OUT.Dynamo_Hatch.tooltip";}
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
@@ -50,7 +50,7 @@ public class GT_MetaTileEntity_Hatch_Dynamo extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Generating electric Energy from Multiblocks";
+		return "metatileentity.GT_Dynamo_Hatch.tooltip";
 	}
 	
 	@Override

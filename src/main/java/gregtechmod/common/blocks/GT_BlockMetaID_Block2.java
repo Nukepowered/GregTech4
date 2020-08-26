@@ -39,22 +39,24 @@ public class GT_BlockMetaID_Block2 extends Block {
     @SideOnly(Side.CLIENT)
     public void registerBlockIcons(IIconRegister par1IconRegister) {
     	for (int i = 0; i < mIcons.length; i++) mIcons[i] = par1IconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + (GT_Config.system ? "troll" : getUnlocalizedName() + "/" + i));
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateLead")			, mIcons[ 0]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateElectrum")		, mIcons[ 1]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateZinc")			, mIcons[ 2]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateOlivine")			, mIcons[ 3]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateGreenSapphire")	, mIcons[ 4]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("platePlatinum")		, mIcons[ 5]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateTungsten")		, mIcons[ 6]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateNickel")			, mIcons[ 7]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateTungstenSteel")	, mIcons[ 8]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateAlloyIridium")	, mIcons[ 9]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateInvar")			, mIcons[10]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateOsmium")			, mIcons[11]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateIridium")			, mIcons[12]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateDenseBronze")		, mIcons[13]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateGarnetYellow")	, mIcons[14]);
-    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateGarnetRed")		, mIcons[15]);
+    	if (GregTech_API.sPostloadFinished) {
+        	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateLead")			, mIcons[ 0]);
+        	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateElectrum")		, mIcons[ 1]);
+        	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateZinc")			, mIcons[ 2]);
+        	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateOlivine")			, mIcons[ 3]);
+        	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateGreenSapphire")	, mIcons[ 4]);
+        	GregTech_API.registerCover(GT_OreDictUnificator.getOres("platePlatinum")		, mIcons[ 5]);
+        	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateTungsten")		, mIcons[ 6]);
+        	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateNickel")			, mIcons[ 7]);
+        	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateTungstenSteel")	, mIcons[ 8]);
+        	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateAlloyIridium")	, mIcons[ 9]);
+        	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateInvar")			, mIcons[10]);
+        	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateOsmium")			, mIcons[11]);
+        	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateIridium")			, mIcons[12]);
+        	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateDenseBronze")		, mIcons[13]);
+        	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateGarnetYellow")	, mIcons[14]);
+        	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateGarnetRed")		, mIcons[15]);
+    	}
 	}
 	
 	@Override

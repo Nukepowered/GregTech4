@@ -93,6 +93,6 @@ public class GT_MetaTileEntity_Multi_AutoCrafter extends GT_MetaTileEntity_Multi
    }
 
    public String getDescription() {
-      return "Highly Advanced Autocrafter";
+      return "metatileentity.GT_Multi_AutoCrafter.tooltip";
    }
 }

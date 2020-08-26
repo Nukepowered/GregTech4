@@ -3,6 +3,7 @@ package gregtechmod.api.metatileentity.implementations;
 import gregtechmod.api.metatileentity.MetaPipeEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.StatCollector;
 
 public abstract class GT_MetaPipeEntity_Frame extends MetaPipeEntity {
 	
@@ -14,7 +15,7 @@ public abstract class GT_MetaPipeEntity_Frame extends MetaPipeEntity {
 		
 	}
 	
-	@Override public String getDescription() {return "Just something you can put a Cover or CFoam on.";}
+	@Override public String getDescription() {return StatCollector.translateToLocal("metatileentity.GT_Frame.tooltip");}
 	@Override public int getTextureIndex(byte aSide, byte aConnections, boolean aActive, boolean aRedstone) {return 3;}
 	
 	@Override public final boolean isSimpleMachine()				{return true;}

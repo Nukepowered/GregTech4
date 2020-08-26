@@ -3,7 +3,6 @@ package gregtechmod.api.items;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_ToolDictNames;
 import gregtechmod.api.util.GT_ModHandler;
-import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 
 import java.util.List;
@@ -20,7 +19,7 @@ public class GT_SoftHammer_Item extends GT_Tool_Item {
 	public GT_SoftHammer_Item(String aUnlocalized, int aMaxDamage, int aEntityDamage) {
 		super(aUnlocalized, "item.GT_Hammer_Rubber.tooltip_main", aMaxDamage, aEntityDamage, true);
 		GregTech_API.registerSoftHammer(new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-		GT_OreDictUnificator.registerOre(GT_ToolDictNames.craftingToolSoftHammer, new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+		registerAtOreDictWildcard(GT_ToolDictNames.craftingToolSoftHammer);
 		setCraftingSound(GregTech_API.sSoundList.get(101));
 		setBreakingSound(GregTech_API.sSoundList.get(101));
 		setEntityHitSound(GregTech_API.sSoundList.get(101));

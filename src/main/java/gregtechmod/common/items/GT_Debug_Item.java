@@ -31,14 +31,15 @@ public class GT_Debug_Item extends GT_Generic_Item implements IElectricItem {
         return true;
     }
     
+    @Override
     @SuppressWarnings("unchecked")
 	@SideOnly(Side.CLIENT)
-    public void getSubItems(int var1, CreativeTabs var2, @SuppressWarnings("rawtypes") List var3) {
+    public void getSubItems(Item item, CreativeTabs tab, @SuppressWarnings("rawtypes") List items) {
         ItemStack tCharged = new ItemStack(this, 1);
         GT_ModHandler.chargeElectricItem(tCharged, 1000000000, Integer.MAX_VALUE, true, false);
-        var3.add(tCharged);
+        items.add(tCharged);
         for (ItemStack tStack : GregTech_API.sBookList.values()) {
-        	if (tStack != null) var3.add(tStack);
+        	if (tStack != null) items.add(tStack);
         }
     }
     

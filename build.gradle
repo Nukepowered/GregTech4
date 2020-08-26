@@ -16,10 +16,19 @@ buildscript {
 }
 
 apply plugin: 'forge'
+apply plugin: 'java'
 
-version = "404"
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+
+sourceCompatibility = targetCompatibility = '1.8'
+compileJava {
+    sourceCompatibility = targetCompatibility = '1.8'
+}
+
+version = "408s"
 group= "gregtechmod"
-archivesBaseName = "gregtech_addon"
+archivesBaseName = "gregtechmod"
 
 minecraft {
     version = "${mc_ver}-${forge_ver}-${mc_ver}"

@@ -7,6 +7,7 @@ import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
+import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
@@ -83,7 +84,7 @@ public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDic
       }
 
       if(aMaterial == Materials.Mercury) {
-         System.err.println("\'blockQuickSilver\'?, In which Ice Desert can you actually place this as a solid Block?");
+         GT_Log.log.error("\'blockQuickSilver\'?, In which Ice Desert can you actually place this as a solid Block?");
       } else if(aMaterial == Materials.Iron) {
          GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Items.IC2_Compressed_Coal_Ball.get(8L, new Object[0]), GT_Utility.copyAmount(1L, aStack), GT_Items.IC2_Compressed_Coal_Chunk.get(1L, new Object[0]), 400, 4);
       }

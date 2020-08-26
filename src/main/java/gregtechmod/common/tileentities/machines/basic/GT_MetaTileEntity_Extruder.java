@@ -84,6 +84,6 @@ public class GT_MetaTileEntity_Extruder extends GT_MetaTileEntity_BasicMachine {
    }
 
    public String getDescription() {
-      return "Universal Machine for Metal Working";
+      return "metatileentity.GT_Extruder.tooltip";
    }
 }

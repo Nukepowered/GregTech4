@@ -9,7 +9,6 @@ import gregtechmod.api.util.GT_CoverBehavior;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
-import ic2.api.Direction;
 import ic2.api.item.ElectricItem;
 import ic2.api.item.IElectricItem;
 import ic2.api.tile.IWrenchable;
@@ -447,14 +446,14 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 		return mIsAddedToEnet;
 	}
     
-	public boolean acceptsEnergyFrom(TileEntity aReceiver, Direction aDirection) {
+	public boolean acceptsEnergyFrom(TileEntity aReceiver, ForgeDirection aDirection) {
     	if (isInvalid()||mReleaseEnergy) return false;
-		return isInputFacing((short)aDirection.toSideValue());
+		return isInputFacing((short)aDirection.ordinal());
 	}
 	
-	public boolean emitsEnergyTo(TileEntity aReceiver, Direction aDirection) {
+	public boolean emitsEnergyTo(TileEntity aReceiver, ForgeDirection aDirection) {
     	if (isInvalid()||mReleaseEnergy) return mReleaseEnergy;
-		return isOutputFacing((short)aDirection.toSideValue());
+		return isOutputFacing((short)aDirection.ordinal());
 	}
 	
 	@Override
@@ -666,7 +665,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 		return getStored();
 	}
 	
-	public boolean isTeleporterCompatible(Direction side) {
+	public boolean isTeleporterCompatible(ForgeDirection side) {
 		return false;
 	}
 
@@ -681,7 +680,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	
 	@Override
 	public double getDemandedEnergy() {
-		return maxEUInput();
+		return this.mReleaseEnergy?0:this.maxEUStore() - this.getEnergyVar();
 	}
 	
 	@Override
@@ -756,7 +755,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	}
 
 	@Override
-	public boolean isMJConverterUpgradable() {
+	public boolean isRFConverterUpgradable() {
 		return false;
 	}
 
@@ -771,7 +770,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	}
 	
 	@Override
-	public boolean hasMJConverterUpgrade() {
+	public boolean hasRFConverterUpgrade() {
 		return false;
 	}
 
@@ -888,7 +887,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	}
 	
 	@Override
-	public boolean increaseStoredMJ(int aEnergy, boolean aIgnoreTooMuchEnergy) {
+	public boolean increaseStoredRF(int aEnergy, boolean aIgnoreTooMuchEnergy) {
 		return false;
 	}
 
@@ -920,7 +919,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	}
 	
 	@Override
-	public boolean addMJConverterUpgrade() {
+	public boolean addRFConverterUpgrade() {
 		return false;
 	}
 	
@@ -1035,7 +1034,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	}
 
 	@Override
-	public int getStoredMJ() {
+	public int getStoredRF() {
 		return 0;
 	}
 
@@ -1090,7 +1089,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	}
 	
 	@Override
-	public int getMJCapacity() {
+	public int getRFCapacity() {
 		return 0;
 	}
 	
@@ -1229,10 +1228,6 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 		return 0;
 	}
 	
-	public boolean isTeleporterCompatible(ForgeDirection side) {
-		return false;
-	}
-	
 	public double demandedEnergyUnits() {
 		return 0;
 	}
@@ -1241,20 +1236,12 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 		return 0;
 	}
 	
-	public boolean acceptsEnergyFrom(TileEntity emitter, ForgeDirection direction) {
-		return false;
-	}
-	
 	public double getOfferedEnergy() {
 		return 0;
 	}
 	
 	public void drawEnergy(double amount) {
 		
-	}
-	
-	public boolean emitsEnergyTo(TileEntity receiver, ForgeDirection direction) {
-		return false;
 	}
 
 	@Override

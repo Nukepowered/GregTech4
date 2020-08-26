@@ -4,6 +4,7 @@ import gregtechmod.api.GregTech_API;
 
 import java.util.List;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -43,7 +44,7 @@ public class GT_CoolantCell_Item extends GT_Generic_Item {
 	@Override
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
 		super.addAdditionalToolTips(aList, aStack);
-		aList.add("Stored Heat: " + getHeatOfStack(aStack));
+		aList.add(I18n.format("item.coolant.stored.tooltip", getHeatOfStack(aStack)));
 	}
 	
     protected static int getHeatOfStack(ItemStack aStack) {

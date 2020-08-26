@@ -3,7 +3,6 @@ package gregtechmod.api.items;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_ToolDictNames;
 import gregtechmod.api.util.GT_ModHandler;
-import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 
 import java.util.List;
@@ -21,7 +20,7 @@ public class GT_Screwdriver_Item extends GT_Tool_Item {
 	public GT_Screwdriver_Item(String aUnlocalized, int aMaxDamage, int aEntityDamage, int aDischargedGTID) {
 		super(aUnlocalized, "item.GT_Screwdriver.tooltip_main", aMaxDamage, aEntityDamage, true, -1, aDischargedGTID);
 		GregTech_API.registerScrewdriver(new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-		GT_OreDictUnificator.registerOre(GT_ToolDictNames.craftingToolScrewdriver, new ItemStack(this, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
+		registerAtOreDictWildcard(GT_ToolDictNames.craftingToolScrewdriver);
 		addToEffectiveList(EntityCaveSpider.class.getName());
 		addToEffectiveList(EntitySpider.class.getName());
 		addToEffectiveList("EntityTFHedgeSpider");

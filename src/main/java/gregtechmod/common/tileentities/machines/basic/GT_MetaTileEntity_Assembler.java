@@ -65,6 +65,6 @@ public class GT_MetaTileEntity_Assembler extends GT_MetaTileEntity_BasicMachine 
 	}
 	@Override
 	public String getDescription() {
-		return "Avengers, Assemble!";
+		return "metatileentity.GT_Assembler.tooltip";
 	}
 }

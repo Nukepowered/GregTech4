@@ -27,7 +27,7 @@ public class GT_MetaTileEntity_ElectricSorter extends GT_MetaTileEntity_Electric
 	@Override public boolean isBatteryUpgradable()					{return true;}
 	@Override public boolean isSimpleMachine()						{return true;}
     @Override public int maxEUStore()								{return 10000;}
-    @Override public int maxMJStore()								{return maxEUStore()/2;}
+    @Override public int maxRFStore()								{return maxEUStore()/2;}
 	@Override public int getMinimumStoredEU()						{return 2000;}
     @Override public boolean isValidSlot(int aIndex)				{return aIndex<1;}
     @Override public boolean isOutputFacing(byte aSide)				{return mTargetDirection == aSide || getBaseMetaTileEntity().getBackFacing() == aSide;}
@@ -148,6 +148,6 @@ public class GT_MetaTileEntity_ElectricSorter extends GT_MetaTileEntity_Electric
 	
 	@Override
 	public String getDescription() {
-		return "The Sorter will put matching Items into the Blue Side.";
+		return "metatileentity.GT_E_Sorter.tooltip";
 	}
 }

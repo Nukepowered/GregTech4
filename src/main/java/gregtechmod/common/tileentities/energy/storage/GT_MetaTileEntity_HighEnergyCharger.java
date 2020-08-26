@@ -63,6 +63,6 @@ public class GT_MetaTileEntity_HighEnergyCharger extends GT_MetaTileEntity_Charg
    }
 
    public String getDescription() {
-      return "(De-)Charges at Tier 7 (Output at the Back)";
+      return "metatileentity.GT_HighEnergyCharger.tooltip";
    }
 }

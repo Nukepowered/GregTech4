@@ -69,6 +69,6 @@ public class GT_MetaTileEntity_BronzeAlloySmelter extends GT_MetaTileEntity_Basi
 	
 	@Override
 	public String getDescription() {
-		return "Steam powered combination Smelter";
+		return "metatileentity.GT_BronzeAlloySmelter.tooltip";
 	}
 }

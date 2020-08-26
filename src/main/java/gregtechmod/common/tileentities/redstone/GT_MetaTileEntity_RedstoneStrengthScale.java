@@ -46,6 +46,6 @@ public class GT_MetaTileEntity_RedstoneStrengthScale extends GT_MetaTileEntity_R
 	
 	@Override
 	public String getDescription() {
-		return "Redstone Strength on a Scale";
+		return "metatileentity.GT_RedstoneScaleBlock.tooltip";
 	}
 }

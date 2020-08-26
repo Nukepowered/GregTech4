@@ -47,7 +47,7 @@ public class GT_MetaTileEntity_Multi_SteamTurbine extends GT_MetaTileEntity_Mult
 	
 	@Override
 	public boolean checkRecipe(ItemStack aStack) {
-		if (depleteInput(GT_ModHandler.getSteam(1600))) {
+		if (depleteInput(GT_ModHandler.getSteam(1600)) || depleteInput(GT_ModHandler.getIC2Steam(1600))) {
 			mEUt = 800;
 			mMaxProgresstime = 1;
 			if (GT_Items.Component_Turbine_Bronze.isStackEqual(aStack, true, true)) {
@@ -156,7 +156,7 @@ public class GT_MetaTileEntity_Multi_SteamTurbine extends GT_MetaTileEntity_Mult
 	
 	@Override
 	public String getDescription() {
-		return "Consumes 1600 Liters of Steam per Tick";
+		return "metatileentity.GT_Multi_SteamTurbine.tooltip";
 	}
 	@Override
 	public int getAmountOfOutputs() {

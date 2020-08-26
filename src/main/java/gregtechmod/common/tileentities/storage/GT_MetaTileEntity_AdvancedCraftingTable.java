@@ -266,7 +266,7 @@ public class GT_MetaTileEntity_AdvancedCraftingTable extends GT_MetaTileEntity_B
 	
 	@Override
 	public String getDescription() {
-		return "For the very large Projects";
+		return "metatileentity.GT_ProjectTable.tooltip";
 	}
 	
 	@Override

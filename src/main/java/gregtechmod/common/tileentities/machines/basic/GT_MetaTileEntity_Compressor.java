@@ -56,6 +56,6 @@ public class GT_MetaTileEntity_Compressor extends GT_MetaTileEntity_BasicMachine
 	
 	@Override
 	public String getDescription() {
-		return "Compress-O-Matic C77";
+		return "metatileentity.GT_Compressor.tooltip";
 	}
 }

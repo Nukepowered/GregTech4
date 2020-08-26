@@ -166,7 +166,7 @@ public class GT_MetaTileEntity_Multi_GasTurbine extends GT_MetaTileEntity_MultiB
 	
 	@Override
 	public String getDescription() {
-		return "About 42 small Gas Turbines worth";
+		return "metatileentity.GT_Multi_GasTurbine.tooltip";
 	}
 	@Override
 	public int getAmountOfOutputs() {

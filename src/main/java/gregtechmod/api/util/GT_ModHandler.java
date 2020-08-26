@@ -14,7 +14,6 @@ import ic2.api.recipe.RecipeOutput;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.Map.Entry;
-
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -90,6 +89,10 @@ public class GT_ModHandler {
 	 */
 	public static FluidStack getSteam(long aAmount) {
 		return FluidRegistry.getFluidStack("steam", (int)aAmount);
+	}
+	
+	public static FluidStack getIC2Steam(long aAmount) {
+		return FluidRegistry.getFluidStack("ic2steam", (int)aAmount);
 	}
 	
 	public static ItemStack getEmptyFuelCan(long aAmount) {
@@ -330,12 +333,16 @@ public class GT_ModHandler {
 	 * Just simple Furnace smelting. Unbelievable how Minecraft fails at making a simple ItemStack->ItemStack mapping...
 	 */
 	@SuppressWarnings("deprecation")
-	public static boolean addSmeltingRecipe(ItemStack aInput, ItemStack aOutput) {
+	public static synchronized boolean addSmeltingRecipe(ItemStack aInput, ItemStack aOutput) {
 		aOutput = GT_OreDictUnificator.get(true, aOutput);
 		if (aInput == null || aOutput == null) return false;
 		if (aInput.getItem().hasContainerItem()) return false;
 		if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.smelting, aInput, true)) return false;
-		FurnaceRecipes.smelting().func_151394_a(aInput.copy(), aOutput.copy(), 0.0F);
+		Map<?, ?> recipes = FurnaceRecipes.smelting().getSmeltingList();
+		synchronized (recipes) {
+			FurnaceRecipes.smelting().func_151394_a(aInput.copy(), aOutput.copy(), 0.0F);
+		}
+		
 		return true;
 	}
 	
@@ -486,7 +493,7 @@ public class GT_ModHandler {
 	/**
 	 * Adds Several Pulverizer-Type Recipes.
 	 */
-	public static boolean addPulverisationRecipe(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2, int aChance, boolean aOverwrite) {
+	public static synchronized boolean addPulverisationRecipe(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2, int aChance, boolean aOverwrite) {
 		aOutput1 = GT_OreDictUnificator.get(true, aOutput1);
 		aOutput2 = GT_OreDictUnificator.get(true, aOutput2);
 		if (aInput == null || aOutput1 == null) return false;
@@ -534,15 +541,15 @@ public class GT_ModHandler {
 	/**
 	 * Adds a Recipe to the Sawmills of GregTech and ThermalCraft
 	 */
-	public static boolean addSawmillRecipe(ItemStack aInput1, ItemStack aOutput1, ItemStack aOutput2) {
+	public static synchronized boolean addSawmillRecipe(ItemStack aInput1, ItemStack aOutput1, ItemStack aOutput2) {
 		return addSawmillRecipe(aInput1, aOutput1, aOutput2, 160);
 	}
 	
-	public static boolean addSawmillRecipe(ItemStack aInput1, ItemStack aOutput1, ItemStack aOutput2, int aRF) {
+	public static synchronized boolean addSawmillRecipe(ItemStack aInput1, ItemStack aOutput1, ItemStack aOutput2, int aRF) {
 		return addSawmillRecipe(aInput1, aOutput1, aOutput2, aRF, 100);
 	}
 	
-	public static boolean addSawmillRecipe(ItemStack aInput1, ItemStack aOutput1, ItemStack aOutput2, int aRF, int aChance) {
+	public static synchronized boolean addSawmillRecipe(ItemStack aInput1, ItemStack aOutput1, ItemStack aOutput2, int aRF, int aChance) {
 		aOutput1 = GT_OreDictUnificator.get(true, aOutput1);
 		aOutput2 = GT_OreDictUnificator.get(true, aOutput2);
 		if (aInput1 == null || aOutput1 == null) return false;
@@ -688,7 +695,7 @@ public class GT_ModHandler {
 	/**
 	 * @param aValue Scrap = 5000, Scrapbox = 45000, Diamond Dust 125000
 	 */
-	public static boolean addIC2MatterAmplifier(ItemStack aAmplifier, int aValue) {
+	public static synchronized boolean addIC2MatterAmplifier(ItemStack aAmplifier, int aValue) {
 		if (aAmplifier == null || aValue <= 0) return false;
 		if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.massfabamplifier, aAmplifier, true)) return false;
 		try {
@@ -905,7 +912,7 @@ public class GT_ModHandler {
 	/**
 	 * Removes a Smelting Recipe
 	 */
-	public static boolean removeFurnaceSmelting(ItemStack aInput) {
+	public static synchronized boolean removeFurnaceSmelting(ItemStack aInput) {
 		if (aInput != null) {
 			FurnaceRecipes.smelting().getSmeltingList().remove(aInput);
 			return true;
@@ -942,10 +949,13 @@ public class GT_ModHandler {
 			} catch(Throwable e) {GT_Log.log.catching(e);}
 		}
 		for (int i = 0; i < sBufferRecipeList.size(); i++) {
+			IRecipe recipe = null;
 			try {
-				if (sBufferRecipeList.get(i).matches(aCrafting, GregTech_API.sDummyWorld)) {
-					rReturn = sBufferRecipeList.get(i).getCraftingResult(aCrafting);
-					sBufferRecipeList.remove(i--);
+				if ((recipe = sBufferRecipeList.get(i)) != null) {
+					if (recipe.matches(aCrafting, GregTech_API.sDummyWorld)) {
+						rReturn = sBufferRecipeList.get(i).getCraftingResult(aCrafting);
+						sBufferRecipeList.remove(i--);
+					}
 				}
 			} catch(Throwable e) {GT_Log.log.catching(e);}
 		}
@@ -957,7 +967,7 @@ public class GT_ModHandler {
 	 * @param aOutput The output of the Recipe.
 	 * @return if it has removed at least one Recipe.
 	 */
-    public static boolean removeRecipeByOutput(ItemStack aOutput) {
+    public static synchronized boolean removeRecipeByOutput(ItemStack aOutput) {
     	if (aOutput == null) return false;
     	boolean rReturn = false;
 		@SuppressWarnings("unchecked")
@@ -1122,9 +1132,9 @@ public class GT_ModHandler {
      * Gives you a list of the Outputs from a Crafting Recipe
      * If you have multiple Mods, which add Bronze Armor for example
      */
-    @SuppressWarnings("unchecked")
-	public static ArrayList<ItemStack> getRecipeOutputs(ItemStack... aRecipe) {
-    	return getRecipeOutputs(CraftingManager.getInstance().getRecipeList(), false, aRecipe);
+	@SuppressWarnings("unchecked")
+    public static synchronized List<ItemStack> getRecipeOutputs(ItemStack... aRecipe) {
+		return getRecipeOutputs(CraftingManager.getInstance().getRecipeList(), false, aRecipe);
     }
     
     /**
@@ -1149,7 +1159,9 @@ public class GT_ModHandler {
 			temp = false;
 			try {
 				temp = aList.get(i).matches(aCrafting, GregTech_API.sDummyWorld);
-			} catch(Throwable e) {GT_Log.log.catching(e);}
+			} catch(Throwable e) {
+				if (!(e instanceof NullPointerException)) GT_Log.log.catching(e);
+			}
 			if (temp) {
 				ItemStack tOutput = aList.get(i).getCraftingResult(aCrafting);
 				if (tOutput == null || tOutput.stackSize <= 0) {
@@ -1188,13 +1200,28 @@ public class GT_ModHandler {
     /**
      * Used in my own Furnace.
      */
-    public static ItemStack getSmeltingOutput(ItemStack aInput, boolean aRemoveInput, ItemStack aOutputSlot) {
+    public static synchronized ItemStack getSmeltingOutput(ItemStack aInput, boolean aRemoveInput, ItemStack aOutputSlot) {
     	if (aInput == null) return null;
-    	ItemStack rStack = GT_OreDictUnificator.get(FurnaceRecipes.smelting().getSmeltingResult(aInput));
+    	ItemStack rStack = GT_OreDictUnificator.get(getSmeltingResult(aInput));
     	if (rStack != null && (aOutputSlot == null || (GT_Utility.areStacksEqual(rStack, aOutputSlot) && rStack.stackSize + aOutputSlot.stackSize <= aOutputSlot.getMaxStackSize()))) {
 			if (aRemoveInput) aInput.stackSize--;
 			return rStack;
 		}
+    	return null;
+    }
+    
+    public static synchronized ItemStack getSmeltingResult(ItemStack aInput) {
+    	@SuppressWarnings("unchecked")
+		Map<ItemStack, ItemStack> recipes = FurnaceRecipes.smelting().getSmeltingList();
+    	synchronized (recipes) {
+    		for (Entry<ItemStack, ItemStack> entry : recipes.entrySet()) {
+    			ItemStack value = entry.getKey();
+    			if (value.getItem() == aInput.getItem() && (aInput.getItemDamage() == 32767 || value.getItemDamage() == aInput.getItemDamage())) {
+    				return entry.getValue();
+    			}
+    		}
+    	}
+    	
     	return null;
     }
     
@@ -1427,12 +1454,12 @@ public class GT_ModHandler {
 	 */
 	public static boolean useSolderingIron(ItemStack aStack, EntityLivingBase aPlayer) {
 		if (aPlayer == null || aStack == null) return false;
-		if (GT_Utility.isItemStackInList(aStack, GregTech_API.sSolderingToolList)) {
+		if (GT_Utility.isItemStackInList(aStack, GregTech_API.sSolderingToolList, true)) {
 			if (aPlayer instanceof EntityPlayer) {
 				EntityPlayer tPlayer = (EntityPlayer)aPlayer;
 				if (tPlayer.capabilities.isCreativeMode) return true;
 				for (int i = 0; i < tPlayer.inventory.mainInventory.length; i++) {
-					if (GT_Utility.isItemStackInList(tPlayer.inventory.mainInventory[i], GregTech_API.sSolderingMetalList)) {
+					if (GT_Utility.isItemStackInList(tPlayer.inventory.mainInventory[i], GregTech_API.sSolderingMetalList, true)) {
 						if (damageOrDechargeItem(aStack, 1, 1000, tPlayer)) {
 							if (tPlayer.inventory.mainInventory[i].getItemDamage() >= tPlayer.inventory.mainInventory[i].getMaxDamage()) tPlayer.inventory.mainInventory[i] = null;
 						    if (damageOrDechargeItem(tPlayer.inventory.mainInventory[i], 1, 1000, tPlayer)) {

@@ -113,7 +113,7 @@ public class GT_MetaTileEntity_IDSU extends MetaTileEntity {
 	
 	@Override
 	public String getDescription() {
-		return "Interdimensional Storage Unit";
+		return "metatileentity.GT_IDSU.tooltip";
 	}
 	
 	@Override

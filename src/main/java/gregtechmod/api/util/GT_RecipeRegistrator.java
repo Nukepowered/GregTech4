@@ -123,7 +123,6 @@ public class GT_RecipeRegistrator {
 	 * @param aBackSmelting allows to reverse smelt into aMat (false for Gems)
 	 * @param aBackMacerating allows to reverse macerate into aOutput
 	 */
-	@SuppressWarnings("null") // And again it is too stupid to get, that it can't be null at that point...
 	public static void registerUsagesForMaterials(ItemStack aMat, ItemStack aOutput, String aPlate, boolean aBackSmelting, boolean aBackMacerating, boolean aRecipeReplacing) {
 		if (aMat == null || aOutput == null) return;
 		aMat = GT_Utility.copy(aMat);
@@ -155,13 +154,15 @@ public class GT_RecipeRegistrator {
 			Items.feather.setDamage(sMt1, Items.feather.getDamage(aMat));
 			
 			for (ItemStack[] tRecipe : sShapes1) {
-				int tAmount1 = 0;
-				for (ItemStack tMat : tRecipe) {
-					if (tMat == sMt1) tAmount1++;
-				}
-				for (ItemStack tCrafted : GT_ModHandler.getRecipeOutputs(tRecipe)) {
-					if (aBackMacerating) GT_ModHandler.addPulverisationRecipe(tCrafted, GT_Utility.copyAmount(tAmount1, aOutput), null, 0, false);
-					if (aBackSmelting) GT_ModHandler.addSmeltingAndAlloySmeltingRecipe(tCrafted, GT_Utility.copyAmount(tAmount1, tUnificated));
+				if (tRecipe != null) {
+					int tAmount1 = 0;
+					for (ItemStack tMat : tRecipe) {
+						if (tMat == sMt1) tAmount1++;
+					}
+					for (ItemStack tCrafted : GT_ModHandler.getRecipeOutputs(tRecipe)) {
+						if (aBackMacerating) GT_ModHandler.addPulverisationRecipe(tCrafted, GT_Utility.copyAmount(tAmount1, aOutput), null, 0, false);
+						if (aBackSmelting) GT_ModHandler.addSmeltingAndAlloySmeltingRecipe(tCrafted, GT_Utility.copyAmount(tAmount1, tUnificated));
+					}
 				}
 			}
 			

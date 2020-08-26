@@ -74,7 +74,7 @@ public class GT_MetaTileEntity_DigitalTank extends GT_MetaTileEntity_BasicTank {
    }
 
    public String getDescription() {
-      return "With a capacity of " + this.getCapacity() + " Liters!";
+      return "metatileentity.GT_DigitalTank.tooltip";
    }
 
    public int getCapacity() {

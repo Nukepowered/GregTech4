@@ -20,12 +20,12 @@ public class GT_MetaItem_DirtyDust extends GT_MetaItem_Abstract {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public static ItemStack addItem(int aMeta, String aName, Materials aMaterial, boolean aGlow) {
+	public static ItemStack addItem(int aMeta, Materials aMaterial, boolean aGlow) {
 		instance.mToolTipList[aMeta] = aMaterial.getToolTip(OrePrefixes.dustImpure.mMaterialAmount / GregTech_API.MATERIAL_UNIT);
 		instance.mGlowList[aMeta] = aGlow;
 		instance.mStackList[aMeta] = new ItemStack(instance, 1, aMeta);
 		if (aMaterial != null) {
-			GT_OreDictUnificator.add(OrePrefixes.dustDirty, aMaterial, instance.getUnunifiedStack(aMeta, 1));
+			GT_OreDictUnificator.addLater(OrePrefixes.dustDirty, aMaterial, instance.getUnunifiedStack(aMeta, 1));
 		}
 		return instance.getUnunifiedStack(aMeta, 1);
 	}

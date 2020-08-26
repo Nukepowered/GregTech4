@@ -22,7 +22,7 @@ public class GT_MetaTileEntity_CropHarvestor extends GT_MetaTileEntity_ElectricB
 	@Override public boolean isSimpleMachine()						{return false;}
 	@Override public int getMinimumStoredEU()						{return 1000+(int)Math.pow(4, getBaseMetaTileEntity().getOverclockerUpgradeCount())*100;}
     @Override public int maxEUStore()								{return 10000;}
-    @Override public int maxMJStore()								{return maxEUStore();}
+    @Override public int maxRFStore()								{return maxEUStore();}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 110);}
     
 	@Override
@@ -65,7 +65,7 @@ public class GT_MetaTileEntity_CropHarvestor extends GT_MetaTileEntity_ElectricB
 	
 	@Override
 	public String getDescription() {
-		return "Harvests the Cropsticks in front of it";
+		return "metatileentity.GT_Harvestor.tooltip";
 	}
 	
 	@Override

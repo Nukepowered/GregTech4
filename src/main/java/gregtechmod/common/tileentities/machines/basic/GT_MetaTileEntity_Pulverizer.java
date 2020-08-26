@@ -130,6 +130,6 @@ public class GT_MetaTileEntity_Pulverizer extends GT_MetaTileEntity_BasicMachine
 	
 	@Override
 	public String getDescription() {
-		return "Macerator + Pulverizer + Rock Crusher in one Machine";
+		return "metatileentity.GT_Pulverizer.tooltip";
 	}
 }

@@ -47,7 +47,7 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends GT_MetaTileEntity_Mul
 	public boolean checkRecipe(ItemStack aStack) {
 		for (GT_Recipe tRecipe : GT_Recipe.sHotFuels) {
 			if (depleteInput(tRecipe.getRepresentativeInput(0))) {
-				mEUt = 400;
+				mEUt = 1600;
 				mMaxProgresstime = (tRecipe.mStartEU * 2) / 5;
 				mEfficiencyIncrease = mMaxProgresstime * 30;
 				if (tRecipe.getOutput(0) != null) mOutputItems = new ItemStack[] { GT_Utility.copy(tRecipe.getOutput(0)) };
@@ -66,7 +66,7 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends GT_MetaTileEntity_Mul
 	public boolean onRunningTick(ItemStack aStack) {
 		if (mEUt > 0) {
 			int tGeneratedEU = (int)(((long)mEUt * 2 * mEfficiency) / 10000);
-			if (tGeneratedEU > 0 && depleteInput(GT_ModHandler.getWater((tGeneratedEU + 160) / 160))) {
+			if (tGeneratedEU > 0 && depleteInput(GT_ModHandler.getWater((tGeneratedEU + 160) / 160))) { 
 				addOutput(GT_ModHandler.getSteam(tGeneratedEU));
 			}
 			return true;
@@ -149,7 +149,7 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends GT_MetaTileEntity_Mul
 	
 	@Override
 	public String getDescription() {
-		return "Converts Heat into Steam";
+		return "metatileentity.GT_Multi_ThermalBoiler.tooltip";
 	}
 	@Override
 	public int getAmountOfOutputs() {

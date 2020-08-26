@@ -18,7 +18,7 @@ import net.minecraft.item.ItemStack;
 public class ProcessingCell implements IOreRecipeRegistrator {
 
    public ProcessingCell() {
-      OrePrefixes.cell.add((IOreRecipeRegistrator)this);
+      OrePrefixes.cell.add(this);
    }
 
    public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {

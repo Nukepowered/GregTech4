@@ -61,6 +61,6 @@ public class GT_MetaTileEntity_Wiremill extends GT_MetaTileEntity_BasicMachine {
 	
 	@Override
 	public String getDescription() {
-		return "Produces Wires more efficiently";
+		return "metatileentity.GT_Wiremill.tooltip";
 	}
 }

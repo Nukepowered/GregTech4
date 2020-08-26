@@ -49,6 +49,6 @@ public class GT_MetaTileEntity_BronzeCompressor extends GT_MetaTileEntity_BasicM
 	
 	@Override
 	public String getDescription() {
-		return "Steam powered Compressor";
+		return "metatileentity.GT_BronzeCompressor.name";
 	}
 }

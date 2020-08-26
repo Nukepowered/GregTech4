@@ -56,6 +56,6 @@ public class GT_MetaTileEntity_Macerator extends GT_MetaTileEntity_BasicMachine 
 	
 	@Override
 	public String getDescription() {
-		return "Maceratron-E-901";
+		return "metatileentity.GT_Macerator.tooltip";
 	}
 }

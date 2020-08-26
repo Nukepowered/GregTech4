@@ -1,7 +1,6 @@
 package gregtechmod.api.metatileentity;
 
 import gregtechmod.api.interfaces.IIC2TileEntity;
-import ic2.api.Direction;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 
@@ -15,8 +14,12 @@ public class BaseMetaTileEntityIC extends BaseMetaTileEntity implements IIC2Tile
 		super();
 	}
 	
-	public double injectEnergy(ForgeDirection aDirection, double aAmount, double voltage) {return injectEnergyUnits((byte)aDirection.ordinal(), (int)aAmount, (int)voltage)?0:aAmount;}
-	public boolean isTeleporterCompatible(Direction aSide) {return hasValidMetaTileEntity() && mMetaTileEntity.isTeleporterCompatible();}
-	public boolean acceptsEnergyFrom(TileEntity aReceiver, Direction aDirection) {return inputEnergyFrom((byte)aDirection.toSideValue());}
-    public boolean emitsEnergyTo(TileEntity aReceiver, Direction aDirection) {return outputsEnergyTo((byte)aDirection.toSideValue());}
+	@Override
+	public double injectEnergy(ForgeDirection aDirection, double aAmount, double aVoltage) {
+		int amps = (int)(aAmount / aVoltage);
+		return injectEnergyUnits((byte)aDirection.ordinal(), (int)aVoltage, amps) ? 0 : aVoltage * amps;
+	}
+	@Override public boolean isTeleporterCompatible(ForgeDirection side) {return hasValidMetaTileEntity() && mMetaTileEntity.isTeleporterCompatible();}
+	@Override public boolean acceptsEnergyFrom(TileEntity aEmitter, ForgeDirection aDirection) {return inputEnergyFrom((byte)aDirection.ordinal());}
+	@Override public boolean emitsEnergyTo(TileEntity aReceiver, ForgeDirection aDirection) {return outputsEnergyTo((byte)aDirection.ordinal());}
 }

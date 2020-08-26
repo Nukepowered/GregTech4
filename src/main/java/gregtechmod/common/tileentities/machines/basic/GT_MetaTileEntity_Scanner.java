@@ -95,6 +95,6 @@ public class GT_MetaTileEntity_Scanner extends GT_MetaTileEntity_BasicMachine {
    }
 
    public String getDescription() {
-      return "Scans Crops and other things.";
+      return "metatileentity.GT_Scanner.tooltip";
    }
 }
