@@ -6,8 +6,11 @@ import gregtechmod.api.interfaces.IMetaTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.InfoBuilder;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -472,8 +475,12 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity {
 	}
 	
 	@Override
-	public String[] getInfoData() {
-		return new String[] {"Progress:", (mProgresstime/20)+"secs", (mMaxProgresstime/20)+"secs", "Efficiency:", (mEfficiency/100.0F)+"%", "Problems:", ""+(getIdealStatus() - getRepairStatus())};
+	public Map<String, List<Object>> getInfoData() { // TODO maybe will not save same-key values
+		return InfoBuilder.create()
+				.newKey("sensor.progress.percentag", mProgresstime * 100.0D / mMaxProgresstime)
+				.newKey("sensor.progress.secs", mProgresstime / 20)
+				.newKey("sensor.progress.secs", mMaxProgresstime / 20)
+				.build();
 	}
 	
 	@Override

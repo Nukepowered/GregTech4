@@ -1,15 +1,18 @@
 package gregtechmod.api.metatileentity.implementations;
 
+import java.util.List;
+import java.util.Map;
+
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.InfoBuilder;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.StatCollector;
 
 /**
  * NEVER INCLUDE THIS FILE IN YOUR MOD!!!
@@ -325,12 +328,12 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 	}
 	
 	@Override
-	public String[] getInfoData() {
-		return new String[] {
-				StatCollector.translateToLocalFormatted("sensor.progress.percentage", (mProgresstime * 100.0D / mMaxProgresstime)),
-				StatCollector.translateToLocalFormatted("sensor.progress.secs", mProgresstime / 20),
-				StatCollector.translateToLocalFormatted("sensor.progress.secs", mMaxProgresstime / 20)
-		};
+	public Map<String, List<Object>> getInfoData() {
+		return InfoBuilder.create()
+				.newKey("sensor.progress.percentage", mProgresstime * 100.0D / mMaxProgresstime)
+				.newKey("sensor.progress.secs", mProgresstime / 20)
+				.newKey("sensor.progress.secs.1", mMaxProgresstime / 20)
+				.build();
 	}
 	
 	@Override

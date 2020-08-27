@@ -7,6 +7,9 @@ import gregtechmod.api.util.GT_Config;
 import gregtechmod.api.util.GT_Utility;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -289,7 +292,7 @@ public abstract class MetaPipeEntity implements IMetaTileEntity {
 	@Override
 	public boolean isGivingInformation() {return false;}
 	@Override
-	public String[] getInfoData() {return new String[]{};}
+	public Map<String, List<Object>> getInfoData() {return Collections.emptyMap();}
 	
 	public boolean isDigitalChest() {return false;}
 	public ItemStack[] getStoredItemData() {return null;}

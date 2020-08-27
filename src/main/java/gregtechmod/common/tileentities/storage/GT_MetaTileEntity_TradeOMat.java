@@ -1,9 +1,15 @@
 package gregtechmod.common.tileentities.storage;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.InfoBuilder;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -180,7 +186,7 @@ public class GT_MetaTileEntity_TradeOMat extends MetaTileEntity {
                   super.mInventory[27] = null;
                }
 
-               super.mInventory[0] = GT_Utility.copy((ItemStack[]) new Object[]{super.mInventory[65]});
+               super.mInventory[0] = GT_Utility.copy(super.mInventory[65]);
             }
 
             this.mIsWorking = true;
@@ -301,16 +307,16 @@ public class GT_MetaTileEntity_TradeOMat extends MetaTileEntity {
       return GT_Utility.isDebugItem(super.mInventory[66])?Float.MAX_VALUE:10.0F;
    }
 
-   public String[] getInfoData() {
-      return !GT_Utility.isStackInvalid(super.mInventory[65]) && !GT_Utility.isStackInvalid(super.mInventory[64])?new String[] {
-    		   StatCollector.translateToLocalFormatted("util.GT_TradeOMat.performed_trades", this.mPerformedTrades)
-    		 , StatCollector.translateToLocalFormatted("util.GT_TradeOMat.stock") + (GT_Utility.isDebugItem(mInventory[66]) ? "Infinite" : Integer.valueOf(this.getAmountOffered()))
-    		 ,	StatCollector.translateToLocalFormatted("util.GT_TradeOMat.received", this.getAmountMoney())
-    		 ,  StatCollector.translateToLocalFormatted("util.GT_TradeOMat.selling", mInventory[65].stackSize, mInventory[65].getDisplayName())
-    		 ,  StatCollector.translateToLocalFormatted("util.GT_TradeOMat.buying", mInventory[64].stackSize, mInventory[64].getDisplayName())
-    		 , 	StatCollector.translateToLocalFormatted("util.GT_TradeOMat.for", mInventory[65].stackSize, mInventory[65].getDisplayName())
-    		 , 	StatCollector.translateToLocalFormatted("util.GT_TradeOMat.for2", mInventory[64].stackSize, mInventory[64].getDisplayName())
-    		 } : new String[0];
+   public Map<String, List<Object>> getInfoData() {
+	   return (GT_Utility.isStackInvalid(mInventory[65]) || GT_Utility.isStackInvalid(mInventory[64])) ?
+			   Collections.singletonMap("sensor.nodata", new ArrayList<>()) :
+			   InfoBuilder.create()
+				   .newKey("util.GT_TradeOMat.performed_trades", mPerformedTrades)
+				   .newKey("util.GT_TradeOMat.stock", (GT_Utility.isDebugItem(mInventory[66]) ? "util.GT_TradeOMat.Infinite" : this.getAmountOffered()))
+				   .newKey("util.GT_TradeOMat.received", this.getAmountMoney())
+				   .newKey("util.GT_TradeOMat.selling", mInventory[65].stackSize, mInventory[65].copy())
+				   .newKey("util.GT_TradeOMat.buying", mInventory[64].stackSize, mInventory[64].copy())
+				   .build();
    }
 
    public boolean isGivingInformation() {

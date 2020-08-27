@@ -3,6 +3,8 @@ package gregtechmod.api.interfaces;
 import gregtechmod.api.util.GT_Config;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -316,7 +318,7 @@ public interface IMetaTileEntity extends ISidedInventory, IFluidTank, IFluidHand
 	@Override
 	public String getInventoryName();
 	
-	public String[] getInfoData();
+	public Map<String, List<Object>> getInfoData();
 	public boolean isGivingInformation();
 	
 	public ItemStack[] getRealInventory();

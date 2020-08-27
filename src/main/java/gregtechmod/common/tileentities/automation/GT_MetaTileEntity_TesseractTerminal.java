@@ -1,10 +1,14 @@
 package gregtechmod.common.tileentities.automation;
 
+import java.util.List;
+import java.util.Map;
+
 import gregtechmod.api.enums.GT_ConfigCategories;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_Config;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.InfoBuilder;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
@@ -152,8 +156,11 @@ public class GT_MetaTileEntity_TesseractTerminal extends MetaTileEntity {
 	}
 	
 	@Override
-	public String[] getInfoData() {
-		return new String[] { "Tesseract Terminal", "Freq: " + mFrequency, getTesseract(mFrequency, false)!=null?"Active":"Inactive"};
+	public Map<String, List<Object>> getInfoData() {
+		return InfoBuilder.create()
+				.newKey("metatileentity.GT_Tesseract.message.1", mFrequency)
+				.newKey("metatileentity.GT_Tesseract.status", "metatileentity.GT_Tesseract.status." + getTesseract(mFrequency, false) != null ? 1 : 2)
+				.build();
 	}
 	
 	@Override

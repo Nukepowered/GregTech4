@@ -7,6 +7,9 @@ import gregtechmod.api.util.*;
 import gregtechmod.common.network.packet.GT_TileEntityPacket;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
@@ -1098,7 +1101,7 @@ public class BaseMetaPipeEntity extends BaseTileEntity implements IGregTechTileE
 	}
 	
 	@Override
-	public String[] getInfoData() {
-		{if (hasValidMetaTileEntity()) return getMetaTileEntity().getInfoData(); return new String[]{};}
+	public Map<String, List<Object>> getInfoData() {
+		{if (hasValidMetaTileEntity()) return getMetaTileEntity().getInfoData(); return Collections.emptyMap();}
 	}
 }

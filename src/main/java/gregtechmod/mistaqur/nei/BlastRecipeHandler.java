@@ -3,13 +3,15 @@ package gregtechmod.mistaqur.nei;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Recipe;
+import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_BlastFurnace;
-
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.util.StatCollector;
 import codechicken.nei.PositionedStack;
 
 public class BlastRecipeHandler extends GT_RecipeHandler {
@@ -51,7 +53,7 @@ public class BlastRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return "Industrial Blast Furnace";  // TODO Locale
+		return StatCollector.translateToLocal("nei.blast_furnance.title");
 	}
 	
 	@Override
@@ -82,10 +84,10 @@ public class BlastRecipeHandler extends GT_RecipeHandler {
 	@Override
 	public void drawExtras(int recipe) {
 		Integer time = ((CachedBlastRecipe)arecipes.get(recipe)).mDuration;
-		drawText(30, 80, new StringBuilder().append("EU: ").append(toNumber(time*((CachedBlastRecipe)arecipes.get(recipe)).mEUt)).toString(), 0xFF000000, false);
-		drawText(30, 90, new StringBuilder().append("Time: ").append(toNumber(time/20)).append(" secs").toString(), 0xFF000000, false);
-		drawText(30,100, new StringBuilder().append("MaxEnergy: ").append(toNumber(((CachedBlastRecipe)arecipes.get(recipe)).mEUt)).append(" EU/t").toString(), 0xFF000000, false);
-		drawText(30,110, new StringBuilder().append("Heat Capacity: ").append(toNumber(((CachedBlastRecipe)arecipes.get(recipe)).mStartEU)).append(" K").toString(), 0xFF000000, false);
+		drawText(30, 80, I18n.format("nei.extras.eu_total", GT_Utility.parseNumberToString(time * ((CachedBlastRecipe)arecipes.get(recipe)).mEUt)), 0xFF000000, false);
+		drawText(30, 90, I18n.format("nei.extras.time", GT_Utility.parseNumberToString(time / 20.0D)), 0xFF000000, false);
+		drawText(30,100, I18n.format("nei.extras.eut", GT_Utility.parseNumberToString(((CachedBlastRecipe)arecipes.get(recipe)).mEUt)), 0xFF000000, false);
+		drawText(30,110, I18n.format("nei.blast_furnance.info", GT_Utility.parseNumberToString(((CachedBlastRecipe)arecipes.get(recipe)).mStartEU)), 0xFF000000, false);
 	}
 
 }

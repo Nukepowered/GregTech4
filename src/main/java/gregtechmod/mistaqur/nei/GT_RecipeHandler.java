@@ -114,24 +114,4 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 	public void drawText(int aX, int aY, String aString, int aColor, boolean aB) {
 		Minecraft.getMinecraft().fontRenderer.drawString(aString, aX, aY, aColor);
 	}
-	
-	public String toNumber(int aNumber) {
-		String tString = "";
-		boolean temp = true; 
-		boolean negative = false;
-		if (aNumber < 0) {
-		  aNumber *= -1;
-		  negative = true;
-		}
-		for (int i = 1000000000; i > 0; i /= 10) {
-		  int tDigit = aNumber / i % 10;
-		  if ((temp) && (tDigit != 0)) temp = false;
-		  if (!temp) {
-			tString = tString + tDigit;
-			if (i != 1) for (int j = i; j > 0; j /= 1000) if (j == 1) tString = tString + ",";
-		  }
-		}
-		if (tString.equals("")) tString = "0";
-		return negative ? "-" + tString : tString;
-	}
 }

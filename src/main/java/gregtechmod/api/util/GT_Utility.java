@@ -856,7 +856,7 @@ public class GT_Utility {
 	}
 	
 	public static boolean isDebugItem(ItemStack aStack) {
-		return GT_Items.Armor_Cheat.isStackEqual(aStack, true, true) || areStacksEqual(GT_ModHandler.getIC2Item("debug", 1), aStack, true);
+		return GT_Items.Tool_Cheat.isStackEqual(aStack, true, true) || areStacksEqual(GT_ModHandler.getIC2Item("debug", 1), aStack, true);
 	}
 	
 	public static boolean isItemStackInIntList(ItemStack aStack, Collection<Integer> aList) {
@@ -891,7 +891,7 @@ public class GT_Utility {
 	}
 	
 	/**
-	 * Converts a Number to a String
+	 * Converts a Number to a String with format like 10,000.10
 	 */
     public static <T extends Number> String parseNumberToString(T aNumber) {
     	return sFormat.format(aNumber);

@@ -5,8 +5,11 @@ import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_Recipe;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.InfoBuilder;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -282,8 +285,12 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity {
 	}
 	
 	@Override
-	public String[] getInfoData() {
-		return new String[] { "Progress:", this.mProgresstime / 20 + "secs", this.mMaxProgresstime / 20 + "secs" };
+	public Map<String, List<Object>> getInfoData() {
+		return InfoBuilder.create()
+				.newKey("sensor.progress.percentage", mProgresstime * 100.0D / mMaxProgresstime)
+				.newKey("sensor.progress.secs", mProgresstime / 20)
+				.newKey("sensor.progress.secs", mMaxProgresstime / 20)
+				.build();
 	}
 	
 	@Override

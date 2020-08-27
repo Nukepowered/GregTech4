@@ -1,5 +1,8 @@
 package gregtechmod.common.tileentities.machines;
 
+import java.util.List;
+import java.util.Map;
+
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
@@ -7,6 +10,7 @@ import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicTan
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Recipe;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.InfoBuilder;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -238,8 +242,12 @@ public class GT_MetaTileEntity_Centrifuge extends GT_MetaTileEntity_BasicTank {
 	}
 	
 	@Override
-	public String[] getInfoData() {
-		return new String[] { "Progress:", this.mProgresstime / 20 + "secs", this.mMaxProgresstime / 20 + "secs" }; // TODO REWORK LOCALE
+	public Map<String, List<Object>> getInfoData() {
+		return InfoBuilder.create()
+				.newKey("sensor.progress.percentage", mProgresstime * 100.0D / mMaxProgresstime)
+				.newKey("sensor.progress.secs", mProgresstime / 20)
+				.newKey("sensor.progress.secs", mMaxProgresstime / 20)
+				.build();
 	}
 	
 	@Override

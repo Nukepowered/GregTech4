@@ -2,11 +2,22 @@ package gregtechmod.common.items;
 
 import gregtechmod.api.interfaces.IGregTechDeviceInformation;
 import gregtechmod.api.items.GT_Generic_Item;
+import gregtechmod.api.util.GT_Utility;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
@@ -30,7 +41,7 @@ public class GT_SensorCard_Item extends GT_Generic_Item implements IRemoteSensor
     public static final UUID CARD_TYPE = new UUID(0, 41);
     
 	public GT_SensorCard_Item(String aName) {
-		super(aName, "item.GT_SensorCard.tooltip");
+		super(aName, "item.GT_SensorCard_Item.tooltip");
 		setMaxStackSize(1);
 	}
 	
@@ -48,10 +59,10 @@ public class GT_SensorCard_Item extends GT_Generic_Item implements IRemoteSensor
 		super.addAdditionalToolTips(aList, aStack);
         ChunkCoordinates target = getCoordinates(aStack);
         if (target == null) {
-    		aList.add("Missing Coodinates!");
+    		aList.add(I18n.format("item.GT_SensorCard_Item.tooltip.info.missing"));
         } else {
-    		aList.add("Device at:");
-            aList.add(String.format("x: %d, y: %d, z: %d", target.posX, target.posY, target.posZ));
+    		aList.add(I18n.format("item.GT_SensorCard_Item.tooltip.info.1"));
+            aList.add(I18n.format("item.GT_SensorCard_Item.tooltip.info.2", target.posX, target.posY, target.posZ));
         }
     }
 	
@@ -65,10 +76,38 @@ public class GT_SensorCard_Item extends GT_Generic_Item implements IRemoteSensor
 		ChunkCoordinates target = aCard.getTarget();
 		TileEntity tTileEntity = world.getTileEntity(target.posX, target.posY, target.posZ);
 		if (tTileEntity != null && tTileEntity instanceof IGregTechDeviceInformation && ((IGregTechDeviceInformation) tTileEntity).isGivingInformation()) {
-			String[] tInfoData = ((IGregTechDeviceInformation) tTileEntity).getInfoData();
-
-			for (int i = 0; i < tInfoData.length; ++i) {
-				aCard.setString("mString" + i, tInfoData[i]);
+			Map<String, List<Object>> tInfoData = ((IGregTechDeviceInformation) tTileEntity).getInfoData();
+			
+			if (tInfoData != null && !tInfoData.isEmpty()) {
+				JsonObject data = new JsonObject();
+				for (Entry<String, List<Object>> entry : tInfoData.entrySet()) {
+					JsonArray values = new JsonArray();
+					for (Object obj : entry.getValue()) {
+						JsonElement value = null;
+						if (obj instanceof Number) {
+							Number num = (Number) obj;
+							num = num instanceof Double && ((Double) num).isNaN() ? 0 : num;
+							value = new JsonPrimitive(num);
+						} else if (obj instanceof Item) {
+							value = new JsonPrimitive(((Item) obj).getUnlocalizedName());
+						} else if (obj instanceof ItemStack) {
+							ItemStack itemStack = (ItemStack) obj;
+							JsonObject stack = new JsonObject();
+							stack.add("amount", new JsonPrimitive(itemStack.stackSize));
+							stack.add("damage", new JsonPrimitive(itemStack.getItemDamage()));
+							stack.add("itemID", new JsonPrimitive(Item.getIdFromItem(itemStack.getItem())));
+							value = stack;
+						} else {
+							value = new JsonPrimitive(obj.toString());
+						}
+						
+						if (value != null) values.add(value);
+					}
+					data.add(entry.getKey(), values);
+				}
+				
+				String jsonData = new Gson().toJson(data);
+				aCard.setString("aData", jsonData);
 			}
 
 			return CardState.OK;
@@ -79,26 +118,52 @@ public class GT_SensorCard_Item extends GT_Generic_Item implements IRemoteSensor
 	
 	@Override
 	public List<PanelString> getStringData(int displaySettings, ICardWrapper aCard, boolean showLabels) {
-        LinkedList<PanelString> rList = new LinkedList<>();
-
-        for(int i = 0; i < 8; ++i) {
-           if((displaySettings & 1 << i) != 0) {
-              PanelString line = new PanelString();
-              line.textLeft = I18n.format(aCard.getString("mString" + i));
-              rList.add(line);
-           }
-        }
-
-        return rList;
+        List<PanelString> rList = new ArrayList<>();
+        String jsonData = aCard.getString("aData");
+		JsonObject data = new JsonParser().parse(jsonData).getAsJsonObject();
         
-//        	line.textLeft = StringUtils.getFormatted("sensor.eut", card.getString("mString3"), showLabels);
+		int i = 0;
+        for (Entry<String, JsonElement> entry : data.entrySet()) {
+        	PanelString str = new PanelString();
+        	List<Object> format = new LinkedList<>();
+        	for (JsonElement value : entry.getValue().getAsJsonArray()) {
+        		if (value.isJsonObject()) {
+        			JsonObject stackData = value.getAsJsonObject();
+        			ItemStack stack = new ItemStack(Item.getItemById(stackData.get("itemID").getAsInt()),
+        					stackData.get("amount").getAsInt(),
+        					stackData.get("damage").getAsInt());
+        			if (GT_Utility.isStackValid(stack)) {
+        				format.add(stack.getDisplayName());
+        			}
+        		} else if (value.isJsonPrimitive()) {
+        			JsonPrimitive val = value.getAsJsonPrimitive();
+        			if (val.isString()) {
+        				format.add(I18n.format(val.getAsString()));
+        			} else if (val.isNumber()) {
+        				format.add(new DecimalFormat("#.##").format(val.getAsNumber()));
+        			}
+        		}
+        	}
+        	
+        	if (showLabels) {
+        		str.textLeft = I18n.format(entry.getKey(), format.toArray());
+        	} else {
+        		str.textLeft = "";
+        		format.forEach(val -> str.textLeft += " " + val.toString());
+        	}
+        	
+        	if ((displaySettings & 1 << i) != 0) rList.add(str);
+        	i++;
+        }
+        
+        return rList;
 	}
 	
 	@Override
     public List<PanelSetting> getSettingsList() {
 	      ArrayList<PanelSetting> rList = new ArrayList<>(30);
 
-	      for(int i = 0; i < 8; ++i) {
+	      for(int i = 0; i < 6; ++i) {
 	         rList.add(new PanelSetting("" + (i + 1), 1 << i, this.getCardType()));
 	      }
 
