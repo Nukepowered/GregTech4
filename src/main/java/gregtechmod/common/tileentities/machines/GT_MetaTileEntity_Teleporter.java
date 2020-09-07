@@ -1,5 +1,8 @@
 package gregtechmod.common.tileentities.machines;
 
+import java.util.List;
+import java.util.Map;
+
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_ConfigCategories;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
@@ -7,6 +10,7 @@ import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_Config;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.InfoBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityHanging;
 import net.minecraft.entity.EntityLiving;
@@ -222,8 +226,14 @@ public class GT_MetaTileEntity_Teleporter extends MetaTileEntity {
 	}
 	
 	@Override
-	public String[] getInfoData() {
-		return new String[] { "Charge: " + mCharge, "X: " + mTargetX + "  Y: " + mTargetY + "  Z: " + mTargetZ, "Dimension: " + mTargetD}; // TODO REWORK LOCALE
+	public Map<String, List<Object>> getInfoData() {
+		return InfoBuilder.create()
+				.newKey("metatileentity.GT_Teleporter.info.charge", mCharge)
+				.newKey("metatileentity.GT_Teleporter.info.1", mTargetX)
+				.newKey("metatileentity.GT_Teleporter.info.2", mTargetY)
+				.newKey("metatileentity.GT_Teleporter.info.3", mTargetZ)
+				.newKey("metatileentity.GT_Teleporter.info.4", DimensionManager.createProviderFor(mTargetD).getDimensionName())
+				.build();
 	}
 	
 	@Override

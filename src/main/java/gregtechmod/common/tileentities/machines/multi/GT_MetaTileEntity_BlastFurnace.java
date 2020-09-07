@@ -1,17 +1,20 @@
 package gregtechmod.common.tileentities.machines.multi;
 
+import java.util.List;
+import java.util.Map;
+
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Recipe;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.InfoBuilder;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.StatCollector;
 import net.minecraftforge.common.util.ForgeDirection;
 
 public class GT_MetaTileEntity_BlastFurnace extends MetaTileEntity {
@@ -233,12 +236,12 @@ public class GT_MetaTileEntity_BlastFurnace extends MetaTileEntity {
 	}
 	
 	@Override
-	public String[] getInfoData() {
-		return new String[] {
-				StatCollector.translateToLocalFormatted("sensor.progress.percentage", mProgresstime * 100.0D / mMaxProgresstime),
-				StatCollector.translateToLocalFormatted("sensor.progress.secs", mProgresstime / 20),
-				StatCollector.translateToLocalFormatted("sensor.progress.secs", mMaxProgresstime / 20)
-		};
+	public Map<String, List<Object>> getInfoData() {
+		return InfoBuilder.create()
+				.newKey("sensor.progress.percentage", mProgresstime * 100.0D / mMaxProgresstime)
+				.newKey("sensor.progress.secs", mProgresstime / 20)
+				.newKey("sensor.progress.secs", mMaxProgresstime / 20)
+				.build();
 	}
 	
 	@Override

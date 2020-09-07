@@ -1,5 +1,8 @@
 package gregtechmod.api.interfaces;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * You are allowed to include this File in your Download, as i will not change it.
  */
@@ -16,5 +19,5 @@ public interface IGregTechDeviceInformation {
 	 * Note: If you insert "\\\\" in the String it tries to translate seperate Parts of the String instead of the String as a whole.
 	 * @return an Array of Information Strings. Don't return null!
 	 */
-	public String[] getInfoData();
+	public Map<String, List<Object>> getInfoData();
 }

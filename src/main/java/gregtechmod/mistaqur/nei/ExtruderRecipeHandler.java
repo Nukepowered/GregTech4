@@ -10,6 +10,8 @@ import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Recipe;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_BasicMachine_Extruder;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.util.StatCollector;
 
 public class ExtruderRecipeHandler extends GT_RecipeHandler {
 	public void loadTransferRects() {
@@ -24,7 +26,7 @@ public class ExtruderRecipeHandler extends GT_RecipeHandler {
 	}
 
 	public String getRecipeName() {
-		return "Extruder";  // TODO Locale
+		return StatCollector.translateToLocal("nei.extruder.title");
 	}
 
 	public String getRecipeId() {
@@ -49,9 +51,9 @@ public class ExtruderRecipeHandler extends GT_RecipeHandler {
 
 	public void drawExtras(int recipe) {
 		Integer time = Integer.valueOf(((CachedExtruderRecipe) this.arecipes.get(recipe)).mDuration);
-		drawText(30, 80, "EU: " + GT_Utility.parseNumberToString(time.intValue() * ((CachedExtruderRecipe) this.arecipes.get(recipe)).mEUt), 0xFF000000, false);
-		drawText(30, 90, "Time: " + GT_Utility.parseNumberToString(time.intValue() / 20) + " secs", 0xFF000000, false);
-		drawText(30, 100, "MaxEnergy: " + GT_Utility.parseNumberToString(((CachedExtruderRecipe) this.arecipes.get(recipe)).mEUt) + " EU/t", 0xFF000000, false);
+		drawText(30, 80, I18n.format("nei.extras.eu_total", GT_Utility.parseNumberToString(time * ((CachedExtruderRecipe)arecipes.get(recipe)).mEUt)), 0xFF000000, false);
+		drawText(30, 90, I18n.format("nei.extras.time", GT_Utility.parseNumberToString(time / 20.0D)), 0xFF000000, false);
+		drawText(30, 100, I18n.format("nei.extras.eut", GT_Utility.parseNumberToString(((CachedExtruderRecipe)arecipes.get(recipe)).mEUt)), 0xFF000000, false);
 	}
 
 	public class CachedExtruderRecipe extends GT_RecipeHandler.CachedGT_Recipe {

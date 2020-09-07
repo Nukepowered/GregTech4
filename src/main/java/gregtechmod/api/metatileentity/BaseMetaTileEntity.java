@@ -9,6 +9,9 @@ import gregtechmod.common.network.packet.GT_TileEntityPacket;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFire;
@@ -1564,8 +1567,8 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	}
 	
 	@Override
-	public String[] getInfoData() {
-		{if (hasValidMetaTileEntity()) return getMetaTileEntity().getInfoData(); return new String[]{};}
+	public Map<String, List<Object>> getInfoData() {
+		{if (hasValidMetaTileEntity()) return getMetaTileEntity().getInfoData(); return Collections.emptyMap();}
 	}
 	
 	public int getSinkTier() {

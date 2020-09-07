@@ -3,13 +3,15 @@ package gregtechmod.mistaqur.nei;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Recipe;
+import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_FusionComputer;
-
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.util.StatCollector;
 import codechicken.nei.PositionedStack;
 
 public class FusionRecipeHandler extends GT_RecipeHandler {
@@ -51,7 +53,7 @@ public class FusionRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return "Fusion Reactor";  // TODO Locale
+		return StatCollector.translateToLocal("nei.fusion_reactor.title");
 	}
 	
 	@Override
@@ -82,12 +84,12 @@ public class FusionRecipeHandler extends GT_RecipeHandler {
 	@Override
 	public void drawExtras(int recipe) {
 		CachedFusionRecipe t = ((CachedFusionRecipe)arecipes.get(recipe));
-		drawText(30, 80, new StringBuilder().append("Start: ").append(toNumber(t.mStartEU)).append("EU").toString(), 0xFF000000, false);
-		drawText(30, 90, new StringBuilder().append("EU/t: ").append(toNumber(t.mEUt)).toString(), 0xFF000000, false);
-		drawText(30, 100, new StringBuilder().append(toNumber(t.mDuration)).append(" Ticks").toString(), 0xFF000000, false);
+		drawText(30, 80, I18n.format("nei.fusion_reactor.info.1", GT_Utility.parseNumberToString(t.mStartEU)), 0xFF000000, false);
+		drawText(30, 90, I18n.format("nei.extras.eut", GT_Utility.parseNumberToString(t.mEUt)), 0xFF000000, false);
+		drawText(30, 100, I18n.format("nei.extras.time", GT_Utility.parseNumberToString(t.mDuration / 20.0D)), 0xFF000000, false);
 		if (t.mEUt < 0)
-			drawText(30, 110, new StringBuilder().append("IN: ").append(toNumber(-t.mEUt * t.mDuration)).append("EU").toString(), 0xFF000000, false);
+			drawText(30, 110, I18n.format("nei.fusion_reactor.info.2", GT_Utility.parseNumberToString(-t.mEUt * t.mDuration)), 0xFF000000, false);
 		else
-			drawText(30, 110, new StringBuilder().append("OUT: ").append(toNumber(t.mEUt * t.mDuration)).append("EU").toString(), 0xFF000000, false);
+			drawText(30, 110,I18n.format("nei.fusion_reactor.info.2", GT_Utility.parseNumberToString(t.mEUt * t.mDuration)), 0xFF000000, false);
 	}
 }

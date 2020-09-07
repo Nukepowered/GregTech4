@@ -14,6 +14,9 @@ import ic2.api.item.IElectricItem;
 import ic2.api.tile.IWrenchable;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -200,8 +203,8 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	}
 	
 	@Override
-	public String[] getInfoData() {
-		return new String[0];
+	public Map<String, List<Object>> getInfoData() {
+		return Collections.emptyMap();
 	}
 
 	@Override

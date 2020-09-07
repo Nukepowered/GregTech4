@@ -7,8 +7,10 @@ import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_Config;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.InfoBuilder;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -178,8 +180,11 @@ public class GT_MetaTileEntity_TesseractGenerator extends MetaTileEntity {
 	}
 	
 	@Override
-	public String[] getInfoData() {
-		return new String[] { "Tesseract Generator", "Freq: " + mFrequency, sTesseractGenerators.get(mFrequency)==this?"Active":"Inactive" }; // TODO REWORK LOCALE
+	public Map<String, List<Object>> getInfoData() {
+		return InfoBuilder.create()
+				.newKey("metatileentity.GT_Tesseract.message.1", mFrequency)
+				.newKey("metatileentity.GT_Tesseract.status", "metatileentity.GT_Tesseract.status." + (sTesseractGenerators.get(mFrequency) == this ? 1 : 2))
+				.build();
 	}
 	
 	@Override
