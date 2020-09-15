@@ -10,3 +10,9 @@ gradle-app.setting
 /eclipse/
 /run
 api_404.zip
+GregTech4.api.iml
+GregTech4.iml
+GregTech4.ipr
+GregTech4.iws
+GregTech4.main.iml
+GregTech4.test.iml
