@@ -10,3 +10,8 @@ gradle-app.setting
 /eclipse/
 /run
 api_404.zip
+*.iml
+*.ipr
+*.iws
+/out/
+/.idea/
