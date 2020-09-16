@@ -1,0 +1,7 @@
+[03:55:48] [main/INFO]: Setting user: Player508
+[03:55:49] [Client thread/INFO]: LWJGL Version: 2.9.1
+[03:55:56] [Client thread/INFO]: Reloading ResourceManager: Default
+[03:55:57] [Sound Library Loader/INFO]: Sound engine started
+[03:55:58] [Client thread/INFO]: Created: 16x16 textures/blocks-atlas
+[03:55:58] [Client thread/INFO]: Created: 16x16 textures/items-atlas
+[03:56:07] [Client thread/INFO]: Stopping!

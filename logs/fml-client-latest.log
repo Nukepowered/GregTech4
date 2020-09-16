@@ -1,0 +1,731 @@
+[03:55:44] [main/DEBUG] [FML/]: Injecting tracing printstreams for STDOUT/STDERR.
+[03:55:44] [main/INFO] [FML/]: Forge Mod Loader version 7.99.40.1614 for Minecraft 1.7.10 loading
+[03:55:44] [main/INFO] [FML/]: Java is Java HotSpot(TM) 64-Bit Server VM, version 1.8.0_261, running on Windows 10:amd64:10.0, installed at C:\Program Files\Java\jre1.8.0_261
+[03:55:44] [main/DEBUG] [FML/]: Java classpath at launch is C:\Users\Пользователь\Desktop\GregTech4\bin\main;\GregTech4\bin\default;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\codechicken\CodeChickenCore\1.7.10-1.0.7.47\3f4dff5483cf69915b761ee5a9e9f1865b03b6c4\CodeChickenCore-1.7.10-1.0.7.47-dev.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\codechicken\NotEnoughItems\1.7.10-1.0.5.120\fd474a3eb268678566e8c908d368532dd057b6ac\NotEnoughItems-1.7.10-1.0.5.120-dev.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\codechicken\CodeChickenLib\1.7.10-1.1.3.138\2dd3b058db77eac637b638aa076e0968b203e75e\CodeChickenLib-1.7.10-1.1.3.138-dev.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.sengir.forestry\forestry_1.7.10\4.2.9.57\6587b393917e6a23ce87ef8c87a80065b6ee506b\forestry_1.7.10-4.2.9.57-dev.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.industrial-craft\industrialcraft-2\2.2.673-experimental\3c78b69033373cbf0f6ab9ba7cbecc785ce6c5d2\industrialcraft-2-2.2.673-experimental-dev.jar;C:\Users\Пользователь\Desktop\GregTech4\build\dirtyArtifacts\forgeSrc-1.7.10-10.13.4.1614-1.7.10.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.minecraft\launchwrapper\1.12\111e7bea9c968cdb3d06ef4632bf7ff0824d0f36\launchwrapper-1.12.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.google.code.findbugs\jsr305\1.3.9\40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf\jsr305-1.3.9.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-debug-all\5.0.3\f9e364ae2a66ce2a543012a4668856e84e5dab74\asm-debug-all-5.0.3.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.typesafe.akka\akka-actor_2.11\2.3.3\ed62e9fc709ca0f2ff1a3220daa8b70a2870078e\akka-actor_2.11-2.3.3.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.typesafe\config\1.2.1\f771f71fdae3df231bcd54d5ca2d57f0bf93f467\config-1.2.1.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-actors-migration_2.11\1.1.0\dfa8bc42b181d5b9f1a5dd147f8ae308b893eb6f\scala-actors-migration_2.11-1.1.0.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang.plugins\scala-continuations-plugin_2.11.1\1.0.2\f361a3283452c57fa30c1ee69448995de23c60f7\scala-continuations-plugin_2.11.1-1.0.2.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-compiler\2.11.1\56ea2e6c025e0821f28d73ca271218b8dd04926a\scala-compiler-2.11.1.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang.plugins\scala-continuations-library_2.11\1.0.2\e517c53a7e9acd6b1668c5a35eccbaa3bab9aac\scala-continuations-library_2.11-1.0.2.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-reflect\2.11.1\6580347e61cc7f8e802941e7fde40fa83b8badeb\scala-reflect-2.11.1.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-actors\2.11.0\8ccfb6541de179bb1c4d45cf414acee069b7f78b\scala-actors-2.11.0.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang.modules\scala-xml_2.11\1.0.2\820fbca7e524b530fdadc594c39d49a21ea0337e\scala-xml_2.11-1.0.2.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang.modules\scala-parser-combinators_2.11\1.0.1\f05d7345bf5a58924f2837c6c1f4d73a938e1ff0\scala-parser-combinators_2.11-1.0.1.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-library\2.11.1\e11da23da3eabab9f4777b9220e60d44c1aab6a\scala-library-2.11.1.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-parser-combinators_2.11\1.0.1\f05d7345bf5a58924f2837c6c1f4d73a938e1ff0\scala-parser-combinators_2.11-1.0.1.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-swing_2.11\1.0.1\b1cdd92bd47b1e1837139c1c53020e86bb9112ae\scala-swing_2.11-1.0.1.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-xml_2.11\1.0.2\7a80ec00aec122fba7cd4e0d4cdd87ff7e4cb6d0\scala-xml_2.11-1.0.2.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.sf.jopt-simple\jopt-simple\4.5\6065cc95c661255349c1d0756657be17c29a4fd3\jopt-simple-4.5.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\lzma\lzma\0.0.1\521616dc7487b42bef0e803bd2fa3faf668101d7\lzma-0.0.1.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.mojang\realms\1.3.5\807ae355ee63583becd7ea60e76aab1532bb42e\realms-1.3.5.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.apache.commons\commons-compress\1.8.1\a698750c16740fd5b3871425f4cb3bbaa87f529d\commons-compress-1.8.1.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.apache.httpcomponents\httpclient\4.3.3\18f4247ff4572a074444572cee34647c43e7c9c7\httpclient-4.3.3.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\commons-logging\commons-logging\1.1.3\f6f66e966c70a83ffbdb6f17a0919eaf7c8aca7f\commons-logging-1.1.3.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.apache.httpcomponents\httpcore\4.3.2\31fbbff1ddbf98f3aa7377c94d33b0447c646b6e\httpcore-4.3.2.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\java3d\vecmath\1.3.1\a0ae4f51da409fa0c20fa0ca59e6bbc9413ae71d\vecmath-1.3.1.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.sf.trove4j\trove4j\3.0.3\42ccaf4761f0dfdfa805c9e340d99a755907e2dd\trove4j-3.0.3.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.ibm.icu\icu4j-core-mojang\51.2\63d216a9311cca6be337c1e458e587f99d382b84\icu4j-core-mojang-51.2.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.paulscode\codecjorbis\20101023\c73b5636faf089d9f00e8732a829577de25237ee\codecjorbis-20101023.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.paulscode\codecwav\20101023\12f031cfe88fef5c1dd36c563c0a3a69bd7261da\codecwav-20101023.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.paulscode\libraryjavasound\20101123\5c5e304366f75f9eaa2e8cca546a1fb6109348b3\libraryjavasound-20101123.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.paulscode\librarylwjglopenal\20100824\73e80d0794c39665aec3f62eee88ca91676674ef\librarylwjglopenal-20100824.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.paulscode\soundsystem\20120107\419c05fe9be71f792b2d76cfc9b67f1ed0fec7f6\soundsystem-20120107.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\io.netty\netty-all\4.0.10.Final\9e50bd52ffe257a0e2cd8d971688d6ce7d174325\netty-all-4.0.10.Final.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.mojang\authlib\1.5.16\ef1582b11fd0943d069cdcb72e99008ac209a283\authlib-1.5.16.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.google.guava\guava\17.0\9c6ef172e8de35fd8d4d8783e4821e57cdef7445\guava-17.0.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.apache.commons\commons-lang3\3.3.2\90a3822c38ec8c996e84c16a3477ef632cbc87a3\commons-lang3-3.3.2.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\commons-io\commons-io\2.4\b1b6ea3b7e4aa4f492509a4952029cd8e48019ad\commons-io-2.4.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\commons-codec\commons-codec\1.9\9ce04e34240f674bc72680f8b843b1457383161a\commons-codec-1.9.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.lwjgl.lwjgl\lwjgl_util\2.9.1\290d7ba8a1bd9566f5ddf16ad06f09af5ec9b20e\lwjgl_util-2.9.1.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.lwjgl.lwjgl\lwjgl\2.9.1\f58c5aabcef0e41718a564be9f8e412fff8db847\lwjgl-2.9.1.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.java.jinput\jinput\2.0.5\39c7796b469a600f72380316f6b1f11db6c2c7c4\jinput-2.0.5.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.java.jutils\jutils\1.0.0\e12fe1fda814bd348c1579329c86943d2cd3c6a6\jutils-1.0.0.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.2.4\a60a5e993c98c864010053cb901b7eab25306568\gson-2.2.4.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.apache.logging.log4j\log4j-core\2.0-beta9\678861ba1b2e1fccb594bb0ca03114bb05da9695\log4j-core-2.0-beta9.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.apache.logging.log4j\log4j-api\2.0-beta9\1dd66e68cccd907880229f9e2de1314bd13ff785\log4j-api-2.0-beta9.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\tv.twitch\twitch\5.16\1f55f009c61637c10c0acfb8b5ffc600f30044b4\twitch-5.16.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.java.jinput\jinput-platform\2.0.5\7ff832a6eb9ab6a767f1ade2b548092d0fa64795\jinput-platform-2.0.5-natives-linux.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.java.jinput\jinput-platform\2.0.5\385ee093e01f587f30ee1c8a2ee7d408fd732e16\jinput-platform-2.0.5-natives-windows.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.java.jinput\jinput-platform\2.0.5\53f9c919f34d2ca9de8c51fc4e1e8282029a9232\jinput-platform-2.0.5-natives-osx.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\tv.twitch\twitch-platform\5.16\7c6affe439099806a4f552da14c42f9d643d8b23\twitch-platform-5.16-natives-windows-32.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\tv.twitch\twitch-platform\5.16\39d0c3d363735b4785598e0e7fbf8297c706a9f9\twitch-platform-5.16-natives-windows-64.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\tv.twitch\twitch-platform\5.16\62503ee712766cf77f97252e5902786fd834b8c5\twitch-platform-5.16-natives-osx.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\tv.twitch\twitch-external-platform\4.5\18215140f010c05b9f86ef6f0f8871954d2ccebf\twitch-external-platform-4.5-natives-windows-32.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\tv.twitch\twitch-external-platform\4.5\c3cde57891b935d41b6680a9c5e1502eeab76d86\twitch-external-platform-4.5-natives-windows-64.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.lwjgl.lwjgl\lwjgl-platform\2.9.1\4c517eca808522457dd95ee8fc1fbcdbb602efbe\lwjgl-platform-2.9.1-natives-windows.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.lwjgl.lwjgl\lwjgl-platform\2.9.1\aa9aae879af8eb378e22cfc64db56ec2ca9a44d1\lwjgl-platform-2.9.1-natives-linux.jar;C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.lwjgl.lwjgl\lwjgl-platform\2.9.1\2d12c83fdfbc04ecabf02c7bc8cc54d034f0daac\lwjgl-platform-2.9.1-natives-osx.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\appliedenergistics2-rv3-beta-6-dev.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\Baubles-1.7.10-1.0.1.10.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\buildcraft-7.1.23-dev.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\CoFHCore-[1.7.10]3.1.4-329-dev.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\IC2NuclearControl-2.4.3a-dev.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\industrialcraft-2-2.2.673-experimental-dev.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\MineFactoryReloaded-[1.7.10]2.8.1-174-dev.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\Railcraft_1.7.10-9.12.2.1-dev.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\src\appliedenergistics2-rv3-beta-6-src.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\src\buildcraft-7.1.23-src.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\src\CoFHCore-[1.7.10]3.1.4-329-src.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\src\IC2NuclearControl-2.4.3a-src.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\src\MineFactoryReloaded-[1.7.10]2.8.1-174-src.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\src\NotEnoughItems-1.7.10-1.0.5.120-src.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\src\Railcraft_1.7.10-9.12.2.1-src.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\src\Thaumcraft-1.7.10-4.2.3.5-src.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\src\ThermalDynamics-[1.7.10]1.2.1-172-src.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\src\ThermalExpansion-[1.7.10]4.1.5-248-src.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\src\ThermalFoundation-[1.7.10]1.2.6-118-src.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\Thaumcraft-1.7.10-4.2.3.5-dev.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\ThermalDynamics-[1.7.10]1.2.1-172-dev.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\ThermalExpansion-[1.7.10]4.1.5-248-dev.jar;C:\Users\Пользователь\Desktop\GregTech4\libs\ThermalFoundation-[1.7.10]1.2.6-118-dev.jar;C:\Users\Пользователь\.gradle\caches\minecraft\net\minecraftforge\forge\1.7.10-10.13.4.1614-1.7.10\start
+[03:55:44] [main/DEBUG] [FML/]: Java library path at launch is C:\Program Files\Java\jre1.8.0_261\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:/Program Files/Java/jre1.8.0_261/bin/server;C:/Program Files/Java/jre1.8.0_261/bin;C:/Program Files/Java/jre1.8.0_261/lib/amd64;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\ProgramData\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\Program Files\nodejs\;C:\Program Files\Java\jdk1.8.0_261\bin;C:\Users\Пользователь\AppData\Local\Microsoft\WindowsApps;C:\Program Files\JetBrains\IntelliJ IDEA 2020.1.2\bin;C:\Users\Пользователь\.dotnet\tools;C:\MinGW\bin;C:\Users\Пользователь\.dotnet\tools;C:\Games\ProjectMinecraft\int\IntelliJ IDEA Community Edition 2020.2\bin;C:\Users\Пользователь\AppData\Local\GitHubDesktop\bin;C:\Games\ProjectMinecraft\IntelliJ IDEA Community Edition 2020.2.1\bin;;C:\Program Files\Java\apache-maven-3.6.3\bin;C:\Users\Пользователь\AppData\Roaming\npm;C:\Program Files\heroku\bin;;C:\Games\ProjectMinecraft\IntelliJ IDEA 2019.3.2\bin;;C:\Windows\system32;;.;C:/Users/Пользователь/.gradle/caches/minecraft/net/minecraft/minecraft_natives/1.7.10
+[03:55:44] [main/INFO] [FML/]: Managed to load a deobfuscated Minecraft name- we are in a deobfuscated environment. Skipping runtime deobfuscation
+[03:55:44] [main/DEBUG] [FML/]: Instantiating coremod class FMLCorePlugin
+[03:55:44] [main/DEBUG] [FML/]: Added access transformer class cpw.mods.fml.common.asm.transformers.AccessTransformer to enqueued access transformers
+[03:55:44] [main/DEBUG] [FML/]: Enqueued coremod FMLCorePlugin
+[03:55:44] [main/DEBUG] [FML/]: Instantiating coremod class FMLForgePlugin
+[03:55:44] [main/DEBUG] [FML/]: Added access transformer class net.minecraftforge.transformers.ForgeAccessTransformer to enqueued access transformers
+[03:55:44] [main/DEBUG] [FML/]: Enqueued coremod FMLForgePlugin
+[03:55:44] [main/DEBUG] [FML/]: All fundamental core mods are successfully located
+[03:55:44] [main/INFO] [FML/]: Found a command line coremod : codechicken.nei.asm.NEICorePlugin
+[03:55:44] [main/DEBUG] [FML/]: Instantiating coremod class NEICorePlugin
+[03:55:44] [main/WARN] [FML/]: The coremod codechicken.nei.asm.NEICorePlugin does not have a MCVersion annotation, it may cause issues with this version of Minecraft
+[03:55:44] [main/DEBUG] [FML/]: Enqueued coremod NEICorePlugin
+[03:55:44] [main/INFO] [FML/]: Found a command line coremod : thaumcraft.codechicken.core.launch.DepLoader
+[03:55:44] [main/DEBUG] [FML/]: Instantiating coremod class DepLoader
+[03:55:44] [main/WARN] [FML/]: The coremod thaumcraft.codechicken.core.launch.DepLoader does not have a MCVersion annotation, it may cause issues with this version of Minecraft
+[03:55:44] [main/DEBUG] [FML/]: Enqueued coremod DepLoader
+[03:55:44] [main/INFO] [FML/]: Found a command line coremod : ic2.core.coremod.IC2core
+[03:55:44] [main/DEBUG] [FML/]: Instantiating coremod class IC2core
+[03:55:44] [main/WARN] [FML/]: The coremod ic2.core.coremod.IC2core does not have a MCVersion annotation, it may cause issues with this version of Minecraft
+[03:55:44] [main/DEBUG] [FML/]: Enqueued coremod IC2core
+[03:55:44] [main/INFO] [FML/]: Found a command line coremod : codechicken.core.launch.CodeChickenCorePlugin
+[03:55:44] [main/DEBUG] [FML/]: Instantiating coremod class CodeChickenCorePlugin
+[03:55:44] [main/WARN] [FML/]: The coremod codechicken.core.launch.CodeChickenCorePlugin does not have a MCVersion annotation, it may cause issues with this version of Minecraft
+[03:55:44] [main/DEBUG] [FML/]: Added access transformer class codechicken.core.asm.CodeChickenAccessTransformer to enqueued access transformers
+[03:55:44] [main/DEBUG] [FML/]: Enqueued coremod CodeChickenCorePlugin
+[03:55:44] [main/INFO] [FML/]: Found a command line coremod : appeng.transformer.AppEngCore
+[03:55:44] [main/DEBUG] [FML/]: Instantiating coremod class AppEngCore
+[03:55:44] [main/DEBUG] [FML/]: The coremod appeng.transformer.AppEngCore requested minecraft version 1.7.10 and minecraft is 1.7.10. It will be loaded.
+[03:55:44] [main/INFO] [FML/]: [AppEng] Core Init
+[03:55:44] [main/DEBUG] [FML/]: Added access transformer class appeng.transformer.asm.ASMTweaker to enqueued access transformers
+[03:55:44] [main/DEBUG] [FML/]: Enqueued coremod AppEngCore
+[03:55:44] [main/INFO] [FML/]: Found a command line coremod : cofh.asm.LoadingPlugin
+[03:55:44] [main/DEBUG] [FML/]: Instantiating coremod class LoadingPlugin
+[03:55:45] [main/WARN] [FML/]: The coremod cofh.asm.LoadingPlugin does not have a MCVersion annotation, it may cause issues with this version of Minecraft
+[03:55:45] [main/DEBUG] [FML/]: Added access transformer class cofh.asm.CoFHAccessTransformer to enqueued access transformers
+[03:55:45] [main/DEBUG] [FML/]: Enqueued coremod LoadingPlugin
+[03:55:45] [main/DEBUG] [FML/]: Attempting to load commandline specified mods, relative to C:\Users\Пользователь\Desktop\GregTech4\.
+[03:55:45] [main/DEBUG] [FML/]: Discovering coremods
+[03:55:45] [main/INFO] [LaunchWrapper/]: Calling tweak class net.minecraftforge.gradle.tweakers.CoremodTweaker
+[03:55:45] [main/INFO] [GradleStart/]: Injecting location in coremod cpw.mods.fml.relauncher.FMLCorePlugin
+[03:55:45] [main/INFO] [GradleStart/]: Injecting location in coremod net.minecraftforge.classloading.FMLForgePlugin
+[03:55:45] [main/INFO] [GradleStart/]: Injecting location in coremod codechicken.core.asm.MCPDeobfuscationTransformer.LoadPlugin
+[03:55:45] [main/INFO] [GradleStart/]: Injecting location in coremod codechicken.nei.asm.NEICorePlugin
+[03:55:45] [main/INFO] [GradleStart/]: Injecting location in coremod thaumcraft.codechicken.core.launch.DepLoader
+[03:55:45] [main/INFO] [GradleStart/]: Injecting location in coremod ic2.core.coremod.IC2core
+[03:55:45] [main/INFO] [GradleStart/]: Injecting location in coremod codechicken.core.launch.CodeChickenCorePlugin
+[03:55:45] [main/INFO] [GradleStart/]: Injecting location in coremod appeng.transformer.AppEngCore
+[03:55:45] [main/INFO] [GradleStart/]: Injecting location in coremod cofh.asm.LoadingPlugin
+[03:55:45] [main/INFO] [LaunchWrapper/]: Loading tweak class name cpw.mods.fml.common.launcher.FMLInjectionAndSortingTweaker
+[03:55:45] [main/INFO] [LaunchWrapper/]: Loading tweak class name cpw.mods.fml.common.launcher.FMLDeobfTweaker
+[03:55:45] [main/INFO] [LaunchWrapper/]: Loading tweak class name net.minecraftforge.gradle.tweakers.AccessTransformerTweaker
+[03:55:45] [main/INFO] [LaunchWrapper/]: Calling tweak class cpw.mods.fml.common.launcher.FMLInjectionAndSortingTweaker
+[03:55:45] [main/INFO] [LaunchWrapper/]: Calling tweak class cpw.mods.fml.common.launcher.FMLInjectionAndSortingTweaker
+[03:55:45] [main/INFO] [LaunchWrapper/]: Calling tweak class cpw.mods.fml.relauncher.CoreModManager$FMLPluginWrapper
+[03:55:45] [main/DEBUG] [FML/]: Injecting coremod FMLCorePlugin {cpw.mods.fml.relauncher.FMLCorePlugin} class transformers
+[03:55:45] [main/TRACE] [FML/]: Registering transformer cpw.mods.fml.common.asm.transformers.MarkerTransformer
+[03:55:45] [main/TRACE] [FML/]: Registering transformer cpw.mods.fml.common.asm.transformers.SideTransformer
+[03:55:45] [main/TRACE] [FML/]: Registering transformer cpw.mods.fml.common.asm.transformers.EventSubscriptionTransformer
+[03:55:45] [main/DEBUG] [FML/]: Injection complete
+[03:55:45] [main/DEBUG] [FML/]: Running coremod plugin for FMLCorePlugin {cpw.mods.fml.relauncher.FMLCorePlugin}
+[03:55:45] [main/DEBUG] [FML/]: Running coremod plugin FMLCorePlugin
+[03:55:45] [main/ERROR] [FML/]: The binary patch set is missing. Either you are in a development environment, or things are not going to work!
+[03:55:46] [main/ERROR] [FML/]: FML appears to be missing any signature data. This is not a good thing
+[03:55:46] [main/DEBUG] [FML/]: Coremod plugin class FMLCorePlugin run successfully
+[03:55:46] [main/INFO] [LaunchWrapper/]: Calling tweak class cpw.mods.fml.relauncher.CoreModManager$FMLPluginWrapper
+[03:55:46] [main/DEBUG] [FML/]: Injecting coremod FMLForgePlugin {net.minecraftforge.classloading.FMLForgePlugin} class transformers
+[03:55:46] [main/TRACE] [FML/]: Registering transformer net.minecraftforge.classloading.FluidIdTransformer
+[03:55:46] [main/DEBUG] [FML/]: Injection complete
+[03:55:46] [main/DEBUG] [FML/]: Running coremod plugin for FMLForgePlugin {net.minecraftforge.classloading.FMLForgePlugin}
+[03:55:46] [main/DEBUG] [FML/]: Running coremod plugin FMLForgePlugin
+[03:55:46] [main/DEBUG] [FML/]: Coremod plugin class FMLForgePlugin run successfully
+[03:55:46] [main/INFO] [LaunchWrapper/]: Calling tweak class cpw.mods.fml.relauncher.CoreModManager$FMLPluginWrapper
+[03:55:46] [main/DEBUG] [FML/]: Injecting coremod CCCDeobfPlugin {codechicken.core.asm.MCPDeobfuscationTransformer$LoadPlugin} class transformers
+[03:55:46] [main/DEBUG] [FML/]: Injection complete
+[03:55:46] [main/DEBUG] [FML/]: Running coremod plugin for CCCDeobfPlugin {codechicken.core.asm.MCPDeobfuscationTransformer$LoadPlugin}
+[03:55:46] [main/DEBUG] [FML/]: Running coremod plugin CCCDeobfPlugin
+[03:55:46] [main/DEBUG] [FML/]: Coremod plugin class LoadPlugin run successfully
+[03:55:46] [main/INFO] [LaunchWrapper/]: Calling tweak class cpw.mods.fml.relauncher.CoreModManager$FMLPluginWrapper
+[03:55:46] [main/DEBUG] [FML/]: Injecting coremod NEICorePlugin {codechicken.nei.asm.NEICorePlugin} class transformers
+[03:55:46] [main/TRACE] [FML/]: Registering transformer codechicken.nei.asm.NEITransformer
+[03:55:46] [main/DEBUG] [FML/]: Injection complete
+[03:55:46] [main/DEBUG] [FML/]: Running coremod plugin for NEICorePlugin {codechicken.nei.asm.NEICorePlugin}
+[03:55:46] [main/DEBUG] [FML/]: Running coremod plugin NEICorePlugin
+[03:55:46] [main/DEBUG] [FML/]: Coremod plugin class NEICorePlugin run successfully
+[03:55:46] [main/INFO] [LaunchWrapper/]: Calling tweak class cpw.mods.fml.relauncher.CoreModManager$FMLPluginWrapper
+[03:55:46] [main/DEBUG] [FML/]: Injecting coremod DepLoader {thaumcraft.codechicken.core.launch.DepLoader} class transformers
+[03:55:46] [main/DEBUG] [FML/]: Injection complete
+[03:55:46] [main/DEBUG] [FML/]: Running coremod plugin for DepLoader {thaumcraft.codechicken.core.launch.DepLoader}
+[03:55:46] [main/DEBUG] [FML/]: Running coremod plugin DepLoader
+[03:55:46] [main/DEBUG] [FML/]: Coremod plugin class DepLoader run successfully
+[03:55:46] [main/INFO] [LaunchWrapper/]: Calling tweak class cpw.mods.fml.relauncher.CoreModManager$FMLPluginWrapper
+[03:55:46] [main/DEBUG] [FML/]: Injecting coremod IC2core {ic2.core.coremod.IC2core} class transformers
+[03:55:46] [main/DEBUG] [FML/]: Injection complete
+[03:55:46] [main/DEBUG] [FML/]: Running coremod plugin for IC2core {ic2.core.coremod.IC2core}
+[03:55:46] [main/DEBUG] [FML/]: Running coremod plugin IC2core
+[03:55:46] [main/INFO] [IC2-core/]: Extracted library ejml-0.23.jar.
+[03:55:46] [main/INFO] [IC2-core/]: Loaded library ejml-0.23.jar.
+[03:55:46] [main/DEBUG] [FML/]: Coremod plugin class IC2core run successfully
+[03:55:46] [main/INFO] [LaunchWrapper/]: Calling tweak class cpw.mods.fml.relauncher.CoreModManager$FMLPluginWrapper
+[03:55:46] [main/DEBUG] [FML/]: Injecting coremod CodeChickenCorePlugin {codechicken.core.launch.CodeChickenCorePlugin} class transformers
+[03:55:46] [main/TRACE] [FML/]: Registering transformer codechicken.lib.asm.ClassHeirachyManager
+[03:55:46] [main/TRACE] [FML/]: Registering transformer codechicken.core.asm.InterfaceDependancyTransformer
+[03:55:46] [main/TRACE] [FML/]: Registering transformer codechicken.core.asm.TweakTransformer
+[03:55:46] [main/TRACE] [FML/]: Registering transformer codechicken.core.asm.DelegatedTransformer
+[03:55:46] [main/TRACE] [FML/]: Registering transformer codechicken.core.asm.DefaultImplementationTransformer
+[03:55:46] [main/DEBUG] [FML/]: Injection complete
+[03:55:46] [main/DEBUG] [FML/]: Running coremod plugin for CodeChickenCorePlugin {codechicken.core.launch.CodeChickenCorePlugin}
+[03:55:46] [main/DEBUG] [FML/]: Running coremod plugin CodeChickenCorePlugin
+[03:55:46] [main/DEBUG] [FML/]: Coremod plugin class CodeChickenCorePlugin run successfully
+[03:55:46] [main/INFO] [LaunchWrapper/]: Calling tweak class cpw.mods.fml.relauncher.CoreModManager$FMLPluginWrapper
+[03:55:46] [main/DEBUG] [FML/]: Injecting coremod AppEngCore {appeng.transformer.AppEngCore} class transformers
+[03:55:46] [main/TRACE] [FML/]: Registering transformer appeng.transformer.asm.ASMIntegration
+[03:55:46] [main/DEBUG] [FML/]: Injection complete
+[03:55:46] [main/DEBUG] [FML/]: Running coremod plugin for AppEngCore {appeng.transformer.AppEngCore}
+[03:55:46] [main/DEBUG] [FML/]: Running coremod plugin AppEngCore
+[03:55:46] [main/DEBUG] [FML/]: Coremod plugin class AppEngCore run successfully
+[03:55:46] [main/INFO] [LaunchWrapper/]: Calling tweak class cpw.mods.fml.common.launcher.FMLDeobfTweaker
+[03:55:46] [main/DEBUG] [FML/]: Loaded 57 rules from AccessTransformer config file fml_at.cfg
+[03:55:46] [main/DEBUG] [FML/]: Loaded 89 rules from AccessTransformer config file forge_at.cfg
+[03:55:46] [main/DEBUG] [FML/]: Loaded 57 rules from AccessTransformer config file fml_at.cfg
+[03:55:46] [main/DEBUG] [FML/]: Loaded 11 rules from AccessTransformer mod jar file C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\codechicken\NotEnoughItems\1.7.10-1.0.5.120\fd474a3eb268678566e8c908d368532dd057b6ac\NotEnoughItems-1.7.10-1.0.5.120-dev.jar!META-INF/nei_at.cfg
+
+[03:55:46] [main/DEBUG] [FML/]: Loaded 6 rules from AccessTransformer mod jar file C:\Users\Пользователь\Desktop\GregTech4\libs\ThermalDynamics-[1.7.10]1.2.1-172-dev.jar!META-INF/tdynamics_at.cfg
+
+[03:55:46] [main/DEBUG] [FML/]: Validating minecraft
+[03:55:47] [main/DEBUG] [FML/]: Minecraft validated, launching...
+[03:55:47] [main/INFO] [LaunchWrapper/]: Calling tweak class cpw.mods.fml.relauncher.CoreModManager$FMLPluginWrapper
+[03:55:47] [main/DEBUG] [FML/]: Injecting coremod LoadingPlugin {cofh.asm.LoadingPlugin} class transformers
+[03:55:47] [main/TRACE] [FML/]: Registering transformer cofh.asm.CoFHClassTransformer
+[03:55:47] [main/DEBUG] [FML/]: Injection complete
+[03:55:47] [main/DEBUG] [FML/]: Running coremod plugin for LoadingPlugin {cofh.asm.LoadingPlugin}
+[03:55:47] [main/DEBUG] [FML/]: Running coremod plugin LoadingPlugin
+[03:55:47] [main/DEBUG] [FML/]: Coremod plugin class LoadingPlugin run successfully
+[03:55:47] [main/INFO] [LaunchWrapper/]: Calling tweak class net.minecraftforge.gradle.tweakers.AccessTransformerTweaker
+[03:55:47] [main/DEBUG] [GradleStart/]: Reading CSV file: C:\Users\Пользователь\.gradle\caches\minecraft\net\minecraftforge\forge\1.7.10-10.13.4.1614-1.7.10\unpacked\conf\fields.csv
+[03:55:47] [main/DEBUG] [GradleStart/]: Reading CSV file: C:\Users\Пользователь\.gradle\caches\minecraft\net\minecraftforge\forge\1.7.10-10.13.4.1614-1.7.10\unpacked\conf\methods.csv
+[03:55:47] [main/INFO] [GradleStart/]: Remapping AccessTransformer rules...
+[03:55:47] [main/INFO] [LaunchWrapper/]: Loading tweak class name cpw.mods.fml.common.launcher.TerminalTweaker
+[03:55:47] [main/INFO] [LaunchWrapper/]: Calling tweak class cpw.mods.fml.common.launcher.TerminalTweaker
+[03:55:47] [main/INFO] [LaunchWrapper/]: Launching wrapped minecraft {net.minecraft.client.main.Main}
+[03:55:47] [main/DEBUG] [CCL ASM/]: Inserted super call into [net/minecraft/client/renderer/InventoryEffectRenderer.updateScreen()V]
+[03:55:47] [main/DEBUG] [CCL ASM/]: Writing method [net/minecraft/client/gui/inventory/GuiContainer.setWorldAndResolution(Lnet/minecraft/client/Minecraft;II)V]
+[03:55:47] [main/DEBUG] [CCL ASM/]: Writing method [net/minecraft/client/gui/inventory/GuiContainer.handleKeyboardInput()V]
+[03:55:47] [main/DEBUG] [CCL ASM/]: Writing method [net/minecraft/client/gui/inventory/GuiContainer.handleKeyboardInput()V]
+[03:55:47] [main/DEBUG] [CCL ASM/]: Writing method [net/minecraft/client/gui/inventory/GuiContainer.handleKeyboardInput()V]
+[03:55:47] [main/DEBUG] [CCL ASM/]: Writing method [net/minecraft/client/gui/inventory/GuiContainer.handleMouseInput()V]
+[03:55:47] [main/DEBUG] [CCL ASM/]: Writing method [net/minecraft/client/gui/inventory/GuiContainer.public_func_73869_a(CI)V]
+[03:55:47] [main/DEBUG] [CCL ASM/]: Writing method [net/minecraft/client/gui/inventory/GuiContainer.public_func_146984_a(Lnet/minecraft/inventory/Slot;III)V]
+[03:55:47] [main/DEBUG] [CCL ASM/]: Injecting before method [net/minecraft/client/gui/inventory/GuiContainer.drawScreen(IIF)V]
+[03:55:47] [main/DEBUG] [CCL ASM/]: Injecting after method [net/minecraft/client/gui/inventory/GuiContainer.drawScreen(IIF)V] @ 138 - 140
+[03:55:47] [main/DEBUG] [CCL ASM/]: Injecting after method [net/minecraft/client/gui/inventory/GuiContainer.drawScreen(IIF)V] @ 220 - 225
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.drawScreen(IIF)V] @ 444 - 470
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.drawItemStack(Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V] @ 9 - 10
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.drawItemStack(Lnet/minecraft/item/ItemStack;IILjava/lang/String;)V] @ 14 - 15
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.func_146977_a(Lnet/minecraft/inventory/Slot;)V] @ 298 - 323
+[03:55:47] [main/DEBUG] [CCL ASM/]: Injecting before method [net/minecraft/client/gui/inventory/GuiContainer.mouseClicked(III)V]
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.mouseClicked(III)V] @ 259 - 260
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.mouseClicked(III)V] @ 331 - 332
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.mouseClickMove(IIIJ)V] @ 98 - 99
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.mouseClickMove(IIIJ)V] @ 107 - 108
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.mouseClickMove(IIIJ)V] @ 118 - 119
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.mouseMovedOrUp(III)V] @ 158 - 159
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.mouseMovedOrUp(III)V] @ 168 - 169
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.mouseMovedOrUp(III)V] @ 287 - 288
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.mouseMovedOrUp(III)V] @ 295 - 296
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.mouseMovedOrUp(III)V] @ 314 - 315
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.mouseMovedOrUp(III)V] @ 424 - 425
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.mouseMovedOrUp(III)V] @ 454 - 455
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.mouseMovedOrUp(III)V] @ 468 - 469
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.mouseMovedOrUp(III)V] @ 497 - 498
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.mouseMovedOrUp(III)V] @ 557 - 559
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.keyTyped(CI)V] @ 54 - 55
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.keyTyped(CI)V] @ 84 - 85
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.checkHotbarKeys(I)Z] @ 41 - 42
+[03:55:47] [main/DEBUG] [CCL ASM/]: Writing method [net/minecraft/client/gui/inventory/GuiContainer.managerHandleMouseClick(Lnet/minecraft/inventory/Slot;III)V]
+[03:55:47] [main/DEBUG] [CCL ASM/]: Injecting after method [net/minecraft/client/gui/inventory/GuiContainer.mouseClickMove(IIIJ)V] @ 14 - 15
+[03:55:47] [main/DEBUG] [CCL ASM/]: Injecting before method [net/minecraft/client/gui/inventory/GuiContainer.mouseMovedOrUp(III)V]
+[03:55:47] [main/DEBUG] [CCL ASM/]: NEI: Injecting mouseUp call
+[03:55:47] [main/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/gui/inventory/GuiContainer.handleMouseClick(Lnet/minecraft/inventory/Slot;III)V] @ 10 - 26
+[03:55:47] [main/DEBUG] [CCL ASM/]: Injecting before method [net/minecraft/client/gui/inventory/GuiContainer.keyTyped(CI)V]
+[03:55:47] [main/DEBUG] [CCL ASM/]: Injecting after method [net/minecraft/client/gui/inventory/GuiContainer.updateScreen()V] @ 0 - 4
+[03:55:47] [main/INFO] [AE2-CORE/]: func_146977_a(Lnet/minecraft/inventory/Slot;)V - Transformed
+[03:55:47] [main/INFO] [AE2-CORE/]: func_146977_a_original(Lnet/minecraft/inventory/Slot;)V - New Method
+[03:55:47] [main/INFO] [AE2-CORE/]: func_146977_a(Lnet/minecraft/inventory/Slot;)V - Invoke Virtual
+[03:55:48] [main/DEBUG] [CCL ASM/]: Writing method [net/minecraft/block/Block.canBeReplacedByLeaves(Lnet/minecraft/world/IBlockAccess;III)Z]
+[03:55:48] [main/DEBUG] [CCL ASM/]: Writing method [net/minecraft/block/BlockMobSpawner.onBlockPlacedBy(Lnet/minecraft/world/World;IIILnet/minecraft/entity/EntityLivingBase;Lnet/minecraft/item/ItemStack;)V]
+[03:55:48] [main/DEBUG] [CCL ASM/]: Injecting before method [net/minecraft/nbt/NBTTagCompound.toString()Ljava/lang/String;] @ 51 - 55
+[03:55:48] [main/DEBUG] [CCL ASM/]: Injecting before method [net/minecraft/nbt/NBTTagList.toString()Ljava/lang/String;] @ 56 - 60
+[03:55:50] [Client thread/DEBUG] [CCL ASM/]: Replacing method [net/minecraft/client/renderer/entity/RenderItem.renderGlint(IIIII)V] @ 7 - 16
+[03:55:50] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - LanguageManager took 0,023s
+[03:55:50] [Client thread/INFO] [FML/]: Could not load splash.properties, will create a default one
+[03:55:50] [Client thread/INFO] [STDOUT/]: [cpw.mods.fml.client.SplashProgress:start:188]: ---- Minecraft Crash Report ----
+// Don't do that.
+
+Time: 16.09.20 3:55
+Description: Loading screen debug info
+
+This is just a prompt for computer specs to be printed. THIS IS NOT A ERROR
+
+
+A detailed walkthrough of the error, its code path and all known details is as follows:
+---------------------------------------------------------------------------------------
+
+-- System Details --
+Details:
+	Minecraft Version: 1.7.10
+	Operating System: Windows 10 (amd64) version 10.0
+	Java Version: 1.8.0_261, Oracle Corporation
+	Java VM Version: Java HotSpot(TM) 64-Bit Server VM (mixed mode), Oracle Corporation
+	Memory: 173260840 bytes (165 MB) / 699924480 bytes (667 MB) up to 3804758016 bytes (3628 MB)
+	JVM Flags: 0 total; 
+	AABB Pool Size: 0 (0 bytes; 0 MB) allocated, 0 (0 bytes; 0 MB) used
+	IntCache: cache: 0, tcache: 0, allocated: 0, tallocated: 0
+	FML: 
+	GL info: ' Vendor: 'NVIDIA Corporation' Version: '4.6.0 NVIDIA 441.66' Renderer: 'GeForce GTX 1660 Ti/PCIe/SSE2'
+[03:55:50] [Client thread/INFO] [MinecraftForge/]: Attempting early MinecraftForge initialization
+[03:55:50] [Client thread/INFO] [FML/]: MinecraftForge v10.13.4.1614 Initialized
+[03:55:50] [Client thread/INFO] [FML/]: Replaced 183 ore recipies
+[03:55:50] [Client thread/INFO] [MinecraftForge/]: Completed early MinecraftForge initialization
+[03:55:50] [Client thread/DEBUG] [FML/]: File C:\Users\Пользователь\Desktop\GregTech4\config\injectedDependencies.json not found. No dependencies injected
+[03:55:50] [Client thread/DEBUG] [FML/]: Building injected Mod Containers [cpw.mods.fml.common.FMLContainer, net.minecraftforge.common.ForgeModContainer, codechicken.nei.NEIModContainer, codechicken.core.asm.CodeChickenCoreModContainer, appeng.transformer.AppEngCore, cofh.asm.LoadingPlugin$CoFHDummyContainer]
+[03:55:50] [Client thread/INFO] [FML/]: [AppEng] Core Init
+[03:55:50] [Client thread/DEBUG] [FML/]: Attempting to load mods contained in the minecraft jar file and associated classes
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related directory at C:\Users\Пользователь\Desktop\GregTech4\bin\main, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\codechicken\CodeChickenCore\1.7.10-1.0.7.47\3f4dff5483cf69915b761ee5a9e9f1865b03b6c4\CodeChickenCore-1.7.10-1.0.7.47-dev.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\codechicken\NotEnoughItems\1.7.10-1.0.5.120\fd474a3eb268678566e8c908d368532dd057b6ac\NotEnoughItems-1.7.10-1.0.5.120-dev.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\codechicken\CodeChickenLib\1.7.10-1.1.3.138\2dd3b058db77eac637b638aa076e0968b203e75e\CodeChickenLib-1.7.10-1.1.3.138-dev.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.sengir.forestry\forestry_1.7.10\4.2.9.57\6587b393917e6a23ce87ef8c87a80065b6ee506b\forestry_1.7.10-4.2.9.57-dev.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.industrial-craft\industrialcraft-2\2.2.673-experimental\3c78b69033373cbf0f6ab9ba7cbecc785ce6c5d2\industrialcraft-2-2.2.673-experimental-dev.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\build\dirtyArtifacts\forgeSrc-1.7.10-10.13.4.1614-1.7.10.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.minecraft\launchwrapper\1.12\111e7bea9c968cdb3d06ef4632bf7ff0824d0f36\launchwrapper-1.12.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.google.code.findbugs\jsr305\1.3.9\40719ea6961c0cb6afaeb6a921eaa1f6afd4cfdf\jsr305-1.3.9.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.ow2.asm\asm-debug-all\5.0.3\f9e364ae2a66ce2a543012a4668856e84e5dab74\asm-debug-all-5.0.3.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.typesafe.akka\akka-actor_2.11\2.3.3\ed62e9fc709ca0f2ff1a3220daa8b70a2870078e\akka-actor_2.11-2.3.3.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.typesafe\config\1.2.1\f771f71fdae3df231bcd54d5ca2d57f0bf93f467\config-1.2.1.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-actors-migration_2.11\1.1.0\dfa8bc42b181d5b9f1a5dd147f8ae308b893eb6f\scala-actors-migration_2.11-1.1.0.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang.plugins\scala-continuations-plugin_2.11.1\1.0.2\f361a3283452c57fa30c1ee69448995de23c60f7\scala-continuations-plugin_2.11.1-1.0.2.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-compiler\2.11.1\56ea2e6c025e0821f28d73ca271218b8dd04926a\scala-compiler-2.11.1.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang.plugins\scala-continuations-library_2.11\1.0.2\e517c53a7e9acd6b1668c5a35eccbaa3bab9aac\scala-continuations-library_2.11-1.0.2.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-reflect\2.11.1\6580347e61cc7f8e802941e7fde40fa83b8badeb\scala-reflect-2.11.1.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-actors\2.11.0\8ccfb6541de179bb1c4d45cf414acee069b7f78b\scala-actors-2.11.0.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang.modules\scala-xml_2.11\1.0.2\820fbca7e524b530fdadc594c39d49a21ea0337e\scala-xml_2.11-1.0.2.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang.modules\scala-parser-combinators_2.11\1.0.1\f05d7345bf5a58924f2837c6c1f4d73a938e1ff0\scala-parser-combinators_2.11-1.0.1.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-library\2.11.1\e11da23da3eabab9f4777b9220e60d44c1aab6a\scala-library-2.11.1.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-parser-combinators_2.11\1.0.1\f05d7345bf5a58924f2837c6c1f4d73a938e1ff0\scala-parser-combinators_2.11-1.0.1.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-swing_2.11\1.0.1\b1cdd92bd47b1e1837139c1c53020e86bb9112ae\scala-swing_2.11-1.0.1.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.scala-lang\scala-xml_2.11\1.0.2\7a80ec00aec122fba7cd4e0d4cdd87ff7e4cb6d0\scala-xml_2.11-1.0.2.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.sf.jopt-simple\jopt-simple\4.5\6065cc95c661255349c1d0756657be17c29a4fd3\jopt-simple-4.5.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\lzma\lzma\0.0.1\521616dc7487b42bef0e803bd2fa3faf668101d7\lzma-0.0.1.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.mojang\realms\1.3.5\807ae355ee63583becd7ea60e76aab1532bb42e\realms-1.3.5.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.apache.commons\commons-compress\1.8.1\a698750c16740fd5b3871425f4cb3bbaa87f529d\commons-compress-1.8.1.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.apache.httpcomponents\httpclient\4.3.3\18f4247ff4572a074444572cee34647c43e7c9c7\httpclient-4.3.3.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\commons-logging\commons-logging\1.1.3\f6f66e966c70a83ffbdb6f17a0919eaf7c8aca7f\commons-logging-1.1.3.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.apache.httpcomponents\httpcore\4.3.2\31fbbff1ddbf98f3aa7377c94d33b0447c646b6e\httpcore-4.3.2.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\java3d\vecmath\1.3.1\a0ae4f51da409fa0c20fa0ca59e6bbc9413ae71d\vecmath-1.3.1.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.sf.trove4j\trove4j\3.0.3\42ccaf4761f0dfdfa805c9e340d99a755907e2dd\trove4j-3.0.3.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.ibm.icu\icu4j-core-mojang\51.2\63d216a9311cca6be337c1e458e587f99d382b84\icu4j-core-mojang-51.2.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.paulscode\codecjorbis\20101023\c73b5636faf089d9f00e8732a829577de25237ee\codecjorbis-20101023.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.paulscode\codecwav\20101023\12f031cfe88fef5c1dd36c563c0a3a69bd7261da\codecwav-20101023.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.paulscode\libraryjavasound\20101123\5c5e304366f75f9eaa2e8cca546a1fb6109348b3\libraryjavasound-20101123.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.paulscode\librarylwjglopenal\20100824\73e80d0794c39665aec3f62eee88ca91676674ef\librarylwjglopenal-20100824.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.paulscode\soundsystem\20120107\419c05fe9be71f792b2d76cfc9b67f1ed0fec7f6\soundsystem-20120107.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\io.netty\netty-all\4.0.10.Final\9e50bd52ffe257a0e2cd8d971688d6ce7d174325\netty-all-4.0.10.Final.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.mojang\authlib\1.5.16\ef1582b11fd0943d069cdcb72e99008ac209a283\authlib-1.5.16.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.google.guava\guava\17.0\9c6ef172e8de35fd8d4d8783e4821e57cdef7445\guava-17.0.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.apache.commons\commons-lang3\3.3.2\90a3822c38ec8c996e84c16a3477ef632cbc87a3\commons-lang3-3.3.2.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\commons-io\commons-io\2.4\b1b6ea3b7e4aa4f492509a4952029cd8e48019ad\commons-io-2.4.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\commons-codec\commons-codec\1.9\9ce04e34240f674bc72680f8b843b1457383161a\commons-codec-1.9.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.lwjgl.lwjgl\lwjgl_util\2.9.1\290d7ba8a1bd9566f5ddf16ad06f09af5ec9b20e\lwjgl_util-2.9.1.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.lwjgl.lwjgl\lwjgl\2.9.1\f58c5aabcef0e41718a564be9f8e412fff8db847\lwjgl-2.9.1.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.java.jinput\jinput\2.0.5\39c7796b469a600f72380316f6b1f11db6c2c7c4\jinput-2.0.5.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.java.jutils\jutils\1.0.0\e12fe1fda814bd348c1579329c86943d2cd3c6a6\jutils-1.0.0.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.2.4\a60a5e993c98c864010053cb901b7eab25306568\gson-2.2.4.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.apache.logging.log4j\log4j-core\2.0-beta9\678861ba1b2e1fccb594bb0ca03114bb05da9695\log4j-core-2.0-beta9.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.apache.logging.log4j\log4j-api\2.0-beta9\1dd66e68cccd907880229f9e2de1314bd13ff785\log4j-api-2.0-beta9.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\tv.twitch\twitch\5.16\1f55f009c61637c10c0acfb8b5ffc600f30044b4\twitch-5.16.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.java.jinput\jinput-platform\2.0.5\7ff832a6eb9ab6a767f1ade2b548092d0fa64795\jinput-platform-2.0.5-natives-linux.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.java.jinput\jinput-platform\2.0.5\385ee093e01f587f30ee1c8a2ee7d408fd732e16\jinput-platform-2.0.5-natives-windows.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.java.jinput\jinput-platform\2.0.5\53f9c919f34d2ca9de8c51fc4e1e8282029a9232\jinput-platform-2.0.5-natives-osx.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\tv.twitch\twitch-platform\5.16\7c6affe439099806a4f552da14c42f9d643d8b23\twitch-platform-5.16-natives-windows-32.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\tv.twitch\twitch-platform\5.16\39d0c3d363735b4785598e0e7fbf8297c706a9f9\twitch-platform-5.16-natives-windows-64.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\tv.twitch\twitch-platform\5.16\62503ee712766cf77f97252e5902786fd834b8c5\twitch-platform-5.16-natives-osx.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\tv.twitch\twitch-external-platform\4.5\18215140f010c05b9f86ef6f0f8871954d2ccebf\twitch-external-platform-4.5-natives-windows-32.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\tv.twitch\twitch-external-platform\4.5\c3cde57891b935d41b6680a9c5e1502eeab76d86\twitch-external-platform-4.5-natives-windows-64.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.lwjgl.lwjgl\lwjgl-platform\2.9.1\4c517eca808522457dd95ee8fc1fbcdbb602efbe\lwjgl-platform-2.9.1-natives-windows.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.lwjgl.lwjgl\lwjgl-platform\2.9.1\aa9aae879af8eb378e22cfc64db56ec2ca9a44d1\lwjgl-platform-2.9.1-natives-linux.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\org.lwjgl.lwjgl\lwjgl-platform\2.9.1\2d12c83fdfbc04ecabf02c7bc8cc54d034f0daac\lwjgl-platform-2.9.1-natives-osx.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\appliedenergistics2-rv3-beta-6-dev.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\Baubles-1.7.10-1.0.1.10.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\buildcraft-7.1.23-dev.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\CoFHCore-[1.7.10]3.1.4-329-dev.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\IC2NuclearControl-2.4.3a-dev.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\industrialcraft-2-2.2.673-experimental-dev.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\MineFactoryReloaded-[1.7.10]2.8.1-174-dev.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\Railcraft_1.7.10-9.12.2.1-dev.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\src\appliedenergistics2-rv3-beta-6-src.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\src\buildcraft-7.1.23-src.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\src\CoFHCore-[1.7.10]3.1.4-329-src.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\src\IC2NuclearControl-2.4.3a-src.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\src\MineFactoryReloaded-[1.7.10]2.8.1-174-src.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\src\NotEnoughItems-1.7.10-1.0.5.120-src.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\src\Railcraft_1.7.10-9.12.2.1-src.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\src\Thaumcraft-1.7.10-4.2.3.5-src.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\src\ThermalDynamics-[1.7.10]1.2.1-172-src.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\src\ThermalExpansion-[1.7.10]4.1.5-248-src.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\src\ThermalFoundation-[1.7.10]1.2.6-118-src.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\Thaumcraft-1.7.10-4.2.3.5-dev.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\ThermalDynamics-[1.7.10]1.2.1-172-dev.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\ThermalExpansion-[1.7.10]4.1.5-248-dev.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\libs\ThermalFoundation-[1.7.10]1.2.6-118-dev.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related directory at C:\Users\Пользователь\.gradle\caches\minecraft\net\minecraftforge\forge\1.7.10-10.13.4.1614-1.7.10\start, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a minecraft related file at C:\Users\Пользователь\Desktop\GregTech4\.\mods\ic2\ejml-0.23.jar, examining for mod candidates
+[03:55:50] [Client thread/DEBUG] [FML/]: Minecraft jar mods loaded successfully
+[03:55:50] [Client thread/INFO] [FML/]: Found 0 mods from the command line. Injecting into mod discoverer
+[03:55:50] [Client thread/INFO] [FML/]: Searching C:\Users\Пользователь\Desktop\GregTech4\mods for mods
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a candidate mod directory 1.7.10
+[03:55:50] [Client thread/DEBUG] [FML/]: Found a candidate mod directory ic2
+[03:55:50] [Client thread/INFO] [FML/]: Also searching C:\Users\Пользователь\Desktop\GregTech4\mods\1.7.10 for mods
+[03:55:50] [Client thread/DEBUG] [FML/]: Examining directory main for potential mods
+[03:55:50] [Client thread/DEBUG] [FML/]: Found an mcmod.info file in directory main
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.lang
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.blocks
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.blocks.fluids
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.blocks.tile.BlockMetaID_Block
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.blocks.tile.BlockMetaID_Block2
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.blocks.tile.BlockMetaID_Machine
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.blocks.tile.BlockMetaID_Stone1
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.blocks.tile.ButtonPanel
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.blocks.tile.Compartment
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.blocks.tile.GasTurbine
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.blocks.tile.Ore_Black
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.blocks.tile.Ore_Default
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.blocks.tile.Ore_End
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.blocks.tile.Ore_Nether
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.blocks.tile.Ore_Red
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.blocks.tile.Ore_Stone
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.blocks.tile.RedstoneDisplay
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.blocks.tile.RedstoneScale
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.blocks.tile.SteamTurbine
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.gui
+[03:55:50] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items.iconsets
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items.item.GregTech_MetaGenerated_Item_01
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items.item.GregTech_MetaGenerated_Item_01.610
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items.item.GregTech_MetaGenerated_Item_01.611
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items.item.GregTech_MetaGenerated_Item_01.618
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items.item.GregTech_MetaGenerated_Item_01.619
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items.item.GregTech_MetaGenerated_Item_01.620
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items.item.GregTech_MetaGenerated_Item_01.621
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items.item.GregTech_MetaGenerated_Item_01.628
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items.item.GregTech_MetaGenerated_Item_01.629
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items.item.GregTech_MetaGenerated_Item_01.697
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items.item.GregTech_MetaGenerated_Item_01.698
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items.item.GT_Cells
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items.item.GT_Components
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items.item.GT_DirtyDusts
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items.item.GT_Dusts
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items.item.GT_Materials
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items.item.GT_Nuggets
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items.item.GT_SmallDusts
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.gregtech_addon.textures.items.item.GT_TinyDusts
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.ic2
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.ic2.sounds
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.ic2.sounds.machines
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.ic2.sounds.tools
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.ic2.sounds.tools.chainsaw
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.ic2.sounds.tools.drill
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.ic2.sounds.tools.jetpack
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.ic2.sounds.tools.mininglaser
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.ic2.sounds.tools.nanosabre
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.ic2.sounds.tools.quantumsuit
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.ic2.textures
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.ic2.textures.blocks
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.ic2.textures.blocks.crop
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.minecraft
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.minecraft.textures
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.minecraft.textures.items
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.minecraft.textures.models
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package assets.minecraft.textures.models.armor
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.api
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.api.enums
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.api.events
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.api.gui
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.api.interfaces
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.api.items
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.api.metatileentity
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.api.metatileentity.examples
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.api.metatileentity.implementations
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.api.util
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.api.world
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.blocks
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.containers
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.covers
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.gui
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.items
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.network
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.network.packet
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.redstonecircuits
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.render
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.tileentities
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.tileentities.automation
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.tileentities.deprecated
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.tileentities.energy
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.tileentities.energy.production
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.tileentities.energy.storage
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.tileentities.frames
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.tileentities.machines
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.tileentities.machines.basic
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.tileentities.machines.multi
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.tileentities.machines.steam
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.tileentities.pipes
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.tileentities.pipes.fluids
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.tileentities.pipes.items
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.tileentities.redstone
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.common.tileentities.storage
+[03:55:51] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (gregtechmod.GT_Mod) - loading
+[03:55:51] [Client thread/TRACE] [gregtech_addon/]: Parsed dependency info : [IC2] [IC2, Railcraft, ThermalExpansion, ThermalExpansion|Transport, ThermalExpansion|Energy, ThermalExpansion|Factory] [RedPowerCore, RedPowerBase, RedPowerMachine, RedPowerCompat, RedPowerWiring, RedPowerLogic, RedPowerLighting, RedPowerWorld, RedPowerControl]
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.loaders
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.loaders.load
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.loaders.misc
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.loaders.oreprocessing
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.loaders.postload
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.loaders.preload
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.mistaqur
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package gregtechmod.mistaqur.nei
+[03:55:51] [Client thread/TRACE] [FML/]: Recursing into package META-INF
+[03:55:51] [Client thread/DEBUG] [FML/]: Examining file CodeChickenCore-1.7.10-1.0.7.47-dev.jar for potential mods
+[03:55:51] [Client thread/DEBUG] [FML/]: The mod container CodeChickenCore-1.7.10-1.0.7.47-dev.jar appears to be missing an mcmod.info file
+[03:55:51] [Client thread/DEBUG] [FML/]: Examining file NotEnoughItems-1.7.10-1.0.5.120-dev.jar for potential mods
+[03:55:51] [Client thread/DEBUG] [FML/]: The mod container NotEnoughItems-1.7.10-1.0.5.120-dev.jar appears to be missing an mcmod.info file
+[03:55:51] [Client thread/DEBUG] [FML/]: Examining file CodeChickenLib-1.7.10-1.1.3.138-dev.jar for potential mods
+[03:55:51] [Client thread/DEBUG] [FML/]: The mod container CodeChickenLib-1.7.10-1.1.3.138-dev.jar appears to be missing an mcmod.info file
+[03:55:51] [Client thread/DEBUG] [FML/]: Examining file forestry_1.7.10-4.2.9.57-dev.jar for potential mods
+[03:55:51] [Client thread/TRACE] [FML/]: Located mcmod.info file in file forestry_1.7.10-4.2.9.57-dev.jar
+[03:55:51] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (forestry.Forestry) - loading
+[03:55:51] [Client thread/TRACE] [Forestry/]: Parsed dependency info : [Forge@[10.13.4.1566,)] [Forge@[10.13.4.1566,), Buildcraft|Core@[6.1.7,), ExtrabiomesXL, BiomesOPlenty, IC2@[2.0.140,), Natura@[2.2.0,), HardcoreEnderExpansion] []
+[03:55:51] [Client thread/DEBUG] [FML/]: Examining file industrialcraft-2-2.2.673-experimental-dev.jar for potential mods
+[03:55:51] [Client thread/TRACE] [FML/]: Located mcmod.info file in file industrialcraft-2-2.2.673-experimental-dev.jar
+[03:55:51] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (ic2.core.IC2) - loading
+[03:55:51] [Client thread/TRACE] [IC2/]: Parsed dependency info : [Forge@[10.13.0.1200,)] [Forge@[10.13.0.1200,)] []
+[03:55:51] [Client thread/DEBUG] [FML/]: Examining file forgeSrc-1.7.10-10.13.4.1614-1.7.10.jar for potential mods
+[03:55:51] [Client thread/DEBUG] [FML/]: The mod container forgeSrc-1.7.10-10.13.4.1614-1.7.10.jar appears to be missing an mcmod.info file
+[03:55:52] [Client thread/DEBUG] [FML/]: Examining file launchwrapper-1.12.jar for potential mods
+[03:55:52] [Client thread/DEBUG] [FML/]: The mod container launchwrapper-1.12.jar appears to be missing an mcmod.info file
+[03:55:52] [Client thread/DEBUG] [FML/]: Examining file jsr305-1.3.9.jar for potential mods
+[03:55:52] [Client thread/DEBUG] [FML/]: The mod container jsr305-1.3.9.jar appears to be missing an mcmod.info file
+[03:55:52] [Client thread/DEBUG] [FML/]: Examining file asm-debug-all-5.0.3.jar for potential mods
+[03:55:52] [Client thread/DEBUG] [FML/]: The mod container asm-debug-all-5.0.3.jar appears to be missing an mcmod.info file
+[03:55:52] [Client thread/DEBUG] [FML/]: Examining file akka-actor_2.11-2.3.3.jar for potential mods
+[03:55:52] [Client thread/DEBUG] [FML/]: The mod container akka-actor_2.11-2.3.3.jar appears to be missing an mcmod.info file
+[03:55:52] [Client thread/DEBUG] [FML/]: Examining file config-1.2.1.jar for potential mods
+[03:55:52] [Client thread/DEBUG] [FML/]: The mod container config-1.2.1.jar appears to be missing an mcmod.info file
+[03:55:52] [Client thread/DEBUG] [FML/]: Examining file scala-actors-migration_2.11-1.1.0.jar for potential mods
+[03:55:52] [Client thread/DEBUG] [FML/]: The mod container scala-actors-migration_2.11-1.1.0.jar appears to be missing an mcmod.info file
+[03:55:52] [Client thread/DEBUG] [FML/]: Examining file scala-continuations-plugin_2.11.1-1.0.2.jar for potential mods
+[03:55:52] [Client thread/DEBUG] [FML/]: The mod container scala-continuations-plugin_2.11.1-1.0.2.jar appears to be missing an mcmod.info file
+[03:55:52] [Client thread/DEBUG] [FML/]: Examining file scala-compiler-2.11.1.jar for potential mods
+[03:55:52] [Client thread/DEBUG] [FML/]: The mod container scala-compiler-2.11.1.jar appears to be missing an mcmod.info file
+[03:55:53] [Client thread/DEBUG] [FML/]: Examining file scala-continuations-library_2.11-1.0.2.jar for potential mods
+[03:55:53] [Client thread/DEBUG] [FML/]: The mod container scala-continuations-library_2.11-1.0.2.jar appears to be missing an mcmod.info file
+[03:55:53] [Client thread/DEBUG] [FML/]: Examining file scala-reflect-2.11.1.jar for potential mods
+[03:55:53] [Client thread/DEBUG] [FML/]: The mod container scala-reflect-2.11.1.jar appears to be missing an mcmod.info file
+[03:55:54] [Client thread/DEBUG] [FML/]: Examining file scala-actors-2.11.0.jar for potential mods
+[03:55:54] [Client thread/DEBUG] [FML/]: The mod container scala-actors-2.11.0.jar appears to be missing an mcmod.info file
+[03:55:54] [Client thread/DEBUG] [FML/]: Examining file scala-xml_2.11-1.0.2.jar for potential mods
+[03:55:54] [Client thread/DEBUG] [FML/]: The mod container scala-xml_2.11-1.0.2.jar appears to be missing an mcmod.info file
+[03:55:54] [Client thread/DEBUG] [FML/]: Examining file scala-parser-combinators_2.11-1.0.1.jar for potential mods
+[03:55:54] [Client thread/DEBUG] [FML/]: The mod container scala-parser-combinators_2.11-1.0.1.jar appears to be missing an mcmod.info file
+[03:55:54] [Client thread/DEBUG] [FML/]: Examining file scala-library-2.11.1.jar for potential mods
+[03:55:54] [Client thread/DEBUG] [FML/]: The mod container scala-library-2.11.1.jar appears to be missing an mcmod.info file
+[03:55:54] [Client thread/DEBUG] [FML/]: Examining file scala-parser-combinators_2.11-1.0.1.jar for potential mods
+[03:55:54] [Client thread/DEBUG] [FML/]: The mod container scala-parser-combinators_2.11-1.0.1.jar appears to be missing an mcmod.info file
+[03:55:54] [Client thread/DEBUG] [FML/]: Examining file scala-swing_2.11-1.0.1.jar for potential mods
+[03:55:54] [Client thread/DEBUG] [FML/]: The mod container scala-swing_2.11-1.0.1.jar appears to be missing an mcmod.info file
+[03:55:54] [Client thread/DEBUG] [FML/]: Examining file scala-xml_2.11-1.0.2.jar for potential mods
+[03:55:54] [Client thread/DEBUG] [FML/]: The mod container scala-xml_2.11-1.0.2.jar appears to be missing an mcmod.info file
+[03:55:54] [Client thread/DEBUG] [FML/]: Examining file jopt-simple-4.5.jar for potential mods
+[03:55:54] [Client thread/DEBUG] [FML/]: The mod container jopt-simple-4.5.jar appears to be missing an mcmod.info file
+[03:55:54] [Client thread/DEBUG] [FML/]: Examining file lzma-0.0.1.jar for potential mods
+[03:55:54] [Client thread/DEBUG] [FML/]: The mod container lzma-0.0.1.jar appears to be missing an mcmod.info file
+[03:55:54] [Client thread/DEBUG] [FML/]: Examining file realms-1.3.5.jar for potential mods
+[03:55:54] [Client thread/DEBUG] [FML/]: The mod container realms-1.3.5.jar appears to be missing an mcmod.info file
+[03:55:54] [Client thread/DEBUG] [FML/]: Examining file commons-compress-1.8.1.jar for potential mods
+[03:55:54] [Client thread/DEBUG] [FML/]: The mod container commons-compress-1.8.1.jar appears to be missing an mcmod.info file
+[03:55:54] [Client thread/DEBUG] [FML/]: Examining file httpclient-4.3.3.jar for potential mods
+[03:55:54] [Client thread/DEBUG] [FML/]: The mod container httpclient-4.3.3.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file commons-logging-1.1.3.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container commons-logging-1.1.3.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file httpcore-4.3.2.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container httpcore-4.3.2.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file vecmath-1.3.1.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container vecmath-1.3.1.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file trove4j-3.0.3.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container trove4j-3.0.3.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file icu4j-core-mojang-51.2.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container icu4j-core-mojang-51.2.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file codecjorbis-20101023.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container codecjorbis-20101023.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file codecwav-20101023.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container codecwav-20101023.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file libraryjavasound-20101123.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container libraryjavasound-20101123.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file librarylwjglopenal-20100824.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container librarylwjglopenal-20100824.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file soundsystem-20120107.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container soundsystem-20120107.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file netty-all-4.0.10.Final.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container netty-all-4.0.10.Final.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file authlib-1.5.16.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container authlib-1.5.16.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file guava-17.0.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container guava-17.0.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file commons-lang3-3.3.2.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container commons-lang3-3.3.2.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file commons-io-2.4.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container commons-io-2.4.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file commons-codec-1.9.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container commons-codec-1.9.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file lwjgl_util-2.9.1.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container lwjgl_util-2.9.1.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file lwjgl-2.9.1.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container lwjgl-2.9.1.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file jinput-2.0.5.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container jinput-2.0.5.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file jutils-1.0.0.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container jutils-1.0.0.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file gson-2.2.4.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container gson-2.2.4.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file log4j-core-2.0-beta9.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container log4j-core-2.0-beta9.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file log4j-api-2.0-beta9.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container log4j-api-2.0-beta9.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file twitch-5.16.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container twitch-5.16.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file jinput-platform-2.0.5-natives-linux.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container jinput-platform-2.0.5-natives-linux.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file jinput-platform-2.0.5-natives-windows.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container jinput-platform-2.0.5-natives-windows.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file jinput-platform-2.0.5-natives-osx.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container jinput-platform-2.0.5-natives-osx.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file twitch-platform-5.16-natives-windows-32.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container twitch-platform-5.16-natives-windows-32.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file twitch-platform-5.16-natives-windows-64.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container twitch-platform-5.16-natives-windows-64.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file twitch-platform-5.16-natives-osx.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container twitch-platform-5.16-natives-osx.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file twitch-external-platform-4.5-natives-windows-32.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container twitch-external-platform-4.5-natives-windows-32.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file twitch-external-platform-4.5-natives-windows-64.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container twitch-external-platform-4.5-natives-windows-64.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file lwjgl-platform-2.9.1-natives-windows.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container lwjgl-platform-2.9.1-natives-windows.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file lwjgl-platform-2.9.1-natives-linux.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container lwjgl-platform-2.9.1-natives-linux.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file lwjgl-platform-2.9.1-natives-osx.jar for potential mods
+[03:55:55] [Client thread/DEBUG] [FML/]: The mod container lwjgl-platform-2.9.1-natives-osx.jar appears to be missing an mcmod.info file
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file appliedenergistics2-rv3-beta-6-dev.jar for potential mods
+[03:55:55] [Client thread/TRACE] [FML/]: Located mcmod.info file in file appliedenergistics2-rv3-beta-6-dev.jar
+[03:55:55] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (appeng.core.AppEng) - loading
+[03:55:55] [Client thread/TRACE] [appliedenergistics2/]: Parsed dependency info : [Forge@[10.13.4.1448,)] [appliedenergistics2-core, Forge@[10.13.4.1448,)] []
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file Baubles-1.7.10-1.0.1.10.jar for potential mods
+[03:55:55] [Client thread/TRACE] [FML/]: Located mcmod.info file in file Baubles-1.7.10-1.0.1.10.jar
+[03:55:55] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (baubles.common.Baubles) - loading
+[03:55:55] [Client thread/TRACE] [Baubles/]: Parsed dependency info : [Forge@[10.13.2,)] [Forge@[10.13.2,)] []
+[03:55:55] [Client thread/DEBUG] [FML/]: Examining file buildcraft-7.1.23-dev.jar for potential mods
+[03:55:55] [Client thread/TRACE] [FML/]: Located mcmod.info file in file buildcraft-7.1.23-dev.jar
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (buildcraft.BuildCraftCore) - loading
+[03:55:56] [Client thread/TRACE] [BuildCraft|Core/]: Parsed dependency info : [Forge@[10.13.2.1236,)] [Forge@[10.13.2.1236,)] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (buildcraft.BuildCraftTransport) - loading
+[03:55:56] [Client thread/TRACE] [BuildCraft|Transport/]: Parsed dependency info : [BuildCraft|Core@7.1.23] [BuildCraft|Core@7.1.23] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (buildcraft.BuildCraftFactory) - loading
+[03:55:56] [Client thread/TRACE] [BuildCraft|Factory/]: Parsed dependency info : [BuildCraft|Core@7.1.23] [BuildCraft|Core@7.1.23] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (buildcraft.BuildCraftSilicon) - loading
+[03:55:56] [Client thread/TRACE] [BuildCraft|Silicon/]: Parsed dependency info : [BuildCraft|Core@7.1.23] [BuildCraft|Core@7.1.23] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (buildcraft.BuildCraftRobotics) - loading
+[03:55:56] [Client thread/TRACE] [BuildCraft|Robotics/]: Parsed dependency info : [BuildCraft|Core@7.1.23] [BuildCraft|Core@7.1.23] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (buildcraft.BuildCraftEnergy) - loading
+[03:55:56] [Client thread/TRACE] [BuildCraft|Energy/]: Parsed dependency info : [BuildCraft|Core@7.1.23] [BuildCraft|Core@7.1.23] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (buildcraft.BuildCraftBuilders) - loading
+[03:55:56] [Client thread/TRACE] [BuildCraft|Builders/]: Parsed dependency info : [BuildCraft|Core@7.1.23] [BuildCraft|Core@7.1.23] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file CoFHCore-[1.7.10]3.1.4-329-dev.jar for potential mods
+[03:55:56] [Client thread/TRACE] [FML/]: Located mcmod.info file in file CoFHCore-[1.7.10]3.1.4-329-dev.jar
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (cofh.CoFHCore) - loading
+[03:55:56] [Client thread/TRACE] [CoFHCore/]: Parsed dependency info : [Forge@[10.13.4.1448,10.14)] [Forge@[10.13.4.1448,10.14)] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file IC2NuclearControl-2.4.3a-dev.jar for potential mods
+[03:55:56] [Client thread/TRACE] [FML/]: Located mcmod.info file in file IC2NuclearControl-2.4.3a-dev.jar
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (shedar.mods.ic2.nuclearcontrol.IC2NuclearControl) - loading
+[03:55:56] [Client thread/TRACE] [IC2NuclearControl/]: Parsed dependency info : [IC2] [IC2] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file industrialcraft-2-2.2.673-experimental-dev.jar for potential mods
+[03:55:56] [Client thread/TRACE] [FML/]: Located mcmod.info file in file industrialcraft-2-2.2.673-experimental-dev.jar
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (ic2.core.IC2) - loading
+[03:55:56] [Client thread/TRACE] [IC2/]: Parsed dependency info : [Forge@[10.13.0.1200,)] [Forge@[10.13.0.1200,)] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file MineFactoryReloaded-[1.7.10]2.8.1-174-dev.jar for potential mods
+[03:55:56] [Client thread/TRACE] [FML/]: Located mcmod.info file in file MineFactoryReloaded-[1.7.10]2.8.1-174-dev.jar
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (powercrystals.minefactoryreloaded.MineFactoryReloadedCore) - loading
+[03:55:56] [Client thread/TRACE] [MineFactoryReloaded/]: Parsed dependency info : [CoFHCore@[1.7.10R3.1.0,1.7.10R3.2.0)] [CoFHCore@[1.7.10R3.1.0,1.7.10R3.2.0)] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcofh/mod/ChildMod; (powercrystals.minefactoryreloaded.modhelpers.ae.AppliedEnergistics) - loading
+[03:55:56] [Client thread/TRACE] [MineFactoryReloaded|CompatAppliedEnergistics/]: Parsed dependency info : [] [MineFactoryReloaded, appliedenergistics2] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcofh/mod/ChildMod; (powercrystals.minefactoryreloaded.modhelpers.atum.Atum) - loading
+[03:55:56] [Client thread/TRACE] [MineFactoryReloaded|CompatAtum/]: Parsed dependency info : [] [MineFactoryReloaded, Atum] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcofh/mod/ChildMod; (powercrystals.minefactoryreloaded.modhelpers.backtools.BackTools) - loading
+[03:55:56] [Client thread/TRACE] [MineFactoryReloaded|CompatBackTools/]: Parsed dependency info : [] [MineFactoryReloaded, mod_BackTools] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcofh/mod/ChildMod; (powercrystals.minefactoryreloaded.modhelpers.buildcraft.Buildcraft) - loading
+[03:55:56] [Client thread/TRACE] [MineFactoryReloaded|CompatBuildCraft/]: Parsed dependency info : [] [MineFactoryReloaded, BuildCraft|Core] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcofh/mod/ChildMod; (powercrystals.minefactoryreloaded.modhelpers.chococraft.Chococraft) - loading
+[03:55:56] [Client thread/TRACE] [MineFactoryReloaded|CompatChococraft/]: Parsed dependency info : [MineFactoryReloaded] [MineFactoryReloaded, chococraft] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcofh/mod/ChildMod; (powercrystals.minefactoryreloaded.modhelpers.extrabiomes.ExtraBiomes) - loading
+[03:55:56] [Client thread/TRACE] [MineFactoryReloaded|CompatExtraBiomes/]: Parsed dependency info : [] [MineFactoryReloaded, ExtrabiomesXL] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcofh/mod/ChildMod; (powercrystals.minefactoryreloaded.modhelpers.forestry.Forestry) - loading
+[03:55:56] [Client thread/TRACE] [MineFactoryReloaded|CompatForestry/]: Parsed dependency info : [] [MineFactoryReloaded, Forestry] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcofh/mod/ChildMod; (powercrystals.minefactoryreloaded.modhelpers.forgemultiparts.FMP) - loading
+[03:55:56] [Client thread/TRACE] [MineFactoryReloaded|CompatForgeMicroblock/]: Parsed dependency info : [] [MineFactoryReloaded] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcofh/mod/ChildMod; (powercrystals.minefactoryreloaded.modhelpers.ic2.IC2) - loading
+[03:55:56] [Client thread/TRACE] [MineFactoryReloaded|CompatIC2/]: Parsed dependency info : [] [MineFactoryReloaded, IC2] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcofh/mod/ChildMod; (powercrystals.minefactoryreloaded.modhelpers.projectred.ProjectRedCompat) - loading
+[03:55:56] [Client thread/TRACE] [MineFactoryReloaded|CompatProjRed/]: Parsed dependency info : [] [MineFactoryReloaded, ProjRed|Core, ProjRed|Exploration] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcofh/mod/ChildMod; (powercrystals.minefactoryreloaded.modhelpers.railcraft.Railcraft) - loading
+[03:55:56] [Client thread/TRACE] [MineFactoryReloaded|CompatRailcraft/]: Parsed dependency info : [] [MineFactoryReloaded, Railcraft] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcofh/mod/ChildMod; (powercrystals.minefactoryreloaded.modhelpers.sufficientbiomes.SufficientBiomes) - loading
+[03:55:56] [Client thread/TRACE] [MineFactoryReloaded|CompatSufficientBiomes/]: Parsed dependency info : [] [MineFactoryReloaded, EmasherWorldGen] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcofh/mod/ChildMod; (powercrystals.minefactoryreloaded.modhelpers.thaumcraft.Thaumcraft) - loading
+[03:55:56] [Client thread/TRACE] [MineFactoryReloaded|CompatThaumcraft/]: Parsed dependency info : [] [MineFactoryReloaded, Thaumcraft] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcofh/mod/ChildMod; (powercrystals.minefactoryreloaded.modhelpers.thermalexpansion.ThermalExpansion) - loading
+[03:55:56] [Client thread/TRACE] [MineFactoryReloaded|CompatThermalExpansion/]: Parsed dependency info : [] [MineFactoryReloaded, ThermalExpansion] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcofh/mod/ChildMod; (powercrystals.minefactoryreloaded.modhelpers.tinkersconstruct.TConstruct) - loading
+[03:55:56] [Client thread/TRACE] [MineFactoryReloaded|CompatTConstruct/]: Parsed dependency info : [] [MineFactoryReloaded, TConstruct] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcofh/mod/ChildMod; (powercrystals.minefactoryreloaded.modhelpers.twilightforest.TwilightForest) - loading
+[03:55:56] [Client thread/TRACE] [MineFactoryReloaded|CompatTwilightForest/]: Parsed dependency info : [] [MineFactoryReloaded, TwilightForest] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (powercrystals.minefactoryreloaded.modhelpers.vanilla.Vanilla) - loading
+[03:55:56] [Client thread/TRACE] [MineFactoryReloaded|CompatVanilla/]: Parsed dependency info : [] [MineFactoryReloaded] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file Railcraft_1.7.10-9.12.2.1-dev.jar for potential mods
+[03:55:56] [Client thread/TRACE] [FML/]: Located mcmod.info file in file Railcraft_1.7.10-9.12.2.1-dev.jar
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (mods.railcraft.common.core.Railcraft) - loading
+[03:55:56] [Client thread/TRACE] [Railcraft/]: Using mcmod dependency info : [Forge] [] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file appliedenergistics2-rv3-beta-6-src.jar for potential mods
+[03:55:56] [Client thread/DEBUG] [FML/]: The mod container appliedenergistics2-rv3-beta-6-src.jar appears to be missing an mcmod.info file
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file buildcraft-7.1.23-src.jar for potential mods
+[03:55:56] [Client thread/DEBUG] [FML/]: The mod container buildcraft-7.1.23-src.jar appears to be missing an mcmod.info file
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file CoFHCore-[1.7.10]3.1.4-329-src.jar for potential mods
+[03:55:56] [Client thread/DEBUG] [FML/]: The mod container CoFHCore-[1.7.10]3.1.4-329-src.jar appears to be missing an mcmod.info file
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file IC2NuclearControl-2.4.3a-src.jar for potential mods
+[03:55:56] [Client thread/DEBUG] [FML/]: The mod container IC2NuclearControl-2.4.3a-src.jar appears to be missing an mcmod.info file
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file MineFactoryReloaded-[1.7.10]2.8.1-174-src.jar for potential mods
+[03:55:56] [Client thread/DEBUG] [FML/]: The mod container MineFactoryReloaded-[1.7.10]2.8.1-174-src.jar appears to be missing an mcmod.info file
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file NotEnoughItems-1.7.10-1.0.5.120-src.jar for potential mods
+[03:55:56] [Client thread/DEBUG] [FML/]: The mod container NotEnoughItems-1.7.10-1.0.5.120-src.jar appears to be missing an mcmod.info file
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file Railcraft_1.7.10-9.12.2.1-src.jar for potential mods
+[03:55:56] [Client thread/DEBUG] [FML/]: The mod container Railcraft_1.7.10-9.12.2.1-src.jar appears to be missing an mcmod.info file
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file Thaumcraft-1.7.10-4.2.3.5-src.jar for potential mods
+[03:55:56] [Client thread/DEBUG] [FML/]: The mod container Thaumcraft-1.7.10-4.2.3.5-src.jar appears to be missing an mcmod.info file
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file ThermalDynamics-[1.7.10]1.2.1-172-src.jar for potential mods
+[03:55:56] [Client thread/DEBUG] [FML/]: The mod container ThermalDynamics-[1.7.10]1.2.1-172-src.jar appears to be missing an mcmod.info file
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file ThermalExpansion-[1.7.10]4.1.5-248-src.jar for potential mods
+[03:55:56] [Client thread/DEBUG] [FML/]: The mod container ThermalExpansion-[1.7.10]4.1.5-248-src.jar appears to be missing an mcmod.info file
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file ThermalFoundation-[1.7.10]1.2.6-118-src.jar for potential mods
+[03:55:56] [Client thread/DEBUG] [FML/]: The mod container ThermalFoundation-[1.7.10]1.2.6-118-src.jar appears to be missing an mcmod.info file
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file Thaumcraft-1.7.10-4.2.3.5-dev.jar for potential mods
+[03:55:56] [Client thread/TRACE] [FML/]: Located mcmod.info file in file Thaumcraft-1.7.10-4.2.3.5-dev.jar
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (thaumcraft.common.Thaumcraft) - loading
+[03:55:56] [Client thread/TRACE] [Thaumcraft/]: Parsed dependency info : [Forge@[10.13.2,), Baubles@[1.0.1.10,)] [Forge@[10.13.2,), Baubles@[1.0.1.10,)] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file ThermalDynamics-[1.7.10]1.2.1-172-dev.jar for potential mods
+[03:55:56] [Client thread/TRACE] [FML/]: Located mcmod.info file in file ThermalDynamics-[1.7.10]1.2.1-172-dev.jar
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (cofh.thermaldynamics.ThermalDynamics) - loading
+[03:55:56] [Client thread/TRACE] [ThermalDynamics/]: Parsed dependency info : [CoFHCore@[1.7.10R3.1.4,1.7.10R3.2.0), ThermalFoundation@[1.7.10R1.2.6,1.7.10R1.3.0)] [CoFHCore@[1.7.10R3.1.4,1.7.10R3.2.0), ThermalFoundation@[1.7.10R1.2.6,1.7.10R1.3.0)] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file ThermalExpansion-[1.7.10]4.1.5-248-dev.jar for potential mods
+[03:55:56] [Client thread/TRACE] [FML/]: Located mcmod.info file in file ThermalExpansion-[1.7.10]4.1.5-248-dev.jar
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (cofh.thermalexpansion.ThermalExpansion) - loading
+[03:55:56] [Client thread/TRACE] [ThermalExpansion/]: Parsed dependency info : [ThermalFoundation@[1.7.10R1.2.6,1.7.10R1.3.0), CoFHCore@[1.7.10R3.1.4,1.7.10R3.2.0)] [CoFHCore@[1.7.10R3.1.4,1.7.10R3.2.0), ThermalFoundation@[1.7.10R1.2.6,1.7.10R1.3.0)] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file ThermalFoundation-[1.7.10]1.2.6-118-dev.jar for potential mods
+[03:55:56] [Client thread/TRACE] [FML/]: Located mcmod.info file in file ThermalFoundation-[1.7.10]1.2.6-118-dev.jar
+[03:55:56] [Client thread/DEBUG] [FML/]: Identified a mod of type Lcpw/mods/fml/common/Mod; (cofh.thermalfoundation.ThermalFoundation) - loading
+[03:55:56] [Client thread/TRACE] [ThermalFoundation/]: Parsed dependency info : [CoFHCore@[1.7.10R3.1.4,1.7.10R3.2.0)] [CoFHCore@[1.7.10R3.1.4,1.7.10R3.2.0)] []
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining directory start for potential mods
+[03:55:56] [Client thread/DEBUG] [FML/]: No mcmod.info file found in directory start
+[03:55:56] [Client thread/TRACE] [FML/]: Recursing into package net
+[03:55:56] [Client thread/TRACE] [FML/]: Recursing into package net.minecraftforge
+[03:55:56] [Client thread/TRACE] [FML/]: Recursing into package net.minecraftforge.gradle
+[03:55:56] [Client thread/TRACE] [FML/]: Recursing into package net.minecraftforge.gradle.tweakers
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining file ejml-0.23.jar for potential mods
+[03:55:56] [Client thread/DEBUG] [FML/]: The mod container ejml-0.23.jar appears to be missing an mcmod.info file
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining directory 1.7.10 for potential mods
+[03:55:56] [Client thread/DEBUG] [FML/]: No mcmod.info file found in directory 1.7.10
+[03:55:56] [Client thread/DEBUG] [FML/]: Examining directory ic2 for potential mods
+[03:55:56] [Client thread/DEBUG] [FML/]: No mcmod.info file found in directory ic2
+[03:55:56] [Client thread/ERROR] [FML/]: Found a duplicate mod IC2 at [C:\Users\Пользователь\.gradle\caches\modules-2\files-2.1\net.industrial-craft\industrialcraft-2\2.2.673-experimental\3c78b69033373cbf0f6ab9ba7cbecc785ce6c5d2\industrialcraft-2-2.2.673-experimental-dev.jar, C:\Users\Пользователь\Desktop\GregTech4\libs\industrialcraft-2-2.2.673-experimental-dev.jar]
+[03:55:56] [Client thread/DEBUG] [FML/]: Bar Step: Loading Resources - Default took 0,005s
+[03:55:56] [Client thread/DEBUG] [FML/]: Bar Finished: Reloading - LanguageManager took 0,007s
+[03:55:56] [Client thread/DEBUG] [FML/]: Bar Step: Loading Resources - Reloading listeners took 0,007s
+[03:55:56] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resources took 0,012s
+[03:55:56] [Client thread/WARN] [FML/]: There were errors previously. Not beginning mod initialization phase
+[03:55:56] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - TextureManager took 0,000s
+[03:55:56] [Sound Library Loader/INFO] [STDOUT/]: [paulscode.sound.SoundSystemLogger:message:69]: 
+[03:55:56] [Sound Library Loader/INFO] [STDOUT/]: [paulscode.sound.SoundSystemLogger:message:69]: Starting up SoundSystem...
+[03:55:57] [Thread-7/INFO] [STDOUT/]: [paulscode.sound.SoundSystemLogger:message:69]: Initializing LWJGL OpenAL
+[03:55:57] [Thread-7/INFO] [STDOUT/]: [paulscode.sound.SoundSystemLogger:message:69]:     (The LWJGL binding of OpenAL.  For more information, see http://www.lwjgl.org)
+[03:55:57] [Thread-7/INFO] [STDOUT/]: [paulscode.sound.SoundSystemLogger:message:69]: OpenAL initialized.
+[03:55:57] [Sound Library Loader/INFO] [STDOUT/]: [paulscode.sound.SoundSystemLogger:message:69]: 
+[03:55:58] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - SoundHandler took 1,086s
+[03:55:58] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - FontRenderer took 0,002s
+[03:55:58] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - FontRenderer took 0,001s
+[03:55:58] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - GrassColorReloadListener took 0,005s
+[03:55:58] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - FoliageColorReloadListener took 0,006s
+[03:55:58] [Client thread/DEBUG] [FML/]: Bar Step: Rendering Setup - Loading Render Manager took 0,149s
+[03:55:58] [Client thread/DEBUG] [FML/]: Bar Finished: Loading Resource - EntityRenderer took 0,000s
+[03:55:58] [Client thread/DEBUG] [FML/]: Bar Step: Rendering Setup - Loading Entity Renderer took 0,026s
+[03:55:58] [Client thread/DEBUG] [FML/]: Bar Step: Rendering Setup - Loading GL properties took 0,001s
+[03:55:58] [Client thread/DEBUG] [FML/]: Bar Step: Rendering Setup - Render Global instance took 0,063s
+[03:55:58] [Client thread/DEBUG] [FML/]: Bar Step: Rendering Setup - Building Blocks Texture took 0,011s
+[03:55:58] [Client thread/DEBUG] [FML/]: Bar Step: Rendering Setup - Anisotropy and Mipmaps took 0,000s
+[03:55:58] [Client thread/DEBUG] [FML/]: Bar Finished: Texture stitching - missingno took 0,001s
+[03:55:58] [Client thread/DEBUG] [FML/]: Bar Finished: Texture creation took 0,002s
+[03:55:58] [Client thread/DEBUG] [FML/]: Bar Step: Rendering Setup - Loading Blocks Texture took 0,006s
+[03:55:58] [Client thread/DEBUG] [FML/]: Bar Finished: Texture stitching - missingno took 0,000s
+[03:55:58] [Client thread/DEBUG] [FML/]: Bar Finished: Texture creation took 0,001s
+[03:55:58] [Client thread/DEBUG] [FML/]: Bar Step: Rendering Setup - Loading Items Texture took 0,004s
+[03:55:58] [Client thread/DEBUG] [FML/]: Bar Step: Rendering Setup - Viewport took 0,004s
+[03:55:58] [Client thread/DEBUG] [FML/]: Bar Finished: Rendering Setup took 0,265s
+[03:56:07] [Client thread/INFO] [STDOUT/]: [paulscode.sound.SoundSystemLogger:message:69]: 
+[03:56:07] [Client thread/INFO] [STDOUT/]: [paulscode.sound.SoundSystemLogger:message:69]: SoundSystem shutting down...
+[03:56:07] [Client thread/INFO] [STDOUT/]: [paulscode.sound.SoundSystemLogger:importantMessage:90]:     Author: Paul Lamb, www.paulscode.com
+[03:56:07] [Client thread/INFO] [STDOUT/]: [paulscode.sound.SoundSystemLogger:message:69]: 
