@@ -13,7 +13,6 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ICrafting;
-import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.DimensionManager;
 
@@ -49,8 +48,7 @@ public class GT_Container_Teleporter extends GT_ContainerMetaTile_Machine {
 	@Override
     public ItemStack slotClick(int aSlotIndex, int aMouseclick, int aShifthold, EntityPlayer aPlayer) {
     	if (aSlotIndex < 0) return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
-	    Slot tSlot = (Slot)inventorySlots.get(aSlotIndex);
-	    if (tSlot != null) {
+	    if (inventorySlots.get(aSlotIndex) != null) {
 	    	switch(aSlotIndex) {
 	    	case 0:
 	    		((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetX -= (aShifthold==1?512:64);
@@ -106,28 +104,19 @@ public class GT_Container_Teleporter extends GT_ContainerMetaTile_Machine {
     }
 	
 	private int getNextWorldId(int intValue, boolean desc) {
-		int currentDim = ((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetD + (intValue * (desc ? -1 : 1));
 		List<Integer> IDs = Arrays.asList(DimensionManager.getIDs());
 		IDs.sort(Comparator.naturalOrder());
 		
-		while (!DimensionManager.isDimensionRegistered(currentDim)) {
-			if (desc) {
-				if (currentDim < IDs.get(0)) {
-					currentDim = IDs.get(IDs.size() - 1);
-					break;
-				}
-			} else {
-				if (currentDim > IDs.get(IDs.size() - 1)) {
-					currentDim = IDs.get(0);
-					break;
-				}
-			}
-			
-			
-			currentDim = desc ? currentDim-1 : currentDim+1;
-		}
+		int idx = IDs.indexOf(((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetD);
+		int offset = intValue * (desc ? -1 : 1);
+		int newIdx = 0;
 		
-		return currentDim;
+		if (idx < 0 || idx + offset > IDs.size()) {
+			return ((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetD;
+		}
+			
+		newIdx = idx + offset;
+		return newIdx < 0 || newIdx >= IDs.size() ? ((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetD : IDs.get(newIdx);
 	}
 	
 	public int mTargetX = 0, mTargetY = 0, mTargetZ = 0, mTargetD = 0, mEgg = 0;
