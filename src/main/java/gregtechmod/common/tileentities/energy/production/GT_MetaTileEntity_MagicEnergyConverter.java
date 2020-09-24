@@ -10,9 +10,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import thaumcraft.common.blocks.BlockTaintFibres;
-import thaumcraft.common.lib.utils.Utils;
-import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 
 public class GT_MetaTileEntity_MagicEnergyConverter extends GT_MetaTileEntity_BasicGenerator {
 
@@ -56,14 +53,15 @@ public class GT_MetaTileEntity_MagicEnergyConverter extends GT_MetaTileEntity_Ba
 				x = te.xCoord + tWorld.rand.nextInt(16) - tWorld.rand.nextInt(16);
 				z = te.zCoord + tWorld.rand.nextInt(16) - tWorld.rand.nextInt(16);
 				final BiomeGenBase bg = tWorld.getBiomeGenForCoords(x, z);
-				if (bg.biomeID != ThaumcraftWorldGenerator.biomeTaint.biomeID) {
-					Utils.setBiomeAt(tWorld, x, z, ThaumcraftWorldGenerator.biomeTaint);
+				if (bg.biomeID != thaumcraft.common.lib.world.ThaumcraftWorldGenerator.biomeTaint.biomeID) {
+					thaumcraft.common.lib.utils.Utils.setBiomeAt(tWorld, x, z, thaumcraft.common.lib.world.ThaumcraftWorldGenerator.biomeTaint);
+					
 				}
 				if (tWorld.rand.nextBoolean()) {
 					x = te.xCoord + tWorld.rand.nextInt(10) - tWorld.rand.nextInt(10);
 					z = te.zCoord + tWorld.rand.nextInt(10) - tWorld.rand.nextInt(10);
 					y = te.yCoord + tWorld.rand.nextInt(5) - tWorld.rand.nextInt(5);
-					if (BlockTaintFibres.spreadFibres(tWorld, x, y, z)) {
+					if (thaumcraft.common.blocks.BlockTaintFibres.spreadFibres(tWorld, x, y, z)) {
 					}
 				}
 			}

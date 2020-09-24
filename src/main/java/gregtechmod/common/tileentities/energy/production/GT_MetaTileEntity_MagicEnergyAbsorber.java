@@ -8,6 +8,9 @@ import gregtechmod.api.util.GT_Config;
 import gregtechmod.api.util.GT_Log;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import cpw.mods.fml.common.Loader;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.item.EntityEnderCrystal;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,24 +24,18 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.util.ForgeDirection;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectSourceHelper;
-import thaumcraft.common.blocks.BlockTaintFibres;
-import thaumcraft.common.entities.monster.EntityWisp;
-import thaumcraft.common.lib.events.EssentiaHandler;
-import thaumcraft.common.lib.utils.Utils;
-import thaumcraft.common.lib.world.ThaumcraftWorldGenerator;
 
 public class GT_MetaTileEntity_MagicEnergyAbsorber extends MetaTileEntity {
-	
 	public static int sEnergyPerEnderCrystal = 32, sEnergyFromVis = 12800;
 	public static final ArrayList<EntityEnderCrystal> sUsedDragonCrystalList = new ArrayList<EntityEnderCrystal>();
-	public static final Aspect[] supportedAspects = new Aspect[] {Aspect.AIR, Aspect.EARTH, Aspect.FIRE, Aspect.WATER, Aspect.ORDER, Aspect.ENTROPY};
+	public static final boolean THAUMCRAFT_LOADED = Loader.isModLoaded("Thaumcraft");
 	
 	public EntityEnderCrystal mTargetedCrystal;
 	private int elementIndex = 0;
-	private Aspect energySource = null;
+	private Object energySource = null;
 	public boolean isActive1 = false, isActive2 = false;
+	
+	private ArrayList<?> supportedAspects = null;
 	
 	public GT_MetaTileEntity_MagicEnergyAbsorber(int aID, String mName) {
 		super(aID, mName);
@@ -95,9 +92,9 @@ public class GT_MetaTileEntity_MagicEnergyAbsorber extends MetaTileEntity {
     @SuppressWarnings("unchecked")
 	@Override
     public void onPostTick() {
-    	if (getBaseMetaTileEntity().isServerSide() && energySource == null && getBaseMetaTileEntity().getWorld().getWorldTime() % 20 == 0) {
+    	if (getBaseMetaTileEntity().isServerSide() && energySource == null && getBaseMetaTileEntity().getWorld().getWorldTime() % 20 == 0 && supportedAspects != null) {
     		elementIndex = (elementIndex + 1) < 6 ? elementIndex + 1 : 0;
-    		energySource = supportedAspects[elementIndex];
+    		energySource = supportedAspects.get(elementIndex);
     	}
     	
     	if (getBaseMetaTileEntity().isServerSide() && getBaseMetaTileEntity().isAllowedToWork() && getBaseMetaTileEntity().getTimer()%10==0) {
@@ -166,12 +163,13 @@ public class GT_MetaTileEntity_MagicEnergyAbsorber extends MetaTileEntity {
     			}
     		}
     		
-    		if (sEnergyFromVis > 0 && isActive2 && getBaseMetaTileEntity().getUniversalEnergyStored() < sEnergyFromVis) {
+    		if (sEnergyFromVis > 0 && isActive2 && getBaseMetaTileEntity().getUniversalEnergyStored() < sEnergyFromVis && THAUMCRAFT_LOADED) {
     			try {
-    				if (energySource != null && EssentiaHandler.findEssentia((TileEntity) this.getBaseMetaTileEntity(), energySource, ForgeDirection.UNKNOWN, 20)) {
-    					if (AspectSourceHelper.drainEssentia((TileEntity) this.getBaseMetaTileEntity(), energySource, ForgeDirection.UNKNOWN, 20)) {
+    				
+    				if (energySource != null && thaumcraft.common.lib.events.EssentiaHandler.findEssentia((TileEntity) this.getBaseMetaTileEntity(), (thaumcraft.api.aspects.Aspect)energySource, ForgeDirection.UNKNOWN, 20)) {
+    					if (thaumcraft.api.aspects.AspectSourceHelper.drainEssentia((TileEntity) this.getBaseMetaTileEntity(), (thaumcraft.api.aspects.Aspect)energySource, ForgeDirection.UNKNOWN, 20)) {
         					getBaseMetaTileEntity().increaseStoredEnergyUnits(sEnergyFromVis, true);
-        					ArrayList<EntityWisp> tList = (ArrayList<EntityWisp>)getBaseMetaTileEntity().getWorld().getEntitiesWithinAABB(EntityWisp.class, AxisAlignedBB.getBoundingBox(getBaseMetaTileEntity().getXCoord()-8, getBaseMetaTileEntity().getYCoord()-8, getBaseMetaTileEntity().getZCoord()-8, getBaseMetaTileEntity().getXCoord()+8, getBaseMetaTileEntity().getYCoord()+8, getBaseMetaTileEntity().getZCoord()+8));
+        					List<?> tList = getBaseMetaTileEntity().getWorld().getEntitiesWithinAABB(thaumcraft.common.entities.monster.EntityWisp.class, AxisAlignedBB.getBoundingBox(getBaseMetaTileEntity().getXCoord()-8, getBaseMetaTileEntity().getYCoord()-8, getBaseMetaTileEntity().getZCoord()-8, getBaseMetaTileEntity().getXCoord()+8, getBaseMetaTileEntity().getYCoord()+8, getBaseMetaTileEntity().getZCoord()+8));
         					if (!tList.isEmpty()) getBaseMetaTileEntity().doExplosion(8192);
         				}
     				} else energySource = null;
@@ -198,14 +196,14 @@ public class GT_MetaTileEntity_MagicEnergyAbsorber extends MetaTileEntity {
 					x = te.xCoord + tWorld.rand.nextInt(16) - tWorld.rand.nextInt(16);
 					z = te.zCoord + tWorld.rand.nextInt(16) - tWorld.rand.nextInt(16);
 					final BiomeGenBase bg = tWorld.getBiomeGenForCoords(x, z);
-					if (bg.biomeID != ThaumcraftWorldGenerator.biomeTaint.biomeID) {
-						Utils.setBiomeAt(tWorld, x, z, ThaumcraftWorldGenerator.biomeTaint);
+					if (bg.biomeID != thaumcraft.common.lib.world.ThaumcraftWorldGenerator.biomeTaint.biomeID) {
+						thaumcraft.common.lib.utils.Utils.setBiomeAt(tWorld, x, z, thaumcraft.common.lib.world.ThaumcraftWorldGenerator.biomeTaint);
 					}
 					if (tWorld.rand.nextBoolean()) {
 						x = te.xCoord + tWorld.rand.nextInt(10) - tWorld.rand.nextInt(10);
 						z = te.zCoord + tWorld.rand.nextInt(10) - tWorld.rand.nextInt(10);
 						y = te.yCoord + tWorld.rand.nextInt(5) - tWorld.rand.nextInt(5);
-						if (BlockTaintFibres.spreadFibres(tWorld, x, y, z)) {
+						if (thaumcraft.common.blocks.BlockTaintFibres.spreadFibres(tWorld, x, y, z)) {
 						}
 					}
 				}
