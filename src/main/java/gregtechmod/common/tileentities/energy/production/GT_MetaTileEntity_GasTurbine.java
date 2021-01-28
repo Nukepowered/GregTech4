@@ -3,7 +3,8 @@ package gregtechmod.common.tileentities.energy.production;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicGenerator;
-import gregtechmod.api.util.GT_Recipe;
+import gregtechmod.api.recipe.GT_Recipe;
+
 import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 

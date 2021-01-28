@@ -4,7 +4,6 @@ import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
-import gregtechmod.common.tileentities.energy.storage.GT_MetaTileEntity_ChargerBox;
 
 public class GT_MetaTileEntity_HighEnergyCharger extends GT_MetaTileEntity_ChargerBox {
 

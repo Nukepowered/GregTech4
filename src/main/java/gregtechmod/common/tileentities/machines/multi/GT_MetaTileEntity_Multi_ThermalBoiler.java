@@ -8,8 +8,8 @@ import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_In
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Maintenance;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Output;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_MultiBlockBase;
+import gregtechmod.api.recipe.GT_Recipe;
 import gregtechmod.api.util.GT_ModHandler;
-import gregtechmod.api.util.GT_Recipe;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

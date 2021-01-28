@@ -3,7 +3,7 @@ package gregtechmod.common.tileentities.machines.steam;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine_Bronze;
-import gregtechmod.api.util.GT_Recipe;
+import gregtechmod.api.recipe.GT_Recipe;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 

@@ -700,8 +700,8 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
     @Override public boolean hasCustomInventoryName() {return false;}
     @Override public ItemStack getStackInSlotOnClosing(int slot) {ItemStack stack = getStackInSlot(slot); if (stack != null) setInventorySlotContents(slot, null); return stack;}
     @Override public void onMachineBlockUpdate() {if (hasValidMetaTileEntity()) mMetaTileEntity.onMachineBlockUpdate();}
-	@Override public int getProgress() {return hasValidMetaTileEntity()?mMetaTileEntity.getProgresstime():0;}
-	@Override public int getMaxProgress() {return hasValidMetaTileEntity()?mMetaTileEntity.maxProgresstime():0;}
+	@Override public int getProgress() {return hasValidMetaTileEntity()?mMetaTileEntity.getRecipeLogic().getProgressTime():0;}
+	@Override public int getMaxProgress() {return hasValidMetaTileEntity()?mMetaTileEntity.getRecipeLogic().getMaxProgressTime():0;}
 	@Override public boolean increaseProgress(int aProgressAmountInTicks) {return hasValidMetaTileEntity()?mMetaTileEntity.increaseProgress(aProgressAmountInTicks)!=aProgressAmountInTicks:false;}
 	@Override public boolean hasThingsToDo() {return getMaxProgress()>0;}
 	@Override public void enableWorking() {if (!mWorks) mWorkUpdate = true; mWorks = true;}

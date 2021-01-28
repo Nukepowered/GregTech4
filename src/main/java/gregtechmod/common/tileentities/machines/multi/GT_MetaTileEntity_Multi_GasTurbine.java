@@ -10,8 +10,8 @@ import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Ma
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Muffler;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Output;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_MultiBlockBase;
+import gregtechmod.api.recipe.GT_Recipe;
 import gregtechmod.api.util.GT_ModHandler;
-import gregtechmod.api.util.GT_Recipe;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.blocks.GT_BlockMetaID_Block;
 import net.minecraft.entity.player.EntityPlayer;

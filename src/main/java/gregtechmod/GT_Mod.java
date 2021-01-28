@@ -14,6 +14,7 @@ import gregtechmod.api.metatileentity.BaseMetaPipeEntity;
 import gregtechmod.api.metatileentity.BaseMetaTileEntity;
 import gregtechmod.api.metatileentity.MetaPipeEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
+import gregtechmod.api.recipe.GT_Recipe;
 import gregtechmod.api.util.GT_CircuitryBehavior;
 import gregtechmod.api.util.GT_Config;
 import gregtechmod.api.util.GT_CoverBehavior;
@@ -22,7 +23,6 @@ import gregtechmod.api.util.GT_LanguageManager;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
-import gregtechmod.api.util.GT_Recipe;
 import gregtechmod.api.util.GT_RecipeRegistrator;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.GT_DummyWorld;
@@ -218,7 +218,7 @@ public class GT_Mod implements IGT_Mod {
 		GregTech_API.sRecipeAdder = new GT_RecipeAdder();
 		GregTech_API.sDummyWorld = new GT_DummyWorld();
 		GregTech_API.sGTCoverload.add(new GT_CoverLoader());
-        GT_OreDictHandler.instance.registerHandler();
+//        GT_OreDictHandler.instance.registerHandler(); // FIXME change this
         
 		for (int i = 0; i < mGregTechCapeList.size(); ++i) {
 			mGregTechCapeList.set(i, mGregTechCapeList.get(i).toLowerCase());
@@ -642,7 +642,7 @@ public class GT_Mod implements IGT_Mod {
         GT_Log.log.info("Activating OreDictionary Handler, this can take some time, as it scans the whole OreDictionary");
         
         GT_Log.log.info("If your Log stops here, you were too impatient. Wait a bit more next time, before killing Minecraft with the Task Manager.");
-        GT_OreDictHandler.instance.activateHandler();
+//        GT_OreDictHandler.instance.activateHandler(); // FIXME change this
         GT_Log.log.info("Congratulations, you have been waiting long enough. Have a Cake.");
         
         GT_Log.log.info("Adding Stone related Recipes");

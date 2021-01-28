@@ -6,7 +6,7 @@ import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IGT_RecipeAdder;
 import gregtechmod.api.items.GT_Tool_Item;
-import gregtechmod.api.util.GT_Recipe;
+import gregtechmod.api.recipe.GT_Recipe;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 

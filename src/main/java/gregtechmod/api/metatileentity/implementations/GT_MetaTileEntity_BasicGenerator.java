@@ -1,6 +1,6 @@
 package gregtechmod.api.metatileentity.implementations;
 
-import gregtechmod.api.util.GT_Recipe;
+import gregtechmod.api.recipe.GT_Recipe;
 import gregtechmod.api.util.GT_Utility;
 
 import java.util.List;

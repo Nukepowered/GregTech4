@@ -5,6 +5,7 @@ import java.util.Map;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.metatileentity.MetaTileEntity;
+import gregtechmod.api.recipe.RecipeLogic;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.InfoBuilder;
@@ -22,7 +23,8 @@ import net.minecraft.util.ChatComponentTranslation;
  */
 public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 	public boolean bAlloyInputFromOutputSide = false, bOutput = false, bOutputBlocked = false, bItemTransfer = false, bSeperatedInputs = false, bHasBeenUpdated = false, bStuttering = false;
-	public int mMainFacing = -1, mProgresstime = 0, mMaxProgresstime = 0, mEUt = 0;
+	public int mMainFacing = -1;
+	protected RecipeLogic recipeLogic;
 	
 	public ItemStack mOutputItem1, mOutputItem2;
 	
@@ -56,9 +58,8 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 	@Override public int dechargerSlotStartIndex()					{return 5;}
 	@Override public int dechargerSlotCount()						{return getElectricTier()>0?1:0;}
 	@Override public boolean isAccessAllowed(EntityPlayer aPlayer)	{return true;}
-	@Override public int getProgresstime()							{return mProgresstime;}
-	@Override public int maxProgresstime()							{return mMaxProgresstime;}
-	@Override public int increaseProgress(int aProgress)			{mProgresstime += aProgress; return mMaxProgresstime-mProgresstime;}
+	@Override public RecipeLogic getRecipeLogic() 					{return recipeLogic;}
+//	@Override public int increaseProgress(int aProgress)			{mProgresstime += aProgress; return mMaxProgresstime-mProgresstime;} // TODO recipe logic related
 	@Override public boolean isLiquidInput (byte aSide)				{return aSide != mMainFacing;}
 	@Override public boolean isLiquidOutput(byte aSide)				{return aSide != mMainFacing;}
     
@@ -69,10 +70,8 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
     	aNBT.setBoolean("bHasBeenUpdated", bHasBeenUpdated);
     	aNBT.setBoolean("bSeperatedInputs", bSeperatedInputs);
 		aNBT.setBoolean("bAlloyInputFromOutputSide", bAlloyInputFromOutputSide);
-    	aNBT.setInteger("mEUt", mEUt);
     	aNBT.setInteger("mMainFacing", mMainFacing);
-    	aNBT.setInteger("mProgresstime", mProgresstime);
-    	aNBT.setInteger("mMaxProgresstime", mMaxProgresstime);
+    	recipeLogic.saveToNBT(aNBT);
         if (mOutputItem1 != null) {
             NBTTagCompound tNBT = new NBTTagCompound();
         	mOutputItem1.writeToNBT(tNBT);
@@ -92,10 +91,8 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 		bHasBeenUpdated = aNBT.getBoolean("bHasBeenUpdated");
 		bSeperatedInputs = aNBT.getBoolean("bSeperatedInputs");
 		bAlloyInputFromOutputSide = aNBT.getBoolean("bAlloyInputFromOutputSide");
-    	mEUt = aNBT.getInteger("mEUt");
 		mMainFacing = aNBT.getInteger("mMainFacing");
-    	mProgresstime = aNBT.getInteger("mProgresstime");
-    	mMaxProgresstime = aNBT.getInteger("mMaxProgresstime");
+    	recipeLogic.loadFromNBT(aNBT);
     	NBTTagCompound tNBT1 = (NBTTagCompound)aNBT.getTag("mOutputItem1");
     	if (tNBT1 != null) {
     		mOutputItem1 = GT_Utility.loadItem(tNBT1);
@@ -117,30 +114,31 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 				bHasBeenUpdated = true;
 				getBaseMetaTileEntity().setFrontFacing(getBaseMetaTileEntity().getBackFacing());
 			}
-	    	if (mMaxProgresstime > 0) {
-	    		getBaseMetaTileEntity().setActive(true);
-	    		if (mProgresstime < 0 || getBaseMetaTileEntity().decreaseStoredEnergyUnits(mEUt*(int)Math.pow(4, getBaseMetaTileEntity().getOverclockerUpgradeCount()), false)) {
-	    			if ((mProgresstime+=(int)Math.pow(2, getBaseMetaTileEntity().getOverclockerUpgradeCount()))>=mMaxProgresstime) {
-	    		    	if (!getBaseMetaTileEntity().addStackToSlot(3, mOutputItem1)) getBaseMetaTileEntity().addStackToSlot(4, mOutputItem1);
-	    		    	if (!getBaseMetaTileEntity().addStackToSlot(3, mOutputItem2)) getBaseMetaTileEntity().addStackToSlot(4, mOutputItem2);
-	    				mOutputItem1 = null;
-	    				mOutputItem2 = null;
-	    				mProgresstime = 0;
-	    				mMaxProgresstime = 0;
-	    				tSucceeded = true;
-	    				endProcess();
-	    			}
-    				bStuttering = false;
-	    		} else {
-	    			if (!bStuttering) {
-	    				stutterProcess();
-	    				if (useStandardStutterSound()) sendSound((byte)8);
-	    				bStuttering = true;
-	    			}
-	    		}
-	    	} else {
-	    		getBaseMetaTileEntity().setActive(false);
-	    	}
+
+			recipeLogic.update();
+//	    	if (mMaxProgresstime > 0) {
+//	    		if (mProgresstime < 0 || getBaseMetaTileEntity().decreaseStoredEnergyUnits(mEUt*(int)Math.pow(4, getBaseMetaTileEntity().getOverclockerUpgradeCount()), false)) {
+//	    			if ((mProgresstime+=(int)Math.pow(2, getBaseMetaTileEntity().getOverclockerUpgradeCount()))>=mMaxProgresstime) {
+//	    		    	if (!getBaseMetaTileEntity().addStackToSlot(3, mOutputItem1)) getBaseMetaTileEntity().addStackToSlot(4, mOutputItem1);
+//	    		    	if (!getBaseMetaTileEntity().addStackToSlot(3, mOutputItem2)) getBaseMetaTileEntity().addStackToSlot(4, mOutputItem2);
+//	    				mOutputItem1 = null;
+//	    				mOutputItem2 = null;
+//	    				mProgresstime = 0;
+//	    				mMaxProgresstime = 0;
+//	    				tSucceeded = true;
+//	    				endProcess();
+//	    			}
+//    				bStuttering = false;
+//	    		} else {
+//	    			if (!bStuttering) {
+//	    				stutterProcess();
+//	    				if (useStandardStutterSound()) sendSound((byte)8);
+//	    				bStuttering = true;
+//	    			}
+//	    		}
+//	    	} else {
+//	    		getBaseMetaTileEntity().setActive(false);
+//	    	}
 	    	
 			if (bItemTransfer && (mInventory[3] != null || mInventory[4] != null) && getBaseMetaTileEntity().getFrontFacing() != mMainFacing && doesAutoOutput() && (tSucceeded || bOutputBlocked || getBaseMetaTileEntity().hasInventoryBeenModified() || getBaseMetaTileEntity().getTimer()%600 == 0) && getBaseMetaTileEntity().isUniversalEnergyStored(500)) {
 				TileEntity tTileEntity2 = getBaseMetaTileEntity().getTileEntityAtSide(getBaseMetaTileEntity().getFrontFacing());
@@ -156,33 +154,33 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 			
 			if (mInventory[3] == null && mInventory[4] == null) bOutputBlocked = false;
 	    	
-	    	if (allowToCheckRecipe()) {
-	    		if (mMaxProgresstime <= 0 && getBaseMetaTileEntity().isAllowedToWork() && (tSucceeded || getBaseMetaTileEntity().hasInventoryBeenModified() || getBaseMetaTileEntity().getTimer()%600 == 0 || getBaseMetaTileEntity().hasWorkJustBeenEnabled()) && getBaseMetaTileEntity().isUniversalEnergyStored(getMinimumStoredEU()-100)) {
-		    		checkRecipe();
-		        	if (mInventory[1] != null && mInventory[1].stackSize <= 0) mInventory[1] = null;
-		        	if (mInventory[2] != null && mInventory[2].stackSize <= 0) mInventory[2] = null;
-		        	if (mMaxProgresstime > 0) {
-			        	mOutputItem1 = GT_OreDictUnificator.get(true, mOutputItem1);
-			        	mOutputItem2 = GT_OreDictUnificator.get(true, mOutputItem2);
-			        	if (GT_Utility.isDebugItem(mInventory[5])) mMaxProgresstime = 1;
-		        	} else {
-			        	mOutputItem1 = null;
-			        	mOutputItem2 = null;
-		        	}
-		        	if (mOutputItem1 != null && mOutputItem1.stackSize > 64) mOutputItem1.stackSize = 64;
-		        	if (mOutputItem2 != null && mOutputItem2.stackSize > 64) mOutputItem2.stackSize = 64;
-		        	
-		        	if (mMaxProgresstime > 0) {
-		        		startProcess();
-		        	}
-		    	}
-	    	} else {
-    			if (!bStuttering) {
-    				stutterProcess();
-    				if (useStandardStutterSound()) sendSound((byte)8);
-    				bStuttering = true;
-    			}
-	    	}
+//	    	if (getBaseMetaTileEntity().isAllowedToWork()) {
+//	    		if (mMaxProgresstime <= 0 && (tSucceeded || getBaseMetaTileEntity().hasInventoryBeenModified() || getBaseMetaTileEntity().getTimer()%600 == 0 || getBaseMetaTileEntity().hasWorkJustBeenEnabled()) && getBaseMetaTileEntity().isUniversalEnergyStored(getMinimumStoredEU()-100)) {
+//		    		checkRecipe();
+//		        	if (mInventory[1] != null && mInventory[1].stackSize <= 0) mInventory[1] = null;
+//		        	if (mInventory[2] != null && mInventory[2].stackSize <= 0) mInventory[2] = null;
+//		        	if (mMaxProgresstime > 0) {
+//			        	mOutputItem1 = GT_OreDictUnificator.get(true, mOutputItem1);
+//			        	mOutputItem2 = GT_OreDictUnificator.get(true, mOutputItem2);
+//			        	if (GT_Utility.isDebugItem(mInventory[5])) mMaxProgresstime = 1;
+//		        	} else {
+//			        	mOutputItem1 = null;
+//			        	mOutputItem2 = null;
+//		        	}
+//		        	if (mOutputItem1 != null && mOutputItem1.stackSize > 64) mOutputItem1.stackSize = 64;
+//		        	if (mOutputItem2 != null && mOutputItem2.stackSize > 64) mOutputItem2.stackSize = 64;
+//		        	
+//		        	if (mMaxProgresstime > 0) {
+//		        		startProcess();
+//		        	}
+//		    	}
+//	    	} else {
+//    			if (!bStuttering) {
+//    				stutterProcess();
+//    				if (useStandardStutterSound()) sendSound((byte)8);
+//    				bStuttering = true;
+//    			}
+//	    	}
 	    }
 	}
 	
@@ -290,12 +288,12 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 	public boolean doesAutoOutput() {
 		return true;
 	}
-
-	public boolean allowToCheckRecipe() {
+	
+	public boolean showPipeFacing() {
 		return true;
 	}
 	
-	public boolean showPipeFacing() {
+	public boolean allowToCheckRecipe() {
 		return true;
 	}
 	
@@ -330,9 +328,9 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 	@Override
 	public Map<String, List<Object>> getInfoData() {
 		return InfoBuilder.create()
-				.newKey("sensor.progress.percentage", mProgresstime * 100.0D / mMaxProgresstime)
-				.newKey("sensor.progress.secs", mProgresstime / 20)
-				.newKey("sensor.progress.secs.1", mMaxProgresstime / 20)
+				.newKey("sensor.progress.percentage", recipeLogic.getProgressTime() * 100.0D / recipeLogic.getMaxProgressTime())
+				.newKey("sensor.progress.secs", recipeLogic.getProgressTime() / 20)
+				.newKey("sensor.progress.secs.1", recipeLogic.getMaxProgressTime() / 20)
 				.build();
 	}
 	

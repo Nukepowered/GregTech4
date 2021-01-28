@@ -1,8 +1,12 @@
-package gregtechmod.api.util;
+package gregtechmod.api.recipe;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.enums.Materials;
+import gregtechmod.api.util.GT_Log;
+import gregtechmod.api.util.GT_ModHandler;
+import gregtechmod.api.util.GT_OreDictUnificator;
+import gregtechmod.api.util.GT_Utility;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -70,7 +74,9 @@ public class GT_Recipe {
 	 * If you want to change the Output, feel free to modify or replace the ItemStack Array, for Inputs, please add a new Recipe, because of the HashMaps.
 	 */
 	public ItemStack[] mInputs, mOutputs;
-	public int mDuration, mEUt, mStartEU;
+	public int mDuration;
+	public int mEUt;
+	public int mStartEU;
 	
 	/**
 	 * Use this to just disable a specific Recipe, but the Config enables that already for every single Recipe.
@@ -439,6 +445,21 @@ public class GT_Recipe {
 		this(aInput1, aInput2, aOutput1, null, null, null, Math.max(aDuration, 1), 30, 0);
 		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(true, false, sChemicalRecipes, mInputs) == null) {
 			addToLists(sChemicalRecipes);
+		}
+	}
+	
+	protected class RecipeEntry {
+		protected ItemStack[] input;
+		protected String oreDictEntry;
+		
+		public RecipeEntry(String oreDict) {
+			oreDictEntry = oreDict;
+			input = new ItemStack[0];
+		}
+		
+		public RecipeEntry(int itemsSize) {
+			oreDictEntry = null;
+			input = new ItemStack[itemsSize];
 		}
 	}
 }

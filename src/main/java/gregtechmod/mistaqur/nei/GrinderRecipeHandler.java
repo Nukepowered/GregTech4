@@ -1,8 +1,8 @@
 package gregtechmod.mistaqur.nei;
 
 import gregtechmod.api.GregTech_API;
+import gregtechmod.api.recipe.GT_Recipe;
 import gregtechmod.api.util.GT_Log;
-import gregtechmod.api.util.GT_Recipe;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_Grinder;
 import java.awt.Rectangle;

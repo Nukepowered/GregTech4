@@ -3,6 +3,7 @@ package gregtechmod.api.metatileentity;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.interfaces.IMetaTileEntity;
+import gregtechmod.api.recipe.RecipeLogic;
 import gregtechmod.api.util.GT_Config;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
@@ -453,14 +454,9 @@ public abstract class MetaTileEntity implements IMetaTileEntity {
 	public boolean isBatteryUpgradable() {return false;}
 	
 	/**
-	 * Progress this machine has already made
+	 * Recipe logic contains all recipe execution data
 	 */
-	public int getProgresstime() {return 0;}
-	
-	/**
-	 * Progress this Machine has to do to produce something
-	 */
-	public int maxProgresstime() {return 0;}
+	public RecipeLogic getRecipeLogic() {return null;};
 	
 	/**
 	 * Increases the Progress, returns the overflown Progress.

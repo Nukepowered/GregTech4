@@ -4,7 +4,6 @@ import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_Utility;
-import gregtechmod.common.tileentities.automation.GT_MetaTileEntity_ElectricBufferSmall;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

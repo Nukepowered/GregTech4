@@ -4,7 +4,6 @@ import gregtechmod.api.enums.GT_ConfigCategories;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_Config;
-import gregtechmod.common.tileentities.storage.GT_MetaTileEntity_DigitalChest;
 
 public class GT_MetaTileEntity_QuantumChest extends GT_MetaTileEntity_DigitalChest {
 
