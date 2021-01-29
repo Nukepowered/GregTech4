@@ -1,7 +1,7 @@
 package gregtechmod.mistaqur.nei;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_OreDictUnificator;
 
 import java.util.List;
@@ -57,9 +57,9 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 	@Override
 	public abstract String getOverlayIdentifier();
 	
-	public abstract List<GT_Recipe> getRecipeList();
+	public abstract List<Recipe> getRecipeList();
 	
-	public abstract CachedGT_Recipe getRecipe(GT_Recipe irecipe);
+	public abstract CachedGT_Recipe getRecipe(Recipe irecipe);
 	
 	@Override
     public void drawBackground(int recipe) {
@@ -81,7 +81,7 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 	@Override
 	public void loadCraftingRecipes(String outputId, Object... results) {
 		if(outputId.equals(getRecipeId())) {
-			for (GT_Recipe irecipe : getRecipeList()) {
+			for (Recipe irecipe : getRecipeList()) {
 				arecipes.add(getRecipe(irecipe));
 			}
 		} else {
@@ -92,7 +92,7 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 	@Override
 	public void loadCraftingRecipes(ItemStack result) {
 		ItemStack tStack = GT_OreDictUnificator.get(true, result);
-		for (GT_Recipe irecipe : getRecipeList()) {
+		for (Recipe irecipe : getRecipeList()) {
 			CachedGT_Recipe recipe = getRecipe(irecipe);
 			if (recipe.contains(recipe.products,tStack) || recipe.contains(recipe.products,result)) {
 				arecipes.add(recipe);
@@ -103,7 +103,7 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 	@Override
 	public void loadUsageRecipes(ItemStack ingredient) {
 		ItemStack tStack = GT_OreDictUnificator.get(false, ingredient);
-		for (GT_Recipe irecipe : getRecipeList()) {
+		for (Recipe irecipe : getRecipeList()) {
 			CachedGT_Recipe recipe = getRecipe(irecipe);
 			if (recipe.contains(recipe.resources,tStack) || recipe.contains(recipe.resources,ingredient)) {
 				arecipes.add(recipe);

@@ -24,17 +24,14 @@ import net.minecraft.util.ChatComponentTranslation;
 public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 	public boolean bAlloyInputFromOutputSide = false, bOutput = false, bOutputBlocked = false, bItemTransfer = false, bSeperatedInputs = false, bHasBeenUpdated = false, bStuttering = false;
 	public int mMainFacing = -1;
-	protected RecipeLogic recipeLogic;
 	
-	public ItemStack mOutputItem1, mOutputItem2;
+	protected RecipeLogic recipeLogic;
 	
 	public GT_MetaTileEntity_BasicMachine(int aID, String aName) {
 		super(aID, aName);
 	}
 	
-	public GT_MetaTileEntity_BasicMachine() {
-		
-	}
+	public GT_MetaTileEntity_BasicMachine() {}
 	
 	@Override public boolean isSimpleMachine()						{return false;}
 	@Override public boolean isOverclockerUpgradable()				{return getElectricTier()>0;}
@@ -72,16 +69,6 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 		aNBT.setBoolean("bAlloyInputFromOutputSide", bAlloyInputFromOutputSide);
     	aNBT.setInteger("mMainFacing", mMainFacing);
     	recipeLogic.saveToNBT(aNBT);
-        if (mOutputItem1 != null) {
-            NBTTagCompound tNBT = new NBTTagCompound();
-        	mOutputItem1.writeToNBT(tNBT);
-            aNBT.setTag("mOutputItem1", tNBT);
-        }
-        if (mOutputItem2 != null) {
-            NBTTagCompound tNBT = new NBTTagCompound();
-        	mOutputItem2.writeToNBT(tNBT);
-            aNBT.setTag("mOutputItem2", tNBT);
-        }
 	}
 	
 	@Override
@@ -93,14 +80,6 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 		bAlloyInputFromOutputSide = aNBT.getBoolean("bAlloyInputFromOutputSide");
 		mMainFacing = aNBT.getInteger("mMainFacing");
     	recipeLogic.loadFromNBT(aNBT);
-    	NBTTagCompound tNBT1 = (NBTTagCompound)aNBT.getTag("mOutputItem1");
-    	if (tNBT1 != null) {
-    		mOutputItem1 = GT_Utility.loadItem(tNBT1);
-    	}
-    	NBTTagCompound tNBT2 = (NBTTagCompound)aNBT.getTag("mOutputItem2");
-    	if (tNBT2 != null) {
-    		mOutputItem2 = GT_Utility.loadItem(tNBT2);
-    	}
 	}
 	
 	@Override
@@ -206,8 +185,6 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
     	bOutputBlocked = true;
     	return false;
     }
-    
-    public abstract void checkRecipe();
     
     public boolean hasTwoSeperateInputs() {
     	return false;

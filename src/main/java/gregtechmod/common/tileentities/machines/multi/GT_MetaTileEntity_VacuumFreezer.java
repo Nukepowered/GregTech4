@@ -6,7 +6,7 @@ import java.util.Map;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.InfoBuilder;
 import net.minecraft.entity.player.EntityPlayer;
@@ -129,7 +129,7 @@ public class GT_MetaTileEntity_VacuumFreezer extends MetaTileEntity {
 	    		mInventory[1].stackSize = Math.min(mOutputItem1.getMaxStackSize(), mOutputItem1.stackSize + mInventory[1].stackSize);
     }
     
-    private boolean spaceForOutput(GT_Recipe aRecipe) {
+    private boolean spaceForOutput(Recipe aRecipe) {
     	if (mInventory[1] == null || aRecipe.getOutput(0) == null || (mInventory[1].stackSize + aRecipe.getOutput(0).stackSize <= mInventory[1].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[1], aRecipe.getOutput(0))))
     		return true;
     	return false;
@@ -137,7 +137,7 @@ public class GT_MetaTileEntity_VacuumFreezer extends MetaTileEntity {
     
     private boolean checkRecipe() {
     	if (!mMachine) return false;
-    	GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sVacuumRecipes, mInventory[0], null);
+    	Recipe tRecipe = Recipe.findEqualRecipe(false, false, Recipe.sVacuumRecipes, mInventory[0], null);
     	if (tRecipe != null) {
     		if (spaceForOutput(tRecipe) && tRecipe.isRecipeInputEqual(true, true, mInventory[0], null)) {
 	        	if (mInventory[0] != null) if (mInventory[0].stackSize == 0) mInventory[0] = null;

@@ -1,7 +1,7 @@
 package gregtechmod.mistaqur.nei;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_BasicMachine_Lathe;
@@ -19,7 +19,7 @@ public class LatheRecipeHandler extends GT_RecipeHandler {
 	public class CachedLatheRecipe extends CachedGT_Recipe {
 		public int mDuration, mEUt;
 
-		public CachedLatheRecipe(GT_Recipe aRecipe) {
+		public CachedLatheRecipe(Recipe aRecipe) {
 			resources = new ArrayList<PositionedStack>();
 			if (aRecipe.getRepresentativeInput1() != null)
 				resources.add(new PositionedStack(aRecipe.getRepresentativeInput1(), 53 - sOffsetX, 25 - sOffsetY));
@@ -69,12 +69,12 @@ public class LatheRecipeHandler extends GT_RecipeHandler {
 	}
 	
 	@Override
-	public List<GT_Recipe> getRecipeList() {
-		return GT_Recipe.sLatheRecipes;
+	public List<Recipe> getRecipeList() {
+		return Recipe.sLatheRecipes;
 	}
 	
 	@Override
-	public CachedGT_Recipe getRecipe(GT_Recipe irecipe) {
+	public CachedGT_Recipe getRecipe(Recipe irecipe) {
 		return new CachedLatheRecipe(irecipe);
 	}
 	

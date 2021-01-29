@@ -1,6 +1,6 @@
 package gregtechmod.api.metatileentity.implementations;
 
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Utility;
 
 import java.util.List;
@@ -68,27 +68,27 @@ public abstract class GT_MetaTileEntity_BasicGenerator extends GT_MetaTileEntity
     	if (getBaseMetaTileEntity().isServerSide()) getBaseMetaTileEntity().setActive(getBaseMetaTileEntity().isAllowedToWork() && getBaseMetaTileEntity().getUniversalEnergyStored() >= getBaseMetaTileEntity().getOutputVoltage() + getMinimumStoredEU());
     }
     
-    public abstract List<GT_Recipe> getRecipes();
+    public abstract List<Recipe> getRecipes();
     
     public abstract int getEfficiency();
     
     public int getFuelValue(FluidStack aLiquid) {
     	if (aLiquid == null) return 0;
     	FluidStack tLiquid;
-    	for (GT_Recipe tFuel : getRecipes()) if ((tLiquid = GT_Utility.getFluidForFilledItem(tFuel.getRepresentativeInput(0))) != null) if (aLiquid.isFluidEqual(tLiquid)) return (int)(((long)tFuel.mStartEU * getEfficiency()) / 100);
+    	for (Recipe tFuel : getRecipes()) if ((tLiquid = GT_Utility.getFluidForFilledItem(tFuel.getRepresentativeInput(0))) != null) if (aLiquid.isFluidEqual(tLiquid)) return (int)(((long)tFuel.mStartEU * getEfficiency()) / 100);
     	return 0;
     }
     
     public int getFuelValue(ItemStack aStack) {
     	if (GT_Utility.isStackInvalid(aStack)) return 0;
-    	GT_Recipe tFuel = GT_Recipe.findEqualRecipe(true, false, getRecipes(), aStack);
+    	Recipe tFuel = Recipe.findEqualRecipe(true, false, getRecipes(), aStack);
     	if (tFuel != null) return (int)((tFuel.mStartEU * 1000L * getEfficiency()) / 100);
     	return 0;
     }
     
     public ItemStack getEmptyContainer(ItemStack aStack) {
     	if (GT_Utility.isStackInvalid(aStack)) return null;
-    	GT_Recipe tFuel = GT_Recipe.findEqualRecipe(true, false, getRecipes(), aStack);
+    	Recipe tFuel = Recipe.findEqualRecipe(true, false, getRecipes(), aStack);
     	if (tFuel != null) return GT_Utility.copy(tFuel.getOutput(0));
     	return GT_Utility.getContainerItem(aStack);
     }

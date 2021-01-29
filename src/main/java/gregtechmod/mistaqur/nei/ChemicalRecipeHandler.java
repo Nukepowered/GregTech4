@@ -1,7 +1,7 @@
 package gregtechmod.mistaqur.nei;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_ChemicalReactor;
@@ -19,7 +19,7 @@ public class ChemicalRecipeHandler extends GT_RecipeHandler {
 	public class CachedChemicalReactorRecipe extends CachedGT_Recipe {
 		public int mDuration, mEUt;
 
-		public CachedChemicalReactorRecipe(GT_Recipe aRecipe) {
+		public CachedChemicalReactorRecipe(Recipe aRecipe) {
 			resources = new ArrayList<PositionedStack>();
 			if (aRecipe.getRepresentativeInput1() != null)
 				resources.add(new PositionedStack(aRecipe.getRepresentativeInput1(), 70 - sOffsetX, 16 - sOffsetY));
@@ -69,12 +69,12 @@ public class ChemicalRecipeHandler extends GT_RecipeHandler {
 	}
 	
 	@Override
-	public List<GT_Recipe> getRecipeList() {
-		return GT_Recipe.sChemicalRecipes;
+	public List<Recipe> getRecipeList() {
+		return Recipe.sChemicalRecipes;
 	}
 	
 	@Override
-	public CachedGT_Recipe getRecipe(GT_Recipe irecipe) {
+	public CachedGT_Recipe getRecipe(Recipe irecipe) {
 		return new CachedChemicalReactorRecipe(irecipe);
 	}
 	

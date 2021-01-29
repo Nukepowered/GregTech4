@@ -3,7 +3,7 @@ package gregtechmod.common.tileentities.energy.production;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicGenerator;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 
 import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +19,7 @@ public class GT_MetaTileEntity_GasTurbine extends GT_MetaTileEntity_BasicGenerat
 	@Override public boolean isFacingValid(byte aFacing) {return true;}
 	@Override public int maxEUOutput() {return this.getBaseMetaTileEntity().isAllowedToWork() ? 16 : 0;}
 	@Override public void onRightclick(EntityPlayer aPlayer) {this.getBaseMetaTileEntity().openGUI(aPlayer, 118);}
-	@Override public List<GT_Recipe> getRecipes() {return GT_Recipe.sTurbineFuels;}
+	@Override public List<Recipe> getRecipes() {return Recipe.sTurbineFuels;}
 	@Override public int getEfficiency() {return 75;}
 	
 	@Override

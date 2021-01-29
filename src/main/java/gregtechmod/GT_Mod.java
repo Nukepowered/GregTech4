@@ -14,7 +14,7 @@ import gregtechmod.api.metatileentity.BaseMetaPipeEntity;
 import gregtechmod.api.metatileentity.BaseMetaTileEntity;
 import gregtechmod.api.metatileentity.MetaPipeEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_CircuitryBehavior;
 import gregtechmod.api.util.GT_Config;
 import gregtechmod.api.util.GT_CoverBehavior;
@@ -202,7 +202,7 @@ public class GT_Mod implements IGT_Mod {
     		|| VERSION != GT_LanguageManager	.VERSION
     		|| VERSION != GT_ModHandler			.VERSION
     		|| VERSION != GT_OreDictUnificator	.VERSION
-    		|| VERSION != GT_Recipe				.VERSION
+    		|| VERSION != Recipe				.VERSION
     		|| VERSION != GT_Utility			.VERSION
     	    || VERSION != GT_RecipeRegistrator	.VERSION
     		|| VERSION != Element				.VERSION
@@ -1078,7 +1078,7 @@ public class GT_Mod implements IGT_Mod {
     @EventHandler
     public void start(FMLServerStartedEvent aEvent) {
 		if (!mDoNotInit) {
-			GT_Recipe.reInit();
+			Recipe.reInit();
 			GregTech_API.sWirelessRedstone.clear();
 		}
     }

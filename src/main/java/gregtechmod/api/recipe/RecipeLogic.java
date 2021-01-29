@@ -4,6 +4,7 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 /**
@@ -11,18 +12,19 @@ import net.minecraft.nbt.NBTTagCompound;
  * @author TheDarkDnKTv
  *
  */
-public abstract class RecipeLogic {
+public class RecipeLogic {
 	private WeakReference<GT_MetaTileEntity_BasicMachine> metaTileEntity;
-	private List<GT_Recipe> recipeMap;
+	protected List<Recipe> recipeMap;
 	
-	private int maxProgressTime;
-	private int progressTime;
-	private int EUt;
+	protected int maxProgressTime;
+	protected int progressTime;
+	protected int EUt;
 	private int overclockersCount;
 	
-	private GT_Recipe previousRecipe;
+	private Recipe previousRecipe;
 	
-	protected RecipeLogic() {
+	public RecipeLogic(List<Recipe> recipeMap) {
+		this.recipeMap = recipeMap;
 		maxProgressTime = 0;
 		progressTime = 0;
 		EUt = 0;
@@ -48,6 +50,7 @@ public abstract class RecipeLogic {
 				maxProgressTime = 0;
 				EUt = 0;
 				
+				endRecipe(previousRecipe);
 				getMachine().endProcess();
 			}
 		} else {
@@ -56,18 +59,60 @@ public abstract class RecipeLogic {
 	}
 	
 	protected void trySerachRecipe() {
-		if (getMachine().getBaseMetaTileEntity().isAllowedToWork() && getMachine().allowToCheckRecipe()) {
+		if (getMachine().allowToCheckRecipe()) {
 			if (previousRecipe != null) {
-				if (previousRecipe.isRecipeInputEqual(true, true, aInputs)) { // TODO add I/O item handlers to MTE
-					maxProgressTime = previousRecipe.mDuration;
-					progressTime = 1;
-					EUt = previousRecipe.mEUt;
+				if (previousRecipe.match(true, getMachineInputs())) { // TODO add I/O item handlers to MTE
+					startRecipe(previousRecipe);
 				};
 			} else {
 				// find new recipe
+				for (Recipe rec : recipeMap) { // FIXME idk maybe this is bad
+					if (rec.match(false, getMachineInputs())) {
+						startRecipe(rec);
+						return;
+					}
+				}
 			}
 		}
-//		getMachine().getBaseMetaTileEntity().setActive(true);
+	}
+	
+	protected void startRecipe(Recipe recipe) {
+		previousRecipe = recipe;
+		maxProgressTime = recipe.mDuration;
+		progressTime = 1;
+		EUt = recipe.mEUt;
+		getMachine().getBaseMetaTileEntity().setActive(true);
+	}
+	
+	protected void endRecipe(Recipe recipe) {
+		ItemStack[] outputs = recipe.getOutputs();
+		if (outputs.length <= getMachineOutputs().length) {
+			
+		}
+	}
+	
+	/**
+	 * Specify machine input slots
+	 */
+	protected ItemStack[] getMachineInputs() {
+		return subArray(getMachine().mInventory, 2, 2);
+	}
+	
+	protected ItemStack[] getMachineOutputs() {
+		return subArray(getMachine().mInventory, 3, 3);
+	}
+	
+	/**
+	 * Will copy links of all objects in arr to new array
+	 */
+	private ItemStack[] subArray(ItemStack[] arr, int from, int to) {
+		assert from >= to;
+		ItemStack[] res = new ItemStack[(to - from) == 0 ? 1 : (to - from)];
+		for (int i = 0; i < res.length; i++) {
+			res[i] = arr[from + i];
+		}
+		
+		return res;
 	}
 	
 	private GT_MetaTileEntity_BasicMachine getMachine() {

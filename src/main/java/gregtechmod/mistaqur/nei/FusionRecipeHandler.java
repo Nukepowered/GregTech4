@@ -1,7 +1,7 @@
 package gregtechmod.mistaqur.nei;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_FusionComputer;
@@ -21,7 +21,7 @@ public class FusionRecipeHandler extends GT_RecipeHandler {
 		public int mEUt;
 		public int mStartEU;
 		
-		public CachedFusionRecipe(GT_Recipe irecipe) {
+		public CachedFusionRecipe(Recipe irecipe) {
 			resources = new ArrayList<PositionedStack>();
 			if (irecipe.getRepresentativeInput1() != null)
 				resources.add(new PositionedStack(irecipe.getRepresentativeInput1(), 48 - sOffsetX, 17 - sOffsetY));
@@ -72,12 +72,12 @@ public class FusionRecipeHandler extends GT_RecipeHandler {
 	}
 	
 	@Override
-	public List<GT_Recipe> getRecipeList() {
-		return GT_Recipe.sFusionRecipes;
+	public List<Recipe> getRecipeList() {
+		return Recipe.sFusionRecipes;
 	}
 	
 	@Override
-	public CachedGT_Recipe getRecipe(GT_Recipe irecipe) {
+	public CachedGT_Recipe getRecipe(Recipe irecipe) {
 		return new CachedFusionRecipe(irecipe);
 	}
 

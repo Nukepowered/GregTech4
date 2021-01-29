@@ -1,7 +1,7 @@
 package gregtechmod.mistaqur.nei;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_Electrolyzer;
@@ -19,7 +19,7 @@ public class ElectrolyzerRecipeHandler extends GT_RecipeHandler {
 	public class CachedElectrolyzerRecipe extends CachedGT_Recipe {
 		public int mDuration, mEUt;
 
-		public CachedElectrolyzerRecipe(GT_Recipe aRecipe) {
+		public CachedElectrolyzerRecipe(Recipe aRecipe) {
 			resources = new ArrayList<PositionedStack>();
 			if (aRecipe.getRepresentativeInput1() != null)
 				resources.add(new PositionedStack(aRecipe.getRepresentativeInput1(), 80 - sOffsetX, 46 - sOffsetY));
@@ -75,12 +75,12 @@ public class ElectrolyzerRecipeHandler extends GT_RecipeHandler {
 	}
 	
 	@Override
-	public List<GT_Recipe> getRecipeList() {
-		return GT_Recipe.sElectrolyzerRecipes;
+	public List<Recipe> getRecipeList() {
+		return Recipe.sElectrolyzerRecipes;
 	}
 	
 	@Override
-	public CachedGT_Recipe getRecipe(GT_Recipe irecipe) {
+	public CachedGT_Recipe getRecipe(Recipe irecipe) {
 		return new CachedElectrolyzerRecipe(irecipe);
 	}
 	

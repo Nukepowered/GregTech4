@@ -6,7 +6,7 @@ import java.util.List;
 import java.awt.Rectangle;
 import codechicken.nei.PositionedStack;
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_BasicMachine_Extruder;
@@ -41,11 +41,11 @@ public class ExtruderRecipeHandler extends GT_RecipeHandler {
 		return "gregtech.extruder";
 	}
 
-	public List<GT_Recipe> getRecipeList() {
-		return GT_Recipe.sExtruderRecipes;
+	public List<Recipe> getRecipeList() {
+		return Recipe.sExtruderRecipes;
 	}
 
-	public GT_RecipeHandler.CachedGT_Recipe getRecipe(GT_Recipe irecipe) {
+	public GT_RecipeHandler.CachedGT_Recipe getRecipe(Recipe irecipe) {
 		return new CachedExtruderRecipe(irecipe);
 	}
 
@@ -61,7 +61,7 @@ public class ExtruderRecipeHandler extends GT_RecipeHandler {
 		public int mDuration;
 		public int mEUt;
 
-		public CachedExtruderRecipe(GT_Recipe aRecipe) {
+		public CachedExtruderRecipe(Recipe aRecipe) {
 			super();
 			super.resources = new ArrayList<>();
 			if (aRecipe.getRepresentativeInput1() != null) {

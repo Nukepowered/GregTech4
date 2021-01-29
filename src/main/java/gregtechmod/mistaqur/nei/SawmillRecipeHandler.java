@@ -1,7 +1,7 @@
 package gregtechmod.mistaqur.nei;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_Sawmill;
@@ -19,7 +19,7 @@ public class SawmillRecipeHandler extends GT_RecipeHandler {
 	public class CachedSawmillRecipe extends CachedGT_Recipe {
 		public int mDuration, mEUt;
 
-		public CachedSawmillRecipe(GT_Recipe aRecipe) {
+		public CachedSawmillRecipe(Recipe aRecipe) {
 			resources = new ArrayList<PositionedStack>();
 			if (aRecipe.getRepresentativeInput1() != null)
 				resources.add(new PositionedStack(aRecipe.getRepresentativeInput1(), 34 - sOffsetX, 16 - sOffsetY));
@@ -73,12 +73,12 @@ public class SawmillRecipeHandler extends GT_RecipeHandler {
 	}
 	
 	@Override
-	public List<GT_Recipe> getRecipeList() {
-		return GT_Recipe.sSawmillRecipes;
+	public List<Recipe> getRecipeList() {
+		return Recipe.sSawmillRecipes;
 	}
 	
 	@Override
-	public CachedGT_Recipe getRecipe(GT_Recipe irecipe) {
+	public CachedGT_Recipe getRecipe(Recipe irecipe) {
 		return new CachedSawmillRecipe(irecipe);
 	}
 	

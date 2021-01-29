@@ -8,7 +8,7 @@ import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_In
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Maintenance;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Output;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_MultiBlockBase;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
@@ -45,7 +45,7 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends GT_MetaTileEntity_Mul
 	
 	@Override
 	public boolean checkRecipe(ItemStack aStack) {
-		for (GT_Recipe tRecipe : GT_Recipe.sHotFuels) {
+		for (Recipe tRecipe : Recipe.sHotFuels) {
 			if (depleteInput(tRecipe.getRepresentativeInput(0))) {
 				mEUt = 1600;
 				mMaxProgresstime = (tRecipe.mStartEU * 2) / 5;

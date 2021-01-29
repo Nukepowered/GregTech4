@@ -3,7 +3,7 @@ package gregtechmod.common.tileentities.machines.multi;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.InfoBuilder;
 
@@ -159,7 +159,7 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity {
     	if (!mMachine) return false;
     	ItemStack input1 =  getPrimaryInput();
     	ItemStack input2 = getSecondaryInput();
-    	GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sFusionRecipes, input1, input2);
+    	Recipe tRecipe = Recipe.findEqualRecipe(false, false, Recipe.sFusionRecipes, input1, input2);
     	if (tRecipe != null && consumeInput(tRecipe.mInputs[0], tRecipe.mInputs[1], getBaseMetaTileEntity().isActive()?0:tRecipe.mStartEU)) {
     		mMaxProgresstime = tRecipe.mDuration;
 		    mEUt = tRecipe.mEUt;

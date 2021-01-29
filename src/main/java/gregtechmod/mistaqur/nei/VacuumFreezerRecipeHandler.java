@@ -1,7 +1,7 @@
 package gregtechmod.mistaqur.nei;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_VacuumFreezer;
@@ -19,7 +19,7 @@ public class VacuumFreezerRecipeHandler extends GT_RecipeHandler {
 	public class CachedVacuumFreezerRecipe extends CachedGT_Recipe {
 		public int mDuration, mEUt;
 
-		public CachedVacuumFreezerRecipe(GT_Recipe aRecipe) {
+		public CachedVacuumFreezerRecipe(Recipe aRecipe) {
 			resources = new ArrayList<PositionedStack>();
 			if (aRecipe.getRepresentativeInput1() != null)
 				resources.add(new PositionedStack(aRecipe.getRepresentativeInput1(), 54 - sOffsetX, 25 - sOffsetY));
@@ -67,12 +67,12 @@ public class VacuumFreezerRecipeHandler extends GT_RecipeHandler {
 	}
 	
 	@Override
-	public List<GT_Recipe> getRecipeList() {
-		return GT_Recipe.sVacuumRecipes;
+	public List<Recipe> getRecipeList() {
+		return Recipe.sVacuumRecipes;
 	}
 	
 	@Override
-	public CachedGT_Recipe getRecipe(GT_Recipe irecipe) {
+	public CachedGT_Recipe getRecipe(Recipe irecipe) {
 		return new CachedVacuumFreezerRecipe(irecipe);
 	}
 	

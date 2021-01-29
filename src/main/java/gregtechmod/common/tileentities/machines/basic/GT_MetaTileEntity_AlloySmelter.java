@@ -3,7 +3,7 @@ package gregtechmod.common.tileentities.machines.basic;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
@@ -70,7 +70,7 @@ public class GT_MetaTileEntity_AlloySmelter extends GT_MetaTileEntity_BasicMachi
     public void checkRecipe() {
 		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 3, 4, (byte)64, (byte)1, (byte)64, (byte)1);
     	if (mInventory[1] != null || mInventory[2] != null) {
-    		GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sAlloySmelterRecipes, mInventory[1], mInventory[2]);
+    		Recipe tRecipe = Recipe.findEqualRecipe(false, false, Recipe.sAlloySmelterRecipes, mInventory[1], mInventory[2]);
     		if (tRecipe != null && spaceForOutput(tRecipe.getOutput(0), null) && tRecipe.isRecipeInputEqual(true, true, mInventory[1], mInventory[2])) {
         		mEUt = tRecipe.mEUt;
     			mMaxProgresstime = tRecipe.mDuration / (1+mHeatingCoilTier);

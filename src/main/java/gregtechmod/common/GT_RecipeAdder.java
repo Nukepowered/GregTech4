@@ -6,7 +6,7 @@ import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IGT_RecipeAdder;
 import gregtechmod.api.items.GT_Tool_Item;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 
@@ -18,7 +18,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 			if ((aDuration = GregTech_API.sRecipeFile.get("fusionreactor", aOutput1, aDuration)) <= 0) {
 				return false;
 			} else {
-				new GT_Recipe(aInput1, aInput2, aOutput1, aDuration, aEUt, aStartEU);
+				new Recipe(aInput1, aInput2, aOutput1, aDuration, aEUt, aStartEU);
 				return true;
 			}
 		} else {
@@ -32,7 +32,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 			if ((aDuration = GregTech_API.sRecipeFile.get("centrifuge", aInput1, aDuration)) <= 0) {
 				return false;
 			} else {
-				new GT_Recipe(aInput1, aInput2 > 0 ? GT_Items.Cell_Empty.get((long) aInput2, new Object[0]) : (aInput2 < 0 ? GT_Items.IC2_Fuel_Can_Empty.get((long) (-aInput2), new Object[0]) : null), aOutput1, aOutput2, aOutput3, aOutput4, aDuration);
+				new Recipe(aInput1, aInput2 > 0 ? GT_Items.Cell_Empty.get((long) aInput2, new Object[0]) : (aInput2 < 0 ? GT_Items.IC2_Fuel_Can_Empty.get((long) (-aInput2), new Object[0]) : null), aOutput1, aOutput2, aOutput3, aOutput4, aDuration);
 				return true;
 			}
 		} else {
@@ -46,7 +46,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 			if ((aDuration = GregTech_API.sRecipeFile.get("electrolyzer", aInput1, aDuration)) <= 0) {
 				return false;
 			} else {
-				new GT_Recipe(aInput1, aInput2 > 0 ? GT_Items.Cell_Empty.get((long) aInput2, new Object[0]) : (aInput2 < 0 ? GT_Items.IC2_Fuel_Can_Empty.get((long) (-aInput2), new Object[0]) : null), aOutput1, aOutput2, aOutput3, aOutput4, aDuration, aEUt);
+				new Recipe(aInput1, aInput2 > 0 ? GT_Items.Cell_Empty.get((long) aInput2, new Object[0]) : (aInput2 < 0 ? GT_Items.IC2_Fuel_Can_Empty.get((long) (-aInput2), new Object[0]) : null), aOutput1, aOutput2, aOutput3, aOutput4, aDuration, aEUt);
 				return true;
 			}
 		} else {
@@ -60,7 +60,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 			if ((aDuration = GregTech_API.sRecipeFile.get("chemicalreactor", aOutput1, aDuration)) <= 0) {
 				return false;
 			} else {
-				new GT_Recipe(aInput1, aInput2, aOutput1, aDuration);
+				new Recipe(aInput1, aInput2, aOutput1, aDuration);
 				return true;
 			}
 		} else {
@@ -75,7 +75,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 			if ((aDuration = GregTech_API.sRecipeFile.get("blastfurnace", aInput1, aDuration)) <= 0) {
 				return false;
 			} else {
-				new GT_Recipe(aInput1, aInput2, aOutput1, aOutput2, aDuration, aEUt, aLevel);
+				new Recipe(aInput1, aInput2, aOutput1, aOutput2, aDuration, aEUt, aLevel);
 				return true;
 			}
 		} else {
@@ -90,7 +90,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 			if ((aDuration = GregTech_API.sRecipeFile.get("canning", aInput1, aDuration)) <= 0) {
 				return false;
 			} else {
-				new GT_Recipe(aInput1, aEUt, aInput2, aDuration, aOutput1, aOutput2);
+				new Recipe(aInput1, aEUt, aInput2, aDuration, aOutput1, aOutput2);
 				return true;
 			}
 		} else {
@@ -108,7 +108,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 					aDuration)) <= 0) {
 				return false;
 			} else {
-				new GT_Recipe(aInput1, aInput2, aEUt, aDuration, aOutput1);
+				new Recipe(aInput1, aInput2, aEUt, aDuration, aOutput1);
 				return true;
 			}
 		} else {
@@ -127,7 +127,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 			if ((aDuration = GregTech_API.sRecipeFile.get("lathe", aInput1, aDuration)) <= 0) {
 				return false;
 			} else {
-				new GT_Recipe(aInput1, aOutput1, aOutput2, aDuration, aEUt);
+				new Recipe(aInput1, aOutput1, aOutput2, aDuration, aEUt);
 				return true;
 			}
 		} else {
@@ -141,7 +141,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 			if ((aDuration = GregTech_API.sRecipeFile.get("cutting", aInput1, aDuration)) <= 0) {
 				return false;
 			} else {
-				new GT_Recipe(aInput1, aDuration, aOutput1, aEUt);
+				new Recipe(aInput1, aDuration, aOutput1, aEUt);
 				return true;
 			}
 		} else {
@@ -156,7 +156,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 			if ((aDuration = GregTech_API.sRecipeFile.get("assembling", aOutput1, aDuration)) <= 0) {
 				return false;
 			} else {
-				new GT_Recipe(aInput1, aEUt, aInput2, aDuration, aOutput1);
+				new Recipe(aInput1, aEUt, aInput2, aDuration, aOutput1);
 				return true;
 			}
 		} else {
@@ -170,7 +170,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 			if ((aDuration = GregTech_API.sRecipeFile.get("wiremill", aInput1, aDuration)) <= 0) {
 				return false;
 			} else {
-				new GT_Recipe(aInput1, aEUt, aDuration, aOutput1);
+				new Recipe(aInput1, aEUt, aDuration, aOutput1);
 				return true;
 			}
 		} else {
@@ -184,7 +184,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 			if ((aDuration = GregTech_API.sRecipeFile.get("bender", aInput1, aDuration)) <= 0) {
 				return false;
 			} else {
-				new GT_Recipe(aEUt, aDuration, aInput1, aOutput1);
+				new Recipe(aEUt, aDuration, aInput1, aOutput1);
 				return true;
 			}
 		} else {
@@ -198,7 +198,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 			if ((aDuration = GregTech_API.sRecipeFile.get("extruder", aOutput1, aDuration)) <= 0) {
 				return false;
 			} else {
-				new GT_Recipe(aEUt, aDuration, aInput1, aShape, aOutput1);
+				new Recipe(aEUt, aDuration, aInput1, aShape, aOutput1);
 				return true;
 			}
 		} else {
@@ -212,7 +212,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 			if ((aInput2 = GregTech_API.sRecipeFile.get("implosion", aInput1, aInput2)) <= 0) {
 				return false;
 			} else {
-				new GT_Recipe(aInput1, aInput2, aOutput1, aOutput2);
+				new Recipe(aInput1, aInput2, aOutput1, aOutput2);
 				return true;
 			}
 		} else {
@@ -226,7 +226,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 			if ((aDuration = GregTech_API.sRecipeFile.get("distillation", aInput1, aDuration)) <= 0) {
 				return false;
 			} else {
-				new GT_Recipe(aInput1, aInput2, aOutput1, aOutput2, aOutput3, aOutput4, aDuration, aEUt);
+				new Recipe(aInput1, aInput2, aOutput1, aOutput2, aOutput3, aOutput4, aDuration, aEUt);
 				return true;
 			}
 		} else {
@@ -240,7 +240,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 			if ((aDuration = GregTech_API.sRecipeFile.get("vacuumfreezer", aInput1, aDuration)) <= 0) {
 				return false;
 			} else {
-				new GT_Recipe(aInput1, aOutput1, aDuration);
+				new Recipe(aInput1, aOutput1, aDuration);
 				return true;
 			}
 		} else {
@@ -259,7 +259,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 			if (!GregTech_API.sRecipeFile.get("grinder", aInput1, true)) {
 				return false;
 			} else {
-				new GT_Recipe(aInput1, aInput2, aOutput1, aOutput2, aOutput3, aOutput4);
+				new Recipe(aInput1, aInput2, aOutput1, aOutput2, aOutput3, aOutput4);
 				return true;
 			}
 		} else {
@@ -278,7 +278,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 			if (!GregTech_API.sRecipeFile.get("industrialsawmill", aInput1, true)) {
 				return false;
 			} else {
-				new GT_Recipe(aInput1, aInput2, aOutput1, aOutput2, aOutput3);
+				new Recipe(aInput1, aInput2, aOutput1, aOutput2, aOutput3);
 				return true;
 			}
 		} else {
@@ -291,7 +291,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 		if (aInput1 == null) {
 			return false;
 		} else {
-			new GT_Recipe(aInput1, aOutput1, GregTech_API.sRecipeFile.get("fuel_" + aType, aInput1, aEU), aType);
+			new Recipe(aInput1, aOutput1, GregTech_API.sRecipeFile.get("fuel_" + aType, aInput1, aEU), aType);
 			return true;
 		}
 	}
@@ -342,7 +342,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 			if (!GregTech_API.sRecipeFile.get("forgehammer", aOutput1, true)) {
 				return false;
 			} else {
-				GT_Recipe.addRecipe(GT_Recipe.sHammerRecipes, true, aInput1, null, aOutput1, null, null, null, aDuration, aEUt, 0);
+				Recipe.addRecipe(Recipe.sHammerRecipes, true, aInput1, null, aOutput1, null, null, null, aDuration, aEUt, 0);
 				return true;
 			}
 		} else {

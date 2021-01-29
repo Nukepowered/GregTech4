@@ -6,7 +6,7 @@ import java.util.Map;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.InfoBuilder;
 import net.minecraft.entity.player.EntityPlayer;
@@ -109,14 +109,14 @@ public class GT_MetaTileEntity_ChemicalReactor extends MetaTileEntity {
 	    		mInventory[2].stackSize = Math.min(mOutputItem1.getMaxStackSize(), mOutputItem1.stackSize + mInventory[2].stackSize);
     }
     
-    private boolean spaceForOutput(GT_Recipe aRecipe) {
+    private boolean spaceForOutput(Recipe aRecipe) {
     	if (mInventory[2] == null || aRecipe.getOutput(0) == null || (mInventory[2].stackSize + aRecipe.getOutput(0).stackSize <= mInventory[2].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[2], aRecipe.getOutput(0))))
     		return true;
     	return false;
     }
     
     private boolean checkRecipe() {
-    	GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sChemicalRecipes, mInventory[0], mInventory[1]);
+    	Recipe tRecipe = Recipe.findEqualRecipe(false, false, Recipe.sChemicalRecipes, mInventory[0], mInventory[1]);
     	
     	if (tRecipe != null) {
     		if (spaceForOutput(tRecipe) && tRecipe.isRecipeInputEqual(true, true, mInventory[0], mInventory[1])) {

@@ -1,7 +1,7 @@
 package gregtechmod.mistaqur.nei;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_BlastFurnace;
@@ -19,7 +19,7 @@ public class BlastRecipeHandler extends GT_RecipeHandler {
 	public class CachedBlastRecipe extends CachedGT_Recipe {
 		public int mDuration, mEUt, mStartEU;
 
-		public CachedBlastRecipe(GT_Recipe aRecipe) {
+		public CachedBlastRecipe(Recipe aRecipe) {
 			resources = new ArrayList<PositionedStack>();
 			if (aRecipe.getRepresentativeInput1() != null)
 				resources.add(new PositionedStack(aRecipe.getRepresentativeInput1(), 34 - sOffsetX, 16 - sOffsetY));
@@ -72,12 +72,12 @@ public class BlastRecipeHandler extends GT_RecipeHandler {
 	}
 	
 	@Override
-	public List<GT_Recipe> getRecipeList() {
-		return GT_Recipe.sBlastRecipes;
+	public List<Recipe> getRecipeList() {
+		return Recipe.sBlastRecipes;
 	}
 	
 	@Override
-	public CachedGT_Recipe getRecipe(GT_Recipe irecipe) {
+	public CachedGT_Recipe getRecipe(Recipe irecipe) {
 		return new CachedBlastRecipe(irecipe);
 	}
 	

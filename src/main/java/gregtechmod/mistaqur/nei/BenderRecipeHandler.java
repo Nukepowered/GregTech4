@@ -1,7 +1,7 @@
 package gregtechmod.mistaqur.nei;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_BasicMachine_Bender;
@@ -19,7 +19,7 @@ public class BenderRecipeHandler extends GT_RecipeHandler {
 	public class CachedBenderRecipe extends CachedGT_Recipe {
 		public int mDuration, mEUt;
 
-		public CachedBenderRecipe(GT_Recipe aRecipe) {
+		public CachedBenderRecipe(Recipe aRecipe) {
 			resources = new ArrayList<PositionedStack>();
 			if (aRecipe.getRepresentativeInput1() != null)
 				resources.add(new PositionedStack(aRecipe.getRepresentativeInput1(), 35 - sOffsetX, 25 - sOffsetY));
@@ -70,12 +70,12 @@ public class BenderRecipeHandler extends GT_RecipeHandler {
 	}
 	
 	@Override
-	public List<GT_Recipe> getRecipeList() {
-		return GT_Recipe.sBenderRecipes;
+	public List<Recipe> getRecipeList() {
+		return Recipe.sBenderRecipes;
 	}
 	
 	@Override
-	public CachedGT_Recipe getRecipe(GT_Recipe irecipe) {
+	public CachedGT_Recipe getRecipe(Recipe irecipe) {
 		return new CachedBenderRecipe(irecipe);
 	}
 	

@@ -10,7 +10,7 @@ import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Ma
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Muffler;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Output;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_MultiBlockBase;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.blocks.GT_BlockMetaID_Block;
@@ -50,7 +50,7 @@ public class GT_MetaTileEntity_Multi_GasTurbine extends GT_MetaTileEntity_MultiB
 	@Override
 	public boolean checkRecipe(ItemStack aStack) {
 		if (GT_Utility.isStackValid(aStack)) {
-			for (GT_Recipe tRecipe : GT_Recipe.sTurbineFuels) {
+			for (Recipe tRecipe : Recipe.sTurbineFuels) {
 				if (depleteInput(tRecipe.getRepresentativeInput(0))) {
 					mEUt = 1000;
 					mOutputItems = new ItemStack[] { GT_Utility.copy(tRecipe.getOutput(0)) };

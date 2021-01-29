@@ -5,7 +5,7 @@ import java.util.List;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicGenerator;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class GT_MetaTileEntity_ThermalGenerator extends GT_MetaTileEntity_BasicGenerator {
@@ -19,7 +19,7 @@ public class GT_MetaTileEntity_ThermalGenerator extends GT_MetaTileEntity_BasicG
 	@Override public boolean isFacingValid(byte aFacing) { return false;}
 	@Override public int maxEUOutput() {return this.getBaseMetaTileEntity().isAllowedToWork() ? 24 : 0;}
 	@Override public void onRightclick(EntityPlayer aPlayer) {this.getBaseMetaTileEntity().openGUI(aPlayer, 119);}
-	@Override public List<GT_Recipe> getRecipes() {return GT_Recipe.sHotFuels;}
+	@Override public List<Recipe> getRecipes() {return Recipe.sHotFuels;}
 	@Override public int getEfficiency() {return 80;}
 
 	@Override

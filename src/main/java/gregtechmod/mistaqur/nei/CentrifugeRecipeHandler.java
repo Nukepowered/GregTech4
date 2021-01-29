@@ -1,7 +1,7 @@
 package gregtechmod.mistaqur.nei;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_Centrifuge;
@@ -19,7 +19,7 @@ public class CentrifugeRecipeHandler extends GT_RecipeHandler {
 	public class CachedCentrifugeRecipe extends CachedGT_Recipe {
 		public int mDuration;
 
-		public CachedCentrifugeRecipe(GT_Recipe aRecipe) {
+		public CachedCentrifugeRecipe(Recipe aRecipe) {
 			resources = new ArrayList<PositionedStack>();
 			if (aRecipe.getRepresentativeInput1() != null)
 				resources.add(new PositionedStack(aRecipe.getRepresentativeInput1(), 80 - sOffsetX, 35 - sOffsetY + 7));
@@ -80,12 +80,12 @@ public class CentrifugeRecipeHandler extends GT_RecipeHandler {
 	}
 	
 	@Override
-	public List<GT_Recipe> getRecipeList() {
-		return GT_Recipe.sCentrifugeRecipes;
+	public List<Recipe> getRecipeList() {
+		return Recipe.sCentrifugeRecipes;
 	}
 	
 	@Override
-	public CachedGT_Recipe getRecipe(GT_Recipe irecipe) {
+	public CachedGT_Recipe getRecipe(Recipe irecipe) {
 		return new CachedCentrifugeRecipe(irecipe);
 	}
 	

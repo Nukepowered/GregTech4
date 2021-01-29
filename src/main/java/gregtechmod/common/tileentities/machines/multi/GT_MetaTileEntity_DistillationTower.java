@@ -6,7 +6,7 @@ import java.util.Map;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
-import gregtechmod.api.recipe.GT_Recipe;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.InfoBuilder;
@@ -189,7 +189,7 @@ public class GT_MetaTileEntity_DistillationTower extends MetaTileEntity {
 	    		mInventory[5].stackSize = Math.min(mOutputItem4.getMaxStackSize(), mOutputItem4.stackSize + mInventory[5].stackSize);
     }
     
-    private boolean spaceForOutput(GT_Recipe aRecipe) {
+    private boolean spaceForOutput(Recipe aRecipe) {
     	if (mInventory[2] == null || aRecipe.getOutput(0) == null || (mInventory[2].stackSize + aRecipe.getOutput(0).stackSize <= mInventory[2].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[2], aRecipe.getOutput(0))))
     	if (mInventory[3] == null || aRecipe.getOutput(1) == null || (mInventory[3].stackSize + aRecipe.getOutput(1).stackSize <= mInventory[3].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[3], aRecipe.getOutput(1))))
     	if (mInventory[4] == null || aRecipe.getOutput(2) == null || (mInventory[4].stackSize + aRecipe.getOutput(2).stackSize <= mInventory[4].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[4], aRecipe.getOutput(2))))
@@ -201,7 +201,7 @@ public class GT_MetaTileEntity_DistillationTower extends MetaTileEntity {
     private boolean checkRecipe() {
     	if (!mMachine) return false;
     	
-    	GT_Recipe tRecipe = GT_Recipe.findEqualRecipe(false, false, GT_Recipe.sDistillationRecipes, mInventory[0], mInventory[1]);
+    	Recipe tRecipe = Recipe.findEqualRecipe(false, false, Recipe.sDistillationRecipes, mInventory[0], mInventory[1]);
     	
     	if (tRecipe != null) {
     		if (spaceForOutput(tRecipe)) {
