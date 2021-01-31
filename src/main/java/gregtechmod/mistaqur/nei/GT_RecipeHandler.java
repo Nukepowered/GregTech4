@@ -4,11 +4,14 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_OreDictUnificator;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.opengl.GL11;
 
 import codechicken.nei.PositionedStack;
@@ -22,15 +25,39 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 	
 	public GT_RecipeHandler() {
 		if (!NEI_GregTech_Config.sIsAdded) {
-//			FMLInterModComms.sendRuntimeMessage(GregTech_API.gregtechmod, "NEIPlugins", "register-crafting-handler", GregTech_API.MOD_ID+"@"+getRecipeName()+"@"+getRecipeId());
-//			API.registerRecipeHandler(this);
-//			API.registerUsageHandler(this); // FIXME enable handler again
+			FMLInterModComms.sendRuntimeMessage(GregTech_API.gregtechmod, "NEIPlugins", "register-crafting-handler", GregTech_API.MOD_ID+"@"+getRecipeName()+"@"+getRecipeId());
+			API.registerRecipeHandler(this);
+			API.registerUsageHandler(this);
 		}
 	}
 	
-	public abstract class CachedGT_Recipe extends CachedRecipe {
+	public class CachedGT_Recipe extends CachedRecipe {
 		public List<PositionedStack> products;
 		public List<PositionedStack> resources;
+		public int mDuration, mEUt;
+		
+		public CachedGT_Recipe(Recipe aRecipe) {
+			resources = new ArrayList<PositionedStack>();
+			products = new ArrayList<PositionedStack>();
+			
+			ItemStack[][] inputs = aRecipe.getRepresentativeInputs();
+			for (int i = 0; i < inputs.length; i++) {
+				ItemStack[] items = Arrays.stream(inputs[i]).filter(item -> item != null).toArray(a -> new ItemStack[a]);
+				if (items.length > 0) {
+					Pair<Integer, Integer> offsets = getInputAligment(i);
+					resources.add(new PositionedStack(items, offsets.getKey(), offsets.getValue()));
+				}
+			}
+
+			ItemStack[] outputs = Arrays.stream(aRecipe.getOutputs()).filter(item -> item != null).toArray(a -> new ItemStack[a]);
+			for (int i = 0; i < outputs.length; i++) {
+				Pair<Integer, Integer> offsets = getOutputAligment(i);
+				products.add(new PositionedStack(outputs[i], offsets.getKey(), offsets.getValue()));
+			}
+			
+			mDuration = aRecipe.mDuration;
+			mEUt = aRecipe.mEUt;
+		}
 		
 		@Override
 		public List<PositionedStack> getIngredients() {
@@ -41,9 +68,18 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 		public PositionedStack getResult() {
 			return null;
 		}
+		
 		@Override
 		public List<PositionedStack> getOtherStacks() {
 			return products;
+		}
+		
+		protected Pair<Integer, Integer> getInputAligment(int itemIdx) {
+			return Pair.of(18 * itemIdx, 0);
+		}
+		
+		protected Pair<Integer, Integer> getOutputAligment(int itemIdx) {
+			return Pair.of((18 * itemIdx), 54);
 		}
 	}
 	

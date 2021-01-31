@@ -2,6 +2,7 @@ package gregtechmod.mistaqur.nei;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeMaps;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_Centrifuge;
@@ -9,36 +10,13 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.StatCollector;
-import codechicken.nei.PositionedStack;
 
 public class CentrifugeRecipeHandler extends GT_RecipeHandler {
-	
-	public class CachedCentrifugeRecipe extends CachedGT_Recipe {
-		public int mDuration;
-
-		public CachedCentrifugeRecipe(Recipe aRecipe) {
-			resources = new ArrayList<PositionedStack>();
-			if (aRecipe.getRepresentativeInput1() != null)
-				resources.add(new PositionedStack(aRecipe.getRepresentativeInput1(), 80 - sOffsetX, 35 - sOffsetY + 7));
-			if (aRecipe.getRepresentativeInput2() != null)
-				resources.add(new PositionedStack(aRecipe.getRepresentativeInput2(), 50 - sOffsetX, 5 - sOffsetY + 7));
-
-			products = new ArrayList<PositionedStack>();
-			if (aRecipe.getOutput(0) != null)
-				products.add(new PositionedStack(aRecipe.getOutput(0), 80 - sOffsetX, 5 - sOffsetY + 7));
-			if (aRecipe.getOutput(1) != null)
-				products.add(new PositionedStack(aRecipe.getOutput(1), 110 - sOffsetX, 35 - sOffsetY + 7));
-			if (aRecipe.getOutput(2) != null)
-				products.add(new PositionedStack(aRecipe.getOutput(2), 80 - sOffsetX, 65 - sOffsetY + 7));
-			if (aRecipe.getOutput(3) != null)
-				products.add(new PositionedStack(aRecipe.getOutput(3), 50 - sOffsetX, 35 - sOffsetY + 7));
-
-			mDuration = aRecipe.mDuration;
-		}
-	}
 	
 	@Override
 	public void loadTransferRects() {
@@ -81,19 +59,36 @@ public class CentrifugeRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public List<Recipe> getRecipeList() {
-//		return Recipe.sCentrifugeRecipes;
-		return null;
+		return RecipeMaps.sCentrifugeRecipes;
 	}
 	
 	@Override
 	public CachedGT_Recipe getRecipe(Recipe irecipe) {
-		return new CachedCentrifugeRecipe(irecipe);
+		return new CachedGT_Recipe(irecipe) {
+			@Override
+			protected Pair<Integer, Integer> getInputAligment(int itemIdx) {
+				int x = itemIdx == 0 ? 80 - sOffsetX : 50 - sOffsetX;
+				int y = itemIdx == 0 ? 35 - sOffsetY + 7 : 5 - sOffsetY + 7;
+				return Pair.of(x, y);
+			}
+			
+			@Override
+			protected Pair<Integer, Integer> getOutputAligment(int itemIdx) {
+				switch(itemIdx) {
+				case 0: return Pair.of(80 - sOffsetX, 5 - sOffsetY + 7);
+				case 1: return Pair.of(110 - sOffsetX, 35 - sOffsetY + 7);
+				case 2: return Pair.of(80 - sOffsetX, 65 - sOffsetY + 7);
+				case 3: return Pair.of(50 - sOffsetX, 35 - sOffsetY + 7);
+				default: return Pair.of(0, 0);
+				}
+			}
+		};
 	}
 	
 	@Override
 	public void drawExtras(int recipe) {
-		Integer time = ((CachedCentrifugeRecipe)arecipes.get(recipe)).mDuration;
-		drawText(30, 90, I18n.format("nei.extras.eu_total", GT_Utility.parseNumberToString(time * 5)), 0xFF000000, false);
-		drawText(30, 100, I18n.format("nei.extras.time", GT_Utility.parseNumberToString(time / 20.0D)), 0xFF000000, false);
+		CachedGT_Recipe rec = (CachedGT_Recipe) arecipes.get(recipe);
+		drawText(30, 90, I18n.format("nei.extras.eu_total", GT_Utility.parseNumberToString(rec.mDuration * 5)), 0xFF000000, false);
+		drawText(30, 100, I18n.format("nei.extras.time", GT_Utility.parseNumberToString(rec.mDuration * 1.0D / 20.0D)), 0xFF000000, false);
 	}
 }

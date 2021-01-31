@@ -2,6 +2,7 @@ package gregtechmod.mistaqur.nei;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeMaps;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_BasicMachine_Bender;
@@ -9,32 +10,13 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.StatCollector;
-import codechicken.nei.PositionedStack;
 
 public class BenderRecipeHandler extends GT_RecipeHandler {
-	
-	public class CachedBenderRecipe extends CachedGT_Recipe {
-		public int mDuration, mEUt;
-
-		public CachedBenderRecipe(Recipe aRecipe) {
-			resources = new ArrayList<PositionedStack>();
-			if (aRecipe.getRepresentativeInput1() != null)
-				resources.add(new PositionedStack(aRecipe.getRepresentativeInput1(), 35 - sOffsetX, 25 - sOffsetY));
-			
-			if (aRecipe.getRepresentativeInput2() != null)
-				super.resources.add(new PositionedStack(aRecipe.getRepresentativeInput2(), 53 - sOffsetX, 25 - sOffsetY));
-			
-			products = new ArrayList<PositionedStack>();
-			if (aRecipe.getOutput(0) != null)
-				products.add(new PositionedStack(aRecipe.getOutput(0), 107 - sOffsetX, 25 - sOffsetY));
-			
-			mDuration = aRecipe.mDuration;
-			mEUt = aRecipe.mEUt;
-		}
-	}
 	
 	@Override
 	public void loadTransferRects() {
@@ -71,20 +53,30 @@ public class BenderRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public List<Recipe> getRecipeList() {
-		return Recipe.sBenderRecipes;
+		return RecipeMaps.sBenderRecipes;
 	}
 	
 	@Override
 	public CachedGT_Recipe getRecipe(Recipe irecipe) {
-		return new CachedBenderRecipe(irecipe);
+		return new CachedGT_Recipe(irecipe) {
+			@Override
+			protected Pair<Integer, Integer> getInputAligment(int itemIdx) {
+				return Pair.of(35 - sOffsetX + (18 * itemIdx), 25 - sOffsetY);
+			}
+			
+			@Override
+			protected Pair<Integer, Integer> getOutputAligment(int itemIdx) {
+				return Pair.of(107 - sOffsetX, 25 - sOffsetY);
+			}
+		};
 	}
 	
 	@Override
 	public void drawExtras(int recipe) {
-		Integer time = ((CachedBenderRecipe)arecipes.get(recipe)).mDuration;
-		drawText(30, 80, I18n.format("nei.extras.eu_total", GT_Utility.parseNumberToString(time * ((CachedBenderRecipe)arecipes.get(recipe)).mEUt)), 0xFF000000, false);
-		drawText(30, 90, I18n.format("nei.extras.time", GT_Utility.parseNumberToString(time / 20.0D)), 0xFF000000, false);
-		drawText(30, 100, I18n.format("nei.extras.eut", GT_Utility.parseNumberToString(((CachedBenderRecipe)arecipes.get(recipe)).mEUt)), 0xFF000000, false);
+		CachedGT_Recipe rec = (CachedGT_Recipe) arecipes.get(recipe);
+		drawText(30, 80, I18n.format("nei.extras.eu_total", GT_Utility.parseNumberToString(rec.mDuration * rec.mEUt)), 0xFF000000, false);
+		drawText(30, 90, I18n.format("nei.extras.time", GT_Utility.parseNumberToString(rec.mDuration * 1.0D / 20.0D)), 0xFF000000, false);
+		drawText(30, 100, I18n.format("nei.extras.eut", GT_Utility.parseNumberToString(rec.mEUt)), 0xFF000000, false);
 	    drawText(30, 110, I18n.format("nei.bender.info.1"), -16777216, false);
 	    drawText(30, 120, I18n.format("nei.bender.info.2"), -16777216, false);
 	}

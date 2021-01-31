@@ -2,6 +2,7 @@ package gregtechmod.mistaqur.nei;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeMaps;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_ChemicalReactor;
@@ -9,32 +10,13 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.StatCollector;
-import codechicken.nei.PositionedStack;
 
 public class ChemicalRecipeHandler extends GT_RecipeHandler {
-	
-	public class CachedChemicalReactorRecipe extends CachedGT_Recipe {
-		public int mDuration, mEUt;
-
-		public CachedChemicalReactorRecipe(Recipe aRecipe) {
-			resources = new ArrayList<PositionedStack>();
-			if (aRecipe.getRepresentativeInput1() != null)
-				resources.add(new PositionedStack(aRecipe.getRepresentativeInput1(), 70 - sOffsetX, 16 - sOffsetY));
-			if (aRecipe.getRepresentativeInput2() != null)
-				resources.add(new PositionedStack(aRecipe.getRepresentativeInput2(), 90 - sOffsetX, 16 - sOffsetY));
-			
-			products = new ArrayList<PositionedStack>();
-			if (aRecipe.getOutput(0) != null)
-				products.add(new PositionedStack(aRecipe.getOutput(0), 80 - sOffsetX, 46 - sOffsetY));
-			
-			mDuration = aRecipe.mDuration;
-			mEUt = aRecipe.mEUt;
-		}
-	}
-	
 	@Override
 	public void loadTransferRects() {
 		try {
@@ -70,19 +52,29 @@ public class ChemicalRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public List<Recipe> getRecipeList() {
-		return Recipe.sChemicalRecipes;
+		return RecipeMaps.sChemicalRecipes;
 	}
 	
 	@Override
 	public CachedGT_Recipe getRecipe(Recipe irecipe) {
-		return new CachedChemicalReactorRecipe(irecipe);
+		return new CachedGT_Recipe(irecipe) {
+			@Override
+			protected Pair<Integer, Integer> getInputAligment(int itemIdx) {
+				return Pair.of(70 - sOffsetX + (20 * itemIdx), 16 - sOffsetY);
+			}
+			
+			@Override
+			protected Pair<Integer, Integer> getOutputAligment(int itemIdx) {
+				return Pair.of(80 - sOffsetX + (18 * itemIdx), 46 - sOffsetY);
+			}
+		};
 	}
 	
 	@Override
 	public void drawExtras(int recipe) {
-		Integer time = ((CachedChemicalReactorRecipe)arecipes.get(recipe)).mDuration;
-		drawText(30, 80, I18n.format("nei.extras.eu_total", GT_Utility.parseNumberToString(time * ((CachedChemicalReactorRecipe)arecipes.get(recipe)).mEUt)), 0xFF000000, false);
-		drawText(30, 90, I18n.format("nei.extras.time", GT_Utility.parseNumberToString(time / 20.0D)), 0xFF000000, false);
-		drawText(30, 100, I18n.format("nei.extras.eut", GT_Utility.parseNumberToString(((CachedChemicalReactorRecipe)arecipes.get(recipe)).mEUt)), 0xFF000000, false);
+		CachedGT_Recipe rec = (CachedGT_Recipe) arecipes.get(recipe);
+		drawText(30, 80, I18n.format("nei.extras.eu_total", GT_Utility.parseNumberToString(rec.mDuration * rec.mEUt)), 0xFF000000, false);
+		drawText(30, 90, I18n.format("nei.extras.time", GT_Utility.parseNumberToString(rec.mDuration * 1.0D / 20.0D)), 0xFF000000, false);
+		drawText(30, 100, I18n.format("nei.extras.eut", GT_Utility.parseNumberToString(rec.mEUt)), 0xFF000000, false);
 	}
 }

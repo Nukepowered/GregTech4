@@ -1,15 +1,18 @@
 package gregtechmod.mistaqur.nei;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.awt.Rectangle;
-import codechicken.nei.PositionedStack;
+
+import org.apache.commons.lang3.tuple.Pair;
+
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeMaps;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_BasicMachine_Extruder;
+
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.StatCollector;
 
@@ -42,46 +45,28 @@ public class ExtruderRecipeHandler extends GT_RecipeHandler {
 	}
 
 	public List<Recipe> getRecipeList() {
-		return Recipe.sExtruderRecipes;
+		return RecipeMaps.sExtruderRecipes;
 	}
 
-	public GT_RecipeHandler.CachedGT_Recipe getRecipe(Recipe irecipe) {
-		return new CachedExtruderRecipe(irecipe);
+	@Override
+	public CachedGT_Recipe getRecipe(Recipe irecipe) {
+		return new CachedGT_Recipe(irecipe) {
+			@Override
+			protected Pair<Integer, Integer> getInputAligment(int itemIdx) {
+				return Pair.of(35 - sOffsetX + (18 * itemIdx), 25 - sOffsetY);
+			}
+			
+			@Override
+			protected Pair<Integer, Integer> getOutputAligment(int itemIdx) {
+				return Pair.of(107 - sOffsetX, 25 - sOffsetY);
+			}
+		};
 	}
 
 	public void drawExtras(int recipe) {
-		Integer time = Integer.valueOf(((CachedExtruderRecipe) this.arecipes.get(recipe)).mDuration);
-		drawText(30, 80, I18n.format("nei.extras.eu_total", GT_Utility.parseNumberToString(time * ((CachedExtruderRecipe)arecipes.get(recipe)).mEUt)), 0xFF000000, false);
-		drawText(30, 90, I18n.format("nei.extras.time", GT_Utility.parseNumberToString(time / 20.0D)), 0xFF000000, false);
-		drawText(30, 100, I18n.format("nei.extras.eut", GT_Utility.parseNumberToString(((CachedExtruderRecipe)arecipes.get(recipe)).mEUt)), 0xFF000000, false);
-	}
-
-	public class CachedExtruderRecipe extends GT_RecipeHandler.CachedGT_Recipe {
-
-		public int mDuration;
-		public int mEUt;
-
-		public CachedExtruderRecipe(Recipe aRecipe) {
-			super();
-			super.resources = new ArrayList<>();
-			if (aRecipe.getRepresentativeInput1() != null) {
-				super.resources.add(new PositionedStack(aRecipe.getRepresentativeInput1(),
-						35 - GT_RecipeHandler.sOffsetX, 25 - GT_RecipeHandler.sOffsetY));
-			}
-
-			if (aRecipe.getRepresentativeInput2() != null) {
-				super.resources.add(new PositionedStack(aRecipe.getRepresentativeInput2(),
-						53 - GT_RecipeHandler.sOffsetX, 25 - GT_RecipeHandler.sOffsetY));
-			}
-
-			super.products = new ArrayList<>();
-			if (aRecipe.getOutput(0) != null) {
-				super.products.add(new PositionedStack(aRecipe.getOutput(0), 107 - GT_RecipeHandler.sOffsetX,
-						25 - GT_RecipeHandler.sOffsetY));
-			}
-
-			this.mDuration = aRecipe.mDuration;
-			this.mEUt = aRecipe.mEUt;
-		}
+		CachedGT_Recipe rec = (CachedGT_Recipe) arecipes.get(recipe);
+		drawText(30, 80, I18n.format("nei.extras.eu_total", GT_Utility.parseNumberToString(rec.mDuration * rec.mEUt)), 0xFF000000, false);
+		drawText(30, 90, I18n.format("nei.extras.time", GT_Utility.parseNumberToString(rec.mDuration * 1.0D / 20.0D)), 0xFF000000, false);
+		drawText(30, 100, I18n.format("nei.extras.eut", GT_Utility.parseNumberToString(rec.mEUt)), 0xFF000000, false);
 	}
 }
