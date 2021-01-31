@@ -1,8 +1,11 @@
 package gregtechmod.common.tileentities.machines.basic;
 
+import java.util.List;
+
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
@@ -12,12 +15,12 @@ import net.minecraft.item.ItemStack;
 
 public class GT_MetaTileEntity_Printer extends GT_MetaTileEntity_BasicMachine {
 	
-	public GT_MetaTileEntity_Printer(int aID, String mName) {
-		super(aID, mName);
+	public GT_MetaTileEntity_Printer(int aID, String mName, List<Recipe> recipeMap) {
+		super(aID, mName, recipeMap);
 	}
 	
-	public GT_MetaTileEntity_Printer() {
-		
+	public GT_MetaTileEntity_Printer(List<Recipe> recipeMap) {
+		super(recipeMap);
 	}
 	
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 142);}
@@ -26,7 +29,7 @@ public class GT_MetaTileEntity_Printer extends GT_MetaTileEntity_BasicMachine {
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_Printer();
+		return new GT_MetaTileEntity_Printer(recipeLogic.recipeMap);
 	}
 	
 	@SuppressWarnings("deprecation")

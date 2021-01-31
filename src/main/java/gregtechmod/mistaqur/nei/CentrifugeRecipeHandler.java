@@ -81,7 +81,8 @@ public class CentrifugeRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public List<Recipe> getRecipeList() {
-		return Recipe.sCentrifugeRecipes;
+//		return Recipe.sCentrifugeRecipes;
+		return null;
 	}
 	
 	@Override

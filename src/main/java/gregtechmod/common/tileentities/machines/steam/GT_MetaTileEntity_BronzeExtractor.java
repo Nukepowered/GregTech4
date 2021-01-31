@@ -1,20 +1,23 @@
 package gregtechmod.common.tileentities.machines.steam;
 
+import java.util.List;
+
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine_Bronze;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class GT_MetaTileEntity_BronzeExtractor extends GT_MetaTileEntity_BasicMachine_Bronze {
 	
-	public GT_MetaTileEntity_BronzeExtractor(int aID, String mName) {
-		super(aID, mName);
+	public GT_MetaTileEntity_BronzeExtractor(int aID, String mName, List<Recipe> recipeMap) {
+		super(aID, mName, recipeMap);
 	}
 	
-	public GT_MetaTileEntity_BronzeExtractor() {
-		
+	public GT_MetaTileEntity_BronzeExtractor(List<Recipe> recipeMap) {
+		super(recipeMap);
 	}
 	
 	@Override
@@ -24,7 +27,7 @@ public class GT_MetaTileEntity_BronzeExtractor extends GT_MetaTileEntity_BasicMa
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_BronzeExtractor();
+		return new GT_MetaTileEntity_BronzeExtractor(recipeLogic.recipeMap);
 	}
 	
 	@Override

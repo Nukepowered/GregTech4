@@ -1,5 +1,6 @@
 package gregtechmod.common.tileentities.machines.basic;
 
+import java.util.List;
 import java.util.UUID;
 
 import com.mojang.authlib.GameProfile;
@@ -10,6 +11,7 @@ import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,12 +24,12 @@ import net.minecraftforge.common.util.FakePlayer;
 
 public class GT_MetaTileEntity_Microwave extends GT_MetaTileEntity_BasicMachine {
 	
-	public GT_MetaTileEntity_Microwave(int aID, String mName) {
-		super(aID, mName);
+	public GT_MetaTileEntity_Microwave(int aID, String mName, List<Recipe> recipeMap) {
+		super(aID, mName, recipeMap);
 	}
 	
-	public GT_MetaTileEntity_Microwave() {
-		
+	public GT_MetaTileEntity_Microwave(List<Recipe> recipeMap) {
+		super(recipeMap);
 	}
 	
 	@Override
@@ -37,7 +39,7 @@ public class GT_MetaTileEntity_Microwave extends GT_MetaTileEntity_BasicMachine 
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_Microwave();
+		return new GT_MetaTileEntity_Microwave(recipeLogic.recipeMap);
 	}
 	
 	@Override

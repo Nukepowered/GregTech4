@@ -1,9 +1,13 @@
 package gregtechmod.loaders.preload;
 
+import java.util.Collections;
+
 import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
+import gregtechmod.api.metatileentity.examples.GT_MetaTileEntity_E_Furnace;
 import gregtechmod.api.metatileentity.implementations.*;
+import gregtechmod.api.recipe.RecipeMaps;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.common.tileentities.automation.*;
 import gregtechmod.common.tileentities.energy.production.*;
@@ -57,21 +61,21 @@ public class GT_MetaTileEntityLoader implements Runnable {
 		new GT_MetaTileEntity_AdvancedPump				( 47, "GT_Pump");
 		new GT_MetaTileEntity_DigitalChest				( 48, "GT_Barrel");
 		new GT_MetaTileEntity_QuantumChest				( 49, "GT_QuantumChest");
-		new GT_MetaTileEntity_Macerator					( 50, "GT_Macerator");
-		new GT_MetaTileEntity_Extractor					( 51, "GT_Extractor");
-		new GT_MetaTileEntity_Compressor				( 52, "GT_Compressor");
-		new GT_MetaTileEntity_Recycler					( 53, "GT_Recycler");
-		new GT_MetaTileEntity_E_Furnace					( 54, "GT_E_Furnace");
-		new GT_MetaTileEntity_Wiremill					( 55, "GT_Wiremill");
-		new GT_MetaTileEntity_AlloySmelter				( 56, "GT_AlloySmelter");
-		new GT_MetaTileEntity_Canner					( 57, "GT_Canner");
+		new GT_MetaTileEntity_Macerator					( 50, "GT_Macerator"			, Collections.emptyList()); // TODO custom recipes
+		new GT_MetaTileEntity_Extractor					( 51, "GT_Extractor"			, Collections.emptyList()); // TODO custom recipes
+		new GT_MetaTileEntity_Compressor				( 52, "GT_Compressor"			, Collections.emptyList()); // TODO custom recipes
+		new GT_MetaTileEntity_Recycler					( 53, "GT_Recycler"				, Collections.emptyList()); // TODO custom recipes
+		new GT_MetaTileEntity_E_Furnace					( 54, "GT_E_Furnace"			, Collections.emptyList());
+		new GT_MetaTileEntity_Wiremill					( 55, "GT_Wiremill"				, RecipeMaps.sWiremillRecipes);
+		new GT_MetaTileEntity_AlloySmelter				( 56, "GT_AlloySmelter"			, RecipeMaps.sAlloySmelterRecipes);
+		new GT_MetaTileEntity_Canner					( 57, "GT_Canner"				, RecipeMaps.sCannerRecipes);
 		new GT_MetaTileEntity_ElectricTypeSorter		( 58, "GT_E_T_Sorter");
-		new GT_MetaTileEntity_Bender					( 59, "GT_Bender");
-		new GT_MetaTileEntity_Assembler					( 60, "GT_Assembler");
-		new GT_MetaTileEntity_Printer					( 61, "GT_Printer");
+		new GT_MetaTileEntity_Bender					( 59, "GT_Bender"				, RecipeMaps.sBenderRecipes);
+		new GT_MetaTileEntity_Assembler					( 60, "GT_Assembler"			, RecipeMaps.sAssemblerRecipes);
+		new GT_MetaTileEntity_Printer					( 61, "GT_Printer"				, RecipeMaps.PRINTER);
 		new GT_MetaTileEntity_Centrifuge				( 62, "GT_Centrifuge");
-		new GT_MetaTileEntity_Microwave					( 63, "GT_Microwave");
-		new GT_MetaTileEntity_Pulverizer				( 64, "GT_Pulverizer");
+		new GT_MetaTileEntity_Microwave					( 63, "GT_Microwave"			, Collections.emptyList()); // TODO custom recipes
+		new GT_MetaTileEntity_Pulverizer				( 64, "GT_Pulverizer"			, Collections.emptyList()); // TODO custom recipes
 		new GT_MetaTileEntity_RedstoneLamp				( 65, "GT_RedstoneLamp");
 		new GT_MetaTileEntity_RedstoneNoteBlock			( 66, "GT_RedstoneNoteBlock");
 		new GT_MetaTileEntity_RedstoneButtonPanel		( 67, "GT_RedstoneButtonPanel");
@@ -117,27 +121,27 @@ public class GT_MetaTileEntityLoader implements Runnable {
 		new GT_MetaTileEntity_Multi_GasTurbine			(108, "GT_Multi_GasTurbine");
 		new GT_MetaTileEntity_Multi_SteamTurbine		(109, "GT_Multi_SteamTurbine");
 		new GT_MetaTileEntity_Multi_ThermalBoiler		(110, "GT_Multi_ThermalBoiler");
-		new GT_MetaTileEntity_Lathe						(111, "GT_Lathe");
+		new GT_MetaTileEntity_Lathe						(111, "GT_Lathe"				, RecipeMaps.sLatheRecipes);
 		new GT_MetaTileEntity_AdvancedCraftingTable		(112, "GT_ProjectTable");
-		new GT_MetaTileEntity_PlateCutter				(113, "GT_Cutter");
-	    new GT_MetaTileEntity_Scanner					(114, "GT_Scanner");
-	    new GT_MetaTileEntity_Extruder					(115, "GT_Extruder");
+		new GT_MetaTileEntity_PlateCutter				(113, "GT_Cutter"				, RecipeMaps.sCutterRecipes);
+	    new GT_MetaTileEntity_Scanner					(114, "GT_Scanner"				, Collections.emptyList());
+	    new GT_MetaTileEntity_Extruder					(115, "GT_Extruder"				, RecipeMaps.sExtruderRecipes);
 	    new GT_MetaTileEntity_ElectricRetrieverAdvanced	(116, "GT_RetrieverAdvanced");
 		
 	    new GT_MetaTileEntity_ElectricTypeFilter		(126, "GT_E_T_Filter");
 	    new GT_MetaTileEntity_ElectricFilter			(127, "GT_E_Filter");
 		
-		GT_Items.Machine_Bronze_CraftingTable.set(	new GT_MetaTileEntity_BronzeCraftingTable	(128, "GT_BronzeTable"			).getStackForm(1));
-		GT_Items.Machine_Bronze_Boiler.set(			new GT_MetaTileEntity_Boiler_Bronze			(129, "GT_BronzeBoiler"			).getStackForm(1));
-		GT_Items.Machine_Bronze_Macerator.set(		new GT_MetaTileEntity_BronzeMacerator		(130, "GT_BronzeMacerator"		).getStackForm(1));
-		GT_Items.Machine_Bronze_Furnace.set(		new GT_MetaTileEntity_BronzeFurnace			(131, "GT_BronzeFurnace"		).getStackForm(1));
-		GT_Items.Machine_Bronze_AlloySmelter.set(	new GT_MetaTileEntity_BronzeAlloySmelter	(132, "GT_BronzeAlloySmelter"	).getStackForm(1));
-		GT_Items.Machine_Bronze_Hammer.set(			new GT_MetaTileEntity_BronzeSteamHammer		(133, "GT_BronzeSteamHammer"	).getStackForm(1));
-		GT_Items.Machine_Bronze_Compressor.set(		new GT_MetaTileEntity_BronzeCompressor		(134, "GT_BronzeCompressor"		).getStackForm(1));
-		GT_Items.Machine_Bronze_Extractor.set(		new GT_MetaTileEntity_BronzeExtractor		(135, "GT_BronzeExtractor"		).getStackForm(1));
-		GT_Items.Machine_Bronze_BlastFurnace.set(	new GT_MetaTileEntity_BronzeBlastFurnace	(136, "GT_BronzeBlastFurnace"	).getStackForm(1));
-		GT_Items.Machine_Steel_Boiler.set(			new GT_MetaTileEntity_Boiler_Steel			(137, "GT_SteelBoiler"			).getStackForm(1));
-		GT_Items.Machine_Steel_Furnace.set(			new GT_MetaTileEntity_SteelFurnace			(138, "GT_SteelFurnace"			).getStackForm(1));
+		GT_Items.Machine_Bronze_CraftingTable.set(	new GT_MetaTileEntity_BronzeCraftingTable	(128, "GT_BronzeTable"			).getStackForm(1)					);
+		GT_Items.Machine_Bronze_Boiler.set(			new GT_MetaTileEntity_Boiler_Bronze			(129, "GT_BronzeBoiler"			).getStackForm(1)					);
+		GT_Items.Machine_Bronze_Macerator.set(		new GT_MetaTileEntity_BronzeMacerator		(130, "GT_BronzeMacerator"		, Collections.emptyList()			).getStackForm(1)); // TODO custom recipes
+		GT_Items.Machine_Bronze_Furnace.set(		new GT_MetaTileEntity_BronzeFurnace			(131, "GT_BronzeFurnace"		, Collections.emptyList()			).getStackForm(1)); // TODO custom recipes
+		GT_Items.Machine_Bronze_AlloySmelter.set(	new GT_MetaTileEntity_BronzeAlloySmelter	(132, "GT_BronzeAlloySmelter"	, RecipeMaps.sAlloySmelterRecipes	).getStackForm(1));
+		GT_Items.Machine_Bronze_Hammer.set(			new GT_MetaTileEntity_BronzeSteamHammer		(133, "GT_BronzeSteamHammer"	, RecipeMaps.sHammerRecipes			).getStackForm(1));
+		GT_Items.Machine_Bronze_Compressor.set(		new GT_MetaTileEntity_BronzeCompressor		(134, "GT_BronzeCompressor"		, Collections.emptyList()			).getStackForm(1)); // TODO custom recipes
+		GT_Items.Machine_Bronze_Extractor.set(		new GT_MetaTileEntity_BronzeExtractor		(135, "GT_BronzeExtractor"		, Collections.emptyList()			).getStackForm(1)); // TODO custom recipes
+		GT_Items.Machine_Bronze_BlastFurnace.set(	new GT_MetaTileEntity_BronzeBlastFurnace	(136, "GT_BronzeBlastFurnace"	).getStackForm(1)					);
+		GT_Items.Machine_Steel_Boiler.set(			new GT_MetaTileEntity_Boiler_Steel			(137, "GT_SteelBoiler"			).getStackForm(1)					);
+		GT_Items.Machine_Steel_Furnace.set(			new GT_MetaTileEntity_SteelFurnace			(138, "GT_SteelFurnace"			, Collections.emptyList()			).getStackForm(1));  // TODO custom recipes
 		
 		//---------------------------------------------------------------------------------------------------------------
 		

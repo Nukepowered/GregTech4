@@ -22,9 +22,9 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 	
 	public GT_RecipeHandler() {
 		if (!NEI_GregTech_Config.sIsAdded) {
-			FMLInterModComms.sendRuntimeMessage(GregTech_API.gregtechmod, "NEIPlugins", "register-crafting-handler", GregTech_API.MOD_ID+"@"+getRecipeName()+"@"+getRecipeId());
-			API.registerRecipeHandler(this);
-			API.registerUsageHandler(this);
+//			FMLInterModComms.sendRuntimeMessage(GregTech_API.gregtechmod, "NEIPlugins", "register-crafting-handler", GregTech_API.MOD_ID+"@"+getRecipeName()+"@"+getRecipeId());
+//			API.registerRecipeHandler(this);
+//			API.registerUsageHandler(this); // FIXME enable handler again
 		}
 	}
 	

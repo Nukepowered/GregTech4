@@ -1202,26 +1202,11 @@ public class GT_ModHandler {
      */
     public static synchronized ItemStack getSmeltingOutput(ItemStack aInput, boolean aRemoveInput, ItemStack aOutputSlot) {
     	if (aInput == null) return null;
-    	ItemStack rStack = GT_OreDictUnificator.get(getSmeltingResult(aInput));
+    	ItemStack rStack = GT_OreDictUnificator.get(FurnaceRecipes.smelting().getSmeltingResult(aInput));
     	if (rStack != null && (aOutputSlot == null || (GT_Utility.areStacksEqual(rStack, aOutputSlot) && rStack.stackSize + aOutputSlot.stackSize <= aOutputSlot.getMaxStackSize()))) {
 			if (aRemoveInput) aInput.stackSize--;
 			return rStack;
 		}
-    	return null;
-    }
-    
-    public static synchronized ItemStack getSmeltingResult(ItemStack aInput) {
-    	@SuppressWarnings("unchecked")
-		Map<ItemStack, ItemStack> recipes = FurnaceRecipes.smelting().getSmeltingList();
-    	synchronized (recipes) {
-    		for (Entry<ItemStack, ItemStack> entry : recipes.entrySet()) {
-    			ItemStack value = entry.getKey();
-    			if (value.getItem() == aInput.getItem() && (aInput.getItemDamage() == 32767 || value.getItemDamage() == aInput.getItemDamage())) {
-    				return entry.getValue();
-    			}
-    		}
-    	}
-    	
     	return null;
     }
     

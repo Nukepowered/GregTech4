@@ -2,8 +2,12 @@ package gregtechmod.api.recipe;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.function.Supplier;
 
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
+import gregtechmod.api.util.GT_Log;
+import gregtechmod.api.util.GT_Utility;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -13,26 +17,30 @@ import net.minecraft.nbt.NBTTagCompound;
  *
  */
 public class RecipeLogic {
-	private WeakReference<GT_MetaTileEntity_BasicMachine> metaTileEntity;
-	protected List<Recipe> recipeMap;
+	public final WeakReference<GT_MetaTileEntity_BasicMachine> metaTileEntity;
+	public final List<Recipe> recipeMap;
 	
+	protected Supplier<Recipe> recipeHandler;
 	protected int maxProgressTime;
 	protected int progressTime;
 	protected int EUt;
-	private int overclockersCount;
 	
+	private int overclockersCount;
 	private Recipe previousRecipe;
 	
-	public RecipeLogic(List<Recipe> recipeMap) {
+	
+	public RecipeLogic(List<Recipe> recipeMap, GT_MetaTileEntity_BasicMachine machine) {
 		this.recipeMap = recipeMap;
 		maxProgressTime = 0;
 		progressTime = 0;
 		EUt = 0;
 		overclockersCount = 0;
+		metaTileEntity = new WeakReference<>(machine);
 	}
 	
 	public void update() {
 		overclockersCount = getMachine().getBaseMetaTileEntity().getOverclockerUpgradeCount();
+		moveItems();
 		if (getMachine().getBaseMetaTileEntity().isAllowedToWork()) {
 			if (progressTime > 0) {
 				updateRecipeProgress();
@@ -41,6 +49,10 @@ public class RecipeLogic {
 				trySerachRecipe();
 			}
 		}
+	}
+	
+	public void setHandler(Supplier<Recipe> handler) {
+		recipeHandler = handler;
 	}
 	
 	protected void updateRecipeProgress() {
@@ -61,19 +73,36 @@ public class RecipeLogic {
 	protected void trySerachRecipe() {
 		if (getMachine().allowToCheckRecipe()) {
 			if (previousRecipe != null) {
-				if (previousRecipe.match(true, getMachineInputs())) { // TODO add I/O item handlers to MTE
+				if (previousRecipe.match(true, getMachine().getBaseMetaTileEntity(), getMachineInputs())) { // TODO add I/O item handlers to MTE
 					startRecipe(previousRecipe);
-				};
+				} else {
+					previousRecipe = null;
+					getMachine().getBaseMetaTileEntity().setActive(false);
+				}
 			} else {
 				// find new recipe
-				for (Recipe rec : recipeMap) { // FIXME idk maybe this is bad
-					if (rec.match(false, getMachineInputs())) {
-						startRecipe(rec);
-						return;
-					}
-				}
+				Recipe resRec = recipeHandler != null ? recipeHandler.get() :
+					recipeMap.stream()
+					.filter(rec -> rec.match(true, getMachine().getBaseMetaTileEntity(), getMachineInputs()))
+					.findFirst().orElse(null);
+				if (resRec != null)
+					startRecipe(resRec);
 			}
 		}
+	}
+	
+	protected void moveItems() {
+		// Slot 0 = HoloSlot
+		// Slot 1 = Left Input
+		// Slot 2 = right Input
+		// Slot 3 = left Output
+		// Slot 4 = right Output
+		// Slot 5 = battery Slot in most cases
+		IInventory inv = getMachine().getBaseMetaTileEntity();
+		int[] in = getMachine().getInputSlots();
+		int[] out = getMachine().getOutputSlots();
+		if (in.length > 1) GT_Utility.moveStackFromSlotAToSlotB(inv, inv, in[0], in[1], (byte)64, (byte)1, (byte)64, (byte)1);
+		if (out.length > 1)  GT_Utility.moveStackFromSlotAToSlotB(inv, inv, out[0], out[1], (byte)64, (byte)1, (byte)64, (byte)1);
 	}
 	
 	protected void startRecipe(Recipe recipe) {
@@ -82,37 +111,35 @@ public class RecipeLogic {
 		progressTime = 1;
 		EUt = recipe.mEUt;
 		getMachine().getBaseMetaTileEntity().setActive(true);
+		getMachine().startProcess();
 	}
 	
 	protected void endRecipe(Recipe recipe) {
 		ItemStack[] outputs = recipe.getOutputs();
 		if (outputs.length <= getMachineOutputs().length) {
-			
+			for (ItemStack out : outputs) {
+				for (int i : getMachineOutputs()) {
+					if (getMachine().getBaseMetaTileEntity().addStackToSlot(i, out.copy())) {
+						break;
+					}
+				}
+			}
+		} else {
+			GT_Log.log.catching(new IllegalStateException("Found recipe with more items output machine has slots!"));
 		}
+		
+		getMachine().endProcess();
 	}
 	
 	/**
 	 * Specify machine input slots
 	 */
-	protected ItemStack[] getMachineInputs() {
-		return subArray(getMachine().mInventory, 2, 2);
+	protected int[] getMachineInputs() {
+		return new int[] {1, 2};
 	}
 	
-	protected ItemStack[] getMachineOutputs() {
-		return subArray(getMachine().mInventory, 3, 3);
-	}
-	
-	/**
-	 * Will copy links of all objects in arr to new array
-	 */
-	private ItemStack[] subArray(ItemStack[] arr, int from, int to) {
-		assert from >= to;
-		ItemStack[] res = new ItemStack[(to - from) == 0 ? 1 : (to - from)];
-		for (int i = 0; i < res.length; i++) {
-			res[i] = arr[from + i];
-		}
-		
-		return res;
+	protected int[] getMachineOutputs() {
+		return new int[] {3, 4};
 	}
 	
 	private GT_MetaTileEntity_BasicMachine getMachine() {

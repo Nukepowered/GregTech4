@@ -1,5 +1,7 @@
 package gregtechmod.common.tileentities.machines.basic;
 
+import java.util.List;
+
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
@@ -11,11 +13,13 @@ import net.minecraft.item.ItemStack;
 
 public class GT_MetaTileEntity_Extruder extends GT_MetaTileEntity_BasicMachine {
 
-   public GT_MetaTileEntity_Extruder(int aID, String aName) {
-      super(aID, aName);
+   public GT_MetaTileEntity_Extruder(int aID, String aName, List<Recipe> recipeMap) {
+      super(aID, aName, recipeMap);
    }
 
-   public GT_MetaTileEntity_Extruder() {}
+   public GT_MetaTileEntity_Extruder(List<Recipe> recipeMap) {
+	   super(recipeMap);
+   }
 
    public int getElectricTier() {
       return 2;
@@ -26,7 +30,7 @@ public class GT_MetaTileEntity_Extruder extends GT_MetaTileEntity_BasicMachine {
    }
 
    public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-      return new GT_MetaTileEntity_Extruder();
+      return new GT_MetaTileEntity_Extruder(recipeLogic.recipeMap);
    }
 
    public void checkRecipe() {

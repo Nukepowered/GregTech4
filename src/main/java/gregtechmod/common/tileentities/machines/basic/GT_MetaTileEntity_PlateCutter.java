@@ -1,5 +1,7 @@
 package gregtechmod.common.tileentities.machines.basic;
 
+import java.util.List;
+
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
@@ -9,19 +11,19 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class GT_MetaTileEntity_PlateCutter extends GT_MetaTileEntity_BasicMachine {
 	
-	public GT_MetaTileEntity_PlateCutter(int aID, String mName) {
-		super(aID, mName);
+	public GT_MetaTileEntity_PlateCutter(int aID, String mName, List<Recipe> recipeMap) {
+		super(aID, mName, recipeMap);
 	}
 	
-	public GT_MetaTileEntity_PlateCutter() {
-		
+	public GT_MetaTileEntity_PlateCutter(List<Recipe> recipeMap) {
+		super(recipeMap);
 	}
 	
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 162);}
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_PlateCutter();
+		return new GT_MetaTileEntity_PlateCutter(recipeLogic.recipeMap);
 	}
 	
 	@Override

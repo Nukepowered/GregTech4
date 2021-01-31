@@ -1,27 +1,30 @@
 package gregtechmod.common.tileentities.machines.basic;
 
+import java.util.List;
+
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class GT_MetaTileEntity_Extractor extends GT_MetaTileEntity_BasicMachine {
 	
-	public GT_MetaTileEntity_Extractor(int aID, String mName) {
-		super(aID, mName);
+	public GT_MetaTileEntity_Extractor(int aID, String mName, List<Recipe> recipeMap) {
+		super(aID, mName, recipeMap);
 	}
 	
-	public GT_MetaTileEntity_Extractor() {
-		
+	public GT_MetaTileEntity_Extractor(List<Recipe> recipeMap) {
+		super(recipeMap);
 	}
 	
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 132);}
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_Extractor();
+		return new GT_MetaTileEntity_Extractor(recipeLogic.recipeMap);
 	}
 	
 	@Override

@@ -1,21 +1,24 @@
 package gregtechmod.common.tileentities.machines.steam;
 
+import java.util.List;
+
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine_Bronze;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class GT_MetaTileEntity_BronzeSteamHammer extends GT_MetaTileEntity_BasicMachine_Bronze {
 	
-	public GT_MetaTileEntity_BronzeSteamHammer(int aID, String mName) {
-		super(aID, mName);
+	public GT_MetaTileEntity_BronzeSteamHammer(int aID, String mName, List<Recipe> recipeMap) {
+		super(aID, mName, recipeMap);
 	}
 	
-	public GT_MetaTileEntity_BronzeSteamHammer() {
-		
+	public GT_MetaTileEntity_BronzeSteamHammer(List<Recipe> recipeMap) {
+		super(recipeMap);
 	}
 	
 	@Override
@@ -25,7 +28,7 @@ public class GT_MetaTileEntity_BronzeSteamHammer extends GT_MetaTileEntity_Basic
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_BronzeSteamHammer();
+		return new GT_MetaTileEntity_BronzeSteamHammer(recipeLogic.recipeMap);
 	}
 	
 	@Override

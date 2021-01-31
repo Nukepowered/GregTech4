@@ -1,5 +1,7 @@
 package gregtechmod.common.tileentities.machines.basic;
 
+import java.util.List;
+
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
@@ -14,12 +16,12 @@ public class GT_MetaTileEntity_AlloySmelter extends GT_MetaTileEntity_BasicMachi
 	
 	public int mHeatingCoilTier = 0;
 	
-	public GT_MetaTileEntity_AlloySmelter(int aID, String mName) {
-		super(aID, mName);
+	public GT_MetaTileEntity_AlloySmelter(int aID, String mName, List<Recipe> recipeMap) {
+		super(aID, mName, recipeMap);
 	}
 	
-	public GT_MetaTileEntity_AlloySmelter() {
-		
+	public GT_MetaTileEntity_AlloySmelter(List<Recipe> recipeMap) {
+		super(recipeMap);
 	}
 	
 	@Override
@@ -63,7 +65,7 @@ public class GT_MetaTileEntity_AlloySmelter extends GT_MetaTileEntity_BasicMachi
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_AlloySmelter();
+		return new GT_MetaTileEntity_AlloySmelter(recipeLogic.recipeMap);
 	}
 	
 	@Override

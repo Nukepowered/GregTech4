@@ -1,14 +1,14 @@
 package gregtechmod.api.metatileentity.examples;
 
+import java.util.List;
+
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
 import gregtechmod.api.recipe.Recipe;
-import gregtechmod.api.recipe.RecipeLogic;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
-import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -25,51 +25,30 @@ public class GT_MetaTileEntity_E_Furnace extends GT_MetaTileEntity_BasicMachine 
 	public int mHeatingCoilTier = 0;
 	
 	// see @MetaTileEntity to register MetaTileEntities
-	public GT_MetaTileEntity_E_Furnace(int aID, String aName) {
-		super(aID, aName);
-		initRecipeLogic();
+	public GT_MetaTileEntity_E_Furnace(int aID, String aName, List<Recipe> recipeMap) {
+		super(aID, aName, recipeMap);
 	}
 	
 	// An empty constructor, which is needed for several Java reasons
-	public GT_MetaTileEntity_E_Furnace() {
-		initRecipeLogic();
-	}
-	
-	private void initRecipeLogic() {
-		recipeLogic = new RecipeLogic(null) {
+	public GT_MetaTileEntity_E_Furnace(List<Recipe> recipeMap) {
+		super(recipeMap);
+		recipeLogic.setHandler(() -> {
 			ItemStack output;
-			
-			@Override
-			protected void trySerachRecipe() {
-//				super.trySerachRecipe(); // TODO furnance custom recipe search
-				output = GT_ModHandler.getSmeltingOutput(mInventory[2], true, mInventory[3]);
+			if (mInventory[2] != null && null != (output = GT_ModHandler.getSmeltingOutput(mInventory[2], true, mInventory[3]))) {
+				if (mInventory[2].stackSize == 0) mInventory[2] = null;
+				// It shall cook at 3 EU/t, if this Machine is overclocked then it will consume more
+				// The time it usually needs, the Heating Coils re decreasing this Time, and if the Machine is overclocked, then it gets processed faster
+				return new Recipe(mInventory[2], null, output, null, null, null, 130 / (1+mHeatingCoilTier), 3, 0);
 			}
 			
-			@Override
-			protected void startRecipe(Recipe recipe) {
-				super.startRecipe(recipe);
-				// Slot 0 = HoloSlot
-				// Slot 1 = Left Input
-				// Slot 2 = right Input
-				// Slot 3 = left Output
-				// Slot 4 = right Output
-				// Slot 5 = battery Slot in most cases
-				// Moves a Stack from the first Input Slot to the Second one if possible
-				GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 1, 2, (byte)64, (byte)1, (byte)64, (byte)1);
-				// Moves a Stack from the first Output Slot to the Second one if possible
-				GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 3, 4, (byte)64, (byte)1, (byte)64, (byte)1);
-	    		// It shall cook at 3 EU/t, if this Machine is overclocked then it will consume more
-	    		this.EUt = 3;
-	    		// The time it usually needs, the Heating Coils re decreasing this Time, and if the Machine is overclocked, then it gets processed faster
-	    		this.maxProgressTime = 130 / (1+mHeatingCoilTier);
-			}
-		};
+			return null;
+		});
 	}
 	
 	// Apply your empty constructor here
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_E_Furnace();
+		return new GT_MetaTileEntity_E_Furnace(recipeLogic.recipeMap);
 	}
 	
 	@Override
@@ -118,6 +97,16 @@ public class GT_MetaTileEntity_E_Furnace extends GT_MetaTileEntity_BasicMachine 
 	}
 	
 	@Override
+    public int[] getInputSlots() {
+    	return new int[] {1, 2};
+	}
+	
+	@Override
+    public int[] getOutputSlots() {
+    	return new int[] {3, 4};
+	}
+	
+	@Override
 	public int getFrontFacingInactive() {
 		// The Furnace Front Texture when it does nothing
 		// Since this relies on my Texture Indices I would recommend the use of @getTextureIcon in @MetaTileEntity
@@ -134,6 +123,7 @@ public class GT_MetaTileEntity_E_Furnace extends GT_MetaTileEntity_BasicMachine 
 	@Override
 	public String getDescription() {
 		// The Description of the Machine, as seen in the Tooltip
-		return "Test Description";
+		// Currently using localization keys insteadof plain text
+		return "metatileentity.GT_E_Furnace.tooltip";
 	}
 }

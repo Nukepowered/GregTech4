@@ -1,5 +1,7 @@
 package gregtechmod.common.tileentities.machines.steam;
 
+import java.util.List;
+
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine_Bronze;
@@ -9,12 +11,12 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class GT_MetaTileEntity_BronzeAlloySmelter extends GT_MetaTileEntity_BasicMachine_Bronze {
 	
-	public GT_MetaTileEntity_BronzeAlloySmelter(int aID, String mName) {
-		super(aID, mName);
+	public GT_MetaTileEntity_BronzeAlloySmelter(int aID, String mName, List<Recipe> recipeMap) {
+		super(aID, mName, recipeMap);
 	}
 	
-	public GT_MetaTileEntity_BronzeAlloySmelter() {
-		
+	public GT_MetaTileEntity_BronzeAlloySmelter(List<Recipe> recipeMap) {
+		super(recipeMap);
 	}
 	
 	@Override
@@ -24,7 +26,7 @@ public class GT_MetaTileEntity_BronzeAlloySmelter extends GT_MetaTileEntity_Basi
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_BronzeAlloySmelter();
+		return new GT_MetaTileEntity_BronzeAlloySmelter(recipeLogic.recipeMap);
 	}
 	
 	@Override

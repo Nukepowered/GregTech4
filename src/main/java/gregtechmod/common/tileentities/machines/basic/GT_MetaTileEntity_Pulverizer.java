@@ -1,10 +1,13 @@
 package gregtechmod.common.tileentities.machines.basic;
 
+import java.util.List;
+
 import cofh.thermalexpansion.api.crafting.recipes.IPulverizerRecipe;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_PulverizerRecipe;
@@ -15,19 +18,21 @@ import net.minecraft.item.ItemStack;
 
 public class GT_MetaTileEntity_Pulverizer extends GT_MetaTileEntity_BasicMachine {
 	
-	public GT_MetaTileEntity_Pulverizer(int aID, String mName) {
-		super(aID, mName);
+	public GT_MetaTileEntity_Pulverizer(int aID, String mName, List<Recipe> recipeMap) {
+		super(aID, mName, recipeMap);
 	}
 	
-	public GT_MetaTileEntity_Pulverizer() {
-		
+	public GT_MetaTileEntity_Pulverizer(List<Recipe> recipeMap) {
+		super(recipeMap);
 	}
 	
-	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 149);}
+	@Override public void onRightclick(EntityPlayer aPlayer) {
+		getBaseMetaTileEntity().openGUI(aPlayer, 149);
+	}
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_Pulverizer();
+		return new GT_MetaTileEntity_Pulverizer(recipeLogic.recipeMap);
 	}
 	
 	@Override

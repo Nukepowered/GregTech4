@@ -5,6 +5,7 @@ import java.util.Map;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.metatileentity.MetaTileEntity;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeLogic;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
@@ -27,11 +28,14 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 	
 	protected RecipeLogic recipeLogic;
 	
-	public GT_MetaTileEntity_BasicMachine(int aID, String aName) {
+	public GT_MetaTileEntity_BasicMachine(int aID, String aName, List<Recipe> recipeMap) {
 		super(aID, aName);
+		recipeLogic = new RecipeLogic(recipeMap, this);
 	}
 	
-	public GT_MetaTileEntity_BasicMachine() {}
+	public GT_MetaTileEntity_BasicMachine(List<Recipe> recipeMap) {
+		recipeLogic = new RecipeLogic(recipeMap, this);
+	}
 	
 	@Override public boolean isSimpleMachine()						{return false;}
 	@Override public boolean isOverclockerUpgradable()				{return getElectricTier()>0;}
@@ -188,6 +192,14 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
     
     public boolean hasTwoSeperateInputs() {
     	return false;
+    }
+    
+    public int[] getInputSlots() {
+    	return new int[] {1};
+    }
+    
+    public int[] getOutputSlots() {
+    	return new int[] {2};
     }
     
     /** Fallback to the regular Machine Outside Texture */

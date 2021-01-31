@@ -193,7 +193,9 @@ public class GT_OreDictUnificator {
 	
 	public static boolean isItemStackInstanceOf(ItemStack aStack, Object aName) {
 		if (GT_Utility.isStringInvalid(aName) || GT_Utility.isStackInvalid(aStack)) return false;
-		for (ItemStack tOreStack : getOres(aName.toString())) if (GT_Utility.areStacksEqual(tOreStack, aStack, !tOreStack.hasTagCompound())) return true;
+		for (ItemStack tOreStack : getOres(aName.toString())) {
+			if (GT_Utility.areStacksEqual(tOreStack, aStack, !tOreStack.hasTagCompound())) return true;
+		}
 		return false;
 	}
 	
