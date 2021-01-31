@@ -27,6 +27,7 @@ public class RecipeLogic {
 	
 	private int overclockersCount;
 	private Recipe previousRecipe;
+	private boolean needRecipeRecheck;
 	
 	
 	public RecipeLogic(List<Recipe> recipeMap, GT_MetaTileEntity_BasicMachine machine) {
@@ -36,17 +37,29 @@ public class RecipeLogic {
 		EUt = 0;
 		overclockersCount = 0;
 		metaTileEntity = new WeakReference<>(machine);
+		needRecipeRecheck = true;
 	}
 	
 	public void update() {
 		overclockersCount = getMachine().getBaseMetaTileEntity().getOverclockerUpgradeCount();
 		moveItems();
+		
 		if (getMachine().getBaseMetaTileEntity().isAllowedToWork()) {
+			if (getMachine().getBaseMetaTileEntity().hasInventoryBeenModified() || getMachine().getBaseMetaTileEntity().hasWorkJustBeenEnabled())
+				needRecipeRecheck = true;
+			
 			if (progressTime > 0) {
 				updateRecipeProgress();
 			}
-			if (progressTime == 0) {
-				trySerachRecipe();
+			
+			if (progressTime == 0 && needRecipeRecheck) {
+				if (isInputNonEmpty()) {
+					trySerachRecipe();
+				} else {
+					previousRecipe = null;
+					needRecipeRecheck = false;
+					getMachine().getBaseMetaTileEntity().setActive(false);
+				}
 			}
 		}
 	}
@@ -67,13 +80,18 @@ public class RecipeLogic {
 			}
 		} else {
 			getMachine().getBaseMetaTileEntity().setActive(false);
+			if (!getMachine().bStuttering) {
+				getMachine().stutterProcess();
+				if (getMachine().useStandardStutterSound()) getMachine().sendSound((byte)8);
+				getMachine().bStuttering = true;
+			}
 		}
 	}
 	
 	protected void trySerachRecipe() {
 		if (getMachine().allowToCheckRecipe()) {
 			if (previousRecipe != null) {
-				if (previousRecipe.match(true, getMachine().getBaseMetaTileEntity(), getMachineInputs())) { // TODO add I/O item handlers to MTE
+				if (previousRecipe.match(false, getMachine().getBaseMetaTileEntity(), getMachineInputs())) { // TODO add I/O item handlers to MTE
 					startRecipe(previousRecipe);
 				} else {
 					previousRecipe = null;
@@ -83,11 +101,13 @@ public class RecipeLogic {
 				// find new recipe
 				Recipe resRec = recipeHandler != null ? recipeHandler.get() :
 					recipeMap.stream()
-					.filter(rec -> rec.match(true, getMachine().getBaseMetaTileEntity(), getMachineInputs()))
+					.filter(rec -> rec.match(false, getMachine().getBaseMetaTileEntity(), getMachineInputs()))
 					.findFirst().orElse(null);
 				if (resRec != null)
 					startRecipe(resRec);
 			}
+			
+			needRecipeRecheck = false;
 		}
 	}
 	
@@ -106,12 +126,15 @@ public class RecipeLogic {
 	}
 	
 	protected void startRecipe(Recipe recipe) {
-		previousRecipe = recipe;
-		maxProgressTime = recipe.mDuration;
-		progressTime = 1;
-		EUt = recipe.mEUt;
-		getMachine().getBaseMetaTileEntity().setActive(true);
-		getMachine().startProcess();
+		if (getMachine().spaceForOutput(recipe.getOutputs()[0], recipe.getOutputs().length > 1 ? recipe.getOutputs()[1] : null)) {
+			previousRecipe = recipe;
+			maxProgressTime = recipe.mDuration;
+			progressTime = 1;
+			EUt = recipe.mEUt;
+			recipe.match(true, getMachine().getBaseMetaTileEntity(), getMachineInputs());
+			getMachine().getBaseMetaTileEntity().setActive(true);
+			getMachine().startProcess();
+		}
 	}
 	
 	protected void endRecipe(Recipe recipe) {
@@ -128,7 +151,18 @@ public class RecipeLogic {
 			GT_Log.log.catching(new IllegalStateException("Found recipe with more items output machine has slots!"));
 		}
 		
+		getMachine().bStuttering = false;
 		getMachine().endProcess();
+	}
+	
+	private boolean isInputNonEmpty() {
+		for (int i : getMachineInputs()) {
+			ItemStack s = getMachine().getStackInSlot(i);
+			if (s != null && s.stackSize > 0) return true;
+		}
+		
+		
+		return false;
 	}
 	
 	/**

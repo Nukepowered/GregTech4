@@ -55,16 +55,22 @@ public class Recipe {
 	
 	public ItemStack[][] getRepresentativeInputs() {
 		ItemStack[][] copy = new ItemStack[mInputs.length][];
-		System.arraycopy(mInputs, 0, copy, 0, mInputs.length);
+		for (int i = 0; i < mInputs.length; i++) {
+			ItemStack[] copy1 = new ItemStack[mInputs[i].length];
+			for (int j = 0; j < mInputs[i].length; j++) {
+				copy1[j] = mInputs[i][j].copy();
+			}
+			copy[i] = copy1;
+		}
+		
 		return copy;
 	}
 	
 	public ItemStack[] getOutputs() {
-		ItemStack[] copy = Arrays.stream(mOutputs).filter(e -> e != null).map(stack -> stack.copy()).toArray(i -> new ItemStack[i]);
-		
-//		ItemStack[] copy = new ItemStack[mOutputs.length];
-//		System.arraycopy(mOutputs, 0, copy, 0, copy.length);
-		return copy;
+		return Arrays.stream(mOutputs)
+				.filter(e -> e != null)
+				.map(stack -> stack.copy())
+				.toArray(i -> new ItemStack[i]);
 	}
 	
 	public boolean match(ItemStack...machineInputs) {
@@ -94,9 +100,9 @@ public class Recipe {
 				for (int slot : inputSlots) {						// Iterating machine's input
 					ItemStack slotStack = tile.getStackInSlot(slot);
 					if (slotStack != null) {
-						if (slotStack != null && isItemStackMatch(slotStack, validItem)) {
+						if (isItemStackMatch(slotStack, validItem)) {
 							decreaseMap.put(slot, validItem);
-						} else return false;
+						}
 					} else continue;
 				}
 			}
@@ -110,6 +116,8 @@ public class Recipe {
 	}
 	
 	private boolean isItemStackMatch(ItemStack invStack, ItemStack recipeStack) {
+		if (invStack == null || recipeStack == null)
+			return false;
 		return invStack.getItem() == recipeStack.getItem() &&
 				invStack.getItemDamage() == recipeStack.getItemDamage() &&
 				(invStack.hasTagCompound() ? invStack.getTagCompound().equals(recipeStack.getTagCompound()) : true) &&
@@ -117,19 +125,21 @@ public class Recipe {
 	}
 	
 	private final void addToMap(HashMap<Integer, List<Recipe>> aMap) {
-//		for (ItemStack tStack : mInputs) if (tStack != null) {
-//			Integer tIntStack = GT_Utility.stackToInt(tStack);
-//			List<GT_Recipe> tList = aMap.get(tIntStack);
-//			if (tList == null) aMap.put(tIntStack, tList = new ArrayList<GT_Recipe>(2));
-//			tList.add(this);
-//		}
+		for (ItemStack[] tStacks : mInputs) {
+			for (ItemStack tStack : tStacks) if (tStack != null) {
+				Integer tIntStack = GT_Utility.stackToInt(tStack);
+				List<Recipe> tList = aMap.get(tIntStack);
+				if (tList == null) aMap.put(tIntStack, tList = new ArrayList<Recipe>(2));
+				tList.add(this);
+			}
+		}
 	}
 	
 	private final void addToLists(List<Recipe> aList) {
-//		HashMap<Integer, List<GT_Recipe>> aMap = sRecipeMappings.get(aList);
-//		if (aMap == null) sRecipeMappings.put(aList, aMap = new HashMap<Integer, List<GT_Recipe>>());
-//		aList.add(this);
-//		addToMap(aMap);
+		HashMap<Integer, List<Recipe>> aMap = sRecipeMappings.get(aList);
+		if (aMap == null) sRecipeMappings.put(aList, aMap = new HashMap<Integer, List<Recipe>>());
+		aList.add(this);
+		addToMap(aMap);
 	}
 	
 	public static Recipe findEqualRecipe(boolean aShapeless, boolean aNotUnificated, List<Recipe> aList, ItemStack...aInputs) {
@@ -178,8 +188,8 @@ public class Recipe {
 	}
 	
 	public static boolean addRecipe(List<Recipe> aList, boolean aShapeless, Recipe aRecipe) {
-//		if (findEqualRecipe(aShapeless, false, aList, aRecipe.mInputs) != null) return false;
-//		aRecipe.addToLists(aList);
+		if (aList.contains(aRecipe)) return false;
+		aRecipe.addToLists(aList);
 		return true;
 	}
 	
@@ -479,5 +489,32 @@ public class Recipe {
 		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(true, false, sChemicalRecipes, aInput1) == null) {
 			addToLists(sChemicalRecipes);
 		}
+	}
+	
+	@Override
+	public int hashCode() {
+		int res = 0;
+		for (ItemStack[] stacks : mInputs)
+			res += GT_Utility.stackArrayToInt(stacks);
+		return (mDuration * mEUt * mStartEU) + res + GT_Utility.stackArrayToInt(mOutputs);
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Recipe) {
+			Recipe r = (Recipe) o;
+			return r == this ||
+					(r.mDuration == this.mDuration &&
+					r.mEUt == this.mEUt &&
+					GT_Utility.doesStackArraysSame(r.mOutputs, this.mOutputs)) &&
+					GT_Utility.doesRecipeInputsSame(r.mInputs, this.mInputs);
+		}
+		
+		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return "Recipe[inputs=" + mInputs.length + ",outputs=" + mOutputs.length + ",EUt=" + mEUt + ",duration=" + mDuration + ",startEU=" + mStartEU + ",enabled=" + mEnabled + "]";
 	}
 }

@@ -7,6 +7,7 @@ import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IGT_RecipeAdder;
 import gregtechmod.api.items.GT_Tool_Item;
 import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeMaps;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 
@@ -342,7 +343,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 			if (!GregTech_API.sRecipeFile.get("forgehammer", aOutput1, true)) {
 				return false;
 			} else {
-				Recipe.addRecipe(Recipe.sHammerRecipes, true, aInput1, null, aOutput1, null, null, null, aDuration, aEUt, 0);
+				Recipe.addRecipe(RecipeMaps.sHammerRecipes, true, aInput1, null, aOutput1, null, null, null, aDuration, aEUt, 0);
 				return true;
 			}
 		} else {

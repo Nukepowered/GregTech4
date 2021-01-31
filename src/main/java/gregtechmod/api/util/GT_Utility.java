@@ -23,6 +23,7 @@ import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
@@ -793,6 +794,34 @@ public class GT_Utility {
 	public static int stackToInt(ItemStack aStack) {
 		if (isStackInvalid(aStack)) return 0;
 		return Item.getIdFromItem(aStack.getItem()) | (Items.feather.getDamage(aStack) << 16);
+	}
+	
+	public static int stackArrayToInt(ItemStack[] stacks) {
+		int result = 0;
+		for (ItemStack stack : stacks) result += stackToInt(stack);
+		return result;
+	}
+	
+	public static boolean doesStackArraysSame(ItemStack[] stacks1, ItemStack[] stacks2) {
+		List<ItemStackKey> l1 = Arrays.stream(stacks1).map(stk -> ItemStackKey.from(stk)).collect(Collectors.toList());
+		List<ItemStackKey> l2 = Arrays.stream(stacks2).map(stk -> ItemStackKey.from(stk)).collect(Collectors.toList());
+		return l1.size() == l2.size() && l1.containsAll(l2);
+	}
+	
+	public static boolean doesRecipeInputsSame(ItemStack[][] s1, ItemStack[][] s2) {
+		if (s1.length == s2.length) {
+			List<List<ItemStackKey>> l1 = Arrays.stream(s1)
+					.map(arr -> Arrays.stream(arr).map(stack -> ItemStackKey.from(stack)).sorted().collect(Collectors.toList()))
+					.sorted()
+					.collect(Collectors.toList());
+			List<List<ItemStackKey>> l2 = Arrays.stream(s2)
+					.map(arr -> Arrays.stream(arr).map(stack -> ItemStackKey.from(stack)).sorted().collect(Collectors.toList()))
+					.sorted()
+					.collect(Collectors.toList());
+			return l1.containsAll(l2);
+		}
+		
+		return false;
 	}
 	
 	public static int stackToWildcard(ItemStack aStack) {

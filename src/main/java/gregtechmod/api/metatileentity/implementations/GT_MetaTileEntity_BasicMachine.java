@@ -97,7 +97,7 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 				bHasBeenUpdated = true;
 				getBaseMetaTileEntity().setFrontFacing(getBaseMetaTileEntity().getBackFacing());
 			}
-
+			
 			recipeLogic.update();
 //	    	if (mMaxProgresstime > 0) {
 //	    		if (mProgresstime < 0 || getBaseMetaTileEntity().decreaseStoredEnergyUnits(mEUt*(int)Math.pow(4, getBaseMetaTileEntity().getOverclockerUpgradeCount()), false)) {
@@ -135,7 +135,7 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 				}
 			}
 			
-			if (mInventory[3] == null && mInventory[4] == null) bOutputBlocked = false;
+			if (mInventory[3] == null && mInventory[4] == null) bOutputBlocked = false; // FIXME output blocked wtf
 	    	
 //	    	if (getBaseMetaTileEntity().isAllowedToWork()) {
 //	    		if (mMaxProgresstime <= 0 && (tSucceeded || getBaseMetaTileEntity().hasInventoryBeenModified() || getBaseMetaTileEntity().getTimer()%600 == 0 || getBaseMetaTileEntity().hasWorkJustBeenEnabled()) && getBaseMetaTileEntity().isUniversalEnergyStored(getMinimumStoredEU()-100)) {
@@ -195,11 +195,11 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
     }
     
     public int[] getInputSlots() {
-    	return new int[] {1};
+    	return new int[] {1, 2};
     }
     
     public int[] getOutputSlots() {
-    	return new int[] {2};
+    	return new int[] {3, 4};
     }
     
     /** Fallback to the regular Machine Outside Texture */
