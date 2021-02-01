@@ -36,7 +36,7 @@ public class GT_MetaTileEntity_Extruder extends GT_MetaTileEntity_BasicMachine {
    public void checkRecipe() {
       GT_Utility.moveStackFromSlotAToSlotB(this.getBaseMetaTileEntity(), this.getBaseMetaTileEntity(), 3, 4, (byte)64, (byte)1, (byte)64, (byte)1);
       if(super.mInventory[1] != null && super.mInventory[1].stackSize > 0 && super.mInventory[2] != null && super.mInventory[2].stackSize > 0) {
-         Recipe tRecipe = Recipe.findEqualRecipe(false, false, Recipe.sExtruderRecipes, new ItemStack[]{super.mInventory[1], super.mInventory[2]});
+         Recipe tRecipe = Recipe.findEqualRecipe(false, Recipe.sExtruderRecipes, new ItemStack[]{super.mInventory[1], super.mInventory[2]});
          if(tRecipe != null && this.spaceForOutput(tRecipe.getOutput(0), (ItemStack)null) && tRecipe.isRecipeInputEqual(false, true, new ItemStack[]{super.mInventory[1], super.mInventory[2]})) {
             super.mEUt = tRecipe.mEUt;
             super.mMaxProgresstime = tRecipe.mDuration;
@@ -60,7 +60,7 @@ public class GT_MetaTileEntity_Extruder extends GT_MetaTileEntity_BasicMachine {
    }
 
    public boolean allowPutStack(int aIndex, byte aSide, ItemStack aStack) {
-      return aIndex == 1 && super.allowPutStack(aIndex, aSide, aStack) && Recipe.findEqualRecipe(false, true, Recipe.sExtruderRecipes, new ItemStack[]{GT_Utility.copyAmount(64L, new Object[]{aStack}), super.mInventory[2]}) != null;
+      return aIndex == 1 && super.allowPutStack(aIndex, aSide, aStack) && Recipe.findEqualRecipe(false, Recipe.sExtruderRecipes, new ItemStack[]{GT_Utility.copyAmount(64L, new Object[]{aStack}), super.mInventory[2]}) != null;
    }
 
    public int getTopFacingInactive() {

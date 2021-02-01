@@ -3,6 +3,7 @@ package gregtechmod.api.metatileentity.implementations;
 import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_Utility;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidEvent;
@@ -75,7 +76,12 @@ public abstract class GT_MetaTileEntity_BasicTank extends MetaTileEntity {
 			
 			if (displaysItemStack()) {
 				if (getDrainableStack() != null) {
-					mInventory[getStackDisplaySlot()] = GT_Items.Display_Fluid.getWithDamage(displaysStackSize()?Math.max(1, Math.min(getDrainableStack().amount/1000, 64)):1, getDrainableStack().getFluidID());
+					ItemStack fluidDisplay = GT_Items.Display_Fluid.getWithDamage(displaysStackSize()?Math.max(1, Math.min(getDrainableStack().amount/1000, 64)):1, getDrainableStack().getFluidID());;
+					NBTTagCompound data = new NBTTagCompound();
+					data.setInteger("amount", mFluid.amount);
+					fluidDisplay.setTagCompound(data);
+					mInventory[getStackDisplaySlot()] = fluidDisplay;
+					
 				} else {
 					if (GT_Items.Display_Fluid.isStackEqual(mInventory[getStackDisplaySlot()], true, true)) mInventory[getStackDisplaySlot()] = null;
 				}

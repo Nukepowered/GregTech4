@@ -147,7 +147,7 @@ public class GT_MetaTileEntity_Centrifuge extends GT_MetaTileEntity_BasicTank im
     	ItemStack fluidItem = findFluidItem(recipe);
     	FluidStack fluid = null;
     	
-    	if ((fluid = GT_Utility.getFluidForFilledItem(fluidItem)) != null) {
+    	if (mFluid != null && (fluid = GT_Utility.getFluidForFilledItem(fluidItem)) != null) {
     		fluid.amount = 1000 * fluidItem.stackSize;
     		if (fluid.getFluidID() == mFluid.getFluidID() && mFluid.amount >= fluid.amount) {
     			if (consume) mFluid.amount -= fluid.amount;

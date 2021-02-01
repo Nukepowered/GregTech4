@@ -8,6 +8,7 @@ import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.interfaces.IRecipeWorkable;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
+
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -113,14 +114,17 @@ public class RecipeLogic {
 				}
 			} else {
 				// find new recipe
-				Recipe resRec = customRecipeProvider != null ? customRecipeProvider.get() :
-					recipeMap.stream()
-					.filter(rec -> match(rec))
-					.findFirst().orElse(null);
+				Recipe resRec = findRecipe();
 				if (resRec != null)
 					startRecipe(resRec);
 			}
 		}
+	}
+	
+	protected Recipe findRecipe() {
+		if (customRecipeProvider == null) {
+			return Recipe.findEqualRecipe(true, recipeMap, getMachine().getBaseMetaTileEntity(), getMachine().getInputSlots());
+		} else return customRecipeProvider.get();
 	}
 	
 	protected boolean match(Recipe recipe) {

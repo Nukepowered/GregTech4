@@ -32,8 +32,12 @@ public final class ItemStackKey {
 	
 	public ItemStack get() {
 		ItemStack copy = this.stack.copy();
-		stack.stackSize = this.stackSize;
+		copy.stackSize = this.stackSize;
 		return copy;
+	}
+	
+	public int getStackSize() {
+		return stackSize;
 	}
 	
 	public boolean isStackEquals(ItemStack stack) {
@@ -41,7 +45,7 @@ public final class ItemStackKey {
 			if (isWildcard) {
 				return this.stack.getItem() == stack.getItem();
 			} else {
-				return ItemStack.areItemStacksEqual(get(), stack) && ItemStack.areItemStackTagsEqual(get(), stack);
+				return ItemStack.areItemStacksEqual(this.stack, stack) && ItemStack.areItemStackTagsEqual(this.stack, stack);
 			}
 		}
 		
@@ -50,7 +54,7 @@ public final class ItemStackKey {
 	
 	@Override
 	public String toString() {
-		return String.format("ItemStackKey[stack=%s, wildcard=%s]", stack.toString(), isWildcard);
+		return String.format("ItemStackKey[stack=%s, wildcard=%s, amount=%s]", stack.toString(), isWildcard, stackSize);
 	}
 	
 	@Override

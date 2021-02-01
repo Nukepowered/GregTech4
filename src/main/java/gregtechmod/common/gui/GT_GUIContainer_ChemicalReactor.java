@@ -30,7 +30,7 @@ public class GT_GUIContainer_ChemicalReactor extends GT_GUIContainerMetaTile_Mac
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
         
         if (mContainer != null && mContainer.mProgressTime>0) {
-        	int tScale = ((GT_Container_ChemicalReactor)mContainer).mProgressScale;
+        	int tScale = Math.max(0, Math.min(10, (mContainer.mProgressTime>0?1:0) + (mContainer.mProgressTime * 10) / (mContainer.mMaxProgressTime<1?1:mContainer.mMaxProgressTime)));
         	drawTexturedModalRect(x + 73, y + 34, 183, 34, 30, tScale);
         }
     }

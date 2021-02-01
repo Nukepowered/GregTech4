@@ -30,7 +30,7 @@ public class GT_MetaTileEntity_PlateCutter extends GT_MetaTileEntity_BasicMachin
     public void checkRecipe() {
 		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 1, 2, (byte)64, (byte)1, (byte)64, (byte)1);
 		if (mInventory[2] != null && mInventory[2].stackSize > 0) {
-			Recipe tRecipe = Recipe.findEqualRecipe(false, false, Recipe.sCutterRecipes, mInventory[2]);
+			Recipe tRecipe = Recipe.findEqualRecipe(false, Recipe.sCutterRecipes, mInventory[2]);
     		if (tRecipe != null && spaceForOutput(tRecipe.getOutput(0), null) && tRecipe.isRecipeInputEqual(true, true, mInventory[2], null)) {
         		mEUt = tRecipe.mEUt;
     			mMaxProgresstime = tRecipe.mDuration;

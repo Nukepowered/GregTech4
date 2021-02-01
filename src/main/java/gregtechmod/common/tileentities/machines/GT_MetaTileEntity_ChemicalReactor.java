@@ -1,135 +1,60 @@
 package gregtechmod.common.tileentities.machines;
 
 import java.util.List;
-import java.util.Map;
 
-import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
+import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Utility;
-import gregtechmod.api.util.InfoBuilder;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 
-public class GT_MetaTileEntity_ChemicalReactor extends MetaTileEntity {
-	
-	private int mProgresstime = 0, mMaxProgresstime = 0, mEUt = 0;
-	private ItemStack mOutputItem1;
-	
-	public GT_MetaTileEntity_ChemicalReactor(int aID, String mName) {
-		super(aID, mName);
+public class GT_MetaTileEntity_ChemicalReactor extends GT_MetaTileEntity_BasicMachine {
+
+	public GT_MetaTileEntity_ChemicalReactor(int aID, String mName, List<Recipe> recipeMap) {
+		super(aID, mName, recipeMap);
+		recipeLogic.moveItems = false;
 	}
 	
-	public GT_MetaTileEntity_ChemicalReactor() {
-		
+	public GT_MetaTileEntity_ChemicalReactor(List<Recipe> recipeMap) {
+		super(recipeMap);
+		recipeLogic.moveItems = false;
 	}
 	
-	@Override public boolean isTransformerUpgradable()				{return true;}
-	@Override public boolean isOverclockerUpgradable()				{return true;}
-	@Override public boolean isBatteryUpgradable()					{return true;}
-	@Override public boolean isSimpleMachine()						{return false;}
 	@Override public boolean isFacingValid(byte aFacing)			{return false;}
-	@Override public boolean isEnetInput() 							{return true;}
-	@Override public boolean isInputFacing(byte aSide)				{return true;}
-    @Override public int maxEUInput()								{return 32;}
-    @Override public int maxEUStore()								{return 10000;}
-    @Override public int maxRFStore()								{return maxEUStore();}
-    @Override public int maxSteamStore()							{return maxEUStore();}
 	@Override public int getInvSize()								{return 3;}
-	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 124);}
-	@Override public boolean isAccessAllowed(EntityPlayer aPlayer)	{return true;}
-	@Override public int getProgresstime()							{return mProgresstime;}
-	@Override public int maxProgresstime()							{return mMaxProgresstime;}
-	@Override public int increaseProgress(int aProgress)			{mProgresstime += aProgress; return mMaxProgresstime-mProgresstime;}
+	@Override public int dechargerSlotCount() 						{return 0;}
+	
+	@Override
+	public void onRightclick(EntityPlayer aPlayer) {
+		getBaseMetaTileEntity().openGUI(aPlayer, 124);
+	}
     
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_ChemicalReactor();
+		return new GT_MetaTileEntity_ChemicalReactor(recipeLogic.recipeMap);
+	}
+    
+	@Override
+    public int[] getInputSlots() {
+    	return new int[] {0, 1};
 	}
 	
 	@Override
-	public void saveNBTData(NBTTagCompound aNBT) {
-    	aNBT.setInteger("mEUt", mEUt);
-    	aNBT.setInteger("mProgresstime", mProgresstime);
-    	aNBT.setInteger("mMaxProgresstime", mMaxProgresstime);
-
-        if (mOutputItem1 != null) {
-            NBTTagCompound tNBT = new NBTTagCompound();
-        	mOutputItem1.writeToNBT(tNBT);
-            aNBT.setTag("mOutputItem1", tNBT);
-        }
+    public int[] getOutputSlots() {
+    	return new int[] {2};
 	}
-	
-	@Override
-	public void loadNBTData(NBTTagCompound aNBT) {
-    	mEUt = aNBT.getInteger("mEUt");
-    	mProgresstime = aNBT.getInteger("mProgresstime");
-    	mMaxProgresstime = aNBT.getInteger("mMaxProgresstime");
-    	
-    	NBTTagCompound tNBT1 = (NBTTagCompound)aNBT.getTag("mOutputItem1");
-    	if (tNBT1 != null) {
-    		mOutputItem1 = GT_Utility.loadItem(tNBT1);
-    	}
-	}
-	
+    
     @Override
-    public void onPostTick() {
-	    if (getBaseMetaTileEntity().isServerSide()) {
-	    	if (mMaxProgresstime > 0) {
-	    		getBaseMetaTileEntity().setActive(true);
-	    		if (mProgresstime < 0 || getBaseMetaTileEntity().decreaseStoredEnergyUnits(mEUt*(int)Math.pow(4, getBaseMetaTileEntity().getOverclockerUpgradeCount()), false)) {
-	    			if ((mProgresstime+=(int)Math.pow(2, getBaseMetaTileEntity().getOverclockerUpgradeCount()))>=mMaxProgresstime) {
-	    				addOutputProducts();
-	    				mOutputItem1 = null;
-	    				mProgresstime = 0;
-	    				mMaxProgresstime = 0;
-	    				getBaseMetaTileEntity().setErrorDisplayID(0);
-	    			}
-	    		} else {
-		    		getBaseMetaTileEntity().setActive(false);
-    				if (GregTech_API.sConstantEnergy) {
-    					mProgresstime = -10;
-	    				getBaseMetaTileEntity().setErrorDisplayID(1);
-    				}
-	    		}
-	    	} else {
-	    		getBaseMetaTileEntity().setActive(false);
-	    		if (getBaseMetaTileEntity().isAllowedToWork() && getBaseMetaTileEntity().getUniversalEnergyStored() > 100) checkRecipe();
-	    	}
-		}
+    public void startProcess() {
+    	getBaseMetaTileEntity().setErrorDisplayID(0);
     }
     
-    private void addOutputProducts() {
-    	if (mOutputItem1 != null)
-	    	if (mInventory[2] == null)
-	    		mInventory[2] = GT_Utility.copy(mOutputItem1);
-	    	else if (GT_Utility.areStacksEqual(mInventory[2], mOutputItem1))
-	    		mInventory[2].stackSize = Math.min(mOutputItem1.getMaxStackSize(), mOutputItem1.stackSize + mInventory[2].stackSize);
-    }
-    
-    private boolean spaceForOutput(Recipe aRecipe) {
-    	if (mInventory[2] == null || aRecipe.getOutput(0) == null || (mInventory[2].stackSize + aRecipe.getOutput(0).stackSize <= mInventory[2].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[2], aRecipe.getOutput(0))))
-    		return true;
-    	return false;
-    }
-    
-    private boolean checkRecipe() {
-    	Recipe tRecipe = Recipe.findEqualRecipe(false, false, Recipe.sChemicalRecipes, mInventory[0], mInventory[1]);
-    	
-    	if (tRecipe != null) {
-    		if (spaceForOutput(tRecipe) && tRecipe.isRecipeInputEqual(true, true, mInventory[0], mInventory[1])) {
-	        	if (mInventory[0] != null) if (mInventory[0].stackSize == 0) mInventory[0] = null;
-	        	if (mInventory[1] != null) if (mInventory[1].stackSize == 0) mInventory[1] = null;
-	        	
-	        	mMaxProgresstime = tRecipe.mDuration;
-	        	mEUt = tRecipe.mEUt;
-	        	mOutputItem1 = GT_Utility.copy(tRecipe.getOutput(0));
-	        	return true;
-    		}
-    	}
-    	return false;
+    @Override
+    public void stutterProcess() {
+    	getBaseMetaTileEntity().setErrorDisplayID(1);
     }
     
 	@Override
@@ -140,20 +65,7 @@ public class GT_MetaTileEntity_ChemicalReactor extends MetaTileEntity {
 			return 29;
 		return aActive?67:66;
 	}
-	
-	@Override
-	public Map<String, List<Object>> getInfoData() {
-		return InfoBuilder.create()
-				.newKey("sensor.progress.percentage", mProgresstime * 100.0D / mMaxProgresstime)
-				.newKey("sensor.progress.secs", mProgresstime / 20)
-				.newKey("sensor.progress.secs", mMaxProgresstime / 20)
-				.build();
-	}
-	
-	@Override
-	public boolean isGivingInformation() {
-		return true;
-	}
+
 	@Override
 	public String getDescription() {
 		return "metatileentity.GT_ChemicalReactor.tooltip";

@@ -82,14 +82,14 @@ public abstract class GT_MetaTileEntity_BasicGenerator extends GT_MetaTileEntity
     
     public int getFuelValue(ItemStack aStack) {
     	if (GT_Utility.isStackInvalid(aStack)) return 0;
-    	Recipe tFuel = Recipe.findEqualRecipe(true, false, recipeMap, aStack);
+    	Recipe tFuel = Recipe.findEqualRecipe(true, recipeMap, aStack);
     	if (tFuel != null) return (int)((tFuel.mStartEU * 1000L * efficiency) / 100);
     	return 0;
     }
     
     public ItemStack getEmptyContainer(ItemStack aStack) {
     	if (GT_Utility.isStackInvalid(aStack)) return null;
-    	Recipe tFuel = Recipe.findEqualRecipe(true, false, recipeMap, aStack);
+    	Recipe tFuel = Recipe.findEqualRecipe(true, recipeMap, aStack);
     	if (tFuel != null) return GT_Utility.copy(tFuel.getOutputs()[0]);
     	return GT_Utility.getContainerItem(aStack);
     }

@@ -11,6 +11,7 @@ import gregtechmod.api.recipe.RecipeLogic;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.InfoBuilder;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -131,11 +132,20 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
 	
 	@Override
     public boolean spaceForOutput(Recipe recipe) {
-		ItemStack aOutput1 = recipe.getOutputs()[0], aOutput2 = recipe.getOutputs().length > 1 ? recipe.getOutputs()[1] : null;
-    	if (mInventory[3] == null || aOutput1 == null || (mInventory[3].stackSize + aOutput1.stackSize <= mInventory[3].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[3], aOutput1)))
-    	if (mInventory[4] == null || aOutput2 == null || (mInventory[4].stackSize + aOutput2.stackSize <= mInventory[4].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[4], aOutput2)))
-    		return true;
-    	return false;
+		ItemStack[] output = recipe.getOutputs();
+		int[] mOutput = getOutputSlots();
+		
+		if (output.length <= mOutput.length) {
+			for (ItemStack recOut : output) {
+				for (int i : mOutput) {
+					if (mInventory[i] != null && recOut != null && (!GT_Utility.areStacksEqual(mInventory[i], recOut) || mInventory[i].stackSize + recOut.stackSize > recOut.getMaxStackSize())) {
+						return false;
+					}
+				}
+			}
+		}
+		
+		return true;
     }
     
     public boolean hasTwoSeperateInputs() {

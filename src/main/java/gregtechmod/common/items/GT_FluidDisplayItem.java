@@ -2,12 +2,17 @@ package gregtechmod.common.items;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.items.GT_Generic_Item;
+import gregtechmod.api.util.GT_Utility;
+
 import java.util.List;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.util.StatCollector;
 import net.minecraftforge.fluids.Fluid;
@@ -56,6 +61,17 @@ public class GT_FluidDisplayItem extends GT_Generic_Item {
     public String getItemStackDisplayName(ItemStack aStack) {
 		return StatCollector.translateToLocal(getUnlocalizedName(aStack));
     }
+	
+	@Override
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SideOnly(Side.CLIENT)
+    public void addInformation(ItemStack stack, EntityPlayer player, List strs, boolean advMode) {
+		NBTTagCompound tag = stack.getTagCompound();
+		if (tag != null && tag.hasKey("amount")) {
+			int amount = tag.getInteger("amount");
+			strs.add(I18n.format("metatileentity.fluid.amount", GT_Utility.parseNumberToString(amount))); 
+		}
+	}
 	
 	@SuppressWarnings("rawtypes")
 	@SideOnly(Side.CLIENT)

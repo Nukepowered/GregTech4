@@ -52,7 +52,7 @@ public class GT_MetaTileEntityLoader implements Runnable {
 		new GT_MetaTileEntity_VacuumFreezer				( 38, "GT_VacuumFreezer");
 		new GT_MetaTileEntity_ElectricRegulatorAdvanced	( 39, "GT_RegulatorAdvanced");
 		new GT_MetaTileEntity_DragonEggEnergySiphon		( 40, "GT_DragonEggEnergySiphon");
-		new GT_MetaTileEntity_ChemicalReactor			( 41, "GT_ChemicalReactor");
+		new GT_MetaTileEntity_ChemicalReactor			( 41, "GT_ChemicalReactor"		, RecipeMaps.sChemicalRecipes);
 		new GT_MetaTileEntity_MagicEnergyConverter		( 42, "GT_MagicConverter"		, RecipeMaps.sMagicFuels		, 100);
 		new GT_MetaTileEntity_MagicEnergyAbsorber		( 43, "GT_MagicAbsorber");
 		new GT_MetaTileEntity_DistillationTower			( 44, "GT_DistillationTower");

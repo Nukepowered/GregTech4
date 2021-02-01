@@ -120,41 +120,44 @@ public class GT_SensorCard_Item extends GT_Generic_Item implements IRemoteSensor
 	public List<PanelString> getStringData(int displaySettings, ICardWrapper aCard, boolean showLabels) {
         List<PanelString> rList = new ArrayList<>();
         String jsonData = aCard.getString("aData");
-		JsonObject data = new JsonParser().parse(jsonData).getAsJsonObject();
         
-		int i = 0;
-        for (Entry<String, JsonElement> entry : data.entrySet()) {
-        	PanelString str = new PanelString();
-        	List<Object> format = new LinkedList<>();
-        	for (JsonElement value : entry.getValue().getAsJsonArray()) {
-        		if (value.isJsonObject()) {
-        			JsonObject stackData = value.getAsJsonObject();
-        			ItemStack stack = new ItemStack(Item.getItemById(stackData.get("itemID").getAsInt()),
-        					stackData.get("amount").getAsInt(),
-        					stackData.get("damage").getAsInt());
-        			if (GT_Utility.isStackValid(stack)) {
-        				format.add(stack.getDisplayName());
-        			}
-        		} else if (value.isJsonPrimitive()) {
-        			JsonPrimitive val = value.getAsJsonPrimitive();
-        			if (val.isString()) {
-        				format.add(I18n.format(val.getAsString()));
-        			} else if (val.isNumber()) {
-        				format.add(new DecimalFormat("#.##").format(val.getAsNumber()));
-        			}
-        		}
-        	}
-        	
-        	if (showLabels) {
-        		str.textLeft = I18n.format(entry.getKey(), format.toArray());
-        	} else {
-        		str.textLeft = "";
-        		format.forEach(val -> str.textLeft += " " + val.toString());
-        	}
-        	
-        	if ((displaySettings & 1 << i) != 0) rList.add(str);
-        	i++;
-        }
+        try {
+			JsonObject data = new JsonParser().parse(jsonData).getAsJsonObject();
+	        
+			int i = 0;
+	        for (Entry<String, JsonElement> entry : data.entrySet()) {
+	        	PanelString str = new PanelString();
+	        	List<Object> format = new LinkedList<>();
+	        	for (JsonElement value : entry.getValue().getAsJsonArray()) {
+	        		if (value.isJsonObject()) {
+	        			JsonObject stackData = value.getAsJsonObject();
+	        			ItemStack stack = new ItemStack(Item.getItemById(stackData.get("itemID").getAsInt()),
+	        					stackData.get("amount").getAsInt(),
+	        					stackData.get("damage").getAsInt());
+	        			if (GT_Utility.isStackValid(stack)) {
+	        				format.add(stack.getDisplayName());
+	        			}
+	        		} else if (value.isJsonPrimitive()) {
+	        			JsonPrimitive val = value.getAsJsonPrimitive();
+	        			if (val.isString()) {
+	        				format.add(I18n.format(val.getAsString()));
+	        			} else if (val.isNumber()) {
+	        				format.add(new DecimalFormat("#.##").format(val.getAsNumber()));
+	        			}
+	        		}
+	        	}
+	        	
+	        	if (showLabels) {
+	        		str.textLeft = I18n.format(entry.getKey(), format.toArray());
+	        	} else {
+	        		str.textLeft = "";
+	        		format.forEach(val -> str.textLeft += " " + val.toString());
+	        	}
+	        	
+	        	if ((displaySettings & 1 << i) != 0) rList.add(str);
+	        	i++;
+	        }
+        } catch (Throwable e) {}
         
         return rList;
 	}
