@@ -105,7 +105,7 @@ public class RecipeLogic {
 	protected void trySerachRecipe() {
 		if (getMachine().allowToCheckRecipe()) {
 			if (previousRecipe != null) {
-				if (previousRecipe.match(false, getMachine().getBaseMetaTileEntity(), getMachine().getInputSlots())) { // TODO add I/O item handlers to MTE
+				if (match(previousRecipe)) {
 					startRecipe(previousRecipe);
 				} else {
 					previousRecipe = null;
@@ -115,12 +115,20 @@ public class RecipeLogic {
 				// find new recipe
 				Recipe resRec = customRecipeProvider != null ? customRecipeProvider.get() :
 					recipeMap.stream()
-					.filter(rec -> rec.match(false, getMachine().getBaseMetaTileEntity(), getMachine().getInputSlots()))
+					.filter(rec -> match(rec))
 					.findFirst().orElse(null);
 				if (resRec != null)
 					startRecipe(resRec);
 			}
 		}
+	}
+	
+	protected boolean match(Recipe recipe) {
+		return recipe.match(false, getMachine().getBaseMetaTileEntity(), getMachine().getInputSlots());
+	}
+	
+	protected void consumeInputs(Recipe recipe) {
+		recipe.match(true, getMachine().getBaseMetaTileEntity(), getMachine().getInputSlots());
 	}
 	
 	protected void moveItems() {
@@ -143,7 +151,7 @@ public class RecipeLogic {
 			maxProgressTime = GT_Utility.isDebugItem(getMachine().getStackInSlot(batterySlot)) ? 1 : recipe.mDuration;
 			progressTime = 1;
 			EUt = recipe.mEUt;
-			recipe.match(true, getMachine().getBaseMetaTileEntity(), getMachine().getInputSlots());
+			consumeInputs(recipe);
 			getMachine().getBaseMetaTileEntity().setActive(true);
 			getMachine().startProcess();
 		}
@@ -167,7 +175,7 @@ public class RecipeLogic {
 		getMachine().endProcess();
 	}
 	
-	private boolean isInputNonEmpty() {
+	protected boolean isInputNonEmpty() {
 		for (int i : getMachine().getInputSlots()) {
 			ItemStack s = getMachine().getStackInSlot(i);
 			if (s != null && s.stackSize > 0) return true;

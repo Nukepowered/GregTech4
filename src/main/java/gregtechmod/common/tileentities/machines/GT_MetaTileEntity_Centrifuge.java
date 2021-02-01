@@ -11,13 +11,15 @@ import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicTan
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeLogic;
 import gregtechmod.api.recipe.RecipeMaps;
-import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.InfoBuilder;
+
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.FluidStack;
 
 public class GT_MetaTileEntity_Centrifuge extends GT_MetaTileEntity_BasicTank implements IRecipeWorkable {
 	
@@ -34,12 +36,26 @@ public class GT_MetaTileEntity_Centrifuge extends GT_MetaTileEntity_BasicTank im
 	}
 	
 	private void init() {
-		recipeLogic = new RecipeLogic(RecipeMaps.sCentrifugeRecipes, this);
+		recipeLogic = new RecipeLogic(RecipeMaps.sCentrifugeRecipes, this) {
+			@Override
+			protected void consumeInputs(Recipe recipe) {
+				if (mFluid == null || GT_MetaTileEntity_Centrifuge.this.consumeFluids(true, recipe)) {
+					super.consumeInputs(recipe);
+				}
+			}
+			
+			@Override
+			protected boolean isInputNonEmpty() {
+				return mFluid != null || super.isInputNonEmpty();
+			}
+			
+			@Override
+			protected boolean match(Recipe recipe) {
+				return consumeFluids(false, recipe) || super.match(recipe);
+			}
+		};
 		recipeLogic.moveItems = false;
-//		recipeLogic.setRecipeProvider(() -> {
-//			
-//			return null;
-//		});
+		recipeLogic.setRecipeProvider(this::searchForRecipe);
 	}
 	
 	@Override public boolean isTransformerUpgradable()				{return true;}
@@ -102,35 +118,58 @@ public class GT_MetaTileEntity_Centrifuge extends GT_MetaTileEntity_BasicTank im
     	if (mInventory[4] == null || aRecipe.getOutputs()[2] == null || (mInventory[4].stackSize + aRecipe.getOutputs()[2].stackSize <= mInventory[4].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[4], aRecipe.getOutputs()[2])))
     	if (mInventory[5] == null || aRecipe.getOutputs()[3] == null || (mInventory[5].stackSize + aRecipe.getOutputs()[3].stackSize <= mInventory[5].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[5], aRecipe.getOutputs()[3])))
     		return true;
-    	GT_Log.log.error("NO space: " + mInventory[2] + " " + mInventory[3] + " " + mInventory[4] + " " + mInventory[5]);
     	return false;
     }
     
-    private boolean checkRecipe() {
-//    	if (mFluid != null) {
-//    		ItemStack tStack = GT_Utility.fillFluidContainer(mFluid, new ItemStack(Items.bucket, 1));
-//    		FluidStack tFluid = GT_Utility.getFluidForFilledItem(tStack);
-//    		if (tStack != null && tFluid != null) {
-//    			tStack.stackSize = mFluid.amount / tFluid.amount;
-//    			int tAmount = tStack.stackSize;
-//    			tRecipe = Recipe.findEqualRecipe(false, false, Recipe.sCentrifugeRecipes, tStack, mInventory[1]);
-//		    	if (tRecipe != null) {
-//		    		if (spaceForOutput(tRecipe) && tRecipe.isRecipeInputEqual(true, true, tStack, mInventory[1])) {
-//			        	mFluid.amount -= (tAmount - tStack.stackSize) * tFluid.amount;
-//		    			if (mFluid.amount <= 0) mFluid = null;
-//		    			if (mInventory[1] != null) if (mInventory[1].stackSize == 0) mInventory[1] = null;
-//			        	mMaxProgresstime = tRecipe.mDuration;
-//			        	mEUt = tRecipe.mEUt;
-//			        	mOutputItem1 = GT_Utility.copy(tRecipe.getOutput(0));
-//			        	mOutputItem2 = GT_Utility.copy(tRecipe.getOutput(1));
-//			        	mOutputItem3 = GT_Utility.copy(tRecipe.getOutput(2));
-//			        	if (!GT_Utility.areStacksEqual(tRecipe.getOutput(3), new ItemStack(Items.bucket, 1))) mOutputItem4 = GT_Utility.copy(tRecipe.getOutput(3));
-//			        	return true;
-//		    		}
-//		    	}
-//    		}
-//    	}
+    private Recipe searchForRecipe() {
+    	Recipe result = null;
+    	
+    	if (mFluid != null) {
+    		ItemStack filledBucket = GT_Utility.fillFluidContainer(mFluid, new ItemStack(Items.bucket));
+    		if (filledBucket != null) {
+    			filledBucket.stackSize = mFluid.amount / 1000;
+    			result = recipeLogic.recipeMap.stream()
+    					.filter(rec -> rec.match(filledBucket))
+    					.findFirst()
+    					.orElse(null);
+    		}
+    	} else {
+    		result = recipeLogic.recipeMap.stream()
+    				.filter(rec -> rec.match(false, getBaseMetaTileEntity(), getInputSlots()))
+    				.findFirst()
+    				.orElse(null);
+    	}
+    	
+    	return result;
+    }
+    
+    private boolean consumeFluids(boolean consume, Recipe recipe) {
+    	ItemStack fluidItem = findFluidItem(recipe);
+    	FluidStack fluid = null;
+    	
+    	if ((fluid = GT_Utility.getFluidForFilledItem(fluidItem)) != null) {
+    		fluid.amount = 1000 * fluidItem.stackSize;
+    		if (fluid.getFluidID() == mFluid.getFluidID() && mFluid.amount >= fluid.amount) {
+    			if (consume) mFluid.amount -= fluid.amount;
+    			return true;
+    		}
+    	}
+    	
     	return false;
+    }
+    
+    private ItemStack findFluidItem(Recipe recipe) {
+    	ItemStack fluidItem = null;
+    	for (ItemStack[] stacks : recipe.getRepresentativeInputs()) {
+    		for (ItemStack stack : stacks) {
+    			if (GT_Utility.getFluidForFilledItem(stack) != null) {
+    				fluidItem = stack;
+    				break;
+    			}
+    		}
+    	}
+    	
+    	return fluidItem;
     }
     
 	@Override

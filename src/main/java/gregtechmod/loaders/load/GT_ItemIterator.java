@@ -110,7 +110,6 @@ public class GT_ItemIterator implements Runnable {
 		GregTech_API.sRecipeAdder.addCannerRecipe(new ItemStack(Items.spider_eye, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(1L), GT_Items.IC2_Food_Can_Spoiled.get(1L), null, 100, 1);
 		GregTech_API.sRecipeAdder.addCannerRecipe(new ItemStack(Items.poisonous_potato, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(1L), GT_Items.IC2_Food_Can_Spoiled.get(1L), null, 100, 1);
 		GregTech_API.sRecipeAdder.addCannerRecipe(new ItemStack(Items.cake, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(6L), GT_Items.IC2_Food_Can_Filled.get(6L), null, 600, 1);
-		GregTech_API.sRecipeAdder.addCannerRecipe(new ItemStack(Blocks.cake, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(6L), GT_Items.IC2_Food_Can_Filled.get(6L), null, 600, 1);
 		GregTech_API.sRecipeAdder.addCannerRecipe(new ItemStack(Items.bowl, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(3L), GT_Items.IC2_Food_Can_Filled.get(3L), new ItemStack(Items.bowl, 1), 300, 1);
 		        
 		GT_Log.log.info("GT_Mod: Scanning ItemList.");

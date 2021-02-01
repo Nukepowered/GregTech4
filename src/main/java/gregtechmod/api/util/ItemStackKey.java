@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 public final class ItemStackKey {
 	
 	private final ItemStack stack;
+	private final int stackSize;
 	public final boolean isWildcard;
 	
 	public static ItemStackKey from(ItemStack stack) {
@@ -20,16 +21,19 @@ public final class ItemStackKey {
 		Objects.requireNonNull(stack.getItem());
 		ItemStack stackCopy = stack.copy();
 		stackCopy.stackSize = 1;
-		return new ItemStackKey(stackCopy, isWildcard);
+		return new ItemStackKey(stackCopy, isWildcard, stack.stackSize);
 	}
 	
-	private ItemStackKey(ItemStack stack, boolean isWildcard) {
+	private ItemStackKey(ItemStack stack, boolean isWildcard, int stackSize) {
 		this.isWildcard = isWildcard;
 		this.stack = stack;
+		this.stackSize = stackSize;
 	}
 	
 	public ItemStack get() {
-		return this.stack.copy();
+		ItemStack copy = this.stack.copy();
+		stack.stackSize = this.stackSize;
+		return copy;
 	}
 	
 	public boolean isStackEquals(ItemStack stack) {

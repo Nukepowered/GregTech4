@@ -534,12 +534,14 @@ public abstract class MetaTileEntity implements IMetaTileEntity {
 				if (setStackToZeroInsteadOfNull(aIndex))
 					rStack.stackSize = 0;
 				else
-					setInventorySlotContents(aIndex, null);
+//					setInventorySlotContents(aIndex, null);
+					getBaseMetaTileEntity().setInventorySlotContents(aIndex, null);
 			} else {
 				rStack = rStack.splitStack(aAmount);
 				if (rStack.stackSize == 0) {
 					if (!setStackToZeroInsteadOfNull(aIndex))
-						setInventorySlotContents(aIndex, null);
+//						setInventorySlotContents(aIndex, null);
+						getBaseMetaTileEntity().setInventorySlotContents(aIndex, null);
 				}
 			}
 		}

@@ -77,15 +77,22 @@ public class Recipe {
 	}
 	
 	public boolean match(ItemStack...machineInputs) {
-		if (machineInputs != null && machineInputs.length > 0) {
-			for (ItemStack[] validItems : mInputs) { 					// Iterating slots
-				for (ItemStack validItem : validItems) {				// Iterating valid items for slot
-					for (ItemStack machineStack : machineInputs) {		// Iterating machine's input
-						if (!isItemStackMatch(machineStack, validItem)) {
-							return false; // TODO fix recipe match check
-						}
+		assert machineInputs != null : "Recipe check failed, machineInputs = null";
+		assert machineInputs.length > 0 : "Recipe check failed, machineInputs size < 1";
+		 
+		if (machineInputs.length >= mInputs.length) {
+			start:
+			for (ItemStack input : Arrays.stream(machineInputs).filter(s -> GT_Utility.isStackValid(s)).collect(Collectors.toList())) {
+				for (ItemStack[] slot : mInputs) {
+					List<ItemStackKey> variants = Arrays.stream(slot)
+							.map(s -> ItemStackKey.from(s))
+							.collect(Collectors.toList());
+					if (variants.contains(ItemStackKey.from(input))) {
+						continue start;
 					}
 				}
+				
+				return false;
 			}
 		} else return false;
 		
@@ -131,15 +138,6 @@ public class Recipe {
 		}
 		
 		return decreaseMap.size() == mInputs.length;
-	}
-	
-	private boolean isItemStackMatch(ItemStack invStack, ItemStack recipeStack) {
-		if (invStack == null || recipeStack == null)
-			return false;
-		return invStack.getItem() == recipeStack.getItem() &&
-				invStack.getItemDamage() == recipeStack.getItemDamage() &&
-				(invStack.hasTagCompound() ? invStack.getTagCompound().equals(recipeStack.getTagCompound()) : true) &&
-				invStack.stackSize >= recipeStack.stackSize;
 	}
 	
 	private final void addToMap(HashMap<Integer, List<Recipe>> aMap) {
