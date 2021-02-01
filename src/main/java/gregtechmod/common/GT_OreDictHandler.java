@@ -9,7 +9,6 @@ import gregtechmod.api.enums.GT_ToolDictNames;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.items.GT_MetaGenerated_Item;
-import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
@@ -643,6 +642,5 @@ public class GT_OreDictHandler {
 		}
 		
 		GregTech_API.sUnification.mConfig.save();
-		Recipe.reInit();
 	}
 }

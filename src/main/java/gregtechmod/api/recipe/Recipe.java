@@ -44,19 +44,6 @@ public class Recipe {
 	/** It is an IdentityHashMap, because it uses a List as Key, and since that List changes (and therefore the Result of the equals Method), the Key is not secure, while the Identity is. */
 	private static final IdentityHashMap<List<Recipe>, Map<Integer, List<Recipe>>> RECIPE_MAPPINGS = new IdentityHashMap<>();
 	
-	public static void reInit() {
-//        GT_Log.log.info("GT_Mod: Re-Unificating Recipes.");
-//        for (Entry<List<GT_Recipe>, HashMap<Integer, List<GT_Recipe>>> tMapEntry : sRecipeMappings.entrySet()) {
-//        	HashMap<Integer, List<GT_Recipe>> tMap = tMapEntry.getValue();
-//        	if (tMap != null) tMap.clear();
-//        	for (GT_Recipe tRecipe : tMapEntry.getKey()) {
-//            	GT_OreDictUnificator.setStackArray(true, tRecipe.mInputs);
-//            	GT_OreDictUnificator.setStackArray(true, tRecipe.mOutputs);
-//            	if (tMap != null) tRecipe.addToMap(tMap);
-//        	}
-//        }
-	}
-	
 	public ItemStack[][] mInputs;
 	public ItemStack[] mOutputs;
 	public int mDuration;

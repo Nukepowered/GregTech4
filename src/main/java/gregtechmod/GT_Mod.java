@@ -1078,7 +1078,6 @@ public class GT_Mod implements IGT_Mod {
     @EventHandler
     public void start(FMLServerStartedEvent aEvent) {
 		if (!mDoNotInit) {
-			Recipe.reInit();
 			GregTech_API.sWirelessRedstone.clear();
 		}
     }
