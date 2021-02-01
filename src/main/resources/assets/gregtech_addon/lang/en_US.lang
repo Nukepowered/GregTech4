@@ -348,6 +348,7 @@ metatileentity.TRANSFORMERS.tooltip=%d Transformer Upgrades
 metatileentity.ENERGYCELLS.tooltip=%d Energy Cell Upgrades
 metatileentity.STEAMTANKS.tooltip=%d Steam Tank Upgrades
 metatileentity.EUSTORAGES.tooltip=%d Additional EU-Storage
+metatileentity.NOT_ENOUGH_ENERGY=Insufficient Energy Line!
 
 item.180k_Helium_Coolantcell.name=180k Helium Coolant Cell
 item.180k_NaK_Coolantcell.name=180k NaK Coolantcell

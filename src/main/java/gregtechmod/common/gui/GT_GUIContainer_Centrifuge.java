@@ -18,11 +18,10 @@ public class GT_GUIContainer_Centrifuge extends GT_GUIContainerMetaTile_Machine 
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
     	FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
-        fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 94, 4210752);
         fontRenderer.drawString("Industrial", 110,  4, 4210752);
         fontRenderer.drawString("Centrifuge", 110, 12, 4210752);
         if ((((GT_Container_Centrifuge)mContainer).mDisplayErrorCode & 1) != 0)
-        	fontRenderer.drawString("Insufficient Energy Line!", 8, ySize - 94, 4210752);
+        	fontRenderer.drawSplitString(StatCollector.translateToLocal("metatileentity.NOT_ENOUGH_ENERGY"), 8, ySize - 102, 90, 4210752);
         else
             fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 94, 4210752);
     }
@@ -33,9 +32,10 @@ public class GT_GUIContainer_Centrifuge extends GT_GUIContainerMetaTile_Machine 
         int x = (width - xSize) / 2;
         int y = (height - ySize) / 2;
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
-        
+      
         if (mContainer != null && mContainer.mProgressTime>0) {
-        	int tScale = ((GT_Container_Centrifuge)mContainer).mProgressScale;
+        	int tScale = Math.max(0, Math.min(10, 
+        			(mContainer.mProgressTime>0?1:0) + (mContainer.mProgressTime * 10) / (mContainer.mMaxProgressTime<1?1:mContainer.mMaxProgressTime)));
         	drawTexturedModalRect(x + 83, y + 33 - tScale, 193, 33 - tScale, 10, tScale);
         	drawTexturedModalRect(x + 78 - tScale, y + 38, 188 - tScale, 38 , tScale, 10);
         	drawTexturedModalRect(x + 83, y + 53, 193, 53, 10, tScale);

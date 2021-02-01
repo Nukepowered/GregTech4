@@ -32,9 +32,9 @@ public class GT_MetaTileEntity_E_Furnace extends GT_MetaTileEntity_BasicMachine 
 	// An empty constructor, which is needed for several Java reasons
 	public GT_MetaTileEntity_E_Furnace(List<Recipe> recipeMap) {
 		super(recipeMap);
-		recipeLogic.setHandler(() -> {
+		recipeLogic.setRecipeProvider(() -> {
 			ItemStack output;
-			if (mInventory[2] != null && null != (output = GT_ModHandler.getSmeltingOutput(mInventory[2], true, mInventory[3]))) {
+			if (mInventory[2] != null && null != (output = GT_ModHandler.getSmeltingOutput(mInventory[2], false, mInventory[3]))) {
 				if (mInventory[2].stackSize == 0) mInventory[2] = null;
 				// It shall cook at 3 EU/t, if this Machine is overclocked then it will consume more
 				// The time it usually needs, the Heating Coils re decreasing this Time, and if the Machine is overclocked, then it gets processed faster

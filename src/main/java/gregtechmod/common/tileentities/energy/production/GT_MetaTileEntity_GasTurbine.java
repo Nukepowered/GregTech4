@@ -10,21 +10,21 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class GT_MetaTileEntity_GasTurbine extends GT_MetaTileEntity_BasicGenerator {
 
-	public GT_MetaTileEntity_GasTurbine(int aID, String aName) {
-		super(aID, aName);
+	public GT_MetaTileEntity_GasTurbine(int aID, String aName, List<Recipe> recipeMap, int efficiency) {
+		super(aID, aName, recipeMap, efficiency);
 	}
 
-	public GT_MetaTileEntity_GasTurbine() {}
+	public GT_MetaTileEntity_GasTurbine(List<Recipe> recipeMap, int efficiency) {
+		super(recipeMap, efficiency);
+	}
 
 	@Override public boolean isFacingValid(byte aFacing) {return true;}
 	@Override public int maxEUOutput() {return this.getBaseMetaTileEntity().isAllowedToWork() ? 16 : 0;}
 	@Override public void onRightclick(EntityPlayer aPlayer) {this.getBaseMetaTileEntity().openGUI(aPlayer, 118);}
-	@Override public List<Recipe> getRecipes() {return Recipe.sTurbineFuels;}
-	@Override public int getEfficiency() {return 75;}
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_GasTurbine();
+		return new GT_MetaTileEntity_GasTurbine(recipeMap, efficiency);
 	}
 
 	@Override

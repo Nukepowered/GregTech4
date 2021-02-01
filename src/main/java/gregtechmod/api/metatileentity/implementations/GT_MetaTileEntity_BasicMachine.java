@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import gregtechmod.api.GregTech_API;
+import gregtechmod.api.interfaces.IRecipeWorkable;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeLogic;
@@ -22,8 +23,8 @@ import net.minecraft.util.ChatComponentTranslation;
  * This is the main construct for my Basic Machines such as the Automatic Extractor
  * Extend this class to make a simple Machine
  */
-public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
-	public boolean bAlloyInputFromOutputSide = false, bOutput = false, bOutputBlocked = false, bItemTransfer = false, bSeperatedInputs = false, bHasBeenUpdated = false, bStuttering = false;
+public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity implements IRecipeWorkable {
+	public boolean bAlloyInputFromOutputSide = false, bOutput = false, bItemTransfer = false, bSeperatedInputs = false, bHasBeenUpdated = false, bStuttering = false;
 	public int mMainFacing = -1;
 	
 	protected RecipeLogic recipeLogic;
@@ -60,7 +61,7 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 	@Override public int dechargerSlotCount()						{return getElectricTier()>0?1:0;}
 	@Override public boolean isAccessAllowed(EntityPlayer aPlayer)	{return true;}
 	@Override public RecipeLogic getRecipeLogic() 					{return recipeLogic;}
-//	@Override public int increaseProgress(int aProgress)			{mProgresstime += aProgress; return mMaxProgresstime-mProgresstime;} // TODO recipe logic related
+	@Override public int increaseProgress(int aProgress)			{recipeLogic.increaseProgressTime(aProgress);return recipeLogic.getMaxProgressTime()-recipeLogic.getProgressTime();}
 	@Override public boolean isLiquidInput (byte aSide)				{return aSide != mMainFacing;}
 	@Override public boolean isLiquidOutput(byte aSide)				{return aSide != mMainFacing;}
     
@@ -89,7 +90,6 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 	@Override
 	public void onPostTick() {
 	    if (getBaseMetaTileEntity().isServerSide()) {
-	    	boolean tSucceeded = false;
 			if (mMainFacing < 2 && getBaseMetaTileEntity().getFrontFacing() > 1) {
 				mMainFacing = getBaseMetaTileEntity().getFrontFacing();
 			}
@@ -98,32 +98,9 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 				getBaseMetaTileEntity().setFrontFacing(getBaseMetaTileEntity().getBackFacing());
 			}
 			
-			recipeLogic.update();
-//	    	if (mMaxProgresstime > 0) {
-//	    		if (mProgresstime < 0 || getBaseMetaTileEntity().decreaseStoredEnergyUnits(mEUt*(int)Math.pow(4, getBaseMetaTileEntity().getOverclockerUpgradeCount()), false)) {
-//	    			if ((mProgresstime+=(int)Math.pow(2, getBaseMetaTileEntity().getOverclockerUpgradeCount()))>=mMaxProgresstime) {
-//	    		    	if (!getBaseMetaTileEntity().addStackToSlot(3, mOutputItem1)) getBaseMetaTileEntity().addStackToSlot(4, mOutputItem1);
-//	    		    	if (!getBaseMetaTileEntity().addStackToSlot(3, mOutputItem2)) getBaseMetaTileEntity().addStackToSlot(4, mOutputItem2);
-//	    				mOutputItem1 = null;
-//	    				mOutputItem2 = null;
-//	    				mProgresstime = 0;
-//	    				mMaxProgresstime = 0;
-//	    				tSucceeded = true;
-//	    				endProcess();
-//	    			}
-//    				bStuttering = false;
-//	    		} else {
-//	    			if (!bStuttering) {
-//	    				stutterProcess();
-//	    				if (useStandardStutterSound()) sendSound((byte)8);
-//	    				bStuttering = true;
-//	    			}
-//	    		}
-//	    	} else {
-//	    		getBaseMetaTileEntity().setActive(false);
-//	    	}
-	    	
-			if (bItemTransfer && (mInventory[3] != null || mInventory[4] != null) && getBaseMetaTileEntity().getFrontFacing() != mMainFacing && doesAutoOutput() && (tSucceeded || bOutputBlocked || getBaseMetaTileEntity().hasInventoryBeenModified() || getBaseMetaTileEntity().getTimer()%600 == 0) && getBaseMetaTileEntity().isUniversalEnergyStored(500)) {
+			boolean succeded = recipeLogic.update();
+			
+			if (bItemTransfer && (mInventory[3] != null || mInventory[4] != null) && getBaseMetaTileEntity().getFrontFacing() != mMainFacing && doesAutoOutput() && (succeded || getBaseMetaTileEntity().hasInventoryBeenModified() || getBaseMetaTileEntity().getTimer()%600 == 0) && getBaseMetaTileEntity().isUniversalEnergyStored(500)) {
 				TileEntity tTileEntity2 = getBaseMetaTileEntity().getTileEntityAtSide(getBaseMetaTileEntity().getFrontFacing());
 				int tCost = GT_Utility.moveOneItemStack(getBaseMetaTileEntity(), tTileEntity2, getBaseMetaTileEntity().getFrontFacing(), getBaseMetaTileEntity().getBackFacing(), null, false, (byte)64, (byte)1, (byte)64, (byte)1);
 				if (tCost > 0) {
@@ -134,36 +111,6 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 					}
 				}
 			}
-			
-			if (mInventory[3] == null && mInventory[4] == null) bOutputBlocked = false; // FIXME output blocked wtf
-	    	
-//	    	if (getBaseMetaTileEntity().isAllowedToWork()) {
-//	    		if (mMaxProgresstime <= 0 && (tSucceeded || getBaseMetaTileEntity().hasInventoryBeenModified() || getBaseMetaTileEntity().getTimer()%600 == 0 || getBaseMetaTileEntity().hasWorkJustBeenEnabled()) && getBaseMetaTileEntity().isUniversalEnergyStored(getMinimumStoredEU()-100)) {
-//		    		checkRecipe();
-//		        	if (mInventory[1] != null && mInventory[1].stackSize <= 0) mInventory[1] = null;
-//		        	if (mInventory[2] != null && mInventory[2].stackSize <= 0) mInventory[2] = null;
-//		        	if (mMaxProgresstime > 0) {
-//			        	mOutputItem1 = GT_OreDictUnificator.get(true, mOutputItem1);
-//			        	mOutputItem2 = GT_OreDictUnificator.get(true, mOutputItem2);
-//			        	if (GT_Utility.isDebugItem(mInventory[5])) mMaxProgresstime = 1;
-//		        	} else {
-//			        	mOutputItem1 = null;
-//			        	mOutputItem2 = null;
-//		        	}
-//		        	if (mOutputItem1 != null && mOutputItem1.stackSize > 64) mOutputItem1.stackSize = 64;
-//		        	if (mOutputItem2 != null && mOutputItem2.stackSize > 64) mOutputItem2.stackSize = 64;
-//		        	
-//		        	if (mMaxProgresstime > 0) {
-//		        		startProcess();
-//		        	}
-//		    	}
-//	    	} else {
-//    			if (!bStuttering) {
-//    				stutterProcess();
-//    				if (useStandardStutterSound()) sendSound((byte)8);
-//    				bStuttering = true;
-//    			}
-//	    	}
 	    }
 	}
 	
@@ -182,11 +129,12 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 		return mMainFacing<2?aSide==aFacing?aActive?getFrontFacingActive():getFrontFacingInactive():aSide==0?aActive?getBottomFacingActive():getBottomFacingInactive():aSide==1?aActive?getTopFacingActive():getTopFacingInactive():aActive?getSideFacingActive():getSideFacingInactive():aSide==mMainFacing?aActive?getFrontFacingActive():getFrontFacingInactive():(showPipeFacing()&&aSide==aFacing)?aSide==0?getBottomFacingPipe():aSide==1?getTopFacingPipe():getSideFacingPipe():aSide==0?aActive?getBottomFacingActive():getBottomFacingInactive():aSide==1?aActive?getTopFacingActive():getTopFacingInactive():aActive?getSideFacingActive():getSideFacingInactive();
 	}
 	
-    public boolean spaceForOutput(ItemStack aOutput1, ItemStack aOutput2) {
+	@Override
+    public boolean spaceForOutput(Recipe recipe) {
+		ItemStack aOutput1 = recipe.getOutputs()[0], aOutput2 = recipe.getOutputs().length > 1 ? recipe.getOutputs()[1] : null;
     	if (mInventory[3] == null || aOutput1 == null || (mInventory[3].stackSize + aOutput1.stackSize <= mInventory[3].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[3], aOutput1)))
     	if (mInventory[4] == null || aOutput2 == null || (mInventory[4].stackSize + aOutput2.stackSize <= mInventory[4].getMaxStackSize() && GT_Utility.areStacksEqual(mInventory[4], aOutput2)))
     		return true;
-    	bOutputBlocked = true;
     	return false;
     }
     
@@ -303,7 +251,7 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity {
 	
 	/** Called whenever the Machine aborted a Process but still works on it, useful for Sound Effects */
 	public void stutterProcess() {
-		//
+		if (useStandardStutterSound()) sendSound((byte)8);
 	}
 	
 	public boolean useStandardStutterSound() {

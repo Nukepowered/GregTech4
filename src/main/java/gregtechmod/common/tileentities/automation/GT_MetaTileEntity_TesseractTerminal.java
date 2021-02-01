@@ -45,8 +45,8 @@ public class GT_MetaTileEntity_TesseractTerminal extends MetaTileEntity {
 	@Override public int getInvSize()								{return 0;}
 	@Override public boolean isAccessAllowed(EntityPlayer aPlayer)	{return true;}
 	@Override public boolean ownerControl()							{return true;}
-	@Override public int getProgresstime()							{return getTesseract(mFrequency, false) != null ? 999 : 0;}
-	@Override public int maxProgresstime()							{return 1000;}
+	public int getProgresstime()									{return getTesseract(mFrequency, false) != null ? 999 : 0;}
+	public int maxProgresstime()									{return 1000;}
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {

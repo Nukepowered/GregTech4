@@ -10,21 +10,21 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class GT_MetaTileEntity_ThermalGenerator extends GT_MetaTileEntity_BasicGenerator {
 
-	public GT_MetaTileEntity_ThermalGenerator(int aID, String aName) {
-		super(aID, aName);
+	public GT_MetaTileEntity_ThermalGenerator(int aID, String aName, List<Recipe> recipeMap, int efficiency) {
+		super(aID, aName, recipeMap, efficiency);
 	}
 
-	public GT_MetaTileEntity_ThermalGenerator() {}
+	public GT_MetaTileEntity_ThermalGenerator(List<Recipe> recipeMap, int efficiency) {
+		super(recipeMap, efficiency);
+	}
 
 	@Override public boolean isFacingValid(byte aFacing) { return false;}
 	@Override public int maxEUOutput() {return this.getBaseMetaTileEntity().isAllowedToWork() ? 24 : 0;}
 	@Override public void onRightclick(EntityPlayer aPlayer) {this.getBaseMetaTileEntity().openGUI(aPlayer, 119);}
-	@Override public List<Recipe> getRecipes() {return Recipe.sHotFuels;}
-	@Override public int getEfficiency() {return 80;}
 
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_ThermalGenerator();
+		return new GT_MetaTileEntity_ThermalGenerator(recipeMap, efficiency);
 	}
 
 	@Override

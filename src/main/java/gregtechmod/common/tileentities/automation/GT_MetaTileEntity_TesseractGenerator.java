@@ -64,8 +64,8 @@ public class GT_MetaTileEntity_TesseractGenerator extends MetaTileEntity {
 	@Override public boolean isAccessAllowed(EntityPlayer aPlayer)	{return true;}
 	@Override public boolean ownerControl()							{return true;}
 	@Override public boolean unbreakable()							{return true;}
-	@Override public int getProgresstime()							{return sTesseractGenerators.get(mFrequency) == this && isWorking >= 20 ? 999 : 0;}
-	@Override public int maxProgresstime()							{return 1000;}
+	public int getProgresstime()									{return sTesseractGenerators.get(mFrequency) == this && isWorking >= 20 ? 999 : 0;}
+	public int maxProgresstime()									{return 1000;}
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {

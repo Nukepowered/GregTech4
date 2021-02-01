@@ -13,21 +13,21 @@ import net.minecraft.world.biome.BiomeGenBase;
 
 public class GT_MetaTileEntity_MagicEnergyConverter extends GT_MetaTileEntity_BasicGenerator {
 
-	public GT_MetaTileEntity_MagicEnergyConverter(int aID, String aName) {
-		super(aID, aName);
+	public GT_MetaTileEntity_MagicEnergyConverter(int aID, String aName, List<Recipe> recipeMap, int efficiency) {
+		super(aID, aName, recipeMap, efficiency);
 	}
 
-	public GT_MetaTileEntity_MagicEnergyConverter() {}
+	public GT_MetaTileEntity_MagicEnergyConverter(List<Recipe> recipeMap, int efficiency) {
+		super(recipeMap, efficiency);
+	}
 
 	@Override public boolean isFacingValid(byte aFacing) {return true;}
 	@Override public int maxEUOutput() {return this.getBaseMetaTileEntity().isAllowedToWork() ? 24 : 0;}
 	@Override public void onRightclick(EntityPlayer aPlayer) {this.getBaseMetaTileEntity().openGUI(aPlayer, 125);}
-	@Override public List<Recipe> getRecipes() {return Recipe.sMagicFuels;}
-	@Override public int getEfficiency() {return 100;}
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_MagicEnergyConverter();
+		return new GT_MetaTileEntity_MagicEnergyConverter(recipeMap, efficiency);
 	}
 
 	@Override

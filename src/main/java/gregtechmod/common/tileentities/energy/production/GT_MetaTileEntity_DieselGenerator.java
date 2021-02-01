@@ -14,21 +14,21 @@ import net.minecraft.item.ItemStack;
 
 public class GT_MetaTileEntity_DieselGenerator extends GT_MetaTileEntity_BasicGenerator {
 
-	public GT_MetaTileEntity_DieselGenerator(int aID, String aName) {
-		super(aID, aName);
+	public GT_MetaTileEntity_DieselGenerator(int aID, String aName, List<Recipe> recipeMap, int efficiency) {
+		super(aID, aName, recipeMap, efficiency);
 	}
 
-	public GT_MetaTileEntity_DieselGenerator() {}
+	public GT_MetaTileEntity_DieselGenerator(List<Recipe> recipeMap, int efficiency) {
+		super(recipeMap, efficiency);
+	}
 
 	@Override public boolean isFacingValid(byte aFacing) {return aFacing > 1;}
 	@Override public int maxEUOutput() {return this.getBaseMetaTileEntity().isAllowedToWork() ? 12 : 0;}
 	@Override public void onRightclick(EntityPlayer aPlayer) {this.getBaseMetaTileEntity().openGUI(aPlayer, 117);}
-	@Override public List<Recipe> getRecipes() {return Recipe.sDieselFuels;}
-	@Override public int getEfficiency() {return 100;}
 
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_DieselGenerator();
+		return new GT_MetaTileEntity_DieselGenerator(recipeMap, efficiency);
 	}
 	
 	@Override

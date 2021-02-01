@@ -49,8 +49,8 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity {
 	@Override public boolean isFacingValid(byte aFacing)			{return true;}
 	@Override public boolean isAccessAllowed(EntityPlayer aPlayer)	{return true;}
 	@Override public boolean isValidSlot(int aIndex)				{return aIndex > 0;}
-	@Override public int getProgresstime()							{return mProgresstime;}
-	@Override public int maxProgresstime()							{return mMaxProgresstime;}
+	public int getProgresstime()									{return mProgresstime;}
+	public int maxProgresstime()									{return mMaxProgresstime;}
 	@Override public int increaseProgress(int aProgress)			{return aProgress;}
 	@Override public int getInvSize()								{return 2;}
 	

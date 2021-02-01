@@ -8,11 +8,14 @@ import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.ItemStackKey;
 
 import static gregtechmod.api.recipe.RecipeMaps.*;
 
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -95,24 +98,39 @@ public class Recipe {
 		assert inputSlots.length > 0 : "Recipe check failed, inputSlots size < 1";
 		
 		Map<Integer, ItemStack> decreaseMap = new HashMap<>();
-		for (ItemStack[] validItems : mInputs) { 					// Iterating slots
-			for (ItemStack validItem : validItems) {				// Iterating valid items for slot
-				for (int slot : inputSlots) {						// Iterating machine's input
-					ItemStack slotStack = tile.getStackInSlot(slot);
-					if (slotStack != null) {
-						if (isItemStackMatch(slotStack, validItem)) {
-							decreaseMap.put(slot, validItem);
-						}
-					} else continue;
+		Map<Integer, ItemStack> slotStacks = new HashMap<>();
+		for (int i : inputSlots) {
+			ItemStack stack = tile.getStackInSlot(i);
+			if (stack != null)
+				slotStacks.put(i, stack);
+		}
+		
+		for (ItemStack[] slot : mInputs) {
+			Map<ItemStackKey, Integer> variants = Arrays.stream(slot)
+					.collect(Collectors.toMap(stack -> ItemStackKey.from(stack), stack -> stack.stackSize));
+			Iterator<Entry<Integer, ItemStack>> iter = slotStacks.entrySet().iterator();
+			while (iter.hasNext()) {
+				Entry<Integer, ItemStack> value = iter.next();
+				ItemStackKey temp = ItemStackKey.from(value.getValue());
+				if ((variants.keySet().contains(temp))) {
+					ItemStack recipeItem = temp.get();
+					recipeItem.stackSize = variants.get(temp);
+					ItemStack slotItem = value.getValue();
+					if (recipeItem.stackSize <= slotItem.stackSize) {
+						decreaseMap.put(value.getKey(), recipeItem);
+						iter.remove();
+						break;
+					} else return false;
 				}
+				return false;
 			}
 		}
 		
-		if (decrease) for (Entry<Integer, ItemStack> e : decreaseMap.entrySet()) {
+		if (decrease && decreaseMap.size() == mInputs.length) for (Entry<Integer, ItemStack> e : decreaseMap.entrySet()) {
 			tile.decrStackSize(e.getKey(), e.getValue().stackSize);
 		}
 		
-		return !decreaseMap.isEmpty();
+		return decreaseMap.size() == mInputs.length;
 	}
 	
 	private boolean isItemStackMatch(ItemStack invStack, ItemStack recipeStack) {

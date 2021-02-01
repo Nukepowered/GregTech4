@@ -4,7 +4,8 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.function.Supplier;
 
-import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
+import gregtechmod.api.interfaces.IGregTechTileEntity;
+import gregtechmod.api.interfaces.IRecipeWorkable;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.inventory.IInventory;
@@ -17,58 +18,70 @@ import net.minecraft.nbt.NBTTagCompound;
  *
  */
 public class RecipeLogic {
-	public final WeakReference<GT_MetaTileEntity_BasicMachine> metaTileEntity;
+	public final WeakReference<IRecipeWorkable> metaTileEntity;
 	public final List<Recipe> recipeMap;
 	
-	protected Supplier<Recipe> recipeHandler;
+	public int batterySlot 		= 5;
+	public boolean moveItems 	= true;
+	/** Do not consume inputs on custom recipe provider, it is only should <b><i>provide</i></b> a recipe instance */
+	protected Supplier<Recipe> customRecipeProvider;
 	protected int maxProgressTime;
 	protected int progressTime;
 	protected int EUt;
 	
 	private int overclockersCount;
 	private Recipe previousRecipe;
-	private boolean needRecipeRecheck;
+	private boolean stuttering;
+	private boolean wasNoEnergy;
 	
-	
-	public RecipeLogic(List<Recipe> recipeMap, GT_MetaTileEntity_BasicMachine machine) {
+	public RecipeLogic(List<Recipe> recipeMap, IRecipeWorkable machine) {
 		this.recipeMap = recipeMap;
 		maxProgressTime = 0;
 		progressTime = 0;
 		EUt = 0;
 		overclockersCount = 0;
+		stuttering = false;
+		wasNoEnergy = false;
 		metaTileEntity = new WeakReference<>(machine);
-		needRecipeRecheck = true;
 	}
 	
-	public void update() {
-		overclockersCount = getMachine().getBaseMetaTileEntity().getOverclockerUpgradeCount();
-		moveItems();
+	public boolean update() {
+		boolean success = false;
+		IGregTechTileEntity base = getMachine().getBaseMetaTileEntity();
+		overclockersCount = base.getOverclockerUpgradeCount();
+		if (moveItems) moveItems();
 		
-		if (getMachine().getBaseMetaTileEntity().isAllowedToWork()) {
-			if (getMachine().getBaseMetaTileEntity().hasInventoryBeenModified() || getMachine().getBaseMetaTileEntity().hasWorkJustBeenEnabled())
-				needRecipeRecheck = true;
-			
+		if (base.isAllowedToWork()) {
 			if (progressTime > 0) {
-				updateRecipeProgress();
-			}
-			
-			if (progressTime == 0 && needRecipeRecheck) {
-				if (isInputNonEmpty()) {
-					trySerachRecipe();
-				} else {
-					previousRecipe = null;
-					needRecipeRecheck = false;
-					getMachine().getBaseMetaTileEntity().setActive(false);
+				int tmp = progressTime;
+				success = updateRecipeProgress();
+				if (tmp == 0 && !success) {
+					throw new IllegalStateException();
 				}
 			}
-		}
+			
+			if (progressTime == 0) {
+				if (base.hasInventoryBeenModified() || base.hasWorkJustBeenEnabled() || success || base.getTimer() % 600 == 0 || wasNoEnergy) {
+					if (isInputNonEmpty() && base.isUniversalEnergyStored(getMachine().getMinimumStoredEU() - 100)) {
+						trySerachRecipe();
+						wasNoEnergy = false;
+					} else {
+						previousRecipe = null;
+						wasNoEnergy = true;
+						base.setActive(false);
+					} 
+				}
+			}
+		} 
+		
+		return success;
 	}
 	
-	public void setHandler(Supplier<Recipe> handler) {
-		recipeHandler = handler;
+	public void setRecipeProvider(Supplier<Recipe> handler) {
+		customRecipeProvider = handler;
 	}
 	
-	protected void updateRecipeProgress() {
+	protected boolean updateRecipeProgress() {
 		if (getMachine().getBaseMetaTileEntity().decreaseStoredEnergyUnits(EUt * (int)Math.pow(4, overclockersCount), false)) {
 			if ((progressTime += (int)Math.pow(2, overclockersCount)) >= maxProgressTime) {
 				progressTime = 0;
@@ -77,21 +90,22 @@ public class RecipeLogic {
 				
 				endRecipe(previousRecipe);
 				getMachine().endProcess();
+				return true;
 			}
 		} else {
-			getMachine().getBaseMetaTileEntity().setActive(false);
-			if (!getMachine().bStuttering) {
+			if (!stuttering) {
 				getMachine().stutterProcess();
-				if (getMachine().useStandardStutterSound()) getMachine().sendSound((byte)8);
-				getMachine().bStuttering = true;
+				stuttering = true;
 			}
 		}
+		
+		return false;
 	}
 	
 	protected void trySerachRecipe() {
 		if (getMachine().allowToCheckRecipe()) {
 			if (previousRecipe != null) {
-				if (previousRecipe.match(false, getMachine().getBaseMetaTileEntity(), getMachineInputs())) { // TODO add I/O item handlers to MTE
+				if (previousRecipe.match(false, getMachine().getBaseMetaTileEntity(), getMachine().getInputSlots())) { // TODO add I/O item handlers to MTE
 					startRecipe(previousRecipe);
 				} else {
 					previousRecipe = null;
@@ -99,15 +113,13 @@ public class RecipeLogic {
 				}
 			} else {
 				// find new recipe
-				Recipe resRec = recipeHandler != null ? recipeHandler.get() :
+				Recipe resRec = customRecipeProvider != null ? customRecipeProvider.get() :
 					recipeMap.stream()
-					.filter(rec -> rec.match(false, getMachine().getBaseMetaTileEntity(), getMachineInputs()))
+					.filter(rec -> rec.match(false, getMachine().getBaseMetaTileEntity(), getMachine().getInputSlots()))
 					.findFirst().orElse(null);
 				if (resRec != null)
 					startRecipe(resRec);
 			}
-			
-			needRecipeRecheck = false;
 		}
 	}
 	
@@ -126,12 +138,12 @@ public class RecipeLogic {
 	}
 	
 	protected void startRecipe(Recipe recipe) {
-		if (getMachine().spaceForOutput(recipe.getOutputs()[0], recipe.getOutputs().length > 1 ? recipe.getOutputs()[1] : null)) {
+		if (getMachine().spaceForOutput(recipe)) {
 			previousRecipe = recipe;
-			maxProgressTime = recipe.mDuration;
+			maxProgressTime = GT_Utility.isDebugItem(getMachine().getStackInSlot(batterySlot)) ? 1 : recipe.mDuration;
 			progressTime = 1;
 			EUt = recipe.mEUt;
-			recipe.match(true, getMachine().getBaseMetaTileEntity(), getMachineInputs());
+			recipe.match(true, getMachine().getBaseMetaTileEntity(), getMachine().getInputSlots());
 			getMachine().getBaseMetaTileEntity().setActive(true);
 			getMachine().startProcess();
 		}
@@ -139,9 +151,9 @@ public class RecipeLogic {
 	
 	protected void endRecipe(Recipe recipe) {
 		ItemStack[] outputs = recipe.getOutputs();
-		if (outputs.length <= getMachineOutputs().length) {
+		if (outputs.length <= getMachine().getOutputSlots().length) {
 			for (ItemStack out : outputs) {
-				for (int i : getMachineOutputs()) {
+				for (int i : getMachine().getOutputSlots()) {
 					if (getMachine().getBaseMetaTileEntity().addStackToSlot(i, out.copy())) {
 						break;
 					}
@@ -151,33 +163,25 @@ public class RecipeLogic {
 			GT_Log.log.catching(new IllegalStateException("Found recipe with more items output machine has slots!"));
 		}
 		
-		getMachine().bStuttering = false;
+		stuttering = false;
 		getMachine().endProcess();
 	}
 	
 	private boolean isInputNonEmpty() {
-		for (int i : getMachineInputs()) {
+		for (int i : getMachine().getInputSlots()) {
 			ItemStack s = getMachine().getStackInSlot(i);
 			if (s != null && s.stackSize > 0) return true;
 		}
 		
-		
 		return false;
 	}
 	
-	/**
-	 * Specify machine input slots
-	 */
-	protected int[] getMachineInputs() {
-		return new int[] {1, 2};
-	}
-	
-	protected int[] getMachineOutputs() {
-		return new int[] {3, 4};
-	}
-	
-	private GT_MetaTileEntity_BasicMachine getMachine() {
+	private IRecipeWorkable getMachine() {
 		return metaTileEntity.get();
+	}
+	
+	public void increaseProgressTime(int amount) {
+		progressTime += amount;
 	}
 	
 	public boolean isActive() {
@@ -201,12 +205,12 @@ public class RecipeLogic {
 		data1.setInteger("TotalTime", maxProgressTime);
 		data1.setInteger("CurrentTime", progressTime);
 		data1.setInteger("EUt", EUt);
-		data.setTag("RecipeLogic", data1);
+		data.setTag("RecipeLogic", data1); // TODO save recipe items to NBT!
 	}
 	
 	public void loadFromNBT(NBTTagCompound data) {
 		NBTTagCompound data1 = data.getCompoundTag("RecipeLogic");
-		if (data1 != null) {
+		if (data1 != null && (maxProgressTime == 0 && progressTime == 0 && EUt == 0)) {
 			maxProgressTime = data1.getInteger("TotalTime");
 			progressTime = data1.getInteger("CurrentTime");
 			EUt = data1.getInteger("EUt");

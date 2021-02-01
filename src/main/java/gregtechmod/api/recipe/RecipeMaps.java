@@ -32,6 +32,4 @@ public class RecipeMaps {
 	public static final List<Recipe> sDenseLiquidFuels		= new ArrayList<Recipe>();
 	public static final List<Recipe> sPlasmaFuels			= new ArrayList<Recipe>();
 	public static final List<Recipe> sMagicFuels			= new ArrayList<Recipe>();
-	
-	
 }

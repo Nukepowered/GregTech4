@@ -4,6 +4,7 @@ import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeMaps;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
@@ -100,7 +101,7 @@ public class GT_MetaTileEntity_ElectricTypeSorter extends GT_MetaTileEntity_Elec
 				
 				OrePrefixes tPrefix = OrePrefixes.getPrefix(sTypeList[mMode]);
 				
-				if (((mMode == 11 && mInventory[0].getItem() instanceof ItemFood) || (mMode == 12 && Recipe.findEqualRecipe(false, false, Recipe.sGrinderRecipes, mInventory[0], GT_ModHandler.getWaterCell(1)) != null) || (tPrefix != null && tPrefix.contains(mInventory[0])) || GT_OreDictUnificator.isItemStackInstanceOf(mInventory[0], sTypeList[mMode]))) {
+				if (((mMode == 11 && mInventory[0].getItem() instanceof ItemFood) || (mMode == 12 && Recipe.findEqualRecipe(false, false, RecipeMaps.sGrinderRecipes, mInventory[0], GT_ModHandler.getWaterCell(1)) != null) || (tPrefix != null && tPrefix.contains(mInventory[0])) || GT_OreDictUnificator.isItemStackInstanceOf(mInventory[0], sTypeList[mMode]))) {
 					getBaseMetaTileEntity().decreaseStoredEnergyUnits(tPrice = GT_Utility.moveOneItemStack(getBaseMetaTileEntity(), getBaseMetaTileEntity().getIInventoryAtSide(mTargetDirection), getBaseMetaTileEntity().getBackFacing(), GT_Utility.getOppositeSide(mTargetDirection), null, false, mTargetStackSize!=0?(byte)mTargetStackSize:64, mTargetStackSize!=0?(byte)mTargetStackSize:1, (byte)64, (byte)1)*3, true);
 				}
 				if (tPrice <= 0) {
