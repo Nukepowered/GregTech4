@@ -84,7 +84,7 @@ public class GT_MetaTileEntity_Centrifuge extends GT_MetaTileEntity_BasicTank im
 	@Override
 	public void saveNBTData(NBTTagCompound aNBT) {
 		super.saveNBTData(aNBT);
-    	recipeLogic.loadFromNBT(aNBT);
+    	recipeLogic.saveToNBT(aNBT);
 	}
 	
 	@Override

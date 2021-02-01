@@ -213,15 +213,22 @@ public class RecipeLogic {
 		data1.setInteger("TotalTime", maxProgressTime);
 		data1.setInteger("CurrentTime", progressTime);
 		data1.setInteger("EUt", EUt);
-		data.setTag("RecipeLogic", data1); // TODO save recipe items to NBT!
+		if (previousRecipe != null && progressTime > 0) {
+			previousRecipe.writeToNBT(data1);
+		}
+		data.setTag("RecipeLogic", data1);
 	}
 	
 	public void loadFromNBT(NBTTagCompound data) {
 		NBTTagCompound data1 = data.getCompoundTag("RecipeLogic");
-		if (data1 != null && (maxProgressTime == 0 && progressTime == 0 && EUt == 0)) {
+		if (data1 != null && progressTime == 0) {
 			maxProgressTime = data1.getInteger("TotalTime");
 			progressTime = data1.getInteger("CurrentTime");
 			EUt = data1.getInteger("EUt");
+			Recipe res = Recipe.loadFromNBT(recipeMap, data1);
+			if (res != null) {
+				previousRecipe = res;
+			}
 		}
 	}
 }

@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.oredict.OreDictionary;
 
 /**
@@ -224,6 +225,29 @@ public class Recipe {
 		}
 		
 		return new ItemStack[] {stack};
+	}
+	
+	public void writeToNBT(NBTTagCompound data) {
+//		NBTTagCompound tag = new NBTTagCompound();
+//		tag.setInteger("duration", mDuration);
+//		tag.setInteger("startEU", mStartEU);
+//		tag.setInteger("EUt", mEUt);
+//		tag.setInteger("duration", mDuration);
+//		NBTTagCompound output
+		data.setInteger("recipeHash", this.hashCode());
+	}
+	
+	public static Recipe loadFromNBT(List<Recipe> recipeMap, NBTTagCompound data) {
+		if (data.hasKey("recipeHash")) {
+			int hash = data.getInteger("recipeHash");
+			for (Recipe res : recipeMap) {
+				if (res.hashCode() == hash) {
+					return res;
+				}
+			}
+		}
+ 		
+		return null;
 	}
 	
 	public Recipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, ItemStack aOutput2, ItemStack aOutput3, ItemStack aOutput4, int aDuration, int aEUt, int aStartEU) {
