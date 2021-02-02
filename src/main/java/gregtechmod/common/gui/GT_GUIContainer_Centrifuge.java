@@ -34,8 +34,8 @@ public class GT_GUIContainer_Centrifuge extends GT_GUIContainerMetaTile_Machine 
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
       
         if (mContainer != null && mContainer.mProgressTime>0) {
-        	int tScale = Math.max(0, Math.min(10, 
-        			(mContainer.mProgressTime>0?1:0) + (mContainer.mProgressTime * 10) / (mContainer.mMaxProgressTime<1?1:mContainer.mMaxProgressTime)));
+        	int tScale = (int) ((mContainer.mProgressTime * 1.0D / mContainer.mMaxProgressTime * 10));
+        	tScale = tScale < 0 || tScale > 10 ? 0 : tScale;
         	drawTexturedModalRect(x + 83, y + 33 - tScale, 193, 33 - tScale, 10, tScale);
         	drawTexturedModalRect(x + 78 - tScale, y + 38, 188 - tScale, 38 , tScale, 10);
         	drawTexturedModalRect(x + 83, y + 53, 193, 53, 10, tScale);
