@@ -1,5 +1,6 @@
 package gregtechmod.api.metatileentity.implementations;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -132,18 +133,17 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
 	
 	@Override
     public boolean spaceForOutput(Recipe recipe) {
-		ItemStack[] output = recipe.getOutputs();
-		int[] mOutput = getOutputSlots();
-		
-		if (output.length <= mOutput.length) {
-			for (ItemStack recOut : output) {
-				for (int i : mOutput) {
-					if (mInventory[i] != null && recOut != null && (!GT_Utility.areStacksEqual(mInventory[i], recOut) || mInventory[i].stackSize + recOut.stackSize > recOut.getMaxStackSize())) {
+		if (recipe.getOutputs().length <= getOutputSlots().length) {
+			List<ItemStack> slots = new ArrayList<>();
+			for (int i : getOutputSlots()) slots.add(mInventory[i]);
+			for (int i = 0; i < slots.size(); i++) {
+				if (slots.get(i) != null && recipe.getOutputs()[i] != null) {
+					if (!GT_Utility.areStacksEqual(slots.get(i), recipe.getOutputs()[i]) || slots.get(i).stackSize + recipe.getOutputs()[i].stackSize > slots.get(i).getMaxStackSize()) {
 						return false;
 					}
 				}
 			}
-		}
+		} else return false;
 		
 		return true;
     }
