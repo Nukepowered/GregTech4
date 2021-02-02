@@ -352,7 +352,7 @@ public class Recipe {
 		if (aInput1 == null) {
 			mInputs = new ItemStack [0][];
 		} else if (aInput2 == null) {
-			mInputs = new ItemStack[][]{ applyOreDict(aInput1) }; 
+			mInputs = new ItemStack[][]{ applyOreDict(aInput1) }; // apply oredict optionally, better to make recipe builder
 		} else {
 			mInputs = new ItemStack[][] { applyOreDict(aInput1), applyOreDict(aInput2)};
 		}

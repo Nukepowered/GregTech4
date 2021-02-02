@@ -158,6 +158,8 @@ public class RecipeLogic {
 			consumeInputs(recipe);
 			getMachine().getBaseMetaTileEntity().setActive(true);
 			getMachine().startProcess();
+		} else {
+			getMachine().getBaseMetaTileEntity().setActive(false);
 		}
 	}
 	
