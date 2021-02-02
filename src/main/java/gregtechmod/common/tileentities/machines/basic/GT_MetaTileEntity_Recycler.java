@@ -29,16 +29,23 @@ public class GT_MetaTileEntity_Recycler extends GT_MetaTileEntity_BasicMachine {
 	}
 	
 	@Override
-    public void checkRecipe() {
-		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 1, 2, (byte)64, (byte)1, (byte)64, (byte)1);
-		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 3, 4, (byte)64, (byte)1, (byte)64, (byte)1);
-    	if (mInventory[2] != null && spaceForOutput(GT_ModHandler.getIC2Item("scrap", 1), null)) {
-    		mOutputItem1 = GT_ModHandler.getRecyclerOutput(mInventory[2], getBaseMetaTileEntity().getRandomNumber(8));
-    		mEUt = 1;
-    		mMaxProgresstime = 45;
-    		mInventory[2].stackSize--;
-    	}
-    }
+	public void initRecipeLogic(List<Recipe> recipeMap) {
+		super.initRecipeLogic(recipeMap);
+		recipeLogic.setRecipeProvider(() -> {
+	    	if (GT_Utility.isStackValid(mInventory[2])) {
+	    		ItemStack instance = mInventory[2].copy();
+	    		instance.stackSize = 1;
+	    		return new Recipe(instance, null, null, null, null, null, 45, 1, 0, false) {
+	    			@Override
+	    			public ItemStack[] getOutputs() {
+	    				return new ItemStack[] {GT_ModHandler.getRecyclerOutput(mInputs[0][0], getBaseMetaTileEntity().getRandomNumber(8))}; // FIXME made chanded output in Recipe 
+	    			}
+	    		};
+	    	}
+	    	
+	    	return null;
+		});
+	}
 	
 	@Override
 	public int getFrontFacingInactive() {

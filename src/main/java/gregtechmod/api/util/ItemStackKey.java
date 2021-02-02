@@ -45,7 +45,7 @@ public final class ItemStackKey {
 			if (isWildcard) {
 				return this.stack.getItem() == stack.getItem();
 			} else {
-				return ItemStack.areItemStacksEqual(this.stack, stack) && ItemStack.areItemStackTagsEqual(this.stack, stack);
+				return this.stack.isItemEqual(stack);// && ItemStack.areItemStackTagsEqual(this.stack, stack); // TODO add NBT comparing settings
 			}
 		}
 		
@@ -64,6 +64,6 @@ public final class ItemStackKey {
 	
 	@Override
 	public int hashCode() {
-		return Objects.hash(stack.getItem(), (isWildcard ? GregTech_API.ITEM_WILDCARD_DAMAGE : Items.feather.getDamage(stack)), stack.getTagCompound());
+		return Objects.hash(stack.getItem(), (isWildcard ? GregTech_API.ITEM_WILDCARD_DAMAGE : Items.feather.getDamage(stack)));//, stack.getTagCompound());
 	}
 }

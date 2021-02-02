@@ -8,6 +8,7 @@ import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
 import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeLogic;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -34,33 +35,38 @@ public class GT_MetaTileEntity_Scanner extends GT_MetaTileEntity_BasicMachine {
    public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
       return new GT_MetaTileEntity_Scanner(recipeLogic.recipeMap);
    }
-
-   public void checkRecipe() {
-      GT_Utility.moveStackFromSlotAToSlotB(this.getBaseMetaTileEntity(), this.getBaseMetaTileEntity(), 3, 4, (byte)64, (byte)1, (byte)64, (byte)1);
-      if(super.mInventory[3] != null) {
-         super.bOutputBlocked = true;
-      } else if(GT_Utility.isStackValid(super.mInventory[1]) && super.mInventory[1].stackSize > 0 && GT_Items.IC2_Crop_Seeds.isStackEqual(super.mInventory[1], true, true)) {
-         NBTTagCompound tNBT = super.mInventory[1].getTagCompound();
-         if(tNBT == null) {
-            tNBT = new NBTTagCompound();
-         }
-
-         if(tNBT.getByte("scan") < 4) {
-            tNBT.setByte("scan", (byte)4);
-            super.mMaxProgresstime = 20;
-            super.mEUt = 500;
-         } else {
-            super.mMaxProgresstime = 1;
-            super.mEUt = 1;
-         }
-
-         --super.mInventory[1].stackSize;
-         super.mOutputItem1 = GT_Utility.copyAmount(1L, new Object[]{super.mInventory[1]});
-         super.mOutputItem1.setTagCompound(tNBT);
-         return;
-      }
-
-      super.mMaxProgresstime = 0;
+   
+   @Override
+   public void initRecipeLogic(List<Recipe> recipeMap) {
+	   recipeLogic = new RecipeLogic(recipeMap, this) {
+		   @Override
+		   protected void moveItems() {
+			   GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 3, 4, (byte)64, (byte)1, (byte)64, (byte)1);
+		   }
+		   
+		   @Override
+		   protected Recipe findRecipe() {
+			   if (GT_Utility.isStackValid(mInventory[1]) && GT_Items.IC2_Crop_Seeds.isStackEqual(mInventory[1], true, true)) {
+				   NBTTagCompound data = mInventory[1].getTagCompound();
+				   if (data == null) return null; // May not work
+				   int dur = 0, eut = 0;
+				   if (data.getByte("scan") < 4) {
+					   data.setByte("scan", (byte)4);
+					   dur = 20;
+					   eut = 500;
+				   } else {
+					   dur = 1;
+					   eut = 1;
+				   }
+				   
+				   ItemStack output = mInventory[1].copy();
+				   output.setTagCompound(data);
+				   return new Recipe(mInventory[1].copy(), null, output, null, null, null, dur, eut, 0, false);
+			   }
+			   
+			   return null;
+		   }
+	   };
    }
 
    public boolean allowPutStack(int aIndex, byte aSide, ItemStack aStack) {

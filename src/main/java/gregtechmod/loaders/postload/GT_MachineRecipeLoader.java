@@ -330,7 +330,7 @@ public class GT_MachineRecipeLoader implements Runnable
         GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_ModHandler.getIC2Item("carbonFiber", 2L), null, GT_ModHandler.getIC2Item("carbonMesh", 1L), 800, 2);
         GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_ModHandler.getIC2Item("carbonMesh", 16L), null, GT_Items.Component_LavaFilter.get(1L), 1600, 8);
         GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Items.Circuit_Basic.get(1L), GT_ModHandler.getIC2Item("frequencyTransmitter", 1L), GT_Items.NC_SensorKit.get(1L), 1600, 2);
-        GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Items.NC_SensorCard.getWildcard(1L), null, GT_Items.Circuit_Basic.get(2L), 1600, 2);
+        GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Items.NC_SensorCard.getWithDamage(1L, 0L), null, GT_Items.Circuit_Basic.get(2L), 1600, 2);
         GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_OreDictUnificator.get(OrePrefixes.plate, Materials.Aluminium, 1L), GT_ModHandler.getIC2Item("pump", 1L), GregTech_API.getGregTechComponent(6, 1), 800, 16);
         GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_OreDictUnificator.get(OrePrefixes.plate, Materials.Aluminium, 1L), new ItemStack(Blocks.heavy_weighted_pressure_plate, 1, 32767), GregTech_API.getGregTechComponent(11, 1), 800, 16);
         GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_OreDictUnificator.get(OrePrefixes.plate, Materials.Aluminium, 1L), new ItemStack(Blocks.light_weighted_pressure_plate, 1, 32767), GregTech_API.getGregTechComponent(10, 1), 800, 16);

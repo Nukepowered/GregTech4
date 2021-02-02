@@ -33,11 +33,11 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
 	
 	public GT_MetaTileEntity_BasicMachine(int aID, String aName, List<Recipe> recipeMap) {
 		super(aID, aName);
-		recipeLogic = new RecipeLogic(recipeMap, this);
+		initRecipeLogic(recipeMap);
 	}
 	
 	public GT_MetaTileEntity_BasicMachine(List<Recipe> recipeMap) {
-		recipeLogic = new RecipeLogic(recipeMap, this);
+		initRecipeLogic(recipeMap);
 	}
 	
 	@Override public boolean isSimpleMachine()						{return false;}
@@ -67,6 +67,10 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
 	@Override public boolean isLiquidInput (byte aSide)				{return aSide != mMainFacing;}
 	@Override public boolean isLiquidOutput(byte aSide)				{return aSide != mMainFacing;}
     
+	protected void initRecipeLogic(List<Recipe> recipeMap) {
+		recipeLogic = new RecipeLogic(recipeMap, this);
+	}
+	
 	@Override
 	public void saveNBTData(NBTTagCompound aNBT) {
 		aNBT.setBoolean("bOutput", bOutput);
@@ -133,12 +137,13 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
 	
 	@Override
     public boolean spaceForOutput(Recipe recipe) {
-		if (recipe.getOutputs().length <= getOutputSlots().length) {
+		ItemStack[] outputs = recipe.getOutputs();
+		if (outputs.length <= getOutputSlots().length) {
 			List<ItemStack> slots = new ArrayList<>();
 			for (int i : getOutputSlots()) slots.add(mInventory[i]);
-			for (int i = 0; i < slots.size(); i++) {
-				if (slots.get(i) != null && recipe.getOutputs()[i] != null) {
-					if (!GT_Utility.areStacksEqual(slots.get(i), recipe.getOutputs()[i]) || slots.get(i).stackSize + recipe.getOutputs()[i].stackSize > slots.get(i).getMaxStackSize()) {
+			for (int i = 0; i < outputs.length && i < slots.size(); i++) {
+				if (slots.get(i) != null && outputs[i] != null) {
+					if (!GT_Utility.areStacksEqual(slots.get(i), outputs[i]) || slots.get(i).stackSize + outputs[i].stackSize > slots.get(i).getMaxStackSize()) {
 						return false;
 					}
 				}
@@ -275,9 +280,9 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
 	@Override
 	public Map<String, List<Object>> getInfoData() {
 		return InfoBuilder.create()
-				.newKey("sensor.progress.percentage", recipeLogic.getProgressTime() * 100.0D / recipeLogic.getMaxProgressTime())
-				.newKey("sensor.progress.secs", recipeLogic.getProgressTime() / 20)
-				.newKey("sensor.progress.secs.1", recipeLogic.getMaxProgressTime() / 20)
+				.newKey("sensor.progress.percentage", recipeLogic.getDisplayProgress() * 100.0D / recipeLogic.getDisplayMaxProgress())
+				.newKey("sensor.progress.secs", recipeLogic.getDisplayProgress() / 20)
+				.newKey("sensor.progress.secs.1", recipeLogic.getDisplayMaxProgress() / 20)
 				.build();
 	}
 	

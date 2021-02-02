@@ -168,7 +168,7 @@ public class RecipeLogic {
 		if (outputs.length <= getMachine().getOutputSlots().length) {
 			for (ItemStack out : outputs) {
 				for (int i : getMachine().getOutputSlots()) {
-					if (getMachine().getBaseMetaTileEntity().addStackToSlot(i, out.copy())) {
+					if (out != null && getMachine().getBaseMetaTileEntity().addStackToSlot(i, out.copy())) {
 						break;
 					}
 				}
@@ -203,10 +203,24 @@ public class RecipeLogic {
 	}
 	
 	public int getMaxProgressTime() {
-		return maxProgressTime / (int)Math.pow(2, overclockersCount);
+		return maxProgressTime;
 	}
 	
 	public int getProgressTime() {
+		return progressTime;
+	}
+	
+	/**
+	 * Using ONLY for display time
+	 */
+	public int getDisplayMaxProgress() {
+		return maxProgressTime / (int)Math.pow(2, overclockersCount);
+	}
+	
+	/**
+	 * Using ONLY for display time
+	 */
+	public int getDisplayProgress() {
 		return progressTime / (int)Math.pow(2, overclockersCount);
 	}
 	

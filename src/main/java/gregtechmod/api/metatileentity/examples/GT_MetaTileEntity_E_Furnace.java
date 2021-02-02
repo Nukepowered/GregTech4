@@ -38,7 +38,7 @@ public class GT_MetaTileEntity_E_Furnace extends GT_MetaTileEntity_BasicMachine 
 				if (mInventory[2].stackSize == 0) mInventory[2] = null;
 				// It shall cook at 3 EU/t, if this Machine is overclocked then it will consume more
 				// The time it usually needs, the Heating Coils re decreasing this Time, and if the Machine is overclocked, then it gets processed faster
-				return new Recipe(mInventory[2], null, output, null, null, null, 130 / (1+mHeatingCoilTier), 3, 0);
+				return new Recipe(mInventory[2], null, output, null, null, null, 130 / (1+mHeatingCoilTier), 3, 0, true);
 			}
 			
 			return null;

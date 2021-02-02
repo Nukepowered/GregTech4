@@ -6,7 +6,7 @@ import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
 import gregtechmod.api.recipe.Recipe;
-import gregtechmod.api.util.GT_Utility;
+
 import net.minecraft.entity.player.EntityPlayer;
 
 public class GT_MetaTileEntity_Assembler extends GT_MetaTileEntity_BasicMachine {
@@ -22,24 +22,15 @@ public class GT_MetaTileEntity_Assembler extends GT_MetaTileEntity_BasicMachine 
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 141);}
 	
 	@Override
-	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_Assembler(recipeLogic.recipeMap);
+	protected void initRecipeLogic(List<Recipe> recipeMap) {
+		super.initRecipeLogic(recipeMap);
+		recipeLogic.moveItems = false;
 	}
 	
 	@Override
-    public void checkRecipe() {
-		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 3, 4, (byte)64, (byte)1, (byte)64, (byte)1);
-    	if (mInventory[1] != null || mInventory[2] != null) {
-    		Recipe tRecipe = Recipe.findEqualRecipe(false, false, Recipe.sAssemblerRecipes, mInventory[1], mInventory[2]);
-    		if (tRecipe != null && spaceForOutput(tRecipe.getOutput(0), null) && tRecipe.isRecipeInputEqual(true, true, mInventory[1], mInventory[2])) {
-        		mEUt = tRecipe.mEUt;
-    			mMaxProgresstime = tRecipe.mDuration;
-    			mOutputItem1 = GT_Utility.copy(tRecipe.getOutput(0));
-    			return;
-    		}
-    	}
-		mOutputItem1 = null;
-    }
+	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
+		return new GT_MetaTileEntity_Assembler(recipeLogic.recipeMap);
+	}
 	
 	@Override
     public boolean hasTwoSeperateInputs() {

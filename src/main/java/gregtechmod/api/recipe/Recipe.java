@@ -24,6 +24,9 @@ import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import com.google.common.collect.ListMultimap;
+import com.google.common.collect.MultimapBuilder.ListMultimapBuilder;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -44,8 +47,8 @@ public class Recipe {
 	/** It is an IdentityHashMap, because it uses a List as Key, and since that List changes (and therefore the Result of the equals Method), the Key is not secure, while the Identity is. */
 	private static final IdentityHashMap<List<Recipe>, Map<Integer, List<Recipe>>> RECIPE_MAPPINGS = new IdentityHashMap<>();
 	
-	public ItemStack[][] mInputs;
-	public ItemStack[] mOutputs;
+	public ItemStack[][] mInputs; // FIXME create ingredient class and make sure counting wildcard / nbt while matching recipes
+	public ItemStack[] mOutputs;	// FIXME add precise and oredict recipes
 	public int mDuration;
 	public int mEUt;
 	public int mStartEU;
@@ -96,11 +99,11 @@ public class Recipe {
 		
 		boolean success = this.match(key -> decreaseList.add(key), slotStacks.keySet());
 		if (success && decrease) {
-			Map<ItemStackKey, Integer> slotAligment = slotStacks.entrySet().stream()
-					.collect(Collectors.toMap(e -> ItemStackKey.from(e.getKey()), e -> e.getValue()));
-			for (ItemStackKey item : decreaseList) {
-				int slotIdx = slotAligment.get(item);
-				tile.decrStackSize(slotIdx, item.getStackSize());
+			ListMultimap<ItemStackKey, Integer> slotAligment = ListMultimapBuilder.hashKeys().arrayListValues().build();
+			slotStacks.entrySet().forEach(e -> slotAligment.put(ItemStackKey.from(e.getKey()), e.getValue()));
+			for (ItemStackKey recipeKey : decreaseList) {
+				List<Integer> slots = new ArrayList<>(slotAligment.values());
+				tile.decrStackSize(slots.get(0), recipeKey.getStackSize());
 			}
 		}
 		
@@ -113,18 +116,19 @@ public class Recipe {
 	private boolean match(Consumer<ItemStackKey> actionPerfomer, Collection<ItemStack> inputs) {
 		if (inputs.size() >= mInputs.length) {
 			start:
-			for (ItemStack input : inputs) {
-				Iterator<ItemStack[]> recipeInputIter = new ArrayList<>(Arrays.asList(mInputs)).iterator(); // Creating instance of normal not connected
-				while (recipeInputIter.hasNext()) {															// array list to avoid damaging of recipe
+			for (ItemStack[] recipeSlot : mInputs) {
+				List<ItemStackKey> variants = Arrays.stream(recipeSlot)
+						.map(s -> ItemStackKey.from(s))
+						.collect(Collectors.toList());
+				Iterator<ItemStack> machineSlot = new ArrayList<>(inputs).iterator();
+				while (machineSlot.hasNext()) {
 					int idx = -1;
-					List<ItemStackKey> variants = Arrays.stream(recipeInputIter.next())
-							.map(s -> ItemStackKey.from(s))
-							.collect(Collectors.toList());
-					if ((idx = variants.indexOf(ItemStackKey.from(input))) >= 0) {
-						if (variants.get(idx).get().stackSize <= input.stackSize) {
+					ItemStack slot = machineSlot.next();
+					if ((idx = variants.indexOf(ItemStackKey.from(slot))) >= 0) {
+						if (variants.get(idx).get().stackSize <= slot.stackSize) {
 							if (actionPerfomer != null)
 								actionPerfomer.accept(variants.get(idx));
-							recipeInputIter.remove();
+							machineSlot.remove();
 							continue start;
 						}
 					}
@@ -211,7 +215,7 @@ public class Recipe {
 	}
 	
 	public static boolean addRecipe(List<Recipe> aList, boolean aShapeless, ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, ItemStack aOutput2, ItemStack aOutput3, ItemStack aOutput4, int aDuration, int aEUt, int aStartEU) {
-		return addRecipe(aList, aShapeless, new Recipe(aInput1, aInput2, aOutput1, aOutput2, aOutput3, aOutput4, aDuration, aEUt, aStartEU));
+		return addRecipe(aList, aShapeless, new Recipe(aInput1, aInput2, aOutput1, aOutput2, aOutput3, aOutput4, aDuration, aEUt, aStartEU, true));
 	}
 	
 	public static boolean addRecipe(List<Recipe> aList, boolean aShapeless, Recipe aRecipe) {
@@ -254,107 +258,121 @@ public class Recipe {
 		return null;
 	}
 	
-	public Recipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, ItemStack aOutput2, ItemStack aOutput3, ItemStack aOutput4, int aDuration, int aEUt, int aStartEU) {
+	/**
+	 * Default constructor, will create simple recipe
+	 * @param aInput1
+	 * @param aInput2
+	 * @param aOutput1
+	 * @param aOutput2
+	 * @param aOutput3
+	 * @param aOutput4
+	 * @param aDuration
+	 * @param aEUt
+	 * @param aStartEU
+	 * @param unification will forcely add oredict variants to input
+	 */
+	public Recipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, ItemStack aOutput2, ItemStack aOutput3, ItemStack aOutput4, int aDuration, int aEUt, int aStartEU, boolean unification) {
 		/*
 		 * Wtf gregorious, what the purpose of this?
 		 */
-		if (aInput1 != null && aInput1.getItemDamage() != GregTech_API.ITEM_WILDCARD_DAMAGE) {
-			if (GT_Utility.areStacksEqual(aInput1, aOutput1)) {
-				if (aInput1.stackSize >= aOutput1.stackSize) {
-					aInput1.stackSize -= aOutput1.stackSize;
-					aOutput1 = null;
-				} else {
-					aOutput1.stackSize -= aInput1.stackSize;
-				}
-			}
-			if (GT_Utility.areStacksEqual(aInput1, aOutput2)) {
-				if (aInput1.stackSize >= aOutput2.stackSize) {
-					aInput1.stackSize -= aOutput2.stackSize;
-					aOutput2 = null;
-				} else {
-					aOutput2.stackSize -= aInput1.stackSize;
-				}
-			}
-			if (GT_Utility.areStacksEqual(aInput1, aOutput3)) {
-				if (aInput1.stackSize >= aOutput3.stackSize) {
-					aInput1.stackSize -= aOutput3.stackSize;
-					aOutput3 = null;
-				} else {
-					aOutput3.stackSize -= aInput1.stackSize;
-				}
-			}
-			if (GT_Utility.areStacksEqual(aInput1, aOutput4)) {
-				if (aInput1.stackSize >= aOutput4.stackSize) {
-					aInput1.stackSize -= aOutput4.stackSize;
-					aOutput4 = null;
-				} else {
-					aOutput4.stackSize -= aInput1.stackSize;
-				}
-			}
-		}
+//		if (aInput1 != null && aInput1.getItemDamage() != GregTech_API.ITEM_WILDCARD_DAMAGE) {
+//			if (GT_Utility.areStacksEqual(aInput1, aOutput1)) {
+//				if (aInput1.stackSize >= aOutput1.stackSize) {
+//					aInput1.stackSize -= aOutput1.stackSize;
+//					aOutput1 = null;
+//				} else {
+//					aOutput1.stackSize -= aInput1.stackSize;
+//				}
+//			}
+//			if (GT_Utility.areStacksEqual(aInput1, aOutput2)) {
+//				if (aInput1.stackSize >= aOutput2.stackSize) {
+//					aInput1.stackSize -= aOutput2.stackSize;
+//					aOutput2 = null;
+//				} else {
+//					aOutput2.stackSize -= aInput1.stackSize;
+//				}
+//			}
+//			if (GT_Utility.areStacksEqual(aInput1, aOutput3)) {
+//				if (aInput1.stackSize >= aOutput3.stackSize) {
+//					aInput1.stackSize -= aOutput3.stackSize;
+//					aOutput3 = null;
+//				} else {
+//					aOutput3.stackSize -= aInput1.stackSize;
+//				}
+//			}
+//			if (GT_Utility.areStacksEqual(aInput1, aOutput4)) {
+//				if (aInput1.stackSize >= aOutput4.stackSize) {
+//					aInput1.stackSize -= aOutput4.stackSize;
+//					aOutput4 = null;
+//				} else {
+//					aOutput4.stackSize -= aInput1.stackSize;
+//				}
+//			}
+//		}
+//		
+//		if (aInput2 != null && aInput2.getItemDamage() != GregTech_API.ITEM_WILDCARD_DAMAGE) {
+//			if (GT_Utility.areStacksEqual(aInput2, aOutput1)) {
+//				assert aOutput1 != null;
+//				if (aInput2.stackSize >= aOutput1.stackSize) {
+//					aInput2.stackSize -= aOutput1.stackSize;
+//					aOutput1 = null;
+//				} else {
+//					aOutput1.stackSize -= aInput2.stackSize;
+//				}
+//			}
+//			if (GT_Utility.areStacksEqual(aInput2, aOutput2)) {
+//				assert aOutput2 != null;
+//				if (aInput2.stackSize >= aOutput2.stackSize) {
+//					aInput2.stackSize -= aOutput2.stackSize;
+//					aOutput2 = null;
+//				} else {
+//					aOutput2.stackSize -= aInput2.stackSize;
+//				}
+//			}
+//			if (GT_Utility.areStacksEqual(aInput2, aOutput3)) {
+//				assert aOutput3 != null;
+//				if (aInput2.stackSize >= aOutput3.stackSize) {
+//					aInput2.stackSize -= aOutput3.stackSize;
+//					aOutput3 = null;
+//				} else {
+//					aOutput3.stackSize -= aInput2.stackSize;
+//				}
+//			}
+//			if (GT_Utility.areStacksEqual(aInput2, aOutput4)) {
+//				assert aOutput4 != null;
+//				if (aInput2.stackSize >= aOutput4.stackSize) {
+//					aInput2.stackSize -= aOutput4.stackSize;
+//					aOutput4 = null;
+//				} else {
+//					aOutput4.stackSize -= aInput2.stackSize;
+//				}
+//			}
+//		}
 		
-		if (aInput2 != null && aInput2.getItemDamage() != GregTech_API.ITEM_WILDCARD_DAMAGE) {
-			if (GT_Utility.areStacksEqual(aInput2, aOutput1)) {
-				assert aOutput1 != null;
-				if (aInput2.stackSize >= aOutput1.stackSize) {
-					aInput2.stackSize -= aOutput1.stackSize;
-					aOutput1 = null;
-				} else {
-					aOutput1.stackSize -= aInput2.stackSize;
-				}
-			}
-			if (GT_Utility.areStacksEqual(aInput2, aOutput2)) {
-				assert aOutput2 != null;
-				if (aInput2.stackSize >= aOutput2.stackSize) {
-					aInput2.stackSize -= aOutput2.stackSize;
-					aOutput2 = null;
-				} else {
-					aOutput2.stackSize -= aInput2.stackSize;
-				}
-			}
-			if (GT_Utility.areStacksEqual(aInput2, aOutput3)) {
-				assert aOutput3 != null;
-				if (aInput2.stackSize >= aOutput3.stackSize) {
-					aInput2.stackSize -= aOutput3.stackSize;
-					aOutput3 = null;
-				} else {
-					aOutput3.stackSize -= aInput2.stackSize;
-				}
-			}
-			if (GT_Utility.areStacksEqual(aInput2, aOutput4)) {
-				assert aOutput4 != null;
-				if (aInput2.stackSize >= aOutput4.stackSize) {
-					aInput2.stackSize -= aOutput4.stackSize;
-					aOutput4 = null;
-				} else {
-					aOutput4.stackSize -= aInput2.stackSize;
-				}
-			}
-		}
-		
-		for (byte i = 64; i > 1; i--) if (aDuration / i > 0) {
-			if (aInput1  == null || aInput1 .stackSize % i == 0)
-			if (aInput2  == null || aInput2 .stackSize % i == 0)
-			if (aOutput1 == null || aOutput1.stackSize % i == 0)
-			if (aOutput2 == null || aOutput2.stackSize % i == 0)
-			if (aOutput3 == null || aOutput3.stackSize % i == 0)
-			if (aOutput4 == null || aOutput4.stackSize % i == 0) {
-				if (aInput1  != null) aInput1 .stackSize /= i;
-				if (aInput2  != null) aInput2 .stackSize /= i;
-				if (aOutput1 != null) aOutput1.stackSize /= i;
-				if (aOutput2 != null) aOutput2.stackSize /= i;
-				if (aOutput3 != null) aOutput3.stackSize /= i;
-				if (aOutput4 != null) aOutput4.stackSize /= i;
-				aDuration /= i;
-			}
-		}
+		// Thanks for retardness....spent 40 minutes to find why recycler works so fast
+//		for (byte i = 64; i > 1; i--) if (aDuration / i > 0) {
+//			if (aInput1  == null || aInput1 .stackSize % i == 0)
+//			if (aInput2  == null || aInput2 .stackSize % i == 0)
+//			if (aOutput1 == null || aOutput1.stackSize % i == 0)
+//			if (aOutput2 == null || aOutput2.stackSize % i == 0)
+//			if (aOutput3 == null || aOutput3.stackSize % i == 0)
+//			if (aOutput4 == null || aOutput4.stackSize % i == 0) {
+//				if (aInput1  != null) aInput1 .stackSize /= i;
+//				if (aInput2  != null) aInput2 .stackSize /= i;
+//				if (aOutput1 != null) aOutput1.stackSize /= i;
+//				if (aOutput2 != null) aOutput2.stackSize /= i;
+//				if (aOutput3 != null) aOutput3.stackSize /= i;
+//				if (aOutput4 != null) aOutput4.stackSize /= i;
+//				aDuration /= i;
+//			}
+//		}
 		
 		if (aInput1 == null) {
 			mInputs = new ItemStack [0][];
 		} else if (aInput2 == null) {
-			mInputs = new ItemStack[][]{ applyOreDict(aInput1) }; // apply oredict optionally, better to make recipe builder
+			mInputs = new ItemStack[][]{ unification ? applyOreDict(aInput1) : new ItemStack[] {aInput1}};
 		} else {
-			mInputs = new ItemStack[][] { applyOreDict(aInput1), applyOreDict(aInput2)};
+			mInputs = new ItemStack[][] { unification ? applyOreDict(aInput1) : new ItemStack[] {aInput1}, unification ? applyOreDict(aInput2) : new ItemStack[] {aInput2}};
 		}
 		
 		mOutputs = new ItemStack[] {aOutput1, aOutput2, aOutput3, aOutput4};
@@ -371,7 +389,7 @@ public class Recipe {
 	
 	// aStartEU = EU per Liter! If there is no Liquid for this Object, then it gets multiplied with 1000!
 	public Recipe(ItemStack aInput1, ItemStack aOutput1, ItemStack aOutput2, ItemStack aOutput3, ItemStack aOutput4, int aStartEU, int aType) {
-		this(aInput1, null, aOutput1, aOutput2, aOutput3, aOutput4, 0, 0, Math.max(1, aStartEU));
+		this(aInput1, null, aOutput1, aOutput2, aOutput3, aOutput4, 0, 0, Math.max(1, aStartEU), true);
 		
 		if (mInputs.length > 0 && aStartEU > 0) {
 			switch (aType) {
@@ -404,126 +422,126 @@ public class Recipe {
 	}
 	
 	public Recipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, int aDuration, int aEUt, int aStartEU) {
-		this(aInput1, aInput2, aOutput1, null, null, null, Math.max(aDuration, 1), aEUt, Math.max(Math.min(aStartEU, 160000000), 0));
+		this(aInput1, aInput2, aOutput1, null, null, null, Math.max(aDuration, 1), aEUt, Math.max(Math.min(aStartEU, 160000000), 0), true);
 		if (mInputs.length > 1 && findEqualRecipe(true, sFusionRecipes, aInput1, aInput2) == null) {
 			addToLists(sFusionRecipes);
 		}
 	}
 	
 	public Recipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, ItemStack aOutput2, ItemStack aOutput3, ItemStack aOutput4, int aDuration) {
-		this(aInput1, aInput2, aOutput1, aOutput2, aOutput3, aOutput4, Math.max(aDuration, 1), 5, 0);
+		this(aInput1, aInput2, aOutput1, aOutput2, aOutput3, aOutput4, Math.max(aDuration, 1), 5, 0, true);
 		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(false, sCentrifugeRecipes, aInput1, aInput2) == null) {
 			addToLists(sCentrifugeRecipes);
 		}
 	}
 	
 	public Recipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, ItemStack aOutput2, ItemStack aOutput3, ItemStack aOutput4, int aDuration, int aEUt) {
-		this(aInput1, aInput2, aOutput1, aOutput2, aOutput3, aOutput4, Math.max(aDuration, 1), Math.max(aEUt, 1), 0);
+		this(aInput1, aInput2, aOutput1, aOutput2, aOutput3, aOutput4, Math.max(aDuration, 1), Math.max(aEUt, 1), 0, true);
 		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(false, sElectrolyzerRecipes, aInput1, aInput2) == null) {
 			addToLists(sElectrolyzerRecipes);
 		}
 	}
 	
 	public Recipe(ItemStack aInput1, ItemStack aOutput1, ItemStack aOutput2, int aDuration, int aEUt) {
-		this(aInput1, null, aOutput1, aOutput2, null, null, aDuration, aEUt, 0);
+		this(aInput1, null, aOutput1, aOutput2, null, null, aDuration, aEUt, 0, true);
 		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(true, sLatheRecipes, aInput1) == null) {
 			addToLists(sLatheRecipes);
 		}
 	}
 	
 	public Recipe(ItemStack aInput1, int aDuration, ItemStack aOutput1, int aEUt) {
-		this(aInput1, null, aOutput1, null, null, null, aDuration, aEUt, 0);
+		this(aInput1, null, aOutput1, null, null, null, aDuration, aEUt, 0, true);
 		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(true, sCutterRecipes, aInput1) == null) {
 			addToLists(sCutterRecipes);
 		}
 	}
 	
 	public Recipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, ItemStack aOutput2, ItemStack aOutput3) {
-		this(aInput1, aInput2, aOutput1, aOutput2, aOutput3, null, 200*aInput1.stackSize, 30, 0);
+		this(aInput1, aInput2, aOutput1, aOutput2, aOutput3, null, 200*aInput1.stackSize, 30, 0, true);
 		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(false, sSawmillRecipes, aInput1, aInput2) == null) {
 			addToLists(sSawmillRecipes);
 		}
 	}
 	
 	public Recipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, ItemStack aOutput2, ItemStack aOutput3, ItemStack aOutput4) {
-		this(aInput1, aInput2, aOutput1, aOutput2, aOutput3, aOutput4, 100*aInput1.stackSize, 120, 0);
+		this(aInput1, aInput2, aOutput1, aOutput2, aOutput3, aOutput4, 100*aInput1.stackSize, 120, 0, true);
 		if (mInputs.length > 0 && aInput2 != null && mOutputs[0] != null && findEqualRecipe(false, sGrinderRecipes, aInput1, aInput2) == null) {
 			addToLists(sGrinderRecipes);
 		}
 	}
 	
 	public Recipe(ItemStack aInput1, int aCellAmount, ItemStack aOutput1, ItemStack aOutput2, ItemStack aOutput3, ItemStack aOutput4, int aDuration, int aEUt) {
-		this(aInput1, aCellAmount>0?GT_Items.Cell_Empty.get(Math.min(64, Math.max(1, aCellAmount))):null, aOutput1, aOutput2, aOutput3, aOutput4, Math.max(aDuration, 1), Math.max(aEUt, 1), 0);
+		this(aInput1, aCellAmount>0?GT_Items.Cell_Empty.get(Math.min(64, Math.max(1, aCellAmount))):null, aOutput1, aOutput2, aOutput3, aOutput4, Math.max(aDuration, 1), Math.max(aEUt, 1), 0, true);
 		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(false, sDistillationRecipes, aInput1, aCellAmount>0?GT_Items.Cell_Empty.get(Math.min(64, Math.max(1, aCellAmount))):null) == null) {
 			addToLists(sDistillationRecipes);
 		}
 	}
 	
 	public Recipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, ItemStack aOutput2, int aDuration, int aEUt, int aLevel) {
-		this(aInput1, aInput2, aOutput1, aOutput2, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), aLevel > 0 ? aLevel : 100);
+		this(aInput1, aInput2, aOutput1, aOutput2, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), aLevel > 0 ? aLevel : 100, true);
 		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(true, sBlastRecipes, aInput1, aInput2) == null) {
 			addToLists(sBlastRecipes);
 		}
 	}
 	
 	public Recipe(ItemStack aInput1, int aInput2, ItemStack aOutput1, ItemStack aOutput2) {
-		this(aInput1, GT_ModHandler.getIC2Item("industrialTnt", aInput2>0?aInput2<64?aInput2:64:1, new ItemStack(Blocks.tnt, aInput2>0?aInput2<64?aInput2:64:1)), aOutput1, aOutput2, null, null, 20, 30, 0);
+		this(aInput1, GT_ModHandler.getIC2Item("industrialTnt", aInput2>0?aInput2<64?aInput2:64:1, new ItemStack(Blocks.tnt, aInput2>0?aInput2<64?aInput2:64:1)), aOutput1, aOutput2, null, null, 20, 30, 0, true);
 		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(false, sImplosionRecipes, aInput1, GT_ModHandler.getIC2Item("industrialTnt", aInput2>0?aInput2<64?aInput2:64:1, new ItemStack(Blocks.tnt, aInput2>0?aInput2<64?aInput2:64:1))) == null) {
 			addToLists(sImplosionRecipes);
 		}
 	}
 	
 	public Recipe(ItemStack aInput1, int aEUt, int aDuration, ItemStack aOutput1) {
-		this(aInput1, null, aOutput1, null, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), 0);
+		this(aInput1, null, aOutput1, null, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), 0, true);
 		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(true, sWiremillRecipes, aInput1) == null) {
 			addToLists(sWiremillRecipes);
 		}
 	}
 	
 	public Recipe(int aEUt, int aDuration, ItemStack aInput1, ItemStack aOutput1) {
-		this(aInput1, GT_Items.Circuit_Integrated.getWithDamage(0, aInput1.stackSize), aOutput1, null, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), 0);
+		this(aInput1, GT_Items.Circuit_Integrated.getWithDamage(0, aInput1.stackSize), aOutput1, null, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), 0, true);
 		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(false, sBenderRecipes, aInput1) == null) {
 			addToLists(sBenderRecipes);
 		}
 	}
 	
 	public Recipe(int aEUt, int aDuration, ItemStack aInput1, ItemStack aShape, ItemStack aOutput1) {
-		this(aInput1, aShape, aOutput1, null, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), 0);
+		this(aInput1, aShape, aOutput1, null, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), 0, true);
 		if (mInputs.length > 1 && mOutputs[0] != null && findEqualRecipe(false, sExtruderRecipes, aInput1) == null) {
 			addToLists(sExtruderRecipes);
 		}
 	}
 	
 	public Recipe(ItemStack aInput1, int aEUt, ItemStack aInput2, int aDuration, ItemStack aOutput1) {
-		this(aInput1, aInput2, aOutput1, null, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), 0);
+		this(aInput1, aInput2, aOutput1, null, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), 0, true);
 		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(true, sAssemblerRecipes, aInput1, aInput2) == null) {
 			addToLists(sAssemblerRecipes);
 		}
 	}
 	
 	public Recipe(ItemStack aInput1, ItemStack aInput2, int aEUt, int aDuration, ItemStack aOutput1) {
-		this(aInput1, aInput2, aOutput1, null, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), 0);
+		this(aInput1, aInput2, aOutput1, null, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), 0, true);
 		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(true, sAlloySmelterRecipes, aInput1, aInput2) == null) {
 			addToLists(sAlloySmelterRecipes);
 		}
 	}
 	
 	public Recipe(ItemStack aInput1, int aEUt, ItemStack aInput2, int aDuration, ItemStack aOutput1, ItemStack aOutput2) {
-		this(aInput1, aInput2, aOutput1, aOutput2, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), 0);
+		this(aInput1, aInput2, aOutput1, aOutput2, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), 0, true);
 		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(true, sCannerRecipes, aInput1, aInput2) == null) {
 			addToLists(sCannerRecipes);
 		}
 	}
 	
 	public Recipe(ItemStack aInput1, ItemStack aOutput1, int aDuration) {
-		this(aInput1, null, aOutput1, null, null, null, Math.max(aDuration, 1), 120, 0);
+		this(aInput1, null, aOutput1, null, null, null, Math.max(aDuration, 1), 120, 0, true);
 		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(true, sVacuumRecipes, aInput1) == null) {
 			addToLists(sVacuumRecipes);
 		}
 	}
 	
 	public Recipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, int aDuration) {
-		this(aInput1, aInput2, aOutput1, null, null, null, Math.max(aDuration, 1), 30, 0);
+		this(aInput1, aInput2, aOutput1, null, null, null, Math.max(aDuration, 1), 30, 0, true);
 		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(true, sChemicalRecipes, aInput1) == null) {
 			addToLists(sChemicalRecipes);
 		}

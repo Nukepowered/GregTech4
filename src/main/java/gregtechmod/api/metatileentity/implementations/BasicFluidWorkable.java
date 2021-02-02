@@ -155,12 +155,13 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
     
 	@Override
     public boolean spaceForOutput(Recipe recipe) {
-		if (recipe.getOutputs().length <= getOutputSlots().length) {
+		ItemStack[] outputs = recipe.getOutputs();
+		if (outputs.length <= getOutputSlots().length) {
 			List<ItemStack> slots = new ArrayList<>();
 			for (int i : getOutputSlots()) slots.add(mInventory[i]);
-			for (int i = 0; i < recipe.getOutputs().length && i < slots.size(); i++) {
-				if (slots.get(i) != null && recipe.getOutputs()[i] != null) {
-					if (!GT_Utility.areStacksEqual(slots.get(i), recipe.getOutputs()[i]) || slots.get(i).stackSize + recipe.getOutputs()[i].stackSize > slots.get(i).getMaxStackSize()) {
+			for (int i = 0; i < outputs.length && i < slots.size(); i++) {
+				if (slots.get(i) != null && outputs[i] != null) {
+					if (!GT_Utility.areStacksEqual(slots.get(i), outputs[i]) || slots.get(i).stackSize + outputs[i].stackSize > slots.get(i).getMaxStackSize()) {
 						return false;
 					}
 				}
@@ -173,9 +174,9 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
 	@Override
 	public Map<String, List<Object>> getInfoData() {
 		return InfoBuilder.create()
-				.newKey("sensor.progress.percentage", recipeLogic.getProgressTime() * 100.0D / recipeLogic.getMaxProgressTime())
-				.newKey("sensor.progress.secs", recipeLogic.getProgressTime() / 20)
-				.newKey("sensor.progress.secs.1", recipeLogic.getMaxProgressTime() / 20)
+				.newKey("sensor.progress.percentage", recipeLogic.getDisplayProgress() * 100.0D / recipeLogic.getDisplayMaxProgress())
+				.newKey("sensor.progress.secs", recipeLogic.getDisplayProgress() / 20)
+				.newKey("sensor.progress.secs.1", recipeLogic.getDisplayMaxProgress() / 20)
 				.build();
 	}
 	

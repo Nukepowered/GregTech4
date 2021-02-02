@@ -7,8 +7,9 @@ import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_ModHandler;
-import gregtechmod.api.util.GT_Utility;
+
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 
 public class GT_MetaTileEntity_Extractor extends GT_MetaTileEntity_BasicMachine {
 	
@@ -28,13 +29,16 @@ public class GT_MetaTileEntity_Extractor extends GT_MetaTileEntity_BasicMachine 
 	}
 	
 	@Override
-    public void checkRecipe() {
-		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 1, 2, (byte)64, (byte)1, (byte)64, (byte)1);
-		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 3, 4, (byte)64, (byte)1, (byte)64, (byte)1);
-    	if (mInventory[2] != null && null != (mOutputItem1 = GT_ModHandler.getExtractorOutput(mInventory[2], true, mInventory[3]))) {
-    		mEUt = 2;
-    		mMaxProgresstime = 400;
-    	}
+	protected void initRecipeLogic(List<Recipe> recipeMap) {
+		super.initRecipeLogic(recipeMap);
+		recipeLogic.setRecipeProvider(() -> {
+			ItemStack output = null;
+	    	if (mInventory[2] != null && null != (output = GT_ModHandler.getExtractorOutput(mInventory[2], true, mInventory[3]))) {
+	    		return new Recipe(mInventory[2].copy(), null, output, null, null, null, 400, 2, 0, true); // TODO add methods get input by output, or all recipe here
+	    	}
+			
+			return null;
+		});
     }
 	
 	@Override
