@@ -48,7 +48,7 @@ public class Recipe {
 	private static final IdentityHashMap<List<Recipe>, Map<Integer, List<Recipe>>> RECIPE_MAPPINGS = new IdentityHashMap<>();
 	
 	public ItemStack[][] mInputs; // FIXME create ingredient class and make sure counting wildcard / nbt while matching recipes
-	public ItemStack[] mOutputs;	// FIXME add precise and oredict recipes
+	public ItemStack[] mOutputs;	// FIXME add precise and oredict recipes and nonconsumptional inputs
 	public int mDuration;
 	public int mEUt;
 	public int mStartEU;
