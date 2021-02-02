@@ -30,7 +30,8 @@ public class GT_GUIContainer_Electrolyzer extends GT_GUIContainerMetaTile_Machin
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
         
         if (mContainer != null && mContainer.mProgressTime>0) {
-        	int tScale = ((GT_Container_Electrolyzer)mContainer).mProgressScale;
+        	int tScale = (int) ((mContainer.mProgressTime * 1.0D / mContainer.mMaxProgressTime * 10));
+        	tScale = tScale < 0 || tScale > 10 ? 0 : tScale;
         	drawTexturedModalRect(x + 73, y + 44 - tScale, 183, 44 - tScale, 30, tScale);
         }
     }

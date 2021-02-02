@@ -203,11 +203,11 @@ public class RecipeLogic {
 	}
 	
 	public int getMaxProgressTime() {
-		return maxProgressTime;
+		return maxProgressTime / (int)Math.pow(2, overclockersCount);
 	}
 	
 	public int getProgressTime() {
-		return progressTime;
+		return progressTime / (int)Math.pow(2, overclockersCount);
 	}
 	
 	public int getEUt() {

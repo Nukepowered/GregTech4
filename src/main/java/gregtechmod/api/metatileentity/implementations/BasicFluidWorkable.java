@@ -45,8 +45,6 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
     @Override public int maxEUStore()								{return 10000;}
     @Override public int maxRFStore()								{return maxEUStore();}
     @Override public int maxSteamStore()							{return maxEUStore();}
-	@Override public int getInvSize()								{return 7;}
-	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 146);}
 	@Override public boolean isAccessAllowed(EntityPlayer aPlayer)	{return true;}
 	@Override public RecipeLogic getRecipeLogic() 					{return recipeLogic;}
 	@Override public int increaseProgress(int aProgress)			{recipeLogic.increaseProgressTime(aProgress); return recipeLogic.getMaxProgressTime()-recipeLogic.getProgressTime();}
@@ -58,15 +56,15 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
 	@Override public boolean displaysItemStack()	{return true;}
 	@Override public boolean displaysStackSize()	{return true;}
 	
-	@Override public int getInputSlot() {return 1;}
-	@Override public int getOutputSlot() {return 2;}
-	@Override public int getStackDisplaySlot() {return 6;}
+	@Override public int getInputSlot() 			{return 1;}
+	@Override public int getOutputSlot() 			{return 2;}
+	@Override public int getStackDisplaySlot() 		{return 6;}
 	
 	protected void initRecipeLogic(List<Recipe> recipeMap) {
 		recipeLogic = new RecipeLogic(recipeMap, this) {
 			@Override
 			protected void consumeInputs(Recipe recipe) {
-				if (mFluid == null || BasicFluidWorkable.this.consumeFluids(true, recipe)) {
+				if (mFluid == null || !BasicFluidWorkable.this.consumeFluids(true, recipe)) {
 					super.consumeInputs(recipe);
 				}
 			}
@@ -92,17 +90,11 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
     		ItemStack filledBucket = GT_Utility.fillFluidContainer(mFluid, new ItemStack(Items.bucket));
     		if (filledBucket != null) {
     			filledBucket.stackSize = mFluid.amount / 1000;
-//    			result = recipeLogic.recipeMap.stream()
-//    					.filter(rec -> rec.match(filledBucket)) // TODO cache recipe haven't inplemented here
-//    					.findFirst()
-//    					.orElse(null);
     			result = Recipe.findEqualRecipe(false, recipeLogic.recipeMap, filledBucket);
     		}
-    	} else {
-//    		result = recipeLogic.recipeMap.stream()
-//    				.filter(rec -> rec.match(false, getBaseMetaTileEntity(), getInputSlots()))
-//    				.findFirst()
-//    				.orElse(null);
+    	}
+    	
+    	if (result == null) {
     		result = Recipe.findEqualRecipe(false, recipeLogic.recipeMap, getBaseMetaTileEntity(), getInputSlots());
     	}
     	
@@ -120,7 +112,7 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
     	ItemStack fluidItem = findFluidItem(recipe);
     	FluidStack fluid = null;
     	
-    	if (mFluid != null && (fluid = GT_Utility.getFluidForFilledItem(fluidItem)) != null) {
+    	if (mFluid != null && fluidItem != null && (fluid = GT_Utility.getFluidForFilledItem(fluidItem)) != null) {
     		fluid.amount = 1000 * fluidItem.stackSize;
     		if (fluid.getFluidID() == mFluid.getFluidID() && mFluid.amount >= fluid.amount) {
     			if (consume) mFluid.amount -= fluid.amount;
@@ -135,7 +127,7 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
     	ItemStack fluidItem = null;
     	for (ItemStack[] stacks : recipe.getRepresentativeInputs()) {
     		for (ItemStack stack : stacks) {
-    			if (GT_Utility.getFluidForFilledItem(stack) != null) {
+    			if (GT_Utility.getFluidForFilledItem(stack) != null && GT_Utility.getContainerForFilledItem(stack).getItem() == Items.bucket) {
     				fluidItem = stack;
     				break;
     			}
@@ -166,7 +158,7 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
 		if (recipe.getOutputs().length <= getOutputSlots().length) {
 			List<ItemStack> slots = new ArrayList<>();
 			for (int i : getOutputSlots()) slots.add(mInventory[i]);
-			for (int i = 0; i < slots.size(); i++) {
+			for (int i = 0; i < recipe.getOutputs().length && i < slots.size(); i++) {
 				if (slots.get(i) != null && recipe.getOutputs()[i] != null) {
 					if (!GT_Utility.areStacksEqual(slots.get(i), recipe.getOutputs()[i]) || slots.get(i).stackSize + recipe.getOutputs()[i].stackSize > slots.get(i).getMaxStackSize()) {
 						return false;
