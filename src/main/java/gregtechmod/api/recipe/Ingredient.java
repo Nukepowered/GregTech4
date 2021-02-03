@@ -22,7 +22,7 @@ public interface Ingredient {
 	public List<ItemStack> getVariants();
 	
 	/**
-	 * Determines this ingredient is consumable or not
+	 * Get a ingredient count
 	 */
-	public boolean consumable();
+	public int getCount();
 }
