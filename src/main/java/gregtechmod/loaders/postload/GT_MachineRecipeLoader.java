@@ -529,6 +529,8 @@ public class GT_MachineRecipeLoader implements Runnable
         GregTech_API.sRecipeAdder.addCentrifugeRecipe(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 2L), 0, GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Ash, 1L), GT_Items.TE_Slag.get(1L, GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Ash, 1L)), null, null, 250);
         GregTech_API.sRecipeAdder.addCentrifugeRecipe(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Glowstone, 16L), 1, GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Redstone, 8L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Gold, 8L), GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Helium, 1L), null, 25000);
         
+        // FIXME write printer recipes
+        
         for (final MaterialStack[] tMats : this.mAlloySmelterList) {
             final ItemStack tDust1 = GT_OreDictUnificator.get(OrePrefixes.dust, tMats[0].mMaterial, tMats[0].mAmount);
             final ItemStack tDust2 = GT_OreDictUnificator.get(OrePrefixes.dust, tMats[1].mMaterial, tMats[1].mAmount);

@@ -1,8 +1,15 @@
-package gregtechmod.api.recipe;
+package gregtechmod.common.recipe;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import gregtechmod.api.recipe.Recipe;
+
+/**
+ * 
+ * @author TheDarkDnKTv
+ *
+ */
 public class RecipeMaps {
 	public static final List<Recipe> sFusionRecipes			= new ArrayList<Recipe>();
 	public static final List<Recipe> sCentrifugeRecipes		= new ArrayList<Recipe>();

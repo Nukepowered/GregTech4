@@ -3,9 +3,9 @@ package gregtechmod.common.tileentities.machines;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.BasicFluidWorkable;
-import gregtechmod.api.recipe.RecipeMaps;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.common.recipe.RecipeMaps;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 

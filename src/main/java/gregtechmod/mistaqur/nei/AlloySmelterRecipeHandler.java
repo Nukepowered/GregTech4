@@ -2,7 +2,6 @@ package gregtechmod.mistaqur.nei;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.recipe.Recipe;
-import gregtechmod.api.recipe.RecipeMaps;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_BasicMachine_AlloySmelter;
@@ -11,6 +10,7 @@ import gregtechmod.common.gui.GT_GUIContainer_BasicMachine_E_Furnace;
 import gregtechmod.common.gui.GT_GUIContainer_BasicMachine_Extractor;
 import gregtechmod.common.gui.GT_GUIContainer_BasicMachine_Macerator;
 import gregtechmod.common.gui.GT_GUIContainer_Scrapboxinator;
+import gregtechmod.common.recipe.RecipeMaps;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;

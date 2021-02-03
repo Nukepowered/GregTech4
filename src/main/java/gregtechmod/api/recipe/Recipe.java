@@ -8,8 +8,9 @@ import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.ItemStackKey;
+import gregtechmod.common.recipe.RecipeMaps;
 
-import static gregtechmod.api.recipe.RecipeMaps.*;
+import static gregtechmod.common.recipe.RecipeMaps.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;

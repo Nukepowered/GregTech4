@@ -20,6 +20,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
@@ -74,7 +75,15 @@ public class GT_MetaTileEntity_Microwave extends GT_MetaTileEntity_BasicMachine 
 //			getBaseMetaTileEntity().doExplosion(128); // FIXME get filled sprayer
 			try {
 				ItemStack foamSprayer = GT_ModHandler.getIC2Item("constructionFoamSprayer", 1, new ItemStack(Blocks.sponge, 1));
-				System.err.println(foamSprayer.stackTagCompound);
+				NBTTagCompound data = new NBTTagCompound();
+				NBTTagCompound fluid = new NBTTagCompound();
+				fluid.setInteger("Amount", 10000);
+				fluid.setString("Fluid", "ic2constructionfoam");
+				data.setTag("Fluid", fluid);
+				foamSprayer.setTagCompound(data);
+				
+				
+				
 				for (int i = 0; i < 6; i++) {
 					foamSprayer.getItem().onItemUse(foamSprayer, new FakePlayer((WorldServer) getBaseMetaTileEntity().getWorld(), new GameProfile(UUID.randomUUID(),"Foo")),
 							getBaseMetaTileEntity().getWorld(), 

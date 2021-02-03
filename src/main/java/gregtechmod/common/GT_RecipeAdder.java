@@ -7,7 +7,7 @@ import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IGT_RecipeAdder;
 import gregtechmod.api.items.GT_Tool_Item;
 import gregtechmod.api.recipe.Recipe;
-import gregtechmod.api.recipe.RecipeMaps;
+import gregtechmod.common.recipe.RecipeMaps;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 

@@ -8,11 +8,10 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.recipe.Recipe;
-import gregtechmod.api.recipe.RecipeMaps;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_BasicMachine_Extruder;
-
+import gregtechmod.common.recipe.RecipeMaps;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.StatCollector;
 
