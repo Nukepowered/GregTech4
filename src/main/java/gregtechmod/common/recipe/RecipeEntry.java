@@ -13,6 +13,7 @@ import com.google.common.collect.Lists;
 import gregtechmod.api.recipe.Ingredient;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.ItemStackKey;
+
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -33,10 +34,17 @@ public class RecipeEntry implements Ingredient {
 		count = 0;
 	}
 	
+	/**
+	 * Will create singleton ingredient with size of stack
+	 */
 	public static Ingredient singleton(ItemStack stack, Match...options) {
-		return singleton(stack, 1, options);
+		assert GT_Utility.isStackValid(stack) : "Stack can not be null or invalid!";
+		return singleton(stack, stack.stackSize, options);
 	}
 	
+	/**
+	 * Will create singleton ingredient with size of count variable
+	 */
 	public static Ingredient singleton(ItemStack stack, int count, Match...options) {
 		assert GT_Utility.isStackValid(stack) : "Stack can not be invalid or null!";
 		
@@ -47,6 +55,9 @@ public class RecipeEntry implements Ingredient {
 		return result;
 	}
 	
+	/**
+	 * Create an Ingredient with size of count variable
+	 */
 	public static Ingredient fromStacks(int count, Collection<ItemStack> stacks, Match...options) {
 		if (stacks.size() > 0) {
 			RecipeEntry result = new RecipeEntry();
@@ -63,6 +74,9 @@ public class RecipeEntry implements Ingredient {
 		throw new IllegalArgumentException("An empty stack array present " + stacks.size());
 	}
 	
+	/**
+	 * Create an Ingredient with size of 1
+	 */
 	public static Ingredient fromStacks(Collection<ItemStack> stacks, Match...options) {
 		return fromStacks(1, stacks, options);
 	}
@@ -115,6 +129,9 @@ public class RecipeEntry implements Ingredient {
 		throw new IllegalArgumentException("Wrong ore dictionary stack supplied: " + stack);
 	}
 	
+	/**
+	 * Create an OreDict Ingredient with size of 1
+	 */
 	public static Ingredient oreDict(ItemStack stack, Match...options) {
 		return oreDict(stack, 1, options);
 	}
@@ -133,13 +150,31 @@ public class RecipeEntry implements Ingredient {
 		return result;
 	}
 	
+	/**
+	 * Create an OreDict Ingredient with size of 1
+	 */
 	public static Ingredient oreDict(String name, Match...options) {
 		return oreDict(name, 1, options);
 	}
 	
+	private boolean matchNBT(ItemStack stack1, ItemStack stack2) {
+		return (stack1.stackTagCompound == null && stack2.stackTagCompound == null) ||
+				(stack1.stackTagCompound != null && stack1.stackTagCompound.equals(stack2.stackTagCompound));
+	}
+	
 	@Override
 	public boolean match(ItemStack input) {
-		// TODO Auto-generated method stub
+		if (GT_Utility.isStackValid(input)) {
+			for (ItemStack stack : variants) {
+				if (stack.getItem() == input.getItem() && 
+						(options.contains(Match.DAMAGE) ? stack.getItemDamage() == input.getItemDamage() : true) &&
+						(options.contains(Match.NBT) ? matchNBT(input, stack) : true)) {
+					return true;
+				}
+			}
+		} else
+			throw new IllegalArgumentException("Input stack is invalid or null");
+
 		return false;
 	}
 
@@ -162,7 +197,7 @@ public class RecipeEntry implements Ingredient {
 	}
 	
 	/**
-	 * By default will match items with any damage and nbt
+	 * By default will match items with any damage and NBT
 	 * @author TheDarkDnKTv
 	 *
 	 */
