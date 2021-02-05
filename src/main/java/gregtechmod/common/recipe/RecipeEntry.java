@@ -186,7 +186,9 @@ public class RecipeEntry implements Ingredient {
 
 	@Override
 	public List<ItemStack> getVariants() {
-		return new ArrayList<>(variants);
+		List<ItemStack> vars = new ArrayList<>();
+		for (ItemStack stack : variants) vars.add(stack.copy());
+		return vars;
 	}
 	
 	@Override

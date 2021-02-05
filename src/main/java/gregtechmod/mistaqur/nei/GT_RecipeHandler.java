@@ -1,14 +1,17 @@
 package gregtechmod.mistaqur.nei;
 
 import gregtechmod.api.GregTech_API;
+import gregtechmod.api.recipe.Ingredient;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_OreDictUnificator;
+import gregtechmod.api.util.GT_Utility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 
 import org.apache.commons.lang3.tuple.Pair;
@@ -16,6 +19,7 @@ import org.lwjgl.opengl.GL11;
 
 import codechicken.nei.PositionedStack;
 import codechicken.nei.api.API;
+import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import cpw.mods.fml.common.event.FMLInterModComms;
 
@@ -34,29 +38,42 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 	public class CachedGT_Recipe extends CachedRecipe {
 		public List<PositionedStack> products;
 		public List<PositionedStack> resources;
+		public List<Integer> nonConsumables;
 		public int mDuration, mEUt;
 		
 		public CachedGT_Recipe(Recipe aRecipe) {
-			resources = new ArrayList<PositionedStack>();
-			products = new ArrayList<PositionedStack>();
+			resources 		= new ArrayList<>();
+			products 		= new ArrayList<>();
+			nonConsumables 	= new ArrayList<>();
 			
-			ItemStack[][] inputs = aRecipe.getRepresentativeInputs();
-			for (int i = 0; i < inputs.length; i++) {
-				ItemStack[] items = Arrays.stream(inputs[i]).filter(item -> item != null).toArray(a -> new ItemStack[a]);
-				if (items.length > 0) {
-					Pair<Integer, Integer> offsets = getInputAligment(i);
-					resources.add(new PositionedStack(items, offsets.getKey(), offsets.getValue()));
+//			ItemStack[][] inputs = aRecipe.getRepresentativeInputs();
+//			for (int i = 0; i < inputs.length; i++) {
+//				ItemStack[] items = Arrays.stream(inputs[i]).filter(item -> item != null).toArray(a -> new ItemStack[a]);
+//				if (items.length > 0) {
+//					Pair<Integer, Integer> offsets = getInputAligment(i);
+//					resources.add(new PositionedStack(items, offsets.getKey(), offsets.getValue()));
+//				}
+//			}
+			
+			List<Ingredient> inputs = aRecipe.getInputs();
+			for (int i = 0; i < inputs.size(); i++) {
+				Ingredient input = inputs.get(i);
+				Pair<Integer, Integer> offsets = getInputAligment(i);
+				if (input.getCount() == 0) {
+					for (ItemStack s : input.getVariants()) {
+						nonConsumables.add(GT_Utility.stackToInt(s));
+					}
 				}
+				resources.add(new PositionedStack(input.getVariants(), offsets.getKey(), offsets.getValue()));
 			}
 
-			ItemStack[] outputs = Arrays.stream(aRecipe.getOutputs()).filter(item -> item != null).toArray(a -> new ItemStack[a]);
-			for (int i = 0; i < outputs.length; i++) {
+			for (int i = 0; i < aRecipe.get.length; i++) {
 				Pair<Integer, Integer> offsets = getOutputAligment(i);
 				products.add(new PositionedStack(outputs[i], offsets.getKey(), offsets.getValue()));
 			}
 			
-			mDuration = aRecipe.mDuration;
-			mEUt = aRecipe.mEUt;
+			mDuration = aRecipe.getDuration();
+			mEUt = aRecipe.getEUt();
 		}
 		
 		@Override
@@ -96,6 +113,17 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 	public abstract List<Recipe> getRecipeList();
 	
 	public abstract CachedGT_Recipe getRecipe(Recipe irecipe);
+	
+	@Override
+	public List<String> handleItemTooltip(GuiRecipe gui, ItemStack stack, List<String> currenttip, int recipe) {
+		CachedRecipe r = arecipes.get(recipe);
+		
+		if (r instanceof CachedGT_Recipe && ((CachedGT_Recipe)r).nonConsumables.contains(GT_Utility.stackToInt(stack))) {
+			currenttip.add(I18n.format("item.non_consumable.tooltip"));
+		}
+		
+		return currenttip;
+	}
 	
 	@Override
     public void drawBackground(int recipe) {

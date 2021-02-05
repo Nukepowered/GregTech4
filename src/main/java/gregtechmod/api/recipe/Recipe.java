@@ -15,6 +15,7 @@ import static gregtechmod.common.recipe.RecipeMaps.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IdentityHashMap;
@@ -181,7 +182,35 @@ public class Recipe {
 		return findEqualRecipe(shapeless, recipeMap, stacks.toArray(new ItemStack[0]));
 	}
 	
-//	public void checkCellBalance() {
+	/////////////
+	// GETTERS //
+	/////////////
+	
+	public int getDuration() {
+		return duration;
+	}
+	
+	public int getEUtoStart() {
+		return startEU;
+	}
+	
+	public int getEUt() {
+		return EUt;
+	}
+	
+	public List<ItemStack> getOutputs() {
+		return Collections.unmodifiableList(outputs);
+	}
+	
+	public List<ChancedOutput> getChancedOutputs() {
+		return Collections.unmodifiableList(chancedOutputs);
+	}
+	
+	public List<Ingredient> getInputs() {
+		return Collections.unmodifiableList(inputs);
+	}
+	
+	//	public void checkCellBalance() {
 //		if (!GregTech_API.SECONDARY_DEBUG_MODE || mInputs.length < 1) return;
 //		
 //		int tInputAmount  = GT_ModHandler.getCapsuleCellContainerCountMultipliedWithStackSize(getFirstInputs());

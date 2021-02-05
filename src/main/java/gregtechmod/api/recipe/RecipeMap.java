@@ -29,6 +29,7 @@ public class RecipeMap {
 		this.maxOutputs = maxOutputs;
 		this.factory 	= facorty;
 		this.recipeList = new ArrayList<Recipe>();
+		this.factory.se
 	}
 	
 	/**
