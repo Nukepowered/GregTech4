@@ -54,7 +54,7 @@ public class LatheRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public List<Recipe> getRecipeList() {
-		return RecipeMaps.sLatheRecipes;
+		return RecipeMaps.LATHE;
 	}
 	
 	@Override

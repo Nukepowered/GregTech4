@@ -12,11 +12,11 @@ import net.minecraft.item.ItemStack;
 public class GT_MetaTileEntity_Electrolyzer extends BasicFluidWorkable {
 	
 	public GT_MetaTileEntity_Electrolyzer(int aID, String mName) {
-		super(aID, mName, RecipeMaps.sElectrolyzerRecipes);
+		super(aID, mName, RecipeMaps.ELECTROLYZER);
 	}
 	
 	public GT_MetaTileEntity_Electrolyzer() {
-		super(RecipeMaps.sElectrolyzerRecipes);
+		super(RecipeMaps.ELECTROLYZER);
 	}
 	
     @Override public int maxEUInput()								{return 128;}

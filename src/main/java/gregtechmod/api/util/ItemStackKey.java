@@ -3,6 +3,7 @@ package gregtechmod.api.util;
 import java.util.Objects;
 
 import gregtechmod.api.GregTech_API;
+
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 

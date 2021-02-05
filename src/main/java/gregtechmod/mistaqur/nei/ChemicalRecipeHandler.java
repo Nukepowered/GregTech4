@@ -53,7 +53,7 @@ public class ChemicalRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public List<Recipe> getRecipeList() {
-		return RecipeMaps.sChemicalRecipes;
+		return RecipeMaps.CHEMICAL;
 	}
 	
 	@Override

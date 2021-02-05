@@ -14,11 +14,11 @@ public class GT_MetaTileEntity_Centrifuge extends BasicFluidWorkable {
 	private int mSpeed = 0;
 	
 	public GT_MetaTileEntity_Centrifuge(int aID, String mName) {
-		super(aID, mName, RecipeMaps.sCentrifugeRecipes);
+		super(aID, mName, RecipeMaps.CENTRIFUGE);
 	}
 	
 	public GT_MetaTileEntity_Centrifuge() {
-		super(RecipeMaps.sCentrifugeRecipes);
+		super(RecipeMaps.CENTRIFUGE);
 	}
     
 	@Override

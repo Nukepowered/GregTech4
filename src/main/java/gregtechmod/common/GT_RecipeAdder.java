@@ -343,7 +343,7 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 			if (!GregTech_API.sRecipeFile.get("forgehammer", aOutput1, true)) {
 				return false;
 			} else {
-				Recipe.addRecipe(RecipeMaps.sHammerRecipes, true, aInput1, null, aOutput1, null, null, null, aDuration, aEUt, 0);
+				Recipe.addRecipe(RecipeMaps.HAMMER, true, aInput1, null, aOutput1, null, null, null, aDuration, aEUt, 0);
 				return true;
 			}
 		} else {

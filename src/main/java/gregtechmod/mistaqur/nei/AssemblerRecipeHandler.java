@@ -54,7 +54,7 @@ public class AssemblerRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public List<Recipe> getRecipeList() {
-		return RecipeMaps.sAssemblerRecipes;
+		return RecipeMaps.ASSEMBLING;
 	}
 	
 	@Override

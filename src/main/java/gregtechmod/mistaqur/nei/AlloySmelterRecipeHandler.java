@@ -89,7 +89,7 @@ public class AlloySmelterRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public List<Recipe> getRecipeList() {
-		return RecipeMaps.sAlloySmelterRecipes;
+		return RecipeMaps.ALLOY_SMELTING;
 	}
 	
 	@Override

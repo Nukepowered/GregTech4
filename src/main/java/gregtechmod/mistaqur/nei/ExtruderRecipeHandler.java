@@ -44,7 +44,7 @@ public class ExtruderRecipeHandler extends GT_RecipeHandler {
 	}
 
 	public List<Recipe> getRecipeList() {
-		return RecipeMaps.sExtruderRecipes;
+		return RecipeMaps.EXTRUDING;
 	}
 
 	@Override

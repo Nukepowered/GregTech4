@@ -54,7 +54,7 @@ public class BenderRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public List<Recipe> getRecipeList() {
-		return RecipeMaps.sBenderRecipes;
+		return RecipeMaps.BENDING;
 	}
 	
 	@Override

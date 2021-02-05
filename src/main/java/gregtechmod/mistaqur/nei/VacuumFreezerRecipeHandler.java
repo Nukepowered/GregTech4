@@ -54,7 +54,7 @@ public class VacuumFreezerRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public List<Recipe> getRecipeList() {
-		return RecipeMaps.sVacuumRecipes;
+		return RecipeMaps.VACUUM_FREEZER;
 	}
 	
 	@Override

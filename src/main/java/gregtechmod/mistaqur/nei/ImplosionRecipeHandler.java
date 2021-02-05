@@ -54,7 +54,7 @@ public class ImplosionRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public List<Recipe> getRecipeList() {
-		return RecipeMaps.sImplosionRecipes;
+		return RecipeMaps.IMPLOSION_COMPRESSOR;
 	}
 	
 	@Override

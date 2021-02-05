@@ -73,7 +73,7 @@ public class FusionRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public List<Recipe> getRecipeList() {
-		return RecipeMaps.sFusionRecipes;
+		return RecipeMaps.FUSION_REACTOR;
 	}
 	
 	@Override

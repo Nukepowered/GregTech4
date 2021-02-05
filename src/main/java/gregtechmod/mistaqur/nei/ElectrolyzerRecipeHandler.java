@@ -54,7 +54,7 @@ public class ElectrolyzerRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public List<Recipe> getRecipeList() {
-		return RecipeMaps.sElectrolyzerRecipes;
+		return RecipeMaps.ELECTROLYZER;
 	}
 	
 	@Override

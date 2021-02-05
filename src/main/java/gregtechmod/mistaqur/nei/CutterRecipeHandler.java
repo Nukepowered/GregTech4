@@ -54,7 +54,7 @@ public class CutterRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public List<Recipe> getRecipeList() {
-		return RecipeMaps.sCutterRecipes;
+		return RecipeMaps.CUTTING;
 	}
 	
 	@Override

@@ -53,7 +53,7 @@ public class WiremillRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public List<Recipe> getRecipeList() {
-		return RecipeMaps.sWiremillRecipes;
+		return RecipeMaps.WIREMILL;
 	}
 	
 	@Override

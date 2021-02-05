@@ -54,7 +54,7 @@ public class CannerRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public List<Recipe> getRecipeList() {
-		return RecipeMaps.sCannerRecipes;
+		return RecipeMaps.CANINNING;
 	}
 	
 	@Override

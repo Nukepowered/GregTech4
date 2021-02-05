@@ -54,7 +54,7 @@ public class DistillationRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public List<Recipe> getRecipeList() {
-		return RecipeMaps.sDistillationRecipes;
+		return RecipeMaps.DISTILLATION;
 	}
 	
 	@Override

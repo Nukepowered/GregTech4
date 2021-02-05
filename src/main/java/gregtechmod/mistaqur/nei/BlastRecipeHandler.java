@@ -73,7 +73,7 @@ public class BlastRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public List<Recipe> getRecipeList() {
-		return RecipeMaps.sBlastRecipes;
+		return RecipeMaps.BLAST_FURNANCE;
 	}
 	
 	@Override

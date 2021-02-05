@@ -53,7 +53,7 @@ public class SawmillRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public List<Recipe> getRecipeList() {
-		return RecipeMaps.sSawmillRecipes;
+		return RecipeMaps.SAWMILL;
 	}
 	
 	@Override

@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 
@@ -16,6 +18,7 @@ import gregtechmod.api.util.ItemStackKey;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+import scala.actors.threadpool.Arrays;
 
 /** An implementation of Ingredient interface
  * 
@@ -24,6 +27,8 @@ import net.minecraftforge.oredict.OreDictionary;
  */
 public class RecipeEntry implements Ingredient {
 	
+	/** For internal use only */
+	private Collection<ItemStackKey> comparableVariants;
 	private HashSet<ItemStack> variants;
 	private EnumSet<Match> options;			// Options for matching
 	private int count;						// Using for non consumable
@@ -32,6 +37,7 @@ public class RecipeEntry implements Ingredient {
 		variants = new HashSet<>();
 		options = EnumSet.noneOf(Match.class);
 		count = 0;
+		comparableVariants = Collections2.transform(variants, stack -> ItemStackKey.from(stack));
 	}
 	
 	/**
@@ -194,6 +200,33 @@ public class RecipeEntry implements Ingredient {
 				this.options.add(option);
 			} else throw new IllegalArgumentException("Options can not be null!");
 		}
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof RecipeEntry) {
+			RecipeEntry e = (RecipeEntry) o;
+			return e.getCount() == this.getCount() && 
+					e.options.equals(this.options) && 
+					e.comparableVariants.size() == this.comparableVariants.size() && 
+					e.comparableVariants.containsAll(this.comparableVariants);
+		}
+		
+		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		return count - Arrays.hashCode(options.toArray()) + Arrays.hashCode(comparableVariants.toArray());
+	}
+	
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this)
+				.append("count=" + count)
+				.append("variants=" + Collections2.transform(variants, stack -> stack.getItem()))
+				.append("matches=" + options)
+				.build();
 	}
 	
 	/**
