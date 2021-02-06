@@ -12,9 +12,9 @@ import gregtechmod.api.util.GT_ItsNotMyFaultException;
  * @author TheDarkDnKTv
  *
  */
-public class RecipeMap {
+public class RecipeMap<F extends RecipeFactory<F>> {
 	
-	private final RecipeFactory factory;
+	private final F factory;
 	private final List<Recipe> recipeList;
 	
 	public final int minInputs;
@@ -22,21 +22,21 @@ public class RecipeMap {
 	public final int minOutputs;
 	public final int maxOutputs;
 	
-	public RecipeMap(int minInputs, int maxInputs, int minOutputs, int maxOutputs, RecipeFactory facorty) {
+	public RecipeMap(int minInputs, int maxInputs, int minOutputs, int maxOutputs, F facorty) {
 		this.minInputs 	= minInputs;
 		this.maxInputs 	= maxInputs;
 		this.minOutputs = minOutputs;
 		this.maxOutputs = maxOutputs;
 		this.factory 	= facorty;
 		this.recipeList = new ArrayList<Recipe>();
-		this.factory.se
+		this.factory.setRecipeMap(this);
 	}
 	
 	/**
 	 * @return a Recipe facotry of this recipe map
 	 * @see RecipeFactory
 	 */
-	public RecipeFactory factory() {
+	public F factory() {
 		return factory;
 	}
 	

@@ -1381,6 +1381,7 @@ item.tool.discharged.tooltip=Empty. You need to recharge it.
 item.empty=Empty. You should recycle it properly.
 item.generated.tooltip=Generated Item
 item.non_consumable.tooltip=§oWill not consume in process
+item.chanced.tooltip=Chance: %s%%
 item.GT_SensorCard_Item.tooltip=Insert into Display Panel
 item.GT_SensorCard_Item.tooltip.info.1=Device at:
 item.GT_SensorCard_Item.tooltip.info.2=x: %d y: %d z: %d

@@ -12,9 +12,10 @@ import net.minecraft.item.ItemStack;
  * @author TheDarkDnKTv
  *
  */
-public abstract class RecipeFactory {
+public abstract class RecipeFactory<F extends RecipeFactory<F>> {
+	public static final int MAX_CHANCE = 100_00; // i.m 100.00%
 	
-	protected RecipeMap map;
+	protected RecipeMap<F> map;
 	protected List<ItemStack> outputItems;
 	protected List<ChancedOutput> chancedOutput;
 	protected List<Ingredient> inputItems;
@@ -34,7 +35,7 @@ public abstract class RecipeFactory {
 		this.reset();
 	}
 	
-	protected RecipeFactory(RecipeMap map) {
+	protected RecipeFactory(RecipeMap<F> map) {
 		this();
 		this.map = map;
 	}
@@ -51,35 +52,35 @@ public abstract class RecipeFactory {
 		shaped = false;
 	}
 	
-	public void setRecipeMap(RecipeMap map) {
+	public void setRecipeMap(RecipeMap<F> map) {
 		assert 		map != null : "Supplied a null map!";
 		assert this.map == null : "It is not allowed to change recipe map if alredy set!";
 		
 		this.map = map;
 	}
 	
-	public RecipeFactory EUt(int energy) {
+	public RecipeFactory<F> EUt(int energy) {
 		EUt = energy;
 		return this;
 	}
 	
-	public RecipeFactory duration(int amount) {
+	public RecipeFactory<F> duration(int amount) {
 		duration = amount;
 		return this;
 	}
 	
-	public RecipeFactory setShaped(boolean value) {
+	public RecipeFactory<F> setShaped(boolean value) {
 		this.shaped = value;
 		return this;
 	}
 	
-	public abstract RecipeFactory nonConsumable(ItemStack stack);
+	public abstract RecipeFactory<F> nonConsumable(ItemStack stack);
 	
-	public RecipeFactory input(ItemStack stack) {
+	public RecipeFactory<F> input(ItemStack stack) {
 		return this.input(stack, true, false);
 	}
 	
-	public RecipeFactory input(ItemStack stack, boolean checkNBT) {
+	public RecipeFactory<F> input(ItemStack stack, boolean checkNBT) {
 		return this.input(stack, true, checkNBT);
 	}
 	
@@ -87,40 +88,64 @@ public abstract class RecipeFactory {
 	 * @param checkDamage if false, will check by wildcard (any item)
 	 * @param checkNBT will check is NBT tags equals
 	 */
-	public abstract RecipeFactory input(ItemStack stack, boolean checkDamage, boolean checkNBT);
+	public abstract RecipeFactory<F> input(ItemStack stack, boolean checkDamage, boolean checkNBT);
 	
-	public abstract RecipeFactory inputs(ItemStack...stacks);
+	public abstract RecipeFactory<F> inputs(ItemStack...stacks);
 	
-	public RecipeFactory input(String oreDict) {
+	public RecipeFactory<F> input(String oreDict) {
 		return this.input(oreDict, 1);
 	}
 	
-	public abstract RecipeFactory input(String oreDict, int amount);
+	public abstract RecipeFactory<F> input(String oreDict, int amount);
 	
-	public RecipeFactory input(Ingredient ingredient) {
-		if (ingredient != null && !ingredient.getVariants().isEmpty()) {
-			this.inputItems.add(ingredient);
-		} else {
-			errors.append(" - Supplied wrong ingredient: ");
-			errors.append(ingredient == null ? "null" : (ingredient.getCount() + "x of " + ingredient.getVariants()));
-			errors.append('\n');
+	public RecipeFactory<F> input(Ingredient ingredient) {
+		if (ingredient == null) {
+			errors.append(" - Supplied wrong ingredient: " + ingredient);
+			return this;
 		}
 		
+		if (ingredient.getVariants().isEmpty()) {
+			errors.append(" - Supplied wrong ingredient: no variants! Current: " + ingredient.getVariants());
+		}
+		
+		if (ingredient.getCount() < 0) {
+			errors.append(" - Supplied wrong ingredient: count is less than 0! Current: " + ingredient.getCount());
+		}
+		
+		this.inputItems.add(ingredient);
 		return this;
 	}
 	
-	public RecipeFactory output(ItemStack stack) {
+	public RecipeFactory<F> output(ItemStack stack) {
 		if (GT_Utility.isStackInvalid(stack))
 			errors.append("Found non-valid stack: " + stack);
 		this.outputItems.add(stack);
 		return this;
 	}
 	
-	public RecipeFactory outputs(ItemStack...stacks) {
+	public RecipeFactory<F> outputs(ItemStack...stacks) {
 		for (ItemStack stack : stacks)
 			this.output(stack);
 		return this;
 	}
+	
+	public RecipeFactory<F> chanced(ChancedOutput output) {
+		if (output.getChance() < 0 || output.getChance() > MAX_CHANCE) {
+			errors.append(" - Chance for " + output.getStack() + " not valid. Shall be 0 <= chance <= 10000");
+		}
+		
+		if (GT_Utility.isStackInvalid(output.getStack())) {
+			errors.append(" - Stack for chanced output is invalid: " + output.getStack());
+		}
+		
+		this.chancedOutput.add(output);
+		return this;
+	}
+	
+	/**
+	 * Chance is in format of int => 9575 == 95.75%, no more than 2 letters after comma
+	 */
+	public abstract RecipeFactory<F> chanced(ItemStack stack, int chance);
 	
 	/**
 	 * Building the recipe

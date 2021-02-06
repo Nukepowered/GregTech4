@@ -22,6 +22,8 @@ import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Random;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -198,16 +200,40 @@ public class Recipe {
 		return EUt;
 	}
 	
-	public List<ItemStack> getOutputs() {
+	/**
+	 * @return list containing only 100% chanced outputs
+	 */
+	public List<ItemStack> getAllOutputs() {
 		return Collections.unmodifiableList(outputs);
 	}
 	
+	/**
+	* @return list of chanced outputs
+	*/
 	public List<ChancedOutput> getChancedOutputs() {
 		return Collections.unmodifiableList(chancedOutputs);
 	}
 	
+	/**
+	 * @return list of all recipe inputs
+	 */
 	public List<Ingredient> getInputs() {
 		return Collections.unmodifiableList(inputs);
+	}
+	
+	/** Get a recipe outputs with applied chance
+	 * @param random will use to detect chance
+	 * @return list of all recipe's outputs
+	 */
+	public List<ItemStack> getResults(Random random) {
+		List<ItemStack> result = new ArrayList<>();
+		result.addAll(GT_Utility.copy(outputs));
+		result.addAll(chancedOutputs.stream()
+			.map(c -> c.get(random))
+			.filter(Optional::isPresent)
+			.map(Optional::get)
+			.collect(Collectors.toList()));
+		return result;
 	}
 	
 	//	public void checkCellBalance() {

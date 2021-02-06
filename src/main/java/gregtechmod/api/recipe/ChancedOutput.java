@@ -23,6 +23,6 @@ public interface ChancedOutput {
 	 */
 	public ItemStack getStack();
 	
-	public Optional<ItemStack> get(Random ranomIn);
+	public Optional<ItemStack> get(Random random);
 	
 }

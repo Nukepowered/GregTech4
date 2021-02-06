@@ -791,6 +791,10 @@ public class GT_Utility {
         }
 	}
 	
+	public static String parseChanceString(int chance) {
+		return parseNumberToString(chance * 1.0D / 100.0D);
+	}
+	
 	public static int stackToInt(ItemStack aStack) {
 		if (isStackInvalid(aStack)) return 0;
 		return Item.getIdFromItem(aStack.getItem()) | (Items.feather.getDamage(aStack) << 16);
@@ -987,6 +991,10 @@ public class GT_Utility {
 	public static ItemStack copy(ItemStack... aStacks) {
 		for (ItemStack tStack : aStacks) if (isStackValid(tStack)) return tStack.copy();
 		return null;
+	}
+	
+	public static List<ItemStack> copy(Collection<ItemStack> stacks) {
+		return stacks.stream().map(ItemStack::copy).collect(Collectors.toList());
 	}
 	
 	public static ItemStack copy(int amount, ItemStack stack) {

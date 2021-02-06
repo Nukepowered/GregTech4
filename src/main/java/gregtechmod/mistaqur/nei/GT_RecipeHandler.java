@@ -1,14 +1,16 @@
 package gregtechmod.mistaqur.nei;
 
 import gregtechmod.api.GregTech_API;
+import gregtechmod.api.recipe.ChancedOutput;
 import gregtechmod.api.recipe.Ingredient;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
@@ -39,23 +41,17 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 		public List<PositionedStack> products;
 		public List<PositionedStack> resources;
 		public List<Integer> nonConsumables;
+		public Map<Integer, Integer> chanced;
+		
 		public int mDuration, mEUt;
 		
-		public CachedGT_Recipe(Recipe aRecipe) {
+		public CachedGT_Recipe(Recipe recipe) {
 			resources 		= new ArrayList<>();
 			products 		= new ArrayList<>();
 			nonConsumables 	= new ArrayList<>();
+			chanced			= new HashMap<>();
 			
-//			ItemStack[][] inputs = aRecipe.getRepresentativeInputs();
-//			for (int i = 0; i < inputs.length; i++) {
-//				ItemStack[] items = Arrays.stream(inputs[i]).filter(item -> item != null).toArray(a -> new ItemStack[a]);
-//				if (items.length > 0) {
-//					Pair<Integer, Integer> offsets = getInputAligment(i);
-//					resources.add(new PositionedStack(items, offsets.getKey(), offsets.getValue()));
-//				}
-//			}
-			
-			List<Ingredient> inputs = aRecipe.getInputs();
+			List<Ingredient> inputs = recipe.getInputs();
 			for (int i = 0; i < inputs.size(); i++) {
 				Ingredient input = inputs.get(i);
 				Pair<Integer, Integer> offsets = getInputAligment(i);
@@ -66,14 +62,24 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 				}
 				resources.add(new PositionedStack(input.getVariants(), offsets.getKey(), offsets.getValue()));
 			}
-
-			for (int i = 0; i < aRecipe.get.length; i++) {
-				Pair<Integer, Integer> offsets = getOutputAligment(i);
-				products.add(new PositionedStack(outputs[i], offsets.getKey(), offsets.getValue()));
+			
+			int offset = 0;
+			List<ItemStack> outputs = recipe.getAllOutputs();
+			for (offset = 0; offset < outputs.size(); offset++) {
+				Pair<Integer, Integer> offsets = getOutputAligment(offset);
+				products.add(new PositionedStack(outputs.get(offset), offsets.getKey(), offsets.getValue()));
 			}
 			
-			mDuration = aRecipe.getDuration();
-			mEUt = aRecipe.getEUt();
+			List<ChancedOutput> chanced = recipe.getChancedOutputs();
+			for (int i = 0; i < chanced.size(); i++) {
+				Pair<Integer, Integer> offsets = getOutputAligment(i + offset);
+				ChancedOutput output = chanced.get(i);
+				products.add(new PositionedStack(output.getStack(), offsets.getKey(), offsets.getValue()));
+				this.chanced.put(GT_Utility.stackToInt(output.getStack()), output.getChance());
+			}
+			
+			mDuration = recipe.getDuration();
+			mEUt = recipe.getEUt();
 		}
 		
 		@Override
@@ -115,11 +121,17 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 	public abstract CachedGT_Recipe getRecipe(Recipe irecipe);
 	
 	@Override
-	public List<String> handleItemTooltip(GuiRecipe gui, ItemStack stack, List<String> currenttip, int recipe) {
-		CachedRecipe r = arecipes.get(recipe);
+	public List<String> handleItemTooltip(GuiRecipe gui, ItemStack stack, List<String> currenttip, int recipeId) {
+		CachedRecipe r = arecipes.get(recipeId);
 		
-		if (r instanceof CachedGT_Recipe && ((CachedGT_Recipe)r).nonConsumables.contains(GT_Utility.stackToInt(stack))) {
-			currenttip.add(I18n.format("item.non_consumable.tooltip"));
+		if (r instanceof CachedGT_Recipe) {
+			CachedGT_Recipe recipe = (CachedGT_Recipe) r;
+			Integer stackInt = GT_Utility.stackToInt(stack);
+			if (recipe.nonConsumables.contains(stackInt)) {
+				currenttip.add(I18n.format("item.non_consumable.tooltip"));
+			} else if ((stackInt = recipe.chanced.get(stackInt)) != null) {
+				currenttip.add(I18n.format("item.chanced.tooltip", GT_Utility.parseChanceString(stackInt)));
+			}
 		}
 		
 		return currenttip;
