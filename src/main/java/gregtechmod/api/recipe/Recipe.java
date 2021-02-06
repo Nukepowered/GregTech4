@@ -177,7 +177,7 @@ public class Recipe {
 		List<ItemStack> stacks = new ArrayList<>();
 		stacks.addAll(outputs);
 		chancedOutputs.forEach(ch -> stacks.add(ch.getStack()));
-		return Collections.unmodifiableList(stacks);
+		return stacks;
 	}
 	
 	/**

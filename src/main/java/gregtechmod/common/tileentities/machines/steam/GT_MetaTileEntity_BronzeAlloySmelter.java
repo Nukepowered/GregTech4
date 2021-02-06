@@ -6,16 +6,17 @@ import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine_Bronze;
 import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class GT_MetaTileEntity_BronzeAlloySmelter extends GT_MetaTileEntity_BasicMachine_Bronze {
 	
-	public GT_MetaTileEntity_BronzeAlloySmelter(int aID, String mName, List<Recipe> recipeMap) {
+	public GT_MetaTileEntity_BronzeAlloySmelter(int aID, String mName, RecipeMap<?> recipeMap) {
 		super(aID, mName, recipeMap);
 	}
 	
-	public GT_MetaTileEntity_BronzeAlloySmelter(List<Recipe> recipeMap) {
+	public GT_MetaTileEntity_BronzeAlloySmelter(RecipeMap<?> recipeMap) {
 		super(recipeMap);
 	}
 	

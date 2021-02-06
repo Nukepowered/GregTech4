@@ -1,12 +1,11 @@
 package gregtechmod.api.metatileentity.implementations;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,11 +20,11 @@ import net.minecraftforge.common.util.ForgeDirection;
  * Extend this class to make a simple Machine
  */
 public abstract class GT_MetaTileEntity_BasicMachine_Bronze extends GT_MetaTileEntity_BasicMachine {
-	public GT_MetaTileEntity_BasicMachine_Bronze(int aID, String aName, List<Recipe> recipeMap) {
+	public GT_MetaTileEntity_BasicMachine_Bronze(int aID, String aName, RecipeMap<?> recipeMap) {
 		super(aID, aName, recipeMap);
 	}
 	
-	public GT_MetaTileEntity_BasicMachine_Bronze(List<Recipe> recipeMap) {
+	public GT_MetaTileEntity_BasicMachine_Bronze(RecipeMap<?> recipeMap) {
 		super(recipeMap);
 	}
 	

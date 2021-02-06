@@ -1,8 +1,6 @@
 package gregtechmod.api.metatileentity.implementations;
 
-import java.util.List;
-
-import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeMap;
 
 /**
  * NEVER INCLUDE THIS FILE IN YOUR MOD!!!
@@ -11,11 +9,11 @@ import gregtechmod.api.recipe.Recipe;
  * Extend this class to make a simple Machine
  */
 public abstract class GT_MetaTileEntity_BasicMachine_Steel extends GT_MetaTileEntity_BasicMachine_Bronze {
-	public GT_MetaTileEntity_BasicMachine_Steel(int aID, String aName, List<Recipe> recipeMap) {
+	public GT_MetaTileEntity_BasicMachine_Steel(int aID, String aName, RecipeMap<?> recipeMap) {
 		super(aID, aName, recipeMap);
 	}
 	
-	public GT_MetaTileEntity_BasicMachine_Steel(List<Recipe> recipeMap) {
+	public GT_MetaTileEntity_BasicMachine_Steel(RecipeMap<?> recipeMap) {
 		super(recipeMap);
 	}
 	

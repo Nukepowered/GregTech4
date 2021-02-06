@@ -140,12 +140,23 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
     public boolean spaceForOutput(Recipe recipe) {
 		List<ItemStack> outputSlots = this.getOutputItems();
 		List<ItemStack> allOutputs = recipe.getAllOutputs();
-		for (int i = 0; i < allOutputs.size(); i++) {
-			ItemStack slot = outputSlots.get(i);
-			ItemStack recipeStack = allOutputs.get(i);
-			if (slot == null || recipeStack == null || (GT_Utility.areStacksEqual(slot, recipeStack) && slot.stackSize + recipeStack.stackSize >= slot.getMaxStackSize()))
-				continue;
-			return false;
+		
+		for (ItemStack current : allOutputs) {
+			int amount = current.stackSize;
+			for (int i = 0; current != null && amount > 0 && i < outputSlots.size(); i++) {
+				ItemStack slot = outputSlots.get(i);
+				if (slot == null) {
+					amount = 0;
+					break;
+				} else if (GT_Utility.areStacksEqual(slot, current)) {
+					int newSize = Math.min(slot.getMaxStackSize(), amount + slot.stackSize);
+					amount -= newSize;
+				}
+			}
+			
+			if (amount > 0) {
+				return false;
+			}
 		}
 		
 		return true;

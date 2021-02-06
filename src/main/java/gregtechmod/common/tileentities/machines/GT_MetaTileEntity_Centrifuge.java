@@ -7,6 +7,7 @@ import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.BasicFluidWorkable;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.ListAdapter;
 import gregtechmod.common.recipe.RecipeMaps;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -41,8 +42,8 @@ public class GT_MetaTileEntity_Centrifuge extends BasicFluidWorkable {
 	@Override public int getStackDisplaySlot() 					{return 6;}
 	@Override public int getInvSize()							{return 7;}
 	@Override public void onRightclick(EntityPlayer aPlayer)	{getBaseMetaTileEntity().openGUI(aPlayer, 146);}
-	@Override public List<ItemStack> getInputItems() 						{ return new int[] {0, 1}; }
-	@Override public List<ItemStack> getOutputItems() 					{ return new int[] {2, 3, 4, 5}; }; 
+	@Override public List<ItemStack> getInputItems() 			{return new ListAdapter<>(mInventory, 0, 1);}
+	@Override public List<ItemStack> getOutputItems() 			{return new ListAdapter<>(mInventory, 2, 5);} 
     
 	@Override
 	public int getTextureIndex(byte aSide, byte aFacing, boolean aActive, boolean aRedstone) {

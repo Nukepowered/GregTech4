@@ -7,6 +7,7 @@ import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.BasicFluidWorkable;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.ListAdapter;
 import gregtechmod.common.recipe.RecipeMaps;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -27,8 +28,8 @@ public class GT_MetaTileEntity_Electrolyzer extends BasicFluidWorkable {
 	@Override public int getOutputSlot() 							{return 2;}
 	@Override public int getStackDisplaySlot() 						{return 6;}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 109);}
-	@Override public List<ItemStack> getInputItems() 							{ return new int[] {0, 1}; }
-	@Override public List<ItemStack> getOutputItems() 						{ return new int[] {2, 3, 4, 5}; }; 
+	@Override public List<ItemStack> getInputItems() 				{return new ListAdapter<>(mInventory, 0, 1);}
+	@Override public List<ItemStack> getOutputItems() 				{return new ListAdapter<>(mInventory, 2, 5);} 
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {

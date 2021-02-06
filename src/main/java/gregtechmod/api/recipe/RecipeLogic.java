@@ -3,6 +3,7 @@ package gregtechmod.api.recipe;
 import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Random;
+import java.util.function.IntUnaryOperator;
 import java.util.function.Supplier;
 
 import gregtechmod.api.interfaces.IGregTechTileEntity;
@@ -27,6 +28,8 @@ public class RecipeLogic {
 	public int batterySlot 		= 5;
 	/** Do not consume inputs on custom recipe provider, it is only should <b><i>provide</i></b> a recipe instance */
 	protected Supplier<Recipe> customRecipeProvider;
+	/** Custom fucntion called every recipe progress time update, if you want to speed up machine because of some factor, just increase the value up */
+	protected IntUnaryOperator progressTimeManipulator = i -> i;
 	protected int maxProgressTime;
 	protected int progressTime;
 	protected int EUt;
@@ -40,8 +43,12 @@ public class RecipeLogic {
 		int inputs = machine.getInputItems().size();
 		int outputs = machine.getOutputItems().size();
 		
-		if (inputs < recipeMap.minInputs || inputs > recipeMap.maxInputs || outputs < recipeMap.minOutputs || outputs > recipeMap.maxOutputs) {
-			throw new IllegalArgumentException("Wrong recipe map was supplied to machine!\n" + "inputs: " + inputs + "; outputs=" + outputs + "\n" + recipeMap.toString());
+		if (recipeMap != null) {
+			if (inputs < recipeMap.minInputs || inputs > recipeMap.maxInputs || outputs < recipeMap.minOutputs || outputs > recipeMap.maxOutputs) {
+				throw new IllegalArgumentException("Wrong recipe map was supplied to machine!\n" + "inputs: " + inputs + "; outputs=" + outputs + "\n" + recipeMap.toString());
+			}
+		} else {
+			GT_Log.log.warn("RecipeMap for machine with class name " + machine.getClass().getSimpleName() + " == null! Make sure you set up custom recipe provoder, otherwise machine will spam errors");
 		}
 		
 		this.recipeMap = recipeMap;
@@ -69,8 +76,8 @@ public class RecipeLogic {
 			}
 			
 			if (progressTime == 0) {
-				if (base.hasInventoryBeenModified() || base.hasWorkJustBeenEnabled() || success || base.getTimer() % 600 == 0 || wasNoEnergy) {
-					if (!getMachine().getInputItems().isEmpty() && base.isUniversalEnergyStored(getMachine().getMinimumStoredEU() - 100)) {
+				if (base.hasInventoryBeenModified() || base.hasWorkJustBeenEnabled() || success || base.getTimer() % 600 == 0 || wasNoEnergy || isInputNonEmpty()) {
+					if (base.isUniversalEnergyStored(getMachine().getMinimumStoredEU() - 100)) {
 						trySerachRecipe();
 						wasNoEnergy = false;
 					} else {
@@ -89,9 +96,13 @@ public class RecipeLogic {
 		customRecipeProvider = handler;
 	}
 	
+	public void setProgressTimeManipulator(IntUnaryOperator applier) {
+		progressTimeManipulator = applier;
+	}
+	
 	protected boolean updateRecipeProgress() {
 		if (getMachine().getBaseMetaTileEntity().decreaseStoredEnergyUnits(EUt * (int)Math.pow(4, overclockersCount), false)) {
-			if ((progressTime += (int)Math.pow(2, overclockersCount)) >= maxProgressTime) {
+			if ((progressTime += progressTimeManipulator.applyAsInt((int)Math.pow(2, overclockersCount))) >= maxProgressTime) {
 				progressTime = 0;
 				maxProgressTime = 0;
 				EUt = 0;
@@ -177,7 +188,7 @@ public class RecipeLogic {
 					amount -= newSize;
 				}
 				
-				if (amount == 0)
+				if (amount <= 0)
 					break;
 			}
 			
@@ -187,6 +198,10 @@ public class RecipeLogic {
 		
 		stuttering = false;
 		getMachine().endProcess();
+	}
+	
+	protected boolean isInputNonEmpty() {
+		return !getMachine().getInputItems().isEmpty();
 	}
 	
 	private IRecipeWorkable getMachine() {
@@ -213,14 +228,14 @@ public class RecipeLogic {
 	 * Using ONLY for display time
 	 */
 	public int getDisplayMaxProgress() {
-		return maxProgressTime / (int)Math.pow(2, overclockersCount);
+		return maxProgressTime / (int)Math.pow(2, overclockersCount) / progressTimeManipulator.applyAsInt(1);
 	}
 	
 	/**
 	 * Using ONLY for display time
 	 */
 	public int getDisplayProgress() {
-		return progressTime / (int)Math.pow(2, overclockersCount);
+		return progressTime / (int)Math.pow(2, overclockersCount) / progressTimeManipulator.applyAsInt(1);
 	}
 	
 	public int getEUt() {

@@ -75,8 +75,8 @@ public class GT_LiquidAndFuelLoader implements Runnable {
 		GT_FluidRegistry.addFluid("nitrocoalfuel"		, null					, Materials.NitroCoalFuel	, OrePrefixes.cell, 1, GT_ModHandler.getEmptyCell(1));
 		
         GT_Log.log.info("GT_Mod: Initializing various Fuels.");
-        new Recipe(new ItemStack(Items.lava_bucket), new ItemStack(Blocks.obsidian), GT_OreDictUnificator.get("ingotCopper", 1), GT_OreDictUnificator.get("ingotTin", 1), GT_OreDictUnificator.get("ingotElectrum", 1), 30, 2);
-        
+//        new Recipe(new ItemStack(Items.lava_bucket), new ItemStack(Blocks.obsidian), GT_OreDictUnificator.get("ingotCopper", 1), GT_OreDictUnificator.get("ingotTin", 1), GT_OreDictUnificator.get("ingotElectrum", 1), 30, 2);
+//        TODO
         GregTech_API.sRecipeAdder.addFuel(GT_ModHandler.getIC2Item("hotcoolantCell", 1), GT_ModHandler.getIC2Item("coolantCell", 1), 20, 2);
         GregTech_API.sRecipeAdder.addFuel(new ItemStack(Items.experience_bottle, 1)					, null,     10, 5);
         GregTech_API.sRecipeAdder.addFuel(new ItemStack(Items.ghast_tear, 1)					, null,    500, 5);

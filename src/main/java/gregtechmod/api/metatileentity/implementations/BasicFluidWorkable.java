@@ -1,6 +1,6 @@
 package gregtechmod.api.metatileentity.implementations;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -8,6 +8,7 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IRecipeWorkable;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeLogic;
+import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.InfoBuilder;
 
@@ -24,12 +25,12 @@ import net.minecraftforge.fluids.FluidStack;
 public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank implements IRecipeWorkable {
 	protected RecipeLogic recipeLogic;
 	
-	public BasicFluidWorkable(int aID, String aName, List<Recipe> recipeMap) {
+	public BasicFluidWorkable(int aID, String aName, RecipeMap<?> recipeMap) {
 		super(aID, aName);
 		initRecipeLogic(recipeMap);
 	}
 	
-	public BasicFluidWorkable(List<Recipe> recipeMap) {
+	public BasicFluidWorkable(RecipeMap<?> recipeMap) {
 		initRecipeLogic(recipeMap);
 	}
 	
@@ -60,7 +61,7 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
 	@Override public int getOutputSlot() 			{return 2;}
 	@Override public int getStackDisplaySlot() 		{return 6;}
 	
-	protected void initRecipeLogic(List<Recipe> recipeMap) {
+	protected void initRecipeLogic(RecipeMap<?> recipeMap) {
 		recipeLogic = new RecipeLogic(recipeMap, this) {
 			@Override
 			protected void consumeInputs(Recipe recipe) {
@@ -79,7 +80,6 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
 				return consumeFluids(false, recipe) || super.match(recipe);
 			}
 		};
-		recipeLogic.moveItems = false;
 		recipeLogic.setRecipeProvider(this::searchForRecipe);
 	}
 	
@@ -90,12 +90,12 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
     		ItemStack filledBucket = GT_Utility.fillFluidContainer(mFluid, new ItemStack(Items.bucket));
     		if (filledBucket != null) {
     			filledBucket.stackSize = mFluid.amount / 1000;
-    			result = Recipe.findEqualRecipe(false, recipeLogic.recipeMap, filledBucket);
+    			result = recipeLogic.recipeMap.findRecipe(Collections.singletonList(filledBucket));
     		}
     	}
     	
     	if (result == null) {
-    		result = Recipe.findEqualRecipe(false, recipeLogic.recipeMap, getBaseMetaTileEntity(), getInputItems());
+    		result = recipeLogic.recipeMap.findRecipe(getInputItems());
     	}
     	
     	return result;
@@ -125,14 +125,14 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
     
     protected ItemStack findFluidItem(Recipe recipe) {
     	ItemStack fluidItem = null;
-    	for (ItemStack[] stacks : recipe.getRepresentativeInputs()) {
-    		for (ItemStack stack : stacks) {
-    			if (GT_Utility.getFluidForFilledItem(stack) != null && GT_Utility.getContainerForFilledItem(stack).getItem() == Items.bucket) {
-    				fluidItem = stack;
-    				break;
-    			}
-    		}
-    	}
+//    	for (ItemStack[] stacks : recipe.getRepresentativeInputs()) {
+//    		for (ItemStack stack : stacks) {
+//    			if (GT_Utility.getFluidForFilledItem(stack) != null && GT_Utility.getContainerForFilledItem(stack).getItem() == Items.bucket) {
+//    				fluidItem = stack;
+//    				break;
+//    			}
+//    		}
+//    	} // FIXME add fluid to recipes!!!
     	
     	return fluidItem;
     }
@@ -155,18 +155,18 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
     
 	@Override
     public boolean spaceForOutput(Recipe recipe) {
-		ItemStack[] outputs = recipe.getOutputs();
-		if (outputs.length <= getOutputItems().length) {
-			List<ItemStack> slots = new ArrayList<>();
-			for (int i : getOutputItems()) slots.add(mInventory[i]);
-			for (int i = 0; i < outputs.length && i < slots.size(); i++) {
-				if (slots.get(i) != null && outputs[i] != null) {
-					if (!GT_Utility.areStacksEqual(slots.get(i), outputs[i]) || slots.get(i).stackSize + outputs[i].stackSize > slots.get(i).getMaxStackSize()) {
-						return false;
-					}
-				}
-			}
-		} else return false;
+//		ItemStack[] outputs = recipe.getOutputs();
+//		if (outputs.length <= getOutputItems().length) {
+//			List<ItemStack> slots = new ArrayList<>();
+//			for (int i : getOutputItems()) slots.add(mInventory[i]);
+//			for (int i = 0; i < outputs.length && i < slots.size(); i++) {
+//				if (slots.get(i) != null && outputs[i] != null) {
+//					if (!GT_Utility.areStacksEqual(slots.get(i), outputs[i]) || slots.get(i).stackSize + outputs[i].stackSize > slots.get(i).getMaxStackSize()) {
+//						return false;
+//					}
+//				}
+//			}
+//		} else return false;
 		
 		return true;
     }

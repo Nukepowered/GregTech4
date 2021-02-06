@@ -6,17 +6,18 @@ import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine_Steel;
 import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class GT_MetaTileEntity_SteelFurnace extends GT_MetaTileEntity_BasicMachine_Steel {
 	
-	public GT_MetaTileEntity_SteelFurnace(int aID, String mName, List<Recipe> recipeMap) {
+	public GT_MetaTileEntity_SteelFurnace(int aID, String mName, RecipeMap<?> recipeMap) {
 		super(aID, mName, recipeMap);
 	}
 	
-	public GT_MetaTileEntity_SteelFurnace(List<Recipe> recipeMap) {
+	public GT_MetaTileEntity_SteelFurnace(RecipeMap<?> recipeMap) {
 		super(recipeMap);
 	}
 	
