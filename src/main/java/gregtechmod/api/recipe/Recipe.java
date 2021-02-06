@@ -1,44 +1,17 @@
 package gregtechmod.api.recipe;
 
-import gregtechmod.api.GregTech_API;
-import gregtechmod.api.enums.GT_Items;
-import gregtechmod.api.enums.Materials;
-import gregtechmod.api.interfaces.IGregTechTileEntity;
-import gregtechmod.api.util.GT_Log;
-import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
-import gregtechmod.api.util.ItemStackKey;
-import gregtechmod.common.recipe.RecipeMaps;
-
-import static gregtechmod.common.recipe.RecipeMaps.*;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.IdentityHashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
-import java.util.Set;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.google.common.collect.ListMultimap;
-import com.google.common.collect.MultimapBuilder;
-import com.google.common.collect.MultimapBuilder.ListMultimapBuilder;
-
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * NEVER INCLUDE THIS FILE IN YOUR MOD!!!
@@ -50,7 +23,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * I know this File causes some Errors, because of missing Main Functions, but if you just need to compile Stuff, then remove said erroreous Functions.
  */
 public class Recipe {
-	public static volatile int VERSION = 408;
+	public static volatile int VERSION = 410;
 	
 	private List<Ingredient> inputs;
 	private List<ItemStack> outputs;
@@ -174,55 +147,6 @@ public class Recipe {
 				return Pair.of(false, itemAmountInSlots);
 		}
 		return Pair.of(true, itemAmountInSlots);
-	}
-	
-	private final void addToMap(Map<Integer, List<Recipe>> aMap) {
-		for (ItemStack[] tStacks : mInputs) {
-			for (ItemStack tStack : tStacks) if (tStack != null) {
-				Integer tIntStack = GT_Utility.stackToInt(tStack);
-				List<Recipe> tList = aMap.get(tIntStack);
-				if (tList == null) aMap.put(tIntStack, tList = new ArrayList<>(2));
-				tList.add(this);
-			}
-		}
-	}
-	
-	private final void addToLists(List<Recipe> aList) {
-		Map<Integer, List<Recipe>> aMap = RECIPE_MAPPINGS.get(aList);
-		if (aMap == null) {
-			RECIPE_MAPPINGS.put(aList, aMap = new HashMap<>());
-		}
-		
-		addToMap(aMap);
-		aList.add(this);
-	}
-	
-	public static Recipe findEqualRecipe(boolean aShapeless, List<Recipe> aList, ItemStack...aInputs) {
-		if (aInputs.length < 1) return null;
-		Map<Integer, List<Recipe>> tMap = RECIPE_MAPPINGS.get(aList);
-		if (tMap == null) {
-			for (Recipe tRecipe : aList) if (tRecipe.match(aInputs)) return tRecipe.enabled?tRecipe:null;
-		} else {
-			for (ItemStack tStack : aInputs) if (tStack != null) {
-				aList = tMap.get(GT_Utility.stackToInt(tStack));
-				if (aList != null) for (Recipe tRecipe : aList) if (tRecipe.match(aInputs)) return tRecipe.enabled?tRecipe:null;
-				aList = tMap.get(GT_Utility.stackToWildcard(tStack));
-				if (aList != null) for (Recipe tRecipe : aList) if (tRecipe.match(aInputs)) return tRecipe.enabled?tRecipe:null;
-			}
-		}
-		return null;
-	}
-	
-	public static Recipe findEqualRecipe(boolean shapeless, List<Recipe> recipeMap, IGregTechTileEntity tile, int[] inputSlots) {
-		List<ItemStack> stacks = new ArrayList<>();
-		for (int i : inputSlots) {
-			ItemStack stack = tile.getStackInSlot(i);
-			if (GT_Utility.isStackValid(stack)) {
-				stacks.add(stack);
-			}
-		}
-		
-		return findEqualRecipe(shapeless, recipeMap, stacks.toArray(new ItemStack[0]));
 	}
 	
 	/////////////
@@ -516,31 +440,38 @@ public class Recipe {
 //			addToLists(sChemicalRecipes);
 //		}
 //	}
-//	
-//	@Override
-//	public int hashCode() {
-//		int res = 0;
-//		for (ItemStack[] stacks : mInputs)
-//			res += GT_Utility.stackArrayToInt(stacks);
-//		return (mDuration * mEUt * mStartEU) + res + GT_Utility.stackArrayToInt(mOutputs);
-//	}
-//	
-//	@Override
-//	public boolean equals(Object o) {
-//		if (o instanceof Recipe) {
-//			Recipe r = (Recipe) o;
-//			return r == this ||
-//					(r.mDuration == this.mDuration &&
-//					r.mEUt == this.mEUt &&
-//					GT_Utility.doesStackArraysSame(r.mOutputs, this.mOutputs)) &&
-//					GT_Utility.doesRecipeInputsSame(r.mInputs, this.mInputs);
-//		}
-//		
-//		return false;
-//	}
-//	
-//	@Override
-//	public String toString() {
-//		return "Recipe[inputs=" + mInputs.length + ",outputs=" + mOutputs.length + ",EUt=" + mEUt + ",duration=" + mDuration + ",startEU=" + mStartEU + ",enabled=" + mEnabled + "]";
-//	}
+	
+	@Override
+	public int hashCode() {
+		return (startEU * EUt * duration) + (shaped ? 1 : 0) + inputs.hashCode() + outputs.hashCode() + chancedOutputs.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Recipe) {
+			Recipe r = (Recipe) o;
+			return r == this ||
+					(r.duration == this.duration &&
+					r.EUt == this.EUt &&
+					r.startEU == this.startEU &&
+					r.inputs.equals(inputs)) &&
+					r.outputs.equals(outputs) &&
+					r.chancedOutputs.equals(chancedOutputs);
+		}
+		
+		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Recipe(startEU=%d, EUt=%d, duration=%d, shaped=%s, enabled=%s)\nin=%s\nout=%s\nchancedOut=%s",
+				startEU,
+				EUt,
+				duration,
+				Boolean.toString(shaped),
+				Boolean.toString(enabled),
+				inputs.toString(),
+				outputs.toString(),
+				chancedOutputs.toString());
+	}
 }

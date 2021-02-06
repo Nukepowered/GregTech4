@@ -44,7 +44,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
  * Due to the many imports, this File can cause compile Problems if not all the APIs are installed
  */
 public class GT_ModHandler {
-	public static volatile int VERSION = 408;
+	public static volatile int VERSION = 410;
 	
 	/**
 	 * Returns if that Liquid is Water

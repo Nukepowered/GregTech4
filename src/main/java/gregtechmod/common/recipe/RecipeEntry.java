@@ -196,6 +196,11 @@ public class RecipeEntry implements Ingredient {
 		return count;
 	}
 	
+	@Override
+	public boolean isWildcard() {
+		return !options.contains(Match.DAMAGE);
+	}
+	
 	private void addOptions(Match...options) {
 		for (Match option : options) {
 			if (option != null) {

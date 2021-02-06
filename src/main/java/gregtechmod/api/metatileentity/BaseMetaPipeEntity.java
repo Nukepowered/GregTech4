@@ -35,7 +35,7 @@ import scala.actors.threadpool.Arrays;
  * This is the main TileEntity for EVERYTHING.
  */
 public class BaseMetaPipeEntity extends BaseTileEntity implements IGregTechTileEntity {
-	public static volatile int VERSION = 408;
+	public static volatile int VERSION = 410;
 	
 	public byte mConnections = 0;
 	

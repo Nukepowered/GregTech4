@@ -25,4 +25,9 @@ public interface Ingredient {
 	 * Get a ingredient count
 	 */
 	public int getCount();
+	
+	/**
+	 * Determine if this ingredient is matches any items with same ID
+	 */
+	public boolean isWildcard();
 }
