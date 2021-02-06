@@ -14,15 +14,23 @@ public final class ItemStackKey {
 	public final boolean isWildcard;
 	
 	public static ItemStackKey from(ItemStack stack) {
-		return from(stack, false);
+		return from(stack, stack.stackSize, false);
 	}
 	
 	public static ItemStackKey from(ItemStack stack, boolean isWildcard) {
+		return from(stack, stack.stackSize, isWildcard);
+	}
+	
+	public static ItemStackKey from(ItemStack stack, int count) {
+		return from(stack, count, false);
+	}
+	
+	public static ItemStackKey from(ItemStack stack, int count, boolean isWildcard) {
 		Objects.requireNonNull(stack);
 		Objects.requireNonNull(stack.getItem());
 		ItemStack stackCopy = stack.copy();
 		stackCopy.stackSize = 1;
-		return new ItemStackKey(stackCopy, isWildcard, stack.stackSize);
+		return new ItemStackKey(stackCopy, isWildcard, count);
 	}
 	
 	private ItemStackKey(ItemStack stack, boolean isWildcard, int stackSize) {

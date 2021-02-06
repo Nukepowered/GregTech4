@@ -1,5 +1,7 @@
 package gregtechmod.api.interfaces;
 
+import java.util.List;
+
 import gregtechmod.api.recipe.Recipe;
 import net.minecraft.item.ItemStack;
 
@@ -27,10 +29,10 @@ public interface IRecipeWorkable {
 	/**
 	 * Array of input slot ids
 	 */
-	public int[] getInputSlots();
+	public List<ItemStack> getInputItems();
 	
 	/**
 	 * Array of output slot ids
 	 */
-	public int[] getOutputSlots();
+	public List<ItemStack> getOutputItems();
 }

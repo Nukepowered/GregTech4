@@ -25,10 +25,14 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.google.common.collect.ListMultimap;
+import com.google.common.collect.MultimapBuilder;
 import com.google.common.collect.MultimapBuilder.ListMultimapBuilder;
 
 import net.minecraft.init.Blocks;
@@ -69,70 +73,107 @@ public class Recipe {
 		this.chancedOutputs = new ArrayList<>(chancedOutputs);
 	}
 	
-	public boolean match(ItemStack...machineInputs) {
-		assert machineInputs != null : "Recipe check failed, machineInputs = null";
-		assert machineInputs.length > 0 : "Recipe check failed, machineInputs size < 1";
-		 List<ItemStack> inputs = Arrays.stream(machineInputs)
-				 .filter(stack -> GT_Utility.isStackValid(stack))
-				 .collect(Collectors.toList());
-		return match(null, inputs);
-	}
-	
-	public boolean match(boolean decrease, IGregTechTileEntity tile, int[] inputSlots) {
-		assert tile != null : "Recipe check failed, tile = null";
-		assert inputSlots != null : "Recipe check failed, inputSlots = null";
-		assert inputSlots.length > 0 : "Recipe check failed, inputSlots size < 1";
+	/**
+	 * Default match method
+	 * @param decrease if set, itemstacks size will dercease
+	 * @param input collection of input stacks even nulls
+	 * @return true if recipe matches for machine <b>input</b>
+	 */
+	public boolean matches(boolean decrease, List<ItemStack> input) {
+		assert input != null : "Input can not be null!";
+		assert input.isEmpty() : "Input can not be empty!";
+		assert input.size() >= inputs.size() : "Can not be less inputs of machine than recipe has!";
+
+		boolean result;
+		if (shaped)
+			result = checkShaped(decrease, input);
+		else
+			result = checkShapeless(decrease, input);
 		
-		List<ItemStackKey> decreaseList = new ArrayList<>();
-		Map<ItemStack, Integer> slotStacks = new HashMap<>();
-		for (int i : inputSlots) {
-			ItemStack stack = tile.getStackInSlot(i);
-			if (stack != null) slotStacks.put(stack.copy(), i);
-		}
-		
-		
-		boolean success = this.match(key -> decreaseList.add(key), slotStacks.keySet());
-		if (success && decrease) {
-			ListMultimap<ItemStackKey, Integer> slotAligment = ListMultimapBuilder.hashKeys().arrayListValues().build();
-			slotStacks.entrySet().forEach(e -> slotAligment.put(ItemStackKey.from(e.getKey()), e.getValue()));
-			for (ItemStackKey recipeKey : decreaseList) {
-				List<Integer> slots = new ArrayList<>(slotAligment.values());
-				tile.decrStackSize(slots.get(0), recipeKey.getStackSize());
-			}
-		}
-		
-		return success;
+		return result;
 	}
 	
 	/**
 	 * Matching recipe to following input, in case of successfully found item in recipe input map will execute actionPerfomer
 	 */
-	private boolean match(Consumer<ItemStackKey> actionPerfomer, Collection<ItemStack> inputs) {
-		if (inputs.size() >= mInputs.length) {
-			start:
-			for (ItemStack[] recipeSlot : mInputs) {
-				List<ItemStackKey> variants = Arrays.stream(recipeSlot)
-						.map(s -> ItemStackKey.from(s))
-						.collect(Collectors.toList());
-				Iterator<ItemStack> machineSlot = new ArrayList<>(inputs).iterator();
-				while (machineSlot.hasNext()) {
-					int idx = -1;
-					ItemStack slot = machineSlot.next();
-					if ((idx = variants.indexOf(ItemStackKey.from(slot))) >= 0) {
-						if (variants.get(idx).get().stackSize <= slot.stackSize) {
-							if (actionPerfomer != null)
-								actionPerfomer.accept(variants.get(idx));
-							machineSlot.remove();
-							continue start;
-						}
-					}
-				}
-				
-				return false;
+	private boolean checkShapeless(boolean decrease, List<ItemStack> inputs) {
+		Pair<Boolean, Integer[]> items = this.matchItems(inputs);
+		if (items.getKey()) {
+			for (int i = 0; decrease && i < inputs.size(); i++) {
+				ItemStack current = inputs.get(i);
+				int newSize = items.getValue()[i];
+				if (current == null || newSize == current.stackSize) continue;
+				if (newSize > 0)
+					current.stackSize = newSize;
+				else
+					inputs.set(i, null);
 			}
-		} else return false;
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Will check if recipe matches for shaped recipe
+	 * @param actionPerfomer will calls every loop, will put in a ItemStack of slot and amount needed for recipe
+	 */
+	private boolean checkShaped(boolean decrease, List<ItemStack> inputs) {
+		for (int i = 0; i < this.inputs.size(); i++) {
+			Ingredient ingr = this.inputs.get(i);
+			ItemStack current = inputs.get(i);
+			if (!ingr.match(current) || current.stackSize < ingr.getCount())
+				return false;
+		}
+		
+		for (int i = 0; decrease && i < this.inputs.size(); i++) { // Check this, not sure about working
+			int toConsume = this.inputs.get(i).getCount();
+			ItemStack current = inputs.get(i);
+			if (current.stackSize == toConsume) {
+				inputs.set(i, null);
+			} else {
+				current.stackSize -= toConsume;
+			}
+		}
 		
 		return true;
+	}
+	
+	/**
+	 * @param input
+	 * @return boolean means if it could be consumed, Integer[] is mapping of item amounts per slot to change
+	 */
+	private Pair<Boolean, Integer[]> matchItems(List<ItemStack> input) {
+		Integer[] itemAmountInSlots = new Integer[input.size()];
+		
+		for (int i = 0; i < input.size(); i++) {
+			ItemStack itemInSlot = input.get(i);
+			itemAmountInSlots[i] = itemInSlot == null ? 0 : itemInSlot.stackSize;
+		}
+		
+		for (Ingredient ingr : inputs) {
+			int ingrAmount = ingr.getCount();
+			boolean consumed = false;
+			
+			if (ingrAmount == 0) {
+				ingrAmount = 1;
+				consumed = true;
+			}
+			
+			for (int i = 0; i < input.size(); i++) {
+				ItemStack inputStack = input.get(i);
+				if (inputStack == null || !ingr.match(inputStack))
+					continue;
+				int toConsume = Math.min(itemAmountInSlots[i], ingrAmount);
+				ingrAmount -= toConsume;
+				if (!consumed)
+					itemAmountInSlots[i] -= toConsume;
+				if (ingrAmount == 0)
+					break;
+			}
+			if (ingrAmount > 0)
+				return Pair.of(false, itemAmountInSlots);
+		}
+		return Pair.of(true, itemAmountInSlots);
 	}
 	
 	private final void addToMap(Map<Integer, List<Recipe>> aMap) {
@@ -198,6 +239,10 @@ public class Recipe {
 	
 	public int getEUt() {
 		return EUt;
+	}
+	
+	public boolean isShaped() {
+		return shaped;
 	}
 	
 	/**

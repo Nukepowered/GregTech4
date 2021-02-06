@@ -38,12 +38,12 @@ public class GT_MetaTileEntity_ChemicalReactor extends GT_MetaTileEntity_BasicMa
 	}
     
 	@Override
-    public int[] getInputSlots() {
+    public List<ItemStack> getInputItems() {
     	return new int[] {0, 1};
 	}
 	
 	@Override
-    public int[] getOutputSlots() {
+    public List<ItemStack> getOutputItems() {
     	return new int[] {2};
 	}
     

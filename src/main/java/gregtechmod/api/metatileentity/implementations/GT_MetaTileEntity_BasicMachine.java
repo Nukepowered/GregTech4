@@ -12,7 +12,7 @@ import gregtechmod.api.recipe.RecipeLogic;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.InfoBuilder;
-
+import gregtechmod.api.util.ListAdapter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -138,9 +138,9 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
 	@Override
     public boolean spaceForOutput(Recipe recipe) {
 		ItemStack[] outputs = recipe.getOutputs();
-		if (outputs.length <= getOutputSlots().length) {
+		if (outputs.length <= getOutputItems().length) {
 			List<ItemStack> slots = new ArrayList<>();
-			for (int i : getOutputSlots()) slots.add(mInventory[i]);
+			for (int i : getOutputItems()) slots.add(mInventory[i]);
 			for (int i = 0; i < outputs.length && i < slots.size(); i++) {
 				if (slots.get(i) != null && outputs[i] != null) {
 					if (!GT_Utility.areStacksEqual(slots.get(i), outputs[i]) || slots.get(i).stackSize + outputs[i].stackSize > slots.get(i).getMaxStackSize()) {
@@ -157,12 +157,12 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
     	return false;
     }
     
-    public int[] getInputSlots() {
-    	return new int[] {1, 2};
+    public List<ItemStack> getInputItems() {
+    	return new ListAdapter<>(mInventory, 1, 2);
     }
     
-    public int[] getOutputSlots() {
-    	return new int[] {3, 4};
+    public List<ItemStack> getOutputItems() {
+    	return new ListAdapter<>(mInventory, 3, 4);
     }
     
     /** Fallback to the regular Machine Outside Texture */

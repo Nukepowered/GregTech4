@@ -1,5 +1,7 @@
 package gregtechmod.common.tileentities.machines;
 
+import java.util.List;
+
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.BasicFluidWorkable;
@@ -25,8 +27,8 @@ public class GT_MetaTileEntity_Electrolyzer extends BasicFluidWorkable {
 	@Override public int getOutputSlot() 							{return 2;}
 	@Override public int getStackDisplaySlot() 						{return 6;}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 109);}
-	@Override public int[] getInputSlots() 							{ return new int[] {0, 1}; }
-	@Override public int[] getOutputSlots() 						{ return new int[] {2, 3, 4, 5}; }; 
+	@Override public List<ItemStack> getInputItems() 							{ return new int[] {0, 1}; }
+	@Override public List<ItemStack> getOutputItems() 						{ return new int[] {2, 3, 4, 5}; }; 
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {

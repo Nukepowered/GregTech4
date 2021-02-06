@@ -172,7 +172,7 @@ public class RecipeEntry implements Ingredient {
 	public boolean match(ItemStack input) {
 		if (GT_Utility.isStackValid(input)) {
 			for (ItemStack stack : variants) {
-				if (stack.getItem() == input.getItem() && 
+				if (stack.getItem() == input.getItem() &&
 						(options.contains(Match.DAMAGE) ? stack.getItemDamage() == input.getItemDamage() : true) &&
 						(options.contains(Match.NBT) ? matchNBT(input, stack) : true)) {
 					return true;

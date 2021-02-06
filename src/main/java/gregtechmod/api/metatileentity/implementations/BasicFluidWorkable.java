@@ -95,7 +95,7 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
     	}
     	
     	if (result == null) {
-    		result = Recipe.findEqualRecipe(false, recipeLogic.recipeMap, getBaseMetaTileEntity(), getInputSlots());
+    		result = Recipe.findEqualRecipe(false, recipeLogic.recipeMap, getBaseMetaTileEntity(), getInputItems());
     	}
     	
     	return result;
@@ -156,9 +156,9 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
 	@Override
     public boolean spaceForOutput(Recipe recipe) {
 		ItemStack[] outputs = recipe.getOutputs();
-		if (outputs.length <= getOutputSlots().length) {
+		if (outputs.length <= getOutputItems().length) {
 			List<ItemStack> slots = new ArrayList<>();
-			for (int i : getOutputSlots()) slots.add(mInventory[i]);
+			for (int i : getOutputItems()) slots.add(mInventory[i]);
 			for (int i = 0; i < outputs.length && i < slots.size(); i++) {
 				if (slots.get(i) != null && outputs[i] != null) {
 					if (!GT_Utility.areStacksEqual(slots.get(i), outputs[i]) || slots.get(i).stackSize + outputs[i].stackSize > slots.get(i).getMaxStackSize()) {

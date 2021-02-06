@@ -1,5 +1,7 @@
 package gregtechmod.common.tileentities.machines;
 
+import java.util.List;
+
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.BasicFluidWorkable;
@@ -39,8 +41,8 @@ public class GT_MetaTileEntity_Centrifuge extends BasicFluidWorkable {
 	@Override public int getStackDisplaySlot() 					{return 6;}
 	@Override public int getInvSize()							{return 7;}
 	@Override public void onRightclick(EntityPlayer aPlayer)	{getBaseMetaTileEntity().openGUI(aPlayer, 146);}
-	@Override public int[] getInputSlots() 						{ return new int[] {0, 1}; }
-	@Override public int[] getOutputSlots() 					{ return new int[] {2, 3, 4, 5}; }; 
+	@Override public List<ItemStack> getInputItems() 						{ return new int[] {0, 1}; }
+	@Override public List<ItemStack> getOutputItems() 					{ return new int[] {2, 3, 4, 5}; }; 
     
 	@Override
 	public int getTextureIndex(byte aSide, byte aFacing, boolean aActive, boolean aRedstone) {

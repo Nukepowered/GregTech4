@@ -123,16 +123,16 @@ public class RecipeLogic {
 	
 	protected Recipe findRecipe() {
 		if (customRecipeProvider == null) {
-			return Recipe.findEqualRecipe(true, recipeMap, getMachine().getBaseMetaTileEntity(), getMachine().getInputSlots());
+			return Recipe.findEqualRecipe(true, recipeMap, getMachine().getBaseMetaTileEntity(), getMachine().getInputItems());
 		} else return customRecipeProvider.get();
 	}
 	
 	protected boolean match(Recipe recipe) {
-		return recipe.match(false, getMachine().getBaseMetaTileEntity(), getMachine().getInputSlots());
+		return recipe.match(false, getMachine().getBaseMetaTileEntity(), getMachine().getInputItems());
 	}
 	
 	protected void consumeInputs(Recipe recipe) {
-		recipe.match(true, getMachine().getBaseMetaTileEntity(), getMachine().getInputSlots());
+		recipe.match(true, getMachine().getBaseMetaTileEntity(), getMachine().getInputItems());
 	}
 	
 	protected void moveItems() {
@@ -143,8 +143,8 @@ public class RecipeLogic {
 		// Slot 4 = right Output
 		// Slot 5 = battery Slot in most cases
 		IInventory inv = getMachine().getBaseMetaTileEntity();
-		int[] in = getMachine().getInputSlots();
-		int[] out = getMachine().getOutputSlots();
+		int[] in = getMachine().getInputItems();
+		int[] out = getMachine().getOutputItems();
 		if (in.length > 1) GT_Utility.moveStackFromSlotAToSlotB(inv, inv, in[0], in[1], (byte)64, (byte)1, (byte)64, (byte)1);
 		if (out.length > 1)  GT_Utility.moveStackFromSlotAToSlotB(inv, inv, out[0], out[1], (byte)64, (byte)1, (byte)64, (byte)1);
 	}
@@ -165,9 +165,9 @@ public class RecipeLogic {
 	
 	protected void endRecipe(Recipe recipe) {
 		ItemStack[] outputs = recipe.getOutputs();
-		if (outputs.length <= getMachine().getOutputSlots().length) {
+		if (outputs.length <= getMachine().getOutputItems().length) {
 			for (ItemStack out : outputs) {
-				for (int i : getMachine().getOutputSlots()) {
+				for (int i : getMachine().getOutputItems()) {
 					if (out != null && getMachine().getBaseMetaTileEntity().addStackToSlot(i, out.copy())) {
 						break;
 					}
@@ -182,7 +182,7 @@ public class RecipeLogic {
 	}
 	
 	protected boolean isInputNonEmpty() {
-		for (int i : getMachine().getInputSlots()) {
+		for (int i : getMachine().getInputItems()) {
 			ItemStack s = getMachine().getStackInSlot(i);
 			if (s != null && s.stackSize > 0) return true;
 		}

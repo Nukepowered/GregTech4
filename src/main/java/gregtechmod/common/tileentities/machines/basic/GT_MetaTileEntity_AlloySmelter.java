@@ -30,7 +30,7 @@ public class GT_MetaTileEntity_AlloySmelter extends GT_MetaTileEntity_BasicMachi
 		recipeLogic = new RecipeLogic(recipeMap, this) {
 			@Override
 			protected void moveItems() {
-				GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), getOutputSlots()[0], getOutputSlots()[1], (byte)64, (byte)1, (byte)64, (byte)1);
+				GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), getOutputItems()[0], getOutputItems()[1], (byte)64, (byte)1, (byte)64, (byte)1);
 			}
 		};
 	}

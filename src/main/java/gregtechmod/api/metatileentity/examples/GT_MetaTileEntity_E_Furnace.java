@@ -97,12 +97,12 @@ public class GT_MetaTileEntity_E_Furnace extends GT_MetaTileEntity_BasicMachine 
 	}
 	
 	@Override
-    public int[] getInputSlots() {
+    public List<ItemStack> getInputItems() {
     	return new int[] {1, 2};
 	}
 	
 	@Override
-    public int[] getOutputSlots() {
+    public List<ItemStack> getOutputItems() {
     	return new int[] {3, 4};
 	}
 	
