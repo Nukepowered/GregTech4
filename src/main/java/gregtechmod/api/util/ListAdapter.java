@@ -11,10 +11,9 @@ import java.util.Objects;
  * @author TheDarkDnKTv
  */
 public class ListAdapter<E> extends AbstractList<E> {
-							// {0,	1,	2,	3,	4,	5,	6,	7,	8,	9}
-	private E[] data; 		// {10, 12, 13, 14, 15, 16, 17, 18, 91, 20}
-	private int idxStart; 	// 1
-	private int idxEnd; 	// 7
+	private E[] data;
+	private int idxStart;
+	private int idxEnd;
 	
 	public ListAdapter(E[] items) {
 		this(items, 0, items.length-1);
@@ -22,6 +21,7 @@ public class ListAdapter<E> extends AbstractList<E> {
 	
 	public ListAdapter(E[] items, int fromIdx, int toIdx) {
 		Objects.requireNonNull(items);
+		assert fromIdx <= toIdx : "Index FROM can not be greater than index TO";
 		this.data = items;
 		this.idxStart = fromIdx;
 		this.idxEnd = toIdx;
