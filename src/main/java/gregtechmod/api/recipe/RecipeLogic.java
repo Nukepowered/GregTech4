@@ -2,6 +2,7 @@ package gregtechmod.api.recipe;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.Random;
 import java.util.function.Supplier;
 
 import gregtechmod.api.interfaces.IGregTechTileEntity;
@@ -9,7 +10,6 @@ import gregtechmod.api.interfaces.IRecipeWorkable;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -19,11 +19,12 @@ import net.minecraft.nbt.NBTTagCompound;
  *
  */
 public class RecipeLogic {
+	public static final Random recipeRandom = new Random();
+	
 	public final WeakReference<IRecipeWorkable> metaTileEntity;
-	public final List<Recipe> recipeMap;
+	public final RecipeMap<?> recipeMap;
 	
 	public int batterySlot 		= 5;
-	public boolean moveItems 	= true;
 	/** Do not consume inputs on custom recipe provider, it is only should <b><i>provide</i></b> a recipe instance */
 	protected Supplier<Recipe> customRecipeProvider;
 	protected int maxProgressTime;
@@ -35,7 +36,14 @@ public class RecipeLogic {
 	private boolean stuttering;
 	private boolean wasNoEnergy;
 	
-	public RecipeLogic(List<Recipe> recipeMap, IRecipeWorkable machine) {
+	public RecipeLogic(RecipeMap<?> recipeMap, IRecipeWorkable machine) {
+		int inputs = machine.getInputItems().size();
+		int outputs = machine.getOutputItems().size();
+		
+		if (inputs < recipeMap.minInputs || inputs > recipeMap.maxInputs || outputs < recipeMap.minOutputs || outputs > recipeMap.maxOutputs) {
+			throw new IllegalArgumentException("Wrong recipe map was supplied to machine!\n" + "inputs: " + inputs + "; outputs=" + outputs + "\n" + recipeMap.toString());
+		}
+		
 		this.recipeMap = recipeMap;
 		maxProgressTime = 0;
 		progressTime = 0;
@@ -50,7 +58,6 @@ public class RecipeLogic {
 		boolean success = false;
 		IGregTechTileEntity base = getMachine().getBaseMetaTileEntity();
 		overclockersCount = base.getOverclockerUpgradeCount();
-		if (moveItems) moveItems();
 		
 		if (base.isAllowedToWork()) {
 			if (progressTime > 0) {
@@ -63,7 +70,7 @@ public class RecipeLogic {
 			
 			if (progressTime == 0) {
 				if (base.hasInventoryBeenModified() || base.hasWorkJustBeenEnabled() || success || base.getTimer() % 600 == 0 || wasNoEnergy) {
-					if (isInputNonEmpty() && base.isUniversalEnergyStored(getMachine().getMinimumStoredEU() - 100)) {
+					if (!getMachine().getInputItems().isEmpty() && base.isUniversalEnergyStored(getMachine().getMinimumStoredEU() - 100)) {
 						trySerachRecipe();
 						wasNoEnergy = false;
 					} else {
@@ -123,38 +130,24 @@ public class RecipeLogic {
 	
 	protected Recipe findRecipe() {
 		if (customRecipeProvider == null) {
-			return Recipe.findEqualRecipe(true, recipeMap, getMachine().getBaseMetaTileEntity(), getMachine().getInputItems());
+			return recipeMap.findRecipe(getMachine().getInputItems());
 		} else return customRecipeProvider.get();
 	}
 	
 	protected boolean match(Recipe recipe) {
-		return recipe.match(false, getMachine().getBaseMetaTileEntity(), getMachine().getInputItems());
+		return recipe.matches(false, getMachine().getInputItems());
 	}
 	
 	protected void consumeInputs(Recipe recipe) {
-		recipe.match(true, getMachine().getBaseMetaTileEntity(), getMachine().getInputItems());
-	}
-	
-	protected void moveItems() {
-		// Slot 0 = HoloSlot
-		// Slot 1 = Left Input
-		// Slot 2 = right Input
-		// Slot 3 = left Output
-		// Slot 4 = right Output
-		// Slot 5 = battery Slot in most cases
-		IInventory inv = getMachine().getBaseMetaTileEntity();
-		int[] in = getMachine().getInputItems();
-		int[] out = getMachine().getOutputItems();
-		if (in.length > 1) GT_Utility.moveStackFromSlotAToSlotB(inv, inv, in[0], in[1], (byte)64, (byte)1, (byte)64, (byte)1);
-		if (out.length > 1)  GT_Utility.moveStackFromSlotAToSlotB(inv, inv, out[0], out[1], (byte)64, (byte)1, (byte)64, (byte)1);
+		recipe.matches(true, getMachine().getInputItems());
 	}
 	
 	protected void startRecipe(Recipe recipe) {
 		if (getMachine().spaceForOutput(recipe)) {
 			previousRecipe = recipe;
-			maxProgressTime = GT_Utility.isDebugItem(getMachine().getStackInSlot(batterySlot)) ? 1 : recipe.mDuration;
+			maxProgressTime = GT_Utility.isDebugItem(getMachine().getStackInSlot(batterySlot)) ? 1 : recipe.getDuration();
 			progressTime = 1;
-			EUt = recipe.mEUt;
+			EUt = recipe.getEUt();
 			consumeInputs(recipe);
 			getMachine().getBaseMetaTileEntity().setActive(true);
 			getMachine().startProcess();
@@ -163,31 +156,37 @@ public class RecipeLogic {
 		}
 	}
 	
+	/**
+	 * Will put outputs to machine and execute machine's end recipe callbacks
+	 * @param recipe
+	 */
 	protected void endRecipe(Recipe recipe) {
-		ItemStack[] outputs = recipe.getOutputs();
-		if (outputs.length <= getMachine().getOutputItems().length) {
-			for (ItemStack out : outputs) {
-				for (int i : getMachine().getOutputItems()) {
-					if (out != null && getMachine().getBaseMetaTileEntity().addStackToSlot(i, out.copy())) {
-						break;
-					}
+		List<ItemStack> outputs = getMachine().getOutputItems();
+		List<ItemStack> recipeOutputs = recipe.getResults(recipeRandom);
+		
+		for (ItemStack recipeOut : recipeOutputs) {
+			int amount = recipeOut.stackSize;
+			for (int i = 0; i < outputs.size(); i++) {
+				ItemStack slot = outputs.get(i);
+				if (slot == null) {
+					outputs.set(i, recipeOut.copy());
+					amount = 0;
+				} else if (GT_Utility.areStacksEqual(recipeOut, slot)) {
+					int newSize = Math.min(slot.getMaxStackSize(), slot.stackSize + amount);
+					slot.stackSize = newSize;
+					amount -= newSize;
 				}
+				
+				if (amount == 0)
+					break;
 			}
-		} else {
-			GT_Log.log.catching(new IllegalStateException("Found recipe with more items output machine has slots!"));
+			
+			if (amount > 0)
+				GT_Log.log.error("Output overflow detected! Left items: " + amount + " for output stack: " + recipeOut);
 		}
 		
 		stuttering = false;
 		getMachine().endProcess();
-	}
-	
-	protected boolean isInputNonEmpty() {
-		for (int i : getMachine().getInputItems()) {
-			ItemStack s = getMachine().getStackInSlot(i);
-			if (s != null && s.stackSize > 0) return true;
-		}
-		
-		return false;
 	}
 	
 	private IRecipeWorkable getMachine() {

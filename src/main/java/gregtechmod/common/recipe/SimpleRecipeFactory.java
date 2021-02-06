@@ -63,7 +63,7 @@ public class SimpleRecipeFactory extends RecipeFactory<SimpleRecipeFactory> {
 
 	@Override
 	public SimpleRecipeFactory chanced(ItemStack stack, int chance) {
-		super.chanced(new ChancedStack(stack, chance));
+		super.chanced(new ChancedStack(stack.copy(), chance));
 		return this;
 	}
 	

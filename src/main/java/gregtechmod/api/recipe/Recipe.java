@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 /**
  * NEVER INCLUDE THIS FILE IN YOUR MOD!!!
@@ -170,10 +171,13 @@ public class Recipe {
 	}
 	
 	/**
-	 * @return list containing only 100% chanced outputs
+	 * @return list containing all possible outputs
 	 */
 	public List<ItemStack> getAllOutputs() {
-		return Collections.unmodifiableList(outputs);
+		List<ItemStack> stacks = new ArrayList<>();
+		stacks.addAll(outputs);
+		chancedOutputs.forEach(ch -> stacks.add(ch.getStack()));
+		return Collections.unmodifiableList(stacks);
 	}
 	
 	/**
@@ -181,6 +185,13 @@ public class Recipe {
 	*/
 	public List<ChancedOutput> getChancedOutputs() {
 		return Collections.unmodifiableList(chancedOutputs);
+	}
+	
+	/**
+	 * @return list containing only 100% chanced outputs
+	 */
+	public List<ItemStack> getOutputs() {
+		return Collections.unmodifiableList(outputs);
 	}
 	
 	/**
@@ -230,23 +241,6 @@ public class Recipe {
 //		if (aList.contains(aRecipe)) return false;
 //		aRecipe.addToLists(aList);
 //		return true;
-//	}
-//	
-//	public void writeToNBT(NBTTagCompound data) {
-//		data.setInteger("recipeHash", this.hashCode());
-//	}
-//	
-//	public static Recipe loadFromNBT(List<Recipe> recipeMap, NBTTagCompound data) {
-//		if (data.hasKey("recipeHash")) {
-//			int hash = data.getInteger("recipeHash");
-//			for (Recipe res : recipeMap) {
-//				if (res.hashCode() == hash) {
-//					return res;
-//				}
-//			}
-//		}
-// 		
-//		return null;
 //	}
 //	
 //	/**
@@ -440,6 +434,23 @@ public class Recipe {
 //			addToLists(sChemicalRecipes);
 //		}
 //	}
+	
+	public void writeToNBT(NBTTagCompound data) {
+		data.setInteger("recipeHash", this.hashCode());
+	}
+
+	public static Recipe loadFromNBT(RecipeMap<?> recipeMap, NBTTagCompound data) {
+		if (data.hasKey("recipeHash")) {
+			int hash = data.getInteger("recipeHash");
+			for (Recipe res : recipeMap.getRecipes()) {
+				if (res.hashCode() == hash) {
+					return res;
+				}
+			}
+		}
+
+		return null;
+	}
 	
 	@Override
 	public int hashCode() {

@@ -64,7 +64,7 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 			}
 			
 			int offset = 0;
-			List<ItemStack> outputs = recipe.getAllOutputs();
+			List<ItemStack> outputs = recipe.getOutputs();
 			for (offset = 0; offset < outputs.size(); offset++) {
 				Pair<Integer, Integer> offsets = getOutputAligment(offset);
 				products.add(new PositionedStack(outputs.get(offset), offsets.getKey(), offsets.getValue()));

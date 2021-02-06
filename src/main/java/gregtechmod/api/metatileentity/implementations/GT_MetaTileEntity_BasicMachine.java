@@ -1,6 +1,5 @@
 package gregtechmod.api.metatileentity.implementations;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,10 +8,12 @@ import gregtechmod.api.interfaces.IRecipeWorkable;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeLogic;
+import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.InfoBuilder;
 import gregtechmod.api.util.ListAdapter;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -31,12 +32,12 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
 	
 	protected RecipeLogic recipeLogic;
 	
-	public GT_MetaTileEntity_BasicMachine(int aID, String aName, List<Recipe> recipeMap) {
+	public GT_MetaTileEntity_BasicMachine(int aID, String aName, RecipeMap<?> recipeMap) {
 		super(aID, aName);
 		initRecipeLogic(recipeMap);
 	}
 	
-	public GT_MetaTileEntity_BasicMachine(List<Recipe> recipeMap) {
+	public GT_MetaTileEntity_BasicMachine(RecipeMap<?> recipeMap) {
 		initRecipeLogic(recipeMap);
 	}
 	
@@ -67,7 +68,7 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
 	@Override public boolean isLiquidInput (byte aSide)				{return aSide != mMainFacing;}
 	@Override public boolean isLiquidOutput(byte aSide)				{return aSide != mMainFacing;}
     
-	protected void initRecipeLogic(List<Recipe> recipeMap) {
+	protected void initRecipeLogic(RecipeMap<?> recipeMap) {
 		recipeLogic = new RecipeLogic(recipeMap, this);
 	}
 	
@@ -137,18 +138,15 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
 	
 	@Override
     public boolean spaceForOutput(Recipe recipe) {
-		ItemStack[] outputs = recipe.getOutputs();
-		if (outputs.length <= getOutputItems().length) {
-			List<ItemStack> slots = new ArrayList<>();
-			for (int i : getOutputItems()) slots.add(mInventory[i]);
-			for (int i = 0; i < outputs.length && i < slots.size(); i++) {
-				if (slots.get(i) != null && outputs[i] != null) {
-					if (!GT_Utility.areStacksEqual(slots.get(i), outputs[i]) || slots.get(i).stackSize + outputs[i].stackSize > slots.get(i).getMaxStackSize()) {
-						return false;
-					}
-				}
-			}
-		} else return false;
+		List<ItemStack> outputSlots = this.getOutputItems();
+		List<ItemStack> allOutputs = recipe.getAllOutputs();
+		for (int i = 0; i < allOutputs.size(); i++) {
+			ItemStack slot = outputSlots.get(i);
+			ItemStack recipeStack = allOutputs.get(i);
+			if (slot == null || recipeStack == null || (GT_Utility.areStacksEqual(slot, recipeStack) && slot.stackSize + recipeStack.stackSize >= slot.getMaxStackSize()))
+				continue;
+			return false;
+		}
 		
 		return true;
     }
