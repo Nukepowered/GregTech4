@@ -1,11 +1,11 @@
 package gregtechmod.common.recipe;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
+import gregtechmod.api.GregTech_API;
 import gregtechmod.api.recipe.ChancedOutput;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeFactory;
@@ -35,12 +35,12 @@ public class SimpleRecipeFactory extends RecipeFactory<SimpleRecipeFactory> {
 		super.input(RecipeEntry.singleton(stack, 0, Match.DAMAGE));
 		return this;
 	}
-
+	
 	@Override
 	public SimpleRecipeFactory input(ItemStack stack, boolean checkDamage, boolean checkNBT) {
 		@SuppressWarnings("serial")
 		List<Match> vals = new ArrayList<Match>() {{
-			if (checkDamage) add(Match.DAMAGE);
+			if (checkDamage && stack.getItemDamage() != GregTech_API.ITEM_WILDCARD_DAMAGE) add(Match.DAMAGE);
 			if (checkNBT) 	 add(Match.NBT);
 		}};
 
@@ -51,7 +51,8 @@ public class SimpleRecipeFactory extends RecipeFactory<SimpleRecipeFactory> {
 
 	@Override
 	public SimpleRecipeFactory inputs(ItemStack... stacks) {
-		super.input(RecipeEntry.fromStacks(Arrays.asList(stacks), Match.DAMAGE));
+		for (ItemStack stack : stacks)
+			this.input(stack);
 		return this;
 	}
 

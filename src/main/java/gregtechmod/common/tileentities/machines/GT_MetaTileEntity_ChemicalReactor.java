@@ -5,22 +5,21 @@ import java.util.List;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
-import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.ListAdapter;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
 public class GT_MetaTileEntity_ChemicalReactor extends GT_MetaTileEntity_BasicMachine {
 
-	public GT_MetaTileEntity_ChemicalReactor(int aID, String mName, List<Recipe> recipeMap) {
+	public GT_MetaTileEntity_ChemicalReactor(int aID, String mName, RecipeMap<?> recipeMap) {
 		super(aID, mName, recipeMap);
-		recipeLogic.moveItems = false;
 	}
 	
-	public GT_MetaTileEntity_ChemicalReactor(List<Recipe> recipeMap) {
+	public GT_MetaTileEntity_ChemicalReactor(RecipeMap<?> recipeMap) {
 		super(recipeMap);
-		recipeLogic.moveItems = false;
 	}
 	
 	@Override public boolean isFacingValid(byte aFacing)			{return false;}
@@ -39,12 +38,12 @@ public class GT_MetaTileEntity_ChemicalReactor extends GT_MetaTileEntity_BasicMa
     
 	@Override
     public List<ItemStack> getInputItems() {
-    	return new int[] {0, 1};
+		return new ListAdapter<>(mInventory, 0, 1);
 	}
 	
 	@Override
     public List<ItemStack> getOutputItems() {
-    	return new int[] {2};
+		return new ListAdapter<>(mInventory, 2, 2);
 	}
     
     @Override

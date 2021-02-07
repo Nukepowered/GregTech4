@@ -48,6 +48,7 @@ import gregtechmod.common.items.GT_MetaOre_Item;
 import gregtechmod.common.items.GT_MetaStone1_Item;
 import gregtechmod.common.network.GT_ConnectionHandler;
 import gregtechmod.common.network.GT_PacketHandler;
+import gregtechmod.common.recipe.RecipeMaps;
 import gregtechmod.common.render.GT_Block_Renderer;
 import gregtechmod.common.tileentities.deprecated.GT_TileEntity_ComputerCube;
 import gregtechmod.common.tileentities.deprecated.GT_TileEntity_LightSource;
@@ -663,10 +664,10 @@ public class GT_Mod implements IGT_Mod {
         GT_ModHandler.addSmeltingRecipe(new ItemStack(GregTech_API.sBlockList[5]	, 1		, 14)			, new ItemStack(GregTech_API.sBlockList[5]	, 1	, 8	));
         GT_ModHandler.addSmeltingRecipe(new ItemStack(GregTech_API.sBlockList[5]	, 1		, 15)			, new ItemStack(GregTech_API.sBlockList[5]	, 1	, 8	));
         
-        GregTech_API.sRecipeAdder.addAssemblerRecipe(new ItemStack(GregTech_API.sBlockList[5]	, 1	, 3)	, null	, new ItemStack(GregTech_API.sBlockList[5]	, 	1, 4)	, 200	, 4	);
-        GregTech_API.sRecipeAdder.addAssemblerRecipe(new ItemStack(GregTech_API.sBlockList[5]	, 1	, 11)	, null	, new ItemStack(GregTech_API.sBlockList[5]	, 1	, 12)	, 200	, 4	);
-        GregTech_API.sRecipeAdder.addAssemblerRecipe(new ItemStack(GregTech_API.sBlockList[5]	, 1	, 7)	, null	, new ItemStack(GregTech_API.sBlockList[5]	, 1	, 6)	, 200	, 4	);
-        GregTech_API.sRecipeAdder.addAssemblerRecipe(new ItemStack(GregTech_API.sBlockList[5]	, 1	, 15)	, null	, new ItemStack(GregTech_API.sBlockList[5]	, 1	, 14)	, 200	, 4	);
+        RecipeMaps.ASSEMBLING.factory().EUt(4).duration(200).input(new ItemStack(GregTech_API.sBlockList[5], 1,  3)).output(new ItemStack(GregTech_API.sBlockList[5], 1,  4)).buildAndRegister();
+        RecipeMaps.ASSEMBLING.factory().EUt(4).duration(200).input(new ItemStack(GregTech_API.sBlockList[5], 1, 11)).output(new ItemStack(GregTech_API.sBlockList[5], 1, 12)).buildAndRegister();
+        RecipeMaps.ASSEMBLING.factory().EUt(4).duration(200).input(new ItemStack(GregTech_API.sBlockList[5], 1,  7)).output(new ItemStack(GregTech_API.sBlockList[5], 1,  6)).buildAndRegister();
+        RecipeMaps.ASSEMBLING.factory().EUt(4).duration(200).input(new ItemStack(GregTech_API.sBlockList[5], 1, 15)).output(new ItemStack(GregTech_API.sBlockList[5], 1, 14)).buildAndRegister();
         
         GT_ModHandler.addShapelessCraftingRecipe(new ItemStack(Blocks.stonebrick			, 1		, 3)	, new Object[] { new ItemStack(Blocks.double_stone_slab		, 1	, 8)	, GT_ToolDictNames.craftingToolFile });
         GT_ModHandler.addShapelessCraftingRecipe(new ItemStack(GregTech_API.sBlockList[5]	, 1		, 6)	, new Object[] { new ItemStack(GregTech_API.sBlockList[5]	, 1	, 7)	, GT_ToolDictNames.craftingToolFile });
@@ -926,7 +927,7 @@ public class GT_Mod implements IGT_Mod {
 				}
 			}
             
-            GT_Log.log.info("Unificating outputs of all known Recipe Types.");
+            GT_Log.log.info("Unificating outputs of all known Recipe Types."); // FIXME remove this нахуй
             ArrayList<ItemStack> items = new ArrayList<ItemStack>();
             GT_Log.log.info("IC2 Machines");
             

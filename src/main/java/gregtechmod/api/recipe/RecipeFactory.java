@@ -69,6 +69,11 @@ public abstract class RecipeFactory<F extends RecipeFactory<F>> {
 		return this;
 	}
 	
+	public RecipeFactory<F> startEU(int amount) {
+		startEU = amount;
+		return this;
+	}
+	
 	public RecipeFactory<F> setShaped(boolean value) {
 		this.shaped = value;
 		return this;
