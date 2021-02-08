@@ -1,8 +1,10 @@
 package gregtechmod.common.recipe;
 
 import gregtechmod.api.recipe.RecipeMap;
+import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.common.recipe.factory.SimpleRecipeFactory;
-import gregtechmod.common.recipe.maps.MaceratorRecipeMap;
+import gregtechmod.common.recipe.maps.IC2RecipeMap;
+import gregtechmod.common.recipe.maps.RecyclerRecipeMap;
 
 /**
  * 
@@ -40,5 +42,8 @@ public class RecipeMaps {
 	public static final RecipeMap<SimpleRecipeFactory> MAGIC_FUELS			= new RecipeMap<>(1, 1, 0, 1, new SimpleRecipeFactory());
 	
 	// Fake RecipeMaps
-	public static final MaceratorRecipeMap MACERATION 						= new MaceratorRecipeMap(1, 2, 1, 2);
+	public static final IC2RecipeMap MACERATION 		= new IC2RecipeMap(1, 2, 1, 2, GT_ModHandler::getMaceratorRecipeList);
+	public static final IC2RecipeMap EXTRACTION 		= new IC2RecipeMap(1, 2, 1, 2, GT_ModHandler::getExtractorRecipeList);
+	public static final IC2RecipeMap COMPRESSION 		= new IC2RecipeMap(1, 2, 1, 2, GT_ModHandler::getCompressorRecipeList);
+	public static final RecyclerRecipeMap RECYCLING 	= new RecyclerRecipeMap(1, 2, 1, 2);
 }

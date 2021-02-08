@@ -62,9 +62,9 @@ public class GT_MetaTileEntityLoader implements Runnable {
 		new GT_MetaTileEntity_DigitalChest				( 48, "GT_Barrel");
 		new GT_MetaTileEntity_QuantumChest				( 49, "GT_QuantumChest");
 		new GT_MetaTileEntity_Macerator					( 50, "GT_Macerator"			, RecipeMaps.MACERATION);
-//		new GT_MetaTileEntity_Extractor					( 51, "GT_Extractor"			, Collections.emptyList()); // TODO custom recipes
-//		new GT_MetaTileEntity_Compressor				( 52, "GT_Compressor"			, Collections.emptyList()); // TODO custom recipes
-//		new GT_MetaTileEntity_Recycler					( 53, "GT_Recycler"				, Collections.emptyList()); // TODO custom recipes
+		new GT_MetaTileEntity_Extractor					( 51, "GT_Extractor"			, RecipeMaps.EXTRACTION);
+		new GT_MetaTileEntity_Compressor				( 52, "GT_Compressor"			, RecipeMaps.COMPRESSION);
+		new GT_MetaTileEntity_Recycler					( 53, "GT_Recycler"				, RecipeMaps.RECYCLING);
 		new GT_MetaTileEntity_E_Furnace					( 54, "GT_E_Furnace"			, null);
 		new GT_MetaTileEntity_Wiremill					( 55, "GT_Wiremill"				, RecipeMaps.WIREMILL);
 		new GT_MetaTileEntity_AlloySmelter				( 56, "GT_AlloySmelter"			, RecipeMaps.ALLOY_SMELTING);

@@ -2,15 +2,13 @@ package gregtechmod.common.recipe.factory;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Random;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.recipe.ChancedOutput;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeFactory;
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_RecipeException;
+import gregtechmod.common.recipe.ChancedStack;
 import gregtechmod.common.recipe.RecipeEntry;
 import gregtechmod.common.recipe.RecipeEntry.Match;
 
@@ -81,30 +79,5 @@ public class SimpleRecipeFactory extends RecipeFactory<SimpleRecipeFactory> {
 			super.reset();
 			return recipe;
 		} throw new GT_RecipeException(errors.toString());
-	}
-	
-	static class ChancedStack implements ChancedOutput {
-		private int chance;
-		private ItemStack stack;
-		
-		ChancedStack(ItemStack stack, int chance) {
-			this.stack = stack.copy();
-			this.chance = chance;
-		}
-		
-		@Override
-		public int getChance() {
-			return chance;
-		}
-
-		@Override
-		public ItemStack getStack() {
-			return stack.copy();
-		}
-
-		@Override
-		public Optional<ItemStack> get(Random random) {
-			return Optional.ofNullable(random.nextInt(MAX_CHANCE) <= chance ? stack.copy() : null);
-		}
 	}
 }
