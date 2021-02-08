@@ -1,6 +1,8 @@
 package gregtechmod.common.recipe;
 
 import gregtechmod.api.recipe.RecipeMap;
+import gregtechmod.common.recipe.factory.SimpleRecipeFactory;
+import gregtechmod.common.recipe.maps.MaceratorRecipeMap;
 
 /**
  * 
@@ -36,4 +38,7 @@ public class RecipeMaps {
 	public static final RecipeMap<SimpleRecipeFactory> DENSE_FUELS			= new RecipeMap<>(1, 1, 0, 0, new SimpleRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory> PLASMA_FUELS			= new RecipeMap<>(1, 1, 0, 0, new SimpleRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory> MAGIC_FUELS			= new RecipeMap<>(1, 1, 0, 1, new SimpleRecipeFactory());
+	
+	// Fake RecipeMaps
+	public static final MaceratorRecipeMap MACERATION 						= new MaceratorRecipeMap(1, 2, 1, 2);
 }

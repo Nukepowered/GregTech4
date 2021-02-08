@@ -35,7 +35,7 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 		this.maxOutputs = maxOutputs;
 		this.factory 	= facorty;
 		this.recipeList = new ArrayList<Recipe>();
-		this.factory.setRecipeMap(this);
+		if (facorty != null) this.factory.setRecipeMap(this);
 	}
 	
 	/**

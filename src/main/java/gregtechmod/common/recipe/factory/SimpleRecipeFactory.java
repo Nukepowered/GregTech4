@@ -1,4 +1,4 @@
-package gregtechmod.common.recipe;
+package gregtechmod.common.recipe.factory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,7 @@ import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeFactory;
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_RecipeException;
+import gregtechmod.common.recipe.RecipeEntry;
 import gregtechmod.common.recipe.RecipeEntry.Match;
 
 import net.minecraft.item.ItemStack;

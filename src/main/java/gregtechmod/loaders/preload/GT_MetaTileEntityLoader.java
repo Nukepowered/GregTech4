@@ -61,7 +61,7 @@ public class GT_MetaTileEntityLoader implements Runnable {
 		new GT_MetaTileEntity_AdvancedPump				( 47, "GT_Pump");
 		new GT_MetaTileEntity_DigitalChest				( 48, "GT_Barrel");
 		new GT_MetaTileEntity_QuantumChest				( 49, "GT_QuantumChest");
-//		new GT_MetaTileEntity_Macerator					( 50, "GT_Macerator"			, Collections.emptyList()); // TODO custom recipes
+		new GT_MetaTileEntity_Macerator					( 50, "GT_Macerator"			, RecipeMaps.MACERATION);
 //		new GT_MetaTileEntity_Extractor					( 51, "GT_Extractor"			, Collections.emptyList()); // TODO custom recipes
 //		new GT_MetaTileEntity_Compressor				( 52, "GT_Compressor"			, Collections.emptyList()); // TODO custom recipes
 //		new GT_MetaTileEntity_Recycler					( 53, "GT_Recycler"				, Collections.emptyList()); // TODO custom recipes
