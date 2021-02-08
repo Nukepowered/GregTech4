@@ -29,8 +29,7 @@ public class GT_DictRegistratorPreItem implements Runnable {
     	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.Water			, GT_ModHandler.getWaterCell(1));
     	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.Water			, GT_ModHandler.getIC2Item("waterCell", 1));
     	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.Creosote		, GT_ModHandler.getRCItem("fluid.creosote.cell", 1));
-    	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.BioFuel			, GT_ModHandler.getIC2Item("biofuelCell", 1));
-    	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.CoalFuel		, GT_ModHandler.getIC2Item("coalfuelCell", 1));
+    	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.BioFuel			, GT_ModHandler.getIC2Item("biogasCell", 1));
     	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.UUMatter		, GT_ModHandler.getIC2Item("UuMatterCell", 1));
     	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.ConstructionFoam, GT_ModHandler.getIC2Item("CFCell", 1));
     	

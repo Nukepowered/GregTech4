@@ -318,16 +318,10 @@ public class GT_Mod implements IGT_Mod {
     	GregTech_API.sPreloadStarted = true;
     	
         GT_Log.log.info("Getting required Items of other Mods.");
-        GT_Items.TE_Slag					.set(GT_ModHandler.getTEItem("slag", 1L));
-        GT_Items.TE_Slag_Rich				.set(GT_ModHandler.getTEItem("slagRich", 1L));
-        GT_Items.TE_Rockwool				.set(GT_ModHandler.getTEItem("rockwool", 1L));
-        GT_Items.TE_Hardened_Glass			.set(GT_ModHandler.getTEItem("glassHardened", 1L));
         GT_Items.Cell_Empty					.set(GT_ModHandler.getIC2Item("cell", 1L, GT_ModHandler.getIC2Item("cell", 1L, GT_ModHandler.getIC2Item("cell", 1L))));
         GT_Items.Cell_Water					.set(GT_ModHandler.getIC2Item("waterCell", 1L, GT_ModHandler.getIC2Item("waterCell", 1L)));
         GT_Items.Cell_Lava					.set(GT_ModHandler.getIC2Item("lavaCell", 1L, GT_ModHandler.getIC2Item("lavaCell", 1L)));
         GT_Items.Cell_Air					.set(GT_ModHandler.getIC2Item("airCell", 1L, GT_ModHandler.getIC2Item("airCell", 1L, GT_ModHandler.getIC2Item("cellOxygen", 1L))));
-        GT_Items.IC2_Fuel_Can_Empty			.set(GT_ModHandler.getIC2Item("fuelCan", 1L, GT_ModHandler.getIC2Item("fuelCanEmpty", 1L, GT_ModHandler.getIC2Item("emptyFuelCan", 1L)))); // not anymore
-        GT_Items.IC2_Fuel_Can_Filled		.set(GT_ModHandler.getIC2Item("filledFuelCan", 1L)); // not anymore
         GT_Items.IC2_Mixed_Metal_Ingot		.set(GT_ModHandler.getIC2Item("mixedMetalIngot", 1L));
         GT_Items.IC2_Fertilizer				.set(GT_ModHandler.getIC2Item("fertilizer", 1L));
         GT_Items.IC2_Resin					.set(GT_ModHandler.getIC2Item("resin", 1L));
@@ -552,6 +546,15 @@ public class GT_Mod implements IGT_Mod {
     @EventHandler
     public void load(FMLInitializationEvent aEvent) {
     	if (mDoNotInit || GregTech_API.sLoadStarted) return;
+    	
+        GT_Items.TE_Slag					.set(GT_ModHandler.getTEItem("slag", 1L));
+        GT_Items.TE_Slag_Rich				.set(GT_ModHandler.getTEItem("slagRich", 1L));
+        GT_Items.TE_Rockwool				.set(GT_ModHandler.getTEItem("rockwool", 1L));
+        try {
+        	 GT_Items.TE_Hardened_Glass.set(new ItemStack(cofh.thermalexpansion.block.TEBlocks.blockGlass));
+        } catch (Throwable e) {
+        	GT_Log.log.catching(e);
+        }
     	
     	for (Runnable tRunnable : GregTech_API.sBeforeGTLoad) {
     		try {

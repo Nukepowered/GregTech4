@@ -1,6 +1,7 @@
 package gregtechmod.api.metatileentity.implementations;
 
 import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_Utility;
 
 import java.util.List;
@@ -12,16 +13,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 public abstract class GT_MetaTileEntity_BasicGenerator extends GT_MetaTileEntity_BasicTank {
-	protected List<Recipe> recipeMap;
+	protected RecipeMap<?> recipeMap;
 	protected int efficiency;
-	
-	public GT_MetaTileEntity_BasicGenerator(int aID, String aName, List<Recipe> recipeMap, int efficiency) {
+	// FIXME change basic generator logic
+	public GT_MetaTileEntity_BasicGenerator(int aID, String aName, RecipeMap<?> recipeMap, int efficiency) {
 		super(aID, aName);
 		this.recipeMap = recipeMap;
 		this.efficiency = efficiency;
 	}
 	
-	public GT_MetaTileEntity_BasicGenerator(List<Recipe> recipeMap, int efficiency) {
+	public GT_MetaTileEntity_BasicGenerator(RecipeMap<?> recipeMap, int efficiency) {
 		this.recipeMap = recipeMap;
 		this.efficiency = efficiency;
 	}
@@ -76,20 +77,20 @@ public abstract class GT_MetaTileEntity_BasicGenerator extends GT_MetaTileEntity
     public int getFuelValue(FluidStack aLiquid) {
     	if (aLiquid == null) return 0;
     	FluidStack tLiquid;
-    	for (Recipe tFuel : recipeMap) if ((tLiquid = GT_Utility.getFluidForFilledItem(tFuel.getFirstInputs()[0])) != null) if (aLiquid.isFluidEqual(tLiquid)) return (int)(((long)tFuel.mStartEU * efficiency) / 100);
+    	for (Recipe tFuel : recipeMap.getRecipes()) if ((tLiquid = GT_Utility.getFluidForFilledItem(tFuel.getInputs().get(0).getVariants().get(0))) != null) if (aLiquid.isFluidEqual(tLiquid)) return (int)(((long)tFuel.getEUtoStart() * efficiency) / 100);
     	return 0;
     }
     
     public int getFuelValue(ItemStack aStack) {
     	if (GT_Utility.isStackInvalid(aStack)) return 0;
-    	Recipe tFuel = Recipe.findEqualRecipe(true, recipeMap, aStack);
-    	if (tFuel != null) return (int)((tFuel.mStartEU * 1000L * efficiency) / 100);
+    	Recipe tFuel = recipeMap.findRecipe(new Arr);
+    	if (tFuel != null) return (int)((tFuel.getEUtoStart() * 1000L * efficiency) / 100);
     	return 0;
     }
     
     public ItemStack getEmptyContainer(ItemStack aStack) {
     	if (GT_Utility.isStackInvalid(aStack)) return null;
-    	Recipe tFuel = Recipe.findEqualRecipe(true, recipeMap, aStack);
+    	Recipe tFuel = recipeMap.findRecipe(true, recipeMap, aStack);
     	if (tFuel != null) return GT_Utility.copy(tFuel.getOutputs()[0]);
     	return GT_Utility.getContainerItem(aStack);
     }

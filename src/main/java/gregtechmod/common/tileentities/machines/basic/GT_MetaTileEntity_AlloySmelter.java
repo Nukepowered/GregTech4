@@ -1,14 +1,11 @@
 package gregtechmod.common.tileentities.machines.basic;
 
-import java.util.List;
-
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
-import gregtechmod.api.recipe.Recipe;
-import gregtechmod.api.recipe.RecipeLogic;
+import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_OreDictUnificator;
-import gregtechmod.api.util.GT_Utility;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,22 +14,12 @@ public class GT_MetaTileEntity_AlloySmelter extends GT_MetaTileEntity_BasicMachi
 	
 	public int mHeatingCoilTier = 0;
 	
-	public GT_MetaTileEntity_AlloySmelter(int aID, String mName, List<Recipe> recipeMap) {
+	public GT_MetaTileEntity_AlloySmelter(int aID, String mName, RecipeMap<?> recipeMap) {
 		super(aID, mName, recipeMap);
 	}
 	
-	public GT_MetaTileEntity_AlloySmelter(List<Recipe> recipeMap) {
+	public GT_MetaTileEntity_AlloySmelter(RecipeMap<?> recipeMap) {
 		super(recipeMap);
-	}
-	
-	@Override
-	protected void initRecipeLogic(List<Recipe> recipeMap) {
-		recipeLogic = new RecipeLogic(recipeMap, this) {
-			@Override
-			protected void moveItems() {
-				GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), getOutputItems()[0], getOutputItems()[1], (byte)64, (byte)1, (byte)64, (byte)1);
-			}
-		};
 	}
 	
 	@Override

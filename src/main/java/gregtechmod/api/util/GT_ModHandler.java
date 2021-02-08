@@ -6,6 +6,7 @@ import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.items.GT_Tool_Item;
+import gregtechmod.common.recipe.RecipeMaps;
 import ic2.api.item.IBoxable;
 import ic2.api.item.IElectricItem;
 import ic2.api.recipe.IRecipeInput;
@@ -95,10 +96,6 @@ public class GT_ModHandler {
 		return FluidRegistry.getFluidStack("ic2steam", (int)aAmount);
 	}
 	
-	public static ItemStack getEmptyFuelCan(long aAmount) {
-		return GT_Items.IC2_Fuel_Can_Empty.get(aAmount);
-	}
-	
 	public static ItemStack getEmptyCell(long aAmount) {
 		return GT_Items.Cell_Empty.get(aAmount);
 	}
@@ -121,29 +118,6 @@ public class GT_ModHandler {
 	public static ItemStack setFuelValue(ItemStack aStack, short aValue) {
         aStack.setTagCompound(GT_Utility.getNBTContainingShort(aStack.getTagCompound(), "GT.ItemFuelValue", aValue));
         return aStack;
-	}
-	
-	/**
-	 * @param aValue Fuel value in EU
-	 */
-	public static ItemStack getFuelCan(int aValue) {
-		if (aValue < 5) return GT_Items.IC2_Fuel_Can_Empty.get(1);
-		ItemStack rFuelCanStack = GT_Items.IC2_Fuel_Can_Filled.get(1);
-		if (rFuelCanStack == null) return null;
-		NBTTagCompound tNBT = new NBTTagCompound();
-        tNBT.setInteger("value", aValue/5);
-        rFuelCanStack.setTagCompound(tNBT);
-        return rFuelCanStack;
-	}
-	
-	/**
-	 * @param aFuelCan the Item you want to check
-	 * @return the exact Value in EU the Fuel Can is worth if its even a Fuel Can.
-	 */
-	public static int getFuelCanValue(ItemStack aFuelCan) {
-		if (GT_Utility.isStackInvalid(aFuelCan) || !GT_Items.IC2_Fuel_Can_Filled.isStackEqual(aFuelCan, false, true)) return 0;
-		NBTTagCompound tNBT = aFuelCan.getTagCompound();
-		return tNBT==null?0:tNBT.getInteger("value")*5;
 	}
 	
 	private static final Map<String, ItemStack> sIC2ItemMap = new HashMap<String, ItemStack>();
@@ -353,7 +327,7 @@ public class GT_ModHandler {
 		if (aInput == null || aOutput == null) return false;
 		boolean temp = false;
 		if (aInput.stackSize == 1 && addSmeltingRecipe(aInput, aOutput)) temp = true;
-		if (GregTech_API.sRecipeAdder.addAlloySmelterRecipe(aInput, null, aOutput, 130, 3)) temp = true;
+		if (RecipeMaps.ALLOY_SMELTING.factory().EUt(3).duration(160).input(aInput).output(aOutput).buildAndRegister()) temp = true;
 		if (addInductionSmelterRecipe(aInput, null, aOutput, null, aOutput.stackSize*100, 0)) temp = true;
 		return temp;
 	}
@@ -512,9 +486,9 @@ public class GT_ModHandler {
 				if (Materials.Wood.contains(aOutput1)) {
 					if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.pulverization, aInput, true)) {
 						if (aOutput2 == null)
-							addSawmillRecipe(GT_Utility.copy(aInput), GT_Utility.copy(aOutput1), null, 80);
+							addSawmillRecipe(GT_Utility.copy(aInput), 80, GT_Utility.copy(aOutput1));
 						else
-							addSawmillRecipe(GT_Utility.copy(aInput), GT_Utility.copy(aOutput1), GT_Utility.copy(aOutput2), 80, aChance<=0?10:aChance);
+							addSawmillRecipe(GT_Utility.copy(aInput), 80, aChance<=0?10:aChance, GT_Utility.copy(aOutput1), GT_Utility.copy(aOutput2));
 					}
 				} else {
 					if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.rockcrushing, aInput, true)) {
@@ -528,9 +502,9 @@ public class GT_ModHandler {
 					}
 					if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.pulverization, aInput, true)) {
 						if (aOutput2 == null)
-							addSawmillRecipe(GT_Utility.copy(aInput), GT_Utility.copy(aOutput1), null, 80);
+							addSawmillRecipe(GT_Utility.copy(aInput), 80, GT_Utility.copy(aOutput1));
 						else
-							addSawmillRecipe(GT_Utility.copy(aInput), GT_Utility.copy(aOutput1), GT_Utility.copy(aOutput2), 80, aChance<=0?10:aChance);
+							addSawmillRecipe(GT_Utility.copy(aInput), 80, aChance<=0?10:aChance, GT_Utility.copy(aOutput1), GT_Utility.copy(aOutput2));
 					}
 				}
 			}
@@ -541,23 +515,22 @@ public class GT_ModHandler {
 	/**
 	 * Adds a Recipe to the Sawmills of GregTech and ThermalCraft
 	 */
-	public static synchronized boolean addSawmillRecipe(ItemStack aInput1, ItemStack aOutput1, ItemStack aOutput2) {
-		return addSawmillRecipe(aInput1, aOutput1, aOutput2, 160);
+	public static boolean addSawmillRecipe(ItemStack aInput1, ItemStack...outputs) {
+		return addSawmillRecipe(aInput1, 160, outputs);
 	}
 	
-	public static synchronized boolean addSawmillRecipe(ItemStack aInput1, ItemStack aOutput1, ItemStack aOutput2, int aRF) {
-		return addSawmillRecipe(aInput1, aOutput1, aOutput2, aRF, 100);
+	public static boolean addSawmillRecipe(ItemStack aInput1, int aRF, ItemStack...outputs) {
+		return addSawmillRecipe(aInput1, aRF, 100, outputs);
 	}
 	
-	public static synchronized boolean addSawmillRecipe(ItemStack aInput1, ItemStack aOutput1, ItemStack aOutput2, int aRF, int aChance) {
-		aOutput1 = GT_OreDictUnificator.get(true, aOutput1);
-		aOutput2 = GT_OreDictUnificator.get(true, aOutput2);
-		if (aInput1 == null || aOutput1 == null) return false;
+	public static boolean addSawmillRecipe(ItemStack aInput1, int aRF, int aChance, ItemStack...outputs) {
+		if (aInput1 == null || outputs[0] == null) return false;
+		
 		if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.sawmill, aInput1, true)) return false;
 	    try {
-	    	cofh.thermalexpansion.api.crafting.CraftingHandlers.sawmill.addRecipe(aRF, aInput1, aOutput1, aOutput2, aChance, true);
+	    	cofh.thermalexpansion.api.crafting.CraftingHandlers.sawmill.addRecipe(aRF, aInput1, outputs[0], outputs.length > 1 ? outputs[1] : null, aChance, true);
 		} catch(Throwable e) {/*Do nothing*/}
-	    GregTech_API.sRecipeAdder.addSawmillRecipe(aInput1, GT_Items.Cell_Water.get(1), aOutput1, aOutput2, GT_Items.Cell_Empty.get(1));
+	    RecipeMaps.SAWMILL.factory().EUt(30).duration(200*aInput1.stackSize).setShaped(true).inputs(aInput1, GT_Items.Cell_Water.get(1)).outputs(outputs).output(GT_Items.Cell_Empty.get(1)).buildAndRegister();
 		return true;
 	}
 	
@@ -568,7 +541,7 @@ public class GT_ModHandler {
 		if (aInput1 == null || (aInput2 == null && !aAllowSecondaryInputEmpty) || aOutput1 == null) return false;
 		aOutput1 = GT_OreDictUnificator.get(true, aOutput1);
 		boolean temp = false;
-		if (GregTech_API.sRecipeAdder.addAlloySmelterRecipe(aInput1, aInput2, aOutput1, aDuration, aEUt)) temp = true;
+		if (RecipeMaps.ALLOY_SMELTING.factory().EUt(aEUt).duration(aDuration).inputs(aInput1, aInput2).output(aOutput1).buildAndRegister()) temp = true;
 		if (addInductionSmelterRecipe(aInput1, aInput2, aOutput1, null, aDuration * 2, 0)) temp = true;
 		return temp;
 	}

@@ -35,5 +35,5 @@ public class RecipeMaps {
 	public static final RecipeMap<SimpleRecipeFactory> HOT_FUELS			= new RecipeMap<>(1, 1, 0, 0, new SimpleRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory> DENSE_FUELS			= new RecipeMap<>(1, 1, 0, 0, new SimpleRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory> PLASMA_FUELS			= new RecipeMap<>(1, 1, 0, 0, new SimpleRecipeFactory());
-	public static final RecipeMap<SimpleRecipeFactory> MAGIC_FUELS			= new RecipeMap<>(1, 1, 0, 0, new SimpleRecipeFactory());
+	public static final RecipeMap<SimpleRecipeFactory> MAGIC_FUELS			= new RecipeMap<>(1, 1, 0, 1, new SimpleRecipeFactory());
 }

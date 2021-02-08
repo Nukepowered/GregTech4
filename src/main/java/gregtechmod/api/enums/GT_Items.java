@@ -28,8 +28,6 @@ public enum GT_Items implements IItemContainer {
 	IC2_Compressed_Coal_Ball,
 	IC2_Compressed_Coal_Chunk,
 	IC2_Fuel_Rod_Empty,
-	IC2_Fuel_Can_Empty,
-	IC2_Fuel_Can_Filled,
 	IC2_Food_Can_Empty,
 	IC2_Food_Can_Filled,
 	IC2_Food_Can_Spoiled,

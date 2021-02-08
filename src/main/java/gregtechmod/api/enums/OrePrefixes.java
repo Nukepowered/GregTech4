@@ -239,7 +239,6 @@ public enum OrePrefixes {
 		cell.mNotGeneratedItems.add(Materials.ConstructionFoam);
 		cell.mNotGeneratedItems.add(Materials.UUMatter);
 		cell.mNotGeneratedItems.add(Materials.BioFuel);
-		cell.mNotGeneratedItems.add(Materials.CoalFuel);
 		cellPlasma.mNotGeneratedItems.add(Materials.Empty);
 		bucket.mNotGeneratedItems.add(Materials.Empty);
 		bucket.mNotGeneratedItems.add(Materials.Lava);

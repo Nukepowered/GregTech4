@@ -66,13 +66,13 @@ public class GT_MetaTileEntityLoader implements Runnable {
 //		new GT_MetaTileEntity_Compressor				( 52, "GT_Compressor"			, Collections.emptyList()); // TODO custom recipes
 //		new GT_MetaTileEntity_Recycler					( 53, "GT_Recycler"				, Collections.emptyList()); // TODO custom recipes
 		new GT_MetaTileEntity_E_Furnace					( 54, "GT_E_Furnace"			, null);
-//		new GT_MetaTileEntity_Wiremill					( 55, "GT_Wiremill"				, RecipeMaps.WIREMILL);
-//		new GT_MetaTileEntity_AlloySmelter				( 56, "GT_AlloySmelter"			, RecipeMaps.ALLOY_SMELTING);
-//		new GT_MetaTileEntity_Canner					( 57, "GT_Canner"				, RecipeMaps.CANINNING);
+		new GT_MetaTileEntity_Wiremill					( 55, "GT_Wiremill"				, RecipeMaps.WIREMILL);
+		new GT_MetaTileEntity_AlloySmelter				( 56, "GT_AlloySmelter"			, RecipeMaps.ALLOY_SMELTING);
+		new GT_MetaTileEntity_Canner					( 57, "GT_Canner"				, RecipeMaps.CANINNING);
 		new GT_MetaTileEntity_ElectricTypeSorter		( 58, "GT_E_T_Sorter");
-//		new GT_MetaTileEntity_Bender					( 59, "GT_Bender"				, RecipeMaps.BENDING);
-//		new GT_MetaTileEntity_Assembler					( 60, "GT_Assembler"			, RecipeMaps.ASSEMBLING);
-//		new GT_MetaTileEntity_Printer					( 61, "GT_Printer"				, RecipeMaps.PRINTER);
+		new GT_MetaTileEntity_Bender					( 59, "GT_Bender"				, RecipeMaps.BENDING);
+		new GT_MetaTileEntity_Assembler					( 60, "GT_Assembler"			, RecipeMaps.ASSEMBLING);
+		new GT_MetaTileEntity_Printer					( 61, "GT_Printer"				, RecipeMaps.PRINTER);
 		new GT_MetaTileEntity_Centrifuge				( 62, "GT_Centrifuge");
 //		new GT_MetaTileEntity_Microwave					( 63, "GT_Microwave"			, Collections.emptyList()); // TODO custom recipes
 //		new GT_MetaTileEntity_Pulverizer				( 64, "GT_Pulverizer"			, Collections.emptyList()); // TODO custom recipes
@@ -121,11 +121,11 @@ public class GT_MetaTileEntityLoader implements Runnable {
 		new GT_MetaTileEntity_Multi_GasTurbine			(108, "GT_Multi_GasTurbine");
 		new GT_MetaTileEntity_Multi_SteamTurbine		(109, "GT_Multi_SteamTurbine");
 		new GT_MetaTileEntity_Multi_ThermalBoiler		(110, "GT_Multi_ThermalBoiler");
-//		new GT_MetaTileEntity_Lathe						(111, "GT_Lathe"				, RecipeMaps.LATHE);
+		new GT_MetaTileEntity_Lathe						(111, "GT_Lathe"				, RecipeMaps.LATHE);
 		new GT_MetaTileEntity_AdvancedCraftingTable		(112, "GT_ProjectTable");
-//		new GT_MetaTileEntity_PlateCutter				(113, "GT_Cutter"				, RecipeMaps.CUTTING);
-//	    new GT_MetaTileEntity_Scanner					(114, "GT_Scanner"				, Collections.emptyList());
-//	    new GT_MetaTileEntity_Extruder					(115, "GT_Extruder"				, RecipeMaps.EXTRUDING);
+		new GT_MetaTileEntity_PlateCutter				(113, "GT_Cutter"				, RecipeMaps.CUTTING);
+//	    new GT_MetaTileEntity_Scanner					(114, "GT_Scanner"				, Collections.emptyList()); // TODO custom recipes
+	    new GT_MetaTileEntity_Extruder					(115, "GT_Extruder"				, RecipeMaps.EXTRUDING);
 	    new GT_MetaTileEntity_ElectricRetrieverAdvanced	(116, "GT_RetrieverAdvanced");
 		
 	    new GT_MetaTileEntity_ElectricTypeFilter		(126, "GT_E_T_Filter");

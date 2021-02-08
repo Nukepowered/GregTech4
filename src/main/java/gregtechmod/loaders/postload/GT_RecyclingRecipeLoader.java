@@ -91,7 +91,6 @@ public class GT_RecyclingRecipeLoader implements Runnable {
         GT_RecipeRegistrator.registerBasicReverseMaceratingAndSmelting(GT_Items.Credit_Greg_Cupronickel		.get(1), Materials.Cupronickel		, GregTech_API.MATERIAL_UNIT / 4);
         GT_RecipeRegistrator.registerBasicReverseMaceratingAndSmelting(GT_Items.IC2_Food_Can_Empty			.get(1), Materials.Tin				, GregTech_API.MATERIAL_UNIT / 2);
         GT_RecipeRegistrator.registerBasicReverseMaceratingAndSmelting(GT_Items.IC2_Fuel_Rod_Empty			.get(1), Materials.Iron				, GregTech_API.MATERIAL_UNIT	);
-        GT_RecipeRegistrator.registerBasicReverseMaceratingAndSmelting(GT_Items.IC2_Fuel_Can_Empty			.get(1), Materials.Tin				, GregTech_API.MATERIAL_UNIT * 7);
         GT_RecipeRegistrator.registerBasicReverseMaceratingAndSmelting(GT_Items.Fuel_Can_Plastic_Empty		.get(1), Materials.Plastic			, GregTech_API.MATERIAL_UNIT	);
         
         GT_RecipeRegistrator.registerBasicReverseMaceratingAndSmelting(GT_Items.Battery_Hull_LV				.get(1), Materials.BatteryAlloy		, GregTech_API.MATERIAL_UNIT * 2);

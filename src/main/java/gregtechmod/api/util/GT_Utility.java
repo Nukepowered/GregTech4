@@ -672,8 +672,6 @@ public class GT_Utility {
 		if (aStack.getItem().hasContainerItem()) return aStack.getItem().getContainerItem(aStack);
 		/** These are all special Cases, in which it is intended to have only GT Blocks outputting those Container Items */
 		if (GT_Items.Cell_Empty.isStackEqual(aStack, false, true)) return null;
-		if (GT_Items.IC2_Fuel_Can_Filled.isStackEqual(aStack, false, true)) return GT_Items.IC2_Fuel_Can_Empty.get(1);
-		if (GT_Items.Fuel_Can_Plastic_Filled.isStackEqual(aStack, false, true)) return GT_Items.Fuel_Can_Plastic_Empty.get(1);
 		
 		int tCapsuleCount = GT_ModHandler.getCapsuleCellContainerCount(aStack);
 		if (tCapsuleCount > 0) return GT_Items.Cell_Empty.get(tCapsuleCount);

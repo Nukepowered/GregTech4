@@ -40,7 +40,7 @@ public class SimpleRecipeFactory extends RecipeFactory<SimpleRecipeFactory> {
 	public SimpleRecipeFactory input(ItemStack stack, boolean checkDamage, boolean checkNBT) {
 		@SuppressWarnings("serial")
 		List<Match> vals = new ArrayList<Match>() {{
-			if (checkDamage && stack.getItemDamage() != GregTech_API.ITEM_WILDCARD_DAMAGE) add(Match.DAMAGE);
+			if (checkDamage && (stack != null && stack.getItemDamage() != GregTech_API.ITEM_WILDCARD_DAMAGE)) add(Match.DAMAGE);
 			if (checkNBT) 	 add(Match.NBT);
 		}};
 

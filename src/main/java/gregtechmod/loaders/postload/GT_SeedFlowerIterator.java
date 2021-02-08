@@ -5,12 +5,14 @@ import java.util.UUID;
 import com.mojang.authlib.GameProfile;
 
 import gregtechmod.api.GregTech_API;
+import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.GT_DummyWorld;
 import gregtechmod.common.items.GT_MetaItem_Cell;
+import gregtechmod.common.recipe.RecipeMaps;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -39,7 +41,7 @@ public class GT_SeedFlowerIterator implements Runnable {
 					} else {
 						tSeed = GT_Utility.copy(tSeed);
 						tSeed.stackSize = 64;
-						GregTech_API.sRecipeAdder.addCentrifugeRecipe(tSeed, 1, GT_MetaItem_Cell.instance.getStack(24, 1), null, null, null, 200);
+						RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(200).setShaped(true).inputs(GT_Items.Cell_Empty.get(1), tSeed).output(GT_MetaItem_Cell.instance.getStack(24, 1)).buildAndRegister();
 					}
 				}
 			}
@@ -80,9 +82,9 @@ public class GT_SeedFlowerIterator implements Runnable {
 			GT_Log.log.info("GT_Mod: Forestry was properly loaded, so the Seed Recipes got added to the Squeezer.");
 		} else {
 			GT_Log.log.info("GT_Mod: Forestry was NOT loaded, so the Recipes got added to the Industrial Centrifuge.");
-			GregTech_API.sRecipeAdder.addCentrifugeRecipe(new ItemStack(Items.melon_seeds, 64, 0), 1, GT_MetaItem_Cell.instance.getStack(24, 1), null, null, null, 200);
-			GregTech_API.sRecipeAdder.addCentrifugeRecipe(new ItemStack(Items.pumpkin_seeds, 64, 0), 1, GT_MetaItem_Cell.instance.getStack(24, 1), null, null, null, 200);
-			GregTech_API.sRecipeAdder.addCentrifugeRecipe(new ItemStack(Items.wheat_seeds, 64, 0), 1, GT_MetaItem_Cell.instance.getStack(24, 1), null, null, null, 200);
+			RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(200).setShaped(true).inputs(GT_Items.Cell_Empty.get(1), new ItemStack(Items.melon_seeds, 64, 0)).output(GT_MetaItem_Cell.instance.getStack(24, 1)).buildAndRegister();
+			RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(200).setShaped(true).inputs(GT_Items.Cell_Empty.get(1), new ItemStack(Items.pumpkin_seeds, 64, 0)).output(GT_MetaItem_Cell.instance.getStack(24, 1)).buildAndRegister();
+			RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(200).setShaped(true).inputs(GT_Items.Cell_Empty.get(1), new ItemStack(Items.wheat_seeds, 64, 0)).output(GT_MetaItem_Cell.instance.getStack(24, 1)).buildAndRegister();
 	    }
 		
         GT_ModHandler.addExtractionRecipe(new ItemStack(Blocks.red_flower, 1, 0), new ItemStack(Items.dye, 3, 1));

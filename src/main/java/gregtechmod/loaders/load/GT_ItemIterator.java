@@ -2,8 +2,6 @@ package gregtechmod.loaders.load;
 
 import java.util.Iterator;
 
-import buildcraft.api.tools.IToolWrench;
-import cofh.api.item.IToolHammer;
 import gregtechmod.GT_Mod;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_ConfigCategories;
@@ -13,12 +11,14 @@ import gregtechmod.api.enums.GT_ToolDictNames;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.items.GT_Tool_Item;
+import gregtechmod.api.recipe.RecipeFactory;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_RecipeRegistrator;
 import gregtechmod.api.util.GT_Utility;
-import mods.railcraft.api.core.items.IToolCrowbar;
+import gregtechmod.common.recipe.RecipeMaps;
+
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -106,12 +106,12 @@ public class GT_ItemIterator implements Runnable {
 		GregTech_API.registerScrewdriver(GT_ModHandler.getRecipeOutput(new ItemStack(Items.iron_ingot, 1), null, null, null, new ItemStack(Items.stick, 1)));
 
 		GT_Log.log.info("GT_Mod: Adding Food Recipes to the Automatic Canning Machine. (also during the following Item Iteration)");
-		GregTech_API.sRecipeAdder.addCannerRecipe(new ItemStack(Items.rotten_flesh, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(2L), GT_Items.IC2_Food_Can_Spoiled.get(2L), null, 200, 1);
-		GregTech_API.sRecipeAdder.addCannerRecipe(new ItemStack(Items.spider_eye, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(1L), GT_Items.IC2_Food_Can_Spoiled.get(1L), null, 100, 1);
-		GregTech_API.sRecipeAdder.addCannerRecipe(new ItemStack(Items.poisonous_potato, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(1L), GT_Items.IC2_Food_Can_Spoiled.get(1L), null, 100, 1);
-		GregTech_API.sRecipeAdder.addCannerRecipe(new ItemStack(Items.cake, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(6L), GT_Items.IC2_Food_Can_Filled.get(6L), null, 600, 1);
-		GregTech_API.sRecipeAdder.addCannerRecipe(new ItemStack(Items.bowl, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(3L), GT_Items.IC2_Food_Can_Filled.get(3L), new ItemStack(Items.bowl, 1), 300, 1);
-		        
+		RecipeMaps.CANINNING.factory().EUt(1).duration(100).inputs(new ItemStack(Items.rotten_flesh, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(2L)).output(GT_Items.IC2_Food_Can_Spoiled.get(2)).buildAndRegister();
+		RecipeMaps.CANINNING.factory().EUt(1).duration(100).inputs(new ItemStack(Items.spider_eye, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(1L)).output(GT_Items.IC2_Food_Can_Spoiled.get(1)).buildAndRegister();
+		RecipeMaps.CANINNING.factory().EUt(1).duration(100).inputs(new ItemStack(Items.poisonous_potato, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(1L)).output(GT_Items.IC2_Food_Can_Spoiled.get(1)).buildAndRegister();
+		RecipeMaps.CANINNING.factory().EUt(1).duration(600).inputs(new ItemStack(Items.cake, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(6L)).output(GT_Items.IC2_Food_Can_Filled.get(6)).buildAndRegister();
+		RecipeMaps.CANINNING.factory().EUt(1).duration(300).inputs(new ItemStack(Items.mushroom_stew, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(3L)).output(GT_Items.IC2_Food_Can_Filled.get(3)).output(new ItemStack(Items.bowl, 1)).buildAndRegister();
+		
 		GT_Log.log.info("GT_Mod: Scanning ItemList.");
 		Iterator<Item> iterator = Item.itemRegistry.iterator();
 		while (iterator.hasNext()) {
@@ -119,7 +119,7 @@ public class GT_ItemIterator implements Runnable {
 			final String tName;
 			if (tItem != null && (tName = tItem.getUnlocalizedName()) != null) {
 				try {
-					if (tItem instanceof IToolCrowbar) {
+					if (tItem instanceof mods.railcraft.api.core.items.IToolCrowbar) {
 						if (!tItem.isDamageable() && !GT_ModHandler.isElectricItem(new ItemStack(tItem, 1, 0))) {
 							if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "infiniteDurabilityRCCrowbars", false) && GT_ModHandler.removeRecipeByOutput(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) {
 								GT_Log.log.info("GT_Mod: Removed infinite RC Crowbar: " + tName);
@@ -130,7 +130,7 @@ public class GT_ItemIterator implements Runnable {
 					}
 				} catch (Throwable e) {}
 				try {
-					if (tItem instanceof IToolHammer) {
+					if (tItem instanceof cofh.api.item.IToolHammer) {
 						if (!tItem.isDamageable() && !GT_ModHandler.isElectricItem(new ItemStack(tItem, 1, 0))) {
 							if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "infiniteDurabilityMFRHammers", false) && GT_ModHandler.removeRecipeByOutput(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) {
 								GT_Log.log.info("GT_Mod: Removed infinite MFR Hammer: " + tName);
@@ -141,7 +141,7 @@ public class GT_ItemIterator implements Runnable {
 					}
 				} catch (Throwable e) {}
 				try {
-					if (tItem instanceof IToolWrench && !(tItem instanceof IToolCrowbar)) {
+					if (tItem instanceof buildcraft.api.tools.IToolWrench && !(tItem instanceof mods.railcraft.api.core.items.IToolCrowbar)) {
 						if (!tItem.isDamageable() && !GT_ModHandler.isElectricItem(new ItemStack(tItem, 1, 0))) {
 							if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "infiniteDurabilityBCWrenches", false) && GT_ModHandler.removeRecipeByOutput(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) {
 								GT_Log.log.info("GT_Mod: Removed infinite BC Wrench: " + tName);
@@ -177,148 +177,111 @@ public class GT_ItemIterator implements Runnable {
 				if (tItem instanceof ItemFood && tItem != GT_Items.IC2_Food_Can_Filled.getItem() && tItem != GT_Items.IC2_Food_Can_Spoiled.getItem()) {
 					final int tFoodValue = (int) Math.ceil(((ItemFood) tItem).func_150905_g(new ItemStack(tItem)) / 2.0D);
 					if (tFoodValue > 0) {
-						GregTech_API.sRecipeAdder.addCannerRecipe(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(tFoodValue), GT_Items.IC2_Food_Can_Filled.get(tFoodValue), GT_Utility.getContainerItem(new ItemStack(tItem, 1, 0)), tFoodValue * 100, 1);
+						RecipeFactory<?> fac = RecipeMaps.CANINNING.factory().EUt(1).duration(tFoodValue * 100).inputs(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(tFoodValue)).output(GT_Items.IC2_Food_Can_Filled.get(tFoodValue));
+						ItemStack container = GT_Utility.getContainerItem(new ItemStack(tItem, 1, 0));
+						if (container != null) fac.output(container);
+						fac.buildAndRegister();
 					}
-				}
-				if (tItem instanceof IFluidContainerItem) {
+				} else if (tItem instanceof IFluidContainerItem) {
 					GT_OreDictUnificator.addToBlacklist(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				}
-				if (tName.equals("item.ItemSensorLocationCard") || tName.equals("item.ItemEnergySensorLocationCard") || tName.equals("item.ItemEnergyArrayLocationCard") || tName.equals("item.ItemTextCard")) {
-					GregTech_API.sRecipeAdder.addAssemblerRecipe(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), null, GT_Items.Circuit_Basic.get(2), 200, 32);
-				}
-				if (tName.equals("item.ItemTimeCard")) {
-					GregTech_API.sRecipeAdder.addAssemblerRecipe(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), null, GT_Items.Circuit_Basic.get(1), 100, 32);
-				}
-				if (tName.equals("tile.beehives")) {
+				} else if (tName.equals("item.ItemSensorLocationCard") || tName.equals("item.ItemEnergySensorLocationCard") || tName.equals("item.ItemEnergyArrayLocationCard") || tName.equals("item.ItemTextCard")) {
+					RecipeMaps.ASSEMBLING.factory().EUt(32).duration(200).input(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE)).output(GT_Items.Circuit_Basic.get(2)).buildAndRegister();
+				} else if (tName.equals("item.ItemTimeCard")) {
+					RecipeMaps.ASSEMBLING.factory().EUt(32).duration(100).input(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE)).output(GT_Items.Circuit_Basic.get(1)).buildAndRegister();
+				} else if (tName.equals("tile.beehives")) {
 					final Block tBlock = Block.getBlockFromItem(tItem);
 					if (tBlock != null) {
 						((GT_Tool_Item) GT_Items.Tool_Scoop_Aluminium.getItem()) .addToMaterialList(tBlock.getMaterial());
 					}
-				}
-				if (tName.equals("tile.ArsMagica:ore_vinteum")) {
+				} else if (tName.equals("tile.ArsMagica:ore_vinteum")) {
 					GT_OreDictUnificator.set(OrePrefixes.ore, Materials.Vinteum, new ItemStack(tItem, 1, 0));
-				}
-				if (tName.equals("item.ArsMagica:purified_vinteum")) {
-					GregTech_API.sRecipeAdder.addFuel(new ItemStack(tItem, 1, 0), null, 256, 5);
-				}
-				if (tName.equals("item.meefSteak") || tName.equals("item.venisonCooked")) {
-					GregTech_API.sRecipeAdder.addCentrifugeRecipe(new ItemStack(tItem, 16, 0), 1, GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Methane, 1L), null, null, null, 5000);
-				}
-				if (tName.equals("item.meefRaw") || tName.equals("item.venisonRaw")) {
-					GregTech_API.sRecipeAdder.addCentrifugeRecipe(new ItemStack(tItem, 12, 0), 1, GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Methane, 1L), null, null, null, 5000);
-				}
-				if (tName.equals("item.fieryBlood")) {
-					GregTech_API.sRecipeAdder.addFuel(new ItemStack(tItem, 1, 0), null, 2048, 5);
-				}
-				if (tName.equals("tile.TFRoots")) {
+				} else if (tName.equals("item.ArsMagica:purified_vinteum")) {
+//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(256).input(new ItemStack(tItem, 1, 0)).buildAndRegister();
+				} else if (tName.equals("item.meefSteak") || tName.equals("item.venisonCooked")) {
+					RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(5000).setShaped(true).inputs(GT_Items.Cell_Empty.get(1), new ItemStack(tItem, 16, 0)).output(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Methane, 1L)).buildAndRegister();
+				} else if (tName.equals("item.meefRaw") || tName.equals("item.venisonRaw")) {
+					RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(5000).setShaped(true).inputs(GT_Items.Cell_Empty.get(1), new ItemStack(tItem, 12, 0)).output(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Methane, 1L)).buildAndRegister();
+				} else if (tName.equals("item.fieryBlood")) {
+//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(2048).input(new ItemStack(tItem, 1, 0)).buildAndRegister();
+				} else if (tName.equals("tile.TFRoots")) {
 					GT_ModHandler.addPulverisationRecipe(new ItemStack(tItem, 1, 0), new ItemStack(Items.stick, 2), new ItemStack(Items.stick, 1), 30);
 					GT_ModHandler.addSawmillRecipe(new ItemStack(tItem, 1, 0), new ItemStack(Items.stick, 4), new ItemStack(Items.stick, 2));
-					GregTech_API.sRecipeAdder.addFuel(new ItemStack(tItem, 1, 1), new ItemStack(Items.stick, 4), 32, 5);
-				}
-				if (tName.equals("item.liveRoot")) {
-					GregTech_API.sRecipeAdder.addFuel(new ItemStack(tItem, 1, 0), new ItemStack(Items.stick, 2), 16, 5);
+//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(32).input(new ItemStack(tItem, 1, 1)).output(new ItemStack(Items.stick, 4)).buildAndRegister();
+				} else if (tName.equals("item.liveRoot")) {
+//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(16).input(new ItemStack(tItem, 1, 0)).output(new ItemStack(Items.stick, 2)).buildAndRegister();
 					GT_RecipeRegistrator.registerBasicReverseMaceratingAndSmelting(new ItemStack(tItem, 1, 0), Materials.LiveRoot, GregTech_API.MATERIAL_UNIT);
-				}
-				if (tName.equals("item.ironwoodIngot")) {
+				} else if (tName.equals("item.ironwoodIngot")) {
 					GT_OreDictUnificator.set(OrePrefixes.ingot, Materials.IronWood, new ItemStack(tItem, 1, 0));
-				}
-				if (tName.equals("item.steeleafIngot")) {
+				} else if (tName.equals("item.steeleafIngot")) {
 					GT_OreDictUnificator.set(OrePrefixes.ingot, Materials.SteelLeaf, new ItemStack(tItem, 1, 0));
-				}
-				if (tName.equals("item.fieryIngot")) {
+				} else if (tName.equals("item.fieryIngot")) {
 					GT_OreDictUnificator.set(OrePrefixes.ingot, Materials.FieryBlood, new ItemStack(tItem, 1, 0));
-				}
-				if (tName.equals("item.tconstruct.manual")) {
+				} else if (tName.equals("item.tconstruct.manual")) {
 					GT_OreDictUnificator.registerOre("bookTinkersManual", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				}
-				if (tName.equals("item.ArsMagica:spell_parchment")) {
+				} else if (tName.equals("item.ArsMagica:spell_parchment")) {
 					GT_OreDictUnificator.registerOre("paperArsSpellParchment", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				}
-				if (tName.equals("item.ArsMagica:spell_recipe")) {
+				} else if (tName.equals("item.ArsMagica:spell_recipe")) {
 					GT_OreDictUnificator.registerOre("paperArsSpellRecipe", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				}
-				if (tName.equals("item.ArsMagica:spell_book")) {
+				} else if (tName.equals("item.ArsMagica:spell_book")) {
 					GT_OreDictUnificator.registerOre("bookArsSpells", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				}
-				if (tName.equals("item.myst.page")) {
+				} else if (tName.equals("item.myst.page")) {
 					GT_OreDictUnificator.registerOre("paperMystcraft", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				}
-				if (tName.equals("item.myst.agebook")) {
+				} else if (tName.equals("item.myst.agebook")) {
 					GT_OreDictUnificator.registerOre("bookMystcraftAge", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				}
-				if (tName.equals("item.myst.linkbook")) {
+				} else if (tName.equals("item.myst.linkbook")) {
 					GT_OreDictUnificator.registerOre("bookMystcraftLink", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				}
-				if (tName.equals("item.myst.notebook")) {
+				} else if (tName.equals("item.myst.notebook")) {
 					GT_OreDictUnificator.registerOre("bookNotes", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				}
-				if (tName.equals("item.itemManuelBook")) {
+				} else if (tName.equals("item.itemManuelBook")) {
 					GT_OreDictUnificator.registerOre("bookWritten", new ItemStack(tItem, 1, 0));
-				}
-				if (tName.equals("item.blueprintItem")) {
+				} else if (tName.equals("item.blueprintItem")) {
 					GT_OreDictUnificator.registerOre("paperBlueprint", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				}
-				if (tName.equals("item.ccprintout")) {
+				} else if (tName.equals("item.ccprintout")) {
 					GT_OreDictUnificator.registerOre("paperWritten", new ItemStack(tItem, 1, 0));
 					GT_OreDictUnificator.registerOre("paperWritten", new ItemStack(tItem, 1, 1));
 					GT_OreDictUnificator.registerOre("bookWritten", new ItemStack(tItem, 1, 2));
-				}
-				if (tName.equals("item.blueprintItem")) {
+				} else if (tName.equals("item.blueprintItem")) {
 					GT_OreDictUnificator.registerOre("paperBlueprint", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				}
-				if (tName.equals("item.wirelessmap")) {
+				} else if (tName.equals("item.wirelessmap")) {
 					GT_OreDictUnificator.registerOre("paperMap", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				}
-				if (tName.equals("item.ItemResearchNotes")) {
+				} else if (tName.equals("item.ItemResearchNotes")) {
 					GT_OreDictUnificator.registerOre("paperResearch", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				}
-				if (tName.equals("item.ItemThaumonomicon")) {
+				} else if (tName.equals("item.ItemThaumonomicon")) {
 					GT_OreDictUnificator.registerOre("bookThaumonomicon", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				}
-				if (tName.equals("item.ItemEssence")) {
-					GregTech_API.sRecipeAdder.addFuel(new ItemStack(tItem, 1, 7), new ItemStack(tItem, 1, 0), 80, 5);
-					GregTech_API.sRecipeAdder.addFuel(new ItemStack(tItem, 1, 10), new ItemStack(tItem, 1, 0), 160, 5);
-					GregTech_API.sRecipeAdder.addFuel(new ItemStack(tItem, 1, 41), new ItemStack(tItem, 1, 0), 120, 5);
-				}
-				if (tName.equals("item.ItemWispEssence")) {
-					GregTech_API.sRecipeAdder.addFuel(new ItemStack(tItem, 1, 7), new ItemStack(tItem, 1, 0), 80, 5);
-					GregTech_API.sRecipeAdder.addFuel(new ItemStack(tItem, 1, 10), new ItemStack(tItem, 1, 0), 160, 5);
-					GregTech_API.sRecipeAdder.addFuel(new ItemStack(tItem, 1, 41), new ItemStack(tItem, 1, 0), 120, 5);
-				}
-				if (tName.equals("item.ItemResource")) {
-					GregTech_API.sRecipeAdder.addFuel(new ItemStack(tItem, 1, 4), null, 4, 5);
+				} else if (tName.equals("item.ItemEssence")) {
+//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(80).input(new ItemStack(tItem, 1, 7)).output(new ItemStack(tItem, 1, 0)).buildAndRegister(); // TODO generators dedicated factory
+//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(160).input(new ItemStack(tItem, 1, 10)).output(new ItemStack(tItem, 1, 0)).buildAndRegister();
+//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(120).input(new ItemStack(tItem, 1, 41)).output(new ItemStack(tItem, 1, 0)).buildAndRegister();
+				} else if (tName.equals("item.ItemWispEssence")) {
+//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(80).input(new ItemStack(tItem, 1, 7)).output(new ItemStack(tItem, 1, 0)).buildAndRegister();
+//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(160).input(new ItemStack(tItem, 1, 10)).output(new ItemStack(tItem, 1, 0)).buildAndRegister();
+//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(120).input(new ItemStack(tItem, 1, 41)).output(new ItemStack(tItem, 1, 0)).buildAndRegister();
+				} else if (tName.equals("item.ItemResource")) {
+//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(4).input(new ItemStack(tItem, 1, 4)).buildAndRegister();
 					GT_OreDictUnificator.set(OrePrefixes.ingot, Materials.Thaumium, new ItemStack(tItem, 1, 2));
 					GT_OreDictUnificator.set(OrePrefixes.gem, Materials.Mercury, new ItemStack(tItem, 1, 3));
 					GT_OreDictUnificator.set(OrePrefixes.gem, Materials.Amber, new ItemStack(tItem, 1, 6));
 					GT_OreDictUnificator.registerOre(OrePrefixes.gem, Materials.Mercury, new ItemStack(tItem, 1, 3));
 					GT_Mod.sThaumiumObtainable = true;
-				}
-				if (tName.equals("item.ItemShard")) {
-					GregTech_API.sRecipeAdder.addFuel(new ItemStack(tItem, 1, 0), null, 160, 5);
-					GregTech_API.sRecipeAdder.addFuel(new ItemStack(tItem, 1, 1), null, 320, 5);
-					GregTech_API.sRecipeAdder.addFuel(new ItemStack(tItem, 1, 2), null, 160, 5);
-					GregTech_API.sRecipeAdder.addFuel(new ItemStack(tItem, 1, 3), null, 160, 5);
-					GregTech_API.sRecipeAdder.addFuel(new ItemStack(tItem, 1, 4), null, 240, 5);
-				}
-				if (tName.equals("item.ligniteCoal")) {
+				} else if (tName.equals("item.ItemShard")) {
+//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(160).input(new ItemStack(tItem, 1, 0)).buildAndRegister();
+//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(320).input(new ItemStack(tItem, 1, 1)).buildAndRegister();
+//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(160).input(new ItemStack(tItem, 1, 2)).buildAndRegister();
+//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(160).input(new ItemStack(tItem, 1, 3)).buildAndRegister();
+//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(240).input(new ItemStack(tItem, 1, 4)).buildAndRegister();
+				} else if (tName.equals("item.ligniteCoal")) {
 					GT_OreDictUnificator.set(OrePrefixes.gem, Materials.Lignite, new ItemStack(tItem, 1, 0));
-				}
-				if (tName.equals("item.charmOfLife1")) {
+				} else if (tName.equals("item.charmOfLife1")) {
 					tCharmL = new ItemStack(tItem, 1, 0);
-				}
-				if (tName.equals("item.charmOfLife2")) {
+				} else if (tName.equals("item.charmOfLife2")) {
 					tCharmLL = new ItemStack(tItem, 1, 0);
-				}
-				if (tName.equals("item.charmOfKeeping1")) {
+				} else if (tName.equals("item.charmOfKeeping1")) {
 					tCharmI = new ItemStack(tItem, 1, 0);
-				}
-				if (tName.equals("item.charmOfKeeping2")) {
+				} else if (tName.equals("item.charmOfKeeping2")) {
 					tCharmII = new ItemStack(tItem, 1, 0);
-				}
-				if (tName.equals("item.charmOfKeeping3")) {
+				} else if (tName.equals("item.charmOfKeeping3")) {
 					tCharmIII = new ItemStack(tItem, 1, 0);
-				}
-				if (tName.equals("tile.railcraft.brick.quarried")) {
+				} else if (tName.equals("tile.railcraft.brick.quarried")) {
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Marble, new ItemStack(tItem, 1, 0));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Marble, new ItemStack(tItem, 1, 1));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Marble, new ItemStack(tItem, 1, 2));
@@ -327,8 +290,7 @@ public class GT_ItemIterator implements Runnable {
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Marble, new ItemStack(tItem, 1, 5));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Marble, new ItemStack(tItem, 1, 6));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Marble, new ItemStack(tItem, 1, 7));
-				}
-				if (tName.equals("tile.railcraft.brick.abyssal")) {
+				} else if (tName.equals("tile.railcraft.brick.abyssal")) {
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Basalt, new ItemStack(tItem, 1, 0));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Basalt, new ItemStack(tItem, 1, 1));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Basalt, new ItemStack(tItem, 1, 2));
@@ -337,13 +299,11 @@ public class GT_ItemIterator implements Runnable {
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Basalt, new ItemStack(tItem, 1, 5));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Basalt, new ItemStack(tItem, 1, 6));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Basalt, new ItemStack(tItem, 1, 7));
-				}
-				if (tName.equals("tile.extrabiomes.redrock") || tName.equals("tile.bop.redRocks")) {
+				} else if (tName.equals("tile.extrabiomes.redrock") || tName.equals("tile.bop.redRocks")) {
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Redrock, new ItemStack(tItem, 1, 0));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Redrock, new ItemStack(tItem, 1, 1));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Redrock, new ItemStack(tItem, 1, 2));
-				}
-				if (tName.equals("tile.rpstone")) {
+				} else if (tName.equals("tile.rpstone")) {
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Marble, new ItemStack(tItem, 1, 0));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Basalt, new ItemStack(tItem, 1, 1));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Marble, new ItemStack(tItem, 1, 2));
@@ -351,11 +311,9 @@ public class GT_ItemIterator implements Runnable {
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Basalt, new ItemStack(tItem, 1, 4));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Basalt, new ItemStack(tItem, 1, 5));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Basalt, new ItemStack(tItem, 1, 6));
-				}
-				if (tName.equals("tile.sedimentaryStone")) {
+				} else if (tName.equals("tile.sedimentaryStone")) {
 					GregTech_API.sRecipeAdder.addJackHammerMinableBlock(Block.getBlockFromItem(tItem), false);
-				}
-				if (tName.equals("tile.igneousStone") || tName.equals("tile.igneousStoneBrick") || tName.equals("tile.igneousCobblestone")) {
+				} else if (tName.equals("tile.igneousStone") || tName.equals("tile.igneousStoneBrick") || tName.equals("tile.igneousCobblestone")) {
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.GraniteRed	, new ItemStack(tItem, 1, 0));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.GraniteBlack	, new ItemStack(tItem, 1, 1));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Rhyolite		, new ItemStack(tItem, 1, 2));
@@ -372,8 +330,7 @@ public class GT_ItemIterator implements Runnable {
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Basalt		, new ItemStack(tItem, 1, 13));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Komatiite		, new ItemStack(tItem, 1, 14));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Dacite		, new ItemStack(tItem, 1, 15));
-				}
-				if (tName.equals("tile.metamorphicStone") || tName.equals("tile.metamorphicStoneBrick") || tName.equals("tile.metamorphicCobblestone")) {
+				} else if (tName.equals("tile.metamorphicStone") || tName.equals("tile.metamorphicStoneBrick") || tName.equals("tile.metamorphicCobblestone")) {
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Gneiss		, new ItemStack(tItem, 1, 0));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Eclogite		, new ItemStack(tItem, 1, 1));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Marble		, new ItemStack(tItem, 1, 2));
@@ -390,54 +347,36 @@ public class GT_ItemIterator implements Runnable {
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Greenschist	, new ItemStack(tItem, 1, 13));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Soapstone		, new ItemStack(tItem, 1, 14));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Migmatite		, new ItemStack(tItem, 1, 15));
-				}
-				if (tName.equals("tile.blockCosmeticSolid")) {
+				} else if (tName.equals("tile.blockCosmeticSolid")) {
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Obsidian		, new ItemStack(tItem, 1, 0));
 					GT_OreDictUnificator.registerOre(OrePrefixes.stone, Materials.Obsidian		, new ItemStack(tItem, 1, 1));
-				}
-				if (tName.equals("tile.enderchest")) {
+				} else if (tName.equals("tile.enderchest")) {
 					GT_OreDictUnificator.registerOre(GT_OreDictNames.craftingEnderChest, new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				}
-				if (tName.equals("tile.autoWorkbenchBlock")) {
+				} else if (tName.equals("tile.autoWorkbenchBlock")) {
 					GT_OreDictUnificator.registerOre(GT_OreDictNames.craftingWorkBench, new ItemStack(tItem, 1, 0));
-				}
-				if (tName.equals("tile.pumpBlock")) {
+				} else if (tName.equals("tile.pumpBlock")) {
 					GT_OreDictUnificator.registerOre(GT_OreDictNames.craftingPump, new ItemStack(tItem, 1, 0));
 					if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "BCPump", false)) {
 						GT_ModHandler.removeRecipeByOutput(new ItemStack(tItem, 1, 0));
 					}
-				}
-				if (tName.equals("tile.tankBlock")) {
+				} else if (tName.equals("tile.tankBlock")) {
 					GT_OreDictUnificator.registerOre(GT_OreDictNames.craftingTank, new ItemStack(tItem, 1, 0));
-				}
-				if (tName.equals("item.minotaurAxe")) {
+				} else if (tName.equals("item.minotaurAxe")) {
 					GT_ModHandler.addPulverisationRecipe(new ItemStack(tItem, 1, 0), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Diamond, 1L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Wood, 1L), 50, false);
-				}
-				if (tName.equals("item.bucketFuel")) {
+				} else if (tName.equals("item.bucketFuel")) {
 					GT_ModHandler.addCraftingRecipe(GT_ModHandler.getRecipeOutput(null, GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 1L), null, GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 1L), GT_ModHandler.getIC2Item("electronicCircuit", 1L), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 1L), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 1L), new ItemStack(tItem, 1), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 1L)), new Object[] { " S ", "SCS", "SLS", 'S', OrePrefixes.plate.get(Materials.Steel), 'C', OrePrefixes.circuit.get(Materials.Basic), 'L', OrePrefixes.cell.get(Materials.Lithium) });
-				}
-				if (tName.equals("item.drawplateDiamond")) {
+				} else if (tName.equals("item.drawplateDiamond")) {
 					GT_OreDictUnificator.registerOre(GT_ToolDictNames.craftingToolDrawplate, new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				}
-				if (tName.equals("item.canLava")) {
-					GregTech_API.sRecipeAdder.addCentrifugeRecipe(new ItemStack(tItem, 8), 0, GT_OreDictUnificator.get(OrePrefixes.nugget, Materials.Electrum, 4L), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Copper, 2L), GT_OreDictUnificator.get(OrePrefixes.dustTiny, Materials.Tungsten, 1L), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Tin, 1L), 5000);
-				}
-				if (tName.equals("item.refractoryLava")) {
-					GregTech_API.sRecipeAdder.addCentrifugeRecipe(new ItemStack(tItem, 8), 0, GT_OreDictUnificator.get(OrePrefixes.nugget, Materials.Electrum, 4L), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Copper, 2L), GT_OreDictUnificator.get(OrePrefixes.dustTiny, Materials.Tungsten, 1L), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Tin, 1L), 5000);
+				} else if (tName.equals("item.canLava") || tName.equals("item.refractoryLava")) {
+					RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(5000).input(new ItemStack(tItem, 8)).outputs(GT_OreDictUnificator.get(OrePrefixes.nugget, Materials.Electrum, 4L), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Copper, 2L), GT_OreDictUnificator.get(OrePrefixes.dustTiny, Materials.Tungsten, 1L), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Tin, 1L)).buildAndRegister();
 				}
 			}
 		}
-			if (tCharmL != null) {
-				GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copyAmount(4L, tCharmL), null,
-						GT_Utility.copyAmount(1L, tCharmLL), 800, 2);
-			}
-			if (tCharmI != null) {
-				GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copyAmount(4L, tCharmI), null,
-						GT_Utility.copyAmount(1L, tCharmII), 800, 2);
-			}
-			if (tCharmII != null) {
-				GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copyAmount(4L, tCharmII), null,
-						GT_Utility.copyAmount(1L, tCharmIII), 800, 2);
-			}
+			if (tCharmL != null)
+				RecipeMaps.ASSEMBLING.factory().EUt(2).duration(800).input(GT_Utility.copyAmount(4L, tCharmL)).output(GT_Utility.copyAmount(1L, tCharmLL)).buildAndRegister();
+			if (tCharmI != null)
+				RecipeMaps.ASSEMBLING.factory().EUt(2).duration(800).input(GT_Utility.copyAmount(4L, tCharmI)).output(GT_Utility.copyAmount(1L, tCharmII)).buildAndRegister();
+			if (tCharmII != null)
+				RecipeMaps.ASSEMBLING.factory().EUt(2).duration(800).input(GT_Utility.copyAmount(4L, tCharmII)).output(GT_Utility.copyAmount(1L, tCharmIII)).buildAndRegister();
 		}
 	}

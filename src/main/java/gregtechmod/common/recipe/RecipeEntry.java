@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
@@ -178,8 +179,7 @@ public class RecipeEntry implements Ingredient {
 					return true;
 				}
 			}
-		} else
-			throw new IllegalArgumentException("Input stack is invalid or null");
+		}
 
 		return false;
 	}
@@ -229,6 +229,7 @@ public class RecipeEntry implements Ingredient {
 	
 	@Override
 	public String toString() {
+		ToStringBuilder.setDefaultStyle(ToStringStyle.SHORT_PREFIX_STYLE);
 		return new ToStringBuilder(this)
 				.append("count=" + count)
 				.append("variants=" + Collections2.transform(variants, stack -> stack.getItem()))
