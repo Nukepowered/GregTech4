@@ -2,6 +2,7 @@ package gregtechmod.mistaqur.nei;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_Electrolyzer;
@@ -9,8 +10,6 @@ import gregtechmod.common.recipe.RecipeMaps;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -53,7 +52,7 @@ public class ElectrolyzerRecipeHandler extends GT_RecipeHandler {
 	}
 	
 	@Override
-	public List<Recipe> getRecipeList() {
+	public RecipeMap<?> getRecipeList() {
 		return RecipeMaps.ELECTROLYZER;
 	}
 	

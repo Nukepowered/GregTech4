@@ -1,13 +1,13 @@
 package gregtechmod.mistaqur.nei;
 
 import java.util.Collections;
-import java.util.List;
 import java.awt.Rectangle;
 
 import org.apache.commons.lang3.tuple.Pair;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_BasicMachine_Extruder;
@@ -43,7 +43,7 @@ public class ExtruderRecipeHandler extends GT_RecipeHandler {
 		return "gregtech.extruder";
 	}
 
-	public List<Recipe> getRecipeList() {
+	public RecipeMap<?> getRecipeList() {
 		return RecipeMaps.EXTRUDING;
 	}
 
