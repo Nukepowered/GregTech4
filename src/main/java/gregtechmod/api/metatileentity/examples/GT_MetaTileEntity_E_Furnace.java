@@ -1,16 +1,12 @@
 package gregtechmod.api.metatileentity.examples;
 
-import java.util.Collections;
 import java.util.List;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
-import gregtechmod.api.recipe.Ingredient;
-import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeMap;
-import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.ListAdapter;
 
@@ -38,48 +34,6 @@ public class GT_MetaTileEntity_E_Furnace extends GT_MetaTileEntity_BasicMachine 
 	public GT_MetaTileEntity_E_Furnace(RecipeMap<?> recipeMap) {
 		super(recipeMap);
 		recipeLogic.setProgressTimeManipulator(time -> time * (1 + mHeatingCoilTier));
-		recipeLogic.setRecipeProvider(() -> {
-			ItemStack output;
-			
-			List<ItemStack> inputs = getInputItems();
-			for (int i = 0; i < inputs.size(); i++) {
-				ItemStack in = inputs.get(i);
-				if (in != null && null != (output = GT_ModHandler.getSmeltingOutput(inputs))) {
-					// It shall cook at 3 EU/t, if this Machine is overclocked then it will consume more
-					// The time it usually needs, the Heating Coils re decreasing this Time, and if the Machine is overclocked, then it gets processed faster
-					Ingredient input = new Ingredient() {
-						ItemStack input;
-						{	
-							input = in.copy();
-							input.stackSize = 1;
-						}
-						@Override
-						public boolean match(ItemStack input) {
-							return this.input.isItemEqual(input);
-						}
-						
-						@Override
-						public boolean isWildcard() {
-							return false;
-						}
-						
-						@Override
-						public List<ItemStack> getVariants() {
-							return Collections.singletonList(input);
-						}
-						
-						@Override
-						public int getCount() {
-							return 1;
-						}
-					};
-					
-					return new Recipe(0, 3, 130, false, Collections.singletonList(input), Collections.singletonList(output), Collections.emptyList());
-				}
-			}
-			
-			return null;
-		});
 	}
 	
 	// Apply your empty constructor here

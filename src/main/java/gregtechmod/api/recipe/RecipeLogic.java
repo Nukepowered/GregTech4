@@ -30,12 +30,12 @@ public class RecipeLogic {
 	protected Supplier<Recipe> customRecipeProvider;
 	/** Custom fucntion called every recipe progress time update, if you want to speed up machine because of some factor, just increase the value up */
 	protected IntUnaryOperator progressTimeManipulator = i -> i;
+	protected Recipe previousRecipe;
 	protected int maxProgressTime;
 	protected int progressTime;
 	protected int EUt;
 	
 	private int overclockersCount;
-	private Recipe previousRecipe;
 	private boolean stuttering;
 	private boolean wasNoEnergy;
 	

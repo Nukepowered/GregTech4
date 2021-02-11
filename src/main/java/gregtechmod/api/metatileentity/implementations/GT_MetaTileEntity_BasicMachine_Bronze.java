@@ -1,6 +1,8 @@
 package gregtechmod.api.metatileentity.implementations;
 
 import gregtechmod.api.GregTech_API;
+import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeLogic;
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
@@ -29,6 +31,34 @@ public abstract class GT_MetaTileEntity_BasicMachine_Bronze extends GT_MetaTileE
 	}
 	
 	public boolean mNeedsSteamVenting = false;
+	
+	@Override
+	protected void initRecipeLogic(RecipeMap<?> map) {
+		this.recipeLogic = new RecipeLogic(map, this) {
+			@Override
+			protected void startRecipe(Recipe recipe) {
+				if (spaceForOutput(recipe)) {
+					previousRecipe = recipe;
+					maxProgressTime = (int) (recipe.getDuration() * 1.33F); // Override max progress time, to increase it for bronze machines
+					progressTime = 1;
+					EUt = recipe.getEUt();
+					if (consumeInputs(recipe)) {
+						getBaseMetaTileEntity().setActive(true);
+						startProcess();
+					} else {
+						GT_Log.log.catching(new IllegalStateException("Error state detected! RecipeMap passed recipe, but it's not matching! Report about this!!!"));
+						EUt = 0;
+						progressTime = 0;
+						maxProgressTime = 0;
+						previousRecipe = null;
+					}
+					
+				} else {
+					getBaseMetaTileEntity().setActive(false);
+				}
+			}
+		};
+	}
 	
 	@Override
 	public void saveNBTData(NBTTagCompound aNBT) {

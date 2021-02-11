@@ -3,6 +3,7 @@ package gregtechmod.common.recipe;
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.common.recipe.factory.SimpleRecipeFactory;
+import gregtechmod.common.recipe.maps.FurnanceRecipeMap;
 import gregtechmod.common.recipe.maps.IC2RecipeMap;
 import gregtechmod.common.recipe.maps.PulverizerRecipeMap;
 import gregtechmod.common.recipe.maps.RecyclerRecipeMap;
@@ -32,7 +33,7 @@ public class RecipeMaps {
 	public static final RecipeMap<SimpleRecipeFactory> LATHE				= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory> CUTTING				= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory> EXTRUDING			= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory());
-	public static final RecipeMap<SimpleRecipeFactory> HAMMER				= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory());
+	public static final RecipeMap<SimpleRecipeFactory> HAMMER				= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory()); // TODO generate recipes according on code in Bronze hamerrer
 	public static final RecipeMap<SimpleRecipeFactory> PRINTER				= new RecipeMap<>(1, 3, 1, 2, new SimpleRecipeFactory());
 	public static final PulverizerRecipeMap			   PULVERIZING 			= new PulverizerRecipeMap(1, 2, 1, 4);
 	
@@ -49,4 +50,5 @@ public class RecipeMaps {
 	public static final IC2RecipeMap 		COMPRESSION 	= new IC2RecipeMap(1, 2, 1, 2, GT_ModHandler::getCompressorResult);
 	public static final RecyclerRecipeMap 	RECYCLING 		= new RecyclerRecipeMap(1, 2, 1, 2);
 	public static final ScannerRecipeMap 	SCANNING 		= new ScannerRecipeMap(1, 2, 1, 2);
+	public static final FurnanceRecipeMap 	MELTING			= new FurnanceRecipeMap(1, 2, 1, 2);
 }

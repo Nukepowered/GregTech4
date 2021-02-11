@@ -64,10 +64,12 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
 	protected void initRecipeLogic(RecipeMap<?> recipeMap) {
 		recipeLogic = new RecipeLogic(recipeMap, this) {
 			@Override
-			protected void consumeInputs(Recipe recipe) {
+			protected boolean consumeInputs(Recipe recipe) {
 				if (mFluid == null || !BasicFluidWorkable.this.consumeFluids(true, recipe)) {
-					super.consumeInputs(recipe);
+					return super.consumeInputs(recipe);
 				}
+				
+				return true;
 			}
 			
 			@Override

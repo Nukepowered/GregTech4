@@ -1,15 +1,10 @@
 package gregtechmod.common.tileentities.machines.steam;
 
-import java.util.List;
-
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine_Bronze;
-
-import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeMap;
-import gregtechmod.api.util.GT_ModHandler;
-import gregtechmod.api.util.GT_Utility;
+
 import net.minecraft.entity.player.EntityPlayer;
 
 public class GT_MetaTileEntity_BronzeExtractor extends GT_MetaTileEntity_BasicMachine_Bronze {
@@ -33,16 +28,6 @@ public class GT_MetaTileEntity_BronzeExtractor extends GT_MetaTileEntity_BasicMa
 	}
 	
 	@Override
-    public void checkRecipe() {
-		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 1, 2, (byte)64, (byte)1, (byte)64, (byte)1);
-		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 3, 4, (byte)64, (byte)1, (byte)64, (byte)1);
-    	if (mInventory[2] != null && null != (mOutputItem1 = GT_ModHandler.getExtractorOutput(mInventory[2], true, mInventory[3]))) {
-    		mEUt = 3;
-    		mMaxProgresstime = 800;
-    	}
-    }
-	
-	@Override
 	public int getFrontFacingInactive() {
 		return 342;
 	}
@@ -54,6 +39,6 @@ public class GT_MetaTileEntity_BronzeExtractor extends GT_MetaTileEntity_BasicMa
 	
 	@Override
 	public String getDescription() {
-		return "metatileentity.GT_BronzeExtractor.tooltipr";
+		return "metatileentity.GT_BronzeExtractor.tooltip";
 	}
 }

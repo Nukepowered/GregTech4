@@ -14,7 +14,6 @@ import ic2.api.recipe.RecipeOutput;
 
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.Map.Entry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -1183,27 +1182,6 @@ public class GT_ModHandler {
     }
     
     /**
-     * Used in my own Macerator. Decreases StackSize of the Input if wanted.
-     */
-    public static ItemStack getMaceratorOutput(ItemStack aInput, boolean aRemoveInput, ItemStack aOutputSlot) {
-    	return GT_Utility.copy(getMachineOutput(aInput, getMaceratorRecipeList(), aRemoveInput, aOutputSlot)[0]);
-    }
-    
-    /**
-     * Used in my own Extractor. Decreases StackSize of the Input if wanted.
-     */
-    public static ItemStack getExtractorOutput(ItemStack aInput, boolean aRemoveInput, ItemStack aOutputSlot) {
-    	return GT_Utility.copy(getMachineOutput(aInput, getExtractorRecipeList(), aRemoveInput, aOutputSlot)[0]);
-    }
-    
-    /**
-     * Used in my own Compressor. Decreases StackSize of the Input if wanted.
-     */
-    public static ItemStack getCompressorOutput(ItemStack aInput, boolean aRemoveInput, ItemStack aOutputSlot) {
-    	return GT_Utility.copy(getMachineOutput(aInput, getCompressorRecipeList(), aRemoveInput, aOutputSlot)[0]);
-    }
-    
-    /**
      * Used in Ore processors.
      */
     public static ItemStack getSmeltingOutput(ItemStack aInput, boolean aRemoveInput, ItemStack aOutputSlot) {
@@ -1229,44 +1207,6 @@ public class GT_ModHandler {
     	}
     	
     	return output;
-    }
-    
-    /**
-     * Used in my own Machines. Decreases StackSize of the Input if wanted.
-     * 
-     * Checks also if there is enough Space in the Output Slots.
-     */
-    public static ItemStack[] getMachineOutput(ItemStack aInput, Map<IRecipeInput, RecipeOutput> aRecipeList, boolean aRemoveInput, ItemStack... aOutputSlots) {
-    	if (aOutputSlots == null || aOutputSlots.length <= 0) return new ItemStack[0];
-    	if (aInput == null) return new ItemStack[aOutputSlots.length];
-    	try {
-			for (Entry<IRecipeInput, RecipeOutput> tEntry : aRecipeList.entrySet()) {
-				if (tEntry.getKey().matches(aInput)) {
-					if (tEntry.getKey().getAmount() <= aInput.stackSize) {
-						ItemStack[] tList = (ItemStack[])tEntry.getValue().items.toArray();
-						if (tList.length == 0) break;
-						ItemStack[] rList = new ItemStack[aOutputSlots.length];
-						
-						for (byte i = 0; i < aOutputSlots.length; i++) {
-							if (tList[i] != null) {
-								if (aOutputSlots[i] == null || (GT_Utility.areStacksEqual(tList[i], aOutputSlots[i]) && tList[i].stackSize + aOutputSlots[i].stackSize <= aOutputSlots[i].getMaxStackSize())) {
-									rList[i] = GT_Utility.copy(tList[i]);
-								} else {
-							    	return new ItemStack[aOutputSlots.length];
-								}
-							}
-						}
-						
-						if (aRemoveInput) aInput.stackSize-=tEntry.getKey().getAmount();
-						return rList;
-					}
-					break;
-				}
-			}
-    	} catch(Throwable e) {
-    		if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);
-    	}
-    	return new ItemStack[aOutputSlots.length];
     }
     
     /**
