@@ -1,6 +1,9 @@
 package gregtechmod.api.recipe;
 
+import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.common.recipe.RecipeEntry;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -11,8 +14,10 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 
 /**
  * NEVER INCLUDE THIS FILE IN YOUR MOD!!!
@@ -215,232 +220,19 @@ public class Recipe {
 			.collect(Collectors.toList()));
 		return result;
 	}
-	
-	//	public void checkCellBalance() {
-//		if (!GregTech_API.SECONDARY_DEBUG_MODE || mInputs.length < 1) return;
-//		
-//		int tInputAmount  = GT_ModHandler.getCapsuleCellContainerCountMultipliedWithStackSize(getFirstInputs());
-//		int tOutputAmount = GT_ModHandler.getCapsuleCellContainerCountMultipliedWithStackSize(mOutputs);
-//		
-//		if (tInputAmount < tOutputAmount) {
-//			if (!Materials.Tin.contains(getFirstInputs())) {
-//				GT_Log.log.catching(new Exception());
-//			}
-//		} else if (tInputAmount > tOutputAmount) {
-//			if (!Materials.Tin.contains(mOutputs)) {
-//				GT_Log.log.catching(new Exception());
-//			}
-//		}
-//	}
-//	
-//	public static boolean addRecipe(List<Recipe> aList, boolean aShapeless, ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, ItemStack aOutput2, ItemStack aOutput3, ItemStack aOutput4, int aDuration, int aEUt, int aStartEU) {
-//		return addRecipe(aList, aShapeless, new Recipe(aInput1, aInput2, aOutput1, aOutput2, aOutput3, aOutput4, aDuration, aEUt, aStartEU, true));
-//	}
-//	
-//	public static boolean addRecipe(List<Recipe> aList, boolean aShapeless, Recipe aRecipe) {
-//		if (aList.contains(aRecipe)) return false;
-//		aRecipe.addToLists(aList);
-//		return true;
-//	}
-//	
-//	/**
-//	 * Default constructor, will create simple recipe
-//	 * @param aInput1
-//	 * @param aInput2
-//	 * @param aOutput1
-//	 * @param aOutput2
-//	 * @param aOutput3
-//	 * @param aOutput4
-//	 * @param aDuration
-//	 * @param aEUt
-//	 * @param aStartEU
-//	 * @param unification will forcely add oredict variants to input
-//	 */
-//	public Recipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, ItemStack aOutput2, ItemStack aOutput3, ItemStack aOutput4, int aDuration, int aEUt, int aStartEU, boolean unification) {
-//		if (aInput1 == null) {
-//			mInputs = new ItemStack [0][];
-//		} else if (aInput2 == null) {
-//			mInputs = new ItemStack[][]{ unification ? applyOreDict(aInput1) : new ItemStack[] {aInput1}};
-//		} else {
-//			mInputs = new ItemStack[][] { unification ? applyOreDict(aInput1) : new ItemStack[] {aInput1}, unification ? applyOreDict(aInput2) : new ItemStack[] {aInput2}};
-//		}
-//		
-//		mOutputs = new ItemStack[] {aOutput1, aOutput2, aOutput3, aOutput4};
-//		mDuration = aDuration;
-//		mStartEU = aStartEU;
-//		mEUt = aEUt;
-//	}
-//	
-//	public Recipe(ItemStack aInput1, ItemStack aOutput1, int aStartEU, int aType) {
-//		this(aInput1, aOutput1, null, null, null, aStartEU, aType);
-//	}
-//	
-//	// aStartEU = EU per Liter! If there is no Liquid for this Object, then it gets multiplied with 1000!
-//	public Recipe(ItemStack aInput1, ItemStack aOutput1, ItemStack aOutput2, ItemStack aOutput3, ItemStack aOutput4, int aStartEU, int aType) {
-//		this(aInput1, null, aOutput1, aOutput2, aOutput3, aOutput4, 0, 0, Math.max(1, aStartEU), true);
-//		
-//		if (mInputs.length > 0 && aStartEU > 0) {
-//			switch (aType) {
-//			// Diesel Generator
-//			case 0:
-//				addToLists(RecipeMaps.sDieselFuels);
-//				break;
-//			// Gas Turbine
-//			case 1:
-//				addToLists(RecipeMaps.sTurbineFuels);
-//				break;
-//			// Thermal Generator
-//			case 2:
-//				addToLists(RecipeMaps.sHotFuels);
-//				break;
-//			// Plasma Generator
-//			case 4:
-//				addToLists(RecipeMaps.sPlasmaFuels);
-//				break;
-//			// Magic Generator
-//			case 5:
-//				addToLists(RecipeMaps.sMagicFuels);
-//				break;
-//			// Fluid Generator. Usually 3. Every wrong Type ends up in the Semifluid Generator
-//			default:
-//				addToLists(RecipeMaps.sDenseLiquidFuels);
-//				break;
-//			}
-//		}
-//	}
-//	
-//	public Recipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, int aDuration, int aEUt, int aStartEU) {
-//		this(aInput1, aInput2, aOutput1, null, null, null, Math.max(aDuration, 1), aEUt, Math.max(Math.min(aStartEU, 160000000), 0), true);
-//		if (mInputs.length > 1 && findEqualRecipe(true, sFusionRecipes, aInput1, aInput2) == null) {
-//			addToLists(sFusionRecipes);
-//		}
-//	}
-//	
-//	public Recipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, ItemStack aOutput2, ItemStack aOutput3, ItemStack aOutput4, int aDuration) {
-//		this(aInput1, aInput2, aOutput1, aOutput2, aOutput3, aOutput4, Math.max(aDuration, 1), 5, 0, true);
-//		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(false, sCentrifugeRecipes, aInput1, aInput2) == null) {
-//			addToLists(sCentrifugeRecipes);
-//		}
-//	}
-//	
-//	public Recipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, ItemStack aOutput2, ItemStack aOutput3, ItemStack aOutput4, int aDuration, int aEUt) {
-//		this(aInput1, aInput2, aOutput1, aOutput2, aOutput3, aOutput4, Math.max(aDuration, 1), Math.max(aEUt, 1), 0, true);
-//		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(false, sElectrolyzerRecipes, aInput1, aInput2) == null) {
-//			addToLists(sElectrolyzerRecipes);
-//		}
-//	}
-//	
-//	public Recipe(ItemStack aInput1, ItemStack aOutput1, ItemStack aOutput2, int aDuration, int aEUt) {
-//		this(aInput1, null, aOutput1, aOutput2, null, null, aDuration, aEUt, 0, true);
-//		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(true, sLatheRecipes, aInput1) == null) {
-//			addToLists(sLatheRecipes);
-//		}
-//	}
-//	
-//	public Recipe(ItemStack aInput1, int aDuration, ItemStack aOutput1, int aEUt) {
-//		this(aInput1, null, aOutput1, null, null, null, aDuration, aEUt, 0, true);
-//		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(true, sCutterRecipes, aInput1) == null) {
-//			addToLists(sCutterRecipes);
-//		}
-//	}
-//	
-//	public Recipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, ItemStack aOutput2, ItemStack aOutput3) {
-//		this(aInput1, aInput2, aOutput1, aOutput2, aOutput3, null, 200*aInput1.stackSize, 30, 0, true);
-//		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(false, sSawmillRecipes, aInput1, aInput2) == null) {
-//			addToLists(sSawmillRecipes);
-//		}
-//	}
-//	
-//	public Recipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, ItemStack aOutput2, ItemStack aOutput3, ItemStack aOutput4) {
-//		this(aInput1, aInput2, aOutput1, aOutput2, aOutput3, aOutput4, 100*aInput1.stackSize, 120, 0, true);
-//		if (mInputs.length > 0 && aInput2 != null && mOutputs[0] != null && findEqualRecipe(false, sGrinderRecipes, aInput1, aInput2) == null) {
-//			addToLists(sGrinderRecipes);
-//		}
-//	}
-//	
-//	public Recipe(ItemStack aInput1, int aCellAmount, ItemStack aOutput1, ItemStack aOutput2, ItemStack aOutput3, ItemStack aOutput4, int aDuration, int aEUt) {
-//		this(aInput1, aCellAmount>0?GT_Items.Cell_Empty.get(Math.min(64, Math.max(1, aCellAmount))):null, aOutput1, aOutput2, aOutput3, aOutput4, Math.max(aDuration, 1), Math.max(aEUt, 1), 0, true);
-//		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(false, sDistillationRecipes, aInput1, aCellAmount>0?GT_Items.Cell_Empty.get(Math.min(64, Math.max(1, aCellAmount))):null) == null) {
-//			addToLists(sDistillationRecipes);
-//		}
-//	}
-//	
-//	public Recipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, ItemStack aOutput2, int aDuration, int aEUt, int aLevel) {
-//		this(aInput1, aInput2, aOutput1, aOutput2, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), aLevel > 0 ? aLevel : 100, true);
-//		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(true, sBlastRecipes, aInput1, aInput2) == null) {
-//			addToLists(sBlastRecipes);
-//		}
-//	}
-//	
-//	public Recipe(ItemStack aInput1, int aInput2, ItemStack aOutput1, ItemStack aOutput2) {
-//		this(aInput1, GT_ModHandler.getIC2Item("industrialTnt", aInput2>0?aInput2<64?aInput2:64:1, new ItemStack(Blocks.tnt, aInput2>0?aInput2<64?aInput2:64:1)), aOutput1, aOutput2, null, null, 20, 30, 0, true);
-//		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(false, sImplosionRecipes, aInput1, GT_ModHandler.getIC2Item("industrialTnt", aInput2>0?aInput2<64?aInput2:64:1, new ItemStack(Blocks.tnt, aInput2>0?aInput2<64?aInput2:64:1))) == null) {
-//			addToLists(sImplosionRecipes);
-//		}
-//	}
-//	
-//	public Recipe(ItemStack aInput1, int aEUt, int aDuration, ItemStack aOutput1) {
-//		this(aInput1, null, aOutput1, null, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), 0, true);
-//		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(true, sWiremillRecipes, aInput1) == null) {
-//			addToLists(sWiremillRecipes);
-//		}
-//	}
-//	
-//	public Recipe(int aEUt, int aDuration, ItemStack aInput1, ItemStack aOutput1) {
-//		this(aInput1, GT_Items.Circuit_Integrated.getWithDamage(0, aInput1.stackSize), aOutput1, null, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), 0, true);
-//		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(false, sBenderRecipes, aInput1) == null) {
-//			addToLists(sBenderRecipes);
-//		}
-//	}
-//	
-//	public Recipe(int aEUt, int aDuration, ItemStack aInput1, ItemStack aShape, ItemStack aOutput1) {
-//		this(aInput1, aShape, aOutput1, null, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), 0, true);
-//		if (mInputs.length > 1 && mOutputs[0] != null && findEqualRecipe(false, sExtruderRecipes, aInput1) == null) {
-//			addToLists(sExtruderRecipes);
-//		}
-//	}
-//	
-//	public Recipe(ItemStack aInput1, int aEUt, ItemStack aInput2, int aDuration, ItemStack aOutput1) {
-//		this(aInput1, aInput2, aOutput1, null, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), 0, true);
-//		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(true, sAssemblerRecipes, aInput1, aInput2) == null) {
-//			addToLists(sAssemblerRecipes);
-//		}
-//	}
-//	
-//	public Recipe(ItemStack aInput1, ItemStack aInput2, int aEUt, int aDuration, ItemStack aOutput1) {
-//		this(aInput1, aInput2, aOutput1, null, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), 0, true);
-//		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(true, sAlloySmelterRecipes, aInput1, aInput2) == null) {
-//			addToLists(sAlloySmelterRecipes);
-//		}
-//	}
-//	
-//	public Recipe(ItemStack aInput1, int aEUt, ItemStack aInput2, int aDuration, ItemStack aOutput1, ItemStack aOutput2) {
-//		this(aInput1, aInput2, aOutput1, aOutput2, null, null, Math.max(aDuration, 1), Math.max(aEUt, 1), 0, true);
-//		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(true, sCannerRecipes, aInput1, aInput2) == null) {
-//			addToLists(sCannerRecipes);
-//		}
-//	}
-//	
-//	public Recipe(ItemStack aInput1, ItemStack aOutput1, int aDuration) {
-//		this(aInput1, null, aOutput1, null, null, null, Math.max(aDuration, 1), 120, 0, true);
-//		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(true, sVacuumRecipes, aInput1) == null) {
-//			addToLists(sVacuumRecipes);
-//		}
-//	}
-//	
-//	public Recipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, int aDuration) {
-//		this(aInput1, aInput2, aOutput1, null, null, null, Math.max(aDuration, 1), 30, 0, true);
-//		if (mInputs.length > 0 && mOutputs[0] != null && findEqualRecipe(true, sChemicalRecipes, aInput1) == null) {
-//			addToLists(sChemicalRecipes);
-//		}
-//	}
-	
+
 	public void writeToNBT(NBTTagCompound data) {
+		NBTTagList outputs = new NBTTagList();
+		for (ItemStack out : this.getResults(new Random())) {
+			NBTTagCompound stack = out.writeToNBT(new NBTTagCompound());
+			outputs.appendTag(stack);
+		}
 		data.setInteger("recipeHash", this.hashCode());
+		data.setTag("recipeOutput", outputs);
 	}
 
 	public static Recipe loadFromNBT(RecipeMap<?> recipeMap, NBTTagCompound data) {
-		if (data.hasKey("recipeHash")) {
+		if (recipeMap != null && data.hasKey("recipeHash")) {
 			int hash = data.getInteger("recipeHash");
 			for (Recipe res : recipeMap.getRecipes()) {
 				if (res.hashCode() == hash) {
@@ -448,7 +240,24 @@ public class Recipe {
 				}
 			}
 		}
-
+		
+		if (data.hasKey("recipeOutput")) {
+			NBTTagList recipe = data.getTagList("recipeOutput", 10);
+			List<ItemStack> stacks = new ArrayList<>();
+			for (int i = 0; i < recipe.tagCount(); i++) {
+				NBTTagCompound stackData = recipe.getCompoundTagAt(i);
+				ItemStack stack = ItemStack.loadItemStackFromNBT(stackData);
+				if (stack != null) {
+					stacks.add(stack);
+				} else GT_Log.log.error("Unable to load stack from tag: " + stackData);
+			}
+			
+			return new Recipe(0, 0, 0, false,
+					Collections.singleton(RecipeEntry.singleton(new ItemStack(Blocks.bedrock))),
+					stacks,
+					Collections.emptyList());
+		}
+		
 		return null;
 	}
 	

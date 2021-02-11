@@ -51,7 +51,7 @@ public class GT_MetaTileEntity_E_Furnace extends GT_MetaTileEntity_BasicMachine 
 						ItemStack input;
 						{	
 							input = in.copy();
-							input.stackSize = 1; // TODO NBT save need to be fixed!
+							input.stackSize = 1;
 						}
 						@Override
 						public boolean match(ItemStack input) {

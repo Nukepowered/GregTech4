@@ -308,7 +308,7 @@ public class GT_GUIHandler implements IGuiHandler {
         if (ID == 146) return new GT_GUIContainer_Centrifuge				(player.inventory, (IGregTechTileEntity)tTileEntity);
         if (ID == 147) return new GT_GUIContainer_RedstoneCircuitBlock		(player.inventory, (IGregTechTileEntity)tTileEntity);
         if (ID == 148) return new GT_GUIContainer_BasicMachine_E_Furnace	(player.inventory, (IGregTechTileEntity)tTileEntity, "Microwave Oven", "E_Furnace.png");
-        if (ID == 149) return new GUI_UniversalMacerator					(player.inventory, (IGregTechTileEntity)tTileEntity, "Universal Macerator", "Macerator.png"); // TODO fix textures for usual macerator
+        if (ID == 149) return new GUI_UniversalMacerator					(player.inventory, (IGregTechTileEntity)tTileEntity, "Universal Macerator", "UniversalMacerator.png");
         if (ID == 150) return new GT_GUIContainer_AESU_Meta					(player.inventory, (IGregTechTileEntity)tTileEntity);
         if (ID == 151) return new GT_GUIContainer_IDSU_Meta					(player.inventory, (IGregTechTileEntity)tTileEntity);
         if (ID == 152) return new GT_GUIContainer_Teleporter				(player.inventory, (IGregTechTileEntity)tTileEntity);
