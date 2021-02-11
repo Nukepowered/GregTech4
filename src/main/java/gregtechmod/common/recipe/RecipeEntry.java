@@ -232,7 +232,7 @@ public class RecipeEntry implements Ingredient {
 		ToStringBuilder.setDefaultStyle(ToStringStyle.SHORT_PREFIX_STYLE);
 		return new ToStringBuilder(this)
 				.append("count=" + count)
-				.append("variants=" + Collections2.transform(variants, stack -> stack.getItem()))
+				.append("variants=" + variants)
 				.append("matches=" + options)
 				.build();
 	}

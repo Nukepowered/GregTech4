@@ -76,7 +76,7 @@ public class RecipeLogic {
 			}
 			
 			if (progressTime == 0) {
-				if (base.hasInventoryBeenModified() || base.hasWorkJustBeenEnabled() || success || base.getTimer() % 600 == 0 || wasNoEnergy || isInputNonEmpty()) {
+				if (base.hasInventoryBeenModified() || base.hasWorkJustBeenEnabled() || success || base.getTimer() % 600 == 0 || wasNoEnergy) {// || isInputNonEmpty()) {
 					if (base.isUniversalEnergyStored(getMachine().getMinimumStoredEU() - 100)) {
 						trySerachRecipe();
 						wasNoEnergy = false;
@@ -149,8 +149,8 @@ public class RecipeLogic {
 		return recipe.matches(false, getMachine().getInputItems());
 	}
 	
-	protected void consumeInputs(Recipe recipe) {
-		recipe.matches(true, getMachine().getInputItems());
+	protected boolean consumeInputs(Recipe recipe) {
+		return recipe.matches(true, getMachine().getInputItems());
 	}
 	
 	protected void startRecipe(Recipe recipe) {
@@ -159,9 +159,17 @@ public class RecipeLogic {
 			maxProgressTime = GT_Utility.isDebugItem(getMachine().getStackInSlot(batterySlot)) ? 1 : recipe.getDuration();
 			progressTime = 1;
 			EUt = recipe.getEUt();
-			consumeInputs(recipe);
-			getMachine().getBaseMetaTileEntity().setActive(true);
-			getMachine().startProcess();
+			if (consumeInputs(recipe)) {
+				getMachine().getBaseMetaTileEntity().setActive(true);
+				getMachine().startProcess();
+			} else {
+				GT_Log.log.catching(new IllegalStateException("Error state detected! RecipeMap passed recipe, but it's not matching! Report about this!!!"));
+				EUt = 0;
+				progressTime = 0;
+				maxProgressTime = 0;
+				previousRecipe = null;
+			}
+			
 		} else {
 			getMachine().getBaseMetaTileEntity().setActive(false);
 		}
@@ -177,19 +185,24 @@ public class RecipeLogic {
 		
 		for (ItemStack recipeOut : recipeOutputs) {
 			int amount = recipeOut.stackSize;
-			for (int i = 0; i < outputs.size(); i++) {
+			for (int i = 0; i < outputs.size() && amount > 0; i++) {
+				ItemStack slot = outputs.get(i);
+				if (GT_Utility.areStacksEqual(recipeOut, slot)) {
+					int newSize = Math.min(slot.getMaxStackSize(), slot.stackSize + amount);
+					amount -= newSize - slot.stackSize;
+					slot.stackSize = newSize;
+				}
+			}
+			
+			for (int i = 0; i < outputs.size() && amount > 0; i++) {
 				ItemStack slot = outputs.get(i);
 				if (slot == null) {
-					outputs.set(i, recipeOut.copy());
+					ItemStack stack = recipeOut.copy();
+					stack.stackSize = amount;
+					outputs.set(i, stack);
 					amount = 0;
-				} else if (GT_Utility.areStacksEqual(recipeOut, slot)) {
-					int newSize = Math.min(slot.getMaxStackSize(), slot.stackSize + amount);
-					slot.stackSize = newSize;
-					amount -= newSize;
-				}
-				
-				if (amount <= 0)
 					break;
+				}
 			}
 			
 			if (amount > 0)

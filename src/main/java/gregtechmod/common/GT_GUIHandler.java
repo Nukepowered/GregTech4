@@ -58,6 +58,7 @@ import gregtechmod.common.containers.GT_Container_TradeOMat_Main;
 import gregtechmod.common.containers.GT_Container_TradeOMat_Settings;
 import gregtechmod.common.containers.GT_Container_Translocator;
 import gregtechmod.common.containers.GT_Container_VacuumFreezer;
+import gregtechmod.common.containers.UniversalMacerator;
 import gregtechmod.common.gui.GT_GUIContainerMetaID_Machine;
 import gregtechmod.common.gui.GT_GUIContainer_1by1;
 import gregtechmod.common.gui.GT_GUIContainer_2by2;
@@ -133,6 +134,7 @@ import gregtechmod.common.gui.GT_GUIContainer_TradeOMat_Main;
 import gregtechmod.common.gui.GT_GUIContainer_TradeOMat_Settings;
 import gregtechmod.common.gui.GT_GUIContainer_Translocator;
 import gregtechmod.common.gui.GT_GUIContainer_VacuumFreezer;
+import gregtechmod.common.gui.GUI_UniversalMacerator;
 import gregtechmod.common.tileentities.deprecated.GT_TileEntityMetaID_Machine;
 import gregtechmod.common.tileentities.deprecated.GT_TileEntity_Sonictron;
 import net.minecraft.entity.player.EntityPlayer;
@@ -207,7 +209,7 @@ public class GT_GUIHandler implements IGuiHandler {
         if (ID == 146) return new GT_Container_Centrifuge				(player.inventory, (IGregTechTileEntity)				tTileEntity);
         if (ID == 147) return new GT_Container_RedstoneCircuitBlock		(player.inventory, (IGregTechTileEntity)				tTileEntity);
         if (ID == 148) return new GT_Container_BasicMachine				(player.inventory, (IGregTechTileEntity)				tTileEntity);
-        if (ID == 149) return new GT_Container_BasicMachine				(player.inventory, (IGregTechTileEntity)				tTileEntity);
+        if (ID == 149) return new UniversalMacerator					(player.inventory, (IGregTechTileEntity)				tTileEntity);
         if (ID == 150) return new GT_Container_AESU_Meta				(player.inventory, (IGregTechTileEntity)				tTileEntity);
         if (ID == 151) return new GT_Container_IDSU_Meta				(player.inventory, (IGregTechTileEntity)				tTileEntity);
         if (ID == 152) return new GT_Container_Teleporter				(player.inventory, (IGregTechTileEntity)				tTileEntity);
@@ -306,7 +308,7 @@ public class GT_GUIHandler implements IGuiHandler {
         if (ID == 146) return new GT_GUIContainer_Centrifuge				(player.inventory, (IGregTechTileEntity)tTileEntity);
         if (ID == 147) return new GT_GUIContainer_RedstoneCircuitBlock		(player.inventory, (IGregTechTileEntity)tTileEntity);
         if (ID == 148) return new GT_GUIContainer_BasicMachine_E_Furnace	(player.inventory, (IGregTechTileEntity)tTileEntity, "Microwave Oven", "E_Furnace.png");
-        if (ID == 149) return new GT_GUIContainer_BasicMachine_Macerator	(player.inventory, (IGregTechTileEntity)tTileEntity, "Universal Macerator", "Macerator.png");
+        if (ID == 149) return new GUI_UniversalMacerator					(player.inventory, (IGregTechTileEntity)tTileEntity, "Universal Macerator", "Macerator.png"); // TODO fix textures for usual macerator
         if (ID == 150) return new GT_GUIContainer_AESU_Meta					(player.inventory, (IGregTechTileEntity)tTileEntity);
         if (ID == 151) return new GT_GUIContainer_IDSU_Meta					(player.inventory, (IGregTechTileEntity)tTileEntity);
         if (ID == 152) return new GT_GUIContainer_Teleporter				(player.inventory, (IGregTechTileEntity)tTileEntity);

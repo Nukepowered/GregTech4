@@ -106,16 +106,11 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
 			}
 			
 			boolean succeded = recipeLogic.update();
-			
-			if (bItemTransfer && (mInventory[3] != null || mInventory[4] != null) && getBaseMetaTileEntity().getFrontFacing() != mMainFacing && doesAutoOutput() && (succeded || getBaseMetaTileEntity().hasInventoryBeenModified() || getBaseMetaTileEntity().getTimer()%600 == 0) && getBaseMetaTileEntity().isUniversalEnergyStored(500)) {
+			if (bItemTransfer && !getOutputItems().isEmpty() && getBaseMetaTileEntity().getFrontFacing() != mMainFacing && doesAutoOutput() && (succeded || getBaseMetaTileEntity().hasInventoryBeenModified() || getBaseMetaTileEntity().getTimer()%600 == 0) && getBaseMetaTileEntity().isUniversalEnergyStored(500)) {
 				TileEntity tTileEntity2 = getBaseMetaTileEntity().getTileEntityAtSide(getBaseMetaTileEntity().getFrontFacing());
 				int tCost = GT_Utility.moveOneItemStack(getBaseMetaTileEntity(), tTileEntity2, getBaseMetaTileEntity().getFrontFacing(), getBaseMetaTileEntity().getBackFacing(), null, false, (byte)64, (byte)1, (byte)64, (byte)1);
 				if (tCost > 0) {
 					getBaseMetaTileEntity().decreaseStoredEnergyUnits(tCost, true);
-					tCost = GT_Utility.moveOneItemStack(getBaseMetaTileEntity(), tTileEntity2, getBaseMetaTileEntity().getFrontFacing(), getBaseMetaTileEntity().getBackFacing(), null, false, (byte)64, (byte)1, (byte)64, (byte)1);
-					if (tCost > 0) {
-						getBaseMetaTileEntity().decreaseStoredEnergyUnits(tCost, true);
-					}
 				}
 			}
 	    }

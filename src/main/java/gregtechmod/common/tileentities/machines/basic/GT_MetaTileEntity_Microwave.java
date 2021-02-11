@@ -1,5 +1,6 @@
 package gregtechmod.common.tileentities.machines.basic;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,8 +14,11 @@ import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
 import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeLogic;
+import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.common.recipe.RecipeEntry;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -27,11 +31,11 @@ import net.minecraftforge.common.util.FakePlayer;
 
 public class GT_MetaTileEntity_Microwave extends GT_MetaTileEntity_BasicMachine {
 	
-	public GT_MetaTileEntity_Microwave(int aID, String mName, List<Recipe> recipeMap) {
+	public GT_MetaTileEntity_Microwave(int aID, String mName, RecipeMap<?> recipeMap) {
 		super(aID, mName, recipeMap);
 	}
 	
-	public GT_MetaTileEntity_Microwave(List<Recipe> recipeMap) {
+	public GT_MetaTileEntity_Microwave(RecipeMap<?> recipeMap) {
 		super(recipeMap);
 	}
 	
@@ -46,50 +50,57 @@ public class GT_MetaTileEntity_Microwave extends GT_MetaTileEntity_BasicMachine 
 	}
 	
 	@Override
-	public void initRecipeLogic(List<Recipe> recipeMap) {
-		super.initRecipeLogic(recipeMap);
-		recipeLogic.setRecipeProvider(() -> {
-			ItemStack output = null;
-			if (GT_Utility.isStackValid(mInventory[2]) && (output = checkForExlosion()) != null) {
-				if (TileEntityFurnace.getItemBurnTime(mInventory[2]) > 0 || TileEntityFurnace.getItemBurnTime(output) > 0) {
-		    		mInventory[2] = null;
-					getBaseMetaTileEntity().setOnFire();
-				} else {
-					ItemStack input = mInventory[2].copy();
-					input.stackSize = 1;
-					return new Recipe(input, null, output, null, null, null, 25, 4, 0, false);
+	public void initRecipeLogic(RecipeMap<?> recipeMap) {
+		recipeLogic = new RecipeLogic(recipeMap, this) {
+			@Override
+			protected Recipe findRecipe() {
+				ItemStack output = null;
+				
+				List<ItemStack> inputs = getInputItems();
+				for (int i = 0; i < inputs.size(); i++) {
+					ItemStack input = inputs.get(i);
+					if (GT_Utility.isStackValid(input) && (output = checkForExlosion(input, i)) != null) {
+						if (TileEntityFurnace.getItemBurnTime(input) > 0 || TileEntityFurnace.getItemBurnTime(output) > 0) {
+				    		inputs.set(i, null);
+							getBaseMetaTileEntity().setOnFire();
+						} else {
+							ItemStack input1 = input.copy();
+							input1.stackSize = 1;
+							return new Recipe(0, 4, 25, false,
+									Collections.singleton(RecipeEntry.singleton(input1)),
+									Collections.singleton(output.copy()),
+									Collections.emptyList());
+						}
+					}
 				}
+				
+				return null;
 			}
-			
-			return null;
-		});
+		};
 	}
 	
-	private ItemStack checkForExlosion() {
-		ItemStack tOutput = GT_ModHandler.getSmeltingOutput(mInventory[2], false, mInventory[3]);
-		if (mInventory[2].getItem() == GT_Items.Spray_CFoam.getItem() ||
-				GT_Utility.areStacksEqual(mInventory[2], GT_ModHandler.getIC2Item("constructionFoamSprayer", 1, GregTech_API.ITEM_WILDCARD_DAMAGE)) ||
-				GT_Utility.areStacksEqual(mInventory[2], GT_ModHandler.getIC2Item("constructionFoam", 1, GregTech_API.ITEM_WILDCARD_DAMAGE)) ||
-				GT_Utility.areStacksEqual(mInventory[2], GT_ModHandler.getIC2Item("CFCell", 1))) {
-//			mInventory[2] = null;
-//			getBaseMetaTileEntity().doExplosion(128); // FIXME get filled sprayer
+	private ItemStack checkForExlosion(ItemStack input, int inIdx) {
+		ItemStack tOutput = GT_ModHandler.getSmeltingOutput(input, false, null);
+		if (input.getItem() == GT_Items.Spray_CFoam.getItem() ||
+				GT_Utility.areStacksEqual(input, GT_ModHandler.getIC2Item("constructionFoamSprayer", 1, GregTech_API.ITEM_WILDCARD_DAMAGE)) ||
+				GT_Utility.areStacksEqual(input, GT_ModHandler.getIC2Item("constructionFoam", 1, GregTech_API.ITEM_WILDCARD_DAMAGE)) ||
+				GT_Utility.areStacksEqual(input, GT_ModHandler.getIC2Item("CFCell", 1))) {
+			IGregTechTileEntity ent = getBaseMetaTileEntity();
+			getInputItems().set(inIdx, null);
+			ent.doExplosion(128);
 			try {
 				ItemStack foamSprayer = GT_ModHandler.getIC2Item("constructionFoamSprayer", 1, new ItemStack(Blocks.sponge, 1));
 				NBTTagCompound data = new NBTTagCompound();
 				NBTTagCompound fluid = new NBTTagCompound();
-				fluid.setInteger("Amount", 10000);
-				fluid.setString("Fluid", "ic2constructionfoam");
+				fluid.setInteger("Amount", 32000);
+				fluid.setString("FluidName", "ic2constructionfoam");
 				data.setTag("Fluid", fluid);
 				foamSprayer.setTagCompound(data);
-				
-				
-				
 				for (int i = 0; i < 6; i++) {
-					foamSprayer.getItem().onItemUse(foamSprayer, new FakePlayer((WorldServer) getBaseMetaTileEntity().getWorld(), new GameProfile(UUID.randomUUID(),"Foo")),
-							getBaseMetaTileEntity().getWorld(), 
-							getBaseMetaTileEntity().getXCoord(), 
-							getBaseMetaTileEntity().getYCoord(), 
-							getBaseMetaTileEntity().getZCoord(), i, 0, 0, 0);
+					foamSprayer.getItem().onItemUse(foamSprayer, new FakePlayer((WorldServer) ent.getWorld(), new GameProfile(UUID.randomUUID(),"Foo")), ent.getWorld(), 
+							ent.getXCoord(), 
+							ent.getYCoord(), 
+							ent.getZCoord(), i, 0, 0, 0);
 				}
 			} catch (Throwable e) {
 				e.printStackTrace();
@@ -97,15 +108,15 @@ public class GT_MetaTileEntity_Microwave extends GT_MetaTileEntity_BasicMachine 
 			
 			return null;
 		} else {
-			if (OrePrefixes.ingot.contains(mInventory[2])
+			if (OrePrefixes.ingot.contains(input)
 					|| OrePrefixes.ingot.contains(tOutput)
-					|| Materials.Netherrack.contains(mInventory[2])
-					|| Materials.Gunpowder.contains(mInventory[2])
+					|| Materials.Netherrack.contains(input)
+					|| Materials.Gunpowder.contains(input)
 					|| Materials.Gunpowder.contains(tOutput)
-					|| mInventory[2].isItemEqual(new ItemStack(Blocks.netherrack))
-					|| mInventory[2].getItem() == Items.egg) {
+					|| input.isItemEqual(new ItemStack(Blocks.netherrack))
+					|| input.getItem() == Items.egg) {
 				
-				mInventory[2] = null;
+				getInputItems().set(inIdx, null);
 				getBaseMetaTileEntity().doExplosion(128);
 				return null;
 			}

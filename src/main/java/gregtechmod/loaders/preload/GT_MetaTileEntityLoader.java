@@ -1,7 +1,5 @@
 package gregtechmod.loaders.preload;
 
-import java.util.Collections;
-
 import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
@@ -74,8 +72,8 @@ public class GT_MetaTileEntityLoader implements Runnable {
 		new GT_MetaTileEntity_Assembler					( 60, "GT_Assembler"			, RecipeMaps.ASSEMBLING);
 		new GT_MetaTileEntity_Printer					( 61, "GT_Printer"				, RecipeMaps.PRINTER);
 		new GT_MetaTileEntity_Centrifuge				( 62, "GT_Centrifuge");
-//		new GT_MetaTileEntity_Microwave					( 63, "GT_Microwave"			, Collections.emptyList()); // TODO custom recipes
-//		new GT_MetaTileEntity_Pulverizer				( 64, "GT_Pulverizer"			, Collections.emptyList()); // TODO custom recipes
+		new GT_MetaTileEntity_Microwave					( 63, "GT_Microwave"			, null);
+		new GT_MetaTileEntity_Pulverizer				( 64, "GT_Pulverizer"			, RecipeMaps.PULVERIZING);
 		new GT_MetaTileEntity_RedstoneLamp				( 65, "GT_RedstoneLamp");
 		new GT_MetaTileEntity_RedstoneNoteBlock			( 66, "GT_RedstoneNoteBlock");
 		new GT_MetaTileEntity_RedstoneButtonPanel		( 67, "GT_RedstoneButtonPanel");
@@ -124,7 +122,7 @@ public class GT_MetaTileEntityLoader implements Runnable {
 		new GT_MetaTileEntity_Lathe						(111, "GT_Lathe"				, RecipeMaps.LATHE);
 		new GT_MetaTileEntity_AdvancedCraftingTable		(112, "GT_ProjectTable");
 		new GT_MetaTileEntity_PlateCutter				(113, "GT_Cutter"				, RecipeMaps.CUTTING);
-//	    new GT_MetaTileEntity_Scanner					(114, "GT_Scanner"				, Collections.emptyList()); // TODO custom recipes
+	    new GT_MetaTileEntity_Scanner					(114, "GT_Scanner"				, RecipeMaps.SCANNING);
 	    new GT_MetaTileEntity_Extruder					(115, "GT_Extruder"				, RecipeMaps.EXTRUDING);
 	    new GT_MetaTileEntity_ElectricRetrieverAdvanced	(116, "GT_RetrieverAdvanced");
 		

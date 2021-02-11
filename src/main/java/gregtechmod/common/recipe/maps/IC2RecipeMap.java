@@ -2,16 +2,11 @@ package gregtechmod.common.recipe.maps;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.function.Supplier;
+import java.util.function.Function;
 
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.recipe.RecipeEntry;
-
-import ic2.api.recipe.IRecipeInput;
-import ic2.api.recipe.RecipeOutput;
 
 import net.minecraft.item.ItemStack;
 
@@ -20,11 +15,11 @@ import net.minecraft.item.ItemStack;
  *
  */
 public class IC2RecipeMap extends DummyRecipeMap {
-	private final Map<IRecipeInput, RecipeOutput> recipeList;
+	private final Function<ItemStack, List<ItemStack>> recipeGetter;
 	
-	public IC2RecipeMap(int minInputs, int maxInputs, int minOutputs, int maxOutputs, Supplier<Map<IRecipeInput, RecipeOutput>> recipeMapGetter) {
+	public IC2RecipeMap(int minInputs, int maxInputs, int minOutputs, int maxOutputs, Function<ItemStack, List<ItemStack>> recipeGetter) {
 		super(minInputs, maxInputs, minOutputs, maxOutputs);
-		this.recipeList = recipeMapGetter.get();
+		this.recipeGetter = recipeGetter;
 	}
 	
 	@Override
@@ -32,14 +27,13 @@ public class IC2RecipeMap extends DummyRecipeMap {
 		for (ItemStack in : input) {
 			if (GT_Utility.isStackValid(in)) {
 				ItemStack inValid = in.copy();
-				for (Entry<IRecipeInput, RecipeOutput> e : recipeList.entrySet()) {
-					if (e.getKey().matches(inValid)) {
-						inValid.stackSize = e.getKey().getAmount();
-						return new Recipe(0, 2, 400, false,
-								Collections.singleton(RecipeEntry.singleton(inValid)),
-								e.getValue().items,
-								Collections.emptyList());
-					}
+				List<ItemStack> results = recipeGetter.apply(inValid);
+				if (results != null && !results.isEmpty()) {
+					inValid.stackSize = in.stackSize - inValid.stackSize;
+					return new Recipe(0, 2, 200, false,
+							Collections.singleton(RecipeEntry.singleton(inValid)),
+							results,
+							Collections.emptyList());
 				}
 			}
 		}

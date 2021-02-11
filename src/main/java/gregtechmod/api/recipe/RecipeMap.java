@@ -65,16 +65,18 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 			if (recipes != null)
 				result = findRecipe(recipes, input);
 			if (result == null && recipesWild != null)
-				result = findRecipe(recipes, input);
+				result = findRecipe(recipesWild, input);
 		}
 		
-		return result;
+		return result != null && result.enabled ? result : null;
 	}
 	
 	private Recipe findRecipe(List<Recipe> recipes, List<ItemStack> input) {
-		for (Recipe recipe : recipes) {
-			if (recipe.matches(false, input)) {
-				return recipe;
+		if (recipes != null) {
+			for (Recipe recipe : recipes) {
+				if (recipe.matches(false, input)) {
+					return recipe;
+				}
 			}
 		}
 		

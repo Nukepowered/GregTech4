@@ -361,7 +361,8 @@ public class GT_Utility {
 								ItemStack rStack = ((cofh.api.transport.IItemDuct)aTileEntity2).insertItem(ForgeDirection.getOrientation(aPutTo), copy(tStack));
 								byte tMovedItemCount = (byte)(tStack.stackSize - (rStack == null ? 0 : rStack.stackSize));
 								if (tMovedItemCount >= 1/*Math.max(aMinMoveAtOnce, aMinTargetStackSize)*/) {
-									//((cofh.api.transport.IItemConduit)aTileEntity2).insertItem(ForgeDirection.getOrientation(aPutTo), copyAmount(tMovedItemCount, tStack), false);
+									ItemStack remains = ((cofh.api.transport.IItemDuct)aTileEntity2).insertItem(ForgeDirection.getOrientation(aPutTo), copyAmount(tMovedItemCount, tStack));
+									tMovedItemCount = (byte) (tStack.stackSize - remains.stackSize);
 									aTileEntity1.decrStackSize(aGrabSlots[i], tMovedItemCount);
 									aTileEntity1.markDirty();
 									return tMovedItemCount;
@@ -484,13 +485,11 @@ public class GT_Utility {
 			}
 			
 			for (int i = 0; i < tGrabSlots.length; i++) {
-				for (int j = 0; j < tPutSlots.length; j++) {
-					if (listContainsItem(aFilter, aTileEntity1.getStackInSlot(tGrabSlots[i]), true, aInvertFilter)) {
-						if (isAllowedToTakeFromSlot(aTileEntity1, tGrabSlots[i], aGrabFrom, aTileEntity1.getStackInSlot(tGrabSlots[i]))) {
-							if (isAllowedToPutIntoSlot((IInventory)aTileEntity2, tPutSlots[j], aPutTo, aTileEntity1.getStackInSlot(tGrabSlots[i]))) {
-								byte tMovedItemCount = moveStackFromSlotAToSlotB(aTileEntity1, (IInventory)aTileEntity2, tGrabSlots[i], tPutSlots[j], aMaxTargetStackSize, aMinTargetStackSize, aMaxMoveAtOnce, aMinMoveAtOnce);
-								if (tMovedItemCount > 0) return tMovedItemCount;
-							}
+				if (listContainsItem(aFilter, aTileEntity1.getStackInSlot(tGrabSlots[i]), true, aInvertFilter) && isAllowedToTakeFromSlot(aTileEntity1, tGrabSlots[i], aGrabFrom, aTileEntity1.getStackInSlot(tGrabSlots[i]))) {
+					for (int j = 0; j < tPutSlots.length; j++) {
+						if (isAllowedToPutIntoSlot((IInventory)aTileEntity2, tPutSlots[j], aPutTo, aTileEntity1.getStackInSlot(tGrabSlots[i]))) {
+							byte tMovedItemCount = moveStackFromSlotAToSlotB(aTileEntity1, (IInventory)aTileEntity2, tGrabSlots[i], tPutSlots[j], aMaxTargetStackSize, aMinTargetStackSize, aMaxMoveAtOnce, aMinMoveAtOnce);
+							if (tMovedItemCount > 0) return tMovedItemCount;
 						}
 					}
 				}

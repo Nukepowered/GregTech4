@@ -5,17 +5,18 @@ import java.util.List;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
-import gregtechmod.api.recipe.Recipe;
-
+import gregtechmod.api.recipe.RecipeMap;
+import gregtechmod.api.util.ListAdapter;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 
 public class GT_MetaTileEntity_Pulverizer extends GT_MetaTileEntity_BasicMachine {
 	
-	public GT_MetaTileEntity_Pulverizer(int aID, String mName, List<Recipe> recipeMap) {
+	public GT_MetaTileEntity_Pulverizer(int aID, String mName, RecipeMap<?> recipeMap) {
 		super(aID, mName, recipeMap);
 	}
 	
-	public GT_MetaTileEntity_Pulverizer(List<Recipe> recipeMap) {
+	public GT_MetaTileEntity_Pulverizer(RecipeMap<?> recipeMap) {
 		super(recipeMap);
 	}
 	
@@ -27,82 +28,32 @@ public class GT_MetaTileEntity_Pulverizer extends GT_MetaTileEntity_BasicMachine
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
 		return new GT_MetaTileEntity_Pulverizer(recipeLogic.recipeMap);
 	}
-	
-    public void checkRecipe() { // TODO register new recipe map with pulv recipes & chanded output
-//    	if (mInventory[2] != null) {
-//	    	if (mInventory[3] == null && mInventory[4] == null) {
-//		    	if (mInventory[2].isItemEqual(new ItemStack(Blocks.gravel, 1))) {
-//		    		Object tObject = GT_ModHandler.getPulverizerRecipe(mInventory[2]);
-//				    try {
-//				    	if (tObject instanceof GT_PulverizerRecipe) {
-//					    	GT_PulverizerRecipe tRecipe = (GT_PulverizerRecipe)tObject;
-//				    		if (tRecipe != null && tRecipe.getInput().stackSize <= mInventory[2].stackSize) {
-//						    	if ((mOutputItem1 = tRecipe.getPrimaryOutput()) != null) {
-//					    			if (getBaseMetaTileEntity().getRandomNumber(100) < tRecipe.getSecondaryOutputChance()) {
-//					    				mOutputItem2 = tRecipe.getSecondaryOutput();
-//					    			}
-//					    			mInventory[2].stackSize-=tRecipe.getInput().stackSize;
-//									mMaxProgresstime = 300*tRecipe.getInput().stackSize;
-//									mEUt = 3;
-//					    			return;
-//						    	}
-//				    		}
-//		    			} else {
-//					    	IPulverizerRecipe tRecipe = (IPulverizerRecipe)tObject;
-//				    		if (tRecipe != null && tRecipe.getInput().stackSize <= mInventory[2].stackSize) {
-//						    	if ((mOutputItem1 = tRecipe.getPrimaryOutput()) != null) {
-//					    			if (getBaseMetaTileEntity().getRandomNumber(100) < tRecipe.getSecondaryOutputChance()) {
-//					    				mOutputItem2 = tRecipe.getSecondaryOutput();
-//					    			}
-//					    			mInventory[2].stackSize-=tRecipe.getInput().stackSize;
-//									mMaxProgresstime = 300*tRecipe.getInput().stackSize;
-//									mEUt = 3;
-//					    			return;
-//						    	}
-//				    		}
-//					    }
-//					} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
-//		    	}
-//			    try {
-//			    	for (ItemStack tOutput : mods.railcraft.api.crafting.RailcraftCraftingManager.rockCrusher.getRecipe(mInventory[2]).getRandomizedOuputs()) {
-//			    		if (tOutput != null) {
-//				    		if (mOutputItem1 == null) {
-//				    			mOutputItem1 = GT_Utility.copy(tOutput);
-//				    			continue;
-//				    		}
-//				    		if (GT_Utility.areStacksEqual(mOutputItem1, tOutput)) {
-//				    			mOutputItem1.stackSize += tOutput.stackSize;
-//				    			continue;
-//				    		}
-//				    		if (mOutputItem2 == null) {
-//				    			mOutputItem2 = GT_Utility.copy(tOutput);
-//				    			continue;
-//				    		}
-//				    		if (GT_Utility.areStacksEqual(mOutputItem2, tOutput)) {
-//				    			mOutputItem2.stackSize += tOutput.stackSize;
-//				    			continue;
-//				    		}
-//			    		}
-//			    	}
-//			    	if (mOutputItem1 != null) {
-//				    	mInventory[2].stackSize--;
-//					    mMaxProgresstime = 300;
-//					    mEUt = 4;
-//				    	return;
-//			    	}
-//			    } catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
-//				if (null != (mOutputItem1 = GT_ModHandler.getMaceratorOutput(mInventory[2], true, mInventory[3]))) {
-//	    			mOutputItem2 = null;
-//			    	mMaxProgresstime = 400;
-//			    	mEUt = 2;
-//			    	return;
-//			    }
-//	    	} else {
-//	    		bOutputBlocked = true;
-//	    	}
-//    	}
-    }
     
+	@Override
+    public List<ItemStack> getInputItems() {
+    	return new ListAdapter<>(mInventory, 1, 2);
+    }
+	
+	@Override
+	public List<ItemStack> getOutputItems() {
+		return new ListAdapter<>(mInventory, 3, 6);
+	}
+	
+	@Override
+	public boolean allowPullStack(int aIndex, byte aSide, ItemStack aStack) {
+		return aSide!=mMainFacing?aIndex>=3||aIndex<8:false;
+	}
+	
+	@Override
+	public int getInvSize() {
+		return 8;
+	}
+	
+	@Override
+	public int dechargerSlotStartIndex() {
+		return 7;
+	}
+	
 	@Override
 	public int getFrontFacingInactive() {
 		return 256;

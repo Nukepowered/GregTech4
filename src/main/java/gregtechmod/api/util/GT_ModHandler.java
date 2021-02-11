@@ -627,6 +627,39 @@ public class GT_ModHandler {
 		return sMassfabRecipes;
 	}
 	
+	public static List<ItemStack> getMaceratorResult(ItemStack input) {
+		try {
+			ic2.api.recipe.RecipeOutput recipe = ic2.api.recipe.Recipes.macerator.getOutputFor(input, true);
+			if (recipe != null) {
+				return GT_Utility.copy(recipe.items);
+			}
+		} catch (Throwable e) {}
+		
+		return null;
+	}
+	
+	public static List<ItemStack> getExtractorResult(ItemStack input) {
+		try {
+			ic2.api.recipe.RecipeOutput recipe = ic2.api.recipe.Recipes.extractor.getOutputFor(input, true);
+			if (recipe != null) {
+				return GT_Utility.copy(recipe.items);
+			}
+		} catch (Throwable e) {}
+		
+		return null;
+	}
+	
+	public static List<ItemStack> getCompressorResult(ItemStack input) {
+		try {
+			ic2.api.recipe.RecipeOutput recipe = ic2.api.recipe.Recipes.compressor.getOutputFor(input, true);
+			if (recipe != null) {
+				return GT_Utility.copy(recipe.items);
+			}
+		} catch (Throwable e) {}
+		
+		return null;
+	}
+	
 	/**
 	 * IC2-ThermalCentrifuge Recipe. Overloads old Recipes automatically
 	 */
