@@ -45,7 +45,8 @@ public class RecipeLogic {
 		
 		if (recipeMap != null) {
 			if (inputs < recipeMap.minInputs || inputs > recipeMap.maxInputs || outputs < recipeMap.minOutputs || outputs > recipeMap.maxOutputs) {
-				throw new IllegalArgumentException("Wrong recipe map was supplied to machine!\n" + "inputs: " + inputs + "; outputs=" + outputs + "\n" + recipeMap.toString());
+//				throw new IllegalArgumentException("Wrong recipe map was supplied to machine!\n" + "inputs: " + inputs + "; outputs=" + outputs + "\n" + recipeMap.toString());
+				
 			}
 		} else {
 			GT_Log.log.warn("RecipeMap for machine with class name " + machine.getClass().getSimpleName() + " == null! Make sure you set up custom recipe provoder, otherwise machine will spam errors");

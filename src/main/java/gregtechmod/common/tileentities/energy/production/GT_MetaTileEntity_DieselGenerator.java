@@ -1,15 +1,13 @@
 package gregtechmod.common.tileentities.energy.production;
 
+import java.util.Collections;
 import java.util.List;
 
-import cpw.mods.fml.common.registry.GameRegistry;
-import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicGenerator;
-import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeMap;
-import gregtechmod.api.util.GT_ModHandler;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
@@ -26,10 +24,12 @@ public class GT_MetaTileEntity_DieselGenerator extends GT_MetaTileEntity_BasicGe
 	@Override public boolean isFacingValid(byte aFacing) {return aFacing > 1;}
 	@Override public int maxEUOutput() {return this.getBaseMetaTileEntity().isAllowedToWork() ? 12 : 0;}
 	@Override public void onRightclick(EntityPlayer aPlayer) {this.getBaseMetaTileEntity().openGUI(aPlayer, 117);}
+	@Override public List<ItemStack> getInputItems() { return Collections.emptyList(); }
+	@Override public List<ItemStack> getOutputItems() { return Collections.emptyList(); }
 
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_DieselGenerator(recipeMap, efficiency);
+		return new GT_MetaTileEntity_DieselGenerator(recipeLogic.recipeMap, efficiency);
 	}
 	
 	@Override
@@ -43,13 +43,13 @@ public class GT_MetaTileEntity_DieselGenerator extends GT_MetaTileEntity_BasicGe
 		return "metatileentity.GT_DieselGenerator.tooltip";
 	}
 	
-	@Override
-	public int getFuelValue(ItemStack aStack) {
-		int rValue = Math.max(GT_ModHandler.getFuelCanValue(aStack) * 6 / 5, super.getFuelValue(aStack));
-		if (GT_Items.Fuel_Can_Plastic_Filled.isStackEqual(aStack, false, true)) {
-			rValue = Math.max(rValue, GameRegistry.getFuelValue(aStack) * 3);
-		}
-
-		return rValue;
-	}
+//	@Override // TODO fuels!
+//	public int getFuelValue(ItemStack aStack) {
+//		int rValue = Math.max(GT_ModHandler.getFuelCanValue(aStack) * 6 / 5, super.getFuelValue(aStack));
+//		if (GT_Items.Fuel_Can_Plastic_Filled.isStackEqual(aStack, false, true)) {
+//			rValue = Math.max(rValue, GameRegistry.getFuelValue(aStack) * 3);
+//		}
+//
+//		return rValue;
+//	}
 }

@@ -3,28 +3,33 @@ package gregtechmod.common.tileentities.energy.production;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicGenerator;
-import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeMap;
 
+import java.util.Collections;
 import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 
 public class GT_MetaTileEntity_GasTurbine extends GT_MetaTileEntity_BasicGenerator {
 
-	public GT_MetaTileEntity_GasTurbine(int aID, String aName, List<Recipe> recipeMap, int efficiency) {
+	public GT_MetaTileEntity_GasTurbine(int aID, String aName, RecipeMap<?> recipeMap, int efficiency) {
 		super(aID, aName, recipeMap, efficiency);
 	}
 
-	public GT_MetaTileEntity_GasTurbine(List<Recipe> recipeMap, int efficiency) {
+	public GT_MetaTileEntity_GasTurbine(RecipeMap<?> recipeMap, int efficiency) {
 		super(recipeMap, efficiency);
 	}
 
 	@Override public boolean isFacingValid(byte aFacing) {return true;}
 	@Override public int maxEUOutput() {return this.getBaseMetaTileEntity().isAllowedToWork() ? 16 : 0;}
 	@Override public void onRightclick(EntityPlayer aPlayer) {this.getBaseMetaTileEntity().openGUI(aPlayer, 118);}
+	@Override public List<ItemStack> getInputItems() { return Collections.emptyList(); }
+	@Override public List<ItemStack> getOutputItems() { return Collections.emptyList(); }
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_GasTurbine(recipeMap, efficiency);
+		return new GT_MetaTileEntity_GasTurbine(recipeLogic.recipeMap, efficiency);
 	}
 
 	@Override

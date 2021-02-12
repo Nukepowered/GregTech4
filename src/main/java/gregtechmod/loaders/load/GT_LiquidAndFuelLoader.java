@@ -8,7 +8,9 @@ import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.GT_FluidRegistry;
 import gregtechmod.common.items.GT_MetaItem_Cell;
-
+import gregtechmod.common.recipe.RecipeMaps;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
@@ -72,12 +74,11 @@ public class GT_LiquidAndFuelLoader implements Runnable {
 		GT_FluidRegistry.addFluid("nitrocoalfuel"		, null					, Materials.NitroCoalFuel	, OrePrefixes.cell, 1, GT_ModHandler.getEmptyCell(1));
 		
         GT_Log.log.info("GT_Mod: Initializing various Fuels.");
-//        RecipeMaps.HOT_FUELS.factory().EUt(0).duration(0).startEU(30).input(new ItemStack(Items.lava_bucket)).outputs(GT_OreDictUnificator.get("ingotCopper", 1), GT_OreDictUnificator.get("ingotTin", 1), GT_OreDictUnificator.get("ingotElectrum", 1)).buildAndRegister();
-//        TODO RECIPES
-//        GregTech_API.sRecipeAdder.addFuel(GT_ModHandler.getIC2Item("hotcoolantCell", 1), GT_ModHandler.getIC2Item("coolantCell", 1), 20, 2);
-//        GregTech_API.sRecipeAdder.addFuel(new ItemStack(Items.experience_bottle, 1)					, null,     10, 5);
-//        GregTech_API.sRecipeAdder.addFuel(new ItemStack(Items.ghast_tear, 1)					, null,    500, 5);
-//        GregTech_API.sRecipeAdder.addFuel(new ItemStack(Blocks.beacon, 1)					, null, Materials.NetherStar.mFuelPower * 2, Materials.NetherStar.mFuelType);
+        RecipeMaps.HOT_FUELS.factory().EUt(15).duration(2).input(new ItemStack(Items.lava_bucket)).buildAndRegister(); // starteu = 30
+        RecipeMaps.HOT_FUELS.factory().EUt(20).duration(2).input(GT_ModHandler.getIC2Item("hotcoolantCell", 1)).output(GT_ModHandler.getIC2Item("coolantCell", 1)).buildAndRegister(); // was set startEU = 20
+        RecipeMaps.MAGIC_FUELS.factory().EUt(10).duration(1).input(new ItemStack(Items.experience_bottle, 1)).buildAndRegister(); // startEU = 10
+        RecipeMaps.MAGIC_FUELS.factory().EUt(20).duration(25).input(new ItemStack(Items.ghast_tear, 1)).buildAndRegister(); // startEU = 500
+        RecipeMaps.MAGIC_FUELS.factory().EUt(32).duration(3125).input(new ItemStack(Blocks.beacon, 1)).buildAndRegister(); // startEU = 500 // Materials.NetherStar.mFuelPower * 2 = 50000 * 2
 		
 		GT_ModHandler.addBoilerFuel(GT_Utility.getFluidForFilledItem(GT_MetaItem_Cell.instance.getUnunifiedStack(35, 1)), 18000);
 		GT_ModHandler.addBoilerFuel(GT_Utility.getFluidForFilledItem(GT_MetaItem_Cell.instance.getUnunifiedStack( 5, 1)), 24000);

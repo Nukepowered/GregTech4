@@ -2,6 +2,7 @@ package gregtechmod.common.recipe;
 
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_ModHandler;
+import gregtechmod.common.recipe.factory.GeneratorRecipeFactory;
 import gregtechmod.common.recipe.factory.SimpleRecipeFactory;
 import gregtechmod.common.recipe.maps.FurnanceRecipeMap;
 import gregtechmod.common.recipe.maps.IC2RecipeMap;
@@ -37,12 +38,12 @@ public class RecipeMaps {
 	public static final RecipeMap<SimpleRecipeFactory> PRINTER				= new RecipeMap<>(1, 3, 1, 2, new SimpleRecipeFactory());
 	public static final PulverizerRecipeMap			   PULVERIZING 			= new PulverizerRecipeMap(1, 2, 1, 4);
 	
-	public static final RecipeMap<SimpleRecipeFactory> DIESEL_FUELS			= new RecipeMap<>(1, 1, 0, 0, new SimpleRecipeFactory()); // TODO generators recipemaps
-	public static final RecipeMap<SimpleRecipeFactory> TURBINE_FUELS		= new RecipeMap<>(1, 1, 0, 0, new SimpleRecipeFactory());
-	public static final RecipeMap<SimpleRecipeFactory> HOT_FUELS			= new RecipeMap<>(1, 1, 0, 0, new SimpleRecipeFactory());
-	public static final RecipeMap<SimpleRecipeFactory> DENSE_FUELS			= new RecipeMap<>(1, 1, 0, 0, new SimpleRecipeFactory());
-	public static final RecipeMap<SimpleRecipeFactory> PLASMA_FUELS			= new RecipeMap<>(1, 1, 0, 0, new SimpleRecipeFactory());
-	public static final RecipeMap<SimpleRecipeFactory> MAGIC_FUELS			= new RecipeMap<>(1, 1, 0, 1, new SimpleRecipeFactory());
+	public static final RecipeMap<GeneratorRecipeFactory> DIESEL_FUELS		= new RecipeMap<>(0, 0, 0, 0, 1, 1, 0, 0, new GeneratorRecipeFactory()); // TODO generators recipemaps
+	public static final RecipeMap<GeneratorRecipeFactory> TURBINE_FUELS		= new RecipeMap<>(0, 0, 0, 0, 1, 1, 0, 0, new GeneratorRecipeFactory());
+	public static final RecipeMap<GeneratorRecipeFactory> HOT_FUELS			= new RecipeMap<>(0, 1, 0, 1, 0, 1, 0, 0, new GeneratorRecipeFactory());
+	public static final RecipeMap<GeneratorRecipeFactory> DENSE_FUELS		= new RecipeMap<>(0, 0, 0, 0, 1, 1, 0, 0, new GeneratorRecipeFactory());
+	public static final RecipeMap<GeneratorRecipeFactory> PLASMA_FUELS		= new RecipeMap<>(0, 0, 0, 0, 1, 1, 0, 0, new GeneratorRecipeFactory());
+	public static final RecipeMap<GeneratorRecipeFactory> MAGIC_FUELS		= new RecipeMap<>(0, 1, 0, 0, 0, 1, 0, 0, new GeneratorRecipeFactory());
 	
 	// Fake RecipeMaps
 	public static final IC2RecipeMap 		MACERATION 		= new IC2RecipeMap(1, 2, 1, 2, GT_ModHandler::getMaceratorResult);
