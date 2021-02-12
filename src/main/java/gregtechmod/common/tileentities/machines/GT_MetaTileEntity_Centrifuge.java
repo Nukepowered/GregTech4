@@ -64,7 +64,7 @@ public class GT_MetaTileEntity_Centrifuge extends BasicFluidWorkable {
 	
 	@Override
 	public boolean allowPutStack(int aIndex, byte aSide, ItemStack aStack) {
-		return GT_Utility.areStacksEqual(aStack, GT_ModHandler.getEmptyCell(1))||GT_Utility.areStacksEqual(aStack, GT_ModHandler.getEmptyFuelCan(1))?aIndex==1:aIndex==0;
+		return GT_Utility.areStacksEqual(aStack, GT_ModHandler.getEmptyCell(1))?aIndex==1:aIndex==0;
 	}
 	
 	@Override

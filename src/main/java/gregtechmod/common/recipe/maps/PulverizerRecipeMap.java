@@ -18,6 +18,7 @@ import gregtechmod.common.recipe.factory.SimpleRecipeFactory;
 import cpw.mods.fml.common.Loader;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
 /**
  * @author TheDarkDnKTv
@@ -33,8 +34,8 @@ public class PulverizerRecipeMap extends RecipeMap<SimpleRecipeFactory> {
 	}
 	
 	@Override
-	public Recipe findRecipe(List<ItemStack> inputs) {
-		Recipe result = super.findRecipe(inputs);
+	public Recipe findRecipe(List<ItemStack> inputs, List<FluidStack> fluidInputs) {
+		Recipe result = super.findRecipe(inputs, fluidInputs);
 		
 		for (int i = 0; i < inputs.size() && result == null; i++) {
 			ItemStack input = inputs.get(i);

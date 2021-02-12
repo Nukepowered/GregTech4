@@ -15,14 +15,14 @@ import gregtechmod.common.recipe.maps.ScannerRecipeMap;
  *
  */
 public class RecipeMaps {
-	public static final RecipeMap<SimpleRecipeFactory> FUSION_REACTOR		= new RecipeMap<>(1, 2, 1, 1, new SimpleRecipeFactory());
-	public static final RecipeMap<SimpleRecipeFactory> CENTRIFUGE			= new RecipeMap<>(1, 2, 1, 4, new SimpleRecipeFactory());
-	public static final RecipeMap<SimpleRecipeFactory> ELECTROLYZER			= new RecipeMap<>(1, 2, 1, 4, new SimpleRecipeFactory());
-	public static final RecipeMap<SimpleRecipeFactory> GRINDER				= new RecipeMap<>(1, 2, 1, 4, new SimpleRecipeFactory());
-	public static final RecipeMap<SimpleRecipeFactory> BLAST_FURNANCE		= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory());
-	public static final RecipeMap<SimpleRecipeFactory> IMPLOSION_COMPRESSOR	= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory());
-	public static final RecipeMap<SimpleRecipeFactory> SAWMILL				= new RecipeMap<>(1, 2, 1, 3, new SimpleRecipeFactory());
-	public static final RecipeMap<SimpleRecipeFactory> VACUUM_FREEZER		= new RecipeMap<>(1, 1, 1, 1, new SimpleRecipeFactory());
+	public static final RecipeMap<SimpleRecipeFactory> FUSION_REACTOR		= new RecipeMap<>(0, 0, 0, 0, 2, 2, 1, 1, new SimpleRecipeFactory());
+	public static final RecipeMap<SimpleRecipeFactory> CENTRIFUGE			= new RecipeMap<>(0, 2, 1, 4, 0, 1, 0, 0, new SimpleRecipeFactory());
+	public static final RecipeMap<SimpleRecipeFactory> ELECTROLYZER			= new RecipeMap<>(0, 2, 1, 4, 0, 1, 0, 0, new SimpleRecipeFactory());
+	public static final RecipeMap<SimpleRecipeFactory> GRINDER				= new RecipeMap<>(1, 2, 1, 4, new SimpleRecipeFactory()); // TODO multiblocks!
+	public static final RecipeMap<SimpleRecipeFactory> BLAST_FURNANCE		= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory()); //
+	public static final RecipeMap<SimpleRecipeFactory> IMPLOSION_COMPRESSOR	= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory()); // 
+	public static final RecipeMap<SimpleRecipeFactory> SAWMILL				= new RecipeMap<>(1, 2, 1, 3, new SimpleRecipeFactory()); //
+	public static final RecipeMap<SimpleRecipeFactory> VACUUM_FREEZER		= new RecipeMap<>(1, 1, 1, 1, new SimpleRecipeFactory()); // -----------------
 	public static final RecipeMap<SimpleRecipeFactory> CHEMICAL				= new RecipeMap<>(1, 2, 1, 1, new SimpleRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory> DISTILLATION			= new RecipeMap<>(1, 2, 1, 4, new SimpleRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory> WIREMILL				= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory());

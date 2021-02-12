@@ -8,6 +8,7 @@ import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.common.recipe.RecipeEntry;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
 /**
  * @author TheDarkDnKTv
@@ -26,7 +27,7 @@ public class FurnanceRecipeMap extends DummyRecipeMap {
 	}
 
 	@Override
-	public Recipe findRecipe(List<ItemStack> inputs) {
+	public Recipe findRecipe(List<ItemStack> inputs, List<FluidStack> fluidInputs) {
 		ItemStack output;
 
 		for (int i = 0; i < inputs.size(); i++) {

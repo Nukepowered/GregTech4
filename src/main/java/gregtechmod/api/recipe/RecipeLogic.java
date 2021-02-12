@@ -141,16 +141,16 @@ public class RecipeLogic {
 	
 	protected Recipe findRecipe() {
 		if (customRecipeProvider == null) {
-			return recipeMap.findRecipe(getMachine().getInputItems());
+			return recipeMap.findRecipe(getMachine().getInputItems(), getMachine().getFluidInputs());
 		} else return customRecipeProvider.get();
 	}
 	
 	protected boolean match(Recipe recipe) {
-		return recipe.matches(false, getMachine().getInputItems());
+		return recipe.matches(false, getMachine().getInputItems(), getMachine().getFluidInputs());
 	}
 	
 	protected boolean consumeInputs(Recipe recipe) {
-		return recipe.matches(true, getMachine().getInputItems());
+		return recipe.matches(true, getMachine().getInputItems(), getMachine().getFluidInputs());
 	}
 	
 	protected void startRecipe(Recipe recipe) {
@@ -214,7 +214,7 @@ public class RecipeLogic {
 	}
 	
 	protected boolean isInputNonEmpty() {
-		return !getMachine().getInputItems().isEmpty();
+		return !getMachine().getInputItems().isEmpty() || !getMachine().getFluidInputs().isEmpty();
 	}
 	
 	private IRecipeWorkable getMachine() {

@@ -4,6 +4,7 @@ import java.util.List;
 
 import gregtechmod.api.recipe.Recipe;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
 /**
  * @author TheDarkDnKTv
@@ -26,13 +27,11 @@ public interface IRecipeWorkable {
 	
 	public ItemStack getStackInSlot(int slotIdx);
 	
-	/**
-	 * Array of input slot ids
-	 */
 	public List<ItemStack> getInputItems();
 	
-	/**
-	 * Array of output slot ids
-	 */
 	public List<ItemStack> getOutputItems();
+	
+	public List<FluidStack> getFluidInputs();
+	
+	public List<FluidStack> getFluidOutputs();
 }

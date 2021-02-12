@@ -6,6 +6,7 @@ import java.util.List;
 import gregtechmod.api.util.GT_Utility;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
 /**
  * A Factory class for creating Recipe instances
@@ -19,6 +20,8 @@ public abstract class RecipeFactory<F extends RecipeFactory<F>> {
 	protected List<ItemStack> outputItems;
 	protected List<ChancedOutput> chancedOutput;
 	protected List<Ingredient> inputItems;
+	protected List<FluidStack> inputFluids;
+	protected List<FluidStack> outputFluids;
 	protected int EUt;
 	protected int startEU;
 	protected int duration;
@@ -32,6 +35,8 @@ public abstract class RecipeFactory<F extends RecipeFactory<F>> {
 		this.outputItems 	= new ArrayList<>();
 		this.chancedOutput 	= new ArrayList<>();
 		this.inputItems 	= new ArrayList<>();
+		this.inputFluids 	= new ArrayList<>();
+		this.outputFluids 	= new ArrayList<>();
 		this.reset();
 	}
 	
@@ -46,6 +51,8 @@ public abstract class RecipeFactory<F extends RecipeFactory<F>> {
 		outputItems.clear();
 		chancedOutput.clear();
 		inputItems.clear();
+		inputFluids.clear();
+		outputFluids.clear();
 		EUt = -1;
 		startEU = 0;
 		duration = -1;
@@ -121,6 +128,26 @@ public abstract class RecipeFactory<F extends RecipeFactory<F>> {
 		return this;
 	}
 	
+	public RecipeFactory<F> input(FluidStack fluid) {
+		if (fluid == null) 					errors.append(" - Invalid FluidStack: " + fluid);
+		else {
+			if (fluid.getFluid() == null) 	errors.append(" - Invalid Fluid in stack: " + fluid);
+			if (fluid.amount <= 0) 			errors.append(" - Invalid FluidStack size: " + fluid);
+		}
+		
+		inputFluids.add(fluid == null ? null : fluid.copy());
+		
+		return this;
+	}
+	
+	public RecipeFactory<F> inputs(FluidStack...fluids) {
+		for (FluidStack fluid : fluids) {
+			this.input(fluid);
+		}
+		
+		return this;
+	}
+	
 	public RecipeFactory<F> output(ItemStack stack) {
 		if (GT_Utility.isStackInvalid(stack))
 			errors.append("Found non-valid stack: " + stack);
@@ -131,6 +158,26 @@ public abstract class RecipeFactory<F extends RecipeFactory<F>> {
 	public RecipeFactory<F> outputs(ItemStack...stacks) {
 		for (ItemStack stack : stacks)
 			this.output(stack);
+		return this;
+	}
+	
+	public RecipeFactory<F> output(FluidStack fluid) {
+		if (fluid == null) 					errors.append(" - Invalid FluidStack: " + fluid);
+		else {
+			if (fluid.getFluid() == null) 	errors.append(" - Invalid Fluid in stack: " + fluid);
+			if (fluid.amount <= 0) 			errors.append(" - Invalid FluidStack size: " + fluid);
+		}
+		
+		outputFluids.add(fluid == null ? null : fluid.copy());
+		
+		return this;
+	}
+	
+	public RecipeFactory<F> outputs(FluidStack...fluids) {
+		for (FluidStack fluid : fluids) {
+			this.output(fluid);
+		}
+		
 		return this;
 	}
 	

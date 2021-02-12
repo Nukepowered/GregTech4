@@ -20,7 +20,7 @@ import net.minecraft.util.StatCollector;
 public class CentrifugeRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
-	public void loadTransferRects() {
+	public void loadTransferRects() { // TODO ADD FLUID RENDER
 		try {
 		transferRects.add(new RecipeTransferRect(new Rectangle(79-sOffsetX, 22-sOffsetY + 7, 18, 12), getRecipeId()));
 		transferRects.add(new RecipeTransferRect(new Rectangle(67-sOffsetX, 34-sOffsetY + 7, 12, 18), getRecipeId()));

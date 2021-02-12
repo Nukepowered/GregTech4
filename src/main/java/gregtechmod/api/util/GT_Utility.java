@@ -830,6 +830,14 @@ public class GT_Utility {
 		return Item.getIdFromItem(aStack.getItem()) | (GregTech_API.ITEM_WILDCARD_DAMAGE << 16);
 	}
 	
+	public static int fluidStackToInt(FluidStack fluid) {
+    	int code = 1;
+    	code = 31*code + fluid.getFluid().hashCode();
+    	if (fluid.tag != null)
+    		code = 31*code + fluid.tag.hashCode();
+		return code < 0 ? code : -code;
+	}
+	
 	public static ItemStack intToStack(int aStack) {
 		int tID = aStack&(~0>>>16), tMeta = aStack>>>16;
 		Item tItem = (Item) Item.itemRegistry.getObjectById(tID);
@@ -883,6 +891,10 @@ public class GT_Utility {
 	
 	public static boolean isStackInvalid(Object aStack) {
 		return aStack == null || !(aStack instanceof ItemStack) || ((ItemStack)aStack).getItem() == null || ((ItemStack)aStack).stackSize <  0;
+	}
+	
+	public static boolean isFluidStackValid(FluidStack fluid) {
+		return fluid != null && fluid.getFluid() != null && fluid.amount > 0;
 	}
 	
 	public static boolean isDebugItem(ItemStack aStack) {

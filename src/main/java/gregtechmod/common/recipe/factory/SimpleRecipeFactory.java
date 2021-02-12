@@ -71,11 +71,13 @@ public class SimpleRecipeFactory extends RecipeFactory<SimpleRecipeFactory> {
 	public Recipe build() {
 		if (EUt < 0) 						errors.append(" - EU/t was not set!\n");
 		if (duration <= 0) 					errors.append(" - Duration was not set!\n");
-		if (inputItems.isEmpty()) 			errors.append(" - Input of recipe shall not be empty!\n");
+		if (inputItems.isEmpty() &&
+				inputFluids.isEmpty()) 		errors.append(" - Input of recipe shall not be empty!\n");
 		if (outputItems.isEmpty() &&
-				chancedOutput.isEmpty()) 	errors.append(" - Output of recipe shall not be empty!");
+				chancedOutput.isEmpty() &&
+				outputFluids.isEmpty()) 	errors.append(" - Output of recipe shall not be empty!");
 		if (errors.length() == 0) {
-			Recipe recipe = new Recipe(startEU, EUt, duration, shaped, inputItems, outputItems, chancedOutput);
+			Recipe recipe = new Recipe(startEU, EUt, duration, shaped, inputItems, outputItems, chancedOutput, inputFluids, outputFluids);
 			super.reset();
 			return recipe;
 		} throw new GT_RecipeException(errors.toString());

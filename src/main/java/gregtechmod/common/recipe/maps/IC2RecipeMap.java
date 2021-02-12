@@ -9,6 +9,7 @@ import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.recipe.RecipeEntry;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
 /** A Recipe map for usual IC2 machines, used as adapter
  * @author TheDarkDnKTv
@@ -23,7 +24,7 @@ public class IC2RecipeMap extends DummyRecipeMap {
 	}
 	
 	@Override
-	public Recipe findRecipe(List<ItemStack> input) {
+	public Recipe findRecipe(List<ItemStack> input, List<FluidStack> fluidInputs) {
 		for (ItemStack in : input) {
 			if (GT_Utility.isStackValid(in)) {
 				ItemStack inValid = in.copy();

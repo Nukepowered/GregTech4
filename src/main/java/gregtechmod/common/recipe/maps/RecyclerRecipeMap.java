@@ -11,6 +11,7 @@ import gregtechmod.common.recipe.ChancedStack;
 import gregtechmod.common.recipe.RecipeEntry;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
 /**
  * @author TheDarkDnKTv
@@ -22,7 +23,7 @@ public class RecyclerRecipeMap extends DummyRecipeMap {
 	}
 
 	@Override
-	public Recipe findRecipe(List<ItemStack> inputs) {
+	public Recipe findRecipe(List<ItemStack> inputs, List<FluidStack> fluidInputs) {
 		for (ItemStack slot : inputs) {
 			if (GT_Utility.isStackValid(slot)) {
 	    		ItemStack instance = slot.copy();

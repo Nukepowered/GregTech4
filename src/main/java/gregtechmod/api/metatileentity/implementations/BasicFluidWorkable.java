@@ -11,9 +11,9 @@ import gregtechmod.api.recipe.RecipeLogic;
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.InfoBuilder;
+import gregtechmod.api.util.ListAdapter;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
@@ -62,81 +62,45 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
 	@Override public int getStackDisplaySlot() 		{return 6;}
 	
 	protected void initRecipeLogic(RecipeMap<?> recipeMap) {
-		recipeLogic = new RecipeLogic(recipeMap, this) {
-			@Override
-			protected boolean consumeInputs(Recipe recipe) {
-				if (mFluid == null || !BasicFluidWorkable.this.consumeFluids(true, recipe)) {
-					return super.consumeInputs(recipe);
-				}
-				
-				return true;
-			}
-			
-			@Override
-			protected boolean isInputNonEmpty() {
-				return mFluid != null || super.isInputNonEmpty();
-			}
-			
-			@Override
-			protected boolean match(Recipe recipe) {
-				return consumeFluids(false, recipe) || super.match(recipe);
-			}
-		};
-		recipeLogic.setRecipeProvider(this::searchForRecipe);
+		recipeLogic = new RecipeLogic(recipeMap, this);
 	}
 	
-    protected Recipe searchForRecipe() {
-    	Recipe result = null;
-    	
-    	if (mFluid != null) {
-    		ItemStack filledBucket = GT_Utility.fillFluidContainer(mFluid, new ItemStack(Items.bucket));
-    		if (filledBucket != null) {
-    			filledBucket.stackSize = mFluid.amount / 1000;
-    			result = recipeLogic.recipeMap.findRecipe(Collections.singletonList(filledBucket));
-    		}
-    	}
-    	
-    	if (result == null) {
-    		result = recipeLogic.recipeMap.findRecipe(getInputItems());
-    	}
-    	
-    	return result;
-    }
+	@Override
+	public List<FluidStack> getFluidInputs() {
+		return new ListAdapter<FluidStack>(new FluidStack[] {mFluid}) {
+			@Override
+			public FluidStack set(int index, FluidStack item) {
+				rangeCheck(index);
+				FluidStack old = mFluid;
+				mFluid = item;
+				return old;
+			}
+			
+			@Override
+			public FluidStack remove(int index) {
+				rangeCheck(index);
+				FluidStack old = mFluid;
+				mFluid = null;
+				return old;
+			}
+			
+			@Override
+			public void clear() {
+				mFluid = null;
+			}
+		};
+	}
+	
+	@Override
+	public List<FluidStack> getFluidOutputs() {
+		return Collections.emptyList();
+	}
 	
     @Override
     public void onPostTick() {
 	    if (getBaseMetaTileEntity().isServerSide()) {
 	    	recipeLogic.update();
 		}
-    }
-    
-    protected boolean consumeFluids(boolean consume, Recipe recipe) {
-    	ItemStack fluidItem = findFluidItem(recipe);
-    	FluidStack fluid = null;
-    	
-    	if (mFluid != null && fluidItem != null && (fluid = GT_Utility.getFluidForFilledItem(fluidItem)) != null) {
-    		fluid.amount = 1000 * fluidItem.stackSize;
-    		if (fluid.getFluidID() == mFluid.getFluidID() && mFluid.amount >= fluid.amount) {
-    			if (consume) mFluid.amount -= fluid.amount;
-    			return true;
-    		}
-    	}
-    	
-    	return false;
-    }
-    
-    protected ItemStack findFluidItem(Recipe recipe) {
-    	ItemStack fluidItem = null;
-//    	for (ItemStack[] stacks : recipe.getRepresentativeInputs()) {
-//    		for (ItemStack stack : stacks) {
-//    			if (GT_Utility.getFluidForFilledItem(stack) != null && GT_Utility.getContainerForFilledItem(stack).getItem() == Items.bucket) {
-//    				fluidItem = stack;
-//    				break;
-//    			}
-//    		}
-//    	} // FIXME add fluid to recipes!!!
-    	
-    	return fluidItem;
     }
     
 	@Override
@@ -155,20 +119,28 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
 		}
 	}
     
-	@Override
+	@Override // TODO did not check for fluid output slots, not needed yet
     public boolean spaceForOutput(Recipe recipe) {
-//		ItemStack[] outputs = recipe.getOutputs();
-//		if (outputs.length <= getOutputItems().length) {
-//			List<ItemStack> slots = new ArrayList<>();
-//			for (int i : getOutputItems()) slots.add(mInventory[i]);
-//			for (int i = 0; i < outputs.length && i < slots.size(); i++) {
-//				if (slots.get(i) != null && outputs[i] != null) {
-//					if (!GT_Utility.areStacksEqual(slots.get(i), outputs[i]) || slots.get(i).stackSize + outputs[i].stackSize > slots.get(i).getMaxStackSize()) {
-//						return false;
-//					}
-//				}
-//			}
-//		} else return false;
+		List<ItemStack> outputSlots = this.getOutputItems();
+		List<ItemStack> allOutputs = recipe.getAllOutputs();
+		
+		for (ItemStack current : allOutputs) {
+			int amount = current.stackSize;
+			for (int i = 0; current != null && amount > 0 && i < outputSlots.size(); i++) {
+				ItemStack slot = outputSlots.get(i);
+				if (slot == null) {
+					amount = 0;
+					break;
+				} else if (GT_Utility.areStacksEqual(slot, current)) {
+					int newSize = Math.min(slot.getMaxStackSize(), amount + slot.stackSize);
+					amount -= newSize;
+				}
+			}
+			
+			if (amount > 0) {
+				return false;
+			}
+		}
 		
 		return true;
     }

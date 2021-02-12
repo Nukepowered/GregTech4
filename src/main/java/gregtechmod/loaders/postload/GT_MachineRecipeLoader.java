@@ -2,6 +2,8 @@ package gregtechmod.loaders.postload;
 
 import ic2.api.recipe.*;
 import net.minecraft.item.*;
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 import gregtechmod.api.util.*;
 import gregtechmod.common.recipe.RecipeEntry;
 import gregtechmod.common.recipe.RecipeMaps;
@@ -153,7 +155,7 @@ public class GT_MachineRecipeLoader implements Runnable
         
         RecipeMaps.ELECTROLYZER.factory().EUt(120).duration(215).input(GT_ModHandler.getIC2Item("electrolyzedWaterCell", 6L)).outputs(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Hydrogen, 4L), GT_Items.Cell_Air.get(1L), GT_Items.Cell_Empty.get(1L)).buildAndRegister();
         RecipeMaps.ELECTROLYZER.factory().EUt(120).duration(215).input(GT_Items.Cell_Water.get(1L)).output(GT_ModHandler.getIC2Item("electrolyzedWaterCell", 1L)).buildAndRegister();
-        RecipeMaps.ELECTROLYZER.factory().EUt(30).duration(100).inputs(new ItemStack(Items.water_bucket, 1), GT_Items.Cell_Empty.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Calcium, 1L)).buildAndRegister();
+        RecipeMaps.ELECTROLYZER.factory().EUt(30).duration(100).inputs(new ItemStack(Items.water_bucket, 1), GT_Items.Cell_Empty.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Calcium, 1L)).buildAndRegister(); // TODO check this recipe
         RecipeMaps.ELECTROLYZER.factory().EUt(106).duration(24).input(new ItemStack(Items.dye, 3, 15)).outputs(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Hydrogen, 4L), GT_Items.Cell_Air.get(1L), GT_Items.Cell_Empty.get(1L)).buildAndRegister();
         RecipeMaps.ELECTROLYZER.factory().EUt(25).duration(500).input("sand", 8).outputs(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.SiliconDioxide, 1L)).buildAndRegister();
         
@@ -495,7 +497,7 @@ public class GT_MachineRecipeLoader implements Runnable
         RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(5000).setShaped(true).input(GT_Items.Cell_Empty.get(1)).input(GT_ModHandler.getIC2Item("terraWart", 16L)).output(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Methane, 1L)).buildAndRegister();
         RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(1300).input(GT_Items.IC2_Resin.get(4L)).outputs(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Rubber, 12L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Plastic, 6L), GT_ModHandler.getIC2Item("plantBall", 1L)).buildAndRegister();
         RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(2500).setShaped(true).input(GT_Items.Cell_Empty.get(1)).input(new ItemStack(Blocks.soul_sand, 16)).outputs(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Oil, 1L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Saltpeter, 4L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Coal, 1L), new ItemStack(Blocks.sand, 10)).buildAndRegister();
-        RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(5000).input(new ItemStack(Items.lava_bucket, 8)).outputs(GT_OreDictUnificator.get(OrePrefixes.nugget, Materials.Electrum, 4L), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Copper, 2L), GT_OreDictUnificator.get(OrePrefixes.dustTiny, Materials.Tungsten, 1L), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Tin, 1L)).buildAndRegister();
+        RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(5000).input(new FluidStack(FluidRegistry.LAVA, 8000)).outputs(GT_OreDictUnificator.get(OrePrefixes.nugget, Materials.Electrum, 4L), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Copper, 2L), GT_OreDictUnificator.get(OrePrefixes.dustTiny, Materials.Tungsten, 1L), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Tin, 1L)).buildAndRegister();
         RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(6000).input(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Lava, 8L)).outputs(GT_OreDictUnificator.get(OrePrefixes.nugget, Materials.Electrum, 4L), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Copper, 2L), GT_OreDictUnificator.get(OrePrefixes.dustTiny, Materials.Tungsten, 1L), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Tin, 17L)).buildAndRegister();
         RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(2400).input(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Netherrack, 16L)).outputs(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Redstone, 1L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Sulfur, 4L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Coal, 1L), GT_OreDictUnificator.get(OrePrefixes.nugget, Materials.Gold, 1L)).buildAndRegister();
         RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(4800).setShaped(true).input(GT_Items.Cell_Empty.get(2)).input(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Endstone, 16L)).outputs(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Helium_3, 1L), GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Helium, 1L), GT_OreDictUnificator.get(OrePrefixes.dustTiny, Materials.Tungsten, 1L), new ItemStack(Blocks.sand, 12)).buildAndRegister();

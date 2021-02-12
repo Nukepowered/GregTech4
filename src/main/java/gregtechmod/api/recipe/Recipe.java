@@ -18,6 +18,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraftforge.fluids.FluidStack;
 
 /**
  * NEVER INCLUDE THIS FILE IN YOUR MOD!!!
@@ -31,9 +32,11 @@ import net.minecraft.nbt.NBTTagList;
 public class Recipe {
 	public static volatile int VERSION = 410;
 	
-	private List<Ingredient> inputs;
-	private List<ItemStack> outputs;
+	private List<Ingredient> itemInputs;
+	private List<ItemStack> itemOutputs;
 	private List<ChancedOutput> chancedOutputs;
+	private List<FluidStack> fluidInputs;
+	private List<FluidStack> fluidOutputs;
 	
 	private int duration;
 	private int EUt;
@@ -43,13 +46,24 @@ public class Recipe {
 	public boolean enabled = true;
 	
 	public Recipe(int startEU, int EUt, int duration, boolean shaped, Collection<Ingredient> inputs, Collection<ItemStack> outputs, Collection<ChancedOutput> chancedOutputs) {
+		this(startEU, EUt, duration, shaped, inputs, outputs, chancedOutputs, Collections.emptyList(), Collections.emptyList());
+	}
+	
+	public Recipe(int startEU, int EUt, int duration, boolean shaped,
+			Collection<Ingredient> itemInputs,
+			Collection<ItemStack> itemOutputs,
+			Collection<ChancedOutput> chancedOutputs,
+			Collection<FluidStack> fluidInputs,
+			Collection<FluidStack> fluidOutputs) {
 		this.startEU 		= startEU;
 		this.EUt 			= EUt;
 		this.duration 		= duration;
 		this.shaped 		= shaped;
-		this.inputs 		= new ArrayList<>(inputs);
-		this.outputs 		= new ArrayList<>(outputs);
-		this.chancedOutputs = new ArrayList<>(chancedOutputs);
+		this.itemInputs 		= new ArrayList<>(itemInputs);
+		this.itemOutputs 		= new ArrayList<>(itemOutputs);
+		this.chancedOutputs 	= new ArrayList<>(chancedOutputs);
+		this.fluidInputs 		= new ArrayList<>(fluidInputs);
+		this.fluidOutputs		= new ArrayList<>(fluidOutputs);
 	}
 	
 	/**
@@ -58,16 +72,16 @@ public class Recipe {
 	 * @param input collection of input stacks even nulls
 	 * @return true if recipe matches for machine <b>input</b>
 	 */
-	public boolean matches(boolean decrease, List<ItemStack> input) {
-		assert input != null : "Input can not be null!";
+	public boolean matches(boolean decrease, List<ItemStack> input, List<FluidStack> fluidInputs) { // TODO fluid recipes!
+		assert input != null && fluidInputs != null : "Item/Fluid input can not be null!";
 		assert input.isEmpty() : "Input can not be empty!";
-		assert input.size() >= inputs.size() : "Can not be less inputs of machine than recipe has!";
+		assert input.size() >= itemInputs.size() : "Can not be less inputs of machine than recipe has!";
 
 		boolean result;
 		if (shaped)
-			result = checkShaped(decrease, input);
+			result = checkShaped(decrease, input, fluidInputs);
 		else
-			result = checkShapeless(decrease, input);
+			result = checkShapeless(decrease, input, fluidInputs);
 		
 		return result;
 	}
@@ -75,18 +89,30 @@ public class Recipe {
 	/**
 	 * Matching recipe to following input, in case of successfully found item in recipe input map will execute actionPerfomer
 	 */
-	private boolean checkShapeless(boolean decrease, List<ItemStack> inputs) {
+	private boolean checkShapeless(boolean decrease, List<ItemStack> inputs, List<FluidStack> fluidInputs) {
 		Pair<Boolean, Integer[]> items = this.matchItems(inputs);
-		if (items.getKey()) {
-			for (int i = 0; decrease && i < inputs.size(); i++) {
+		Pair<Boolean, Integer[]> fluids = this.matchFluids(fluidInputs);
+		if (items.getKey() && fluids.getKey()) {
+			for (int i = 0; decrease && i < inputs.size() && !inputs.isEmpty(); i++) {
 				ItemStack current = inputs.get(i);
 				int newSize = items.getValue()[i];
 				if (current == null || newSize == current.stackSize) continue;
 				if (newSize > 0)
 					current.stackSize = newSize;
 				else
-					inputs.set(i, null);
+					inputs.remove(i);
 			}
+			
+			for (int i = 0; decrease && i < fluidInputs.size() && !fluidInputs.isEmpty(); i++) {
+				FluidStack current = fluidInputs.get(i);
+				int newSize = fluids.getValue()[i];
+				if (current == null || newSize == current.amount) continue;
+				if (newSize > 0)
+					current.amount = newSize;
+				else
+					fluidInputs.remove(i);
+			}
+			
 			return true;
 		}
 		return false;
@@ -96,21 +122,38 @@ public class Recipe {
 	 * Will check if recipe matches for shaped recipe
 	 * @param actionPerfomer will calls every loop, will put in a ItemStack of slot and amount needed for recipe
 	 */
-	private boolean checkShaped(boolean decrease, List<ItemStack> inputs) {
-		for (int i = 0; i < this.inputs.size(); i++) {
-			Ingredient ingr = this.inputs.get(i);
+	private boolean checkShaped(boolean decrease, List<ItemStack> inputs, List<FluidStack> fluidInputs) {
+		for (int i = 0; i < this.itemInputs.size(); i++) {
+			Ingredient ingr = this.itemInputs.get(i);
 			ItemStack current = inputs.get(i);
 			if (!ingr.match(current) || current.stackSize < ingr.getCount())
 				return false;
 		}
 		
-		for (int i = 0; decrease && i < this.inputs.size(); i++) { // Check this, not sure about working
-			int toConsume = this.inputs.get(i).getCount();
+		for (int i = 0; i < this.fluidInputs.size(); i++) {
+			FluidStack current = fluidInputs.get(i);
+			FluidStack rCurrent = this.fluidInputs.get(i);
+			if (!rCurrent.isFluidEqual(current) || current.amount < rCurrent.amount)
+				return false;
+		}
+		
+		for (int i = 0; decrease && i < this.itemInputs.size(); i++) { // Check this, not sure about working
+			int toConsume = this.itemInputs.get(i).getCount();
 			ItemStack current = inputs.get(i);
 			if (current.stackSize == toConsume) {
-				inputs.set(i, null);
+				inputs.remove(i);
 			} else {
 				current.stackSize -= toConsume;
+			}
+		}
+		
+		for (int i = 0; decrease && i < this.fluidInputs.size(); i++) {
+			int toConsume = this.fluidInputs.get(i).amount;
+			FluidStack current = fluidInputs.get(i);
+			if (current.amount == toConsume) {
+				fluidInputs.remove(i);
+			} else {
+				current.amount -= toConsume;
 			}
 		}
 		
@@ -129,7 +172,7 @@ public class Recipe {
 			itemAmountInSlots[i] = itemInSlot == null ? 0 : itemInSlot.stackSize;
 		}
 		
-		for (Ingredient ingr : inputs) {
+		for (Ingredient ingr : itemInputs) {
 			int ingrAmount = ingr.getCount();
 			boolean consumed = false;
 			
@@ -155,6 +198,41 @@ public class Recipe {
 		return Pair.of(true, itemAmountInSlots);
 	}
 	
+	private Pair<Boolean, Integer[]> matchFluids(List<FluidStack> input) {
+		Integer[] fluidAmountInSlots = new Integer[input.size()];
+		
+		for (int i = 0; i < input.size(); i++) {
+			FluidStack fluidInSlot = input.get(i);
+			fluidAmountInSlots[i] = fluidInSlot == null ? 0 : fluidInSlot.amount;
+		}
+		
+		for (FluidStack ingr : fluidInputs) {
+			int ingrAmount = ingr.amount;
+			boolean consumed = false;
+			
+			if (ingrAmount == 0) {
+				ingrAmount = 1;
+				consumed = true;
+			}
+			
+			for (int i = 0; i < input.size(); i++) {
+				FluidStack inputStack = input.get(i);
+				if (inputStack == null || !ingr.isFluidEqual(inputStack))
+					continue;
+				int toConsume = Math.min(fluidAmountInSlots[i], ingrAmount);
+				ingrAmount -= toConsume;
+				if (!consumed)
+					fluidAmountInSlots[i] -= toConsume;
+				if (ingrAmount == 0)
+					break;
+			}
+			if (ingrAmount > 0)
+				return Pair.of(false, fluidAmountInSlots);
+		}
+		
+		return Pair.of(true, fluidAmountInSlots);
+	}
+	
 	/////////////
 	// GETTERS //
 	/////////////
@@ -175,12 +253,16 @@ public class Recipe {
 		return shaped;
 	}
 	
+	public boolean isFluidRecipe() {
+		return !fluidInputs.isEmpty() || !fluidOutputs.isEmpty();
+	}
+	
 	/**
 	 * @return list containing all possible outputs
 	 */
 	public List<ItemStack> getAllOutputs() {
 		List<ItemStack> stacks = new ArrayList<>();
-		stacks.addAll(outputs);
+		stacks.addAll(itemOutputs);
 		chancedOutputs.forEach(ch -> stacks.add(ch.getStack()));
 		return stacks;
 	}
@@ -196,14 +278,28 @@ public class Recipe {
 	 * @return list containing only 100% chanced outputs
 	 */
 	public List<ItemStack> getOutputs() {
-		return Collections.unmodifiableList(outputs);
+		return Collections.unmodifiableList(itemOutputs);
+	}
+	
+	/**
+	 * @return list of all recipe fluid outputs
+	 */
+	public List<FluidStack> getFluidOutputs() {
+		return Collections.unmodifiableList(fluidOutputs);
 	}
 	
 	/**
 	 * @return list of all recipe inputs
 	 */
 	public List<Ingredient> getInputs() {
-		return Collections.unmodifiableList(inputs);
+		return Collections.unmodifiableList(itemInputs);
+	}
+	
+	/**
+	 * @return list of all recipe fluid inputs
+	 */
+	public List<FluidStack> getFluidInputs() {
+		return Collections.unmodifiableList(fluidInputs);
 	}
 	
 	/** Get a recipe outputs with applied chance
@@ -212,7 +308,7 @@ public class Recipe {
 	 */
 	public List<ItemStack> getResults(Random random) {
 		List<ItemStack> result = new ArrayList<>();
-		result.addAll(GT_Utility.copy(outputs));
+		result.addAll(GT_Utility.copy(itemOutputs));
 		result.addAll(chancedOutputs.stream()
 			.map(c -> c.get(random))
 			.filter(Optional::isPresent)
@@ -220,7 +316,11 @@ public class Recipe {
 			.collect(Collectors.toList()));
 		return result;
 	}
-
+	
+	////////////////////
+	// NBT WRITE/READ //
+	////////////////////
+	
 	public void writeToNBT(NBTTagCompound data) {
 		NBTTagList outputs = new NBTTagList();
 		for (ItemStack out : this.getResults(new Random())) {
@@ -230,7 +330,8 @@ public class Recipe {
 		data.setInteger("recipeHash", this.hashCode());
 		data.setTag("recipeOutput", outputs);
 	}
-
+	
+	// TODO still does not support fluid output saves
 	public static Recipe loadFromNBT(RecipeMap<?> recipeMap, NBTTagCompound data) {
 		if (recipeMap != null && data.hasKey("recipeHash")) {
 			int hash = data.getInteger("recipeHash");
@@ -261,9 +362,18 @@ public class Recipe {
 		return null;
 	}
 	
+	///////////////
+	// OVERRIDES //
+	///////////////
+	
 	@Override
 	public int hashCode() {
-		return (startEU * EUt * duration) + (shaped ? 1 : 0) + inputs.hashCode() + outputs.hashCode() + chancedOutputs.hashCode();
+		return (startEU * EUt * duration) + (shaped ? 1 : 0)
+				+ itemInputs.hashCode()
+				+ itemOutputs.hashCode()
+				+ chancedOutputs.hashCode()
+				+ fluidInputs.hashCode()
+				+ fluidOutputs.hashCode();
 	}
 	
 	@Override
@@ -274,9 +384,11 @@ public class Recipe {
 					(r.duration == this.duration &&
 					r.EUt == this.EUt &&
 					r.startEU == this.startEU &&
-					r.inputs.equals(inputs)) &&
-					r.outputs.equals(outputs) &&
-					r.chancedOutputs.equals(chancedOutputs);
+					r.itemInputs.equals(itemInputs)) &&
+					r.itemOutputs.equals(itemOutputs) &&
+					r.chancedOutputs.equals(chancedOutputs) &&
+					r.fluidInputs.equals(fluidInputs) &&
+					r.fluidOutputs.equals(fluidOutputs);
 		}
 		
 		return false;
@@ -284,14 +396,16 @@ public class Recipe {
 	
 	@Override
 	public String toString() {
-		return String.format("Recipe(startEU=%d, EUt=%d, duration=%d, shaped=%s, enabled=%s)\nin=%s\nout=%s\nchancedOut=%s",
+		return String.format("Recipe(startEU=%d, EUt=%d, duration=%d, shaped=%s, enabled=%s)\nin=%s\nout=%s\nchancedOut=%s\nfluidIn=%s\nfluidOut=%s",
 				startEU,
 				EUt,
 				duration,
 				Boolean.toString(shaped),
 				Boolean.toString(enabled),
-				inputs.toString(),
-				outputs.toString(),
-				chancedOutputs.toString());
+				itemInputs.toString(),
+				itemOutputs.toString(),
+				chancedOutputs.toString(),
+				fluidInputs.toString(),
+				fluidOutputs.toString());
 	}
 }

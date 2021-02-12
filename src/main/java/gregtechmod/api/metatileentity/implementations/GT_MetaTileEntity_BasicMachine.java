@@ -1,5 +1,6 @@
 package gregtechmod.api.metatileentity.implementations;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraftforge.fluids.FluidStack;
 
 /**
  * NEVER INCLUDE THIS FILE IN YOUR MOD!!!
@@ -161,12 +163,24 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
     	return false;
     }
     
+    @Override
     public List<ItemStack> getInputItems() {
     	return new ListAdapter<>(mInventory, 1, 2);
     }
     
+    @Override
     public List<ItemStack> getOutputItems() {
     	return new ListAdapter<>(mInventory, 3, 4);
+    }
+    
+    @Override
+    public List<FluidStack> getFluidInputs() {
+    	return Collections.emptyList();
+    }
+    
+    @Override
+    public List<FluidStack> getFluidOutputs() {
+    	return Collections.emptyList();
     }
     
     /** Fallback to the regular Machine Outside Texture */

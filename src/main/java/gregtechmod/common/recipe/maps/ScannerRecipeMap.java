@@ -9,6 +9,7 @@ import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.recipe.RecipeEntry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.FluidStack;
 
 /**
  * @author TheDarkDnKTv
@@ -21,7 +22,7 @@ public class ScannerRecipeMap extends DummyRecipeMap {
 	}
 	
 	@Override
-	public Recipe findRecipe(List<ItemStack> inputs) {
+	public Recipe findRecipe(List<ItemStack> inputs, List<FluidStack> fluidInputs) {
 		for (int i = 0; i < inputs.size(); i++) {
 			ItemStack input = inputs.get(i);
 			if (GT_Utility.isStackValid(input) && GT_Items.IC2_Crop_Seeds.isStackEqual(input, true, true)) {
