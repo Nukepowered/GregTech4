@@ -1,5 +1,10 @@
 package gregtechmod.api.metatileentity.implementations;
 
+import java.util.Collections;
+
+import gregtechmod.api.interfaces.IGregTechTileEntity;
+import gregtechmod.api.interfaces.IRecipeWorkable;
+import gregtechmod.api.recipe.RecipeLogic;
 import gregtechmod.api.recipe.RecipeMap;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,64 +33,29 @@ public abstract class GT_MetaTileEntity_BasicGenerator extends BasicFluidWorkabl
 	@Override public int maxEUStore()								{return 1000000;}
 	@Override public boolean isAccessAllowed(EntityPlayer aPlayer)	{return true;}
     
-	@Override public boolean doesFillContainers()	{return getBaseMetaTileEntity().isAllowedToWork();}
+	@Override public boolean doesFillContainers()	{return false;}
 	@Override public boolean doesEmptyContainers()	{return getBaseMetaTileEntity().isAllowedToWork();}
 	@Override public boolean canTankBeFilled()		{return getBaseMetaTileEntity().isAllowedToWork();}
 	@Override public boolean canTankBeEmptied()		{return getBaseMetaTileEntity().isAllowedToWork();}
+	@Override public int getInputSlot() 			{return 0;}
+	@Override public int getOutputSlot() 			{return 1;}
 	@Override public int getStackDisplaySlot() 		{return 2;}
 	@Override public boolean displaysItemStack()	{return true;}
 	@Override public boolean displaysStackSize()	{return false;}
 	
 	@Override public boolean isFluidInputAllowed(FluidStack aFluid) {
-		 // TODO FUELS!
-//		return getFuelValue(aFluid) > 0;
-		return true;
+		return aFluid != null && recipeLogic.recipeMap.findRecipe(Collections.emptyList(), Collections.singletonList(aFluid)) != null;
 	}
 	
-//    @Override
-//    public void onPostTick() {
-//    	if (getBaseMetaTileEntity().isServerSide() && getBaseMetaTileEntity().isAllowedToWork() && getBaseMetaTileEntity().getTimer()%10==0) {
-//    		if (mFluid == null) {
-//    			if (getBaseMetaTileEntity().getUniversalEnergyStored() < getBaseMetaTileEntity().getOutputVoltage() + getMinimumStoredEU()) {
-//    				mInventory[getStackDisplaySlot()] = null;
-//    			} else {
-//    				if (mInventory[getStackDisplaySlot()] == null) mInventory[getStackDisplaySlot()] = new ItemStack(Blocks.fire, 1);
-//    				mInventory[getStackDisplaySlot()].setStackDisplayName(I18n.format("metatileentity.GT_MetaTileEntity_BasicGenerator.tooltip", getBaseMetaTileEntity().getUniversalEnergyStored() - getMinimumStoredEU()));
-//    			}
-//    		} else {
-//    			int tFuelValue = getFuelValue(mFluid);
-//    			if (tFuelValue > 0) while (getBaseMetaTileEntity().getUniversalEnergyStored() < (getBaseMetaTileEntity().getOutputVoltage() * 10 + getMinimumStoredEU()) && mFluid.amount > 0) {
-//    				if (getBaseMetaTileEntity().increaseStoredEnergyUnits(tFuelValue, true)) mFluid.amount--;
-//    			}
-//    		}
-//    		if (mInventory[getInputSlot()] != null && getBaseMetaTileEntity().getUniversalEnergyStored() < (getBaseMetaTileEntity().getOutputVoltage() * 10 + getMinimumStoredEU()) && GT_Utility.getFluidForFilledItem(mInventory[getInputSlot()]) == null) {
-//    			int tFuelValue = getFuelValue(mInventory[getInputSlot()]);
-//    			if (tFuelValue > 0) {
-//        			ItemStack tEmptyContainer = getEmptyContainer(mInventory[getInputSlot()]);
-//					if (getBaseMetaTileEntity().addStackToSlot(getOutputSlot(), tEmptyContainer)) {
-//						getBaseMetaTileEntity().increaseStoredEnergyUnits(tFuelValue, true);
-//						getBaseMetaTileEntity().decrStackSize(getInputSlot(), 1);
-//					}
-//    			}
-//    		}
-//		}
-//    	
-//    	if (getBaseMetaTileEntity().isServerSide()) getBaseMetaTileEntity().setActive(getBaseMetaTileEntity().isAllowedToWork() && getBaseMetaTileEntity().getUniversalEnergyStored() >= getBaseMetaTileEntity().getOutputVoltage() + getMinimumStoredEU());
-//    }
-    
-//    public int getFuelValue(FluidStack aLiquid) {
-//    	if (aLiquid == null) return 0;
-//    	FluidStack tLiquid;
-//    	for (Recipe tFuel : recipeMap.getRecipes()) if ((tLiquid = GT_Utility.getFluidForFilledItem(tFuel.getInputs().get(0).getVariants().get(0))) != null) if (aLiquid.isFluidEqual(tLiquid)) return (int)(((long)tFuel.getEUtoStart() * efficiency) / 100);
-//    	return 0;
-//    }
-//    
-//    public int getFuelValue(ItemStack aStack) {
-//    	if (GT_Utility.isStackInvalid(aStack)) return 0;
-//    	Recipe tFuel = recipeMap.findRecipe(new Arr);
-//    	if (tFuel != null) return (int)((tFuel.getEUtoStart() * 1000L * efficiency) / 100);
-//    	return 0;
-//    }
+	@Override
+	public void initRecipeLogic(RecipeMap<?> recipeMap) {
+		recipeLogic = new GeneratorRecipeLogic(recipeMap, this);
+	}
+	
+    @Override
+    public void onPostTick() {
+    	super.onPostTick();
+    }
 	
 	@Override
 	public int getCapacity() {
@@ -95,5 +65,63 @@ public abstract class GT_MetaTileEntity_BasicGenerator extends BasicFluidWorkabl
 	@Override
 	public int getTankPressure() {
 		return -100;
+	}
+	
+	protected class GeneratorRecipeLogic extends RecipeLogic {
+		public GeneratorRecipeLogic(RecipeMap<?> recipeMap, IRecipeWorkable machine) {
+			super(recipeMap, machine);
+		}
+		
+		@Override 
+		public boolean update() {
+			boolean success = false;
+			IGregTechTileEntity base = getMachine().getBaseMetaTileEntity();
+			overclockersCount = base.getOverclockerUpgradeCount();
+			
+			if (base.isAllowedToWork()) {
+				if (progressTime > 0) {
+					int tmp = progressTime;
+					success = updateRecipeProgress();
+					if (tmp == 0 && !success) {
+						throw new IllegalStateException();
+					}
+				}
+				
+				if (progressTime == 0) {
+					if (base.hasInventoryBeenModified() || base.hasWorkJustBeenEnabled() || success || base.getTimer() % 600 == 0 || mFluid != null) {
+						if (base.getUniversalEnergyStored() < (base.getOutputVoltage() * 10 + getMachine().getMinimumStoredEU())) {
+							trySerachRecipe();
+						} else {
+							previousRecipe = null;
+							base.setActive(false);
+						} 
+					}
+				}
+			} 
+			
+			return success;
+		}
+		
+		@Override
+		protected boolean updateRecipeProgress() {
+			if (getMachine().getBaseMetaTileEntity().increaseStoredEnergyUnits(EUt * efficiency / 100, false)) {
+				if ((progressTime += progressTimeManipulator.applyAsInt(1)) >= maxProgressTime) {
+					progressTime = 0;
+					maxProgressTime = 0;
+					EUt = 0;
+					
+					endRecipe(previousRecipe);
+					getMachine().endProcess();
+					return true;
+				}
+			} else {
+				if (!stuttering) {
+					getMachine().stutterProcess();
+					stuttering = true;
+				}
+			}
+			
+			return false;
+		}
 	}
 }

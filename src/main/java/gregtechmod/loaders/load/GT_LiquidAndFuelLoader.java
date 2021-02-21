@@ -1,5 +1,6 @@
 package gregtechmod.loaders.load;
 
+import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.util.GT_Log;
@@ -74,11 +75,11 @@ public class GT_LiquidAndFuelLoader implements Runnable {
 		GT_FluidRegistry.addFluid("nitrocoalfuel"		, null					, Materials.NitroCoalFuel	, OrePrefixes.cell, 1, GT_ModHandler.getEmptyCell(1));
 		
         GT_Log.log.info("GT_Mod: Initializing various Fuels.");
-        RecipeMaps.HOT_FUELS.factory().EUt(15).duration(2).input(new ItemStack(Items.lava_bucket)).buildAndRegister(); // starteu = 30
-        RecipeMaps.HOT_FUELS.factory().EUt(20).duration(2).input(GT_ModHandler.getIC2Item("hotcoolantCell", 1)).output(GT_ModHandler.getIC2Item("coolantCell", 1)).buildAndRegister(); // was set startEU = 20
-        RecipeMaps.MAGIC_FUELS.factory().EUt(10).duration(1).input(new ItemStack(Items.experience_bottle, 1)).buildAndRegister(); // startEU = 10
-        RecipeMaps.MAGIC_FUELS.factory().EUt(20).duration(25).input(new ItemStack(Items.ghast_tear, 1)).buildAndRegister(); // startEU = 500
-        RecipeMaps.MAGIC_FUELS.factory().EUt(32).duration(3125).input(new ItemStack(Blocks.beacon, 1)).buildAndRegister(); // startEU = 500 // Materials.NetherStar.mFuelPower * 2 = 50000 * 2
+        RecipeMaps.HOT_FUELS.factory().EUt(24).duration(1000).input(new FluidStack(FluidRegistry.LAVA, 1000)).buildAndRegister();
+        RecipeMaps.HOT_FUELS.factory().EUt(20).duration(1000).input(FluidRegistry.getFluidStack("ic2hotcoolant", 1000)).input(GT_Items.Cell_Empty.get(1)).output(GT_ModHandler.getIC2Item("coolantCell", 1)).buildAndRegister();
+        RecipeMaps.MAGIC_FUELS.factory().EUt(10).duration(1).input(new ItemStack(Items.experience_bottle, 1)).buildAndRegister(); // startEU = 10 ~ 10kEU
+        RecipeMaps.MAGIC_FUELS.factory().EUt(20).duration(25).input(new ItemStack(Items.ghast_tear, 1)).buildAndRegister(); // startEU = 500 ~ 500kEU // TODO Nerf this
+        RecipeMaps.MAGIC_FUELS.factory().EUt(32).duration(3125).input(new ItemStack(Blocks.beacon, 1)).buildAndRegister(); // Materials.NetherStar.mFuelPower * 2 = 50000 * 2 ~ 1MEU
 		
 		GT_ModHandler.addBoilerFuel(GT_Utility.getFluidForFilledItem(GT_MetaItem_Cell.instance.getUnunifiedStack(35, 1)), 18000);
 		GT_ModHandler.addBoilerFuel(GT_Utility.getFluidForFilledItem(GT_MetaItem_Cell.instance.getUnunifiedStack( 5, 1)), 24000);

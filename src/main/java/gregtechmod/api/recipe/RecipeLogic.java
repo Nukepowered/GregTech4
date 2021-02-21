@@ -4,7 +4,6 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Random;
 import java.util.function.IntUnaryOperator;
-import java.util.function.Supplier;
 
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.interfaces.IRecipeWorkable;
@@ -26,8 +25,6 @@ public class RecipeLogic {
 	public final RecipeMap<?> recipeMap;
 	
 	public int batterySlot 		= 5;
-	/** Do not consume inputs on custom recipe provider, it is only should <b><i>provide</i></b> a recipe instance */
-	protected Supplier<Recipe> customRecipeProvider;
 	/** Custom fucntion called every recipe progress time update, if you want to speed up machine because of some factor, just increase the value up */
 	protected IntUnaryOperator progressTimeManipulator = i -> i;
 	protected Recipe previousRecipe;
@@ -35,9 +32,9 @@ public class RecipeLogic {
 	protected int progressTime;
 	protected int EUt;
 	
-	private int overclockersCount;
-	private boolean stuttering;
-	private boolean wasNoEnergy;
+	protected int overclockersCount;
+	protected boolean stuttering;
+	protected boolean wasNoEnergy;
 	
 	public RecipeLogic(RecipeMap<?> recipeMap, IRecipeWorkable machine) {
 		int inputs = machine.getInputItems().size();
@@ -93,10 +90,6 @@ public class RecipeLogic {
 		return success;
 	}
 	
-	public void setRecipeProvider(Supplier<Recipe> handler) {
-		customRecipeProvider = handler;
-	}
-	
 	public void setProgressTimeManipulator(IntUnaryOperator applier) {
 		progressTimeManipulator = applier;
 	}
@@ -141,9 +134,7 @@ public class RecipeLogic {
 	}
 	
 	protected Recipe findRecipe() {
-		if (customRecipeProvider == null) {
-			return recipeMap.findRecipe(getMachine().getInputItems(), getMachine().getFluidInputs());
-		} else return customRecipeProvider.get();
+		return recipeMap.findRecipe(getMachine().getInputItems(), getMachine().getFluidInputs());
 	}
 	
 	protected boolean match(Recipe recipe) {
@@ -218,7 +209,7 @@ public class RecipeLogic {
 		return !getMachine().getInputItems().isEmpty() || !getMachine().getFluidInputs().isEmpty();
 	}
 	
-	private IRecipeWorkable getMachine() {
+	protected IRecipeWorkable getMachine() {
 		return metaTileEntity.get();
 	}
 	

@@ -46,7 +46,7 @@ public class GT_MetaTileEntity_MagicEnergyConverter extends GT_MetaTileEntity_Ba
 	}
     
     @Override
-	public void onExplosion() {
+	public void onExplosion() { // TODO explosions
 	   	try {
 	   		TileEntity te = (TileEntity) this.getBaseMetaTileEntity();
     		World tWorld = this.getBaseMetaTileEntity().getWorld();

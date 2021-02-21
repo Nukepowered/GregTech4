@@ -112,16 +112,16 @@ public abstract class RecipeFactory<F extends RecipeFactory<F>> {
 	
 	public RecipeFactory<F> input(Ingredient ingredient) {
 		if (ingredient == null) {
-			errors.append(" - Supplied wrong ingredient: " + ingredient);
+			errors.append(" - Supplied wrong ingredient: " + ingredient + "\n");
 			return this;
 		}
 		
 		if (ingredient.getVariants().isEmpty()) {
-			errors.append(" - Supplied wrong ingredient: no variants! Current: " + ingredient.getVariants());
+			errors.append(" - Supplied wrong ingredient: no variants! Current: " + ingredient.getVariants() + "\n");
 		}
 		
 		if (ingredient.getCount() < 0) {
-			errors.append(" - Supplied wrong ingredient: count is less than 0! Current: " + ingredient.getCount());
+			errors.append(" - Supplied wrong ingredient: count is less than 0! Current: " + ingredient.getCount() + "\n");
 		}
 		
 		this.inputItems.add(ingredient);
@@ -129,10 +129,10 @@ public abstract class RecipeFactory<F extends RecipeFactory<F>> {
 	}
 	
 	public RecipeFactory<F> input(FluidStack fluid) {
-		if (fluid == null) 					errors.append(" - Invalid FluidStack: " + fluid);
+		if (fluid == null) 					errors.append(" - Invalid FluidStack: " + fluid + "\n");
 		else {
-			if (fluid.getFluid() == null) 	errors.append(" - Invalid Fluid in stack: " + fluid);
-			if (fluid.amount <= 0) 			errors.append(" - Invalid FluidStack size: " + fluid);
+			if (fluid.getFluid() == null) 	errors.append(" - Invalid Fluid in stack: " + fluid + "\n");
+			if (fluid.amount <= 0) 			errors.append(" - Invalid FluidStack size: " + fluid + "\n");
 		}
 		
 		inputFluids.add(fluid == null ? null : fluid.copy());
@@ -162,10 +162,10 @@ public abstract class RecipeFactory<F extends RecipeFactory<F>> {
 	}
 	
 	public RecipeFactory<F> output(FluidStack fluid) {
-		if (fluid == null) 					errors.append(" - Invalid FluidStack: " + fluid);
+		if (fluid == null) 					errors.append(" - Invalid FluidStack: " + fluid + "\n");
 		else {
-			if (fluid.getFluid() == null) 	errors.append(" - Invalid Fluid in stack: " + fluid);
-			if (fluid.amount <= 0) 			errors.append(" - Invalid FluidStack size: " + fluid);
+			if (fluid.getFluid() == null) 	errors.append(" - Invalid Fluid in stack: " + fluid + "\n");
+			if (fluid.amount <= 0) 			errors.append(" - Invalid FluidStack size: " + fluid + "\n");
 		}
 		
 		outputFluids.add(fluid == null ? null : fluid.copy());
@@ -183,11 +183,11 @@ public abstract class RecipeFactory<F extends RecipeFactory<F>> {
 	
 	public RecipeFactory<F> chanced(ChancedOutput output) {
 		if (output.getChance() < 0 || output.getChance() > MAX_CHANCE) {
-			errors.append(" - Chance for " + output.getStack() + " not valid. Shall be 0 <= chance <= 10000");
+			errors.append(" - Chance for " + output.getStack() + " not valid. Shall be 0 <= chance <= 10000" + "\n");
 		}
 		
 		if (GT_Utility.isStackInvalid(output.getStack())) {
-			errors.append(" - Stack for chanced output is invalid: " + output.getStack());
+			errors.append(" - Stack for chanced output is invalid: " + output.getStack() + "\n");
 		}
 		
 		this.chancedOutput.add(output);
