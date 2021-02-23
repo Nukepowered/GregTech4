@@ -11,23 +11,18 @@ import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_Config;
 import gregtechmod.api.util.GT_Log;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
-import thaumcraft.common.lib.network.PacketHandler;
-import thaumcraft.common.lib.network.fx.PacketFXEssentiaSource;
-import thaumcraft.common.tiles.TileNode;
 
 public class GT_MetaTileEntity_DragonEggEnergySiphon extends MetaTileEntity {
-	
 	public static int sDragonEggEnergyPerTick = 128;
 	public static boolean sAllowMultipleEggs = false, sAllowFlux = true;
-	private SoftReference<TileNode> cachedNode = new SoftReference<>(null);
+	private SoftReference<Object> cachedNode = new SoftReference<>(null);
 	
 	public static SoftReference<GT_MetaTileEntity_DragonEggEnergySiphon> mActiveSiphon = new SoftReference<>(null);
 	
@@ -35,9 +30,7 @@ public class GT_MetaTileEntity_DragonEggEnergySiphon extends MetaTileEntity {
 		super(aID, mName);
 	}
 	
-	public GT_MetaTileEntity_DragonEggEnergySiphon() {
-		
-	}
+	public GT_MetaTileEntity_DragonEggEnergySiphon() {}
 	
 	@Override public boolean unbreakable()							{return true;}
 	@Override public boolean isSimpleMachine()						{return false;}
@@ -100,32 +93,32 @@ public class GT_MetaTileEntity_DragonEggEnergySiphon extends MetaTileEntity {
     		if (getBaseMetaTileEntity().isAllowedToWork() && hasEgg()) {
     			getBaseMetaTileEntity().setActive(true);
     			if (getBaseMetaTileEntity().increaseStoredEnergyUnits(sDragonEggEnergyPerTick, false)) {
-    				if (sAllowFlux) {
+    				if (sAllowFlux && GT_MetaTileEntity_MagicEnergyAbsorber.THAUMCRAFT_LOADED) {
 	        			try {
 	        				if (this.findNode()) {
-	        					TileNode node = cachedNode.get();
-		        				AspectList aspects = new AspectList();
-		        				switch (getBaseMetaTileEntity().getRandomNumber(1000)) {
-		        				case  0:  aspects.add(Aspect.MECHANISM, 3); break;
-		            			case  1:  aspects.add(Aspect.VOID, 1); break;
-		                		case  2:  aspects.add(Aspect.ELDRITCH, 2); break;
-		                		case  3:  aspects.add(Aspect.EXCHANGE, 1); break;
-		                		case  4:  aspects.add(Aspect.MAGIC, 1); break;
-		                		case  5:  aspects.add(Aspect.MOTION, 3); break;
-		                		case  6:  aspects.add(Aspect.AIR, 2); break;
-		                		case  7:  aspects.add(Aspect.EARTH, 2); break;
-		                		case  8:  aspects.add(Aspect.FIRE, 2); break;
-		                		case  9:  aspects.add(Aspect.WATER, 2); break;
-		                		case  10: aspects.add(Aspect.ORDER, 2); break;
-		                		case  11: aspects.add(Aspect.ENTROPY, 2); break;
+	        					thaumcraft.common.tiles.TileNode node = (thaumcraft.common.tiles.TileNode) cachedNode.get();
+	        					thaumcraft.api.aspects.AspectList aspects = new thaumcraft.api.aspects.AspectList();
+		        				switch (getBaseMetaTileEntity().getRandomNumber(5000)) {
+		        				case  0:  aspects.add(thaumcraft.api.aspects.Aspect.MECHANISM, 3); break;
+		            			case  1:  aspects.add(thaumcraft.api.aspects.Aspect.VOID, 1); break;
+		                		case  2:  aspects.add(thaumcraft.api.aspects.Aspect.ELDRITCH, 2); break;
+		                		case  3:  aspects.add(thaumcraft.api.aspects.Aspect.EXCHANGE, 1); break;
+		                		case  4:  aspects.add(thaumcraft.api.aspects.Aspect.MAGIC, 1); break;
+		                		case  5:  aspects.add(thaumcraft.api.aspects.Aspect.MOTION, 3); break;
+		                		case  6:  aspects.add(thaumcraft.api.aspects.Aspect.AIR, 2); break;
+		                		case  7:  aspects.add(thaumcraft.api.aspects.Aspect.EARTH, 2); break;
+		                		case  8:  aspects.add(thaumcraft.api.aspects.Aspect.FIRE, 2); break;
+		                		case  9:  aspects.add(thaumcraft.api.aspects.Aspect.WATER, 2); break;
+		                		case  10: aspects.add(thaumcraft.api.aspects.Aspect.ORDER, 2); break;
+		                		case  11: aspects.add(thaumcraft.api.aspects.Aspect.ENTROPY, 2); break;
 		        				}
 		        				
 		        				if (!aspects.aspects.isEmpty()) {
-		        					Aspect toAdd = aspects.getAspects()[0];
+		        					thaumcraft.api.aspects.Aspect toAdd = aspects.getAspects()[0];
 		        					TileEntity tThis = (TileEntity) this.getBaseMetaTileEntity();
 		        					node.getAspects().add(aspects);
 		        					node.nodeChange();
-		        					PacketHandler.INSTANCE.sendToAllAround(new PacketFXEssentiaSource(node.xCoord, node.yCoord, node.zCoord, (byte)(node.xCoord - tThis.xCoord), (byte)(node.yCoord - tThis.yCoord), (byte)(node.zCoord - tThis.zCoord), toAdd.getColor()), 
+		        					thaumcraft.common.lib.network.PacketHandler.INSTANCE.sendToAllAround(new thaumcraft.common.lib.network.fx.PacketFXEssentiaSource(node.xCoord, node.yCoord, node.zCoord, (byte)(node.xCoord - tThis.xCoord), (byte)(node.yCoord - tThis.yCoord), (byte)(node.zCoord - tThis.zCoord), toAdd.getColor()), 
 		        							new NetworkRegistry.TargetPoint(node.getWorldObj().provider.dimensionId, node.xCoord, node.yCoord, node.zCoord, 32.0));
 		        				}
 	        				}
@@ -148,7 +141,7 @@ public class GT_MetaTileEntity_DragonEggEnergySiphon extends MetaTileEntity {
     }
     
     private boolean findNode() {
-    	List<ArrayList<Integer>> nodesCoords = TileNode.locations.entrySet().stream()
+    	List<ArrayList<Integer>> nodesCoords = thaumcraft.common.tiles.TileNode.locations.entrySet().stream()
 				.map(entry -> entry.getValue())
 				.collect(Collectors.toList());
 		TileEntity tThis = (TileEntity) this.getBaseMetaTileEntity();
@@ -171,12 +164,12 @@ public class GT_MetaTileEntity_DragonEggEnergySiphon extends MetaTileEntity {
 		
     	if (coords != null && !coords.isEmpty()) {
     		TileEntity tr = tWorld.getTileEntity(coords.get(1), coords.get(2), coords.get(3));
-    		if (tr != null && tr instanceof TileNode) {
-    			TileNode node = (TileNode) tr;
+    		if (tr != null && tr instanceof thaumcraft.common.tiles.TileNode) {
+    			thaumcraft.common.tiles.TileNode node = (thaumcraft.common.tiles.TileNode) tr;
     			if (node.isInvalid()) {
     				String key = node.getId();
     				node = null;
-    				TileNode.locations.remove(key);
+    				thaumcraft.common.tiles.TileNode.locations.remove(key);
     				System.gc();
     				return false;
     			}
@@ -184,7 +177,7 @@ public class GT_MetaTileEntity_DragonEggEnergySiphon extends MetaTileEntity {
     			this.cachedNode = new SoftReference<>(node);
     			return true;
     		} else {
-    			TileNode.locations.remove(String.format("%d:%d:%d:%d", coords.get(0), coords.get(1), coords.get(2), coords.get(3)));
+    			thaumcraft.common.tiles.TileNode.locations.remove(String.format("%d:%d:%d:%d", coords.get(0), coords.get(1), coords.get(2), coords.get(3)));
     		}
     	}
     	

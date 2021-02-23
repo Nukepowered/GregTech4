@@ -27,22 +27,27 @@ import net.minecraftforge.common.util.ForgeDirection;
 
 public class GT_MetaTileEntity_MagicEnergyAbsorber extends MetaTileEntity {
 	public static int sEnergyPerEnderCrystal = 32, sEnergyFromVis = 12800;
+	private static ArrayList<?> supportedAspects;
+	
 	public static final ArrayList<EntityEnderCrystal> sUsedDragonCrystalList = new ArrayList<EntityEnderCrystal>();
-	public static final boolean THAUMCRAFT_LOADED = Loader.isModLoaded("Thaumcraft");
+	public static final boolean THAUMCRAFT_LOADED;
 	
 	public EntityEnderCrystal mTargetedCrystal;
 	private int elementIndex = 0;
 	private Object energySource = null;
 	public boolean isActive1 = false, isActive2 = false;
-	
-	private ArrayList<?> supportedAspects = null;
+
 	
 	public GT_MetaTileEntity_MagicEnergyAbsorber(int aID, String mName) {
 		super(aID, mName);
 	}
 	
-	public GT_MetaTileEntity_MagicEnergyAbsorber() {
-		
+	public GT_MetaTileEntity_MagicEnergyAbsorber() {}
+	
+	static {
+		if (THAUMCRAFT_LOADED = Loader.isModLoaded("Thaumcraft")) try {
+			supportedAspects = thaumcraft.api.aspects.Aspect.getPrimalAspects();
+		} catch (Throwable e) {}
 	}
 	
 	@Override public boolean isSimpleMachine()						{return false;}
@@ -110,7 +115,7 @@ public class GT_MetaTileEntity_MagicEnergyAbsorber extends MetaTileEntity {
 			                        if (tID > -1 && tID < Enchantment.enchantmentsList.length) {
 				                        Enchantment tEnchantment = Enchantment.enchantmentsList[tID];
 				                        if (tEnchantment != null) {
-				                        	getBaseMetaTileEntity().increaseStoredEnergyUnits((1000000*tLevel)/(tEnchantment.getMaxLevel()*tEnchantment.getWeight()), true);
+				                        	getBaseMetaTileEntity().increaseStoredEnergyUnits((1_000_000*tLevel)/(tEnchantment.getMaxLevel()*tEnchantment.getWeight()), true);
 				                        }
 			                        }
 			                    }
@@ -125,7 +130,7 @@ public class GT_MetaTileEntity_MagicEnergyAbsorber extends MetaTileEntity {
 			                        if (tID > -1 && tID < Enchantment.enchantmentsList.length) {
 				                        Enchantment tEnchantment = Enchantment.enchantmentsList[tID];
 				                        if (tEnchantment != null) {
-				                        	getBaseMetaTileEntity().increaseStoredEnergyUnits((1000000*tLevel)/(tEnchantment.getMaxLevel()*tEnchantment.getWeight()), true);
+				                        	getBaseMetaTileEntity().increaseStoredEnergyUnits((1_000_000*tLevel)/(tEnchantment.getMaxLevel()*tEnchantment.getWeight()), true);
 				                        }
 			                        }
 			                    }
@@ -166,19 +171,19 @@ public class GT_MetaTileEntity_MagicEnergyAbsorber extends MetaTileEntity {
     		if (sEnergyFromVis > 0 && isActive2 && getBaseMetaTileEntity().getUniversalEnergyStored() < sEnergyFromVis && THAUMCRAFT_LOADED) {
     			try {
     				
-    				if (energySource != null && thaumcraft.common.lib.events.EssentiaHandler.findEssentia((TileEntity) this.getBaseMetaTileEntity(), (thaumcraft.api.aspects.Aspect)energySource, ForgeDirection.UNKNOWN, 20)) {
+    				if (energySource != null) {
     					if (thaumcraft.api.aspects.AspectSourceHelper.drainEssentia((TileEntity) this.getBaseMetaTileEntity(), (thaumcraft.api.aspects.Aspect)energySource, ForgeDirection.UNKNOWN, 20)) {
         					getBaseMetaTileEntity().increaseStoredEnergyUnits(sEnergyFromVis, true);
         					List<?> tList = getBaseMetaTileEntity().getWorld().getEntitiesWithinAABB(thaumcraft.common.entities.monster.EntityWisp.class, AxisAlignedBB.getBoundingBox(getBaseMetaTileEntity().getXCoord()-8, getBaseMetaTileEntity().getYCoord()-8, getBaseMetaTileEntity().getZCoord()-8, getBaseMetaTileEntity().getXCoord()+8, getBaseMetaTileEntity().getYCoord()+8, getBaseMetaTileEntity().getZCoord()+8));
         					if (!tList.isEmpty()) getBaseMetaTileEntity().doExplosion(8192);
-        				}
-    				} else energySource = null;
+        				} else energySource = null;
+    				} 
     			} catch(Throwable e) {
     				if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);
     			}
     		}
     		
-			getBaseMetaTileEntity().setActive(getBaseMetaTileEntity().getUniversalEnergyStored() >= getBaseMetaTileEntity().getOutputVoltage() + getMinimumStoredEU());
+			if (getBaseMetaTileEntity() != null) getBaseMetaTileEntity().setActive(getBaseMetaTileEntity().getUniversalEnergyStored() >= getBaseMetaTileEntity().getOutputVoltage() + getMinimumStoredEU());
     	}
     }
     

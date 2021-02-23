@@ -752,7 +752,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
     public boolean playerOwnsThis(EntityPlayer aPlayer, boolean aCheckPrecicely) {if (!hasValidMetaTileEntity()) return false; if (aCheckPrecicely || unbreakable() || privateAccess() || mOwnerName.equals("")) if (mOwnerName.equals("")&&isServerSide()) setOwnerName(aPlayer.getDisplayName()); else if (privateAccess() && !aPlayer.getDisplayName().equals("Player") && !mOwnerName.equals("Player") && !mOwnerName.equals(aPlayer.getDisplayName())) return false; return true;}
     public boolean privateAccess() {if (!hasValidMetaTileEntity()) return mLockUpgrade; return mLockUpgrade || mMetaTileEntity.ownerControl();}
     public boolean unbreakable()   {if (!hasValidMetaTileEntity()) return mLockUpgrade; return mLockUpgrade || mMetaTileEntity.unbreakable();}
-    public void doEnergyExplosion() {if (getUniversalEnergyCapacity() > 0 && getUniversalEnergyStored() >= getUniversalEnergyCapacity()/5) doExplosion(getOutputVoltage()*(getUniversalEnergyStored() >= getUniversalEnergyCapacity()?4:getUniversalEnergyStored() >= getUniversalEnergyCapacity()/2?2:1));}
+    public void doEnergyExplosion() {if (getUniversalEnergyCapacity() > 0 && getUniversalEnergyStored() >= mMetaTileEntity.getMinimumStoredEU()) doExplosion(getOutputVoltage()*(getUniversalEnergyStored() >= getUniversalEnergyCapacity()?4:getUniversalEnergyStored() >= getUniversalEnergyCapacity()/2?2:1));}
     
     @Override
     public void doExplosion(int aAmount) {

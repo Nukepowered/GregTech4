@@ -63,7 +63,7 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 	public Recipe findRecipe(List<ItemStack> input, List<FluidStack> fluidInputs) {
 		if (input.size() < minInputs) 
 			throw new IllegalArgumentException("Inputs of machine can not be smaller than minimum RecipeMap inputs amount");
-		
+		// FIXME fix this shit, recipe should not be searched only for first item
 		ItemStack first = null;
 		for (ItemStack stack : input) {
 			if (GT_Utility.isStackValid(stack)) {

@@ -1,6 +1,7 @@
 package gregtechmod.common.recipe;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -19,7 +20,6 @@ import gregtechmod.api.util.ItemStackKey;
 
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
-import scala.actors.threadpool.Arrays;
 
 /** An implementation of Ingredient interface
  * 

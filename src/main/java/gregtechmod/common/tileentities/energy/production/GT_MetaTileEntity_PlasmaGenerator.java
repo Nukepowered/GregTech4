@@ -1,15 +1,11 @@
 package gregtechmod.common.tileentities.energy.production;
 
-import java.util.Collections;
-import java.util.List;
-
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicGenerator;
 import gregtechmod.api.recipe.RecipeMap;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 
 public class GT_MetaTileEntity_PlasmaGenerator extends GT_MetaTileEntity_BasicGenerator {
 
@@ -26,8 +22,6 @@ public class GT_MetaTileEntity_PlasmaGenerator extends GT_MetaTileEntity_BasicGe
 	@Override public void onRightclick(EntityPlayer aPlayer) {this.getBaseMetaTileEntity().openGUI(aPlayer, 121);}
 	@Override public boolean isOutputFacing(byte aSide) {return aSide == this.getBaseMetaTileEntity().getFrontFacing();}
 	@Override public int maxEUStore() {return 1000000000;}
-	@Override public List<ItemStack> getInputItems() { return Collections.emptyList(); }
-	@Override public List<ItemStack> getOutputItems() { return Collections.emptyList(); }
 
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {

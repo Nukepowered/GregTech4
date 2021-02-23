@@ -1,17 +1,27 @@
 package gregtechmod.api.metatileentity.implementations;
 
-import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.interfaces.IRecipeWorkable;
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeLogic;
 import gregtechmod.api.recipe.RecipeMap;
-
+import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.ListAdapter;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
 public abstract class GT_MetaTileEntity_BasicGenerator extends BasicFluidWorkable {
-
+	
+	/** A mapping of allowed fluid inputs by generator maps */
+	protected static final Map<Class<?>, Set<Integer>> ALLOWED_FLUIDS = new HashMap<>();
+	
 	protected int efficiency;
 	
 	public GT_MetaTileEntity_BasicGenerator(int aID, String aName, RecipeMap<?> recipeMap, int efficiency) {
@@ -40,11 +50,29 @@ public abstract class GT_MetaTileEntity_BasicGenerator extends BasicFluidWorkabl
 	@Override public int getInputSlot() 			{return 0;}
 	@Override public int getOutputSlot() 			{return 1;}
 	@Override public int getStackDisplaySlot() 		{return 2;}
+	@Override public List<ItemStack> getInputItems() { return new ListAdapter<>(mInventory, 0, 1); }
+	@Override public List<ItemStack> getOutputItems() { return new ListAdapter<>(mInventory, 1, 2); }
 	@Override public boolean displaysItemStack()	{return true;}
 	@Override public boolean displaysStackSize()	{return false;}
 	
 	@Override public boolean isFluidInputAllowed(FluidStack aFluid) {
-		return aFluid != null && recipeLogic.recipeMap.findRecipe(Collections.emptyList(), Collections.singletonList(aFluid)) != null;
+		if (GT_Utility.isFluidStackValid(aFluid)) {
+			Set<Integer> allowedValues = ALLOWED_FLUIDS.get(this.getClass());
+			if (allowedValues != null) {
+				return allowedValues.contains(GT_Utility.fluidStackToInt(aFluid));
+			} else {
+				allowedValues = new HashSet<>();
+				for (Recipe recipe : recipeLogic.recipeMap.getRecipes()) {
+					 for (FluidStack fluid : recipe.getFluidInputs()) {
+						 allowedValues.add(GT_Utility.fluidStackToInt(fluid));
+					 }
+				}
+				
+				ALLOWED_FLUIDS.put(this.getClass(), allowedValues);
+			}
+		}
+		
+		return false;
 	}
 	
 	@Override
@@ -76,7 +104,6 @@ public abstract class GT_MetaTileEntity_BasicGenerator extends BasicFluidWorkabl
 		public boolean update() {
 			boolean success = false;
 			IGregTechTileEntity base = getMachine().getBaseMetaTileEntity();
-			overclockersCount = base.getOverclockerUpgradeCount();
 			
 			if (base.isAllowedToWork()) {
 				if (progressTime > 0) {
@@ -89,7 +116,10 @@ public abstract class GT_MetaTileEntity_BasicGenerator extends BasicFluidWorkabl
 				
 				if (progressTime == 0) {
 					if (base.hasInventoryBeenModified() || base.hasWorkJustBeenEnabled() || success || base.getTimer() % 600 == 0 || mFluid != null) {
-						if (base.getUniversalEnergyStored() < (base.getOutputVoltage() * 10 + getMachine().getMinimumStoredEU())) {
+						int a = base.getUniversalEnergyStored();
+						int b = base.getOutputVoltage() * 10;
+						int c = getMachine().getMinimumStoredEU();
+						if (a < (b + c)) {
 							trySerachRecipe();
 						} else {
 							previousRecipe = null;
@@ -104,23 +134,18 @@ public abstract class GT_MetaTileEntity_BasicGenerator extends BasicFluidWorkabl
 		
 		@Override
 		protected boolean updateRecipeProgress() {
-			if (getMachine().getBaseMetaTileEntity().increaseStoredEnergyUnits(EUt * efficiency / 100, false)) {
-				if ((progressTime += progressTimeManipulator.applyAsInt(1)) >= maxProgressTime) {
-					progressTime = 0;
-					maxProgressTime = 0;
-					EUt = 0;
-					
-					endRecipe(previousRecipe);
-					getMachine().endProcess();
-					return true;
+				if (getMachine().getBaseMetaTileEntity().increaseStoredEnergyUnits(EUt * efficiency / 100, false)) {
+					if ((progressTime += progressTimeManipulator.applyAsInt(1)) >= maxProgressTime) {
+						progressTime = 0;
+						maxProgressTime = 0;
+						EUt = 0;
+						
+						endRecipe(previousRecipe);
+						getMachine().endProcess();
+						return true;
+					}
 				}
-			} else {
-				if (!stuttering) {
-					getMachine().stutterProcess();
-					stuttering = true;
-				}
-			}
-			
+				
 			return false;
 		}
 	}

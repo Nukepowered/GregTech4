@@ -1,15 +1,11 @@
 package gregtechmod.common.tileentities.energy.production;
 
-import java.util.Collections;
-import java.util.List;
-
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicGenerator;
 import gregtechmod.api.recipe.RecipeMap;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -27,8 +23,6 @@ public class GT_MetaTileEntity_MagicEnergyConverter extends GT_MetaTileEntity_Ba
 	@Override public boolean isFacingValid(byte aFacing) {return true;}
 	@Override public int maxEUOutput() {return this.getBaseMetaTileEntity().isAllowedToWork() ? 24 : 0;}
 	@Override public void onRightclick(EntityPlayer aPlayer) {this.getBaseMetaTileEntity().openGUI(aPlayer, 125);}
-	@Override public List<ItemStack> getInputItems() { return Collections.emptyList(); }
-	@Override public List<ItemStack> getOutputItems() { return Collections.emptyList(); }
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
@@ -46,7 +40,7 @@ public class GT_MetaTileEntity_MagicEnergyConverter extends GT_MetaTileEntity_Ba
 	}
     
     @Override
-	public void onExplosion() { // TODO explosions
+	public void onExplosion() {
 	   	try {
 	   		TileEntity te = (TileEntity) this.getBaseMetaTileEntity();
     		World tWorld = this.getBaseMetaTileEntity().getWorld();

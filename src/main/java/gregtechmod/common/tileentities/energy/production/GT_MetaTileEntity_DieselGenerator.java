@@ -1,15 +1,11 @@
 package gregtechmod.common.tileentities.energy.production;
 
-import java.util.Collections;
-import java.util.List;
-
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicGenerator;
 import gregtechmod.api.recipe.RecipeMap;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 
 public class GT_MetaTileEntity_DieselGenerator extends GT_MetaTileEntity_BasicGenerator {
 
@@ -24,8 +20,6 @@ public class GT_MetaTileEntity_DieselGenerator extends GT_MetaTileEntity_BasicGe
 	@Override public boolean isFacingValid(byte aFacing) {return aFacing > 1;}
 	@Override public int maxEUOutput() {return this.getBaseMetaTileEntity().isAllowedToWork() ? 12 : 0;}
 	@Override public void onRightclick(EntityPlayer aPlayer) {this.getBaseMetaTileEntity().openGUI(aPlayer, 117);}
-	@Override public List<ItemStack> getInputItems() { return Collections.emptyList(); }
-	@Override public List<ItemStack> getOutputItems() { return Collections.emptyList(); }
 
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {

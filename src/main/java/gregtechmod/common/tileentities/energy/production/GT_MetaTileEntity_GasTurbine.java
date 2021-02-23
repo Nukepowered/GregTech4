@@ -5,11 +5,7 @@ import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicGenerator;
 import gregtechmod.api.recipe.RecipeMap;
 
-import java.util.Collections;
-import java.util.List;
-
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 
 public class GT_MetaTileEntity_GasTurbine extends GT_MetaTileEntity_BasicGenerator {
 
@@ -24,8 +20,6 @@ public class GT_MetaTileEntity_GasTurbine extends GT_MetaTileEntity_BasicGenerat
 	@Override public boolean isFacingValid(byte aFacing) {return true;}
 	@Override public int maxEUOutput() {return this.getBaseMetaTileEntity().isAllowedToWork() ? 16 : 0;}
 	@Override public void onRightclick(EntityPlayer aPlayer) {this.getBaseMetaTileEntity().openGUI(aPlayer, 118);}
-	@Override public List<ItemStack> getInputItems() { return Collections.emptyList(); }
-	@Override public List<ItemStack> getOutputItems() { return Collections.emptyList(); }
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
