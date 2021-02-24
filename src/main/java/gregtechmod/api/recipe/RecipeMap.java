@@ -1,11 +1,14 @@
 package gregtechmod.api.recipe;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.IntConsumer;
 
 import gregtechmod.api.util.GT_RecipeException;
@@ -63,44 +66,35 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 	public Recipe findRecipe(List<ItemStack> input, List<FluidStack> fluidInputs) {
 		if (input.size() < minInputs) 
 			throw new IllegalArgumentException("Inputs of machine can not be smaller than minimum RecipeMap inputs amount");
-		// FIXME fix this shit, recipe should not be searched only for first item
-		ItemStack first = null;
-		for (ItemStack stack : input) {
-			if (GT_Utility.isStackValid(stack)) {
-				first = stack;
-				break;
+		Set<Recipe> recipesTotal = new HashSet<>();
+		for (FluidStack fluid : fluidInputs) {
+			if (GT_Utility.isFluidStackValid(fluid)) {
+				List<Recipe> recipesFluid = MAPPINGS.get(GT_Utility.fluidStackToInt(fluid));
+				if (recipesFluid != null) 
+					recipesTotal.addAll(recipesFluid);
 			}
 		}
 		
-		FluidStack fFluid = null;
-		for (FluidStack fluid : fluidInputs) {
-			if (GT_Utility.isFluidStackValid(fluid)) {
-				fFluid = fluid;
-				break;
+		for (ItemStack item : input) {
+			if (GT_Utility.isStackValid(item)) {
+				List<Recipe> recipesItems = MAPPINGS.get(GT_Utility.stackToInt(item));
+				List<Recipe> recipesItemsWild = MAPPINGS.get(GT_Utility.stackToWildcard(item));
+				if (recipesItems != null) 
+					recipesTotal.addAll(recipesItems);
+				if (recipesItemsWild != null) 
+					recipesTotal.addAll(recipesItemsWild);
 			}
 		}
 		
 		Recipe result = null;
-		if (GT_Utility.isFluidStackValid(fFluid)) {
-			List<Recipe> recipesFluid = MAPPINGS.get(GT_Utility.fluidStackToInt(fFluid));
-			if (recipesFluid != null) 
-				result = findRecipe(recipesFluid, input, fluidInputs);
+		if (!recipesTotal.isEmpty()) {
+			result = findRecipe(recipesTotal, input, fluidInputs);
 		}
-		
-		if (result == null && GT_Utility.isStackValid(first)) {
-			List<Recipe> recipes 		= MAPPINGS.get(GT_Utility.stackToInt(first));
-			List<Recipe> recipesWild 	= MAPPINGS.get(GT_Utility.stackToWildcard(first));
-			
-			if (recipes != null)
-				result = findRecipe(recipes, input, fluidInputs);
-			if (result == null && recipesWild != null)
-				result = findRecipe(recipesWild, input, fluidInputs);
-		}
-		
+
 		return result != null && result.enabled ? result : null;
 	}
 	
-	private Recipe findRecipe(List<Recipe> recipes, List<ItemStack> input, List<FluidStack> fluidInputs) {
+	private Recipe findRecipe(Collection<Recipe> recipes, List<ItemStack> input, List<FluidStack> fluidInputs) {
 		if (recipes != null) {
 			for (Recipe recipe : recipes) {
 				if (recipe.matches(false, input, fluidInputs)) {
