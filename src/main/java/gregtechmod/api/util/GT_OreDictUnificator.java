@@ -199,6 +199,18 @@ public class GT_OreDictUnificator {
 		return false;
 	}
 	
+	public static boolean isItemStackDye(Dyes dye, ItemStack aStack) {
+		if (GT_Utility.isStackValid(aStack)) {
+			for (ItemStack stack : OreDictionary.getOres(dye.toString())) {
+				if (stack.isItemEqual(aStack)) {
+					return true;
+				}
+			}
+		}
+		
+		return false;
+	}
+	
 	public static boolean isItemStackDye(ItemStack aStack) {
 		if (GT_Utility.isStackInvalid(aStack)) return false;
 		for (Dyes tDye : Dyes.values()) if (tDye != Dyes._NULL && isItemStackInstanceOf(aStack, tDye.toString())) return true;

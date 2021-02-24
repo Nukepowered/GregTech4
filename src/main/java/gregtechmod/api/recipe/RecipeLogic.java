@@ -39,11 +39,15 @@ public class RecipeLogic {
 	public RecipeLogic(RecipeMap<?> recipeMap, IRecipeWorkable machine) {
 		int inputs = machine.getInputItems().size();
 		int outputs = machine.getOutputItems().size();
-		
+		int fluidIn = machine.getFluidInputs().size();
+		int fluidOut = machine.getFluidOutputs().size();
+
 		if (recipeMap != null) {
-			if (inputs < recipeMap.minInputs || inputs > recipeMap.maxInputs || outputs < recipeMap.minOutputs || outputs > recipeMap.maxOutputs) {
-//				throw new IllegalArgumentException("Wrong recipe map was supplied to machine!\n" + "inputs: " + inputs + "; outputs=" + outputs + "\n" + recipeMap.toString());
-				
+			if (inputs < recipeMap.minInputs || inputs > recipeMap.maxInputs || outputs < recipeMap.minOutputs || outputs > recipeMap.maxOutputs
+					|| fluidIn < recipeMap.minFluidInputs || fluidIn > recipeMap.maxFluidInputs || fluidOut < recipeMap.minFluidOutputs || fluidOut > recipeMap.maxFluidOutputs) {
+				throw new IllegalArgumentException("Wrong recipe map was supplied to machine!\n"
+						+ "inputs: " + inputs + "; outputs: " + outputs + "\n"
+								+ "fluid inputs:" + fluidIn + "; fluid outputs: " + fluidOut + "\n" + recipeMap.toString());
 			}
 		} else {
 			GT_Log.log.warn("RecipeMap for machine with class name " + machine.getClass().getSimpleName() + " == null! Make sure you set up custom recipe provoder, otherwise machine will spam errors");
@@ -146,7 +150,7 @@ public class RecipeLogic {
 	}
 	
 	protected void startRecipe(Recipe recipe) {
-		if (getMachine().spaceForOutput(recipe)) {
+		if (getMachine().spaceForOutput(recipe) && getMachine().getBaseMetaTileEntity().decreaseStoredEnergyUnits(recipe.getEUtoStart(), false)) {
 			previousRecipe = recipe;
 			maxProgressTime = GT_Utility.isDebugItem(getMachine().getStackInSlot(batterySlot)) ? 1 : recipe.getDuration();
 			progressTime = 1;

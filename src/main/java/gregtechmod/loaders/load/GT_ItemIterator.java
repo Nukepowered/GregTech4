@@ -196,19 +196,19 @@ public class GT_ItemIterator implements Runnable {
 				} else if (tName.equals("tile.ArsMagica:ore_vinteum")) {
 					GT_OreDictUnificator.set(OrePrefixes.ore, Materials.Vinteum, new ItemStack(tItem, 1, 0));
 				} else if (tName.equals("item.ArsMagica:purified_vinteum")) {
-//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(256).input(new ItemStack(tItem, 1, 0)).buildAndRegister();
+					RecipeMaps.MAGIC_FUELS.factory().EUt(24).duration(11).input(new ItemStack(tItem, 1)).buildAndRegister();
 				} else if (tName.equals("item.meefSteak") || tName.equals("item.venisonCooked")) {
 					RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(5000).setShaped(true).inputs(GT_Items.Cell_Empty.get(1), new ItemStack(tItem, 16, 0)).output(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Methane, 1L)).buildAndRegister();
 				} else if (tName.equals("item.meefRaw") || tName.equals("item.venisonRaw")) {
 					RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(5000).setShaped(true).inputs(GT_Items.Cell_Empty.get(1), new ItemStack(tItem, 12, 0)).output(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Methane, 1L)).buildAndRegister();
 				} else if (tName.equals("item.fieryBlood")) {
-//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(2048).input(new ItemStack(tItem, 1, 0)).buildAndRegister();
+					RecipeMaps.MAGIC_FUELS.factory().EUt(24).duration(85).input(new ItemStack(tItem, 1)).buildAndRegister();
 				} else if (tName.equals("tile.TFRoots")) {
 					GT_ModHandler.addPulverisationRecipe(new ItemStack(tItem, 1, 0), new ItemStack(Items.stick, 2), new ItemStack(Items.stick, 1), 30);
 					GT_ModHandler.addSawmillRecipe(new ItemStack(tItem, 1, 0), new ItemStack(Items.stick, 4), new ItemStack(Items.stick, 2));
-//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(32).input(new ItemStack(tItem, 1, 1)).output(new ItemStack(Items.stick, 4)).buildAndRegister();
+					RecipeMaps.MAGIC_FUELS.factory().EUt(16).duration(2).input(new ItemStack(tItem, 1, 1)).output(new ItemStack(Items.stick, 4)).buildAndRegister();
 				} else if (tName.equals("item.liveRoot")) {
-//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(16).input(new ItemStack(tItem, 1, 0)).output(new ItemStack(Items.stick, 2)).buildAndRegister();
+					RecipeMaps.MAGIC_FUELS.factory().EUt(16).duration(1).input(new ItemStack(tItem, 1, 0)).output(new ItemStack(Items.stick, 2)).buildAndRegister();
 					GT_RecipeRegistrator.registerBasicReverseMaceratingAndSmelting(new ItemStack(tItem, 1, 0), Materials.LiveRoot, GregTech_API.MATERIAL_UNIT);
 				} else if (tName.equals("item.ironwoodIngot")) {
 					GT_OreDictUnificator.set(OrePrefixes.ingot, Materials.IronWood, new ItemStack(tItem, 1, 0));
@@ -249,26 +249,26 @@ public class GT_ItemIterator implements Runnable {
 				} else if (tName.equals("item.ItemThaumonomicon")) {
 					GT_OreDictUnificator.registerOre("bookThaumonomicon", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 				} else if (tName.equals("item.ItemEssence")) {
-//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(80).input(new ItemStack(tItem, 1, 7)).output(new ItemStack(tItem, 1, 0)).buildAndRegister(); // TODO generators dedicated factory
-//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(160).input(new ItemStack(tItem, 1, 10)).output(new ItemStack(tItem, 1, 0)).buildAndRegister();
-//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(120).input(new ItemStack(tItem, 1, 41)).output(new ItemStack(tItem, 1, 0)).buildAndRegister();
+					RecipeMaps.MAGIC_FUELS.factory().EUt(20).duration(4).input(new ItemStack(tItem, 1, 7)).output(new ItemStack(tItem, 1, 0)).buildAndRegister();
+					RecipeMaps.MAGIC_FUELS.factory().EUt(20).duration(8).input(new ItemStack(tItem, 1, 10)).output(new ItemStack(tItem, 1, 0)).buildAndRegister();
+					RecipeMaps.MAGIC_FUELS.factory().EUt(24).duration(5).input(new ItemStack(tItem, 1, 41)).output(new ItemStack(tItem, 1, 0)).buildAndRegister();
 				} else if (tName.equals("item.ItemWispEssence")) {
-//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(80).input(new ItemStack(tItem, 1, 7)).output(new ItemStack(tItem, 1, 0)).buildAndRegister();
-//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(160).input(new ItemStack(tItem, 1, 10)).output(new ItemStack(tItem, 1, 0)).buildAndRegister();
-//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(120).input(new ItemStack(tItem, 1, 41)).output(new ItemStack(tItem, 1, 0)).buildAndRegister();
+					RecipeMaps.MAGIC_FUELS.factory().EUt(20).duration(4).input(new ItemStack(tItem, 1, 7)).output(new ItemStack(tItem, 1, 0)).buildAndRegister();
+					RecipeMaps.MAGIC_FUELS.factory().EUt(20).duration(8).input(new ItemStack(tItem, 1, 10)).output(new ItemStack(tItem, 1, 0)).buildAndRegister();
+					RecipeMaps.MAGIC_FUELS.factory().EUt(24).duration(5).startEU(120).input(new ItemStack(tItem, 1, 41)).output(new ItemStack(tItem, 1, 0)).buildAndRegister();
 				} else if (tName.equals("item.ItemResource")) {
-//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(4).input(new ItemStack(tItem, 1, 4)).buildAndRegister();
+					RecipeMaps.MAGIC_FUELS.factory().EUt(4).duration(1).input(new ItemStack(tItem, 1, 4)).buildAndRegister();
 					GT_OreDictUnificator.set(OrePrefixes.ingot, Materials.Thaumium, new ItemStack(tItem, 1, 2));
 					GT_OreDictUnificator.set(OrePrefixes.gem, Materials.Mercury, new ItemStack(tItem, 1, 3));
 					GT_OreDictUnificator.set(OrePrefixes.gem, Materials.Amber, new ItemStack(tItem, 1, 6));
 					GT_OreDictUnificator.registerOre(OrePrefixes.gem, Materials.Mercury, new ItemStack(tItem, 1, 3));
 					GT_Mod.sThaumiumObtainable = true;
 				} else if (tName.equals("item.ItemShard")) {
-//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(160).input(new ItemStack(tItem, 1, 0)).buildAndRegister();
-//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(320).input(new ItemStack(tItem, 1, 1)).buildAndRegister();
-//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(160).input(new ItemStack(tItem, 1, 2)).buildAndRegister();
-//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(160).input(new ItemStack(tItem, 1, 3)).buildAndRegister();
-//					RecipeMaps.MAGIC_FUELS.factory().EUt(0).duration(0).startEU(240).input(new ItemStack(tItem, 1, 4)).buildAndRegister();
+					RecipeMaps.MAGIC_FUELS.factory().EUt(20).duration(8).input(new ItemStack(tItem, 1, 0)).buildAndRegister();
+					RecipeMaps.MAGIC_FUELS.factory().EUt(20).duration(16).input(new ItemStack(tItem, 1, 1)).buildAndRegister();
+					RecipeMaps.MAGIC_FUELS.factory().EUt(20).duration(8).input(new ItemStack(tItem, 1, 2)).buildAndRegister();
+					RecipeMaps.MAGIC_FUELS.factory().EUt(20).duration(8).input(new ItemStack(tItem, 1, 3)).buildAndRegister();
+					RecipeMaps.MAGIC_FUELS.factory().EUt(24).duration(10).input(new ItemStack(tItem, 1, 4)).buildAndRegister();
 				} else if (tName.equals("item.ligniteCoal")) {
 					GT_OreDictUnificator.set(OrePrefixes.gem, Materials.Lignite, new ItemStack(tItem, 1, 0));
 				} else if (tName.equals("item.charmOfLife1")) {

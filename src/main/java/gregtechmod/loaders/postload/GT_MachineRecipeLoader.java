@@ -4,9 +4,11 @@ import ic2.api.recipe.*;
 import net.minecraft.item.*;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
+
 import gregtechmod.api.util.*;
 import gregtechmod.common.recipe.RecipeEntry;
 import gregtechmod.common.recipe.RecipeMaps;
+
 import cpw.mods.fml.common.Loader;
 import gregtechmod.api.*;
 import net.minecraft.block.*;
@@ -22,7 +24,7 @@ public class GT_MachineRecipeLoader implements Runnable
         this.mAlloySmelterList = new MaterialStack[][] { { new MaterialStack(Materials.Tetrahedrite, 3L), new MaterialStack(Materials.Tin, 1L), new MaterialStack(Materials.Bronze, 3L) }, { new MaterialStack(Materials.Tetrahedrite, 3L), new MaterialStack(Materials.Zinc, 1L), new MaterialStack(Materials.Brass, 3L) }, { new MaterialStack(Materials.Copper, 3L), new MaterialStack(Materials.Tin, 1L), new MaterialStack(Materials.Bronze, 4L) }, { new MaterialStack(Materials.Copper, 3L), new MaterialStack(Materials.Zinc, 1L), new MaterialStack(Materials.Brass, 4L) }, { new MaterialStack(Materials.Copper, 1L), new MaterialStack(Materials.Nickel, 1L), new MaterialStack(Materials.Cupronickel, 2L) }, { new MaterialStack(Materials.Iron, 2L), new MaterialStack(Materials.Nickel, 1L), new MaterialStack(Materials.Invar, 3L) }, { new MaterialStack(Materials.Chrome, 1L), new MaterialStack(Materials.Nickel, 4L), new MaterialStack(Materials.Nichrome, 5L) }, { new MaterialStack(Materials.Tin, 9L), new MaterialStack(Materials.Antimony, 1L), new MaterialStack(Materials.SolderingAlloy, 10L) }, { new MaterialStack(Materials.Lead, 4L), new MaterialStack(Materials.Antimony, 1L), new MaterialStack(Materials.BatteryAlloy, 5L) }, { new MaterialStack(Materials.Gold, 1L), new MaterialStack(Materials.Silver, 1L), new MaterialStack(Materials.Electrum, 2L) }, { new MaterialStack(Materials.Magnesium, 1L), new MaterialStack(Materials.Aluminium, 2L), new MaterialStack(Materials.Magnalium, 3L) }, { new MaterialStack(Materials.Copper, 1L), new MaterialStack(Materials.Redstone, 4L), new MaterialStack(Materials.RedAlloy, 1L) }, { new MaterialStack(Materials.Silver, 1L), new MaterialStack(Materials.Nikolite, 4L), new MaterialStack(Materials.BlueAlloy, 1L) } };
     }
     
-    @Override
+	@Override
     public void run() {
     	
         GT_Log.log.info("GT_Mod: Adding non-OreDict Machine Recipes.");
@@ -504,7 +506,13 @@ public class GT_MachineRecipeLoader implements Runnable
         RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(250).input(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 2L)).outputs(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Ash, 1L), GT_Items.TE_Slag.get(1L, GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Ash, 1L))).buildAndRegister();
         RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(25000).setShaped(true).input(GT_Items.Cell_Empty.get(1)).input(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Glowstone, 16L)).outputs(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Redstone, 8L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Gold, 8L), GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Helium, 1L)).buildAndRegister();
         
-        // FIXME write printer recipes
+        RecipeMaps.PRINTER.factory().EUt(1).duration(200).setShaped(true).input(new ItemStack(Items.reeds)).output(new ItemStack(Items.paper)).buildAndRegister();
+        RecipeMaps.PRINTER.factory().EUt(1).duration(200).setShaped(true).input("dustWood").output(new ItemStack(Items.paper)).buildAndRegister();
+        RecipeMaps.PRINTER.factory().EUt(2).duration(400).setShaped(true).input(new ItemStack(Items.paper, 3)).input(new ItemStack(Items.leather)).output(new ItemStack(Items.book)).buildAndRegister();
+        RecipeMaps.PRINTER.factory().EUt(2).duration(400).setShaped(true).input(new ItemStack(Items.paper, 8)).input(new ItemStack(Items.compass)).output(new ItemStack(Items.map)).buildAndRegister();
+        if (Loader.isModLoaded("arsmagica2")) {
+        	RecipeMaps.PRINTER.factory().EUt(2).duration(400).setShaped(true).input("paper", 8).input("stickWood", 2).output(GT_OreDictUnificator.getFirstOre("paperArsSpellParchment", 1)).buildAndRegister();
+        }
         
         for (final MaterialStack[] tMats : this.mAlloySmelterList) {
             final ItemStack tDust1 = GT_OreDictUnificator.get(OrePrefixes.dust, tMats[0].mMaterial, tMats[0].mAmount);
