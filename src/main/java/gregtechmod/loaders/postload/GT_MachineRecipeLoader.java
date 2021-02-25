@@ -4,7 +4,7 @@ import ic2.api.recipe.*;
 import net.minecraft.item.*;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-
+import net.minecraftforge.oredict.OreDictionary;
 import gregtechmod.api.util.*;
 import gregtechmod.common.recipe.RecipeEntry;
 import gregtechmod.common.recipe.RecipeMaps;
@@ -114,6 +114,21 @@ public class GT_MachineRecipeLoader implements Runnable
 //        RecipeMaps.BLAST_FURNANCE.factory().minTemperature(1500).EUt(120).duration(320).input(OrePrefixes.gem, Materials.Galena, 2).outputs(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Silver, 1L), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Lead, 1L)).buildAndRegister();
         RecipeMaps.BLAST_FURNANCE.factory().minTemperature(1000).EUt(120).duration(400).input(OrePrefixes.dust, Materials.Magnetite, 2).outputs(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Iron, 1L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 2)).buildAndRegister();
 //        RecipeMaps.BLAST_FURNANCE.factory().minTemperature(1000).EUt(120).duration(320).input(OrePrefixes.gem, Materials.Magnetite, 2).outputs(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Iron, 1L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Ash, 2)).buildAndRegister();
+        
+        RecipeMaps.BRONZE_BLAST_FURNANCE.factory().EUt(1).duration(7200).input(OrePrefixes.ingot, Materials.Iron).input("gemCoal", 4).outputs(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 1), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 4)).buildAndRegister();
+        RecipeMaps.BRONZE_BLAST_FURNANCE.factory().EUt(1).duration(7200).input(OrePrefixes.dust, Materials.Iron).input("gemCoal", 4).outputs(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 1), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 4)).buildAndRegister();
+        RecipeMaps.BRONZE_BLAST_FURNANCE.factory().EUt(1).duration(64800).input(OrePrefixes.ingot, Materials.Iron, 9).input(OrePrefixes.block, Materials.Coal, 4).outputs(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 9), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 36)).buildAndRegister();
+    	RecipeMaps.BRONZE_BLAST_FURNANCE.factory().EUt(1).duration(64800).input(OrePrefixes.dust, Materials.Iron, 9).input(OrePrefixes.block, Materials.Coal, 4).outputs(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 9), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 36)).buildAndRegister();
+    	RecipeMaps.BRONZE_BLAST_FURNANCE.factory().EUt(1).duration(3600).input(OrePrefixes.dust, Materials.Steel).input("gemCoal", 2).outputs(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 1), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 2)).buildAndRegister();
+    	RecipeMaps.BRONZE_BLAST_FURNANCE.factory().EUt(1).duration(32400).input(OrePrefixes.dust, Materials.Steel, 9).input(OrePrefixes.block, Materials.Coal, 2).outputs(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 9), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 18)).buildAndRegister();
+    	RecipeMaps.BRONZE_BLAST_FURNANCE.factory().EUt(1).duration(64800).input(OrePrefixes.block, Materials.Iron).input("gemCoal", 36).outputs(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 9), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 36)).buildAndRegister();
+    	RecipeMaps.BRONZE_BLAST_FURNANCE.factory().EUt(1).duration(64800).input(OrePrefixes.block, Materials.Iron).input(OrePrefixes.block, Materials.Coal, 4).outputs(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 9), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 36)).buildAndRegister();
+        if (OreDictionary.doesOreNameExist("fuelCoke")) {
+        	RecipeMaps.BRONZE_BLAST_FURNANCE.factory().EUt(1).duration(4800).input(OrePrefixes.ingot, Materials.Iron).input("fuelCoke", 2).outputs(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 1), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 4)).buildAndRegister();
+        	RecipeMaps.BRONZE_BLAST_FURNANCE.factory().EUt(1).duration(4800).input(OrePrefixes.dust, Materials.Iron).input("fuelCoke", 2).outputs(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 1), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 4)).buildAndRegister();
+        	RecipeMaps.BRONZE_BLAST_FURNANCE.factory().EUt(1).duration(2400).input(OrePrefixes.dust, Materials.Steel).input("fuelCoke").outputs(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 1), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 2)).buildAndRegister();
+        	RecipeMaps.BRONZE_BLAST_FURNANCE.factory().EUt(1).duration(43200).input(OrePrefixes.block, Materials.Iron).input("fuelCoke", 18).outputs(GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Steel, 9), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 36)).buildAndRegister();
+        }
         
         RecipeMaps.CANINNING.factory().EUt(2).duration( 100).inputs(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Mercury			,  1), GT_Items.Battery_Hull_LV.get(1)).outputs(GT_Items.Battery_SU_LV_Mercury		.getWithCharge(1, Integer.MAX_VALUE), GT_Items.Cell_Empty.get( 1)).buildAndRegister();
         RecipeMaps.CANINNING.factory().EUt(2).duration( 400).inputs(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.SulfuricAcid		,  4), GT_Items.Battery_Hull_MV.get(1)).outputs(GT_Items.Battery_SU_MV_SulfuricAcid	.getWithCharge(1, Integer.MAX_VALUE), GT_Items.Cell_Empty.get( 4)).buildAndRegister();

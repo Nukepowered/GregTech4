@@ -1421,6 +1421,7 @@ nei.bender.title=Plate Bending Machine
 nei.bender.info.1=Circuits optional
 nei.bender.info.2=but recommended!
 nei.blast_furnance.title=Industrial Blast Furnace
+nei.bronze_blast_furnance.title=Bronze Blast Furnace
 nei.blast_furnance.info=Heat Capacity: %sK
 nei.canner.title=Automatic Canning Machine
 nei.centrifuge.title=Industrial Centrifuge
