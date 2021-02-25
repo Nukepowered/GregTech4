@@ -1,30 +1,31 @@
 package gregtechmod.mistaqur.nei;
 
-import gregtechmod.api.GregTech_API;
-import gregtechmod.api.recipe.Recipe;
-import gregtechmod.api.recipe.RecipeMap;
-import gregtechmod.api.util.GT_Log;
-import gregtechmod.api.util.GT_Utility;
-import gregtechmod.common.gui.GT_GUIContainer_BlastFurnace;
-import gregtechmod.common.recipe.RecipeMaps;
-
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeMap;
+import gregtechmod.api.util.GT_Log;
+import gregtechmod.api.util.GT_Utility;
+import gregtechmod.common.gui.GT_GUIContainer_BronzeBlastFurnace;
+import gregtechmod.common.recipe.RecipeMaps;
+
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.StatCollector;
 
-public class BlastRecipeHandler extends GT_RecipeHandler {
-	
-	public class CachedBlastRecipe extends CachedGT_Recipe {
-		public int minTemp;
+/**
+ * @author TheDarkDnKTv
+ *
+ */
+public class BronzeBlastRecipeHandler extends BlastRecipeHandler {
 
-		public CachedBlastRecipe(Recipe aRecipe) {
-			super(aRecipe);
-			minTemp = ((Integer)aRecipe.getMeta("minTemp")).intValue();
+	
+	public class CachedBronzeBlastRecipe extends CachedGT_Recipe {
+		public CachedBronzeBlastRecipe(Recipe recipe) {
+			super(recipe);
 		}
 		
 		@Override
@@ -45,7 +46,7 @@ public class BlastRecipeHandler extends GT_RecipeHandler {
 		
 		ArrayList<Class<? extends GuiContainer>> guis = new ArrayList<Class<? extends GuiContainer>>();
 		ArrayList<RecipeTransferRect> transferRects2 = new ArrayList<RecipeTransferRect>();
-		guis.add(GT_GUIContainer_BlastFurnace.class);
+		guis.add(GT_GUIContainer_BronzeBlastFurnace.class);
 		transferRects2.add(new RecipeTransferRect(new Rectangle(56-5, 26-11, 24, 15), getRecipeId(), new Object[0]));
 		RecipeTransferRectHandler.registerRectsToGuis(guis, transferRects2);
 		} catch(Throwable e) {GT_Log.log.catching(e);}
@@ -53,40 +54,32 @@ public class BlastRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return StatCollector.translateToLocal("nei.blast_furnance.title");
+		return StatCollector.translateToLocal("nei.bronze_blast_furnance.title");
 	}
 	
 	@Override
 	public String getRecipeId() {
-		return "gregtech.Blast";
-	}
-	
-	@Override
-	public String getGuiTexture() {
-		return GregTech_API.GUI_PATH + "NEIBlast.png";
+		return "gregtech.BronzeBlast";
 	}
 	
 	@Override
 	public String getOverlayIdentifier() {
-		return "gregtech.Blast";
+		return "gregtech.BronzeBlast";
 	}
 	
 	@Override
 	public RecipeMap<?> getRecipeList() {
-		return RecipeMaps.BLAST_FURNANCE;
+		return RecipeMaps.BRONZE_BLAST_FURNANCE;
 	}
 	
 	@Override
 	public CachedGT_Recipe getRecipe(Recipe irecipe) {
-		return new CachedBlastRecipe(irecipe);
+		return new CachedBronzeBlastRecipe(irecipe);
 	}
 	
 	@Override
 	public void drawExtras(int recipe) {
-		Integer time = ((CachedBlastRecipe)arecipes.get(recipe)).mDuration;
-		drawText(30, 80, I18n.format("nei.extras.eu_total", GT_Utility.parseNumberToString(time * ((CachedBlastRecipe)arecipes.get(recipe)).mEUt)), 0xFF000000, false);
+		Integer time = ((CachedBronzeBlastRecipe)arecipes.get(recipe)).mDuration;
 		drawText(30, 90, I18n.format("nei.extras.time", GT_Utility.parseNumberToString(time * 1.0D / 20.0D)), 0xFF000000, false);
-		drawText(30,100, I18n.format("nei.extras.eut", GT_Utility.parseNumberToString(((CachedBlastRecipe)arecipes.get(recipe)).mEUt)), 0xFF000000, false);
-		drawText(30,110, I18n.format("nei.blast_furnance.info", GT_Utility.parseNumberToString(((CachedBlastRecipe)arecipes.get(recipe)).minTemp)), 0xFF000000, false);
 	}
 }

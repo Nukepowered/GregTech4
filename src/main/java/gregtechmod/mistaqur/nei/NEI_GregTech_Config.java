@@ -18,6 +18,7 @@ public class NEI_GregTech_Config implements IConfigureNEI {
 		new VacuumFreezerRecipeHandler();
 		new GrinderRecipeHandler();
 		new BlastRecipeHandler();
+		new BronzeBlastRecipeHandler();
 		new SawmillRecipeHandler();
 		new ImplosionRecipeHandler();
 		new FusionRecipeHandler();
@@ -60,7 +61,7 @@ public class NEI_GregTech_Config implements IConfigureNEI {
 	 */
 	@Override
 	public String getVersion() {
-		return "(3.02c)";
+		return "(3.08)";
 	}
 
 }
