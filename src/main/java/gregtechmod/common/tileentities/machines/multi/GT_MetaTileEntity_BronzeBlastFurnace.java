@@ -61,6 +61,7 @@ public class GT_MetaTileEntity_BronzeBlastFurnace extends BaseMultiWorkable {
 	    getBaseMetaTileEntity().openGUI(aPlayer, 170);
 	}
 	
+	@Override
     protected boolean checkMachine() {
     	int xDir = ForgeDirection.getOrientation(getBaseMetaTileEntity().getBackFacing()).offsetX, zDir = ForgeDirection.getOrientation(getBaseMetaTileEntity().getBackFacing()).offsetZ;
     	for (int i = -1; i < 2; i++) for (int j = -1; j < 3; j++) for (int k = -1; k < 2; k++) if (xDir+i != 0 || j != 0 || zDir+k != 0) {

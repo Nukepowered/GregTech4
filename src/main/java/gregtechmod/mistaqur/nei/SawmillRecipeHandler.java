@@ -61,7 +61,7 @@ public class SawmillRecipeHandler extends GT_RecipeHandler {
 		return new CachedGT_Recipe(irecipe) {
 			@Override
 			protected Pair<Integer, Integer> getInputAligment(int itemIdx) {
-				return Pair.of(34, 16 - sOffsetY + (itemIdx * 18));
+				return Pair.of(29, 16 - sOffsetY + (itemIdx * 18));
 			}
 			
 			@Override

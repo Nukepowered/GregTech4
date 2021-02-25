@@ -87,7 +87,7 @@ public class RecipeLogic {
 					} else {
 						previousRecipe = null;
 						wasNoEnergy = true;
-						base.setActive(false);
+						triggerMachine(false);
 					} 
 				}
 			}

@@ -58,7 +58,7 @@ public class GT_ModHandler {
 	 * Returns a Liquid Stack with given amount of Water.
 	 */
 	public static FluidStack getWater(long aAmount) {
-		return FluidRegistry.getFluidStack("water", (int)aAmount);
+		return new FluidStack(FluidRegistry.WATER, (int) aAmount);
 	}
 	
 	/**
@@ -73,7 +73,7 @@ public class GT_ModHandler {
 	 * Returns a Liquid Stack with given amount of Lava.
 	 */
 	public static FluidStack getLava(long aAmount) {
-		return FluidRegistry.getFluidStack("lava", (int)aAmount);
+		return new FluidStack(FluidRegistry.LAVA, (int) aAmount);
 	}
 	
 	/**
@@ -529,7 +529,7 @@ public class GT_ModHandler {
 	    try {
 	    	cofh.thermalexpansion.api.crafting.CraftingHandlers.sawmill.addRecipe(aRF, aInput1, outputs[0], outputs.length > 1 ? outputs[1] : null, aChance, true);
 		} catch(Throwable e) {/*Do nothing*/}
-	    RecipeMaps.SAWMILL.factory().EUt(30).duration(200*aInput1.stackSize).setShaped(true).inputs(aInput1, GT_Items.Cell_Water.get(1)).outputs(outputs).output(GT_Items.Cell_Empty.get(1)).buildAndRegister();
+	    RecipeMaps.SAWMILL.factory().EUt(30).duration(200*aInput1.stackSize).setShaped(true).inputs(aInput1).input(getWater(1000)).outputs(outputs).buildAndRegister();
 		return true;
 	}
 	

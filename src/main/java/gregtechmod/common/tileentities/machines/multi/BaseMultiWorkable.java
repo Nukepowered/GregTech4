@@ -63,10 +63,16 @@ public abstract class BaseMultiWorkable extends MetaTileEntity implements IRecip
     
     @Override
     public void onPostTick() {
-    	if (getBaseMetaTileEntity().isServerSide() && needCheckStruct) {
-    		structComplete = checkMachine();
-    		needCheckStruct = false;
-    		getBaseMetaTileEntity().setActive(structComplete);
+    	if (getBaseMetaTileEntity().isServerSide()) {
+    		if (needCheckStruct) {
+    			structComplete = checkMachine();
+        		needCheckStruct = false;
+        		getBaseMetaTileEntity().setActive(structComplete);
+    		}
+    		
+    		if (structComplete) {
+    			recipeLogic.update();
+    		}
     	}
     }
     
@@ -91,13 +97,15 @@ public abstract class BaseMultiWorkable extends MetaTileEntity implements IRecip
 	public void startProcess() {}
 
 	@Override
-	public void endProcess() {}
+	public void endProcess() {
+		getBaseMetaTileEntity().setErrorDisplayID(0);
+	}
 
 	@Override
 	public void stutterProcess() {
 		if (GregTech_API.sConstantEnergy) {
 			int val = (int) (recipeLogic.getMaxProgressTime() * 0.1D);
-			
+			getBaseMetaTileEntity().setErrorDisplayID(1);
 			if (recipeLogic.getProgressTime() > val) 
 				recipeLogic.increaseProgressTime(-val);
 		}

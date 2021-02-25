@@ -91,6 +91,7 @@ public class GT_MetaTileEntity_BlastFurnace extends BaseMultiWorkable {
 	    getBaseMetaTileEntity().openGUI(aPlayer, 113);
 	}
 	
+	@Override
     protected boolean checkMachine() {
     	int xDir = ForgeDirection.getOrientation(getBaseMetaTileEntity().getFrontFacing()).offsetX*2, yDir = ForgeDirection.getOrientation(getBaseMetaTileEntity().getFrontFacing()).offsetY*2, zDir = ForgeDirection.getOrientation(getBaseMetaTileEntity().getFrontFacing()).offsetZ*2;
     	mHeatCapacity = mHeatingCoilTier * 500;
@@ -121,9 +122,9 @@ public class GT_MetaTileEntity_BlastFurnace extends BaseMultiWorkable {
     public void onPostTick() {
     	super.onPostTick();
 	    if (getBaseMetaTileEntity().isServerSide()) {
-	    	if (structComplete) {
-	    		recipeLogic.update();
-	    	} else mHeatCapacity = 0;
+	    	if (!structComplete) {
+	    		mHeatCapacity = 0;
+	    	}  
 		}
     }
     

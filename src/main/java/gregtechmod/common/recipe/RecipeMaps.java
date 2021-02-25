@@ -25,7 +25,7 @@ public class RecipeMaps {
 	public static final RecipeMap<BlastFurnanceRecipeFactory> 	BLAST_FURNANCE			= new RecipeMap<>(1, 2, 1, 2, new BlastFurnanceRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory> 			BRONZE_BLAST_FURNANCE	= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory()); 
 	public static final RecipeMap<SimpleRecipeFactory> 			IMPLOSION_COMPRESSOR= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory()); // 
-	public static final RecipeMap<SimpleRecipeFactory> 			SAWMILL				= new RecipeMap<>(1, 2, 1, 3, new SimpleRecipeFactory()); //
+	public static final RecipeMap<SimpleRecipeFactory> 			SAWMILL				= new RecipeMap<>(1, 2, 1, 3, 0, 1, 0, 0, new SimpleRecipeFactory()); //
 	public static final RecipeMap<SimpleRecipeFactory> 			VACUUM_FREEZER		= new RecipeMap<>(1, 1, 1, 1, new SimpleRecipeFactory()); // -----------------
 	public static final RecipeMap<SimpleRecipeFactory> 			CHEMICAL			= new RecipeMap<>(1, 2, 1, 1, new SimpleRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory> 			DISTILLATION		= new RecipeMap<>(1, 2, 1, 4, new SimpleRecipeFactory());
