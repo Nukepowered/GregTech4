@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.IntConsumer;
+import java.util.function.Predicate;
 
 import gregtechmod.api.util.GT_RecipeException;
 import gregtechmod.api.util.GT_Utility;
@@ -63,9 +64,47 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 		return factory;
 	}
 	
+	public Recipe findRecipe(List<ItemStack> input, List<FluidStack> fluidInputs, Predicate<Recipe> metaChecker) {
+		Set<Recipe> recipesTotal = this.getMappedRecipes(input, fluidInputs);
+		Recipe result = null;
+		if (!recipesTotal.isEmpty())
+			result = findRecipe(recipesTotal, input, fluidInputs, metaChecker);
+		return result != null && result.enabled ? result : null;
+	}
+	
 	public Recipe findRecipe(List<ItemStack> input, List<FluidStack> fluidInputs) {
-		if (input.size() < minInputs) 
-			throw new IllegalArgumentException("Inputs of machine can not be smaller than minimum RecipeMap inputs amount");
+		Set<Recipe> recipesTotal = this.getMappedRecipes(input, fluidInputs);
+		Recipe result = null;
+		if (!recipesTotal.isEmpty())
+			result = findRecipe(recipesTotal, input, fluidInputs);
+		return result != null && result.enabled ? result : null;
+	}
+	
+	private Recipe findRecipe(Collection<Recipe> recipes, List<ItemStack> input, List<FluidStack> fluidInputs) {
+		if (recipes != null) {
+			for (Recipe recipe : recipes) {
+				if (recipe.matches(false, input, fluidInputs)) {
+					return recipe;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	private Recipe findRecipe(Collection<Recipe> recipes, List<ItemStack> input, List<FluidStack> fluidInputs, Predicate<Recipe> metaChecker) {
+		if (recipes != null) {
+			for (Recipe recipe : recipes) {
+				if (metaChecker.test(recipe) && recipe.matches(false, input, fluidInputs)) {
+					return recipe;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	private Set<Recipe> getMappedRecipes(List<ItemStack> input, List<FluidStack> fluidInputs) {
 		Set<Recipe> recipesTotal = new HashSet<>();
 		for (FluidStack fluid : fluidInputs) {
 			if (GT_Utility.isFluidStackValid(fluid)) {
@@ -85,25 +124,8 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 					recipesTotal.addAll(recipesItemsWild);
 			}
 		}
-		
-		Recipe result = null;
-		if (!recipesTotal.isEmpty()) {
-			result = findRecipe(recipesTotal, input, fluidInputs);
-		}
 
-		return result != null && result.enabled ? result : null;
-	}
-	
-	private Recipe findRecipe(Collection<Recipe> recipes, List<ItemStack> input, List<FluidStack> fluidInputs) {
-		if (recipes != null) {
-			for (Recipe recipe : recipes) {
-				if (recipe.matches(false, input, fluidInputs)) {
-					return recipe;
-				}
-			}
-		}
-		
-		return null;
+		return recipesTotal;
 	}
 	
 	/**

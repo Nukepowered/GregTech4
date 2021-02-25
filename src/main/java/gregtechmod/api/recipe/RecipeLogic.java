@@ -4,6 +4,7 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 import java.util.Random;
 import java.util.function.IntUnaryOperator;
+import java.util.function.Predicate;
 
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.interfaces.IRecipeWorkable;
@@ -27,6 +28,7 @@ public class RecipeLogic {
 	public int batterySlot 		= 5;
 	/** Custom fucntion called every recipe progress time update, if you want to speed up machine because of some factor, just increase the value up */
 	protected IntUnaryOperator progressTimeManipulator = i -> i;
+	protected Predicate<Recipe> metadataVerifier = recipe -> true;
 	protected Recipe previousRecipe;
 	protected int maxProgressTime;
 	protected int progressTime;
@@ -98,6 +100,10 @@ public class RecipeLogic {
 		progressTimeManipulator = applier;
 	}
 	
+	public void setMetadataVerify(Predicate<Recipe> verifier) {
+		metadataVerifier = verifier;
+	}
+	
 	protected boolean updateRecipeProgress() {
 		if (getMachine().getBaseMetaTileEntity().decreaseStoredEnergyUnits(EUt * (int)Math.pow(4, overclockersCount), false)) {
 			if ((progressTime += progressTimeManipulator.applyAsInt((int)Math.pow(2, overclockersCount))) >= maxProgressTime) {
@@ -126,7 +132,7 @@ public class RecipeLogic {
 					startRecipe(previousRecipe);
 				} else {
 					previousRecipe = null;
-					getMachine().getBaseMetaTileEntity().setActive(false);
+					triggerMachine(false);
 				}
 			} else {
 				// find new recipe
@@ -138,11 +144,11 @@ public class RecipeLogic {
 	}
 	
 	protected Recipe findRecipe() {
-		return recipeMap.findRecipe(getMachine().getInputItems(), getMachine().getFluidInputs());
+		return recipeMap.findRecipe(getMachine().getInputItems(), getMachine().getFluidInputs(), metadataVerifier);
 	}
 	
 	protected boolean match(Recipe recipe) {
-		return recipe.matches(false, getMachine().getInputItems(), getMachine().getFluidInputs());
+		return metadataVerifier.test(recipe) && recipe.matches(false, getMachine().getInputItems(), getMachine().getFluidInputs());
 	}
 	
 	protected boolean consumeInputs(Recipe recipe) {
@@ -156,7 +162,7 @@ public class RecipeLogic {
 			progressTime = 1;
 			EUt = recipe.getEUt();
 			if (consumeInputs(recipe)) {
-				getMachine().getBaseMetaTileEntity().setActive(true);
+				triggerMachine(true);
 				getMachine().startProcess();
 			} else {
 				GT_Log.log.catching(new IllegalStateException("Error state detected! RecipeMap passed recipe, but it's not matching! Report about this!!!"));
@@ -167,7 +173,7 @@ public class RecipeLogic {
 			}
 			
 		} else {
-			getMachine().getBaseMetaTileEntity().setActive(false);
+			triggerMachine(false);
 		}
 	}
 	
@@ -207,6 +213,10 @@ public class RecipeLogic {
 		
 		stuttering = false;
 		getMachine().endProcess();
+	}
+	
+	protected void triggerMachine(boolean value) {
+		getMachine().getBaseMetaTileEntity().setActive(value);
 	}
 	
 	protected boolean isInputNonEmpty() {

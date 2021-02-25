@@ -34,7 +34,8 @@ public class GT_GUIContainer_BlastFurnace extends GT_GUIContainerMetaTile_Machin
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
         
         if (mContainer != null) {
-        	int tScale = ((GT_Container_BlastFurnace)mContainer).mProgressScale;
+        	GT_Container_BlastFurnace cont = (GT_Container_BlastFurnace) mContainer;
+        	int tScale = Math.max(0, Math.min(20, (cont.mProgressTime>0?1:0) + (cont.mProgressTime * 20) / (cont.mMaxProgressTime<1?1:cont.mMaxProgressTime)));
         	if (mContainer.mProgressTime>0) drawTexturedModalRect(x + 58, y + 28, 176, 0, tScale, 11);
         }
     }

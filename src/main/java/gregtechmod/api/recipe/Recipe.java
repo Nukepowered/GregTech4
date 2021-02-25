@@ -78,7 +78,7 @@ public class Recipe {
 	 * @param input collection of input stacks even nulls
 	 * @return true if recipe matches for machine <b>input</b>
 	 */
-	public boolean matches(boolean decrease, List<ItemStack> input, List<FluidStack> fluidInputs) { // TODO fluid recipes!
+	public boolean matches(boolean decrease, List<ItemStack> input, List<FluidStack> fluidInputs) {
 		assert input != null && fluidInputs != null : "Item/Fluid input can not be null!";
 		assert input.isEmpty() : "Input can not be empty!";
 		assert input.size() >= itemInputs.size() : "Can not be less inputs of machine than recipe has!";

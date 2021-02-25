@@ -2,11 +2,15 @@ package gregtechmod.api.util;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.Dyes;
+import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -191,12 +195,21 @@ public class GT_OreDictUnificator {
 		return sItemhash2NameMap.get(GT_Utility.stackToInt(aStack));
 	}
 	
-	public static boolean isItemStackInstanceOf(ItemStack aStack, Object aName) {
+	public static boolean isItemStackInstanceOf(ItemStack aStack, OrePrefixes prefix, Materials material) {
+		if (prefix == null || material == null) return false;
+		return isItemStackInstanceOf(aStack, prefix.get(material));
+	}
+	
+	public static boolean isItemStackInstanceOf(ItemStack aStack, Object aName) { // TODO rework all this class
 		if (GT_Utility.isStringInvalid(aName) || GT_Utility.isStackInvalid(aStack)) return false;
-		for (ItemStack tOreStack : getOres(aName.toString())) {
-			if (GT_Utility.areStacksEqual(tOreStack, aStack, !tOreStack.hasTagCompound())) return true;
-		}
-		return false;
+//		for (ItemStack tOreStack : getOres(aName.toString())) {
+//			if (GT_Utility.areStacksEqual(tOreStack, aStack, !tOreStack.hasTagCompound())) return true;
+//		}
+		
+		List<String> names = Arrays.stream(OreDictionary.getOreIDs(aStack))
+				.mapToObj(val -> OreDictionary.getOreName(val))
+				.collect(Collectors.toList());
+		return names.contains(aName.toString());
 	}
 	
 	public static boolean isItemStackDye(Dyes dye, ItemStack aStack) {

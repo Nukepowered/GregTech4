@@ -1,6 +1,10 @@
 package gregtechmod.common.recipe;
 
 import java.util.List;
+import java.util.Objects;
+
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
@@ -36,8 +40,7 @@ public class UnifierRecipeEntry implements Ingredient {
 
 	@Override
 	public boolean match(ItemStack input) {
-//		GT_OreDictUnificator. // FIXME Fix oredict unificator
-		return false;
+		return GT_OreDictUnificator.isItemStackInstanceOf(input, prefix, material);
 	}
 
 	@Override
@@ -55,5 +58,26 @@ public class UnifierRecipeEntry implements Ingredient {
 	@Override
 	public boolean isWildcard() {
 		return false;
+	}
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(prefix, material, count);
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof UnifierRecipeEntry) {
+			UnifierRecipeEntry r = (UnifierRecipeEntry) obj;
+			return r.prefix == prefix && r.material == material && r.count == count;
+		}
+		
+		return false;
+	}
+	
+	@Override
+	public String toString() {
+		ToStringBuilder.setDefaultStyle(ToStringStyle.SHORT_PREFIX_STYLE);
+		return new ToStringBuilder(this).build();
 	}
 }
