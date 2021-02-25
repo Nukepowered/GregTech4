@@ -34,8 +34,10 @@ public class GT_Container_BlastFurnace extends GT_ContainerMetaTile_Machine {
         super.detectAndSendChanges();
     	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
     	mMachine = ((GT_MetaTileEntity_BlastFurnace)mTileEntity.getMetaTileEntity()).mMachine;
-    	mProgress = ((GT_MetaTileEntity_BlastFurnace)mTileEntity.getMetaTileEntity()).getProgresstime();
-    	mMaxProgress = ((GT_MetaTileEntity_BlastFurnace)mTileEntity.getMetaTileEntity()).maxProgresstime();
+//    	mProgress = ((GT_MetaTileEntity_BlastFurnace)mTileEntity.getMetaTileEntity()).getProgresstime();
+//    	mMaxProgress = ((GT_MetaTileEntity_BlastFurnace)mTileEntity.getMetaTileEntity()).maxProgresstime();
+    	mProgress = 0;
+    	mMaxProgress = 0;
     	mProgressScale = Math.max(0, Math.min(20, (mProgress>0?1:0) + (mProgress * 20) / (mMaxProgress<1?1:mMaxProgress)));
     	mHeatCapacity = ((GT_MetaTileEntity_BlastFurnace)mTileEntity.getMetaTileEntity()).mHeatCapacity;
     	

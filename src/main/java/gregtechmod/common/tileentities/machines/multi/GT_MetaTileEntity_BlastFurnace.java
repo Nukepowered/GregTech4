@@ -44,8 +44,6 @@ public class GT_MetaTileEntity_BlastFurnace extends MetaTileEntity {
     @Override public int maxSteamStore()							{return maxEUStore();}
 	@Override public int getInvSize()								{return 4;}
 	@Override public boolean isAccessAllowed(EntityPlayer aPlayer)	{return true;}
-	@Override public int getProgresstime()							{return mProgresstime;}
-	@Override public int maxProgresstime()							{return mMaxProgresstime;}
 	@Override public int increaseProgress(int aProgress)			{mProgresstime += aProgress; return mMaxProgresstime-mProgresstime;}
     
 	@Override

@@ -20,11 +20,11 @@ import net.minecraft.util.StatCollector;
 public class BlastRecipeHandler extends GT_RecipeHandler {
 	
 	public class CachedBlastRecipe extends CachedGT_Recipe {
-		public int mStartEU;
+		public int minTemp;
 
 		public CachedBlastRecipe(Recipe aRecipe) {
 			super(aRecipe);
-			mStartEU = aRecipe.getEUtoStart();
+			minTemp = ((Integer)aRecipe.getMeta("minTemp")).intValue();
 		}
 		
 		@Override
@@ -87,7 +87,7 @@ public class BlastRecipeHandler extends GT_RecipeHandler {
 		drawText(30, 80, I18n.format("nei.extras.eu_total", GT_Utility.parseNumberToString(time * ((CachedBlastRecipe)arecipes.get(recipe)).mEUt)), 0xFF000000, false);
 		drawText(30, 90, I18n.format("nei.extras.time", GT_Utility.parseNumberToString(time * 1.0D / 20.0D)), 0xFF000000, false);
 		drawText(30,100, I18n.format("nei.extras.eut", GT_Utility.parseNumberToString(((CachedBlastRecipe)arecipes.get(recipe)).mEUt)), 0xFF000000, false);
-		drawText(30,110, I18n.format("nei.blast_furnance.info", GT_Utility.parseNumberToString(((CachedBlastRecipe)arecipes.get(recipe)).mStartEU)), 0xFF000000, false);
+		drawText(30,110, I18n.format("nei.blast_furnance.info", GT_Utility.parseNumberToString(((CachedBlastRecipe)arecipes.get(recipe)).minTemp)), 0xFF000000, false);
 	}
 
 }

@@ -3,6 +3,8 @@ package gregtechmod.api.recipe;
 import java.util.ArrayList;
 import java.util.List;
 
+import gregtechmod.api.enums.Materials;
+import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.util.GT_Utility;
 
 import net.minecraft.item.ItemStack;
@@ -103,6 +105,13 @@ public abstract class RecipeFactory<F extends RecipeFactory<F>> {
 	public abstract RecipeFactory<F> input(ItemStack stack, boolean checkDamage, boolean checkNBT);
 	
 	public abstract RecipeFactory<F> inputs(ItemStack...stacks);
+	
+	public abstract RecipeFactory<F> input(OrePrefixes prefix, Materials material, int count);
+	
+	public RecipeFactory<F> input(OrePrefixes prefix, Materials material) {
+		this.input(prefix, material, 1);
+		return this;
+	}
 	
 	public RecipeFactory<F> input(String oreDict) {
 		return this.input(oreDict, 1);

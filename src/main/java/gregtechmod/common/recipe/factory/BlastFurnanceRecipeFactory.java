@@ -13,32 +13,47 @@ import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_RecipeException;
 import gregtechmod.common.recipe.ChancedStack;
 import gregtechmod.common.recipe.RecipeEntry;
-import gregtechmod.common.recipe.RecipeEntry.Match;
 import gregtechmod.common.recipe.UnifierRecipeEntry;
+import gregtechmod.common.recipe.RecipeEntry.Match;
 import net.minecraft.item.ItemStack;
 
 /**
  * @author TheDarkDnKTv
  *
  */
-public class GeneratorRecipeFactory extends RecipeFactory<GeneratorRecipeFactory> {
+public class BlastFurnanceRecipeFactory extends RecipeFactory<BlastFurnanceRecipeFactory> {
+	
+	private int minTemp = -1;
+	
+	public BlastFurnanceRecipeFactory() {}
 
-	public GeneratorRecipeFactory() {
-		super();
-	}
-
-	public GeneratorRecipeFactory(RecipeMap<GeneratorRecipeFactory> map) {
+	public BlastFurnanceRecipeFactory(RecipeMap<BlastFurnanceRecipeFactory> map) {
 		super(map);
 	}
 	
-	@Override
-	public GeneratorRecipeFactory nonConsumable(ItemStack stack) {
-		super.input(RecipeEntry.singleton(stack, 0, Match.DAMAGE));
+	public BlastFurnanceRecipeFactory minTemperature(int value) {
+		if (minTemp >= 0)
+			throw new GT_RecipeException("Can not set temperature twice!");
+		if (value <= 0)
+			errors.append(" - Blast temperature should be grather than zero!\n");
+		this.minTemp = value;
 		return this;
 	}
 	
 	@Override
-	public GeneratorRecipeFactory input(ItemStack stack, boolean checkDamage, boolean checkNBT) {
+	protected void reset() {
+		super.reset();
+		minTemp = -1;
+	}
+	
+	@Override
+	public BlastFurnanceRecipeFactory nonConsumable(ItemStack stack) {
+		super.input(RecipeEntry.singleton(stack, 0, Match.DAMAGE));
+		return this;
+	}
+
+	@Override
+	public BlastFurnanceRecipeFactory input(ItemStack stack, boolean checkDamage, boolean checkNBT) {
 		@SuppressWarnings("serial")
 		List<Match> vals = new ArrayList<Match>() {{
 			if (checkDamage && (stack != null && stack.getItemDamage() != GregTech_API.ITEM_WILDCARD_DAMAGE)) add(Match.DAMAGE);
@@ -49,44 +64,49 @@ public class GeneratorRecipeFactory extends RecipeFactory<GeneratorRecipeFactory
 		super.input(RecipeEntry.singleton(stack, vals.toArray(new Match[0])));
 		return this;
 	}
-	
+
 	@Override
-	public GeneratorRecipeFactory input(OrePrefixes prefix, Materials material, int count) {
+	public BlastFurnanceRecipeFactory input(OrePrefixes prefix, Materials material, int count) {
 		if (count < 0) errors.append("- Count less than ZERO!!!");
-		this.inputItems.add(new UnifierRecipeEntry(prefix, material, count));
+		inputItems.add(new UnifierRecipeEntry(prefix, material, count));
 		return this;
 	}
 	
 	@Override
-	public GeneratorRecipeFactory inputs(ItemStack... stacks) {
+	public BlastFurnanceRecipeFactory inputs(ItemStack... stacks) {
 		for (ItemStack stack : stacks)
 			this.input(stack);
 		return this;
 	}
 
 	@Override
-	public GeneratorRecipeFactory input(String oreDict, int amount) {
+	public BlastFurnanceRecipeFactory input(String oreDict, int amount) {
 		if (amount < 0) errors.append("- Count less than ZERO!!!");
 		super.input(RecipeEntry.oreDict(oreDict, amount, Match.DAMAGE));
 		return this;
 	}
 
 	@Override
-	public GeneratorRecipeFactory chanced(ItemStack stack, int chance) {
+	public BlastFurnanceRecipeFactory chanced(ItemStack stack, int chance) {
 		super.chanced(new ChancedStack(stack.copy(), chance));
 		return this;
 	}
-	
+
 	@Override
 	public Recipe build() {
 		if (EUt < 0) 						errors.append(" - EU/t was not set!\n");
 		if (duration <= 0) 					errors.append(" - Duration was not set!\n");
+		if (minTemp < 0) 					errors.append(" - Blast temperature was not set!\n");
 		if (inputItems.isEmpty() &&
 				inputFluids.isEmpty()) 		errors.append(" - Input of recipe shall not be empty!\n");
+		if (outputItems.isEmpty() &&
+				chancedOutput.isEmpty() &&
+				outputFluids.isEmpty()) 	errors.append(" - Output of recipe shall not be empty!");
 		if (errors.length() == 0) {
-			Recipe recipe = new Recipe(startEU, EUt, duration, shaped, inputItems, outputItems, chancedOutput, inputFluids, outputFluids, Collections.emptyMap());
+			Recipe recipe = new Recipe(startEU, EUt, duration, shaped, inputItems, outputItems, chancedOutput, inputFluids, outputFluids, Collections.singletonMap("minTemp", Integer.valueOf(minTemp)));
 			reset();
 			return recipe;
 		} throw new GT_RecipeException(errors.toString());
 	}
+
 }
