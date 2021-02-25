@@ -6,7 +6,6 @@ import java.util.UUID;
 
 import com.mojang.authlib.GameProfile;
 
-import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
@@ -82,9 +81,9 @@ public class GT_MetaTileEntity_Microwave extends GT_MetaTileEntity_BasicMachine 
 	private ItemStack checkForExlosion(ItemStack input, int inIdx) {
 		ItemStack tOutput = GT_ModHandler.getSmeltingOutput(input, false, null);
 		if (input.getItem() == GT_Items.Spray_CFoam.getItem() ||
-				GT_Utility.areStacksEqual(input, GT_ModHandler.getIC2Item("constructionFoamSprayer", 1, GregTech_API.ITEM_WILDCARD_DAMAGE)) ||
-				GT_Utility.areStacksEqual(input, GT_ModHandler.getIC2Item("constructionFoam", 1, GregTech_API.ITEM_WILDCARD_DAMAGE)) ||
-				GT_Utility.areStacksEqual(input, GT_ModHandler.getIC2Item("CFCell", 1))) {
+				input.isItemEqual(GT_ModHandler.getIC2Item("constructionFoamSprayer", 1)) ||
+				input.isItemEqual(GT_ModHandler.getIC2Item("constructionFoam", 1)) ||
+				input.isItemEqual(GT_ModHandler.getIC2Item("CFCell", 1))) {
 			IGregTechTileEntity ent = getBaseMetaTileEntity();
 			getInputItems().set(inIdx, null);
 			ent.doExplosion(128);

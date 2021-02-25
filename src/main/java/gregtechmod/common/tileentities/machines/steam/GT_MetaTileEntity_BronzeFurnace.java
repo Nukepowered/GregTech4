@@ -1,13 +1,12 @@
 package gregtechmod.common.tileentities.machines.steam;
 
-import java.util.List;
-
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine_Bronze;
 import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeLogic;
 import gregtechmod.api.recipe.RecipeMap;
-import gregtechmod.api.util.GT_ModHandler;
+import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -22,6 +21,34 @@ public class GT_MetaTileEntity_BronzeFurnace extends GT_MetaTileEntity_BasicMach
 	}
 	
 	@Override
+	public void initRecipeLogic(RecipeMap<?> map) {
+		recipeLogic = new RecipeLogic(map, this) {
+			@Override
+			protected void startRecipe(Recipe recipe) {
+				if (getMachine().spaceForOutput(recipe) && getMachine().getBaseMetaTileEntity().decreaseStoredEnergyUnits(recipe.getEUtoStart(), false)) {
+					previousRecipe = recipe;
+					maxProgressTime = GT_Utility.isDebugItem(getMachine().getStackInSlot(batterySlot)) ? 1 : 400;
+					progressTime = 1;
+					EUt = recipe.getEUt();
+					if (consumeInputs(recipe)) {
+						getMachine().getBaseMetaTileEntity().setActive(true);
+						getMachine().startProcess();
+					} else {
+						GT_Log.log.catching(new IllegalStateException("Error state detected! RecipeMap passed recipe, but it's not matching! Report about this!!!"));
+						EUt = 0;
+						progressTime = 0;
+						maxProgressTime = 0;
+						previousRecipe = null;
+					}
+					
+				} else {
+					getMachine().getBaseMetaTileEntity().setActive(false);
+				}
+			}
+		};
+	}
+	
+	@Override
 	public void onRightclick(EntityPlayer aPlayer) {
 		getBaseMetaTileEntity().openGUI(aPlayer, 165);
 	}
@@ -30,16 +57,6 @@ public class GT_MetaTileEntity_BronzeFurnace extends GT_MetaTileEntity_BasicMach
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
 		return new GT_MetaTileEntity_BronzeFurnace(recipeLogic.recipeMap);
 	}
-	
-	@Override
-    public void checkRecipe() {
-		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 1, 2, (byte)64, (byte)1, (byte)64, (byte)1);
-		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 3, 4, (byte)64, (byte)1, (byte)64, (byte)1);
-    	if (mInventory[2] != null && null != (mOutputItem1 = GT_ModHandler.getSmeltingOutput(mInventory[2], true, mInventory[3]))) {
-    		mEUt = 3;
-    		mMaxProgresstime = 400;
-    	}
-    }
 	
 	@Override
 	public int getFrontFacingInactive() {
