@@ -7,7 +7,9 @@ import gregtechmod.common.recipe.RecipeEntry;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -38,6 +40,8 @@ public class Recipe {
 	private List<FluidStack> fluidInputs;
 	private List<FluidStack> fluidOutputs;
 	
+	private Map<String, Object> metadata;
+	
 	private int duration;
 	private int EUt;
 	private int startEU;
@@ -46,7 +50,7 @@ public class Recipe {
 	public boolean enabled = true;
 	
 	public Recipe(int startEU, int EUt, int duration, boolean shaped, Collection<Ingredient> inputs, Collection<ItemStack> outputs, Collection<ChancedOutput> chancedOutputs) {
-		this(startEU, EUt, duration, shaped, inputs, outputs, chancedOutputs, Collections.emptyList(), Collections.emptyList());
+		this(startEU, EUt, duration, shaped, inputs, outputs, chancedOutputs, Collections.emptyList(), Collections.emptyList(), Collections.emptyMap());
 	}
 	
 	public Recipe(int startEU, int EUt, int duration, boolean shaped,
@@ -54,7 +58,8 @@ public class Recipe {
 			Collection<ItemStack> itemOutputs,
 			Collection<ChancedOutput> chancedOutputs,
 			Collection<FluidStack> fluidInputs,
-			Collection<FluidStack> fluidOutputs) {
+			Collection<FluidStack> fluidOutputs,
+			Map<String, Object> meta) {
 		this.startEU 		= startEU;
 		this.EUt 			= EUt;
 		this.duration 		= duration;
@@ -64,6 +69,7 @@ public class Recipe {
 		this.chancedOutputs 	= new ArrayList<>(chancedOutputs);
 		this.fluidInputs 		= new ArrayList<>(fluidInputs);
 		this.fluidOutputs		= new ArrayList<>(fluidOutputs);
+		this.metadata			= new HashMap<>(meta);
 	}
 	
 	/**
@@ -257,6 +263,10 @@ public class Recipe {
 		return !fluidInputs.isEmpty() || !fluidOutputs.isEmpty();
 	}
 	
+	public Object getMeta(String name) {
+		return metadata.get(name);
+	}
+	
 	/**
 	 * @return list containing all possible outputs
 	 */
@@ -373,7 +383,8 @@ public class Recipe {
 				+ itemOutputs.hashCode()
 				+ chancedOutputs.hashCode()
 				+ fluidInputs.hashCode()
-				+ fluidOutputs.hashCode();
+				+ fluidOutputs.hashCode()
+				+ metadata.hashCode();
 	}
 	
 	@Override
@@ -388,7 +399,8 @@ public class Recipe {
 					r.itemOutputs.equals(itemOutputs) &&
 					r.chancedOutputs.equals(chancedOutputs) &&
 					r.fluidInputs.equals(fluidInputs) &&
-					r.fluidOutputs.equals(fluidOutputs);
+					r.fluidOutputs.equals(fluidOutputs) &&
+					r.metadata.equals(metadata);
 		}
 		
 		return false;
@@ -396,7 +408,7 @@ public class Recipe {
 	
 	@Override
 	public String toString() {
-		return String.format("Recipe(startEU=%d, EUt=%d, duration=%d, shaped=%s, enabled=%s)\nin=%s\nout=%s\nchancedOut=%s\nfluidIn=%s\nfluidOut=%s",
+		return String.format("Recipe(startEU=%d, EUt=%d, duration=%d, shaped=%s, enabled=%s)\nin=%s\nout=%s\nchancedOut=%s\nfluidIn=%s\nfluidOut=%s\nmeta=%s",
 				startEU,
 				EUt,
 				duration,
@@ -406,6 +418,7 @@ public class Recipe {
 				itemOutputs.toString(),
 				chancedOutputs.toString(),
 				fluidInputs.toString(),
-				fluidOutputs.toString());
+				fluidOutputs.toString(),
+				metadata.toString());
 	}
 }
