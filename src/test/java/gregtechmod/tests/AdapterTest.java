@@ -1,3 +1,4 @@
+package gregtechmod.tests;
 import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 import org.junit.rules.ExpectedException;

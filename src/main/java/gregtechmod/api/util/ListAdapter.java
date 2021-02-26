@@ -11,7 +11,7 @@ import java.util.Objects;
  * @author TheDarkDnKTv
  */
 public class ListAdapter<E> extends AbstractList<E> {
-	private E[] data;
+	protected E[] data;
 	private int idxStart;
 	private int idxEnd;
 	
