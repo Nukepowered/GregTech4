@@ -32,7 +32,8 @@ public class GT_GUIContainer_VacuumFreezer extends GT_GUIContainerMetaTile_Machi
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
         
         if (mContainer != null && mContainer.mProgressTime>0) {
-        	int tScale = ((GT_Container_VacuumFreezer)mContainer).mProgressScale;
+        	GT_Container_VacuumFreezer cont = (GT_Container_VacuumFreezer) mContainer;
+        	int tScale = Math.max(0, Math.min(20, (cont.mProgressTime>0?1:0) + (cont.mProgressTime * 20) / (cont.mMaxProgressTime<1?1:cont.mMaxProgressTime)));
         	this.drawTexturedModalRect(x + 58, y + 28, 176, 0, tScale, 11);
         }
     }

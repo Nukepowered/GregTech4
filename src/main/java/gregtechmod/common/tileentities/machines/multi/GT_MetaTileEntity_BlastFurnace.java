@@ -3,6 +3,7 @@ package gregtechmod.common.tileentities.machines.multi;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
+import gregtechmod.api.metatileentity.implementations.BaseMultiWorkable;
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;

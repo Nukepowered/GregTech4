@@ -5,6 +5,7 @@ import java.util.List;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
+import gregtechmod.api.metatileentity.implementations.BaseMultiFluidWorkable;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.ListAdapter;
@@ -12,19 +13,18 @@ import gregtechmod.common.recipe.RecipeMaps;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 
-public class GT_MetaTileEntity_Sawmill extends BaseMultiWorkable {
-
-	private FluidStack[] fluids = new FluidStack[] { GT_ModHandler.getWater(0) };
+public class GT_MetaTileEntity_Sawmill extends BaseMultiFluidWorkable {
 	
 	public GT_MetaTileEntity_Sawmill(int aID, String mName) {
-		super(aID, mName, RecipeMaps.SAWMILL);
+		super(aID, mName, RecipeMaps.SAWMILL, 1, 0);
 	}
 	
 	public GT_MetaTileEntity_Sawmill() {
-		super(RecipeMaps.SAWMILL);
+		super(RecipeMaps.SAWMILL, 1, 0);
 	}
 	
 	@Override public boolean isFacingValid(byte aFacing)			{return aFacing == 0;}
@@ -33,38 +33,14 @@ public class GT_MetaTileEntity_Sawmill extends BaseMultiWorkable {
     
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_Sawmill();
+		GT_MetaTileEntity_Sawmill sawmill = new GT_MetaTileEntity_Sawmill();
+		sawmill.getFluidInputs().set(0, GT_ModHandler.getWater(0));
+		return sawmill;
 	}
 	
 	@Override
 	public List<ItemStack> getOutputItems() {
 		return new ListAdapter<>(mInventory, 2, 4);
-	}
-	
-	@Override
-	public List<FluidStack> getFluidInputs() {
-		if (fluids == null) {
-			return new ListAdapter<>(new FluidStack[1]);
-		}
-		
-		return new ListAdapter<>(fluids);
-	}
-	
-	@Override
-	public void saveNBTData(NBTTagCompound aNBT) {
-		super.saveNBTData(aNBT);
-		if (GT_Utility.isFluidStackValid(fluids[0])) {
-			fluids[0].writeToNBT(aNBT);
-		}
-	}
-	
-	@Override
-	public void loadNBTData(NBTTagCompound aNBT) {
-    	super.loadNBTData(aNBT);
-    	FluidStack stack = FluidStack.loadFluidStackFromNBT(aNBT);
-    	if (GT_Utility.isFluidStackValid(stack)) {
-    		fluids[0] = stack;
-    	}
 	}
 	
     protected boolean checkMachine() {
@@ -102,23 +78,12 @@ public class GT_MetaTileEntity_Sawmill extends BaseMultiWorkable {
 	}
 	
 	@Override
-	public int fill(FluidStack resource, boolean doFill) {
-		if (GT_Utility.isFluidStackValid(resource)) {
-			int space = getCapacity() - fluids[0].amount;
-			int toFill = resource.amount <= space  ? resource.amount : space;
-			if (doFill) {
-				fluids[0].amount += toFill;
-				// TODO could be dupe, may change resource
-			}
-			
-			return toFill;
-		}
-		
-		return 0;
+	public boolean canFill(ForgeDirection aSide, Fluid aFluid) {
+		return getFluidAmount() < getCapacity();
 	}
 	
-	@Override public FluidStack getFluid() {return fluids[0].copy();}
-	@Override public int getFluidAmount() {return fluids[0].amount;}
+	@Override public FluidStack getFluid() {return fluidInputs.get(0).copy();}
+	@Override public int getFluidAmount() {return fluidInputs.get(0).amount;}
 	@Override public int getTankPressure() {return -100;}
 	@Override public int getCapacity() {return 10000;}
 }

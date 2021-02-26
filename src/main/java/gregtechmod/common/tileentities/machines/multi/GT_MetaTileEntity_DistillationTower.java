@@ -5,6 +5,7 @@ import java.util.List;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
+import gregtechmod.api.metatileentity.implementations.BaseMultiWorkable;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.ListAdapter;

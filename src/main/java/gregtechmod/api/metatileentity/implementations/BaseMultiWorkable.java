@@ -1,4 +1,4 @@
-package gregtechmod.common.tileentities.machines.multi;
+package gregtechmod.api.metatileentity.implementations;
 
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +26,7 @@ import net.minecraftforge.fluids.FluidStack;
 public abstract class BaseMultiWorkable extends MetaTileEntity implements IRecipeWorkable {
 	
 	protected RecipeLogic recipeLogic;
-	protected boolean needCheckStruct = false;
+	protected boolean needCheckStruct = true;
 	protected boolean structComplete = false;
 
 	public BaseMultiWorkable(int aID, String aBasicName, RecipeMap<?> map) {

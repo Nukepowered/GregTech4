@@ -28,25 +28,20 @@ public class GT_Container_Grinder extends GT_ContainerMetaTile_Machine {
         addSlotToContainer(new GT_Slot_Output(mTileEntity, 5, 140,  25));
     }
 
-    public int mProgress, mMaxProgress, mProgressScale, mWaterAmount;
+    public int mWaterAmount;
     public boolean mMachine = true;
     
     @SuppressWarnings("rawtypes")
 	public void detectAndSendChanges() {
         super.detectAndSendChanges();
     	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
-    	mMachine = ((GT_MetaTileEntity_Grinder)mTileEntity.getMetaTileEntity()).mMachine;
-    	mWaterAmount = ((GT_MetaTileEntity_Grinder)mTileEntity.getMetaTileEntity()).mFluidAmount;
-    	mProgress = ((GT_MetaTileEntity_Grinder)mTileEntity.getMetaTileEntity()).getProgresstime();
-    	mMaxProgress = ((GT_MetaTileEntity_Grinder)mTileEntity.getMetaTileEntity()).maxProgresstime();
-    	mProgressScale = Math.max(0, Math.min(20, (mProgress>0?1:0) + (mProgress * 20) / (mMaxProgress<1?1:mMaxProgress)));
+    	mMachine = ((GT_MetaTileEntity_Grinder)mTileEntity.getMetaTileEntity()).isStructComplete();
+    	mWaterAmount = ((GT_MetaTileEntity_Grinder)mTileEntity.getMetaTileEntity()).getFluidAmount();
+    	
     	
         Iterator var2 = this.crafters.iterator();
         while (var2.hasNext()) {
             ICrafting var1 = (ICrafting)var2.next();
-            var1.sendProgressBarUpdate(this, 100, mProgress);
-            var1.sendProgressBarUpdate(this, 101, mMaxProgress);
-            var1.sendProgressBarUpdate(this, 102, mProgressScale);
             var1.sendProgressBarUpdate(this, 103, mMachine?1:0);
             var1.sendProgressBarUpdate(this, 104, mWaterAmount);
         }
@@ -56,9 +51,6 @@ public class GT_Container_Grinder extends GT_ContainerMetaTile_Machine {
     public void updateProgressBar(int par1, int par2) {
     	super.updateProgressBar(par1, par2);
     	switch (par1) {
-    	case 100: mProgress = par2; break;
-    	case 101: mMaxProgress = par2; break;
-    	case 102: mProgressScale = par2; break;
     	case 103: mMachine = (par2!=0); break;
     	case 104: mWaterAmount = par2; break;
     	}

@@ -831,12 +831,12 @@ public class GregTech_API {
 		sDimensionalList.add( 0);
 		sDimensionalList.add( 1);
 		
-		sSoundList.put(  0, "random.break");
-		sSoundList.put(  1, "random.anvil_use");
-		sSoundList.put(  2, "random.anvil_break");
-		sSoundList.put(  3, "random.click");
-		sSoundList.put(  4, "random.fizz");
-		sSoundList.put(  5, "random.explode");
+		sSoundList.put(  0, "minecraft:random.break");
+		sSoundList.put(  1, "minecraft:random.anvil_use");
+		sSoundList.put(  2, "minecraft:random.anvil_break");
+		sSoundList.put(  3, "minecraft:random.click");
+		sSoundList.put(  4, "minecraft:random.fizz");
+		sSoundList.put(  5, "minecraft:random.explode");
 		
 		sSoundList.put(100, GregTech_API.IC2_MOD_ID + ":" + "tools.Wrench");
 		sSoundList.put(101, GregTech_API.IC2_MOD_ID + ":" + "tools.RubberTrampoline");

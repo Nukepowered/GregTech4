@@ -32,10 +32,11 @@ public class GT_GUIContainer_Grinder extends GT_GUIContainerMetaTile_Machine {
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
         
         if (mContainer != null) {
-        	int tScale = ((GT_Container_Grinder)mContainer).mProgressScale;
+        	GT_Container_Grinder cont = (GT_Container_Grinder) mContainer;
+        	int tScale = Math.max(0, Math.min(20, (cont.mProgressTime>0?1:0) + (cont.mProgressTime * 20) / (cont.mMaxProgressTime<1?1:cont.mMaxProgressTime)));
         	if (mContainer.mProgressTime > 0) drawTexturedModalRect(x + 58, y + 28, 176, 0, tScale, 11);
 
-        	tScale = ((GT_Container_Grinder)mContainer).mWaterAmount/550;
+        	tScale = cont.mWaterAmount/550;
         	if (tScale > 0)
         		drawTexturedModalRect(x + 33, y + 33 + 18 - tScale, 176, 33 + 18 - tScale, 18, tScale);
         }
