@@ -1,9 +1,12 @@
 package gregtechmod.common.tileentities.machines.multi;
 
+import java.util.List;
+
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.BaseMultiWorkable;
+import gregtechmod.api.util.ListAdapter;
 import gregtechmod.common.recipe.RecipeMaps;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,7 +25,9 @@ public class GT_MetaTileEntity_VacuumFreezer extends BaseMultiWorkable {
 	@Override public boolean isFacingValid(byte aFacing)			{return aFacing == 0;}
 	@Override public int getInvSize()								{return 2;}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 122);}
-    
+	@Override public List<ItemStack> getInputItems() { return new ListAdapter<>(mInventory, 0, 0); }
+	@Override public List<ItemStack> getOutputItems() { return new ListAdapter<>(mInventory, 1, 1); }
+	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
 		return new GT_MetaTileEntity_VacuumFreezer();

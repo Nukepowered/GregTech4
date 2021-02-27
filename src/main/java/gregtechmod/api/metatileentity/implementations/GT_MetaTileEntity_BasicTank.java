@@ -16,7 +16,7 @@ import net.minecraftforge.fluids.FluidStack;
  */
 public abstract class GT_MetaTileEntity_BasicTank extends MetaTileEntity {
 	
-	public FluidStack mFluid;
+	public FluidStack[] mFluid = new FluidStack[1];
 	
 	public GT_MetaTileEntity_BasicTank(int aID, String aName) {
 		super(aID, aName);
@@ -32,16 +32,16 @@ public abstract class GT_MetaTileEntity_BasicTank extends MetaTileEntity {
 	
 	@Override
 	public void saveNBTData(NBTTagCompound aNBT) {
-		if (mFluid != null) {
+		if (mFluid[0] != null) {
 			try {
-				aNBT.setTag("mLiquid", mFluid.writeToNBT(new NBTTagCompound()));
+				aNBT.setTag("mLiquid", mFluid[0].writeToNBT(new NBTTagCompound()));
 			} catch(Throwable e) {/*Do nothing*/}
 		}
 	}
 	
 	@Override
 	public void loadNBTData(NBTTagCompound aNBT) {
-    	mFluid = FluidStack.loadFluidStackFromNBT(aNBT.getCompoundTag("mLiquid"));
+		mFluid[0] = FluidStack.loadFluidStackFromNBT(aNBT.getCompoundTag("mLiquid"));
 	}
 	
 	@Override
@@ -64,21 +64,21 @@ public abstract class GT_MetaTileEntity_BasicTank extends MetaTileEntity {
 	public boolean isFluidInputAllowed(FluidStack aFluid) {return true;}
 	public boolean isFluidChangingAllowed() {return true;}
 	
-	public FluidStack getFillableStack() {return mFluid;}
-	public FluidStack setFillableStack(FluidStack aFluid) {mFluid = aFluid; return mFluid;}
-	public FluidStack getDrainableStack() {return mFluid;}
-	public FluidStack setDrainableStack(FluidStack aFluid) {mFluid = aFluid; return mFluid;}
+	public FluidStack getFillableStack() {return mFluid[0];}
+	public FluidStack setFillableStack(FluidStack aFluid) {mFluid[0] = aFluid; return mFluid[0];}
+	public FluidStack getDrainableStack() {return mFluid[0];}
+	public FluidStack setDrainableStack(FluidStack aFluid) {mFluid[0] = aFluid; return mFluid[0];}
 	
 	@Override
 	public void onPreTick() {
 		if (getBaseMetaTileEntity().isServerSide()) {
-			if (isFluidChangingAllowed() && mFluid != null && mFluid.amount <= 0) mFluid = null;
+			if (isFluidChangingAllowed() && mFluid != null && mFluid[0].amount <= 0) mFluid = null;
 			
 			if (displaysItemStack()) {
 				if (getDrainableStack() != null) {
 					ItemStack fluidDisplay = GT_Items.Display_Fluid.getWithDamage(displaysStackSize()?Math.max(1, Math.min(getDrainableStack().amount/1000, 64)):1, getDrainableStack().getFluidID());;
 					NBTTagCompound data = new NBTTagCompound();
-					data.setInteger("amount", mFluid.amount);
+					data.setInteger("amount", mFluid[0].amount);
 					fluidDisplay.setTagCompound(data);
 					mInventory[getStackDisplaySlot()] = fluidDisplay;
 					
