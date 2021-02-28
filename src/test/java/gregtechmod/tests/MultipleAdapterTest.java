@@ -2,7 +2,12 @@ package gregtechmod.tests;
 
 import static org.junit.Assert.assertTrue;
 
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 
 import gregtechmod.api.util.InventoryHandler;
 import gregtechmod.api.util.InventoryHandlerList;
@@ -11,6 +16,8 @@ import gregtechmod.api.util.InventoryHandlerList;
  * @author TheDarkDnKTv
  *
  */
+@TestInstance(Lifecycle.PER_CLASS)
+@TestMethodOrder(OrderAnnotation.class)
 public class MultipleAdapterTest {
 
 	InventoryHandler<Integer> first;
@@ -27,21 +34,41 @@ public class MultipleAdapterTest {
 		second.set(1, 94);
 		second.set(3, 47);
 		second.set(5, 35);
-
-		list = new InventoryHandlerList<>(first, second);
 	}
 	
 	@Test
+	@Order(1)
 	public void mergeTest() {
-		System.err.println(first);
-		System.err.println(second);
+		System.out.println("Fisrt list: " + first);
+		System.out.println("Second list: " + second);
+		list = new InventoryHandlerList<>(first, second);
+		System.out.print("New list: ");
 		System.err.println(list);
 		assertTrue("Size: " + list.size(), list.size() == 11);
 	}
 	
 	@Test
+	@Order(2)
 	public void getTest() {
 		Integer value = list.get(5);
 		assertTrue("Value: " + value, value == 54);
+	}
+	
+	@Test
+	@Order(3)
+	public void remove() {
+		Integer a = list.remove(list.size() - 1);
+		assertTrue(a == 35);
+	}
+	
+	@Test
+	@Order(4)
+	public void emptyTest() {
+		boolean value = list.isEmpty();
+		list.clear();
+		assertTrue(!value);
+		System.out.println("Fisrt list after clean: " + first);
+		System.out.println("Second list after clean: " + second);
+		assertTrue("Not empty after cleaning", first.isEmpty() && second.isEmpty());
 	}
 }

@@ -3,6 +3,7 @@ package gregtechmod.api.util;
 import java.util.AbstractList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -15,16 +16,16 @@ import gnu.trove.map.hash.TIntObjectHashMap;
  */
 public class InventoryHandlerList<E> extends AbstractList<E> {
 	
-	protected final TIntObjectMap<InventoryHandler<E>> indexMapping;
+	protected final TIntObjectMap<List<E>> indexMapping;
 	protected final Map<Integer, Integer> offsetMap;
 	
 	@SafeVarargs
-	public InventoryHandlerList(InventoryHandler<E>... initial) { // TODO varagrs check
+	public InventoryHandlerList(List<E>... initial) {
 		Objects.requireNonNull(initial);
 		indexMapping = new TIntObjectHashMap<>();
 		offsetMap = new HashMap<>();
 		int offset = 0;
-		for (InventoryHandler<E> list : initial) {
+		for (List<E> list : initial) {
 			if (list == null)
 				throw new IllegalArgumentException("Input lists can not be null!");
 			for (int i = offset; i < offset + list.size(); i++)
@@ -37,14 +38,14 @@ public class InventoryHandlerList<E> extends AbstractList<E> {
 	@Override
 	public E get(int index) {
 		rangeCheck(index);
-		InventoryHandler<E> handler = indexMapping.get(index);
+		List<E> handler = indexMapping.get(index);
 		return handler.get(getTrueIdx(index, handler));
 	}
 
     @Override
     public E set(int index, E element) {
     	rangeCheck(index);
-    	InventoryHandler<E> handler = indexMapping.get(index);
+    	List<E> handler = indexMapping.get(index);
     	int realIdx = this.getTrueIdx(index, handler);
     	E old = handler.get(realIdx);
     	handler.set(realIdx, element);
@@ -54,7 +55,7 @@ public class InventoryHandlerList<E> extends AbstractList<E> {
 	@Override
 	public E remove(int index) {
 		rangeCheck(index);
-		InventoryHandler<E> handler = indexMapping.get(index);
+		List<E> handler = indexMapping.get(index);
     	int realIdx = this.getTrueIdx(index, handler);
 		E value = handler.remove(realIdx);
 		return value;
@@ -62,7 +63,7 @@ public class InventoryHandlerList<E> extends AbstractList<E> {
 	
 	@Override
 	public void clear() {
-		for (InventoryHandler<E> handler : indexMapping.valueCollection()) {
+		for (List<E> handler : indexMapping.valueCollection()) {
 			handler.clear();
 		}
 	}
@@ -70,7 +71,7 @@ public class InventoryHandlerList<E> extends AbstractList<E> {
 	@Override
     public boolean isEmpty() {
 		boolean result = true;
-		for (InventoryHandler<E> handler : indexMapping.valueCollection()) {
+		for (List<E> handler : indexMapping.valueCollection()) {
 			result &= handler.isEmpty();
 		}
 		
@@ -111,7 +112,7 @@ public class InventoryHandlerList<E> extends AbstractList<E> {
         return "Index: "+index+", Size: "+indexMapping.size();
     }
     
-    protected int getTrueIdx(int index, InventoryHandler<E> handler) {
+    protected int getTrueIdx(int index, List<E> handler) {
     	int offset = offsetMap.get(System.identityHashCode(handler));
     	return index - offset;
     }
