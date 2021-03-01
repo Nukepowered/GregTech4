@@ -35,8 +35,8 @@ public class GT_Container_BasicTank extends GT_ContainerMetaTile_Machine {
 	public void detectAndSendChanges() {
         super.detectAndSendChanges();
     	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
-    	if (((GT_MetaTileEntity_BasicTank)mTileEntity.getMetaTileEntity()).mFluid != null)
-    		mContent = ((GT_MetaTileEntity_BasicTank)mTileEntity.getMetaTileEntity()).mFluid.amount;
+    	if (((GT_MetaTileEntity_BasicTank)mTileEntity.getMetaTileEntity()).mFluid[0] != null)
+    		mContent = ((GT_MetaTileEntity_BasicTank)mTileEntity.getMetaTileEntity()).mFluid[0].amount;
     	else
     		mContent = 0;
     	

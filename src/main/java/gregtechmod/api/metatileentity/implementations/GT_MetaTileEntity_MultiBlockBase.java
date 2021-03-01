@@ -10,21 +10,25 @@ import gregtechmod.api.recipe.RecipeLogic;
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.InfoBuilder;
+import gregtechmod.api.util.InventoryHandlerList;
+import gregtechmod.api.util.ListAdapter;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
 public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity implements IRecipeWorkable {
 	
-	private MultiblockRecipeLogic recipeLogic;
+	protected RecipeLogic recipeLogic;
 	
 	/* REPAIR STATUS */
 	public boolean mWrench 			= false;
@@ -36,10 +40,11 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity im
 	
 	/* STRUCTURE STATUS */
 	protected boolean structComplete 	= false;
-	protected boolean needCheckStruct 	= false;
+	protected boolean needCheckStruct 	= true;
 	
 	/* MISC */
-	public int mPollution = 0, mEfficiencyIncrease = 0, mRuntime = 0, mEfficiency = 0;
+	public int mPollution = 0, mRuntime = 0, mEfficiency = 100;
+	protected int MAX_FLUID_STACK = 16_000;
 	
 	protected List<GT_MetaTileEntity_Hatch_Input> mInputHatches 					= new ArrayList<GT_MetaTileEntity_Hatch_Input>();
 	protected List<GT_MetaTileEntity_Hatch_Output> mOutputHatches 					= new ArrayList<GT_MetaTileEntity_Hatch_Output>();
@@ -49,6 +54,11 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity im
 	protected List<GT_MetaTileEntity_Hatch_EnergyInput> mEnergyHatches 				= new ArrayList<GT_MetaTileEntity_Hatch_EnergyInput>();
 	protected WeakReference<GT_MetaTileEntity_Hatch_Muffler> mufflerHatch 			= new WeakReference<>(null);
 	protected WeakReference<GT_MetaTileEntity_Hatch_Maintenance> maintenanceHatch 	= new WeakReference<>(null);
+	
+	protected List<ItemStack> itemInputs 	= null;
+	protected List<ItemStack> itemOutputs	= null;
+	protected List<FluidStack> fluidInputs	= null;
+	protected List<FluidStack> fluidOutputs	= null;
 	
 	public GT_MetaTileEntity_MultiBlockBase(int aID, String aName, RecipeMap<?> map) {
 		super(aID, aName);
@@ -74,7 +84,6 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity im
 	@Override public boolean allowToCheckRecipe() 					{return true;}
 	@Override public boolean isGivingInformation() 					{return true;}
 	@Override public void startProcess() 							{}
-	@Override public void endProcess() 								{}
 	@Override public void stutterProcess() 							{}
 	@Override public boolean isValidSlot(int aIndex)				{return aIndex > 0;}
 	@Override public int getInvSize()								{return 2;}
@@ -85,7 +94,6 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity im
 	@Override
 	public void saveNBTData(NBTTagCompound aNBT) {
 		recipeLogic.saveToNBT(aNBT);
-    	aNBT.setInteger("mEfficiencyIncrease", mEfficiencyIncrease);
     	aNBT.setInteger("mEfficiency", mEfficiency);
     	aNBT.setInteger("mPollution", mPollution);
     	aNBT.setInteger("mRuntime", mRuntime);
@@ -103,7 +111,6 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity im
 	@Override
 	public void loadNBTData(NBTTagCompound aNBT) {
 		recipeLogic.loadFromNBT(aNBT);
-    	mEfficiencyIncrease = aNBT.getInteger("mEfficiencyIncrease");
     	mEfficiency = aNBT.getInteger("mEfficiency");
     	mPollution = aNBT.getInteger("mPollution");
     	mRuntime = aNBT.getInteger("mRuntime");
@@ -122,7 +129,6 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity im
 	@Override
 	public void onPostTick() {
 		if (getBaseMetaTileEntity().isServerSide()) {
-    		if (mEfficiency < 0) mEfficiency = 0;
     		if (needCheckStruct) {
     			mInputHatches.clear();
 				mInputBusses.clear();
@@ -134,6 +140,15 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity im
 				maintenanceHatch.clear();
     			structComplete = checkMachine(mInventory[1]);
         		needCheckStruct = false;
+        		if (structComplete) {
+        			this.findInventories();
+        			mEfficiency = (int) (this.getMaxEfficiency(mInventory[1]) * (this.getRepairStatus() * 1.0D / this.getIdealStatus()));
+        		} else {
+        			itemInputs 		= null;
+        			itemOutputs 	= null;
+        			fluidInputs 	= null;
+        			fluidOutputs 	= null;
+        		}
     		}
     		
     		if (structComplete) {
@@ -155,21 +170,46 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity im
     			}
     			
     			if (getRepairStatus() > 0) {
-    				recipeLogic.update();
-    				if (recipeLogic.isActive()) {
-    					if (doRandomMaintenanceDamage()) {
-    						if (onRunningTick(mInventory[1]) && !polluteEnvironment(getPollutionPerTick(mInventory[1]))) {
-				    			stopMachine();
-				    		}
-    					} else {
-    						mEfficiency = Math.max(0, mEfficiency - 1000);
-    					}
-    				}
+    				this.updateLogic();
     			} else stopMachine();
     		} else stopMachine();
 
 			getBaseMetaTileEntity().setErrorDisplayID((getBaseMetaTileEntity().getErrorDisplayID()&~127)|(mWrench?0:1)|(mScrewdriver?0:2)|(mSoftHammer?0:4)|(mHardHammer?0:8)|(mSolderingTool?0:16)|(mCrowbar?0:32)|(structComplete?0:64));
 		}
+	}
+	
+	protected void updateLogic() {
+		recipeLogic.update();
+		if (recipeLogic.isActive()) {
+			if (doRandomMaintenanceDamage()) {
+				if (onRunningTick() && !polluteEnvironment(getPollutionPerTick(mInventory[1]))) {
+	    			stopMachine();
+	    		}
+			}
+		}
+	}
+	
+	protected void findInventories() {
+		List<List<ItemStack>> items = new ArrayList<>();
+		List<List<FluidStack>> fluids = new ArrayList<>();
+		
+		for (GT_MetaTileEntity_Hatch_InputBus bus : mInputBusses)
+			items.add(new ListAdapter<>(bus.mInventory));
+		itemInputs = new InventoryHandlerList<>(items);
+		items.clear();
+		for (GT_MetaTileEntity_Hatch_OutputBus bus : mOutputBusses)
+			items.add(new ListAdapter<>(bus.mInventory));
+		itemOutputs = new InventoryHandlerList<>(items);
+		items.clear();
+		
+		for (GT_MetaTileEntity_Hatch_Input hatch : mInputHatches)
+			fluids.add(new ListAdapter<>(hatch.mFluid));
+		fluidInputs = new InventoryHandlerList<>(fluids);
+		fluids.clear();
+		for (GT_MetaTileEntity_Hatch_Output hatch : mOutputHatches)
+			fluids.add(new ListAdapter<>(hatch.mFluid));
+		fluidOutputs = new InventoryHandlerList<>(fluids);
+		fluids.clear();
 	}
 	
 	public boolean polluteEnvironment(int aPollutionLevel) {
@@ -185,21 +225,160 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity im
 		
 		return mPollution < 10000;
 	}
-
+	
+	protected boolean depleteInput(ItemStack item) {
+		List<ItemStack> input = this.getInputItems();
+		int[] itemAmountInSlots = new int[input.size()];
+		int amount = item.stackSize;
+		for (int i = 0; i < input.size() && amount > 0; i++) {
+			ItemStack itemInSlot = input.get(i);
+			
+			if (itemInSlot == null) {
+				itemAmountInSlots[i] = 0;
+			} else {
+				int toConsume = 0;
+				if (item.isItemEqual(itemInSlot)) {
+					toConsume = Math.min(itemInSlot.stackSize, amount);
+					amount -= toConsume;
+				}
+				
+				itemAmountInSlots[i] = itemInSlot.stackSize - toConsume;
+			}
+		}
+		
+		if (amount <= 0) {
+			for (int i = 0; i < input.size(); i++) {
+				ItemStack itemSlot = input.get(i);
+				if (itemSlot != null && itemSlot.stackSize != itemAmountInSlots[i]) {
+					if (itemAmountInSlots[i] == 0) {
+						input.remove(i);
+					} else {
+						itemSlot.stackSize = itemAmountInSlots[i];
+					}
+				}
+			}
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	protected boolean depleteInput(FluidStack fluid) {
+		List<FluidStack> input = this.getFluidInputs();
+		int[] itemAmountInSlots = new int[input.size()];
+		int amount = fluid.amount;
+		for (int i = 0; i < input.size() && amount > 0; i++) {
+			FluidStack fluidInSlot = input.get(i);
+			
+			if (fluidInSlot == null) {
+				itemAmountInSlots[i] = 0;
+			} else {
+				int toConsume = 0;
+				if (fluid.isFluidEqual(fluidInSlot)) {
+					toConsume = Math.min(fluidInSlot.amount, amount);
+					amount -= toConsume;
+				}
+				
+				itemAmountInSlots[i] = fluidInSlot.amount - toConsume;
+			}
+		}
+		
+		if (amount <= 0) {
+			for (int i = 0; i < input.size(); i++) {
+				FluidStack itemSlot = input.get(i);
+				if (itemSlot != null && itemSlot.amount != itemAmountInSlots[i]) {
+					if (itemAmountInSlots[i] == 0) {
+						input.remove(i);
+					} else {
+						itemSlot.amount = itemAmountInSlots[i];
+					}
+				}
+			}
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	protected boolean addOutput(ItemStack item) {
+		List<ItemStack> outputs = this.getOutputItems();
+		Map<Integer, Integer> newInv = new HashMap<>();
+		int amount = item.stackSize;
+		
+		for (int i = 0; i < outputs.size() && amount > 0; i++) {
+			ItemStack itemInSlot = outputs.get(i);
+			
+			if (itemInSlot == null) {
+				outputs.set(i, item);
+				return true;
+			} else {
+				if (item.isItemEqual(itemInSlot)) {
+					int newSize = itemInSlot.stackSize;
+					newSize = Math.min(itemInSlot.getMaxStackSize(), itemInSlot.stackSize + amount);
+					amount -= newSize - itemInSlot.stackSize;
+					newInv.put(i, newSize);
+				}
+			}
+		}
+		
+		if (amount <= 0) {
+			for (Integer idx : newInv.keySet()) {
+				outputs.get(idx).stackSize = newInv.get(idx);
+			}
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	protected boolean addOutput(FluidStack fluid) {
+		List<FluidStack> outputs = this.getFluidOutputs();
+		Map<Integer, Integer> newInv = new HashMap<>();
+		int amount = fluid.amount;
+		
+		for (int i = 0; i < outputs.size() && amount > 0; i++) {
+			FluidStack itemInSlot = outputs.get(i);
+			
+			if (itemInSlot == null) {
+				outputs.set(i, fluid);
+				return true;
+			} else {
+				if (fluid.isFluidEqual(itemInSlot)) {
+					int newSize = itemInSlot.amount;
+					newSize = Math.min(MAX_FLUID_STACK, itemInSlot.amount + amount);
+					amount -= newSize - itemInSlot.amount;
+					newInv.put(i, newSize);
+				}
+			}
+		}
+		
+		if (amount <= 0) {
+			for (Integer idx : newInv.keySet()) {
+				outputs.get(idx).amount = newInv.get(idx);
+			}
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
 	/**
 	 * Called every tick the Machine runs
 	 */
-	public boolean onRunningTick(ItemStack aStack) {
-		if (recipeLogic.getEUt() > 0) {
-			int tGeneratedEU = (int)(((long)recipeLogic.getEUt() * mEfficiency) / 10000);
-			addEnergyOutput(tGeneratedEU);
-		} else if (recipeLogic.getEUt() < 0) {
-			int tConsumedEU = (int)(((long)-recipeLogic.getEUt() * 10000) / Math.max(1000, mEfficiency));
-			if (!drainEnergyInput(tConsumedEU)) {
-				stopMachine();
-				return false;
-			}
+	public boolean onRunningTick() { 
+		//  // mInventory[1]
+//			int tGeneratedEU = (int)(((long)recipeLogic.getEUt() * mEfficiency) / 10000);
+//			addEnergyOutput(tGeneratedEU);
+		int toConsume = (int) (recipeLogic.getEUt() * (2.0D - (mEfficiency / 100.0D)));
+		if (!drainEnergyInput(toConsume)) {
+			stopMachine();
+			return false;
 		}
+		
 		return true;
 	}
 	
@@ -209,17 +388,12 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity im
 	public abstract boolean isCorrectMachinePart(ItemStack aStack);
 	
 	/**
-	 * Checks the Recipe
-	 */
-	public abstract boolean checkRecipe(ItemStack aStack);
-	
-	/**
 	 * Checks the Machine. You have to assign the MetaTileEntities for the Hatches here.
 	 */
 	protected abstract boolean checkMachine(ItemStack aStack);
 	
 	/**
-	 * Gets the maximum Efficiency that spare Part can get (0 - 10000)
+	 * Gets the maximum Efficiency that spare Part can get (0 - 100)
 	 */
 	public abstract int getMaxEfficiency(ItemStack aStack);
 	
@@ -234,11 +408,6 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity im
 	public abstract int getDamageToComponent(ItemStack aStack);
 	
 	/**
-	 * Gets the Amount of possibly outputted Items for loading the Output Stack Array from NBT.
-	 */
-	public abstract int getAmountOfOutputs();
-	
-	/**
 	 * If it explodes when the Component has to be replaced.
 	 */
 	public abstract boolean explodesOnComponentBreak(ItemStack aStack);
@@ -246,7 +415,6 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity im
 	public void stopMachine() {
 		recipeLogic.stop();
     	mEfficiency = 0;
-		getBaseMetaTileEntity().disableWorking();
 	}
 	
 	public int getRepairStatus() {
@@ -258,7 +426,7 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity im
 	}
 	
 	public static boolean isValidMetaTileEntity(MetaTileEntity aMetaTileEntity) {
-		return aMetaTileEntity.getBaseMetaTileEntity() != null && aMetaTileEntity.getBaseMetaTileEntity().getMetaTileEntity() == aMetaTileEntity;
+		return aMetaTileEntity != null && aMetaTileEntity.getBaseMetaTileEntity() != null && aMetaTileEntity.getBaseMetaTileEntity().getMetaTileEntity() == aMetaTileEntity;
 	}
 	
 	public boolean doRandomMaintenanceDamage() {
@@ -303,6 +471,11 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity im
 	}
 	
 	@Override
+	public void endProcess() {
+		mEfficiency = (int) (this.getMaxEfficiency(mInventory[1]) * (this.getRepairStatus() * 1.0D / this.getIdealStatus()));
+	}
+	
+	@Override
 	public boolean spaceForOutput(Recipe recipe) {
 		List<ItemStack> outputSlots = this.getOutputItems();
 		List<ItemStack> allOutputs = recipe.getAllOutputs();
@@ -325,32 +498,121 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity im
 			}
 		}
 		
+		for (FluidStack fluid : recipe.getFluidOutputs()) {
+			int amount = this.fill(fluid.copy(), false);
+			if (amount < fluid.amount) {
+				return false;
+			}
+		}
+		
 		return true;
 	}
 	
-	// TODO
 	@Override
 	public List<ItemStack> getInputItems() {
+		if (structComplete) {
+			if (itemInputs != null) {
+				return itemInputs;
+			}
+		}
 		
-		return null;
-		
+		return Collections.emptyList();
 	}
 	
 	@Override
 	public List<ItemStack> getOutputItems() {
-		return null;
+		if (structComplete) {
+			if (itemOutputs != null) {
+				return itemOutputs;
+			}
+		}
+		
+		return Collections.emptyList();
 	}
 	
 	@Override
 	public List<FluidStack> getFluidInputs() {
+		if (structComplete) {
+			if (fluidInputs != null) {
+				return fluidInputs;
+			}
+		}
 		
+		return Collections.emptyList();
+	}
+	
+	@Override
+	public List<FluidStack> getFluidOutputs() {
+		if (structComplete) {
+			if (fluidOutputs != null) {
+				return fluidOutputs;
+			}
+		}
 		
+		return Collections.emptyList();
+	}
+	
+	@Override
+	public int fill(FluidStack resource, boolean doFill) {
+		if (GT_Utility.isFluidStackValid(resource)) {
+			for (int i = 0; i < fluidInputs.size(); i++) {
+				FluidStack stackInSlot = fluidInputs.get(i);
+				if (!GT_Utility.isFluidStackValid(stackInSlot) || stackInSlot.isFluidEqual(resource)) {
+					int space = getCapacity() - stackInSlot.amount;
+					int toFill = resource.amount <= space  ? resource.amount : space;
+					if (doFill) {
+						stackInSlot.amount += toFill;
+						// TODO could be dupe, may change resource
+					}
+					
+					return toFill;
+				}
+			}
+		}
+		
+		return 0;
+	}
+	
+	@Override
+	public FluidStack drain(ForgeDirection aSide, FluidStack aFluid, boolean doDrain) {
+		if (GT_Utility.isFluidStackValid(aFluid)) 
+		for (int i = 0; i < fluidOutputs.size(); i++) {
+			FluidStack stackInSlot = fluidOutputs.get(i);
+			if (GT_Utility.isFluidStackValid(stackInSlot) && aFluid.isFluidEqual(stackInSlot)) {
+				int amount = Math.min(aFluid.amount, stackInSlot.amount);
+				FluidStack result = stackInSlot.copy();
+				result.amount = amount;
+				if (doDrain) {
+					if (stackInSlot.amount == amount) {
+						fluidOutputs.set(i, null);
+					} else stackInSlot.amount -= amount;
+				}
+				
+				return result;
+			}
+		}
 		
 		return null;
 	}
 	
 	@Override
-	public List<FluidStack> getFluidOutputs() {
+	public FluidStack drain(ForgeDirection aSide, int maxDrain, boolean doDrain) {
+		for (int i = 0; i < fluidOutputs.size(); i++) {
+			FluidStack stackInSlot = fluidOutputs.get(i);
+			if (GT_Utility.isFluidStackValid(stackInSlot)) {
+				int amount = Math.min(maxDrain, stackInSlot.amount);
+				FluidStack result = stackInSlot.copy();
+				result.amount = amount;
+				if (doDrain) {
+					if (stackInSlot.amount == amount) {
+						fluidOutputs.set(i, null);
+					} else stackInSlot.amount -= amount;
+				}
+				
+				return result;
+			}
+		}
+		
 		return null;
 	}
 	
@@ -528,21 +790,29 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity im
 		}
 		
 		@Override
-		protected void endRecipe(Recipe recipe) {
-			super.endRecipe(recipe);
-			GT_MetaTileEntity_MultiBlockBase machine = getMachine1();
-			machine.mEfficiencyIncrease = 0;
-			machine.mEfficiency = Math.max(0, Math.min(machine.mEfficiency + machine.mEfficiencyIncrease, machine.getMaxEfficiency(machine.mInventory[1]) - ((machine.getIdealStatus() - machine.getRepairStatus()) * 1000)));
+		protected boolean updateRecipeProgress() {
+			if (getMachine1().onRunningTick()) {
+				if ((progressTime += progressTimeManipulator.applyAsInt((int)Math.pow(2, overclockersCount))) >= maxProgressTime) {
+					progressTime = 0;
+					maxProgressTime = 0;
+					EUt = 0;
+					
+					endRecipe(previousRecipe);
+					getMachine().endProcess();
+					return true;
+				}
+			} else {
+				if (!stuttering) {
+					getMachine().stutterProcess();
+					stuttering = true;
+				}
+			}
+			
+			return false;
 		}
 		
 		private GT_MetaTileEntity_MultiBlockBase getMachine1() {
 			return (GT_MetaTileEntity_MultiBlockBase) getMachine();
-		}
-		
-		public void stop() {
-			EUt = 0;
-			maxProgressTime = 0;
-			progressTime = 0;
 		}
 	}
 }

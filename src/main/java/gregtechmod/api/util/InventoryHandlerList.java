@@ -35,6 +35,21 @@ public class InventoryHandlerList<E> extends AbstractList<E> {
 		}
 	}
 	
+	public InventoryHandlerList(List<List<E>> lists) {
+		if (lists == null) throw new IllegalArgumentException();
+		indexMapping = new TIntObjectHashMap<>();
+		offsetMap = new HashMap<>();
+		int offset = 0;
+		for (List<E> list : lists) {
+			if (list == null)
+				throw new IllegalArgumentException("Input lists can not be null!");
+			for (int i = offset; i < offset + list.size(); i++)
+				indexMapping.put(i, list);
+			offsetMap.put(System.identityHashCode(list), offset);
+			offset += list.size();
+		}
+	}
+	
 	@Override
 	public E get(int index) {
 		rangeCheck(index);

@@ -43,7 +43,7 @@ public class GT_Container_SteelBoiler extends GT_ContainerMetaTile_Machine {
     	mTemperature = ((GT_MetaTileEntity_Boiler_Steel)mTileEntity.getMetaTileEntity()).mTemperature;
     	mProcessingEnergy = ((GT_MetaTileEntity_Boiler_Steel)mTileEntity.getMetaTileEntity()).mProcessingEnergy;
     	mSteamAmount = ((GT_MetaTileEntity_Boiler_Steel)mTileEntity.getMetaTileEntity()).mSteam == null?0:((GT_MetaTileEntity_Boiler_Steel)mTileEntity.getMetaTileEntity()).mSteam.amount;
-    	mWaterAmount = ((GT_MetaTileEntity_Boiler_Steel)mTileEntity.getMetaTileEntity()).mFluid == null?0:((GT_MetaTileEntity_Boiler_Steel)mTileEntity.getMetaTileEntity()).mFluid.amount;
+    	mWaterAmount = ((GT_MetaTileEntity_Boiler_Steel)mTileEntity.getMetaTileEntity()).mFluid == null?0:((GT_MetaTileEntity_Boiler_Steel)mTileEntity.getMetaTileEntity()).mFluid[0].amount;
     	
     	mTemperature = Math.min(54, Math.max(0, (mTemperature * 54) / 990));
     	mSteamAmount = Math.min(54, Math.max(0, (mSteamAmount * 54) / 31900));

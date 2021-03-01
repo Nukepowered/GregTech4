@@ -113,7 +113,7 @@ public abstract class BaseMultiFluidWorkable extends BaseMultiWorkable {
 	}
 	
 	@Override
-    public int fill(ForgeDirection aSide, FluidStack resource, boolean doFill) {
+	public int fill(FluidStack resource, boolean doFill) {
 		if (GT_Utility.isFluidStackValid(resource)) {
 			for (int i = 0; i < fluidInputs.size(); i++) {
 				FluidStack stackInSlot = fluidInputs.get(i);

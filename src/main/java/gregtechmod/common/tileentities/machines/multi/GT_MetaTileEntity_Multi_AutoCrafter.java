@@ -16,10 +16,12 @@ public class GT_MetaTileEntity_Multi_AutoCrafter extends GT_MetaTileEntity_Multi
    public void onRightclick(EntityPlayer aPlayer) {}
 
    public GT_MetaTileEntity_Multi_AutoCrafter(int aID, String aName) {
-      super(aID, aName);
+      super(aID, aName, null);
    }
 
-   public GT_MetaTileEntity_Multi_AutoCrafter() {}
+   public GT_MetaTileEntity_Multi_AutoCrafter() {
+	   super(null);
+   }
 
    public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
       return new GT_MetaTileEntity_Multi_AutoCrafter();

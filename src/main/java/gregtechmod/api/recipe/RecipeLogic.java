@@ -8,11 +8,13 @@ import java.util.function.Predicate;
 
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.interfaces.IRecipeWorkable;
+import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fluids.FluidStack;
 
 /**
  * Class incapsulating main beahvoir of recipes machine
@@ -22,7 +24,7 @@ import net.minecraft.nbt.NBTTagCompound;
 public class RecipeLogic {
 	public static final Random recipeRandom = new Random();
 	
-	public final WeakReference<IRecipeWorkable> metaTileEntity;
+	public WeakReference<IRecipeWorkable> metaTileEntity;
 	public final RecipeMap<?> recipeMap;
 	
 	public int batterySlot 		= 5;
@@ -63,6 +65,11 @@ public class RecipeLogic {
 		stuttering = false;
 		wasNoEnergy = false;
 		metaTileEntity = new WeakReference<>(machine);
+	}
+	
+	/** For child classes use only! */
+	protected RecipeLogic(RecipeMap<?> map) {
+		recipeMap = map;
 	}
 	
 	public boolean update() {
@@ -189,26 +196,28 @@ public class RecipeLogic {
 			int amount = recipeOut.stackSize;
 			for (int i = 0; i < outputs.size() && amount > 0; i++) {
 				ItemStack slot = outputs.get(i);
-				if (GT_Utility.areStacksEqual(recipeOut, slot)) {
-					int newSize = Math.min(slot.getMaxStackSize(), slot.stackSize + amount);
-					amount -= newSize - slot.stackSize;
-					slot.stackSize = newSize;
-				}
-			}
-			
-			for (int i = 0; i < outputs.size() && amount > 0; i++) {
-				ItemStack slot = outputs.get(i);
 				if (slot == null) {
 					ItemStack stack = recipeOut.copy();
 					stack.stackSize = amount;
 					outputs.set(i, stack);
 					amount = 0;
 					break;
+				} else if (GT_Utility.areStacksEqual(recipeOut, slot)) {
+					int newSize = Math.min(slot.getMaxStackSize(), slot.stackSize + amount);
+					amount -= newSize - slot.stackSize;
+					slot.stackSize = newSize;
 				}
 			}
 			
 			if (amount > 0)
 				GT_Log.log.error("Output overflow detected! Left items: " + amount + " for output stack: " + recipeOut);
+		}
+		
+		MetaTileEntity mte = (MetaTileEntity) getMachine();
+		for (FluidStack fluid : recipe.getFluidOutputs()) {
+			int amount = mte.fill(fluid.copy(), true);
+			if (amount > 0)
+				GT_Log.log.error("Output overflow detected! Left fluid: " + amount + " for output stack: " + fluid);
 		}
 		
 		stuttering = false;
@@ -227,12 +236,22 @@ public class RecipeLogic {
 		return metaTileEntity.get();
 	}
 	
+	/**
+	 * Will reset working state
+	 * Needed in multiblocks
+	 */
+	public void stop() {
+		EUt = 0;
+		maxProgressTime = 0;
+		progressTime = 0;
+	}
+	
 	public void increaseProgressTime(int amount) {
 		progressTime += amount;
 	}
 	
 	public boolean isActive() {
-		return maxProgressTime > 0;
+		return maxProgressTime > 0 && getMachine().getBaseMetaTileEntity().isAllowedToWork();
 	}
 	
 	public int getMaxProgressTime() {
@@ -241,6 +260,10 @@ public class RecipeLogic {
 	
 	public int getProgressTime() {
 		return progressTime;
+	}
+	
+	public Recipe getCurrentRecipe() {
+		return previousRecipe;
 	}
 	
 	/**

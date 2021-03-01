@@ -99,15 +99,15 @@ public class GT_MetaTileEntity_AdvancedCraftingTable extends GT_MetaTileEntity_B
     }
     
     private void fillLiquidContainers() {
-		for (byte i = 16; i < 21 && mFluid != null; i++) {
-			ItemStack tOutput = GT_Utility.fillFluidContainer(mFluid, mInventory[i]);
+		for (byte i = 16; i < 21 && mFluid[0] != null; i++) {
+			ItemStack tOutput = GT_Utility.fillFluidContainer(mFluid[0], mInventory[i]);
 			if (tOutput != null) {
 				if (mInventory[i].stackSize == 1) {
-					mFluid.amount -= GT_Utility.getFluidForFilledItem(tOutput).amount * tOutput.stackSize;
+					mFluid[0].amount -= GT_Utility.getFluidForFilledItem(tOutput).amount * tOutput.stackSize;
 					mInventory[i] = tOutput;
 				} else for (byte j = 16; j < 21; j++) {
 					if (mInventory[j] == null || (GT_Utility.areStacksEqual(tOutput, mInventory[j]) && mInventory[j].stackSize + tOutput.stackSize <= tOutput.getMaxStackSize())) {
-						mFluid.amount -= GT_Utility.getFluidForFilledItem(tOutput).amount * tOutput.stackSize;
+						mFluid[0].amount -= GT_Utility.getFluidForFilledItem(tOutput).amount * tOutput.stackSize;
 						getBaseMetaTileEntity().decrStackSize(i, 1);
 						if (mInventory[j] == null) {
 							mInventory[j] = tOutput;
@@ -117,10 +117,10 @@ public class GT_MetaTileEntity_AdvancedCraftingTable extends GT_MetaTileEntity_B
 						break;
 					}
 				}
-				if (mFluid != null && mFluid.amount <= 0) mFluid = null;
+				if (mFluid[0] != null && mFluid[0].amount <= 0) mFluid[0] = null;
 			}
 		}
-		if (mFluid != null && mFluid.amount <= 0) mFluid = null;
+		if (mFluid[0] != null && mFluid[0].amount <= 0) mFluid[0] = null;
     }
     
     public void setBluePrint(ItemStack aStack) {

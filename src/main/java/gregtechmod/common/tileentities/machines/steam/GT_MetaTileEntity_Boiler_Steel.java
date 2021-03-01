@@ -120,14 +120,14 @@ public class GT_MetaTileEntity_Boiler_Steel extends GT_MetaTileEntity_BasicTank 
     		
     		if (getBaseMetaTileEntity().getTimer()%10==0) {
 	    		if (mTemperature > 100) {
-	    			if (mFluid == null || !GT_ModHandler.isWater(mFluid) || mFluid.amount <= 0) {
+	    			if (mFluid[0] == null || !GT_ModHandler.isWater(mFluid[0]) || mFluid[0].amount <= 0) {
 	    				mHadNoWater = true;
 	    			} else {
 	    				if (mHadNoWater) {
 	        				getBaseMetaTileEntity().doExplosion(2048);
 	        				return;
 	    				}
-	    				mFluid.amount--;
+	    				mFluid[0].amount--;
 		    			if (mSteam == null) {
 		    				mSteam = GT_ModHandler.getSteam(150);
 		    			} else {

@@ -72,7 +72,7 @@ public abstract class GT_MetaTileEntity_BasicTank extends MetaTileEntity {
 	@Override
 	public void onPreTick() {
 		if (getBaseMetaTileEntity().isServerSide()) {
-			if (isFluidChangingAllowed() && mFluid != null && mFluid[0].amount <= 0) mFluid = null;
+			if (isFluidChangingAllowed() && mFluid[0] != null && mFluid[0].amount <= 0) mFluid[0] = null;
 			
 			if (displaysItemStack()) {
 				if (getDrainableStack() != null) {
@@ -131,7 +131,7 @@ public abstract class GT_MetaTileEntity_BasicTank extends MetaTileEntity {
 	}
 	
 	@Override
-	public final int fill(FluidStack aFluid, boolean doFill) {
+	public int fill(FluidStack aFluid, boolean doFill) {
 		if (aFluid == null || aFluid.getFluidID() <= 0 || !canTankBeFilled() || !isFluidInputAllowed(aFluid)) return 0;
 		
 		if (getFillableStack() == null || getFillableStack().getFluidID() <= 0) {
@@ -164,7 +164,7 @@ public abstract class GT_MetaTileEntity_BasicTank extends MetaTileEntity {
 	}
 	
 	@Override
-	public final FluidStack drain(int maxDrain, boolean doDrain) {
+	public FluidStack drain(int maxDrain, boolean doDrain) {
 		if (getDrainableStack() == null || !canTankBeEmptied()) return null;
 		if (getDrainableStack().amount <= 0 && isFluidChangingAllowed()) {
 			setDrainableStack(null);

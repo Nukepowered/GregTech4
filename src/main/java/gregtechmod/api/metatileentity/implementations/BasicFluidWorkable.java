@@ -16,6 +16,7 @@ import gregtechmod.api.util.ListAdapter;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
 /**
@@ -67,28 +68,7 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
 	
 	@Override
 	public List<FluidStack> getFluidInputs() {
-		return new ListAdapter<FluidStack>(new FluidStack[] {mFluid}) {
-			@Override
-			public FluidStack set(int index, FluidStack item) {
-				rangeCheck(index);
-				FluidStack old = mFluid;
-				mFluid = item;
-				return old;
-			}
-			
-			@Override
-			public FluidStack remove(int index) {
-				rangeCheck(index);
-				FluidStack old = mFluid;
-				mFluid = null;
-				return old;
-			}
-			
-			@Override
-			public void clear() {
-				mFluid = null;
-			}
-		};
+		return new ListAdapter<FluidStack>(mFluid);
 	}
 	
 	@Override
@@ -118,7 +98,7 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
 				recipeLogic.increaseProgressTime(-val);
 		}
 	}
-    
+	
 	@Override // TODO did not check for fluid output slots, not needed yet
     public boolean spaceForOutput(Recipe recipe) {
 		List<ItemStack> outputSlots = this.getOutputItems();
@@ -142,8 +122,83 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
 			}
 		}
 		
+		for (FluidStack fluid : recipe.getFluidOutputs()) {
+			int amount = this.fill(fluid.copy(), false);
+			if (amount < fluid.amount) {
+				return false;
+			}
+		}
+		
 		return true;
     }
+	
+	@Override
+	public int fill(FluidStack resource, boolean doFill) {
+		if (GT_Utility.isFluidStackValid(resource)) {
+			List<FluidStack> fluidInputs = this.getFluidInputs();
+			for (int i = 0; i < fluidInputs.size(); i++) {
+				FluidStack stackInSlot = fluidInputs.get(i);
+				if (!GT_Utility.isFluidStackValid(stackInSlot) || stackInSlot.isFluidEqual(resource)) {
+					int space = getCapacity() - stackInSlot.amount;
+					int toFill = resource.amount <= space  ? resource.amount : space;
+					if (doFill) {
+						stackInSlot.amount += toFill;
+						// TODO could be dupe, may change resource
+					}
+					
+					return toFill;
+				}
+			}
+		}
+		
+		return 0;
+	}
+	
+	@Override
+	public FluidStack drain(ForgeDirection aSide, FluidStack aFluid, boolean doDrain) {
+		if (GT_Utility.isFluidStackValid(aFluid)) {
+			List<FluidStack> fluidOutputs = this.getFluidOutputs();
+			for (int i = 0; i < fluidOutputs.size(); i++) {
+				FluidStack stackInSlot = fluidOutputs.get(i);
+				if (GT_Utility.isFluidStackValid(stackInSlot) && aFluid.isFluidEqual(stackInSlot)) {
+					int amount = Math.min(aFluid.amount, stackInSlot.amount);
+					FluidStack result = stackInSlot.copy();
+					result.amount = amount;
+					if (doDrain) {
+						if (stackInSlot.amount == amount) {
+							fluidOutputs.set(i, null);
+						} else stackInSlot.amount -= amount;
+					}
+					
+					return result;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	@Override
+	public FluidStack drain(ForgeDirection aSide, int maxDrain, boolean doDrain) {
+		List<FluidStack> fluidOutputs = this.getFluidOutputs();
+		for (int i = 0; i < fluidOutputs.size(); i++) {
+			FluidStack stackInSlot = fluidOutputs.get(i);
+			if (GT_Utility.isFluidStackValid(stackInSlot)) {
+				int amount = Math.min(maxDrain, stackInSlot.amount);
+				FluidStack result = stackInSlot.copy();
+				result.amount = amount;
+				if (doDrain) {
+					if (stackInSlot.amount == amount) {
+						fluidOutputs.set(i, null);
+					} else stackInSlot.amount -= amount;
+				}
+				
+				return result;
+			}
+		}
+		
+		return null;
+	}
     
 	@Override
 	public Map<String, List<Object>> getInfoData() {

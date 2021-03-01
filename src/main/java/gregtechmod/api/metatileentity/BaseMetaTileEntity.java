@@ -865,7 +865,8 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 				if (GT_Utility.isItemStackInList(aPlayer.inventory.getCurrentItem(), GregTech_API.sSoftHammerList, true)) {
 					if (GT_ModHandler.damageOrDechargeItem(aPlayer.inventory.getCurrentItem(), 1, 1000, aPlayer)) {
 						mWorks = !mWorks;
-						GT_Utility.sendChatToPlayer(aPlayer, "Machine Processing: " + (isAllowedToWork()?"Enabled":"Disabled"));
+						mWorkUpdate = true;
+						GT_Utility.sendChatToPlayer(aPlayer, "Machine Processing: " + (isAllowedToWork()?"Enabled":"Disabled")); // TODO LOCALE!!!
 						GT_Utility.sendSoundToPlayers(worldObj, GregTech_API.sSoundList.get(101), 1.0F, -1, xCoord, yCoord, zCoord);
 					}
 					return true;

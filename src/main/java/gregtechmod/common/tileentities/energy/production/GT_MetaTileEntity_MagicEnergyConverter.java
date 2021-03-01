@@ -4,7 +4,7 @@ import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicGenerator;
 import gregtechmod.api.recipe.RecipeMap;
-
+import gregtechmod.common.recipe.logic.GeneratorRecipeLogic;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -26,7 +26,7 @@ public class GT_MetaTileEntity_MagicEnergyConverter extends GT_MetaTileEntity_Ba
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_MagicEnergyConverter(recipeLogic.recipeMap, efficiency);
+		return new GT_MetaTileEntity_MagicEnergyConverter(recipeLogic.recipeMap, ((GeneratorRecipeLogic)recipeLogic).efficiency);
 	}
 
 	@Override

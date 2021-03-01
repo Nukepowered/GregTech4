@@ -83,7 +83,7 @@ public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank 
     			((BaseTileEntity)getBaseMetaTileEntity()).ignoreUnloadedChunks = false;
     		}
     		
-    		if (getBaseMetaTileEntity().isAllowedToWork() && getBaseMetaTileEntity().getUniversalEnergyStored() > 10000 && (mFluid == null || mFluid.amount + 1000 <= getCapacity())) {
+    		if (getBaseMetaTileEntity().isAllowedToWork() && getBaseMetaTileEntity().getUniversalEnergyStored() > 10000 && (mFluid[0] == null || mFluid[0].amount + 1000 <= getCapacity())) {
         		boolean tMovedOneDown = false;
         		
         		if (getBaseMetaTileEntity().getTimer()%100==0) {
@@ -214,12 +214,12 @@ public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank 
     		
     		if (tBlock == Blocks.water || tBlock == Blocks.flowing_water) {
 	    		if (tMeta == 0) {
-	    			if (mFluid == null) {
+	    			if (mFluid[0] == null) {
 		        		getBaseMetaTileEntity().decreaseStoredEnergyUnits(1000, true);
-		    			mFluid = GT_ModHandler.getWater(1000);
-		    		} else if (GT_ModHandler.isWater(mFluid)) {
+		    			mFluid[0] = GT_ModHandler.getWater(1000);
+		    		} else if (GT_ModHandler.isWater(mFluid[0])) {
 		        		getBaseMetaTileEntity().decreaseStoredEnergyUnits(1000, true);
-		    			mFluid.amount += 1000;
+		    			mFluid[0].amount += 1000;
 		    		} else {
 		    			return false;
 		    		}
@@ -230,12 +230,12 @@ public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank 
     		
     		if (tBlock == Blocks.lava || tBlock == Blocks.flowing_lava) {
 	    		if (tMeta == 0) {
-		    		if (mFluid == null) {
+		    		if (mFluid[0] == null) {
 		        		getBaseMetaTileEntity().decreaseStoredEnergyUnits(1000, true);
-		    			mFluid = GT_ModHandler.getLava(1000);
-		    		} else if (GT_ModHandler.isLava(mFluid)) {
+		    			mFluid[0] = GT_ModHandler.getLava(1000);
+		    		} else if (GT_ModHandler.isLava(mFluid[0])) {
 		        		getBaseMetaTileEntity().decreaseStoredEnergyUnits(1000, true);
-		    			mFluid.amount += 1000;
+		    			mFluid[0].amount += 1000;
 		    		} else {
 		    			return false;
 		    		}
@@ -245,9 +245,9 @@ public class GT_MetaTileEntity_AdvancedPump extends GT_MetaTileEntity_BasicTank 
     		}
     		
 			if (tBlock instanceof IFluidBlock) {
-	    		if (mFluid == null) {
-	    			mFluid = ((IFluidBlock) tBlock).drain(getBaseMetaTileEntity().getWorld(), aX, aY, aZ, true);
-	        		getBaseMetaTileEntity().decreaseStoredEnergyUnits(mFluid==null?1000:mFluid.amount, true);
+	    		if (mFluid[0] == null) {
+	    			mFluid[0] = ((IFluidBlock) tBlock).drain(getBaseMetaTileEntity().getWorld(), aX, aY, aZ, true);
+	        		getBaseMetaTileEntity().decreaseStoredEnergyUnits(mFluid[0]==null?1000:mFluid[0].amount, true);
 	    		} else {
 	    			return false;
 	    		}

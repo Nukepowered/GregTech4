@@ -113,7 +113,7 @@ public class GT_MetaTileEntity_PlayerDetector extends MetaTileEntity {
 
    public boolean onRightclick(EntityPlayer aPlayer, byte aSide, float aX, float aY, float aZ) {
       ItemStack tStack = aPlayer.getCurrentEquippedItem();
-      if(GT_Utility.areStacksEqual(tStack, GT_OreDictUnificator.get(OrePrefixes.plate, (Object)Materials.Paper, 1L), true)) {
+      if(GT_Utility.areStacksEqual(tStack, GT_OreDictUnificator.get(OrePrefixes.plate, Materials.Paper, 1L), true)) {
          NBTTagCompound tMessage = tStack.getTagCompound().getCompoundTag("display");
          if(tMessage != null) {
             this.mDetectedPlayer = tMessage.getString("Name");

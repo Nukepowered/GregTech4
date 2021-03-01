@@ -14,6 +14,7 @@ import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.blocks.GT_BlockMetaID_Block;
+import gregtechmod.common.recipe.RecipeMaps;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -25,11 +26,11 @@ public class GT_MetaTileEntity_Multi_GasTurbine extends GT_MetaTileEntity_MultiB
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 156, GregTech_API.gregtechmod);}
 	
 	public GT_MetaTileEntity_Multi_GasTurbine(int aID, String mName) {
-		super(aID, mName);
+		super(aID, mName, RecipeMaps.TURBINE_FUELS);
 	}
 	
 	public GT_MetaTileEntity_Multi_GasTurbine() {
-		
+		super(RecipeMaps.TURBINE_FUELS);
 	}
 	
 	@Override

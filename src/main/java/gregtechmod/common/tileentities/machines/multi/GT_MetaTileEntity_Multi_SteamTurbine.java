@@ -23,11 +23,11 @@ public class GT_MetaTileEntity_Multi_SteamTurbine extends GT_MetaTileEntity_Mult
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 157, GregTech_API.gregtechmod);}
 	
 	public GT_MetaTileEntity_Multi_SteamTurbine(int aID, String mName) {
-		super(aID, mName);
+		super(aID, mName, null); // TODO add another class without recipe logic
 	}
 	
 	public GT_MetaTileEntity_Multi_SteamTurbine() {
-		
+		super(null);
 	}
 	
 	@Override

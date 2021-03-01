@@ -118,19 +118,19 @@ public class GT_MetaTileEntity_ElectricAutoWorkbench extends GT_MetaTileEntity_B
 			}
 			
 			if (mInventory[18] == null) {
-				for (byte i = 0; i < 18 && mFluid != null; i++) {
-					ItemStack tOutput = GT_Utility.fillFluidContainer(mFluid, mInventory[i]);
+				for (byte i = 0; i < 18 && mFluid[0] != null; i++) {
+					ItemStack tOutput = GT_Utility.fillFluidContainer(mFluid[0], mInventory[i]);
 					if (tOutput != null) {
 						for (byte j = 0; j < 9; j++) {
 							if (mInventory[j] == null || (GT_Utility.areStacksEqual(tOutput, mInventory[j]) && mInventory[j].stackSize + tOutput.stackSize <= tOutput.getMaxStackSize())) {
-								mFluid.amount -= GT_Utility.getFluidForFilledItem(tOutput).amount * tOutput.stackSize;
+								mFluid[0].amount -= GT_Utility.getFluidForFilledItem(tOutput).amount * tOutput.stackSize;
 								getBaseMetaTileEntity().decrStackSize(i, 1);
 								if (mInventory[j] == null) {
 									mInventory[j] = tOutput;
 								} else {
 									mInventory[j].stackSize++;
 								}
-								if (mFluid.amount <= 0) mFluid = null;
+								if (mFluid[0].amount <= 0) mFluid[0] = null;
 								break;
 							}
 						}

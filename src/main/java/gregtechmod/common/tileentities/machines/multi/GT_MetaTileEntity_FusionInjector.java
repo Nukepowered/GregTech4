@@ -48,9 +48,9 @@ public class GT_MetaTileEntity_FusionInjector extends GT_MetaTileEntity_BasicTan
     
     public ItemStack getMaterial() {
     	if (mInventory[getInputSlot()] == null) {
-    		ItemStack tStack = GT_Utility.fillFluidContainer(mFluid, GT_Items.Cell_Empty.get(1));
+    		ItemStack tStack = GT_Utility.fillFluidContainer(mFluid[0], GT_Items.Cell_Empty.get(1));
     		if (tStack == null) return null;
-    		tStack.stackSize = mFluid.amount / GT_Utility.getFluidForFilledItem(tStack).amount;
+    		tStack.stackSize = mFluid[0].amount / GT_Utility.getFluidForFilledItem(tStack).amount;
     		return tStack;
     	}
     	return mInventory[getInputSlot()];
@@ -58,7 +58,7 @@ public class GT_MetaTileEntity_FusionInjector extends GT_MetaTileEntity_BasicTan
     
     public boolean consumeMaterial(ItemStack aStack) {
     	if (aStack == null) return false;
-    	if (mFluid == null || !GT_Utility.containsFluid(aStack, mFluid) || GT_Utility.getFluidForFilledItem(aStack).amount * aStack.stackSize > mFluid.amount) {
+    	if (mFluid[0] == null || !GT_Utility.containsFluid(aStack, mFluid[0]) || GT_Utility.getFluidForFilledItem(aStack).amount * aStack.stackSize > mFluid[0].amount) {
     		if (mInventory[0] != null && GT_Utility.areStacksEqual(mInventory[0], aStack) && mInventory[0].stackSize >= aStack.stackSize) {
     			ItemStack tOutputCells = GT_ModHandler.getEmptyCell(GT_ModHandler.getCapsuleCellContainerCount(aStack));
     			if (tOutputCells != null && tOutputCells.stackSize > 0) {
@@ -72,7 +72,7 @@ public class GT_MetaTileEntity_FusionInjector extends GT_MetaTileEntity_BasicTan
     			return true;
     		}
     	} else {
-    		mFluid.amount -= (GT_Utility.getFluidForFilledItem(aStack).amount * aStack.stackSize);
+    		mFluid[0].amount -= (GT_Utility.getFluidForFilledItem(aStack).amount * aStack.stackSize);
     		return true;
     	}
     	return false;

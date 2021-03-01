@@ -111,29 +111,33 @@ public class GT_OreDictUnificator {
 		isAddingOre--;
 	}
 	
-	public static synchronized ItemStack getFirstOre(Object aName, long aAmount) {
+	public static ItemStack getFirstOre(Object aName, long aAmount) {
 		if (GT_Utility.isStringInvalid(aName)) return null;
 		if (GT_Utility.isStackValid(sName2OreMap.get(aName.toString()))) return GT_Utility.copyAmount(aAmount, sName2OreMap.get(aName.toString()));
 		return GT_Utility.copyAmount(aAmount, getOres(aName).toArray(new ItemStack[0]));
 	}
 	
-	public static synchronized ItemStack get(Object aName, long aAmount) {
+	public static ItemStack get(Object aName, long aAmount) {
 		return get(aName, null, aAmount, true, true);
 	}
 	
-	public static synchronized ItemStack get(Object aName, ItemStack aReplacement, long aAmount) {
+	public static ItemStack get(Object aName, ItemStack aReplacement, long aAmount) {
 		return get(aName, aReplacement, aAmount, true, true);
 	}
+
+	public static ItemStack get(OrePrefixes aPrefix, Materials aMaterial) {
+		return get(aPrefix, aMaterial, null, 1);
+	}
 	
-	public static synchronized ItemStack get(OrePrefixes aPrefix, Object aMaterial, long aAmount) {
+	public static ItemStack get(OrePrefixes aPrefix, Materials aMaterial, long aAmount) {
 		return get(aPrefix, aMaterial, null, aAmount);
 	}
 	
-	public static synchronized ItemStack get(OrePrefixes aPrefix, Object aMaterial, ItemStack aReplacement, long aAmount) {
+	public static ItemStack get(OrePrefixes aPrefix, Materials aMaterial, ItemStack aReplacement, long aAmount) {
 		return get(aPrefix.get(aMaterial), aReplacement, aAmount, false, true);
 	}
 	
-	public static synchronized ItemStack get(Object aName, ItemStack aReplacement, long aAmount, boolean aMentionPossibleTypos, boolean aNoInvalidAmounts) {
+	public static ItemStack get(Object aName, ItemStack aReplacement, long aAmount, boolean aMentionPossibleTypos, boolean aNoInvalidAmounts) {
 		if (aNoInvalidAmounts && aAmount < 1) return null;
 		if (!sName2OreMap.containsKey(aName.toString()) && aMentionPossibleTypos) GT_Log.log.error("Unknown Key for Unification, Typo? " + aName);
 		return GT_Utility.copyAmount(aAmount, sName2OreMap.get(aName.toString()), getFirstOre(aName, aAmount), aReplacement);

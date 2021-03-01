@@ -514,8 +514,8 @@ public class GT_ItemLoader implements Runnable {
 		GT_Items.Credit_Greg_Neutronium.set(		tMetaGenerated.addItem(  7, "credit_iridium"		, "item.GregTech_MetaGenerated_Item_01.credit_iridium.tooltip"	, null));
 		GT_Items.Coin_Gold_Ancient.set(				tMetaGenerated.addItem(  8, "ancient_coin"			, "item.GregTech_MetaGenerated_Item_01.ancient_coin.tooltip"	, null));
 		GT_Items.Coin_Doge.set(						tMetaGenerated.addItem(  9, "doge_coin"				, "item.GregTech_MetaGenerated_Item_01.doge_coin.tooltip"		, null));
-		GT_Items.Coin_Chocolate.set(				tMetaGenerated.addItem( 10, "chocolate_coin"		, "item.GregTech_MetaGenerated_Item_01.chocolate_coin.tooltip"	, new GT_FoodStat(1, 0.1F, EnumAction.eat, GT_OreDictUnificator.get(OrePrefixes.nugget, (Object) Materials.Gold, 1L), true, false, new int[] { Potion.moveSpeed.id, 200, 1, 100 })));
-		GT_Items.Bottle_Purple_Drink.set(			tMetaGenerated.addItem(100, "purple_drink"			, "item.GregTech_MetaGenerated_Item_01.purple_drink.tooltip"	, new GT_FoodStat(8, 0.2F, EnumAction.drink, GT_OreDictUnificator.get(OrePrefixes.bottle, (Object) Materials.Empty, 1L), false, false, new int[] { Potion.moveSlowdown.id, 400, 0, 100 })));
+		GT_Items.Coin_Chocolate.set(				tMetaGenerated.addItem( 10, "chocolate_coin"		, "item.GregTech_MetaGenerated_Item_01.chocolate_coin.tooltip"	, new GT_FoodStat(1, 0.1F, EnumAction.eat, GT_OreDictUnificator.get(OrePrefixes.nugget, Materials.Gold, 1L), true, false, new int[] { Potion.moveSpeed.id, 200, 1, 100 })));
+		GT_Items.Bottle_Purple_Drink.set(			tMetaGenerated.addItem(100, "purple_drink"			, "item.GregTech_MetaGenerated_Item_01.purple_drink.tooltip"	, new GT_FoodStat(8, 0.2F, EnumAction.drink, GT_OreDictUnificator.get(OrePrefixes.bottle, Materials.Empty, 1L), false, false, new int[] { Potion.moveSlowdown.id, 400, 0, 100 })));
 		GT_Items.Food_Potato_On_Stick.set(			tMetaGenerated.addItem(200, "potato_stick"			, "item.GregTech_MetaGenerated_Item_01.potato_stick.tooltip"	, new GT_FoodStat(1, 0.3F, EnumAction.eat, new ItemStack(Items.stick, 1), false, false, new int[0])));
 		GT_Items.Food_Potato_On_Stick_Roasted.set(	tMetaGenerated.addItem(201, "roasted_potato_stick"	, "item.GregTech_MetaGenerated_Item_01.potato_stick.tooltip"	, new GT_FoodStat(6, 0.6F, EnumAction.eat, new ItemStack(Items.stick, 1), false, false, new int[0])));
 		GT_Items.Shape_Mold_Plate.set(				tMetaGenerated.addItem(301, "mold_plates"			, "item.GregTech_MetaGenerated_Item_01.mold_plates.tooltip"		, null));
@@ -618,7 +618,7 @@ public class GT_ItemLoader implements Runnable {
 		
 		GT_Items.NC_SensorKit.set((GregTech_API.sItemList[17] = new GT_SensorKit_Item("GregTech_Sensorkit")));
 	    GT_Items.Armor_Cheat.set(GregTech_API.sItemList[18] = GregTech_API.constructElectricArmorItem("Ultimate_Cheat_Armor", 1000000000, Integer.MAX_VALUE, 1, 10, -1, 100.0D, true, 1, tArmorID1));
-	    GT_Items.Tool_Mortar_Iron.set((GregTech_API.sItemList[30] = new GT_Mortar_Item("Iron_Mortar", 64, GT_OreDictUnificator.get(OrePrefixes.dust, (Object)Materials.Iron, 1L))));
+	    GT_Items.Tool_Mortar_Iron.set((GregTech_API.sItemList[30] = new GT_Mortar_Item("Iron_Mortar", 64, GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iron, 1L))));
 	    GT_Items.Tool_Mortar_Wood.set((GregTech_API.sItemList[31] = new GT_Generic_Item("Flint_Mortar", "item.Flint_Mortar.tooltip_main")));
 	    GT_Items.Tool_Sonictron.set((GregTech_API.sItemList[32] = new GT_Sonictron_Item( "Sonictron")));
 	    GT_Items.Tool_Destructopack.set((GregTech_API.sItemList[33] = new GT_Destructopack_Item("Destructopack")));

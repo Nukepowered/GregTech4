@@ -601,8 +601,7 @@ public abstract class MetaTileEntity implements IMetaTileEntity {
     
 	@Override
 	public FluidStack drain(ForgeDirection aSide, FluidStack aFluid, boolean doDrain) {
-		if (getFluid() != null && aFluid != null && getFluid().isFluidEqual(aFluid)) return drain(aFluid.amount, doDrain);
-		return null;
+		return drain(aFluid.amount, doDrain);
 	}
 	
 	@Override
