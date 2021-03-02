@@ -18,7 +18,7 @@ import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_In
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Maintenance;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Output;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_OutputBus;
-import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_MultiBlockBase;
+import gregtechmod.api.metatileentity.implementations.MTEWorkableMultiblock;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_ModHandler;
@@ -34,7 +34,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-public class GT_MetaTileEntity_Multi_ThermalBoiler extends GT_MetaTileEntity_MultiBlockBase {
+public class GT_MetaTileEntity_Multi_ThermalBoiler extends MTEWorkableMultiblock {
 
 	@Override public boolean isFacingValid(byte aFacing)			{return aFacing > 1;}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 158, GregTech_API.gregtechmod);}
@@ -98,11 +98,6 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends GT_MetaTileEntity_Mul
 	}
 	
 	@Override
-	public boolean onRunningTick() {
-		return true;
-	}
-	
-	@Override
 	public boolean checkMachine(ItemStack aStack) {
 		byte tSide = getBaseMetaTileEntity().getBackFacing();
 		if (getBaseMetaTileEntity().getAirAtSideAndDistance(getBaseMetaTileEntity().getBackFacing(), 1)) {
@@ -163,7 +158,8 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends GT_MetaTileEntity_Mul
 	@Override
 	public Map<String, List<Object>> getInfoData() {
 		return InfoBuilder.create()
-				.newKey("sensor.progress.secs.1", ((MultiblockGenerator)recipeLogic).getLeftEU()) // TODO locale
+				.newKey("metatileentity.multiblock.thermalboiler.left_eu", ((MultiblockGenerator)recipeLogic).getLeftEU())
+				.newKey("metatileentity.multiblock.malfunction_amount", getIdealStatus() - getRepairStatus())
 				.build();
 	}
 	
@@ -202,7 +198,7 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends GT_MetaTileEntity_Mul
 		@Override
 		public boolean update() {
 			boolean success = false;
-			GT_MetaTileEntity_MultiBlockBase machine = (GT_MetaTileEntity_MultiBlockBase) getMachine();
+			MTEWorkableMultiblock machine = (MTEWorkableMultiblock) getMachine();
 			IGregTechTileEntity base = machine.getBaseMetaTileEntity();
 			
 			if (base.isAllowedToWork()) {
@@ -226,30 +222,28 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends GT_MetaTileEntity_Mul
 		
 		@Override
 		protected boolean updateRecipeProgress() {
-			GT_MetaTileEntity_MultiBlockBase machine = (GT_MetaTileEntity_MultiBlockBase) getMachine();
+			MTEWorkableMultiblock machine = (MTEWorkableMultiblock) getMachine();
 			if (leftEU > 0) {
-				if (machine.onRunningTick()) {
-					int EU = (int) Math.min(((MetaTileEntity) getMachine()).maxEUOutput(), leftEU);
-					EU = progressTimeManipulator.applyAsInt(EU);
-					if (machine.depleteInput(GT_ModHandler.getWater((EU + 160) / 160))) {
-						machine.addOutput(GT_ModHandler.getSteam(EU * 2));
-						leftEU -= EU;
-						if (leftEU <= 0) {
-							progressTime = 0;
-							maxProgressTime = 0;
-							EUt = 0;
-							leftEU = 0;
-			
-							endRecipe(previousRecipe);
-							getMachine().endProcess();
-						}
-						
-						return true;
+				int EU = (int) Math.min(((MetaTileEntity) getMachine()).maxEUOutput(), leftEU);
+				EU = progressTimeManipulator.applyAsInt(EU);
+				if (machine.depleteInput(GT_ModHandler.getWater((EU + 160) / 160))) {
+					machine.addOutput(GT_ModHandler.getSteam(EU * 2));
+					leftEU -= EU;
+					if (leftEU <= 0) {
+						progressTime = 0;
+						maxProgressTime = 0;
+						EUt = 0;
+						leftEU = 0;
+
+						if (previousRecipe != null) endRecipe(previousRecipe);
+						getMachine().endProcess();
 					}
+
+					return true;
 				}
 			}
 			
-			else machine.stopMachine();
+			machine.stopMachine();
 			return false;
 		}
 	}

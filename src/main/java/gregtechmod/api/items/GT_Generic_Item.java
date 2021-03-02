@@ -56,6 +56,7 @@ public class GT_Generic_Item extends Item {
 		return 0;
 	}
 	
+	@SideOnly(Side.CLIENT)
 	@SuppressWarnings("unchecked")
 	@Override
     public void addInformation(ItemStack aStack, EntityPlayer aPlayer, @SuppressWarnings("rawtypes") List aList, boolean advanced) {
@@ -65,6 +66,7 @@ public class GT_Generic_Item extends Item {
 	    addAdditionalToolTips(aList, aStack);
 	}
 	
+	@SideOnly(Side.CLIENT)
 	protected void addAdditionalToolTips(List<String> aList, ItemStack aStack) {
 	}
 }

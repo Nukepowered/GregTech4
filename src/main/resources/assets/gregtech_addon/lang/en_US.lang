@@ -350,6 +350,14 @@ metatileentity.STEAMTANKS.tooltip=%d Steam Tank Upgrades
 metatileentity.EUSTORAGES.tooltip=%d Additional EU-Storage
 metatileentity.NOT_ENOUGH_ENERGY=Insufficient Energy Line!
 
+metatileentity.turbine.speed=Speed: %s%%
+metatileentity.turbine.durability=Turbine HP: %s
+metatileentity.turbine.no_turbine=No turbine installed
+metatileentity.multiblock.dynamo_output=Outputs: %s  EU/t
+metatileentity.multiblock.malfunction_amount=Malfunctions: %s
+metatileentity.multiblock.thermalboiler.left_eu=Recipe EU: %s
+
+
 item.180k_Helium_Coolantcell.name=180k Helium Coolant Cell
 item.180k_NaK_Coolantcell.name=180k NaK Coolantcell
 item.360k_Helium_Coolantcell.name=360k Helium Coolant Cell
@@ -1382,6 +1390,7 @@ item.empty=Empty. You should recycle it properly.
 item.generated.tooltip=Generated Item
 item.non_consumable.tooltip=§oWill not consume in process
 item.chanced.tooltip=Chance: %s%%
+item.durability.tooltip=Durability: %d / %d
 item.GT_SensorCard_Item.tooltip=Insert into Display Panel
 item.GT_SensorCard_Item.tooltip.info.1=Device at:
 item.GT_SensorCard_Item.tooltip.info.2=x: %d y: %d z: %d

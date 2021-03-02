@@ -1,5 +1,10 @@
 package gregtechmod.api.items;
 
+import java.util.List;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 
 /**
@@ -32,4 +37,13 @@ public class GT_Durable_Item extends GT_Generic_Item {
     public boolean hasEffect(ItemStack par1ItemStack) {
         return false;
     }
+	
+	@SideOnly(Side.CLIENT)
+	@Override
+	protected void addAdditionalToolTips(List<String> aList, ItemStack aStack) {
+		if (aStack != null && aStack.getItem() != null && aStack.getItem() instanceof GT_Durable_Item) {
+			int durability = aStack.getMaxDamage() - aStack.getItemDamage();
+			aList.add(I18n.format("item.durability.tooltip", durability, aStack.getMaxDamage()));
+		}
+	}
 }

@@ -116,8 +116,8 @@ public class GT_MetaTileEntityLoader implements Runnable {
 		new GT_MetaTileEntity_Supercondensator			(103, "GT_Supercondensator");
 		new GT_MetaTileEntity_HighEnergyCharger			(104, "GT_HighEnergyCharger");
 		
-//		new GT_MetaTileEntity_Multi_GasTurbine			(108, "GT_Multi_GasTurbine");
-//		new GT_MetaTileEntity_Multi_SteamTurbine		(109, "GT_Multi_SteamTurbine"); // FIXME finish MULTIBLOCKS
+		new GT_MetaTileEntity_Multi_GasTurbine			(108, "GT_Multi_GasTurbine");
+		new GT_MetaTileEntity_Multi_SteamTurbine		(109, "GT_Multi_SteamTurbine");
 		new GT_MetaTileEntity_Multi_ThermalBoiler		(110, "GT_Multi_ThermalBoiler");
 		new GT_MetaTileEntity_Lathe						(111, "GT_Lathe"				, RecipeMaps.LATHE);
 		new GT_MetaTileEntity_AdvancedCraftingTable		(112, "GT_ProjectTable");

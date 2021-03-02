@@ -14,7 +14,7 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class GeneratorRecipeLogic extends RecipeLogic {
 	
-	public final IntSupplier efficiency; // FIXME change generator logic to TOTAL EU
+	public final IntSupplier efficiency;
 	protected long leftEU = 0;
 	
 	public GeneratorRecipeLogic(IntSupplier efficiency, RecipeMap<?> recipeMap, IRecipeWorkable machine) {

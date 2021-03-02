@@ -3,11 +3,11 @@ package gregtechmod.common.tileentities.machines.multi;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
-import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_MultiBlockBase;
+import gregtechmod.api.metatileentity.implementations.MTEWorkableMultiblock;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 
-public class GT_MetaTileEntity_Multi_AutoCrafter extends GT_MetaTileEntity_MultiBlockBase {
+public class GT_MetaTileEntity_Multi_AutoCrafter extends MTEWorkableMultiblock {
 
    public boolean isFacingValid(byte aFacing) {
       return aFacing > 1;

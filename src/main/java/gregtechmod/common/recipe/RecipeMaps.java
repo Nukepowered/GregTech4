@@ -21,12 +21,12 @@ public class RecipeMaps {
 	public static final RecipeMap<SimpleRecipeFactory> 			FUSION_REACTOR			= new RecipeMap<>(0, 0, 0, 0, 2, 2, 1, 1, new SimpleRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory> 			CENTRIFUGE				= new RecipeMap<>(0, 2, 1, 4, 0, 1, 0, 0, new SimpleRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory> 			ELECTROLYZER			= new RecipeMap<>(0, 2, 1, 4, 0, 1, 0, 0, new SimpleRecipeFactory());
-	public static final RecipeMap<SimpleRecipeFactory> 			GRINDER					= new RecipeMap<>(1, 2, 1, 4, 0, 1, 0, 0, new SimpleRecipeFactory()); // TODO multiblocks!
+	public static final RecipeMap<SimpleRecipeFactory> 			GRINDER					= new RecipeMap<>(1, 2, 1, 4, 0, 1, 0, 0, new SimpleRecipeFactory());
 	public static final RecipeMap<BlastFurnanceRecipeFactory> 	BLAST_FURNANCE			= new RecipeMap<>(1, 2, 1, 2, new BlastFurnanceRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory> 			BRONZE_BLAST_FURNANCE	= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory()); 
-	public static final RecipeMap<SimpleRecipeFactory> 			IMPLOSION_COMPRESSOR= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory()); // 
-	public static final RecipeMap<SimpleRecipeFactory> 			SAWMILL				= new RecipeMap<>(1, 2, 1, 3, 0, 1, 0, 0, new SimpleRecipeFactory()); //
-	public static final RecipeMap<SimpleRecipeFactory> 			VACUUM_FREEZER		= new RecipeMap<>(1, 1, 1, 1, new SimpleRecipeFactory()); // -----------------
+	public static final RecipeMap<SimpleRecipeFactory> 			IMPLOSION_COMPRESSOR= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory());
+	public static final RecipeMap<SimpleRecipeFactory> 			SAWMILL				= new RecipeMap<>(1, 2, 1, 3, 0, 1, 0, 0, new SimpleRecipeFactory());
+	public static final RecipeMap<SimpleRecipeFactory> 			VACUUM_FREEZER		= new RecipeMap<>(1, 1, 1, 1, new SimpleRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory> 			CHEMICAL			= new RecipeMap<>(1, 2, 1, 1, new SimpleRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory> 			DISTILLATION		= new RecipeMap<>(1, 2, 1, 4, new SimpleRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory> 			WIREMILL			= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory());
@@ -41,8 +41,8 @@ public class RecipeMaps {
 	public static final RecipeMapPrinter			   			PRINTER				= new RecipeMapPrinter(1, 3, 1, 2);
 	public static final PulverizerRecipeMap			   			PULVERIZING 		= new PulverizerRecipeMap(1, 2, 1, 4);
 	
-	public static final RecipeMap<GeneratorRecipeFactory> DIESEL_FUELS		= new RecipeMap<>(0, 1, 0, 1, 1, 1, 0, 0, new GeneratorRecipeFactory()); // TODO generators recipemaps
-	public static final RecipeMap<GeneratorRecipeFactory> TURBINE_FUELS		= new RecipeMap<>(0, 1, 0, 1, 1, 1, 0, 0, new GeneratorRecipeFactory());
+	public static final RecipeMap<GeneratorRecipeFactory> DIESEL_FUELS		= new RecipeMap<>(0, 1, 0, 1, 1, 1, 0, 0, new GeneratorRecipeFactory());
+	public static final RecipeMap<GeneratorRecipeFactory> TURBINE_FUELS		= new RecipeMap<>(0, 1, 0, 1, 0, 1, 0, 0, new GeneratorRecipeFactory());
 	public static final RecipeMap<GeneratorRecipeFactory> HOT_FUELS			= new RecipeMap<>(0, 1, 0, 1, 0, 1, 0, 0, new GeneratorRecipeFactory());
 	public static final RecipeMap<GeneratorRecipeFactory> DENSE_FUELS		= new RecipeMap<>(0, 1, 0, 1, 1, 1, 0, 0, new GeneratorRecipeFactory());
 	public static final RecipeMap<GeneratorRecipeFactory> PLASMA_FUELS		= new RecipeMap<>(0, 1, 0, 1, 1, 1, 0, 0, new GeneratorRecipeFactory());
