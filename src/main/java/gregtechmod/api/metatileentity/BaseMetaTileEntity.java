@@ -628,13 +628,13 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 				mSidedRedstone[5] = (byte)((aValue&32)>0?15:0);
 				break;
 			case  4:
-		    	if (hasValidMetaTileEntity() && mTickTimer > 20) mMetaTileEntity.doSound((byte)aValue, xCoord+0.5, yCoord+0.5, zCoord+0.5);
+		    	if (hasValidMetaTileEntity()) mMetaTileEntity.doSound((byte)aValue, xCoord+0.5, yCoord+0.5, zCoord+0.5);
 		    	break;
 			case  5:
-				if (hasValidMetaTileEntity() && mTickTimer > 20) mMetaTileEntity.startSoundLoop((byte)aValue, xCoord+0.5, yCoord+0.5, zCoord+0.5);
+				if (hasValidMetaTileEntity()) mMetaTileEntity.startSoundLoop((byte)aValue, xCoord+0.5, yCoord+0.5, zCoord+0.5);
 		    	break;
 			case  6:
-				if (hasValidMetaTileEntity() && mTickTimer > 20) mMetaTileEntity.stopSoundLoop((byte)aValue, xCoord+0.5, yCoord+0.5, zCoord+0.5);
+				if (hasValidMetaTileEntity()) mMetaTileEntity.stopSoundLoop((byte)aValue, xCoord+0.5, yCoord+0.5, zCoord+0.5);
 	    		break;
 			case  7:
 				mLightValue = (byte)aValue;
@@ -693,7 +693,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	@Override public int getInventoryStackLimit() {if (hasValidMetaTileEntity()) return mMetaTileEntity.getInventoryStackLimit(); return 64;}
 	@Override public void openInventory()  {if (hasValidMetaTileEntity()) mMetaTileEntity.onOpenGUI();}
 	@Override public void closeInventory() {if (hasValidMetaTileEntity()) mMetaTileEntity.onCloseGUI();}
-	@Override public boolean isUseableByPlayer(EntityPlayer aPlayer) {return hasValidMetaTileEntity() && playerOwnsThis(aPlayer, false) && mTickTimer>40 && getTileEntityOffset(0, 0, 0) == this && aPlayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64 && mMetaTileEntity.isAccessAllowed(aPlayer);}
+	@Override public boolean isUseableByPlayer(EntityPlayer aPlayer) {return hasValidMetaTileEntity() && playerOwnsThis(aPlayer, false) && getTileEntityOffset(0, 0, 0) == this && aPlayer.getDistanceSq(xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64 && mMetaTileEntity.isAccessAllowed(aPlayer);}
 	@Override public void validate() {super.validate(); mTickTimer = 0;}
     @Override public void invalidate() {tileEntityInvalid = false; if (hasValidMetaTileEntity()) {mMetaTileEntity.onRemoval(); mMetaTileEntity.setBaseMetaTileEntity(null);} if (isServerSide()) {GT_ModHandler.removeTileFromEnet(worldObj, this); mIsAddedToEnet = false;} super.invalidate();}
     @Override public void onChunkUnload() {if (isServerSide()) {GT_ModHandler.removeTileFromEnet(worldObj, this); mIsAddedToEnet = false;} super.onChunkUnload();}
@@ -1452,7 +1452,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
     
     @Override
     public int fill(ForgeDirection aSide, FluidStack aFluid, boolean doFill) {
-    	if (mTickTimer > 5 && hasValidMetaTileEntity() && (mRunningThroughTick || !mInputDisabled ) && (aSide == ForgeDirection.UNKNOWN || (mMetaTileEntity.isLiquidInput ((byte)aSide.ordinal()) && getCoverBehaviorAtSide((byte)aSide.ordinal()).letsLiquidIn ((byte)aSide.ordinal(), getCoverIDAtSide((byte)aSide.ordinal()), getCoverDataAtSide((byte)aSide.ordinal()), this)))) {
+    	if (hasValidMetaTileEntity() && (mRunningThroughTick || !mInputDisabled ) && (aSide == ForgeDirection.UNKNOWN || (mMetaTileEntity.isLiquidInput ((byte)aSide.ordinal()) && getCoverBehaviorAtSide((byte)aSide.ordinal()).letsLiquidIn ((byte)aSide.ordinal(), getCoverIDAtSide((byte)aSide.ordinal()), getCoverDataAtSide((byte)aSide.ordinal()), this)))) {
     		int amount = mMetaTileEntity.fill(aSide, aFluid, doFill);
     		if (amount > 0 && doFill) mInventoryChanged = true;
     		return amount;
@@ -1462,7 +1462,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
     
 	@Override
 	public FluidStack drain(ForgeDirection aSide, int maxDrain, boolean doDrain) {
-		if (mTickTimer > 5 && hasValidMetaTileEntity() && (mRunningThroughTick || !mOutputDisabled) && (aSide == ForgeDirection.UNKNOWN || (mMetaTileEntity.isLiquidOutput((byte)aSide.ordinal()) && getCoverBehaviorAtSide((byte)aSide.ordinal()).letsLiquidOut((byte)aSide.ordinal(), getCoverIDAtSide((byte)aSide.ordinal()), getCoverDataAtSide((byte)aSide.ordinal()), this)))) {
+		if (hasValidMetaTileEntity() && (mRunningThroughTick || !mOutputDisabled) && (aSide == ForgeDirection.UNKNOWN || (mMetaTileEntity.isLiquidOutput((byte)aSide.ordinal()) && getCoverBehaviorAtSide((byte)aSide.ordinal()).letsLiquidOut((byte)aSide.ordinal(), getCoverIDAtSide((byte)aSide.ordinal()), getCoverDataAtSide((byte)aSide.ordinal()), this)))) {
 			FluidStack stack = mMetaTileEntity.drain(aSide, maxDrain, doDrain);
 			if (stack != null && stack.amount > 0 && doDrain) mInventoryChanged = true;
 			return stack;
@@ -1472,7 +1472,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	
 	@Override
 	public FluidStack drain(ForgeDirection aSide, FluidStack aFluid, boolean doDrain) {
-		if (mTickTimer > 5 && hasValidMetaTileEntity() && (mRunningThroughTick || !mOutputDisabled) && (aSide == ForgeDirection.UNKNOWN || (mMetaTileEntity.isLiquidOutput((byte)aSide.ordinal()) && getCoverBehaviorAtSide((byte)aSide.ordinal()).letsLiquidOut((byte)aSide.ordinal(), getCoverIDAtSide((byte)aSide.ordinal()), getCoverDataAtSide((byte)aSide.ordinal()), this)))) {
+		if (hasValidMetaTileEntity() && (mRunningThroughTick || !mOutputDisabled) && (aSide == ForgeDirection.UNKNOWN || (mMetaTileEntity.isLiquidOutput((byte)aSide.ordinal()) && getCoverBehaviorAtSide((byte)aSide.ordinal()).letsLiquidOut((byte)aSide.ordinal(), getCoverIDAtSide((byte)aSide.ordinal()), getCoverDataAtSide((byte)aSide.ordinal()), this)))) {
 			FluidStack stack = mMetaTileEntity.drain(aSide, aFluid, doDrain);
 			if (stack != null && stack.amount > 0 && doDrain) mInventoryChanged = true;
 			return stack;
@@ -1482,13 +1482,13 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	
 	@Override
 	public boolean canFill(ForgeDirection aSide, Fluid aFluid) {
-		if (mTickTimer > 5 && hasValidMetaTileEntity() && (mRunningThroughTick || !mInputDisabled ) && (aSide == ForgeDirection.UNKNOWN || (mMetaTileEntity.isLiquidInput ((byte)aSide.ordinal()) && getCoverBehaviorAtSide((byte)aSide.ordinal()).letsLiquidIn ((byte)aSide.ordinal(), getCoverIDAtSide((byte)aSide.ordinal()), getCoverDataAtSide((byte)aSide.ordinal()), this)))) return mMetaTileEntity.canFill(aSide, aFluid);
+		if (hasValidMetaTileEntity() && (mRunningThroughTick || !mInputDisabled ) && (aSide == ForgeDirection.UNKNOWN || (mMetaTileEntity.isLiquidInput ((byte)aSide.ordinal()) && getCoverBehaviorAtSide((byte)aSide.ordinal()).letsLiquidIn ((byte)aSide.ordinal(), getCoverIDAtSide((byte)aSide.ordinal()), getCoverDataAtSide((byte)aSide.ordinal()), this)))) return mMetaTileEntity.canFill(aSide, aFluid);
 		return false;
 	}
 	
 	@Override
 	public boolean canDrain(ForgeDirection aSide, Fluid aFluid) {
-		if (mTickTimer > 5 && hasValidMetaTileEntity() && (mRunningThroughTick || !mOutputDisabled) && (aSide == ForgeDirection.UNKNOWN || (mMetaTileEntity.isLiquidOutput((byte)aSide.ordinal()) && getCoverBehaviorAtSide((byte)aSide.ordinal()).letsLiquidOut((byte)aSide.ordinal(), getCoverIDAtSide((byte)aSide.ordinal()), getCoverDataAtSide((byte)aSide.ordinal()), this)))) return mMetaTileEntity.canDrain(aSide, aFluid);
+		if (hasValidMetaTileEntity() && (mRunningThroughTick || !mOutputDisabled) && (aSide == ForgeDirection.UNKNOWN || (mMetaTileEntity.isLiquidOutput((byte)aSide.ordinal()) && getCoverBehaviorAtSide((byte)aSide.ordinal()).letsLiquidOut((byte)aSide.ordinal(), getCoverIDAtSide((byte)aSide.ordinal()), getCoverDataAtSide((byte)aSide.ordinal()), this)))) return mMetaTileEntity.canDrain(aSide, aFluid);
 		return false;
 	}
 	
