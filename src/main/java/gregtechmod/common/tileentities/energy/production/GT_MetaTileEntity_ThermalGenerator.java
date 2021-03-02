@@ -4,7 +4,6 @@ import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicGenerator;
 import gregtechmod.api.recipe.RecipeMap;
-import gregtechmod.common.recipe.logic.GeneratorRecipeLogic;
 
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -24,7 +23,7 @@ public class GT_MetaTileEntity_ThermalGenerator extends GT_MetaTileEntity_BasicG
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
-		return new GT_MetaTileEntity_ThermalGenerator(recipeLogic.recipeMap, ((GeneratorRecipeLogic)recipeLogic).efficiency);
+		return new GT_MetaTileEntity_ThermalGenerator(recipeLogic.recipeMap, efficiency);
 	}
 
 	@Override

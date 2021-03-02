@@ -3,8 +3,9 @@ package gregtechmod.common.tileentities.machines.multi;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.function.IntSupplier;
 
-import cofh.lib.util.helpers.MathHelper;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.enums.Materials;
@@ -20,10 +21,10 @@ import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Ou
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_MultiBlockBase;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeMap;
-import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.InfoBuilder;
 import gregtechmod.common.recipe.RecipeMaps;
 import gregtechmod.common.recipe.logic.GeneratorRecipeLogic;
 
@@ -37,6 +38,7 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends GT_MetaTileEntity_Mul
 
 	@Override public boolean isFacingValid(byte aFacing)			{return aFacing > 1;}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 158, GregTech_API.gregtechmod);}
+	@Override public int maxEUOutput() 								{return 400;}
 	
 	public GT_MetaTileEntity_Multi_ThermalBoiler(int aID, String mName) {
 		super(aID, mName, RecipeMaps.HOT_FUELS);
@@ -52,7 +54,7 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends GT_MetaTileEntity_Mul
 	}
 	
 	protected void initRecipeLogic(RecipeMap<?> map) {
-		recipeLogic = new MultiblockGenerator(100, map, this);
+		recipeLogic = new MultiblockGenerator(() -> mEfficiency, map, this);
 	}
 	
 	@Override
@@ -97,13 +99,6 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends GT_MetaTileEntity_Mul
 	
 	@Override
 	public boolean onRunningTick() {
-		int tGeneratedEU = (int) (recipeLogic.getEUt() * (mEfficiency / 100.0D));
-		if (tGeneratedEU > 0) {
-			if (this.depleteInput(GT_ModHandler.getWater((tGeneratedEU + 160) / 160))) {
-				this.addOutput(GT_ModHandler.getSteam(tGeneratedEU));
-			} else return false;
-		}
-		
 		return true;
 	}
 	
@@ -166,6 +161,13 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends GT_MetaTileEntity_Mul
 	}
 	
 	@Override
+	public Map<String, List<Object>> getInfoData() {
+		return InfoBuilder.create()
+				.newKey("sensor.progress.secs.1", ((MultiblockGenerator)recipeLogic).getLeftEU()) // TODO locale
+				.build();
+	}
+	
+	@Override
 	public int getTextureIndex(byte aSide, byte aFacing, boolean aActive, boolean aRedstone) {
 		if (aSide==aFacing) return aActive?84:83;
     	return super.getTextureIndex(aSide, aFacing, aActive, aRedstone);
@@ -192,10 +194,8 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends GT_MetaTileEntity_Mul
 	}
 	
 	private static class MultiblockGenerator extends GeneratorRecipeLogic {
-		
-		private static final float RECIPE_BOOST = 16.66666666F;
-		
-		protected MultiblockGenerator(int efficiency, RecipeMap<?> recipeMap, IRecipeWorkable machine) {
+	
+		protected MultiblockGenerator(IntSupplier efficiency, RecipeMap<?> recipeMap, IRecipeWorkable machine) {
 			super(efficiency, recipeMap, machine);
 		}
 		
@@ -205,65 +205,51 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends GT_MetaTileEntity_Mul
 			GT_MetaTileEntity_MultiBlockBase machine = (GT_MetaTileEntity_MultiBlockBase) getMachine();
 			IGregTechTileEntity base = machine.getBaseMetaTileEntity();
 			
-			// TODO change this after changing generator's recipe logic
-			if (progressTime > 0) {
-				int tmp = progressTime;
-				success = updateRecipeProgress();
-				if (tmp == 0 && !success) {
-					throw new IllegalStateException();
+			if (base.isAllowedToWork()) {
+				if (leftEU > 0) {
+					long tmp = leftEU;
+					success = updateRecipeProgress();
+					if (tmp == 0 && !success) {
+						throw new IllegalStateException();
+					}
 				}
-			}
-
-			if (progressTime == 0) {
-				if ((machine.hasInventoryBeenModified() || base.hasWorkJustBeenEnabled() || success || base.getTimer() % 600 == 0) && base.isAllowedToWork()) {// || !getMachine().getFluidInputs().isEmpty()) { // TODO may be generators will not work
-					trySerachRecipe();
-				} else {
-					previousRecipe = null;
-					base.setActive(false);
+				
+				if (leftEU == 0) {
+					if (machine.hasInventoryBeenModified() || base.hasWorkJustBeenEnabled() || success || base.getTimer() % 600 == 0) {
+						trySerachRecipe();
+					}
 				}
-			}
-
+			} 
+			
 			return success;
 		}
 		
 		@Override
-		protected void startRecipe(Recipe recipe) {
-			
-			if (getMachine().spaceForOutput(recipe)) {
-				previousRecipe = recipe;
-				maxProgressTime = MathHelper.floor(recipe.getDuration() / RECIPE_BOOST);
-				progressTime = 1;
-				EUt = MathHelper.floor(recipe.getEUt() * RECIPE_BOOST);
-				if (consumeInputs(recipe)) {
-					triggerMachine(true);
-					getMachine().startProcess();
-				} else {
-					GT_Log.log.catching(new IllegalStateException("Error state detected! RecipeMap passed recipe, but it's not matching! Report about this!!!"));
-					EUt = 0;
-					progressTime = 0;
-					maxProgressTime = 0;
-					previousRecipe = null;
-				}
-				
-			} else {
-				triggerMachine(false);
-			}
-		}
-		
-		@Override
 		protected boolean updateRecipeProgress() {
-			if (((GT_MetaTileEntity_MultiBlockBase) getMachine()).onRunningTick()) {
-				if ((progressTime += progressTimeManipulator.applyAsInt(1)) >= maxProgressTime) {
-					progressTime = 0;
-					maxProgressTime = 0;
-					EUt = 0;
-
-					endRecipe(previousRecipe);
-					getMachine().endProcess();
-					return true;
+			GT_MetaTileEntity_MultiBlockBase machine = (GT_MetaTileEntity_MultiBlockBase) getMachine();
+			if (leftEU > 0) {
+				if (machine.onRunningTick()) {
+					int EU = (int) Math.min(((MetaTileEntity) getMachine()).maxEUOutput(), leftEU);
+					EU = progressTimeManipulator.applyAsInt(EU);
+					if (machine.depleteInput(GT_ModHandler.getWater((EU + 160) / 160))) {
+						machine.addOutput(GT_ModHandler.getSteam(EU * 2));
+						leftEU -= EU;
+						if (leftEU <= 0) {
+							progressTime = 0;
+							maxProgressTime = 0;
+							EUt = 0;
+							leftEU = 0;
+			
+							endRecipe(previousRecipe);
+							getMachine().endProcess();
+						}
+						
+						return true;
+					}
 				}
-			} else ((GT_MetaTileEntity_MultiBlockBase) getMachine()).stopMachine();
-
+			}
+			
+			else machine.stopMachine();
 			return false;
 		}
 	}

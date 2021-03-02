@@ -196,13 +196,13 @@ public class GT_ItemIterator implements Runnable {
 				} else if (tName.equals("tile.ArsMagica:ore_vinteum")) {
 					GT_OreDictUnificator.set(OrePrefixes.ore, Materials.Vinteum, new ItemStack(tItem, 1, 0));
 				} else if (tName.equals("item.ArsMagica:purified_vinteum")) {
-					RecipeMaps.MAGIC_FUELS.factory().EUt(24).duration(11).input(new ItemStack(tItem, 1)).buildAndRegister();
+					RecipeMaps.MAGIC_FUELS.factory().EUt(16).duration(16).input(new ItemStack(tItem, 1)).buildAndRegister();
 				} else if (tName.equals("item.meefSteak") || tName.equals("item.venisonCooked")) {
 					RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(5000).setShaped(true).inputs(GT_Items.Cell_Empty.get(1), new ItemStack(tItem, 16, 0)).output(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Methane, 1L)).buildAndRegister();
 				} else if (tName.equals("item.meefRaw") || tName.equals("item.venisonRaw")) {
 					RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(5000).setShaped(true).inputs(GT_Items.Cell_Empty.get(1), new ItemStack(tItem, 12, 0)).output(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Methane, 1L)).buildAndRegister();
 				} else if (tName.equals("item.fieryBlood")) {
-					RecipeMaps.MAGIC_FUELS.factory().EUt(24).duration(85).input(new ItemStack(tItem, 1)).buildAndRegister();
+					RecipeMaps.MAGIC_FUELS.factory().EUt(32).duration(64).input(new ItemStack(tItem, 1)).buildAndRegister();
 				} else if (tName.equals("tile.TFRoots")) {
 					GT_ModHandler.addPulverisationRecipe(new ItemStack(tItem, 1, 0), new ItemStack(Items.stick, 2), new ItemStack(Items.stick, 1), 30);
 					GT_ModHandler.addSawmillRecipe(new ItemStack(tItem, 1, 0), new ItemStack(Items.stick, 4), new ItemStack(Items.stick, 2));

@@ -9,6 +9,7 @@ import java.util.Set;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.InfoBuilder;
 import gregtechmod.api.util.ListAdapter;
 import gregtechmod.common.recipe.logic.GeneratorRecipeLogic;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,14 +21,18 @@ public abstract class GT_MetaTileEntity_BasicGenerator extends BasicFluidWorkabl
 	/** A mapping of allowed fluid inputs by generator maps */
 	protected static final Map<Class<?>, Set<Integer>> ALLOWED_FLUIDS = new HashMap<>();
 	
+	protected int efficiency;
+	
 	public GT_MetaTileEntity_BasicGenerator(int aID, String aName, RecipeMap<?> recipeMap, int efficiency) {
 		super(aID, aName, recipeMap);
-		recipeLogic = new GeneratorRecipeLogic(efficiency, recipeMap, this);
+		this.efficiency = efficiency;
+		recipeLogic = new GeneratorRecipeLogic(this::getEfficiency, recipeMap, this);
 	}
 	
 	public GT_MetaTileEntity_BasicGenerator(RecipeMap<?> recipeMap, int efficiency) {
 		super(recipeMap);
-		recipeLogic = new GeneratorRecipeLogic(efficiency, recipeMap, this);
+		this.efficiency = efficiency;
+		recipeLogic = new GeneratorRecipeLogic(this::getEfficiency, recipeMap, this);
 	}
 	
 	@Override public boolean isValidSlot(int aIndex)				{return aIndex < 2;}
@@ -72,6 +77,13 @@ public abstract class GT_MetaTileEntity_BasicGenerator extends BasicFluidWorkabl
 		return false;
 	}
 	
+	@Override
+	public Map<String, List<Object>> getInfoData() {
+		return InfoBuilder.create()
+				.newKey("sensor.progress.percentage", GT_Utility.parseNumberToString(((GeneratorRecipeLogic)recipeLogic).getLeftEU())) // TODO locale
+				.build();
+	}
+	
     @Override
     public void onPostTick() {
     	super.onPostTick();
@@ -85,5 +97,9 @@ public abstract class GT_MetaTileEntity_BasicGenerator extends BasicFluidWorkabl
 	@Override
 	public int getTankPressure() {
 		return -100;
+	}
+	
+	public int getEfficiency() {
+		return this.efficiency;
 	}
 }

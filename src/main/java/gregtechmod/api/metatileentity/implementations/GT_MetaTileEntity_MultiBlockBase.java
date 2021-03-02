@@ -226,7 +226,7 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity im
 		return mPollution < 10000;
 	}
 	
-	protected boolean depleteInput(ItemStack item) {
+	public boolean depleteInput(ItemStack item) {
 		List<ItemStack> input = this.getInputItems();
 		int[] itemAmountInSlots = new int[input.size()];
 		int amount = item.stackSize;
@@ -264,7 +264,7 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity im
 		return false;
 	}
 	
-	protected boolean depleteInput(FluidStack fluid) {
+	public boolean depleteInput(FluidStack fluid) {
 		List<FluidStack> input = this.getFluidInputs();
 		int[] itemAmountInSlots = new int[input.size()];
 		int amount = fluid.amount;
@@ -302,7 +302,7 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity im
 		return false;
 	}
 	
-	protected boolean addOutput(ItemStack item) {
+	public boolean addOutput(ItemStack item) {
 		List<ItemStack> outputs = this.getOutputItems();
 		Map<Integer, Integer> newInv = new HashMap<>();
 		int amount = item.stackSize;
@@ -334,7 +334,7 @@ public abstract class GT_MetaTileEntity_MultiBlockBase extends MetaTileEntity im
 		return false;
 	}
 	
-	protected boolean addOutput(FluidStack fluid) {
+	public boolean addOutput(FluidStack fluid) {
 		List<FluidStack> outputs = this.getFluidOutputs();
 		Map<Integer, Integer> newInv = new HashMap<>();
 		int amount = fluid.amount;
