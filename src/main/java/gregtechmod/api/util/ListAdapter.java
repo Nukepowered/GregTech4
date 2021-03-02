@@ -3,6 +3,7 @@ package gregtechmod.api.util;
 import java.util.AbstractList;
 import java.util.Collection;
 import java.util.Objects;
+import java.util.RandomAccess;
 
 /**
  * An array to list adapter with range controll function
@@ -10,7 +11,7 @@ import java.util.Objects;
  * 
  * @author TheDarkDnKTv
  */
-public class ListAdapter<E> extends AbstractList<E> {
+public class ListAdapter<E> extends AbstractList<E> implements RandomAccess {
 	protected E[] data;
 	private int idxStart;
 	private int idxEnd;

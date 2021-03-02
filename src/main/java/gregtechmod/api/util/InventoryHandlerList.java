@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.RandomAccess;
 
 import gnu.trove.map.TIntObjectMap;
 import gnu.trove.map.hash.TIntObjectHashMap;
@@ -14,7 +15,7 @@ import gnu.trove.map.hash.TIntObjectHashMap;
  * @author TheDarkDnKTv
  * An multi inventory adapter used for multiblocks
  */
-public class InventoryHandlerList<E> extends AbstractList<E> {
+public class InventoryHandlerList<E> extends AbstractList<E> implements RandomAccess {
 	
 	protected final TIntObjectMap<List<E>> indexMapping;
 	protected final Map<Integer, Integer> offsetMap;
