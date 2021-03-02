@@ -1,5 +1,7 @@
 package gregtechmod.common.tileentities.machines.multi;
 
+import java.lang.ref.WeakReference;
+
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicTank;
@@ -7,7 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class GT_MetaTileEntity_FusionExtractor extends GT_MetaTileEntity_BasicTank {
 	
-	public IGregTechTileEntity mFusionComputer;
+	private WeakReference<IGregTechTileEntity> mFusionComputer;
 	
 	public GT_MetaTileEntity_FusionExtractor(int aID, String mName) {
 		super(aID, mName);
@@ -35,11 +37,22 @@ public class GT_MetaTileEntity_FusionExtractor extends GT_MetaTileEntity_BasicTa
 	@Override public boolean displaysItemStack()	{return true;}
 	@Override public boolean displaysStackSize()	{return true;}
 	
-	@Override
+    @Override
     public void onPostTick() {
-    	if (getBaseMetaTileEntity().isServerSide() && getBaseMetaTileEntity().getTimer()%20==0) {
-    		getBaseMetaTileEntity().setActive(mFusionComputer!=null&&mFusionComputer.isActive());
+    	if (getBaseMetaTileEntity().isServerSide()) {
+    		if (mFusionComputer != null && mFusionComputer.get() != null) {
+    			if (mFusionComputer.get().isInvalidTileEntity()) {
+    				mFusionComputer.clear();
+    				getBaseMetaTileEntity().setActive(false);
+    			} else if (getBaseMetaTileEntity().isActive() != mFusionComputer.get().isActive()) {
+    				getBaseMetaTileEntity().setActive(!getBaseMetaTileEntity().isActive());
+    			}
+    		}
     	}
+    }
+	
+    public void setComputer(IGregTechTileEntity computer) {
+    	mFusionComputer = new WeakReference<>(computer);
     }
     
 	@Override

@@ -18,7 +18,7 @@ import gregtechmod.common.recipe.maps.ScannerRecipeMap;
  *
  */
 public class RecipeMaps {
-	public static final RecipeMap<SimpleRecipeFactory> 			FUSION_REACTOR			= new RecipeMap<>(0, 0, 0, 0, 2, 2, 1, 1, new SimpleRecipeFactory());
+	public static final RecipeMap<SimpleRecipeFactory> 			FUSION_REACTOR			= new RecipeMap<>(0, 2, 0, 1, 0, 2, 0, 1, new SimpleRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory> 			CENTRIFUGE				= new RecipeMap<>(0, 2, 1, 4, 0, 1, 0, 0, new SimpleRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory> 			ELECTROLYZER			= new RecipeMap<>(0, 2, 1, 4, 0, 1, 0, 0, new SimpleRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory> 			GRINDER					= new RecipeMap<>(1, 2, 1, 4, 0, 1, 0, 0, new SimpleRecipeFactory());

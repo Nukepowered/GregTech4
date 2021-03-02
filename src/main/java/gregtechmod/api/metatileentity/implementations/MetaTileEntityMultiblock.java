@@ -544,7 +544,7 @@ public abstract class MetaTileEntityMultiblock extends MetaTileEntity {
 			}
 		}
 		
-		return false;
+		return getBaseMetaTileEntity().hasInventoryBeenModified();
 	}
 	
 	public boolean addEnergyOutput(int aEU) {

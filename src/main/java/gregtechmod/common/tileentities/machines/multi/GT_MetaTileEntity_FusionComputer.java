@@ -2,14 +2,24 @@ package gregtechmod.common.tileentities.machines.multi;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
+import gregtechmod.api.interfaces.IRecipeWorkable;
 import gregtechmod.api.metatileentity.MetaTileEntity;
+import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicTank;
+import gregtechmod.api.metatileentity.implementations.MetaTileEntityMultiblock;
 import gregtechmod.api.recipe.Recipe;
+import gregtechmod.api.recipe.RecipeLogic;
+import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.InfoBuilder;
+import gregtechmod.api.util.InventoryHandler;
+import gregtechmod.api.util.InventoryHandlerList;
+import gregtechmod.api.util.ListAdapter;
+import gregtechmod.api.util.WeakList;
+import gregtechmod.common.recipe.RecipeMaps;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -18,23 +28,32 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
-public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity {
+public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity implements IRecipeWorkable {
 
-	public int mProgresstime = 0, mMaxProgresstime = 0, mEUt = 0, mUpdate = 0, mStartUpCheck = 100;
-	private ItemStack mOutputItem1;
-	public boolean mMachine = true;
+	/* STRUCTURE STATUS */
+	protected boolean structComplete 	= false;
+	protected boolean needCheckStruct 	= true;
 	
-	private ArrayList<IGregTechTileEntity> mPlasmaExtractors   = new ArrayList<IGregTechTileEntity>();
-	private ArrayList<IGregTechTileEntity> mEnergyInjectors    = new ArrayList<IGregTechTileEntity>();
-	private ArrayList<IGregTechTileEntity> mPrimaryInjectors   = new ArrayList<IGregTechTileEntity>();
-	private ArrayList<IGregTechTileEntity> mSecondaryInjectors = new ArrayList<IGregTechTileEntity>();
+	protected int MAX_FLUID_STACK = 16_000;
+	
+	protected RecipeLogic recipeLogic;
+	
+	private WeakList<GT_MetaTileEntity_BasicTank> mPlasmaExtractors   	= new WeakList<>();
+	private WeakList<GT_MetaTileEntity_BasicTank> mPlasmaInjectors   	= new WeakList<>();
+	private WeakList<IGregTechTileEntity> mEnergyInjectors   			= new WeakList<>();
+
+	protected List<FluidStack> fluidInputs	= null;
+	protected List<FluidStack> fluidOutputs	= null;
+	protected List<ItemStack> itemInputs	= null;
+	protected List<ItemStack> itemOutputs	= null;
 	
 	public GT_MetaTileEntity_FusionComputer(int aID, String mName) {
 		super(aID, mName);
+		recipeLogic = new FusionRecipeLogic();
 	}
 	
 	public GT_MetaTileEntity_FusionComputer() {
-		
+		recipeLogic = new FusionRecipeLogic();
 	}
 	
 	@Override public boolean isSimpleMachine()						{return false;}
@@ -45,8 +64,6 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity {
     @Override public int getEUVar()									{return getStoredEU();}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 143);}
 	@Override public boolean isAccessAllowed(EntityPlayer aPlayer)	{return true;}
-	@Override public int getProgresstime()							{return mProgresstime;}
-	@Override public int maxProgresstime()							{return mMaxProgresstime;}
 	@Override public int increaseProgress(int aProgress)			{return aProgress;}
     
 	@Override
@@ -59,135 +76,91 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity {
 		return aSide != getBaseMetaTileEntity().getFrontFacing();
 	}
 	
-	@Override
-	public void saveNBTData(NBTTagCompound aNBT) {
-    	aNBT.setInteger("mEUt", mEUt);
-    	aNBT.setInteger("mProgresstime", mProgresstime);
-    	aNBT.setInteger("mMaxProgresstime", mMaxProgresstime);
-    	
-        if (mOutputItem1 != null) {
-            NBTTagCompound tNBT = new NBTTagCompound();
-        	mOutputItem1.writeToNBT(tNBT);
-            aNBT.setTag("mOutputItem1", tNBT);
-        }
-	}
-	
-	@Override
-	public void loadNBTData(NBTTagCompound aNBT) {
-    	mUpdate = 100;
-    	mEUt = aNBT.getInteger("mEUt");
-    	mProgresstime = aNBT.getInteger("mProgresstime");
-    	mMaxProgresstime = aNBT.getInteger("mMaxProgresstime");
-    	
-    	NBTTagCompound tNBT1 = (NBTTagCompound)aNBT.getTag("mOutputItem1");
-    	if (tNBT1 != null) {
-    		mOutputItem1 = GT_Utility.loadItem(tNBT1);
-    	}
-	}
-	
 	private void setComputerOf(MetaTileEntity aMetaTileEntity, boolean setreset) {
 		if (aMetaTileEntity != null) {
 			if (aMetaTileEntity instanceof GT_MetaTileEntity_FusionInjector) {
-				((GT_MetaTileEntity_FusionInjector)aMetaTileEntity).mFusionComputer = setreset?getBaseMetaTileEntity():null;
+				((GT_MetaTileEntity_FusionInjector)aMetaTileEntity).setComputer(setreset?getBaseMetaTileEntity():null);
 				if (setreset)
-					if (aMetaTileEntity.getBaseMetaTileEntity().getYCoord() > getBaseMetaTileEntity().getYCoord())
-						mPrimaryInjectors.add(aMetaTileEntity.getBaseMetaTileEntity());
-					else
-						mSecondaryInjectors.add(aMetaTileEntity.getBaseMetaTileEntity());
+					mPlasmaInjectors.add((GT_MetaTileEntity_FusionInjector)aMetaTileEntity);
 			}
 			if (aMetaTileEntity instanceof GT_MetaTileEntity_FusionEnergyInjector) {
-				((GT_MetaTileEntity_FusionEnergyInjector)aMetaTileEntity).mFusionComputer = setreset?getBaseMetaTileEntity():null;
+				((GT_MetaTileEntity_FusionEnergyInjector)aMetaTileEntity).setComputer(setreset?getBaseMetaTileEntity():null);
 				if (setreset)
 					mEnergyInjectors.add(aMetaTileEntity.getBaseMetaTileEntity());
 			}
 			if (aMetaTileEntity instanceof GT_MetaTileEntity_FusionExtractor) {
-				((GT_MetaTileEntity_FusionExtractor)aMetaTileEntity).mFusionComputer = setreset?getBaseMetaTileEntity():null;
+				((GT_MetaTileEntity_FusionExtractor)aMetaTileEntity).setComputer(setreset?getBaseMetaTileEntity():null);
 				if (setreset)
-					mPlasmaExtractors.add(aMetaTileEntity.getBaseMetaTileEntity());
+					mPlasmaExtractors.add((GT_MetaTileEntity_FusionExtractor)aMetaTileEntity);
 			}
 		}
 	}
 	
 	private void reset() {
-		for (IGregTechTileEntity tTileEntity : mPlasmaExtractors  ) setComputerOf((MetaTileEntity)tTileEntity.getMetaTileEntity(), false);
-		for (IGregTechTileEntity tTileEntity : mPrimaryInjectors  ) setComputerOf((MetaTileEntity)tTileEntity.getMetaTileEntity(), false);
-		for (IGregTechTileEntity tTileEntity : mSecondaryInjectors) setComputerOf((MetaTileEntity)tTileEntity.getMetaTileEntity(), false);
+		for (GT_MetaTileEntity_BasicTank tTileEntity : mPlasmaExtractors  ) setComputerOf(tTileEntity, false);
+		for (GT_MetaTileEntity_BasicTank tTileEntity : mPlasmaInjectors  ) setComputerOf(tTileEntity, false);
 		for (IGregTechTileEntity tTileEntity : mEnergyInjectors   ) setComputerOf((MetaTileEntity)tTileEntity.getMetaTileEntity(), false);
 		
-		mPlasmaExtractors   = new ArrayList<IGregTechTileEntity>();
-		mPrimaryInjectors   = new ArrayList<IGregTechTileEntity>();
-		mSecondaryInjectors = new ArrayList<IGregTechTileEntity>();
-		mEnergyInjectors    = new ArrayList<IGregTechTileEntity>();
+		mPlasmaExtractors.clear();
+		mPlasmaInjectors.clear();
+		mEnergyInjectors.clear();
+		
+		fluidInputs = null;
+		fluidOutputs = null;
+		itemInputs = null;
+		itemOutputs = null;
 	}
 	
     @Override
     public void onMachineBlockUpdate() {
-    	mUpdate = 100;
+    	needCheckStruct = true;
     }
     
     @Override
     public void onPostTick() {
 	    if (getBaseMetaTileEntity().isServerSide()) {
-	    	if (mUpdate--==0 || mStartUpCheck==0) {
-	        	mMachine = checkMachine();
-	    	}
-	    	if (mStartUpCheck-- < 0) {
-		    	if (mMaxProgresstime > 0) {
-		    		if (mMachine && decreaseStoredEU(-mEUt)) {
-			    		if (++mProgresstime>mMaxProgresstime) {
-			    			addOutput(mOutputItem1);
-			    			mOutputItem1 = null;
-			    			mProgresstime = 0;
-			    			mMaxProgresstime = 0;
-			    			if (getBaseMetaTileEntity().isAllowedToWork()) checkRecipe();
-			    		}
-			    	} else {
-		    			addOutput(mOutputItem1);
-		    			mOutputItem1 = null;
-		    			mProgresstime = 0;
-		    			mMaxProgresstime = 0;
-			    	}
-		    	} else {
-		    		if (getBaseMetaTileEntity().isAllowedToWork()) checkRecipe();
-		    	}
-		    	getBaseMetaTileEntity().setActive(mMaxProgresstime > 0);
+	    	if (getBaseMetaTileEntity().isServerSide()) {
+	    		if (needCheckStruct) {
+	    			reset();
+	    			structComplete = checkMachine();
+	        		needCheckStruct = false;
+	        		
+	        		if (structComplete) {
+	        			fluidInputs = new InventoryHandlerList<>(mPlasmaInjectors.stream().map(extr -> new ListAdapter<>(extr.mFluid)).collect(Collectors.toList()));
+	        			fluidOutputs = new InventoryHandlerList<>(mPlasmaExtractors.stream().map(extr -> new ListAdapter<>(extr.mFluid)).collect(Collectors.toList()));
+	        			itemInputs = new InventoryHandlerList<>(mPlasmaInjectors.stream().map(extr -> new ListAdapter<>(extr.mInventory, extr.getInputSlot(), extr.getInputSlot())).collect(Collectors.toList()));
+	        			itemOutputs = new InventoryHandlerList<>(mPlasmaExtractors.stream().map(extr -> new ListAdapter<>(extr.mInventory, extr.getOutputSlot(), extr.getOutputSlot())).collect(Collectors.toList()));
+	        		}
+	    		} else if (!structComplete && getBaseMetaTileEntity().getTimer() % 600 == 0) {
+	    			needCheckStruct = true;
+	    		}
+	    		
+	    		if (structComplete) {
+	    			recipeLogic.update();
+	    		} else recipeLogic.stop();
 	    	}
 		}
     }
     
-    private boolean checkRecipe() {
-    	if (!mMachine) return false;
-    	ItemStack input1 =  getPrimaryInput();
-    	ItemStack input2 = getSecondaryInput();
-    	Recipe tRecipe = Recipe.findEqualRecipe(false, false, Recipe.sFusionRecipes, input1, input2);
-    	if (tRecipe != null && consumeInput(tRecipe.mInputs[0], tRecipe.mInputs[1], getBaseMetaTileEntity().isActive()?0:tRecipe.mStartEU)) {
-    		mMaxProgresstime = tRecipe.mDuration;
-		    mEUt = tRecipe.mEUt;
-		    mOutputItem1 = GT_Utility.copy(tRecipe.getOutput(0));
-		    return true;
-    	}
-    	return false;
-    }
-    
-    private ItemStack getPrimaryInput() {
-    	for (IGregTechTileEntity tTileEntity : mPrimaryInjectors) {
-    		if (tTileEntity.getMetaTileEntity() != null && tTileEntity.getMetaTileEntity() instanceof GT_MetaTileEntity_FusionInjector) {
-    			ItemStack rStack = ((GT_MetaTileEntity_FusionInjector)tTileEntity.getMetaTileEntity()).getMaterial();
-    			if (rStack != null) return rStack;
-    		}
-    	}
-    	return null;
-    }
-    
-    private ItemStack getSecondaryInput() {
-    	for (IGregTechTileEntity tTileEntity : mSecondaryInjectors) {
-    		if (tTileEntity.getMetaTileEntity() != null && tTileEntity.getMetaTileEntity() instanceof GT_MetaTileEntity_FusionInjector) {
-    			ItemStack rStack = ((GT_MetaTileEntity_FusionInjector)tTileEntity.getMetaTileEntity()).getMaterial();
-    			if (rStack != null) return rStack;
-    		}
-    	}
-    	return null;
-    }
+    public boolean hasInventoryBeenModified() {
+		for (GT_MetaTileEntity_BasicTank hatch : mPlasmaInjectors) {
+			if (MetaTileEntityMultiblock.isValidMetaTileEntity(hatch)) {
+				if (hatch.getBaseMetaTileEntity().hasInventoryBeenModified()) {
+					return true;
+				}
+			}
+		}
+		
+		for (GT_MetaTileEntity_BasicTank hatch : mPlasmaExtractors) {
+			if (MetaTileEntityMultiblock.isValidMetaTileEntity(hatch)) {
+				if (hatch.getBaseMetaTileEntity().hasInventoryBeenModified()) {
+					return true;
+				}
+			}
+		}
+		
+		return getBaseMetaTileEntity().hasInventoryBeenModified();
+	}
     
     private int getStoredEU() {
     	int rEU = 0;
@@ -211,73 +184,6 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity {
     	return false;
     }
     
-    private boolean consumeInput(ItemStack aInput1, ItemStack aInput2, int aEU) {
-    	if (aInput1 != null && aInput2 != null) {
-	    	if (aEU <= 0 || getStoredEU() >= aEU) {
-		    	for (IGregTechTileEntity tTileEntity : mPrimaryInjectors) {
-		    		if (tTileEntity.getMetaTileEntity() != null && tTileEntity.getMetaTileEntity() instanceof GT_MetaTileEntity_FusionInjector) {
-		    			ItemStack tStack = ((GT_MetaTileEntity_FusionInjector)tTileEntity.getMetaTileEntity()).getMaterial();
-		    			if (tStack != null) {
-		    				if (GT_Utility.areStacksEqual(tStack, aInput1) && tStack.stackSize >= aInput1.stackSize) {
-			    		    	for (IGregTechTileEntity tTileEntity2 : mSecondaryInjectors) {
-			    		    		if (tTileEntity2.getMetaTileEntity() != null && tTileEntity2.getMetaTileEntity() instanceof GT_MetaTileEntity_FusionInjector) {
-			    		    			if (((GT_MetaTileEntity_FusionInjector)tTileEntity2.getMetaTileEntity()).consumeMaterial(aInput2)) {
-			    		    				return decreaseStoredEU(aEU) && ((GT_MetaTileEntity_FusionInjector)tTileEntity.getMetaTileEntity()).consumeMaterial(aInput1);
-			    		    			}
-			    		    		}
-			    		    	}
-			    		    	return false;
-		    				}
-		    			}
-		    		}
-		    	}
-		    	for (IGregTechTileEntity tTileEntity : mSecondaryInjectors) {
-		    		if (tTileEntity.getMetaTileEntity() != null && tTileEntity.getMetaTileEntity() instanceof GT_MetaTileEntity_FusionInjector) {
-		    			ItemStack tStack = ((GT_MetaTileEntity_FusionInjector)tTileEntity.getMetaTileEntity()).getMaterial();
-		    			if (tStack != null) {
-		    				if (GT_Utility.areStacksEqual(tStack, aInput1) && tStack.stackSize >= aInput1.stackSize) {
-			    		    	for (IGregTechTileEntity tTileEntity2 : mPrimaryInjectors) {
-			    		    		if (tTileEntity2.getMetaTileEntity() != null && tTileEntity2.getMetaTileEntity() instanceof GT_MetaTileEntity_FusionInjector) {
-			    		    			if (((GT_MetaTileEntity_FusionInjector)tTileEntity2.getMetaTileEntity()).consumeMaterial(aInput2)) {
-			    		    				return decreaseStoredEU(aEU) && ((GT_MetaTileEntity_FusionInjector)tTileEntity.getMetaTileEntity()).consumeMaterial(aInput1);
-			    		    			}
-			    		    		}
-			    		    	}
-			    		    	return false;
-		    				}
-		    			}
-		    		}
-		    	}
-	    	}
-    	}
-    	return false;
-    }
-    
-    private void addOutput(ItemStack aOutput) {
-    	if (aOutput == null) return;
-    	FluidStack tLiquid = GT_Utility.getFluidForFilledItem(aOutput);
-    	if (tLiquid == null) {
-    		for (IGregTechTileEntity tTileEntity : mPlasmaExtractors) {
-    			ItemStack tStack = tTileEntity.getStackInSlot(1);
-    			if (tStack == null) {
-    				tTileEntity.setInventorySlotContents(1, GT_Utility.copy(aOutput));
-    				return;
-    			}
-    			if (GT_Utility.areStacksEqual(tStack, aOutput) && tStack.stackSize + aOutput.stackSize <= tStack.getMaxStackSize()) {
-    				tStack.stackSize+=aOutput.stackSize;
-        			return;
-    			}
-    		}
-    	} else {
-    		for (IGregTechTileEntity tTileEntity : mPlasmaExtractors) {
-    			if (((MetaTileEntity)tTileEntity.getMetaTileEntity()).fill(tLiquid, false) == tLiquid.amount) {
-    				((MetaTileEntity)tTileEntity.getMetaTileEntity()).fill(tLiquid, true);
-    				return;
-    			}
-    		}
-    	}
-    }
-    
 	@Override
 	public int getTextureIndex(byte aSide, byte aFacing, boolean aActive, boolean aRedstone) {
 		if (aSide != aFacing) return aActive?20:19;
@@ -287,9 +193,10 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity {
 	@Override
 	public Map<String, List<Object>> getInfoData() {
 		return InfoBuilder.create()
-				.newKey("sensor.progress.percentage", mProgresstime * 100.0D / mMaxProgresstime)
-				.newKey("sensor.progress.secs", mProgresstime / 20)
-				.newKey("sensor.progress.secs", mMaxProgresstime / 20)
+				.newKey("sensor.progress.percentage", recipeLogic.getDisplayProgress() * 100.0D / recipeLogic.getDisplayMaxProgress())
+				.newKey("sensor.progress.secs", recipeLogic.getDisplayProgress() / 20)
+				.newKey("sensor.progress.secs.1", recipeLogic.getDisplayMaxProgress() / 20)
+				.newKey("nei.extras.eu_total", GT_Utility.parseNumberToString(getStoredEU()))
 				.build();
 	}
 	
@@ -555,4 +462,210 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity {
     	if (tObject == null || !(tObject instanceof MetaTileEntity)) return null;
     	return (MetaTileEntity)tObject;
     }
+
+	@Override
+	public void startProcess() {}
+
+	@Override
+	public void endProcess() {}
+
+	@Override
+	public void stutterProcess() {}
+
+	@Override
+	public boolean allowToCheckRecipe() {
+		return true;
+	}
+
+	@Override
+	public boolean spaceForOutput(Recipe recipe) {
+		for (FluidStack fluid : recipe.getFluidOutputs()) {
+			int amount = fluid.amount;
+			for (int i = 0; amount > 0 && i < fluidOutputs.size(); i++) {
+				FluidStack stackInSlot = fluidOutputs.get(i);
+				if (GT_Utility.isFluidStackValid(stackInSlot) && stackInSlot.isFluidEqual(fluid)) {
+					int tmp = Math.min(MAX_FLUID_STACK, stackInSlot.amount + fluid.amount);
+					amount -= tmp - stackInSlot.amount;
+				} else if (stackInSlot == null) amount = 0;
+			}
+			
+			if (amount > 0) // Could not work fine, need check
+				return false;
+		}
+		
+		return true;
+	}
+
+	@Override
+	public List<ItemStack> getInputItems() {
+		if (structComplete && itemInputs != null) {
+			return itemInputs;
+		}
+		
+		return new InventoryHandler<>(2);
+	}
+
+	@Override
+	public List<ItemStack> getOutputItems() {
+		if (structComplete && itemOutputs != null) {
+			return itemOutputs;
+		}
+		
+		return new InventoryHandler<>(1);
+	}
+
+	@Override
+	public List<FluidStack> getFluidInputs() {
+		if (structComplete && fluidInputs != null) {
+			return fluidInputs;
+		}
+		
+		return new InventoryHandler<>(2);
+	}
+
+	@Override
+	public List<FluidStack> getFluidOutputs() {
+		if (structComplete && fluidOutputs != null) {
+			return fluidOutputs;
+		}
+		
+		return new InventoryHandler<>(1);
+	}
+	
+	
+	@Override
+	public void saveNBTData(NBTTagCompound aNBT) {
+    	recipeLogic.saveToNBT(aNBT);
+	}
+	
+	@Override
+	public void loadNBTData(NBTTagCompound aNBT) {
+    	recipeLogic.loadFromNBT(aNBT);
+	}
+	
+	private class FusionRecipeLogic extends RecipeLogic {
+		
+		private boolean firstStart = true;
+		
+		protected FusionRecipeLogic() {
+			super(RecipeMaps.FUSION_REACTOR, GT_MetaTileEntity_FusionComputer.this);
+		}
+		
+		@Override
+		public boolean update() {
+			boolean success = false;
+			IGregTechTileEntity base = getMachine().getBaseMetaTileEntity();
+			GT_MetaTileEntity_FusionComputer machine = (GT_MetaTileEntity_FusionComputer)getMachine();
+			overclockersCount = base.getOverclockerUpgradeCount();
+			
+			if (base.isAllowedToWork()) {
+				if (progressTime > 0) {
+					int tmp = progressTime;
+					success = updateRecipeProgress();
+					if (tmp == 0 && !success) {
+						throw new IllegalStateException();
+					}
+				}
+				
+				if (progressTime == 0) {
+					if (machine.hasInventoryBeenModified() || base.hasWorkJustBeenEnabled() || success || base.getTimer() % 600 == 0 || wasNoEnergy) {
+						if (machine.getStoredEU() >= machine.getMinimumStoredEU() - 100) {
+							trySerachRecipe();
+							wasNoEnergy = false;
+						} else {
+							previousRecipe = null;
+							wasNoEnergy = true;
+							triggerMachine(false);
+						} 
+					} else {
+						previousRecipe = null;
+					}
+				}
+			} 
+			
+			return success;
+		}
+		
+		@Override
+		protected boolean updateRecipeProgress() {
+			if (((GT_MetaTileEntity_FusionComputer)getMachine()).decreaseStoredEU(EUt)) {
+				if ((progressTime += progressTimeManipulator.applyAsInt((int)Math.pow(2, overclockersCount))) >= maxProgressTime) {
+					progressTime = 0;
+					maxProgressTime = 0;
+					EUt = 0;
+					
+					endRecipe(previousRecipe);
+					getMachine().endProcess();
+					return true;
+				}
+			} else stop();
+			
+			return false;
+		}
+		
+		@Override
+		protected void trySerachRecipe() {
+			if (getMachine().allowToCheckRecipe()) {
+				if (previousRecipe != null) {
+					if (match(previousRecipe)) {
+						startRecipe(previousRecipe);
+					} else {
+						previousRecipe = null;
+						triggerMachine(false);
+					}
+				} else {
+					firstStart = true;
+					Recipe resRec = findRecipe();
+					if (resRec != null)
+						startRecipe(resRec);
+					firstStart = false;
+				}
+			}
+		}
+		
+		
+		@Override
+		protected void startRecipe(Recipe recipe) {
+			if (getMachine().spaceForOutput(recipe) && firstStart ? ((GT_MetaTileEntity_FusionComputer)getMachine()).decreaseStoredEU(recipe.getEUtoStart()) : true) {
+				previousRecipe = recipe;
+				maxProgressTime = recipe.getDuration();
+				progressTime = 1;
+				EUt = recipe.getEUt();
+				if (consumeInputs(recipe)) {
+					triggerMachine(true);
+					getMachine().startProcess();
+				} else {
+					GT_Log.log.catching(new IllegalStateException("Error state detected! RecipeMap passed recipe, but it's not matching! Report about this!!!"));
+					EUt = 0;
+					progressTime = 0;
+					maxProgressTime = 0;
+					previousRecipe = null;
+				}
+				
+			} else stop();
+		}
+		
+		@Override
+		public void stop() {
+			super.stop();
+			getMachine().getBaseMetaTileEntity().disableWorking();
+			triggerMachine(false);
+			firstStart = true;
+		}
+		
+		@Override
+		public void saveToNBT(NBTTagCompound data) {
+			super.saveToNBT(data);
+			NBTTagCompound data1 = data.getCompoundTag("RecipeLogic");
+			data1.setBoolean("firstStart", firstStart);
+			data.setTag("RecipeLogic", data1);
+		}
+		
+		@Override
+		public void loadFromNBT(NBTTagCompound data) {
+			super.loadFromNBT(data);
+			NBTTagCompound data1 = data.getCompoundTag("RecipeLogic");
+			firstStart = data1.getBoolean("firstStart");
+		}
+	}
 }

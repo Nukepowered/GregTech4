@@ -99,7 +99,7 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
 		}
 	}
 	
-	@Override // TODO did not check for fluid output slots, not needed yet
+	@Override
     public boolean spaceForOutput(Recipe recipe) {
 		List<ItemStack> outputSlots = this.getOutputItems();
 		List<ItemStack> allOutputs = recipe.getAllOutputs();
@@ -123,7 +123,7 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
 		}
 		
 		for (FluidStack fluid : recipe.getFluidOutputs()) {
-			int amount = this.fill(fluid.copy(), false);
+			int amount = this.fill(fluid.copy(), false); // TODO FIX FLUID CHECK!
 			if (amount < fluid.amount) {
 				return false;
 			}

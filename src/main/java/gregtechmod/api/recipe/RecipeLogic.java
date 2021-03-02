@@ -8,7 +8,6 @@ import java.util.function.Predicate;
 
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.interfaces.IRecipeWorkable;
-import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 
@@ -27,6 +26,7 @@ public class RecipeLogic {
 	public WeakReference<IRecipeWorkable> metaTileEntity;
 	public final RecipeMap<?> recipeMap;
 	
+	public int MAX_FLUID_STACK = 16_000;
 	public int batterySlot 		= 5;
 	/** Custom fucntion called every recipe progress time update, if you want to speed up machine because of some factor, just increase the value up */
 	protected IntUnaryOperator progressTimeManipulator = i -> i;
@@ -96,6 +96,8 @@ public class RecipeLogic {
 						wasNoEnergy = true;
 						triggerMachine(false);
 					} 
+				} else {
+					previousRecipe = null;
 				}
 			}
 		} 
@@ -213,11 +215,20 @@ public class RecipeLogic {
 				GT_Log.log.error("Output overflow detected! Left items: " + amount + " for output stack: " + recipeOut);
 		}
 		
-		MetaTileEntity mte = (MetaTileEntity) getMachine();
+		List<FluidStack> fluidOutputs = getMachine().getFluidOutputs();
 		for (FluidStack fluid : recipe.getFluidOutputs()) {
-			int amount = mte.fill(fluid.copy(), true);
-			if (amount > 0)
-				GT_Log.log.error("Output overflow detected! Left fluid: " + amount + " for output stack: " + fluid);
+			int amount = fluid.amount;
+			for (int i = 0; amount > 0 && i < fluidOutputs.size(); i++) {
+				FluidStack stackInSlot = fluidOutputs.get(i);
+				if (GT_Utility.isFluidStackValid(stackInSlot) && stackInSlot.isFluidEqual(fluid)) {
+					int tmp = Math.min(MAX_FLUID_STACK, stackInSlot.amount + fluid.amount);
+					amount -= tmp - stackInSlot.amount;
+					stackInSlot.amount = tmp;
+				} else if (stackInSlot == null) {
+					fluidOutputs.set(i, fluid.copy());
+					amount = 0;
+				}
+			}
 		}
 		
 		stuttering = false;

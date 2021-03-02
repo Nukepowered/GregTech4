@@ -1,17 +1,16 @@
 package gregtechmod.common.tileentities.machines.multi;
 
-import gregtechmod.api.enums.GT_Items;
+import java.lang.ref.WeakReference;
+
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicTank;
-import gregtechmod.api.util.GT_ModHandler;
-import gregtechmod.api.util.GT_Utility;
+
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 
 public class GT_MetaTileEntity_FusionInjector extends GT_MetaTileEntity_BasicTank {
 	
-	public IGregTechTileEntity mFusionComputer;
+	private WeakReference<IGregTechTileEntity> mFusionComputer;
 	
 	public GT_MetaTileEntity_FusionInjector(int aID, String mName) {
 		super(aID, mName);
@@ -41,41 +40,20 @@ public class GT_MetaTileEntity_FusionInjector extends GT_MetaTileEntity_BasicTan
 	
     @Override
     public void onPostTick() {
-    	if (getBaseMetaTileEntity().isServerSide() && getBaseMetaTileEntity().getTimer()%20==0) {
-    		getBaseMetaTileEntity().setActive(mFusionComputer!=null&&mFusionComputer.isActive());
-    	}
-    }
-    
-    public ItemStack getMaterial() {
-    	if (mInventory[getInputSlot()] == null) {
-    		ItemStack tStack = GT_Utility.fillFluidContainer(mFluid[0], GT_Items.Cell_Empty.get(1));
-    		if (tStack == null) return null;
-    		tStack.stackSize = mFluid[0].amount / GT_Utility.getFluidForFilledItem(tStack).amount;
-    		return tStack;
-    	}
-    	return mInventory[getInputSlot()];
-    }
-    
-    public boolean consumeMaterial(ItemStack aStack) {
-    	if (aStack == null) return false;
-    	if (mFluid[0] == null || !GT_Utility.containsFluid(aStack, mFluid[0]) || GT_Utility.getFluidForFilledItem(aStack).amount * aStack.stackSize > mFluid[0].amount) {
-    		if (mInventory[0] != null && GT_Utility.areStacksEqual(mInventory[0], aStack) && mInventory[0].stackSize >= aStack.stackSize) {
-    			ItemStack tOutputCells = GT_ModHandler.getEmptyCell(GT_ModHandler.getCapsuleCellContainerCount(aStack));
-    			if (tOutputCells != null && tOutputCells.stackSize > 0) {
-    				if (mInventory[1] == null) {
-    					mInventory[1] = tOutputCells;
-    				} else if (GT_Utility.areStacksEqual(mInventory[1], tOutputCells)) {
-    					mInventory[1].stackSize = Math.min(mInventory[1].getMaxStackSize(), mInventory[1].stackSize + tOutputCells.stackSize);
-    				}
+    	if (getBaseMetaTileEntity().isServerSide()) {
+    		if (mFusionComputer != null && mFusionComputer.get() != null) {
+    			if (mFusionComputer.get().isInvalidTileEntity()) {
+    				mFusionComputer.clear();
+    				getBaseMetaTileEntity().setActive(false);
+    			} else if (getBaseMetaTileEntity().isActive() != mFusionComputer.get().isActive()) {
+    				getBaseMetaTileEntity().setActive(!getBaseMetaTileEntity().isActive());
     			}
-    			getBaseMetaTileEntity().decrStackSize(0, aStack.stackSize);
-    			return true;
     		}
-    	} else {
-    		mFluid[0].amount -= (GT_Utility.getFluidForFilledItem(aStack).amount * aStack.stackSize);
-    		return true;
     	}
-    	return false;
+    }
+	
+    public void setComputer(IGregTechTileEntity computer) {
+    	mFusionComputer = new WeakReference<>(computer);
     }
     
 	@Override

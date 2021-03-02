@@ -25,7 +25,7 @@ public class IC2RecipeMap extends DummyRecipeMap {
 	
 	@Override
 	public Recipe findRecipe(List<ItemStack> input, List<FluidStack> fluidInputs) {
-		for (ItemStack in : input) { // TODO find items
+		for (ItemStack in : input) {
 			if (GT_Utility.isStackValid(in)) {
 				ItemStack inValid = in.copy();
 				List<ItemStack> results = recipeGetter.apply(inValid);

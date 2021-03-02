@@ -2,6 +2,7 @@ package gregtechmod.api.metatileentity.implementations;
 
 import java.util.List;
 
+import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeLogic;
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_Utility;
@@ -40,6 +41,11 @@ public abstract class BaseMultiFluidWorkable extends BaseMultiWorkable {
 
 	@Override // Fuck this shit, called before i init fluid IO
 	protected void initRecipeLogic(RecipeMap<?> map) {}
+	
+	@Override
+	public boolean spaceForOutput(Recipe recipe) {
+		return super.spaceForOutput(recipe); // TODO FIX FLUIDS CHECK!
+	}
 	
 	@Override
 	public void saveNBTData(NBTTagCompound aNBT) {

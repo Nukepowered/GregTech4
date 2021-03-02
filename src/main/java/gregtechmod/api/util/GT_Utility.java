@@ -1002,6 +1002,12 @@ public class GT_Utility {
 		return null;
 	}
 	
+	public static FluidStack copy(FluidStack fluid, int amount) {
+		fluid = fluid.copy();
+		fluid.amount = amount;
+		return fluid;
+	}
+	
 	public static List<ItemStack> copy(Collection<ItemStack> stacks) {
 		return stacks.stream().map(ItemStack::copy).collect(Collectors.toList());
 	}
