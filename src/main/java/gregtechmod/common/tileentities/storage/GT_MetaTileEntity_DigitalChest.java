@@ -10,9 +10,9 @@ import gregtechmod.api.util.GT_Config;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.InfoBuilder;
+
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -20,8 +20,6 @@ import net.minecraft.tileentity.TileEntity;
 public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
 
    public int mItemCount = 0;
-   public Item mItemID = null;
-   public int mItemMeta = 0;
    public boolean isDigitalChest = true;
    public static int sDigitalItemCount = '\u8000';
 
@@ -36,92 +34,47 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
       sDigitalItemCount = Math.max(1024, aConfig.get(GT_ConfigCategories.machineconfig, "DigitalChest.MaxItems", sDigitalItemCount));
    }
 
-   public boolean unbreakable() {
-      return true;
-   }
-
-   public boolean isWrenchable() {
-      return this.mItemCount <= 0;
-   }
-
-   public boolean isSimpleMachine() {
-      return true;
-   }
-
-   public int getInvSize() {
-      return 3;
-   }
-
-   public boolean isFacingValid(byte aFacing) {
-      return true;
-   }
-
-   public boolean isAccessAllowed(EntityPlayer aPlayer) {
-      return true;
-   }
-
-   public boolean ownerControl() {
-      return false;
-   }
-
-   public boolean isEnetOutput() {
-      return false;
-   }
-
-   public boolean isEnetInput() {
-      return false;
-   }
-
-   public boolean isOutputFacing(byte aSide) {
-      return false;
-   }
-
-   public boolean isInputFacing(byte aSide) {
-      return false;
-   }
-
-   public int getProgresstime() {
-      return this.mItemCount + (super.mInventory[0] == null?0:super.mInventory[0].stackSize) + (super.mInventory[1] == null?0:super.mInventory[1].stackSize) + (super.mInventory[2] == null?0:super.mInventory[2].stackSize);
-   }
-
-   public int maxProgresstime() {
-      return this.getMaxItemCount();
-   }
+   @Override public boolean unbreakable() 							{return true;}
+   @Override public boolean isSimpleMachine() 						{return true;}
+   @Override  public int getInvSize() 								{return 1;}
+   @Override public boolean isFacingValid(byte aFacing) 			{return true;}
+   @Override public boolean isAccessAllowed(EntityPlayer aPlayer) 	{return true;}
+   @Override public boolean ownerControl() 							{return false;}
+   @Override public boolean isEnetOutput() 							{return false;}
+   @Override public boolean isEnetInput() 							{return false;}
+   @Override public boolean isOutputFacing(byte aSide) 				{return false;}
+   @Override public boolean isInputFacing(byte aSide) 				{return false;}
+   @Override public boolean isDigitalChest() 						{return isDigitalChest;}
+   @Override public boolean isWrenchable()							{return this.mItemCount <= 0;}
+   @Override public void setItemCount(int aCount) 					{this.mItemCount = aCount; }
 
    public int getMaxItemCount() {
       return sDigitalItemCount - 192;
    }
 
-   public void setItemCount(int aCount) {
-      this.mItemCount = aCount;
-   }
-
+   @Override
    public void onRightclick(EntityPlayer aPlayer) {
       ItemStack tPlayerItem = aPlayer.inventory.getCurrentItem();
       if(tPlayerItem == null) {
-         if(this.mItemID != null) {
-            for(int tNBT = 0; this.mItemCount < this.getMaxItemCount() && tNBT < aPlayer.inventory.getSizeInventory(); ++tNBT) {
-               if(aPlayer.inventory.getStackInSlot(tNBT) != null && aPlayer.inventory.getStackInSlot(tNBT).getItem() == this.getStoredItem().getItem() && aPlayer.inventory.getStackInSlot(tNBT).getItemDamage() == this.mItemMeta && !aPlayer.inventory.getStackInSlot(tNBT).hasTagCompound()) {
-                  this.mItemCount += aPlayer.inventory.getStackInSlot(tNBT).stackSize;
-                  if(aPlayer.inventory.getStackInSlot(tNBT).stackSize == 111) {
-                     this.mItemCount = this.getMaxItemCount() + 192 - (this.mItemCount + (super.mInventory[0] == null?0:super.mInventory[0].stackSize) + (super.mInventory[1] == null?0:super.mInventory[1].stackSize) + (super.mInventory[2] == null?0:super.mInventory[2].stackSize));
-                  } else if(this.mItemCount > this.getMaxItemCount()) {
-                     aPlayer.inventory.getStackInSlot(tNBT).stackSize = this.mItemCount - this.getMaxItemCount();
-                     this.mItemCount = this.getMaxItemCount();
-                  } else {
-                     aPlayer.inventory.getStackInSlot(tNBT).stackSize = 0;
-                  }
-               }
+         if(mInventory[0] != null) {
+            for(int i = 0; this.mItemCount < this.getMaxItemCount() && i < aPlayer.inventory.getSizeInventory(); ++i) {
+            	ItemStack itemInSlot = aPlayer.inventory.getStackInSlot(i);
+				if (itemInSlot != null && itemInSlot.isItemEqual(getStoredItem()) && !itemInSlot.hasTagCompound()) {
+					int tmp = mItemCount;
+					mItemCount = Math.min(tmp + itemInSlot.stackSize, getMaxItemCount());
+					tmp = mItemCount - tmp;
+					if (tmp == itemInSlot.stackSize) {
+						aPlayer.inventory.setInventorySlotContents(i, null);
+					} else {
+						itemInSlot.stackSize -= tmp;
+					}
+				}
+			}
 
-               if(aPlayer.inventory.getStackInSlot(tNBT) != null && aPlayer.inventory.getStackInSlot(tNBT).stackSize <= 0) {
-                  aPlayer.inventory.setInventorySlotContents(tNBT, (ItemStack)null);
-               }
-            }
-
-            GT_Utility.sendChatToPlayer(aPlayer, this.mItemCount + (super.mInventory[0] == null?0:super.mInventory[0].stackSize) + (super.mInventory[1] == null?0:super.mInventory[1].stackSize) + (super.mInventory[2] == null?0:super.mInventory[2].stackSize) + " of " + (new ItemStack(this.getStoredItem().getItem(), 1, this.mItemMeta)).getDisplayName());
+            GT_Utility.sendChatToPlayer(aPlayer, mItemCount + " of " + mInventory[0].getDisplayName());
          }
       } else {
-         if(this.isDigitalChest && GT_OreDictUnificator.isItemStackInstanceOf(tPlayerItem, "craftingQuantumChestUpgrade")) {
+         if(isDigitalChest && GT_OreDictUnificator.isItemStackInstanceOf(tPlayerItem, "craftingQuantumChestUpgrade")) {
             if(tPlayerItem.stackSize > 0 || aPlayer.capabilities.isCreativeMode) {
                if(!aPlayer.capabilities.isCreativeMode) {
                   --tPlayerItem.stackSize;
@@ -136,117 +89,123 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
             return;
          }
 
-         if(this.mItemID == null) {
-            this.mItemID = tPlayerItem.getItem();
-            this.mItemMeta = tPlayerItem.getItemDamage();
-            this.mItemCount = 0;
-         }
-
-         if(this.mItemID != null) {
-            if(this.mItemCount < this.getMaxItemCount() && tPlayerItem.getItem() == this.mItemID && tPlayerItem.getItemDamage() == this.mItemMeta && !tPlayerItem.hasTagCompound()) {
-               this.mItemCount += tPlayerItem.stackSize;
-               if(tPlayerItem.stackSize == 111) {
-                  this.mItemCount = this.getMaxItemCount();
-               } else if(this.mItemCount > this.getMaxItemCount()) {
-                  tPlayerItem.stackSize = this.mItemCount - this.getMaxItemCount();
-                  this.mItemCount = this.getMaxItemCount();
-               } else {
-                  tPlayerItem.stackSize = 0;
-               }
-            } else {
-               GT_Utility.sendChatToPlayer(aPlayer, this.mItemCount + (super.mInventory[0] == null?0:super.mInventory[0].stackSize) + (super.mInventory[1] == null?0:super.mInventory[1].stackSize) + (super.mInventory[2] == null?0:super.mInventory[2].stackSize) + " of " + (new ItemStack(this.mItemID, 1, this.mItemMeta)).getDisplayName());
-            }
+         if(mInventory[0] == null) {
+            mInventory[0] = tPlayerItem;
+            this.mItemCount = tPlayerItem.stackSize;
+            aPlayer.inventory.setInventorySlotContents(aPlayer.inventory.currentItem, null);
+         } else if (tPlayerItem.isItemEqual(mInventory[0]) && !tPlayerItem.hasTagCompound()) {
+        	 int tmp = mItemCount;
+        	 mItemCount = Math.min(mItemCount + tPlayerItem.stackSize, getMaxItemCount());
+        	 tmp = mItemCount - tmp;
+        	 if (tmp == tPlayerItem.stackSize) {
+        		 aPlayer.inventory.setInventorySlotContents(aPlayer.inventory.currentItem, null);
+        	 } else {
+        		 tPlayerItem.stackSize -= tmp;
+        	 }
+        	 
+         } else {
+        	 GT_Utility.sendChatToPlayer(aPlayer, this.mItemCount + " of " + mInventory[0].getDisplayName());
          }
       }
 
       if(aPlayer.inventoryContainer != null) {
          aPlayer.inventoryContainer.detectAndSendChanges();
       }
-
    }
 
+   @Override
    public void onLeftclick(EntityPlayer aPlayer) {
-      if(super.mInventory[0] != null && super.mInventory[0].stackSize > 0) {
-         ItemStack tOutput = GT_Utility.copy((ItemStack[]) new Object[]{super.mInventory[0]});
-         if(aPlayer.isSneaking()) {
-            tOutput.stackSize = 1;
-         }
-
-         this.getBaseMetaTileEntity().decrStackSize(0, tOutput.stackSize);
-         EntityItem tEntity = new EntityItem(this.getBaseMetaTileEntity().getWorld(), (double)this.getBaseMetaTileEntity().getOffsetX(this.getBaseMetaTileEntity().getFrontFacing(), 1) + 0.5D, (double)this.getBaseMetaTileEntity().getOffsetY(this.getBaseMetaTileEntity().getFrontFacing(), 1) + 0.5D, (double)this.getBaseMetaTileEntity().getOffsetZ(this.getBaseMetaTileEntity().getFrontFacing(), 1) + 0.5D, tOutput);
-         tEntity.motionX = 0.0D;
-         tEntity.motionY = 0.0D;
-         tEntity.motionZ = 0.0D;
-         this.getBaseMetaTileEntity().getWorld().spawnEntityInWorld(tEntity);
-      }
-
+		if (mInventory[0] != null) {
+			if (mItemCount > 0) {
+				ItemStack tOutput = mInventory[0].copy();
+				tOutput.stackSize = aPlayer.isSneaking() ? 1 : Math.min(tOutput.getMaxStackSize(), mItemCount);
+				mItemCount -= tOutput.stackSize;
+				EntityItem tEntity = new EntityItem(this.getBaseMetaTileEntity().getWorld(),
+						(double) this.getBaseMetaTileEntity().getOffsetX(this.getBaseMetaTileEntity().getFrontFacing(), 1)
+								+ 0.5D,
+						(double) this.getBaseMetaTileEntity().getOffsetY(this.getBaseMetaTileEntity().getFrontFacing(), 1)
+								+ 0.5D,
+						(double) this.getBaseMetaTileEntity().getOffsetZ(this.getBaseMetaTileEntity().getFrontFacing(), 1)
+								+ 0.5D,
+						tOutput);
+				tEntity.motionX = 0.0D;
+				tEntity.motionY = 0.0D;
+				tEntity.motionZ = 0.0D;
+				this.getBaseMetaTileEntity().getWorld().spawnEntityInWorld(tEntity);
+			}
+			
+			if (mItemCount <= 0 && getBaseMetaTileEntity().isAllowedToWork()) {
+				mInventory[0] = null;
+			}
+		} 
    }
 
+   @Override
    public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
       return new GT_MetaTileEntity_DigitalChest();
    }
 
+   @Override
    public void saveNBTData(NBTTagCompound aNBT) {
       aNBT.setInteger("mItemCount", this.mItemCount);
-      aNBT.setInteger("mItemID", Item.getIdFromItem(this.mItemID));
-      aNBT.setInteger("mItemMeta", this.mItemMeta);
    }
 
+   @Override
    public void loadNBTData(NBTTagCompound aNBT) {
       this.mItemCount = aNBT.getInteger("mItemCount");
-      this.mItemID = Item.getItemById(aNBT.getInteger("mItemID"));
-      this.mItemMeta = aNBT.getInteger("mItemMeta");
    }
 
+   @Override
    public boolean allowCoverOnSide(byte aSide, int aCoverID) {
       return aSide != this.getBaseMetaTileEntity().getFrontFacing();
    }
 
+   @Override
    public void onPostTick() {
-      if(this.getBaseMetaTileEntity().isServerSide() && this.mItemID != null) {
-         if(this.mItemID == null || this.getItemCount() <= 0 && this.getBaseMetaTileEntity().isAllowedToWork()) {
-            this.mItemID = null;
-            this.mItemMeta = 0;
-            this.mItemCount = 0;
-         }
-
-         if(super.mInventory[1] == null) {
-            super.mInventory[1] = new ItemStack(this.mItemID, 0, this.mItemMeta);
-         } else if(this.mItemCount < this.getMaxItemCount() && super.mInventory[1].getItem() == this.mItemID && super.mInventory[1].getItemDamage() == this.mItemMeta && !super.mInventory[1].hasTagCompound()) {
-            this.mItemCount += super.mInventory[1].stackSize;
-            if(this.mItemCount > this.getMaxItemCount()) {
-               super.mInventory[1].stackSize = this.mItemCount - this.getMaxItemCount();
-               this.mItemCount = this.getMaxItemCount();
-            } else {
-               super.mInventory[1].stackSize = 0;
-            }
-         }
-
-         if(super.mInventory[2] == null) {
-            super.mInventory[2] = new ItemStack(this.mItemID, 0, this.mItemMeta);
-         } else if(this.mItemCount < this.getMaxItemCount() && super.mInventory[2].getItem() == this.mItemID && super.mInventory[2].getItemDamage() == this.mItemMeta && !super.mInventory[2].hasTagCompound()) {
-            this.mItemCount += super.mInventory[2].stackSize;
-            if(this.mItemCount > this.getMaxItemCount()) {
-               super.mInventory[2].stackSize = this.mItemCount - this.getMaxItemCount();
-               this.mItemCount = this.getMaxItemCount();
-            } else {
-               super.mInventory[2].stackSize = 0;
-            }
-         }
-
-         if(this.mItemCount > 0) {
-            if(super.mInventory[0] == null) {
-               super.mInventory[0] = new ItemStack(this.mItemID, 0, this.mItemMeta);
-            }
-
-            if(super.mInventory[0] != null && super.mInventory[0].getItem() == this.mItemID && super.mInventory[0].getItemDamage() == this.mItemMeta && !super.mInventory[0].hasTagCompound()) {
-               while(super.mInventory[0].stackSize < super.mInventory[0].getMaxStackSize() && this.mItemCount > 0) {
-                  --this.mItemCount;
-                  ++super.mInventory[0].stackSize;
-               }
-            }
-         }
-      }
+//      if(this.getBaseMetaTileEntity().isServerSide() && this.mItemID != null) {
+//         if(this.mItemID == null || this.getItemCount() <= 0 && this.getBaseMetaTileEntity().isAllowedToWork()) {
+//            this.mItemID = null;
+//            this.mItemMeta = 0;
+//            this.mItemCount = 0;
+//         }
+//
+//         if(super.mInventory[1] == null) {
+//            super.mInventory[1] = new ItemStack(this.mItemID, 0, this.mItemMeta);
+//         } else if(this.mItemCount < this.getMaxItemCount() && super.mInventory[1].getItem() == this.mItemID && super.mInventory[1].getItemDamage() == this.mItemMeta && !super.mInventory[1].hasTagCompound()) {
+//            this.mItemCount += super.mInventory[1].stackSize;
+//            if(this.mItemCount > this.getMaxItemCount()) {
+//               super.mInventory[1].stackSize = this.mItemCount - this.getMaxItemCount();
+//               this.mItemCount = this.getMaxItemCount();
+//            } else {
+//               super.mInventory[1].stackSize = 0;
+//            }
+//         }
+//
+//         if(super.mInventory[2] == null) {
+//            super.mInventory[2] = new ItemStack(this.mItemID, 0, this.mItemMeta);
+//         } else if(this.mItemCount < this.getMaxItemCount() && super.mInventory[2].getItem() == this.mItemID && super.mInventory[2].getItemDamage() == this.mItemMeta && !super.mInventory[2].hasTagCompound()) {
+//            this.mItemCount += super.mInventory[2].stackSize;
+//            if(this.mItemCount > this.getMaxItemCount()) {
+//               super.mInventory[2].stackSize = this.mItemCount - this.getMaxItemCount();
+//               this.mItemCount = this.getMaxItemCount();
+//            } else {
+//               super.mInventory[2].stackSize = 0;
+//            }
+//         }
+//
+//         if(this.mItemCount > 0) {
+//            if(super.mInventory[0] == null) {
+//               super.mInventory[0] = new ItemStack(this.mItemID, 0, this.mItemMeta);
+//            }
+//
+//            if(super.mInventory[0] != null && super.mInventory[0].getItem() == this.mItemID && super.mInventory[0].getItemDamage() == this.mItemMeta && !super.mInventory[0].hasTagCompound()) {
+//               while(super.mInventory[0].stackSize < super.mInventory[0].getMaxStackSize() && this.mItemCount > 0) {
+//                  --this.mItemCount;
+//                  ++super.mInventory[0].stackSize;
+//               }
+//            }
+//         }
+//      }
 
    }
 
@@ -255,41 +214,44 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
    }
 
    private ItemStack getStoredItem() {
-      return this.mItemID == null?null:new ItemStack(this.mItemID, 1, this.mItemMeta);
+	   ItemStack stack = mInventory[0];
+	   if (stack == null) {
+		   return null;
+	   } else {
+		   return stack.copy();
+	   }
    }
-
-   private int getItemCount() {
-      return this.mItemCount + (super.mInventory[0] == null?0:super.mInventory[0].stackSize) + (super.mInventory[1] == null?0:super.mInventory[1].stackSize) + (super.mInventory[2] == null?0:super.mInventory[2].stackSize);
-   }
+   
+   @Override
    public Map<String, List<Object>> getInfoData() {
 	   return InfoBuilder.create()
-			   .newKey("metatileentity.GT_Barrel.item", GT_Utility.isStackValid(getStoredItem()) ? getStoredItem().copy() : "null")
-			   .newKey("metatileentity.GT_Barrel.count", getItemCount(), getMaxItemCount())
+			   .newKey("metatileentity.GT_Barrel.item", GT_Utility.isStackValid(getStoredItem()) ? getStoredItem() : "materials.Empty")
+			   .newKey("metatileentity.GT_Barrel.count", GT_Utility.parseNumberToString(mItemCount), GT_Utility.parseNumberToString(getMaxItemCount()))
 			   .build();
    }
 
+   @Override
    public boolean isGivingInformation() {
       return true;
    }
 
+   @Override
    public String getDescription() {
       return "metatileentity.GT_Barrel.tooltip";
    }
 
-   public boolean isDigitalChest() {
-      return true;
-   }
-
+   @Override
    public ItemStack[] getStoredItemData() {
-      return new ItemStack[]{new ItemStack(this.mItemID, this.mItemCount, this.mItemMeta)};
+		return mInventory;
    }
 
+   @Override
    public boolean allowPullStack(int aIndex, byte aSide, ItemStack aStack) {
       return aIndex == 0;
    }
 
+   @Override
    public boolean allowPutStack(int aIndex, byte aSide, ItemStack aStack) {
-      return (aIndex == 1 || aIndex == 2) && aStack.getItem() == this.mItemID && aStack.getItemDamage() == this.mItemMeta && !aStack.hasTagCompound();
+      return (aIndex == 1 || aIndex == 2) && mInventory[0] == null || (mInventory[0].isItemEqual(aStack) && !aStack.hasTagCompound());
    }
-
 }

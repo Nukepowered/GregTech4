@@ -12,11 +12,11 @@ public class GT_MetaTileEntity_QuantumChest extends GT_MetaTileEntity_DigitalChe
 
    public GT_MetaTileEntity_QuantumChest(int aID, String aName) {
       super(aID, aName);
-      super.isDigitalChest = false;
+      isDigitalChest = false;
    }
 
    public GT_MetaTileEntity_QuantumChest() {
-      super.isDigitalChest = false;
+      isDigitalChest = false;
    }
 
    public void onConfigLoad(GT_Config aConfig) {
@@ -38,5 +38,4 @@ public class GT_MetaTileEntity_QuantumChest extends GT_MetaTileEntity_DigitalChe
    public String getDescription() {
       return "tile.BlockMetaID_Machine.Quantumchest.tooltip";
    }
-
 }
