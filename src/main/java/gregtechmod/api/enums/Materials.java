@@ -173,8 +173,6 @@ public enum Materials {
 	FieryBlood			(  -1, GT_ItemTextures.SET_NONE				, 1|2          |64                      , 255, 255, 255,   0,	5,    2048,    0,          0,          0,          0,    false, false, 1,   1,   1,   Dyes.dyeRed			),
 	Firestone			(  -1, GT_ItemTextures.SET_NONE				, 0                                     , 255, 255, 255,   0,	0,    0,       0,          0,          0,          0,    false, false, 3,   1,   1,   Dyes.dyeOrange		),
 	Fluorite			(  -1, GT_ItemTextures.SET_NONE				, 1    |8                               , 255, 255, 255,   0,	0,    0,       0,          0,          0,          0,    false, false, 3,   1,   1,   Dyes.dyeGreen		),
-	// TODO remove this shit
-	FoolsRuby			( 512, GT_ItemTextures.SET_RUBY				, 1  |4|8                               , 255, 100, 100, 127,	0,    0,       0,          0,          0,          0,    false, true,  3,   1,   1,   Dyes.dyeRed			),
 	Force				( 521, GT_ItemTextures.SET_DIAMOND			, 1|2|4|8      |64|128                  , 255, 255,   0,   0,	0,    0,       0,          0,          0,          0,    false, false, 3,   1,   1,   Dyes.dyeYellow		),
 	Forcicium			( 518, GT_ItemTextures.SET_DIAMOND			, 1  |4|8|16                            ,  50,  50,  70,   0,	0,    0,       0,          0,          0,          0,    false, false, 3,   1,   1,   Dyes.dyeGreen		),
 	Forcillium			( 519, GT_ItemTextures.SET_DIAMOND			, 1  |4|8|16                            ,  50,  50,  70,   0,	0,    0,       0,          0,          0,          0,    false, false, 3,   1,   1,   Dyes.dyeGreen		),
@@ -815,8 +813,6 @@ public enum Materials {
 		Tanzanite		.addOreByProduct(Opal			);
 		Opal			.addOreByProduct(Tanzanite		);
 		Amethyst		.addOreByProduct(Amethyst		);
-		Jasper			.addOreByProduct(FoolsRuby		);
-		FoolsRuby		.addOreByProduct(Jasper			);
 		Amber			.addOreByProduct(Amber			);
 		Topaz			.addOreByProduct(BlueTopaz		);
 		BlueTopaz		.addOreByProduct(Topaz			);
@@ -831,7 +827,6 @@ public enum Materials {
 		Salt			.addOreByProduct(RockSalt		);
 		RockSalt		.addOreByProduct(Salt			);
 		
-		FoolsRuby.mChemicalFormula = Ruby.mChemicalFormula;
 		Naquadah.mChemicalFormula = "Nq";
 		
 		ImmutableMap.Builder<String, Materials> builder = new ImmutableMap.Builder<>();
