@@ -20,7 +20,7 @@ import net.minecraft.util.StatCollector;
 public class CentrifugeRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
-	public void loadTransferRects() { // TODO ADD FLUID RENDER
+	public void loadTransferRects() {
 		try {
 		transferRects.add(new RecipeTransferRect(new Rectangle(79-sOffsetX, 22-sOffsetY + 7, 18, 12), getRecipeId()));
 		transferRects.add(new RecipeTransferRect(new Rectangle(67-sOffsetX, 34-sOffsetY + 7, 12, 18), getRecipeId()));
@@ -82,6 +82,11 @@ public class CentrifugeRecipeHandler extends GT_RecipeHandler {
 				case 3: return Pair.of(50 - sOffsetX, 35 - sOffsetY + 7);
 				default: return Pair.of(0, 0);
 				}
+			}
+			
+			@Override
+			protected Pair<Integer, Integer> getFluidInputAligment(int itemIdx) {
+				return Pair.of(110 - sOffsetX + (itemIdx * 18), 65 - sOffsetY + 7);
 			}
 		};
 	}

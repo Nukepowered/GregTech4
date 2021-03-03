@@ -68,6 +68,11 @@ public class SawmillRecipeHandler extends GT_RecipeHandler {
 			protected Pair<Integer, Integer> getOutputAligment(int itemIdx) {
 				return Pair.of(86 - sOffsetX + (itemIdx * 18), 25 - sOffsetY);
 			}
+			
+			@Override
+			protected Pair<Integer, Integer> getFluidInputAligment(int itemIdx) {
+				return Pair.of(29, 34 - sOffsetY + (itemIdx * 18));
+			}
 		};
 	}
 	
