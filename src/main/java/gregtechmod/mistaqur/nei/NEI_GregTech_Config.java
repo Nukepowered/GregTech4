@@ -4,6 +4,13 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.common.gui.GT_GUIContainer_AdvancedWorkbench;
 import gregtechmod.common.gui.GT_GUIContainer_BronzeWorkbench;
+import gregtechmod.common.gui.GT_GUIContainer_DieselGenerator;
+import gregtechmod.common.gui.GT_GUIContainer_GasTurbine;
+import gregtechmod.common.gui.GT_GUIContainer_MagicEnergyConverter;
+import gregtechmod.common.gui.GT_GUIContainer_PlasmaGenerator;
+import gregtechmod.common.gui.GT_GUIContainer_SemifluidGenerator;
+import gregtechmod.common.gui.GT_GUIContainer_ThermalGenerator;
+import gregtechmod.common.recipe.RecipeMaps;
 import codechicken.nei.api.IConfigureNEI;
 
 public class NEI_GregTech_Config implements IConfigureNEI {
@@ -31,14 +38,14 @@ public class NEI_GregTech_Config implements IConfigureNEI {
 		new LatheRecipeHandler();
 		new CutterRecipeHandler();
 		new ExtruderRecipeHandler();
-		/*
-		new DieselFuelsHandler(); // TODO NEI overlays
-		new TurbineFuelsHandler();
-		new HotFuelsHandler();
-		new DenseLiquidFuelsHandler();
-		new PlasmaFuelsHandler();
-		new MagicFuelsHandler();
-		*/
+		
+		new GeneratorHandler(RecipeMaps.HOT_FUELS		, "thermal_generator"	, GT_GUIContainer_ThermalGenerator.class);
+		new GeneratorHandler(RecipeMaps.DIESEL_FUELS	, "diesel_generator"	, GT_GUIContainer_DieselGenerator.class);
+		new GeneratorHandler(RecipeMaps.TURBINE_FUELS	, "gas_turbine"			, GT_GUIContainer_GasTurbine.class);
+		new GeneratorHandler(RecipeMaps.DENSE_FUELS		, "semifluid_generator"	, GT_GUIContainer_SemifluidGenerator.class);
+		new GeneratorHandler(RecipeMaps.PLASMA_FUELS	, "plasma_generator"	, GT_GUIContainer_PlasmaGenerator.class);
+		new GeneratorHandler(RecipeMaps.MAGIC_FUELS		, "magic_generator"		, GT_GUIContainer_MagicEnergyConverter.class);
+		
         try {
     		Class.forName("codechicken.nei.api.API");
     		codechicken.nei.api.API.registerGuiOverlay(GT_GUIContainer_AdvancedWorkbench.class, "crafting", 57, 22);

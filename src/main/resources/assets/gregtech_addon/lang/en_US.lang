@@ -1470,6 +1470,12 @@ nei.lathe.title=Lathe
 nei.sawmill.title=Industrial Sawmill
 nei.vacuum_freezer.title=Vacuum Freezer
 nei.wiremill.title=Wiremill
+nei.thermal_generator.title=Hot Fuels
+nei.diesel_generator.title=Diesel Generator Fuels
+nei.gas_turbine.title=Turbine Fuels
+nei.semifluid_generator.title=Dense Fuels
+nei.plasma_generator.title=Plasma Fuels
+nei.magic_generator.title=Magic Fuels
 
 nei.extras.eu_total=EU: %s
 nei.extras.time=Time: %s seconds

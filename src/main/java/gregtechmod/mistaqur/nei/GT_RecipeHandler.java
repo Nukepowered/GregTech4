@@ -27,8 +27,9 @@ import org.lwjgl.opengl.GL11;
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.NEIClientConfig;
 import codechicken.nei.PositionedStack;
-import codechicken.nei.api.API;
+import codechicken.nei.recipe.GuiCraftingRecipe;
 import codechicken.nei.recipe.GuiRecipe;
+import codechicken.nei.recipe.GuiUsageRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import cpw.mods.fml.common.event.FMLInterModComms;
 
@@ -39,8 +40,10 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 	public GT_RecipeHandler() {
 		if (!NEI_GregTech_Config.sIsAdded) {
 			FMLInterModComms.sendRuntimeMessage(GregTech_API.gregtechmod, "NEIPlugins", "register-crafting-handler", GregTech_API.MOD_ID+"@"+getRecipeName()+"@"+getRecipeId());
-			API.registerRecipeHandler(this);
-			API.registerUsageHandler(this);
+//			API.registerRecipeHandler(this); // Oh nice, NEI checks if class not same... Scroll this, I'll just add it to fucking list
+//			API.registerUsageHandler(this);
+			GuiCraftingRecipe.craftinghandlers.add(this);
+			GuiUsageRecipe.usagehandlers.add(this);
 		}
 	}
 	
