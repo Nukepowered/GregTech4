@@ -2,6 +2,7 @@ package gregtechmod.api.gui;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 
 /**
@@ -30,7 +31,7 @@ public class GT_GUIContainer_BasicMachine extends GT_GUIContainerMetaTile_Machin
     
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-        fontRenderer.drawString(mName, 8,  4, 4210752);
+        fontRenderer.drawString(I18n.format("metatileentity." + mName), 8,  4, 4210752);
     }
     
     @Override

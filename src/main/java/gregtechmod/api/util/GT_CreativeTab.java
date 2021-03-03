@@ -7,9 +7,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class GT_CreativeTab extends CreativeTabs {
-
-	public GT_CreativeTab() {
-		super("gregtech");
+	
+	/**
+	 * Will create tab with translate key itemGroup. + categoryTranslateKey
+	 * @param categoryTranslateKey
+	 */
+	public GT_CreativeTab(String categoryTranslateKey) {
+		super(categoryTranslateKey);
 	}
 	
 	@Override

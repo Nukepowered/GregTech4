@@ -5,10 +5,14 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_ConfigCategories;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.common.GT_GUIHandler;
+
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.NetHandlerPlayServer;
 import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.EnumChatFormatting;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.FMLNetworkEvent.ClientConnectedToServerEvent;
@@ -33,9 +37,12 @@ public class GT_ConnectionHandler implements Runnable {
 		EntityPlayerMP aPlayer = handler.playerEntity;
 		if (aPlayer == null) return; 
 		String aUserName = aPlayer.getDisplayName();
-		if (!GT_Mod.mAlreadyPlayed || aUserName.equalsIgnoreCase("richardg867")) {
-			handler.sendPacket(new S02PacketChat(new ChatComponentText("GregTech is known for massivly changing the Tech Tree of modded Minecraft. Please make sure to look up Recipes via NEI (you will definetly need NEI), before complaining about missing Recipes. I needed to change some Recipes to prevent exploits and to improve the Tech Tree, even for regular unmodded Minecraft Recipes. Most of them are Configurable, so don't complain.")));
-			handler.sendPacket(new S02PacketChat(new ChatComponentText("~ Gregorius Techneticies")));
+		if (!GT_Mod.mAlreadyPlayed || aUserName.equalsIgnoreCase("richardg867") || true) {
+			handler.sendPacket(new S02PacketChat(new ChatComponentTranslation("gregtechmod.log_in.text_1")));
+			handler.sendPacket(new S02PacketChat(new ChatComponentTranslation("gregtechmod.log_in.text_2")));
+			handler.sendPacket(new S02PacketChat(new ChatComponentText("Github page: " + EnumChatFormatting.YELLOW.toString() + "https://github.com/Nukepowered/GregTech4")));
+			handler.sendPacket(new S02PacketChat(new ChatComponentText("~ Gregorius Techneticies, TheDarkDnKTv")));
+			
 			if (aUserName.equalsIgnoreCase("richardg867")) {
 				handler.sendPacket(new S02PacketChat(new ChatComponentText("Is that enough of a disclaimer for you RichardG?")));
 			}
@@ -52,7 +59,7 @@ public class GT_ConnectionHandler implements Runnable {
 				GT_Log.log.info("Industrialcraft Version: " + e);
 			}
 
-			if (e < 800) {
+			if (e < 820) {
 				handler.sendPacket(new S02PacketChat(new ChatComponentText("GregTech: Please update your IndustrialCraft here:")));
 				handler.sendPacket(new S02PacketChat(new ChatComponentText("http://ic2api.player.to:8080/job/IC2_experimental/?")));
 			}

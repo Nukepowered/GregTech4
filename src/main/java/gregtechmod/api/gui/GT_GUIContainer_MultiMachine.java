@@ -2,6 +2,7 @@ package gregtechmod.api.gui;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 
 /**
@@ -22,7 +23,7 @@ public class GT_GUIContainer_MultiMachine extends GT_GUIContainerMetaTile_Machin
     
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-        fontRenderer.drawString(mName, 10,  8, 16448255);
+        fontRenderer.drawString(I18n.format("metatileentity." + mName), 10,  8, 16448255);
         
         if (mContainer != null) {
         	if ((((GT_Container_MultiMachine)mContainer).mDisplayErrorCode &  1) != 0) fontRenderer.drawString("Pipe is loose.", 10, 16, 16448255);

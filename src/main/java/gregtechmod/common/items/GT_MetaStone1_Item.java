@@ -6,6 +6,7 @@ import gregtechmod.api.util.GT_LanguageManager;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -27,7 +28,7 @@ public class GT_MetaStone1_Item extends ItemBlock {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
     public void addInformation(ItemStack aStack, EntityPlayer aPlayer, List aList, boolean par4) {
-		if (aStack.getItemDamage() % 8 > 2) aList.add("block.deny_mobs_spawn.tooltip");
+		if (aStack.getItemDamage() % 8 > 2) aList.add(I18n.format("block.deny_mobs_spawn.tooltip"));
     }
 	
 	@Override

@@ -5,7 +5,7 @@ tile.BlockMetaID_Block.Block_of_Silver.name=Block of Silver
 tile.BlockMetaID_Block.Block_of_Ruby.name=Block of Ruby
 tile.BlockMetaID_Block.Block_of_Sapphire.name=Block of Sapphire
 tile.BlockMetaID_Block.LESU_Block.name=LESU-Block
-tile.BlockMetaID_Block.Block_of_Aluminum.name=Block of Aluminium
+tile.BlockMetaID_Block.Block_of_Aluminium.name=Block of Aluminium
 tile.BlockMetaID_Block.Block_of_Titanium.name=Block of Titanium
 tile.BlockMetaID_Block.Block_of_Chrome.name=Block of Chrome
 tile.BlockMetaID_Block.Highly_Advanced_Machineblock.name=Highly Advanced Machineblock
@@ -326,6 +326,7 @@ metatileentity.GT_Pipe_Brass.name=Brass Item Pipe
 metatileentity.GT_Pipe_Electrum.name=Electrum Item Pipe
 metatileentity.GT_Pipe_Brass_Large.name=Large Brass Item Pipe
 metatileentity.GT_Pipe_Electrum_Large.name=Large Electrum Item Pipe
+metatileentity.GT_Pipe_Platinum_Large.name=Large Platinum Item Pipe
 metatileentity.GT_Frame_Iron.name=Iron Frame
 metatileentity.GT_Frame_Aluminium.name=Aluminium Frame
 metatileentity.GT_Frame_Steel.name=Steel Frame
@@ -350,12 +351,27 @@ metatileentity.STEAMTANKS.tooltip=%d Steam Tank Upgrades
 metatileentity.EUSTORAGES.tooltip=%d Additional EU-Storage
 metatileentity.NOT_ENOUGH_ENERGY=Insufficient Energy Line!
 
+metatileentity.generator.efficiency=Efficiency: %s%%
+
+metatileentity.enabled=Enabled
+metatileentity.disabled=Disabled
+metatileentity.status.working=Machine Processing: %s
+metatileentity.status.auto_io=Auto-Input: %s Auto-Output: %s
+metatileentity.status.redstone=Redstone Output at Side %d set to: %s
+metatileentity.status.redstone_weak=Weak
+metatileentity.status.redstone_strong=Strong
+
 metatileentity.turbine.speed=Speed: %s%%
 metatileentity.turbine.durability=Turbine HP: %s
 metatileentity.turbine.no_turbine=No turbine installed
 metatileentity.multiblock.dynamo_output=Outputs: %s  EU/t
 metatileentity.multiblock.malfunction_amount=Malfunctions: %s
 metatileentity.multiblock.thermalboiler.left_eu=Recipe EU: %s
+
+metatileentity.steam_extractor.gui=Steam Extractor
+metatileentity.steam_compressor.gui=Steam Compressor
+metatileentity.steam_hammerer.gui=Steam Forge Hammer
+metatileentity.steam_alloy_smelter.gui=Steam Smelter
 
 
 item.180k_Helium_Coolantcell.name=180k Helium Coolant Cell
@@ -866,6 +882,10 @@ item.GT_Dusts.8.name=Sulfur Dust
 item.GT_Dusts.80.name=Thorium Dust
 item.GT_Dusts.81.name=Plutonium Dust
 item.GT_Dusts.9.name=Saltpeter Dust
+item.GT_Dusts.68.name=Black Granite Dust
+item.GT_Dusts.69.name=Red Granite Dust
+item.GT_Dusts.70.name=Potassium Feldspar Dust
+item.GT_Dusts.71.name=Biotite Dust
 item.GT_File_Bronze.name=Bronze File
 item.GT_File_Iron.name=Iron File
 item.GT_File_Steel.name=Steel File
@@ -1417,6 +1437,7 @@ util.missIC2NC=Nuclear Control not installed
 util.GT_IntegratedCircuit.configuration=Configuration: %s
 
 itemGroup.gregtech=GregTech Intergalactical
+itemGroup.gregtech_materials=GregTech Materials
 block.deny_mobs_spawn.tooltip=Mobs can't spawn on this block
 sensor.progress.percentage=Progress: %s%%
 sensor.progress.secs=%s sec.
@@ -1453,6 +1474,9 @@ nei.wiremill.title=Wiremill
 nei.extras.eu_total=EU: %s
 nei.extras.time=Time: %s seconds
 nei.extras.eut=Requires: %s EU/t
+
+gregtechmod.log_in.text_1=GregTech is known for massivly changing the Tech Tree of modded Minecraft. Please make sure to look up Recipes via NEI (you will definetly need NEI), before complaining about missing Recipes. 
+gregtechmod.log_in.text_2=We proviede approved port of GregTech 4, so I hope you enjoy it! In case of bugs were found, please report it!
 
 fluid.heliumplasma=Helium Plasma
 fluid.hydrogen=Hydrogen

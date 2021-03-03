@@ -80,7 +80,8 @@ public abstract class GT_MetaTileEntity_BasicGenerator extends BasicFluidWorkabl
 	@Override
 	public Map<String, List<Object>> getInfoData() {
 		return InfoBuilder.create()
-				.newKey("sensor.progress.percentage", GT_Utility.parseNumberToString(((GeneratorRecipeLogic)recipeLogic).getLeftEU())) // TODO locale
+				.newKey("sensor.progress.percentage", GT_Utility.parseNumberToString(((GeneratorRecipeLogic)recipeLogic).getLeftEU()))
+				.newKey("metatileentity.generator.efficiency", GT_Utility.parseNumberToString(efficiency / 100.0D))
 				.build();
 	}
 	

@@ -26,6 +26,8 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.IChatComponent;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.EnumSkyBlock;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -856,7 +858,8 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 					if (GT_ModHandler.damageOrDechargeItem(aPlayer.inventory.getCurrentItem(), 1, 1000, aPlayer)) {
 						mInputDisabled = !mInputDisabled;
 						if (mInputDisabled) mOutputDisabled = !mOutputDisabled;
-						GT_Utility.sendChatToPlayer(aPlayer, "Auto-Input: " + (mInputDisabled?"Disabled":"Enabled") + "  Auto-Output: " + (mOutputDisabled?"Disabled":"Enabled"));
+						IChatComponent component = new ChatComponentTranslation("metatileentity.status.auto_io", new ChatComponentTranslation(mInputDisabled?"metatileentity.disabled":"metatileentity.enabled"), new ChatComponentTranslation(mOutputDisabled?"metatileentity.disabled":"metatileentity.enabled"));
+						GT_Utility.sendChatToPlayer(aPlayer, component);
 						GT_Utility.sendSoundToPlayers(worldObj, GregTech_API.sSoundList.get(1), 1.0F, -1, xCoord, yCoord, zCoord);
 					}
 					return true;
@@ -866,7 +869,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 					if (GT_ModHandler.damageOrDechargeItem(aPlayer.inventory.getCurrentItem(), 1, 1000, aPlayer)) {
 						mWorks = !mWorks;
 						mWorkUpdate = true;
-						GT_Utility.sendChatToPlayer(aPlayer, "Machine Processing: " + (isAllowedToWork()?"Enabled":"Disabled")); // TODO LOCALE!!!
+						GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.working", new ChatComponentTranslation(isAllowedToWork() ? "metatileentity.enabled" : "metatileentity.disabled")));
 						GT_Utility.sendSoundToPlayers(worldObj, GregTech_API.sSoundList.get(101), 1.0F, -1, xCoord, yCoord, zCoord);
 					}
 					return true;
@@ -876,7 +879,8 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 					byte tSide = GT_Utility.determineWrenchingSide(aSide, aX, aY, aZ);
 					if (GT_ModHandler.useSolderingIron(aPlayer.inventory.getCurrentItem(), aPlayer)) {
 						mStrongRedstone ^= (1 << tSide);
-						GT_Utility.sendChatToPlayer(aPlayer, "Redstone Output at Side " + tSide + " set to: " + ((mStrongRedstone & (1 << tSide))!=0?"Strong":"Weak"));
+						IChatComponent component = new ChatComponentTranslation("metatileentity.status.redstone", tSide, new ChatComponentTranslation("metatileentity.status.redstone_" + ((mStrongRedstone & (1 << tSide))!=0?"strong":"weak")));
+						GT_Utility.sendChatToPlayer(aPlayer, component);
 						GT_Utility.sendSoundToPlayers(worldObj, GregTech_API.sSoundList.get(103), 3.0F, -1, xCoord, yCoord, zCoord);
 					}
 					return true;

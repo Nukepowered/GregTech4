@@ -90,7 +90,7 @@ public class GregTech_API {
 	public static IIcon FAIL_ICON = null;
 	
 	/** My Creative Tab */
-	public static final CreativeTabs TAB_GREGTECH = new GT_CreativeTab(), TAB_GREGTECH_MATERIALS = new GT_CreativeTab();
+	public static final CreativeTabs TAB_GREGTECH = new GT_CreativeTab("gregtech"), TAB_GREGTECH_MATERIALS = new GT_CreativeTab("gregtech_materials");
 	
 	public static int TICKS_FOR_LAG_AVERAGING = 25, MILLISECOND_THRESHOLD_UNTIL_LAG_WARNING = 100;
 	
