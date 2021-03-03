@@ -1,11 +1,20 @@
 package gregtechmod.common.tileentities.energy.storage;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.Map.Entry;
+
+import gregtechmod.GT_Mod;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 
 public class GT_MetaTileEntity_IDSU extends MetaTileEntity {
 	
@@ -53,6 +62,55 @@ public class GT_MetaTileEntity_IDSU extends MetaTileEntity {
 	}
 	
 	@Override
+	public void onFirstServerTick() {
+		GregTech_API.sIDSUList.clear();
+		if (GT_Mod.mUniverse != null && !GT_Mod.mUniverse.isRemote) {
+			try {
+				File dir = GT_Mod.getSaveDirectory();
+				if (dir != null) {
+					NBTTagCompound data = CompressedStreamTools.readCompressed(new FileInputStream(new File(dir, "data/GT_IDSU_Energyvalues.dat")));
+					NBTTagList list = data.getTagList("Energy", 10);
+					for (int i = 0; i < list.tagCount(); ++i) {
+						NBTTagCompound tTag = list.getCompoundTagAt(i);
+						GregTech_API.sIDSUList.put(tTag.getInteger("Hash"), tTag.getInteger("EU"));
+					}
+				}
+			} catch (FileNotFoundException e) {
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	@Override
+	public void onServerStop() {
+		if (GT_Mod.mUniverse != null && !GT_Mod.mUniverse.isRemote) {
+			try {
+				File dir = GT_Mod.getSaveDirectory();
+				if (dir != null) {
+					NBTTagCompound data = new NBTTagCompound();
+					NBTTagList list = new NBTTagList();
+					for (Entry<Integer, Integer> e : GregTech_API.sIDSUList.entrySet()) {
+						NBTTagCompound entry = new NBTTagCompound();
+						entry.setInteger("Hash", e.getKey());
+						entry.setInteger("EU", e.getValue());
+						list.appendTag(entry);
+					}
+					
+					data.setTag("Energy", list);
+					CompressedStreamTools.writeCompressed(data, new FileOutputStream(new File(dir, "data/GT_IDSU_Energyvalues.dat")));
+				}
+			} catch (FileNotFoundException e) {
+			} catch (Throwable e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		GregTech_API.sIDSUList.clear();
+    }
+	
+	@Override
     public int getInputTier() {
     	return 5;
     }
@@ -86,11 +144,6 @@ public class GT_MetaTileEntity_IDSU extends MetaTileEntity {
 	public void onServerStart() {
 		GregTech_API.sIDSUList.clear();
 	}
-	
-	@Override
-	public void onServerStop() {
-		GregTech_API.sIDSUList.clear();
-    }
 	
 	@Override
 	public void setEUVar(int aEU) {

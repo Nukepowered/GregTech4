@@ -80,13 +80,9 @@ import gregtechmod.loaders.preload.GT_DictRegistratorPreItem;
 import gregtechmod.loaders.preload.GT_ItemLoader;
 import gregtechmod.loaders.preload.GT_MetaTileEntityLoader;
 import gregtechmod.loaders.preload.GT_OreProcessingLoader;
-import ic2.api.recipe.RecipeOutput;
-import ic2.api.recipe.Recipes;
-import mods.railcraft.api.core.items.TagList;
 
 import java.io.File;
 import java.io.PrintStream;
-import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -97,6 +93,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Scanner;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -111,7 +108,6 @@ import net.minecraft.network.Packet;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.storage.SaveHandler;
 import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -120,6 +116,7 @@ import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
 import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerRegisterEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+
 import cpw.mods.fml.common.LoadController;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -934,55 +931,55 @@ public class GT_Mod implements IGT_Mod {
             ArrayList<ItemStack> items = new ArrayList<ItemStack>();
             GT_Log.log.info("IC2 Machines");
             
-            for (RecipeOutput recipeOut : Recipes.cannerBottle.getRecipes().values()) {
+            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.cannerBottle.getRecipes().values()) {
             	for (ItemStack recipeItem : recipeOut.items) {
             		items.add(recipeItem);
             	}
             }
             
-            for (RecipeOutput recipeOut : Recipes.centrifuge.getRecipes().values()) {
+            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.centrifuge.getRecipes().values()) {
             	for (ItemStack recipeItem : recipeOut.items) {
             		items.add(recipeItem);
             	}
             }
             
-            for (RecipeOutput recipeOut : Recipes.compressor.getRecipes().values()) {
+            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.compressor.getRecipes().values()) {
             	for (ItemStack recipeItem : recipeOut.items) {
             		items.add(recipeItem);
             	}
             }
             
-            for (RecipeOutput recipeOut : Recipes.extractor.getRecipes().values()) {
+            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.extractor.getRecipes().values()) {
             	for (ItemStack recipeItem : recipeOut.items) {
             		items.add(recipeItem);
             	}
             }
             
-            for (RecipeOutput recipeOut : Recipes.macerator.getRecipes().values()) {
+            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.macerator.getRecipes().values()) {
             	for (ItemStack recipeItem : recipeOut.items) {
             		items.add(recipeItem);
             	}
             }
             
-            for (RecipeOutput recipeOut : Recipes.metalformerCutting.getRecipes().values()) {
+            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.metalformerCutting.getRecipes().values()) {
             	for (ItemStack recipeItem : recipeOut.items) {
             		items.add(recipeItem);
             	}
             }
 
-            for (RecipeOutput recipeOut : Recipes.metalformerRolling.getRecipes().values()) {
+            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.metalformerRolling.getRecipes().values()) {
             	for (ItemStack recipeItem : recipeOut.items) {
             		items.add(recipeItem);
             	}
             }
             
-            for (RecipeOutput recipeOut : Recipes.matterAmplifier.getRecipes().values()) {
+            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.matterAmplifier.getRecipes().values()) {
             	for (ItemStack recipeItem : recipeOut.items) {
             		items.add(recipeItem);
             	}
             }
             
-            for (RecipeOutput recipeOut : Recipes.oreWashing.getRecipes().values()) {
+            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.oreWashing.getRecipes().values()) {
             	for (ItemStack recipeItem : recipeOut.items) {
             		items.add(recipeItem);
             	}
@@ -1098,9 +1095,6 @@ public class GT_Mod implements IGT_Mod {
     		}
     	}
     	
-    	mUniverse = null;
-    	GregTech_API.sWirelessRedstone.clear();
-    	
     	for (IMetaTileEntity tMetaTileEntity : GregTech_API.mMetaTileList) {
     		try {
 	    		if (tMetaTileEntity != null) tMetaTileEntity.onServerStop();
@@ -1108,6 +1102,9 @@ public class GT_Mod implements IGT_Mod {
 	    		GT_Log.log.catching(e);
 	    	}
     	}
+    	
+    	mUniverse = null;
+    	GregTech_API.sWirelessRedstone.clear();
     	
 		try {
 			if (GregTech_API.DEBUG_MODE) {
@@ -1156,7 +1153,7 @@ public class GT_Mod implements IGT_Mod {
 				GT_Log.log.info("*");
 
 				try {
-					for (String name : TagList.getTags()) {
+					for (String name : mods.railcraft.api.core.items.TagList.getTags()) {
 						GT_Log.log.info(name);
 					}
 				} catch (Throwable e) {}
@@ -1250,24 +1247,7 @@ public class GT_Mod implements IGT_Mod {
 
 	
     public static File getSaveDirectory() {
-    	if (mUniverse == null) return null;
-        SaveHandler tSaveHandler = (SaveHandler)mUniverse.getSaveHandler();
-        File rFile = null;
-        Field[] tFields = SaveHandler.class.getDeclaredFields();
-        for (int i = 0; i < tFields.length; ++i) {
-            if (tFields[i].getType() == File.class)  {
-            	tFields[i].setAccessible(true);
-                try {
-                    File tFile = (File)tFields[i].get(tSaveHandler);
-                    if (rFile == null || rFile.getParentFile() == tFile) {
-                    	rFile = tFile;
-                    }
-                } catch (Exception e) {
-                	
-                }
-            }
-        }
-        return rFile;
+        return mUniverse != null ? mUniverse.getSaveHandler().getWorldDirectory() : null;
     }
     
     @Override
