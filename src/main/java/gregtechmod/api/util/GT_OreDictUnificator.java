@@ -143,11 +143,6 @@ public class GT_OreDictUnificator {
 		return GT_Utility.copyAmount(aAmount, sName2OreMap.get(aName.toString()), getFirstOre(aName, aAmount), aReplacement);
 	}
 	
-	public static ItemStack[] setStackArray(boolean aUseBlackList, ItemStack... aStacks) {
-		for (int i = 0; i < aStacks.length; i++) aStacks[i] = get(aUseBlackList, GT_Utility.copy(aStacks[i]));
-		return aStacks;
-	}
-	
 	public static ItemStack[] getStackArray(boolean aUseBlackList, Object... aStacks) {
 		ItemStack[] rStacks = new ItemStack[aStacks.length];
 		for (int i = 0; i < aStacks.length; i++) rStacks[i] = get(aUseBlackList, GT_Utility.copy((ItemStack)aStacks[i]));
@@ -204,12 +199,8 @@ public class GT_OreDictUnificator {
 		return isItemStackInstanceOf(aStack, prefix.get(material));
 	}
 	
-	public static boolean isItemStackInstanceOf(ItemStack aStack, Object aName) { // TODO rework all this class
+	public static boolean isItemStackInstanceOf(ItemStack aStack, Object aName) {
 		if (GT_Utility.isStringInvalid(aName) || GT_Utility.isStackInvalid(aStack)) return false;
-//		for (ItemStack tOreStack : getOres(aName.toString())) {
-//			if (GT_Utility.areStacksEqual(tOreStack, aStack, !tOreStack.hasTagCompound())) return true;
-//		}
-		
 		List<String> names = Arrays.stream(OreDictionary.getOreIDs(aStack))
 				.mapToObj(val -> OreDictionary.getOreName(val))
 				.collect(Collectors.toList());
@@ -242,7 +233,7 @@ public class GT_OreDictUnificator {
     	if (GT_Utility.isStringInvalid(aName) || GT_Utility.isStackInvalid(aStack)) return false;
     	String tName = aName.toString();
     	if (tName.equals("")) return false;
-    	ArrayList<ItemStack> tList = getOres(tName);
+    	List<ItemStack> tList = getOres(tName);
     	for (int i = 0; i < tList.size(); i++) if (GT_Utility.areStacksEqual(tList.get(i), aStack, true)) return false;
     	isRegisteringOre++;
     	OreDictionary.registerOre(tName, GT_Utility.copyAmount(1, aStack));
@@ -258,7 +249,7 @@ public class GT_OreDictUnificator {
     	if (GT_Utility.isStringInvalid(aName) || GT_Utility.isStackInvalid(aStack)) return false;
     	String tName = aName.toString();
     	if (tName.equals("")) return false;
-    	ArrayList<ItemStack> tList = getOres(tName);
+    	List<ItemStack> tList = getOres(tName);
     	for (int i = 0; i < tList.size(); i++) if (GT_Utility.areStacksEqual(tList.get(i), aStack, true)) return false;
     	isRegisteringOre++;
     	sToRegister.put(GT_Utility.copyAmount(1, aStack), tName);
@@ -277,16 +268,16 @@ public class GT_OreDictUnificator {
     /**
      * @return a Copy of the OreDictionary.getOres() List
      */
-    public static synchronized ArrayList<ItemStack> getOres(OrePrefixes aPrefix, Object aMaterial) {
+    public static List<ItemStack> getOres(OrePrefixes aPrefix, Materials aMaterial) {
     	return getOres(aPrefix.get(aMaterial));
     }
     
     /**
      * @return a Copy of the OreDictionary.getOres() List
      */
-    public static synchronized ArrayList<ItemStack> getOres(Object aOreName) {
+    public static List<ItemStack> getOres(Object aOreName) {
     	String aName = aOreName==null?"":aOreName.toString();
-    	ArrayList<ItemStack> rList = new ArrayList<ItemStack>();
+    	List<ItemStack> rList = new ArrayList<ItemStack>();
     	if (GT_Utility.isStringValid(aName)) rList.addAll(OreDictionary.getOres(aName));
     	return rList;
     }

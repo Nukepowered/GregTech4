@@ -11,21 +11,20 @@ import net.minecraft.item.ItemStack;
 public class ProcessingStoneVarious implements IOreRecipeRegistrator {
 
    public ProcessingStoneVarious() {
-      OrePrefixes.stone.add((IOreRecipeRegistrator)this);
-      OrePrefixes.stoneCobble.add((IOreRecipeRegistrator)this);
-      OrePrefixes.stoneBricks.add((IOreRecipeRegistrator)this);
-      OrePrefixes.stoneChiseled.add((IOreRecipeRegistrator)this);
-      OrePrefixes.stoneCracked.add((IOreRecipeRegistrator)this);
-      OrePrefixes.stoneMossy.add((IOreRecipeRegistrator)this);
-      OrePrefixes.stoneMossyBricks.add((IOreRecipeRegistrator)this);
-      OrePrefixes.stoneSmooth.add((IOreRecipeRegistrator)this);
+      OrePrefixes.stone.add(this);
+      OrePrefixes.stoneCobble.add(this);
+      OrePrefixes.stoneBricks.add(this);
+      OrePrefixes.stoneChiseled.add(this);
+      OrePrefixes.stoneCracked.add(this);
+      OrePrefixes.stoneMossy.add(this);
+      OrePrefixes.stoneMossyBricks.add(this);
+      OrePrefixes.stoneSmooth.add(this);
    }
 
-   @SuppressWarnings("deprecation")
    public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
       Block aBlock = Block.getBlockFromItem(aStack.getItem());
       if(aBlock != null) {
-         if(aStack.getItem().getItemStackLimit() > GT_Mod.sBlockStackSize) {
+         if(aStack.getMaxStackSize() > GT_Mod.sBlockStackSize) {
             aStack.getItem().setMaxStackSize(GT_Mod.sBlockStackSize);
          }
          

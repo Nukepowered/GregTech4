@@ -12,13 +12,12 @@ import net.minecraft.item.ItemStack;
 public class ProcessingToolHeadShovel implements IOreRecipeRegistrator {
 
    public ProcessingToolHeadShovel() {
-      OrePrefixes.toolHeadShovel.add((IOreRecipeRegistrator)this);
+      OrePrefixes.toolHeadShovel.add(this);
    }
 
    public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
       if(!aMaterial.contains(SubTag.NO_SMASHING)) {
-         GT_ModHandler.addCraftingRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), false, true, new Object[]{"FPH", Character.valueOf('P'), OrePrefixes.plate.get(aMaterial), Character.valueOf('I'), OrePrefixes.ingot.get(aMaterial), Character.valueOf('H'), GT_ToolDictNames.craftingToolHardHammer, Character.valueOf('F'), GT_ToolDictNames.craftingToolFile});
+         GT_ModHandler.addCraftingRecipe(GT_Utility.copyAmount(1L, aStack), false, true, new Object[]{"FPH", Character.valueOf('P'), OrePrefixes.plate.get(aMaterial), Character.valueOf('I'), OrePrefixes.ingot.get(aMaterial), Character.valueOf('H'), GT_ToolDictNames.craftingToolHardHammer, Character.valueOf('F'), GT_ToolDictNames.craftingToolFile});
       }
-
    }
 }

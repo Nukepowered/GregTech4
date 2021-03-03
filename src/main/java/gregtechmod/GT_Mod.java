@@ -216,7 +216,7 @@ public class GT_Mod implements IGT_Mod {
 		GregTech_API.sRecipeAdder = new GT_RecipeAdder();
 		GregTech_API.sDummyWorld = new GT_DummyWorld();
 		GregTech_API.sGTCoverload.add(new GT_CoverLoader());
-//        GT_OreDictHandler.instance.registerHandler(); // FIXME change this
+        GT_OreDictHandler.instance.registerHandler();
         
 		for (int i = 0; i < mGregTechCapeList.size(); ++i) {
 			mGregTechCapeList.set(i, mGregTechCapeList.get(i).toLowerCase());
@@ -643,7 +643,7 @@ public class GT_Mod implements IGT_Mod {
         GT_Log.log.info("Activating OreDictionary Handler, this can take some time, as it scans the whole OreDictionary");
         
         GT_Log.log.info("If your Log stops here, you were too impatient. Wait a bit more next time, before killing Minecraft with the Task Manager.");
-//        GT_OreDictHandler.instance.activateHandler(); // FIXME change this
+        GT_OreDictHandler.instance.activateHandler();
         GT_Log.log.info("Congratulations, you have been waiting long enough. Have a Cake.");
         
         GT_Log.log.info("Adding Stone related Recipes");

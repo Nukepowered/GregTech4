@@ -8,7 +8,6 @@ import gregtechmod.api.enums.GT_OreDictNames;
 import gregtechmod.api.enums.GT_ToolDictNames;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
-import gregtechmod.api.items.GT_MetaGenerated_Item;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
@@ -18,19 +17,17 @@ import gregtechmod.api.util.OreDictEntry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.ProgressManager;
 import cpw.mods.fml.common.ProgressManager.ProgressBar;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -41,7 +38,7 @@ import net.minecraftforge.oredict.OreDictionary.OreRegisterEvent;
 public class GT_OreDictHandler {
 	public static final GT_OreDictHandler instance = new GT_OreDictHandler();
 	
-	private final List<OreDictEntry> mEvents = new ArrayList<>();
+	private final Map<OrePrefixes, List<OreDictEntry>> mEvents = new HashMap<>();
 	private final List<String> mIgnoredItems = Arrays.asList(new String[]{"itemRawRubber", "itemSilicon", "itemBacon", "itemJetpackAccelerator", "itemLazurite", "itemIridium", "itemTear", "itemClaw", "itemFertilizer", "itemTar", "itemSlimeball", "itemCoke", "itemBeeswax", "itemBeeQueen", "itemForcicium", "itemForcillium", "itemRoyalJelly", "itemHoneydew", "itemHoney", "itemPollen", "itemReedTypha", "itemSulfuricAcid", "itemPotash", "itemCompressedCarbon", "itemBitumen", "itemBioFuel", "itemCokeSugar", "itemCokeCactus", "itemCharcoalSugar", "itemCharcoalCactus", "itemSludge", "itemEnrichedAlloy", "itemQuicksilver", "itemMercury", "itemOsmium", "itemUltimateCircuit", "itemEnergizedStar", "itemAntimatterMolecule", "itemAntimatterGlob", "itemCoal", "itemBoat", "itemHerbalMedicineCake", "itemCakeSponge", "itemFishandPumpkinCakeSponge", "itemSoulCleaver", "itemInstantCake", "itemWhippingCream", "itemGlisteningWhippingCream", "itemCleaver", "itemHerbalMedicineWhippingCream", "itemStrangeWhippingCream", "itemBlazeCleaver", "itemBakedCakeSponge", "itemMagmaCake", "itemGlisteningCake", "itemOgreCleaver", "itemFishandPumpkinCake", "itemMagmaWhippingCream", "itemMultimeter", "itemSuperconductor"});
 	private final List<String> mIgnoredNames = Arrays.asList(new String[]{"whiteStone", "stoneSlab", "clayBowl", "clayPlate", "ceramicBowl", "ceramicPlate", "ovenRack", "clayCup", "ceramicCup", "batteryBox", "transmutationStone", "torchRedstoneActive", "coal", "charcoal", "cloth", "cobblestoneSlab", "stoneBrickSlab", "cobblestoneWall", "stoneBrickWall", "cobblestoneStair", "stoneBrickStair", "blockCloud", "blockDirt", "blockTyrian", "blockCarpet", "blockFft", "blockLavastone", "blockHolystone", "blockConcrete", "sunnariumPart", "brSmallMachineCyaniteProcessor", "meteoriteCoal", "blockCobble", "pressOreProcessor", "crusherOreProcessor", "grinderOreProcessor", "blockRubber", "blockHoney", "blockHoneydew", "blockPeat", "blockRadioactive", "blockSlime", "blockCocoa", "blockSugarCane", "blockLeather", "blockClayBrick", "solarPanelHV", "cableRedNet", "stoneBowl", "crafterWood", "taintedSoil", "brickXyEngineering", "breederUranium", "wireMill", "chunkLazurite", "aluminumNatural", "aluminiumNatural", "naturalAluminum", "naturalAluminium", "antimatterMilligram", "antimatterGram", "strangeMatter", "coalGenerator", "electricFurnace", "unfinishedTank", "valvePart", "aquaRegia", "leatherSeal", "leatherSlimeSeal", "hambone", "slimeball", "enrichedUranium", "camoPaste"});
 	private final List<String> mInvalidNames = Arrays.asList(new String[]{"bloodstoneOre", "universalCable", "bronzeTube", "ironTube", "netherTube", "obbyTube", "infiniteBattery", "eliteBattery", "advancedBattery", "10kEUStore", "blueDye", "MonazitOre", "quartzCrystal", "whiteLuminiteCrystal", "darkStoneIngot", "invisiumIngot", "demoniteOrb", "enderGem", "starconiumGem", "osmoniumIngot", "tapaziteGem", "zectiumIngot", "foolsRubyGem", "rubyGem", "meteoriteGem", "adamiteShard", "sapphireGem", "copperIngot", "ironStick", "goldStick", "diamondStick", "reinforcedStick", "draconicStick", "emeraldStick", "copperStick", "tinStick", "silverStick", "bronzeStick", "steelStick", "leadStick", "manyullynStick", "arditeStick", "cobaltStick", "aluminiumStick", "alumiteStick", "oilsandsOre", "copperWire", "superconductorWire", "sulfuricAcid", "conveyorBelt", "ironWire", "aluminumWire", "aluminiumWire", "silverWire", "tinWire", "dustSiliconSmall", "AluminumOre", "plateHeavyT2", "blockWool", "alloyPlateEnergizedHardened", "gasWood", "alloyPlateEnergized", "SilverOre", "LeadOre", "TinOre", "CopperOre", "silverOre", "leadOre", "tinOre", "copperOre", "bauxiteOre", "HSLivingmetalIngot", "oilMoving", "oilStill", "oilBucket", "petroleumOre", "dieselFuel", "diamondNugget", "planks", "wood", "stick", "sticks", "naquadah", "obsidianRod", "stoneRod", "thaumiumRod", "steelRod", "netherrackRod", "woodRod", "ironRod", "cactusRod", "flintRod", "copperRod", "cobaltRod", "alumiteRod", "blueslimeRod", "arditeRod", "manyullynRod", "bronzeRod", "boneRod", "slimeRod"});
@@ -393,9 +390,6 @@ public class GT_OreDictHandler {
                                            GT_OreDictUnificator.set(OrePrefixes.ingot, Materials.RedAlloy, new ItemStack(aEvent.Ore.getItem(), 1, 0));
                                            GT_OreDictUnificator.set(OrePrefixes.ingot, Materials.BlueAlloy, new ItemStack(aEvent.Ore.getItem(), 1, 1));
                                            GT_OreDictUnificator.set(OrePrefixes.ingot, Materials.Brass, new ItemStack(aEvent.Ore.getItem(), 1, 2));
-                                           GregTech_API.sRecipeAdder.addWiremillRecipe(GT_ModHandler.getIC2Item("copperCableItem", 3L), new ItemStack(aEvent.Ore.getItem(), 1, 8), 400, 1);
-                                           GregTech_API.sRecipeAdder.addWiremillRecipe(GT_ModHandler.getIC2Item("ironCableItem", 6L), new ItemStack(aEvent.Ore.getItem(), 1, 9), 400, 2);
-                                           GregTech_API.sRecipeAdder.addCutterRecipe(new ItemStack(aEvent.Ore.getItem(), 1, 3), new ItemStack(aEvent.Ore.getItem(), 16, 4), 400, 8);
                                         }
 									 default: break;
                                      }
@@ -486,7 +480,10 @@ public class GT_OreDictHandler {
                          }
 
                          GT_Log.ore.println(e);
-                         this.mEvents.add(OreDictEntry.create(aEvent.Ore, aOriginalMod, aEvent.Name));
+                         List<OreDictEntry> list = mEvents.get(aPrefix);
+                         list = list == null ? new ArrayList<>() : list;
+                         list.add(OreDictEntry.create(aEvent.Ore, aOriginalMod, aEvent.Name));
+                         this.mEvents.put(aPrefix, list);
                          if(this.mActivated) {
                             this.registerRecipes(aEvent, aOriginalMod);
                          }
@@ -517,28 +514,25 @@ public class GT_OreDictHandler {
     public void activateHandler() {
     	mActivated = true;
     	long time = System.currentTimeMillis();
-    	GT_Log.log.info("Splitting tasks");
-    	Multimap<OrePrefixes, OreDictEntry> tasks = this.splitTasks();
-    	ExecutorService service = Executors.newFixedThreadPool(4, new ThreadFactoryBuilder().setDaemon(true).setNameFormat("GT-OreDictHandler-%d").build());
-    	ProgressBar bar  = ProgressManager.push("Handling OreDict", tasks.keySet().size(), false);
     	
-    	for (OrePrefixes prefix : tasks.keySet()) {
-	    	service.submit(() -> {
-	    		try {
-		    		this.processTask(prefix, new ArrayList<>(tasks.get(prefix)));
-		    		bar.step("prefix: " + prefix.toString());
-	    		} catch (Throwable e) {
-	    			bar.step("ERRORRED");
-	    			GT_Log.log.throwing(e);
-	    		}
-	    	});
-    	}
+    	ProgressBar bar = ProgressManager.push("Handling OreDict", mEvents.keySet().size(), false);
     	
-    	service.shutdown();
-    	while (!service.isTerminated()) {
-    		try {
-    			Thread.sleep(100);
-    		} catch (InterruptedException e) {}
+    	for (Entry<OrePrefixes, List<OreDictEntry>> e : mEvents.entrySet()) {
+    		bar.step("prefix - " + e.getKey());
+    		
+    		if (e.getKey() != null) {
+    			this.processTask(e.getKey(), e.getValue());
+    		} else {
+    			StringBuilder app = new StringBuilder();
+    			app.append("Thingy Name: ");
+    			app.append(":");
+    			app.append(e.getValue());
+    			app.append(" !!!Unknown 'Thingy' detected!!! ");
+    			app.append("This Object seems to probably not follow a valid OreDictionary Convention, or I missed a Convention. ");
+    			app.append("Please report to GregTech Intergalactical for additional compatiblity. ");
+    			app.append("This is not an Error, it's just an Information.");
+    			GT_Log.log.warn(app.toString());
+    		}
     	}
     	
     	ProgressManager.pop(bar);
@@ -559,30 +553,6 @@ public class GT_OreDictHandler {
             }
             
     	}
-    }
-    
-    private Multimap<OrePrefixes, OreDictEntry> splitTasks() {
-    	Multimap<OrePrefixes, OreDictEntry> tasks = ArrayListMultimap.create();
-    	
-    	for (OreDictEntry entry : mEvents) {
-    		OrePrefixes prefix = OrePrefixes.getOrePrefix(entry.oreDictName);
-    		if (prefix != null) {
-    			tasks.put(prefix,  entry);
-    		} else {
-    			StringBuilder app = new StringBuilder();
-    			app.append("Thingy Name: ");
-    			app.append(entry.modName);
-    			app.append(":");
-    			app.append(entry.oreDictName);
-    			app.append(" !!!Unknown 'Thingy' detected!!! ");
-    			app.append("This Object seems to probably not follow a valid OreDictionary Convention, or I missed a Convention. ");
-    			app.append("Please report to GregTech Intergalactical for additional compatiblity. ");
-    			app.append("This is not an Error, it's just an Information.");
-    			GT_Log.log.warn(app.toString());
-    		}
-    	}
-    	
-    	return tasks;
     }
     
     public void registerRecipes(final OreDictionary.OreRegisterEvent aEvent, final String aMod) {
@@ -609,34 +579,20 @@ public class GT_OreDictHandler {
 		GregTech_API.sUnification.mConfig.save();
 		GregTech_API.sUnification.mConfig.load();
 		
-		for (OreDictEntry tEvent : this.mEvents) {
-			if (tEvent.ore.getItem() instanceof GT_MetaGenerated_Item) {
-				final OrePrefixes tPrefix = OrePrefixes.getOrePrefix(tEvent.oreDictName);
-				if (tPrefix == null || !tPrefix.mIsUnificatable) {
+		for (Entry<OrePrefixes, List<OreDictEntry>> e : mEvents.entrySet()) {
+			if (e.getKey() == null || !e.getKey().mIsUnificatable) {
+				continue;
+			}
+			
+			for (OreDictEntry entry : e.getValue()) {
+				GT_OreDictUnificator.addAssociation(entry.oreDictName, entry.ore);
+				if (GT_OreDictUnificator.isBlacklisted(entry.ore)) {
 					continue;
 				}
-				GT_OreDictUnificator.addAssociation(tEvent.oreDictName, tEvent.ore);
-				if (GT_OreDictUnificator.isBlacklisted(tEvent.ore)) {
-					continue;
-				}
-				if (!tEvent.modName.equals("UNKNOWN_MOD_ID") && GregTech_API.sUnification.get(GT_ConfigCategories.specialunificationtargets + "." + tEvent.modName, tEvent.oreDictName, false)) {
-					GT_OreDictUnificator.set(tEvent.oreDictName, tEvent.ore, true, true);
+				if (!entry.modName.equals("UNKNOWN_MOD_ID") && GregTech_API.sUnification.get(GT_ConfigCategories.specialunificationtargets + "." + entry.modName, entry.oreDictName, false)) {
+					GT_OreDictUnificator.set(entry.oreDictName, entry.ore, true, true);
 				} else {
-					GT_OreDictUnificator.set(tEvent.oreDictName, tEvent.ore, false, true);
-				}
-			} else {
-				final OrePrefixes tPrefix = OrePrefixes.getOrePrefix(tEvent.oreDictName);
-				if (tPrefix == null || !tPrefix.mIsUnificatable) {
-					continue;
-				}
-				GT_OreDictUnificator.addAssociation(tEvent.oreDictName, tEvent.ore);
-				if (GT_OreDictUnificator.isBlacklisted(tEvent.ore)) {
-					continue;
-				}
-				if (!tEvent.modName.equals("UNKNOWN_MOD_ID") && GregTech_API.sUnification.get(GT_ConfigCategories.specialunificationtargets + "." + tEvent.modName, tEvent.oreDictName, false)) {
-					GT_OreDictUnificator.set(tEvent.oreDictName, tEvent.ore, true, true);
-				} else {
-					GT_OreDictUnificator.set(tEvent.oreDictName, tEvent.ore, false, true);
+					GT_OreDictUnificator.set(entry.oreDictName, entry.ore, false, true);
 				}
 			}
 		}

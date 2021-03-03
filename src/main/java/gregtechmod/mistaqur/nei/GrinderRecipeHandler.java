@@ -69,6 +69,16 @@ public class GrinderRecipeHandler extends GT_RecipeHandler {
 			protected Pair<Integer, Integer> getOutputAligment(int itemIdx) {
 				return Pair.of(86 - sOffsetX + (18 * itemIdx), 25 - sOffsetY);
 			}
+			
+			@Override
+			protected Pair<Integer, Integer> getFluidInputAligment(int itemIdx) {
+				return Pair.of(34 - sOffsetX, 34 - sOffsetY + (18 * itemIdx));
+			}
+			
+			@Override
+			protected Pair<Integer, Integer> getFluidOutputAligment(int itemIdx) {
+				return Pair.of(86 - sOffsetX + (18 * itemIdx), 25 - sOffsetY);
+			}
 		};
 	}
 	
