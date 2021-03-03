@@ -30,8 +30,6 @@ public abstract class RecipeFactory<F extends RecipeFactory<F>> {
 	protected boolean shaped;
 	
 	protected StringBuilder errors;
-	// TODO maybe create a fluid I/O
-	
 	
 	protected RecipeFactory() {
 		this.outputItems 	= new ArrayList<>();

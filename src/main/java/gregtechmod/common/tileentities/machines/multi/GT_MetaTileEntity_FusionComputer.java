@@ -479,6 +479,27 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity implements 
 
 	@Override
 	public boolean spaceForOutput(Recipe recipe) {
+		List<ItemStack> outputSlots = this.getOutputItems();
+		List<ItemStack> allOutputs = recipe.getAllOutputs();
+		
+		for (ItemStack current : allOutputs) {
+			int amount = current.stackSize;
+			for (int i = 0; current != null && amount > 0 && i < outputSlots.size(); i++) {
+				ItemStack slot = outputSlots.get(i);
+				if (slot == null) {
+					amount = 0;
+					break;
+				} else if (GT_Utility.areStacksEqual(slot, current)) {
+					int newSize = Math.min(slot.getMaxStackSize(), amount + slot.stackSize);
+					amount -= newSize;
+				}
+			}
+			
+			if (amount > 0) {
+				return false;
+			}
+		}
+		
 		for (FluidStack fluid : recipe.getFluidOutputs()) {
 			int amount = fluid.amount;
 			for (int i = 0; amount > 0 && i < fluidOutputs.size(); i++) {
@@ -489,7 +510,7 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity implements 
 				} else if (stackInSlot == null) amount = 0;
 			}
 			
-			if (amount > 0) // Could not work fine, need check
+			if (amount > 0)
 				return false;
 		}
 		

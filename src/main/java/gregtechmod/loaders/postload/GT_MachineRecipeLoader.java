@@ -171,7 +171,7 @@ public class GT_MachineRecipeLoader implements Runnable
         
         RecipeMaps.ELECTROLYZER.factory().EUt(120).duration(215).input(GT_ModHandler.getIC2Item("electrolyzedWaterCell", 6L)).outputs(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Hydrogen, 4L), GT_Items.Cell_Air.get(1L), GT_Items.Cell_Empty.get(1L)).buildAndRegister();
         RecipeMaps.ELECTROLYZER.factory().EUt(120).duration(215).input(GT_Items.Cell_Water.get(1L)).output(GT_ModHandler.getIC2Item("electrolyzedWaterCell", 1L)).buildAndRegister();
-        RecipeMaps.ELECTROLYZER.factory().EUt(30).duration(100).inputs(new ItemStack(Items.water_bucket, 1), GT_Items.Cell_Empty.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Calcium, 1L)).buildAndRegister(); // TODO check this recipe
+        RecipeMaps.ELECTROLYZER.factory().EUt(30).duration(100).inputs(new ItemStack(Items.water_bucket, 1), GT_Items.Cell_Empty.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Calcium, 1L)).buildAndRegister();
         RecipeMaps.ELECTROLYZER.factory().EUt(106).duration(24).input(new ItemStack(Items.dye, 3, 15)).outputs(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Hydrogen, 4L), GT_Items.Cell_Air.get(1L), GT_Items.Cell_Empty.get(1L)).buildAndRegister();
         RecipeMaps.ELECTROLYZER.factory().EUt(25).duration(500).input("sand", 8).outputs(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.SiliconDioxide, 1L)).buildAndRegister();
         

@@ -29,7 +29,7 @@ public class GT_MetaTileEntity_Electrolyzer extends BasicFluidWorkable {
 	@Override public int getStackDisplaySlot() 						{return 6;}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 109);}
 	@Override public List<ItemStack> getInputItems() 				{return new ListAdapter<>(mInventory, 0, 1);}
-	@Override public List<ItemStack> getOutputItems() 				{return new ListAdapter<>(mInventory, 2, 5);} 
+	@Override public List<ItemStack> getOutputItems() 				{return new ListAdapter<>(mInventory, 2, 5);} // TODO electrolyzer fluid slot etc
 	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {

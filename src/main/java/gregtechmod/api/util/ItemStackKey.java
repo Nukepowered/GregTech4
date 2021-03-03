@@ -54,7 +54,7 @@ public final class ItemStackKey {
 			if (isWildcard) {
 				return this.stack.getItem() == stack.getItem();
 			} else {
-				return this.stack.isItemEqual(stack);// && ItemStack.areItemStackTagsEqual(this.stack, stack); // TODO add NBT comparing settings
+				return this.stack.isItemEqual(stack);
 			}
 		}
 		

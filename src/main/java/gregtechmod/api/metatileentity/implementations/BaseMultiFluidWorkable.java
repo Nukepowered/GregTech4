@@ -19,6 +19,7 @@ import net.minecraftforge.fluids.FluidStack;
  */
 public abstract class BaseMultiFluidWorkable extends BaseMultiWorkable {
 	
+	public int MAX_FLUID_STACK = 16_000;
 	protected final List<FluidStack> fluidInputs, fluidOutputs;
 
 	public BaseMultiFluidWorkable(int aID, String aBasicName, RecipeMap<?> map, int fluidInputs, int fluidOutputs) {
@@ -44,7 +45,21 @@ public abstract class BaseMultiFluidWorkable extends BaseMultiWorkable {
 	
 	@Override
 	public boolean spaceForOutput(Recipe recipe) {
-		return super.spaceForOutput(recipe); // TODO FIX FLUIDS CHECK!
+		for (FluidStack fluid : recipe.getFluidOutputs()) {
+			int amount = fluid.amount;
+			for (int i = 0; amount > 0 && i < fluidOutputs.size(); i++) {
+				FluidStack stackInSlot = fluidOutputs.get(i);
+				if (GT_Utility.isFluidStackValid(stackInSlot) && stackInSlot.isFluidEqual(fluid)) {
+					int tmp = Math.min(MAX_FLUID_STACK, stackInSlot.amount + fluid.amount);
+					amount -= tmp - stackInSlot.amount;
+				} else if (stackInSlot == null) amount = 0;
+			}
+			
+			if (amount > 0)
+				return false;
+		}
+		
+		return super.spaceForOutput(recipe);
 	}
 	
 	@Override

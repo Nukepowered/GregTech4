@@ -104,11 +104,18 @@ public abstract class MTEWorkableMultiblock extends MetaTileEntityMultiblock imp
 			}
 		}
 		
-		for (FluidStack fluid : recipe.getFluidOutputs()) { // TODO fix this fluid check!
-			int amount = this.fill(fluid.copy(), false);
-			if (amount < fluid.amount) {
-				return false;
+		for (FluidStack fluid : recipe.getFluidOutputs()) {
+			int amount = fluid.amount;
+			for (int i = 0; amount > 0 && i < fluidOutputs.size(); i++) {
+				FluidStack stackInSlot = fluidOutputs.get(i);
+				if (GT_Utility.isFluidStackValid(stackInSlot) && stackInSlot.isFluidEqual(fluid)) {
+					int tmp = Math.min(MAX_FLUID_STACK, stackInSlot.amount + fluid.amount);
+					amount -= tmp - stackInSlot.amount;
+				} else if (stackInSlot == null) amount = 0;
 			}
+			
+			if (amount > 0)
+				return false;
 		}
 		
 		return true;

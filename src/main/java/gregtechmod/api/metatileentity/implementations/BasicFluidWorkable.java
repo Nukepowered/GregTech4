@@ -26,6 +26,8 @@ import net.minecraftforge.fluids.FluidStack;
 public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank implements IRecipeWorkable {
 	protected RecipeLogic recipeLogic;
 	
+	public int MAX_FLUID_STACK = 16_000;
+	
 	public BasicFluidWorkable(int aID, String aName, RecipeMap<?> recipeMap) {
 		super(aID, aName);
 		initRecipeLogic(recipeMap);
@@ -122,11 +124,19 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
 			}
 		}
 		
+		List<FluidStack> fluidOutputs = this.getFluidOutputs();
 		for (FluidStack fluid : recipe.getFluidOutputs()) {
-			int amount = this.fill(fluid.copy(), false); // TODO FIX FLUID CHECK!
-			if (amount < fluid.amount) {
-				return false;
+			int amount = fluid.amount;
+			for (int i = 0; amount > 0 && i < fluidOutputs.size(); i++) {
+				FluidStack stackInSlot = fluidOutputs.get(i);
+				if (GT_Utility.isFluidStackValid(stackInSlot) && stackInSlot.isFluidEqual(fluid)) {
+					int tmp = Math.min(MAX_FLUID_STACK, stackInSlot.amount + fluid.amount);
+					amount -= tmp - stackInSlot.amount;
+				} else if (stackInSlot == null) amount = 0;
 			}
+			
+			if (amount > 0)
+				return false;
 		}
 		
 		return true;

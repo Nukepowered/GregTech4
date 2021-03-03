@@ -37,8 +37,6 @@ public class GT_MetaTileEntity_Boiler_Steel extends GT_MetaTileEntity_BasicTank 
 	@Override public boolean isAccessAllowed(EntityPlayer aPlayer)	{return true;}
 	@Override public boolean isValidSlot(int aIndex)				{return true;}
 	@Override public int getInvSize()								{return 4;}
-//	@Override public int getProgresstime()							{return mTemperature;} // TODO maybe needed somewhere
-//	@Override public int maxProgresstime()							{return 1000;}
 	
 	@Override public void onRightclick(EntityPlayer aPlayer) {
 		if (aPlayer != null) {
