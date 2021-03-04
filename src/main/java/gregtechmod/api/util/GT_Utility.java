@@ -151,6 +151,15 @@ public class GT_Utility {
 		return null;
 	}
 	
+	public static void setFieldContent(Object aObject, Object value, String aField, boolean aPrivate, boolean aLogErrors) {
+		Field f = getField(aObject, aField, aPrivate, aLogErrors);
+		try {
+			f.set(aObject, value);
+		} catch (Throwable e) {
+			if (aLogErrors) GT_Log.log.catching(e);
+		}
+	}
+	
 	public static Object callPublicMethod(Object aObject, String aMethod, Object... aParameters) {
 		return callMethod(aObject, aMethod, false, false, true, aParameters);
 	}

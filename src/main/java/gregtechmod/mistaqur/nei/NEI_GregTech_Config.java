@@ -11,6 +11,25 @@ import gregtechmod.common.gui.GT_GUIContainer_PlasmaGenerator;
 import gregtechmod.common.gui.GT_GUIContainer_SemifluidGenerator;
 import gregtechmod.common.gui.GT_GUIContainer_ThermalGenerator;
 import gregtechmod.common.recipe.RecipeMaps;
+import gregtechmod.mistaqur.nei.handlers.AssemblerRecipeHandler;
+import gregtechmod.mistaqur.nei.handlers.BenderRecipeHandler;
+import gregtechmod.mistaqur.nei.handlers.BlastRecipeHandler;
+import gregtechmod.mistaqur.nei.handlers.BronzeBlastRecipeHandler;
+import gregtechmod.mistaqur.nei.handlers.CannerRecipeHandler;
+import gregtechmod.mistaqur.nei.handlers.CentrifugeRecipeHandler;
+import gregtechmod.mistaqur.nei.handlers.ChemicalRecipeHandler;
+import gregtechmod.mistaqur.nei.handlers.CutterRecipeHandler;
+import gregtechmod.mistaqur.nei.handlers.DistillationRecipeHandler;
+import gregtechmod.mistaqur.nei.handlers.ElectrolyzerRecipeHandler;
+import gregtechmod.mistaqur.nei.handlers.ExtruderRecipeHandler;
+import gregtechmod.mistaqur.nei.handlers.FusionRecipeHandler;
+import gregtechmod.mistaqur.nei.handlers.GeneratorHandler;
+import gregtechmod.mistaqur.nei.handlers.GrinderRecipeHandler;
+import gregtechmod.mistaqur.nei.handlers.ImplosionRecipeHandler;
+import gregtechmod.mistaqur.nei.handlers.LatheRecipeHandler;
+import gregtechmod.mistaqur.nei.handlers.SawmillRecipeHandler;
+import gregtechmod.mistaqur.nei.handlers.VacuumFreezerRecipeHandler;
+import gregtechmod.mistaqur.nei.handlers.WiremillRecipeHandler;
 import codechicken.nei.api.IConfigureNEI;
 
 public class NEI_GregTech_Config implements IConfigureNEI {

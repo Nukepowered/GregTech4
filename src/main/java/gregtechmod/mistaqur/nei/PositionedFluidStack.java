@@ -22,9 +22,9 @@ import net.minecraftforge.fluids.FluidStack;
  */
 public class PositionedFluidStack {
 	
-	protected int x;
-	protected int y;
-	protected FluidStack fluid;
+	public int x;
+	public int y;
+	public FluidStack fluid;
 	/**
 	 * 
 	 */

@@ -1,4 +1,4 @@
-package gregtechmod.mistaqur.nei;
+package gregtechmod.mistaqur.nei.handlers;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
-
+import gregtechmod.mistaqur.nei.GT_RecipeHandler;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.StatCollector;

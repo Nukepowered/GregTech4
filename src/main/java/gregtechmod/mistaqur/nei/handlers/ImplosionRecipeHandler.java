@@ -1,12 +1,13 @@
-package gregtechmod.mistaqur.nei;
+package gregtechmod.mistaqur.nei.handlers;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
-import gregtechmod.common.gui.GT_GUIContainer_Sawmill;
+import gregtechmod.common.gui.GT_GUIContainer_ImplosionCompressor;
 import gregtechmod.common.recipe.RecipeMaps;
+import gregtechmod.mistaqur.nei.GT_RecipeHandler;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -17,7 +18,8 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.StatCollector;
 
-public class SawmillRecipeHandler extends GT_RecipeHandler {
+public class ImplosionRecipeHandler extends GT_RecipeHandler {
+	
 	@Override
 	public void loadTransferRects() {
 		try {
@@ -25,7 +27,7 @@ public class SawmillRecipeHandler extends GT_RecipeHandler {
 		
 		ArrayList<Class<? extends GuiContainer>> guis = new ArrayList<Class<? extends GuiContainer>>();
 		ArrayList<RecipeTransferRect> transferRects2 = new ArrayList<RecipeTransferRect>();
-		guis.add(GT_GUIContainer_Sawmill.class);
+		guis.add(GT_GUIContainer_ImplosionCompressor.class);
 		transferRects2.add(new RecipeTransferRect(new Rectangle(56-5, 26-11, 24, 15), getRecipeId(), new Object[0]));
 		RecipeTransferRectHandler.registerRectsToGuis(guis, transferRects2);
 		} catch(Throwable e) {GT_Log.log.catching(e);}
@@ -33,27 +35,27 @@ public class SawmillRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return StatCollector.translateToLocal("nei.sawmill.title");
+		return StatCollector.translateToLocal("nei.implosion_compressor.title");
 	}
 	
 	@Override
 	public String getRecipeId() {
-		return "gregtech.Sawmill";
+		return "gregtech.Implosion";
 	}
 	
 	@Override
 	public String getGuiTexture() {
-		return GregTech_API.GUI_PATH + "NEISawmill.png";
+		return GregTech_API.GUI_PATH + "NEIImplosion.png";
 	}
 	
 	@Override
 	public String getOverlayIdentifier() {
-		return "gregtech.Sawmill";
+		return "gregtech.Implosion";
 	}
 	
 	@Override
 	public RecipeMap<?> getRecipeList() {
-		return RecipeMaps.SAWMILL;
+		return RecipeMaps.IMPLOSION_COMPRESSOR;
 	}
 	
 	@Override
@@ -61,17 +63,12 @@ public class SawmillRecipeHandler extends GT_RecipeHandler {
 		return new CachedGT_Recipe(irecipe) {
 			@Override
 			protected Pair<Integer, Integer> getInputAligment(int itemIdx) {
-				return Pair.of(29, 16 - sOffsetY + (itemIdx * 18));
+				return Pair.of(34 - sOffsetX , 16 - sOffsetY + (18 * itemIdx));
 			}
 			
 			@Override
 			protected Pair<Integer, Integer> getOutputAligment(int itemIdx) {
-				return Pair.of(86 - sOffsetX + (itemIdx * 18), 25 - sOffsetY);
-			}
-			
-			@Override
-			protected Pair<Integer, Integer> getFluidInputAligment(int itemIdx) {
-				return Pair.of(29, 34 - sOffsetY + (itemIdx * 18));
+				return Pair.of(86 - sOffsetX + (18 * itemIdx), 25 - sOffsetY);
 			}
 		};
 	}

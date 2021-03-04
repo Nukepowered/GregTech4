@@ -1,4 +1,4 @@
-package gregtechmod.mistaqur.nei;
+package gregtechmod.mistaqur.nei.handlers;
 
 import java.util.Collections;
 import java.awt.Rectangle;
@@ -12,6 +12,7 @@ import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_BasicMachine_Extruder;
 import gregtechmod.common.recipe.RecipeMaps;
+import gregtechmod.mistaqur.nei.GT_RecipeHandler;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.StatCollector;
 

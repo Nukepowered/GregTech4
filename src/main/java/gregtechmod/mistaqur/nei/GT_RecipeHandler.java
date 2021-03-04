@@ -7,6 +7,7 @@ import gregtechmod.api.recipe.Ingredient;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.mistaqur.nei.handlers.FixedPositionedStack;
 
 import static codechicken.lib.gui.GuiDraw.changeTexture;
 
@@ -75,21 +76,21 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 						nonConsumables.add(GT_Utility.stackToInt(s));
 					}
 				}
-				resources.add(new PositionedStack(input.getVariants(), offsets.getKey(), offsets.getValue()));
+				resources.add(new FixedPositionedStack(input.getVariants(), offsets.getKey(), offsets.getValue()));
 			}
 			
 			int offset = 0;
 			List<ItemStack> outputs = recipe.getOutputs();
 			for (offset = 0; offset < outputs.size(); offset++) {
 				Pair<Integer, Integer> offsets = getOutputAligment(offset);
-				products.add(new PositionedStack(outputs.get(offset), offsets.getKey(), offsets.getValue()));
+				products.add(new FixedPositionedStack(outputs.get(offset), offsets.getKey(), offsets.getValue()));
 			}
 			
 			List<ChancedOutput> chanced = recipe.getChancedOutputs();
 			for (int i = 0; i < chanced.size(); i++) {
 				Pair<Integer, Integer> offsets = getOutputAligment(i + offset);
 				ChancedOutput output = chanced.get(i);
-				products.add(new PositionedStack(output.getStack(), offsets.getKey(), offsets.getValue()));
+				products.add(new FixedPositionedStack(output.getStack(), offsets.getKey(), offsets.getValue()));
 				this.chanced.put(GT_Utility.stackToInt(output.getStack()), output.getChance());
 			}
 			

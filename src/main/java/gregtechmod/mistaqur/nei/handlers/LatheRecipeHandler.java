@@ -1,59 +1,61 @@
-package gregtechmod.mistaqur.nei;
+package gregtechmod.mistaqur.nei.handlers;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
-import gregtechmod.common.gui.GT_GUIContainer_Electrolyzer;
+import gregtechmod.common.gui.GT_GUIContainer_BasicMachine_Lathe;
 import gregtechmod.common.recipe.RecipeMaps;
+import gregtechmod.mistaqur.nei.GT_RecipeHandler;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.StatCollector;
 
-public class ElectrolyzerRecipeHandler extends GT_RecipeHandler {
+public class LatheRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public void loadTransferRects() {
 		try {
-		transferRects.add(new RecipeTransferRect(new Rectangle(74-sOffsetX, 33-sOffsetY, 30, 10), getRecipeId()));
+		transferRects.add(new RecipeTransferRect(new Rectangle(70-sOffsetX, 24-sOffsetY, 36, 18), getRecipeId()));
 		
 		ArrayList<Class<? extends GuiContainer>> guis = new ArrayList<Class<? extends GuiContainer>>();
 		ArrayList<RecipeTransferRect> transferRects2 = new ArrayList<RecipeTransferRect>();
-		guis.add(GT_GUIContainer_Electrolyzer.class);
-		transferRects2.add(new RecipeTransferRect(new Rectangle(74-5, 33-11, 30, 10), getRecipeId(), new Object[0]));
+		guis.add(GT_GUIContainer_BasicMachine_Lathe.class);
+		transferRects2.add(new RecipeTransferRect(new Rectangle(70-5, 24-11, 36, 18), getRecipeId(), new Object[0]));
 		RecipeTransferRectHandler.registerRectsToGuis(guis, transferRects2);
 		} catch(Throwable e) {GT_Log.log.catching(e);}
 	}
 	
 	@Override
 	public String getRecipeName() {
-		return StatCollector.translateToLocal("nei.electrolyzer.title");
+		return StatCollector.translateToLocal("nei.lathe.title");
 	}
 	
 	@Override
 	public String getRecipeId() {
-		return "gregtech.Electrolyzer";
+		return "gregtech.Lathe";
 	}
 	
 	@Override
 	public String getGuiTexture() {
-		return GregTech_API.GUI_PATH + "NEIElectrolyzer.png";
+		return GregTech_API.GUI_PATH + "NEILathe.png";
 	}
 	
 	@Override
 	public String getOverlayIdentifier() {
-		return "gregtech.electrolyzer";
+		return "gregtech.Lathe";
 	}
 	
 	@Override
 	public RecipeMap<?> getRecipeList() {
-		return RecipeMaps.ELECTROLYZER;
+		return RecipeMaps.LATHE;
 	}
 	
 	@Override
@@ -61,12 +63,12 @@ public class ElectrolyzerRecipeHandler extends GT_RecipeHandler {
 		return new CachedGT_Recipe(irecipe) {
 			@Override
 			protected Pair<Integer, Integer> getInputAligment(int itemIdx) {
-				return Pair.of(80 - sOffsetX - (30 * itemIdx), 46 - sOffsetY);
+				return Pair.of(53 - sOffsetX + (18 * itemIdx), 25 - sOffsetY);
 			}
 			
 			@Override
 			protected Pair<Integer, Integer> getOutputAligment(int itemIdx) {
-				return Pair.of(50 - sOffsetX + (20 * itemIdx), 16 - sOffsetY);
+				return Pair.of(107 - sOffsetX + (18 * itemIdx), 25 - sOffsetY);
 			}
 		};
 	}

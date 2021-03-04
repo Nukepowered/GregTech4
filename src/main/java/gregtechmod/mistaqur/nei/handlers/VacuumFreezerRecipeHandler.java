@@ -1,12 +1,13 @@
-package gregtechmod.mistaqur.nei;
+package gregtechmod.mistaqur.nei.handlers;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
-import gregtechmod.common.gui.GT_GUIContainer_ImplosionCompressor;
+import gregtechmod.common.gui.GT_GUIContainer_VacuumFreezer;
 import gregtechmod.common.recipe.RecipeMaps;
+import gregtechmod.mistaqur.nei.GT_RecipeHandler;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
@@ -17,16 +18,16 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.StatCollector;
 
-public class ImplosionRecipeHandler extends GT_RecipeHandler {
+public class VacuumFreezerRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public void loadTransferRects() {
 		try {
-		transferRects.add(new RecipeTransferRect(new Rectangle(56-sOffsetX, 26-sOffsetY, 24, 15), getRecipeId()));
+		transferRects.add(new RecipeTransferRect(new Rectangle(76-sOffsetX, 26-sOffsetY, 24, 15), getRecipeId()));
 		
 		ArrayList<Class<? extends GuiContainer>> guis = new ArrayList<Class<? extends GuiContainer>>();
 		ArrayList<RecipeTransferRect> transferRects2 = new ArrayList<RecipeTransferRect>();
-		guis.add(GT_GUIContainer_ImplosionCompressor.class);
+		guis.add(GT_GUIContainer_VacuumFreezer.class);
 		transferRects2.add(new RecipeTransferRect(new Rectangle(56-5, 26-11, 24, 15), getRecipeId(), new Object[0]));
 		RecipeTransferRectHandler.registerRectsToGuis(guis, transferRects2);
 		} catch(Throwable e) {GT_Log.log.catching(e);}
@@ -34,27 +35,27 @@ public class ImplosionRecipeHandler extends GT_RecipeHandler {
 	
 	@Override
 	public String getRecipeName() {
-		return StatCollector.translateToLocal("nei.implosion_compressor.title");
+		return StatCollector.translateToLocal("nei.vacuum_freezer.title");
 	}
 	
 	@Override
 	public String getRecipeId() {
-		return "gregtech.Implosion";
+		return "gregtech.VacuumFreezer";
 	}
 	
 	@Override
 	public String getGuiTexture() {
-		return GregTech_API.GUI_PATH + "NEIImplosion.png";
+		return GregTech_API.GUI_PATH + "NEIVacuumFreezer.png";
 	}
 	
 	@Override
 	public String getOverlayIdentifier() {
-		return "gregtech.Implosion";
+		return "gregtech.VacuumFreezer";
 	}
 	
 	@Override
 	public RecipeMap<?> getRecipeList() {
-		return RecipeMaps.IMPLOSION_COMPRESSOR;
+		return RecipeMaps.VACUUM_FREEZER;
 	}
 	
 	@Override
@@ -62,12 +63,12 @@ public class ImplosionRecipeHandler extends GT_RecipeHandler {
 		return new CachedGT_Recipe(irecipe) {
 			@Override
 			protected Pair<Integer, Integer> getInputAligment(int itemIdx) {
-				return Pair.of(34 - sOffsetX , 16 - sOffsetY + (18 * itemIdx));
+				return Pair.of(54 - sOffsetX - (18 * itemIdx), 25 - sOffsetY);
 			}
 			
 			@Override
 			protected Pair<Integer, Integer> getOutputAligment(int itemIdx) {
-				return Pair.of(86 - sOffsetX + (18 * itemIdx), 25 - sOffsetY);
+				return Pair.of(106 - sOffsetX, 25 - sOffsetY);
 			}
 		};
 	}

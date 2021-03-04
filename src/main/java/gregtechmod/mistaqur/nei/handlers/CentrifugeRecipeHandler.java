@@ -1,4 +1,4 @@
-package gregtechmod.mistaqur.nei;
+package gregtechmod.mistaqur.nei.handlers;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.recipe.Recipe;
@@ -7,6 +7,7 @@ import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.gui.GT_GUIContainer_Centrifuge;
 import gregtechmod.common.recipe.RecipeMaps;
+import gregtechmod.mistaqur.nei.GT_RecipeHandler;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
