@@ -21,7 +21,7 @@ public class ProcessingBlock implements IOreRecipeRegistrator {
    }
 
    @SuppressWarnings("deprecation")
-public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
+public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
       GregTech_API.sRecipeAdder.addCutterRecipe(GT_Utility.copyAmount(1L, aStack), GT_OreDictUnificator.get(OrePrefixes.plate, (Object)aMaterial, 9L), Math.max(aMaterial.getMass() * 10, 1), 30);
       ItemStack tStack1 = GT_OreDictUnificator.get(OrePrefixes.ingot, (Object)aMaterial, 1L);
       ItemStack tStack2 = GT_OreDictUnificator.get(OrePrefixes.gem, (Object)aMaterial, 1L);

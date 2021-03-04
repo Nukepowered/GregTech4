@@ -384,6 +384,16 @@ public class GT_ModHandler {
 		return true;
 	}
 	
+	/** @param secondaryChance - 1-100%  */
+	public static boolean addTCPulveriserRecipe(ItemStack input, ItemStack primaryOutput, ItemStack secondaryOutput, int secondaryChance, int RF) {
+		if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.pulverization, input, true)) return false;
+		try {
+			// TODO null, maybe load later
+			cofh.thermalexpansion.api.crafting.CraftingHandlers.pulverizer.addRecipe(RF, input, primaryOutput, secondaryOutput, secondaryChance, true);
+		} catch(Throwable e) {/*Do nothing*/}
+		return true;
+	}
+	
 	/**
 	 * IC2-Extractor Recipe. Overloads old Recipes automatically
 	 */
@@ -413,36 +423,6 @@ public class GT_ModHandler {
 		return true;
 	}
 	
-	private static Map<Integer, Object> sPulverizerRecipes = new HashMap<Integer, Object>();
-	
-	/**
-	 * @return Object that can either be cast into IPulverizerRecipe or into GT_PulverizerRecipe
-	 */
-	public static Object getPulverizerRecipe(ItemStack aInput) {
-		if (aInput == null) return null;
-		Object tObject = sPulverizerRecipes.get(GT_Utility.stackToInt(aInput));
-		if (tObject != null) {
-			return tObject;
-		}
-		
-		ItemStack tInput = GT_Utility.copy(aInput);
-		Items.feather.setDamage(tInput, GregTech_API.ITEM_WILDCARD_DAMAGE);
-		tObject = sPulverizerRecipes.get(GT_Utility.stackToInt(tInput));
-		if (tObject != null) {
-			return tObject;
-		}
-		/*
-		try {
-    		for (thermalexpansion.api.crafting.IPulverizerRecipe tRecipe : thermalexpansion.api.crafting.CraftingManagers.pulverizerManager.getRecipeList()) {
-    			if (GT_Utility.areStacksEqual(tRecipe.getInput(), aInput)) {
-		    		return tRecipe;
-    			}
-    		}
-		} catch(Throwable e) {}
-		*/
-		return null;
-	}
-	
 	public static boolean addPulverisationRecipe(ItemStack aInput, ItemStack aOutput1) {
 		return addPulverisationRecipe(aInput, aOutput1, null, 0, false);
 	}
@@ -466,7 +446,7 @@ public class GT_ModHandler {
 	/**
 	 * Adds Several Pulverizer-Type Recipes.
 	 */
-	public static synchronized boolean addPulverisationRecipe(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2, int aChance, boolean aOverwrite) {
+	public static boolean addPulverisationRecipe(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2, int aChance, boolean aOverwrite) {
 		aOutput1 = GT_OreDictUnificator.get(true, aOutput1);
 		aOutput2 = GT_OreDictUnificator.get(true, aOutput2);
 		if (aInput == null || aOutput1 == null) return false;
@@ -475,10 +455,7 @@ public class GT_ModHandler {
 		if (GT_Utility.getContainerItem(aInput) == null) {
 			if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.maceration, aInput, true)) {
 				GT_Utility.addSimpleIC2MachineRecipe(aInput, getMaceratorRecipeList(), null, aOutput1);
-			}
-			
-			if (aOutput2 != null && GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.pulverization, aInput, true)) {
-				sPulverizerRecipes.put(GT_Utility.stackToInt(aInput), new GT_PulverizerRecipe(aInput, aOutput1, aOutput2, aChance<=0?10:aChance));
+				addTCPulveriserRecipe(aInput, aOutput1, aOutput2, aChance, 2400);
 			}
 			
 			if (!OrePrefixes.log.contains(aInput)) {

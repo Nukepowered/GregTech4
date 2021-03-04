@@ -12,6 +12,7 @@ import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
+
 import java.util.Iterator;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemBlock;
@@ -27,7 +28,7 @@ public class ProcessingOre implements IOreRecipeRegistrator {
    }
 
    @SuppressWarnings("deprecation")
-   public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
       if(aStack.getItem() instanceof ItemBlock && aStack.getItem().getItemStackLimit() > GT_Mod.sOreStackSize) {
          aStack.getItem().setMaxStackSize(GT_Mod.sOreStackSize);
       }

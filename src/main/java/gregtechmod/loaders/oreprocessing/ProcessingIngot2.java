@@ -3,14 +3,12 @@ package gregtechmod.loaders.oreprocessing;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_ConfigCategories;
 import gregtechmod.api.enums.GT_ToolDictNames;
-import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.enums.SubTag;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
-import net.minecraft.item.ItemStack;
 
 public class ProcessingIngot2 implements IOreRecipeRegistrator {
 
@@ -18,7 +16,7 @@ public class ProcessingIngot2 implements IOreRecipeRegistrator {
       OrePrefixes.ingotDouble.add((IOreRecipeRegistrator)this);
    }
 
-   public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
       if(!aMaterial.contains(SubTag.NO_SMASHING)) {
          GregTech_API.sRecipeAdder.addBenderRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), GT_OreDictUnificator.get(OrePrefixes.plateDouble, (Object)aMaterial, 1L), Math.max(aMaterial.getMass() * 2, 1), 24);
          GregTech_API.sRecipeAdder.addBenderRecipe(GT_Utility.copyAmount(2L, new Object[]{aStack}), GT_OreDictUnificator.get(OrePrefixes.plateQuadruple, (Object)aMaterial, 1L), Math.max(aMaterial.getMass() * 4, 1), 24);

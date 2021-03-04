@@ -1,7 +1,6 @@
 package gregtechmod.loaders.oreprocessing;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.enums.SubTag;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
@@ -27,7 +26,7 @@ public class ProcessingOreSmelting implements IOreRecipeRegistrator {
 
    }
 
-   public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
       if(!aMaterial.contains(SubTag.NO_SMELTING)) {
          if(!aMaterial.mBlastFurnaceRequired && !aMaterial.mDirectSmelting.mBlastFurnaceRequired) {
             switch(aPrefix) {

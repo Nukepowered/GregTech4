@@ -2,11 +2,9 @@ package gregtechmod.loaders.oreprocessing;
 
 import gregtechmod.GT_Mod;
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import net.minecraft.block.Block;
-import net.minecraft.item.ItemStack;
 
 public class ProcessingStoneVarious implements IOreRecipeRegistrator {
 
@@ -21,7 +19,7 @@ public class ProcessingStoneVarious implements IOreRecipeRegistrator {
       OrePrefixes.stoneSmooth.add(this);
    }
 
-   public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
       Block aBlock = Block.getBlockFromItem(aStack.getItem());
       if(aBlock != null) {
          if(aStack.getMaxStackSize() > GT_Mod.sBlockStackSize) {

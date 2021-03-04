@@ -107,16 +107,16 @@ public class GT_OreProcessingLoader implements Runnable {
 //      new ProcessingSlab();
 //      new ProcessingStick();
       new ProcessingStone();
-      new ProcessingStoneCobble();
-      new ProcessingStoneVarious();
-      new ProcessingToolHeadAxe();
-      new ProcessingToolHeadFile();
-      new ProcessingToolHeadHammer();
-      new ProcessingToolHeadHoe();
-      new ProcessingToolHeadPickaxe();
-      new ProcessingToolHeadSaw();
-      new ProcessingToolHeadShovel();
-      new ProcessingToolHeadSword();
+//      new ProcessingStoneCobble();
+//      new ProcessingStoneVarious();
+//      new ProcessingToolHeadAxe();
+//      new ProcessingToolHeadFile();
+//      new ProcessingToolHeadHammer();
+//      new ProcessingToolHeadHoe();
+//      new ProcessingToolHeadPickaxe();
+//      new ProcessingToolHeadSaw();
+//      new ProcessingToolHeadShovel();
+//      new ProcessingToolHeadSword();
       new ProcessingWax();
    }
 }

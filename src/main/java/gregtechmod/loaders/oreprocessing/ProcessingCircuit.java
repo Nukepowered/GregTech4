@@ -9,7 +9,6 @@ import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
-import net.minecraft.item.ItemStack;
 
 public class ProcessingCircuit implements IOreRecipeRegistrator {
 
@@ -17,7 +16,7 @@ public class ProcessingCircuit implements IOreRecipeRegistrator {
       OrePrefixes.circuit.add((IOreRecipeRegistrator)this);
    }
 
-   public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
       switch(aMaterial) {
       case Basic:
          if(!GT_Utility.areStacksEqual(aStack, GT_Items.Circuit_Integrated.getWildcard(1L, new Object[0]))) {

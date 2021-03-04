@@ -20,7 +20,7 @@ public class ProcessingSand implements IOreRecipeRegistrator {
    }
 
    @SuppressWarnings("deprecation")
-   public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
       if(aOreDictName.equals("sandCracked")) {
          if(aStack.getItem() instanceof ItemBlock) {
             if(aStack.getItem().getItemStackLimit() > GT_Mod.sBlockStackSize) {

@@ -15,7 +15,7 @@ public class ProcessingGear implements IOreRecipeRegistrator {
       OrePrefixes.gearGt.add((IOreRecipeRegistrator)this);
    }
 
-   public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
       GT_ModHandler.removeRecipeByOutput(aStack);
       switch(ProcessingGear.NamelessClass1327650710.$SwitchMap$gregtechmod$api$enums$Materials[aMaterial.ordinal()]) {
       case 1:

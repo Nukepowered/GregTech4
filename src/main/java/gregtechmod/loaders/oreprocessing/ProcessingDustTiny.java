@@ -1,7 +1,6 @@
 package gregtechmod.loaders.oreprocessing;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.enums.SubTag;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
@@ -16,7 +15,7 @@ public class ProcessingDustTiny implements IOreRecipeRegistrator {
       OrePrefixes.dustTiny.add((IOreRecipeRegistrator)this);
    }
 
-   public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
       GT_ModHandler.addShapelessCraftingRecipe(GT_OreDictUnificator.get(OrePrefixes.dust, (Object)aMaterial, 1L), new Object[]{aOreDictName, aOreDictName, aOreDictName, aOreDictName, aOreDictName, aOreDictName, aOreDictName, aOreDictName, aOreDictName});
       if(!aMaterial.contains(SubTag.NO_SMELTING)) {
          if(aMaterial.mBlastFurnaceRequired) {

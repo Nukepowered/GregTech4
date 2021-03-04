@@ -22,7 +22,7 @@ public class ProcessingLog implements IOreRecipeRegistrator {
    }
 
    @SuppressWarnings("deprecation")
-   public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
       if(aOreDictName.equals("logRubber")) {
          GregTech_API.sRecipeAdder.addCentrifugeRecipe(GT_Utility.copyAmount(16L, new Object[]{aStack}), 5, GT_Items.IC2_Resin.get(8L, new Object[0]), GT_ModHandler.getIC2Item("plantBall", 6L), GT_OreDictUnificator.get(OrePrefixes.cell, (Object)Materials.Methane, 1L), GT_OreDictUnificator.get(OrePrefixes.cell, (Object)Materials.Carbon, 4L), 5000);
          GT_ModHandler.addSawmillRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), GT_Items.IC2_Resin.get(1L, new Object[0]), GT_OreDictUnificator.get(OrePrefixes.dust, (Object)Materials.Wood, 16L));

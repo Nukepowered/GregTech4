@@ -2,14 +2,12 @@ package gregtechmod.loaders.oreprocessing;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_Items;
-import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.enums.SubTag;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
-import net.minecraft.item.ItemStack;
 
 public class ProcessingShaping implements IOreRecipeRegistrator {
 
@@ -17,7 +15,7 @@ public class ProcessingShaping implements IOreRecipeRegistrator {
       OrePrefixes.ingot.add((IOreRecipeRegistrator)this);
    }
 
-   public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
       if(GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial, 1L) != null && !aMaterial.contains(SubTag.NO_SMELTING)) {
          int tAmount = (int)(aPrefix.mMaterialAmount / GregTech_API.MATERIAL_UNIT);
          if(tAmount > 0 && tAmount <= 64 && aPrefix.mMaterialAmount % GregTech_API.MATERIAL_UNIT == 0L) {

@@ -6,7 +6,6 @@ import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_RecipeRegistrator;
 import gregtechmod.api.util.GT_Utility;
-import net.minecraft.item.ItemStack;
 
 public class ProcessingItem implements IOreRecipeRegistrator {
 
@@ -14,7 +13,7 @@ public class ProcessingItem implements IOreRecipeRegistrator {
       OrePrefixes.item.add((IOreRecipeRegistrator)this);
    }
 
-   public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
       if(aOreDictName.equals("itemManganese")) {
          GT_RecipeRegistrator.registerBasicReverseMaceratingAndSmelting(GT_Utility.copyAmount(1L, new Object[]{aStack}), Materials.Manganese, 3628800L);
       } else if(aOreDictName.equals("itemSalt")) {

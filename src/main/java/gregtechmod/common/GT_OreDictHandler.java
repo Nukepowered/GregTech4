@@ -22,11 +22,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.ProgressManager;
 import cpw.mods.fml.common.ProgressManager.ProgressBar;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.registry.GameData;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -51,23 +50,14 @@ public class GT_OreDictHandler {
 		if (GT_Mod.mDoNotInit || aEvent == null || aEvent.Ore == null || aEvent.Ore.getItem() == null || aEvent.Name == null || aEvent.Name.equals("") || mIgnoredNames.contains(aEvent.Name)) return;
 		
 		try {
-		
 			if (aEvent.Ore.stackSize != 1) {
 				GT_Log.log.warn("WARNING: '" + aEvent.Name + "' is either being misused by another Mod or has been wrongly registered, as the stackSize of the Event-Stack is not 1!!!");
 			}
 			
 			aEvent.Ore.stackSize = 1;
-			
-			ModContainer tContainer = Loader.instance().activeModContainer();
-	    	String aMod = tContainer==null ? "UNKNOWN_MOD_ID" : tContainer.getModId();
-	    	String aOriginalMod = aMod;
-			if (GT_OreDictUnificator.isRegisteringOres()) {
-				aMod = GregTech_API.MOD_ID;
-			} else if (aMod.equals(GregTech_API.MOD_ID)) {
-				aMod = "UNKNOWN_MOD_ID";
-			}
+			String aMod = GameData.getItemRegistry().getNameForObject(aEvent.Ore.getItem()).split(":")[0]; // Best way to get modid
 	    	
-	    	if (aOriginalMod.toLowerCase().contains("tconstruct") || aOriginalMod.toLowerCase().contains("xycraft") || (aOriginalMod.toLowerCase().contains("natura") || aOriginalMod.toLowerCase().contains("natural"))) return;
+	    	if (aMod.toLowerCase().contains("tconstruct") || aMod.toLowerCase().contains("xycraft") || (aMod.toLowerCase().contains("natura") || aMod.toLowerCase().contains("natural"))) return;
 			if (mActivated || GregTech_API.sPostloadStarted || GT_Mod.sSortToTheEnd && GregTech_API.sLoadFinished) {
 				GT_Log.log.warn("WARNING: " + aMod + " attempted to register " + aEvent.Name + " very late at the OreDictionary! Some Functionality may not work as expected! Sometimes registration in Postload is required, but you should always register OreDictionary Items in the Load Phase whenever possible.");
 			}
@@ -76,7 +66,7 @@ public class GT_OreDictHandler {
 			String tAssosiation = GT_OreDictUnificator.getAssociation(aEvent.Ore);
 			if(GT_Utility.isStringValid(tAssosiation) && tAssosiation.equals(aEvent.Name)) {
                 GT_Log.ore.println(e + " is ambiguous, this is an Error.");
-                GT_Log.log.warn("WARNING: The OreDict-Registration of " + aEvent.Name + " by " + aOriginalMod + " is ambiguous. Please check if the Item hasn\'t already been registered under that Name, before registering it a second time!");
+                GT_Log.log.warn("WARNING: The OreDict-Registration of " + aEvent.Name + " by " + aMod + " is ambiguous. Please check if the Item hasn\'t already been registered under that Name, before registering it a second time!");
              } else {
             	 this.mRegisteredStacks.add(aEvent.Ore);
             	 if (aEvent.Name.startsWith("item") && this.mIgnoredItems.contains(aEvent.Name)) {
@@ -161,26 +151,26 @@ public class GT_OreDictHandler {
                             GT_Log.log.error("I don\'t know exactly what to suggest about this Name, please consult me personally at GregTech.");
                          }
 
-                         GT_Log.log.error("Private Prefixes could also be a solution if the first Suggestion doesn\'t apply. In that case the suggestion for the name is \'" + aOriginalMod + ":" + aEvent.Name + "\' don\'t forget to insert the \':\' inbetween the Mod ID and OreDict Name, that is the most important part.");
+                         GT_Log.log.error("Private Prefixes could also be a solution if the first Suggestion doesn\'t apply. In that case the suggestion for the name is \'" + aMod + ":" + aEvent.Name + "\' don\'t forget to insert the \':\' inbetween the Mod ID and OreDict Name, that is the most important part.");
                          GT_Log.log.error("If you are not the Owner then report it to the Owner of the Mod, which the Item belongs to.");
                       } else {
                          OrePrefixes aPrefix = OrePrefixes.getOrePrefix(aEvent.Name);
                          String tName = "";
                          if(aPrefix == null) {
                             if(aEvent.Name.toLowerCase().equals(aEvent.Name)) {
-                               GT_Log.log.error("Improperly registered Ore: " + aEvent.Name + " !!!Improperly registered Ore detected!!! This Object does not follow any OreDictionary Convention, as it is 100% lowercased!!! Please report this to its Modauthor for a fix. If nothing proper is found, a good suggestion for its Name would be \'" + aOriginalMod + ":" + aEvent.Name + "\' don\'t forget to insert the \':\' inbetween the Mod ID and OreDict Name, that is the most important part.");
+                               GT_Log.log.error("Improperly registered Ore: " + aEvent.Name + " !!!Improperly registered Ore detected!!! This Object does not follow any OreDictionary Convention, as it is 100% lowercased!!! Please report this to its Modauthor for a fix. If nothing proper is found, a good suggestion for its Name would be \'" + aMod + ":" + aEvent.Name + "\' don\'t forget to insert the \':\' inbetween the Mod ID and OreDict Name, that is the most important part.");
                                GT_Log.ore.println(e + " is invalid due to being solely lowercased.");
                                return;
                             }
 
                             if(aEvent.Name.toUpperCase().equals(aEvent.Name)) {
-                               GT_Log.log.error("Improperly registered Ore: " + aEvent.Name + " !!!Improperly registered Ore detected!!! This Object does not follow any OreDictionary Convention, as it is 100% uppercased!!! Please report this to its Modauthor for a fix. If nothing proper is found, a good suggestion for its Name would be \'" + aOriginalMod + ":" + aEvent.Name + "\' don\'t forget to insert the \':\' inbetween the Mod ID and OreDict Name, that is the most important part.");
+                               GT_Log.log.error("Improperly registered Ore: " + aEvent.Name + " !!!Improperly registered Ore detected!!! This Object does not follow any OreDictionary Convention, as it is 100% uppercased!!! Please report this to its Modauthor for a fix. If nothing proper is found, a good suggestion for its Name would be \'" + aMod + ":" + aEvent.Name + "\' don\'t forget to insert the \':\' inbetween the Mod ID and OreDict Name, that is the most important part.");
                                GT_Log.ore.println(e + " is invalid due to being solely uppercased.");
                                return;
                             }
 
                             if(GT_Utility.sUpperCasedCharacters.contains(Character.valueOf(aEvent.Name.charAt(0)))) {
-                               GT_Log.log.error("Improperly registered Ore: " + aEvent.Name + " !!!Improperly registered Ore detected!!! This Object does not follow any OreDictionary Convention, because it starts with an uppercased Letter. Please report this to its Modauthor for a fix. If nothing proper is found, a good suggestion for its Name would be \'" + aOriginalMod + ":" + aEvent.Name + "\' don\'t forget to insert the \':\' inbetween the Mod ID and OreDict Name, that is the most important part.");
+                               GT_Log.log.error("Improperly registered Ore: " + aEvent.Name + " !!!Improperly registered Ore detected!!! This Object does not follow any OreDictionary Convention, because it starts with an uppercased Letter. Please report this to its Modauthor for a fix. If nothing proper is found, a good suggestion for its Name would be \'" + aMod + ":" + aEvent.Name + "\' don\'t forget to insert the \':\' inbetween the Mod ID and OreDict Name, that is the most important part.");
                                GT_Log.ore.println(e + " is invalid due to the first character being uppercased.");
                                return;
                             }
@@ -404,7 +394,7 @@ public class GT_OreDictHandler {
                             } else {
                                if(!aPrefix.mIsSelfReferencing) {
                                   GT_Log.log.error("WARNING: \'" + aEvent.Name + "\' is an OreDictionary Name which may cause Problems, due to being a Prefix, please use another one.");
-                                  GT_Log.log.error("Private Prefixes are a solution. Please use \'" + aOriginalMod + ":" + aEvent.Name + "\' don\'t forget to insert the \':\' inbetween the Mod ID and OreDict Name, that is the most important part.");
+                                  GT_Log.log.error("Private Prefixes are a solution. Please use \'" + aMod + ":" + aEvent.Name + "\' don\'t forget to insert the \':\' inbetween the Mod ID and OreDict Name, that is the most important part.");
                                   GT_Log.ore.println(e + " uses a Prefix as full OreDict Name, and is therefor invalid.");
                                   aEvent.Ore.setStackDisplayName("Invalid OreDictionary Tag");
                                   return;
@@ -481,12 +471,22 @@ public class GT_OreDictHandler {
 
                          GT_Log.ore.println(e);
                          List<OreDictEntry> list = mEvents.get(aPrefix);
-                         list = list == null ? new ArrayList<>() : list;
-                         list.add(OreDictEntry.create(aEvent.Ore, aOriginalMod, aEvent.Name));
-                         this.mEvents.put(aPrefix, list);
-                         if(this.mActivated) {
-                            this.registerRecipes(aEvent, aOriginalMod);
+                         if (list != null) {
+                        	 int idx = list.indexOf(OreDictEntry.create(aEvent.Name));
+                        	 if (idx >= 0) {
+                        		 list.get(idx).ores.add(aEvent.Ore);
+                        	 } else {
+                        		 list.add(OreDictEntry.create(aEvent.Name, aEvent.Ore));
+                        	 }
+                         } else {
+                        	 list = new ArrayList<>();
+                        	 list.add(OreDictEntry.create(aEvent.Name, aEvent.Ore));
                          }
+                         
+                         this.mEvents.put(aPrefix, list);
+//                         if(this.mActivated) {
+//                            this.registerRecipes(aEvent, aMod);
+//                         }
 
                       }
                    } else {
@@ -521,7 +521,7 @@ public class GT_OreDictHandler {
     		bar.step("prefix - " + e.getKey());
     		
     		if (e.getKey() != null) {
-    			this.processTask(e.getKey(), e.getValue());
+    			e.getKey().processOre(e.getValue());
     		} else {
     			StringBuilder app = new StringBuilder();
     			app.append("Thingy Name: ");
@@ -540,40 +540,25 @@ public class GT_OreDictHandler {
 		GT_Log.log.warn(String.format("Time spent for oredict iterating: %.3f seconds", (System.currentTimeMillis() - time) / 1000.0D));
     }
     
-    private void processTask(OrePrefixes prefix, List<OreDictEntry> items) {
-    	for (OreDictEntry entry : items) {
-            Materials aMaterial = (prefix == null) ? Materials._NULL : OrePrefixes.getMaterial(entry.oreDictName, prefix);
-            if (prefix != null) {
-                if (!prefix.isIgnored(aMaterial)) {
-                	long time = System.currentTimeMillis();
-                	prefix.processOre(aMaterial, entry.oreDictName, entry.modName, GT_Utility.copyAmount(1, entry.ore));
-                	double timeDiff = (System.currentTimeMillis() - time) / 1000.0D;
-                	if (timeDiff > 0.8) GT_Log.log.warn(String.format("Too long execution for processor '%s': executed for: %.3f, tasks: %d", prefix.toString(), timeDiff, prefix.mOreProcessing.size()));
-                }
-            }
-            
-    	}
-    }
-    
-    public void registerRecipes(final OreDictionary.OreRegisterEvent aEvent, final String aMod) {
-        if (aEvent.Ore == null || aEvent.Ore.getItem() == null) {
-            return;
-        }
-        if (aEvent.Ore.stackSize != 1) {
-            aEvent.Ore.stackSize = 1;
-            GT_Log.log.error("WARNING: '" + aEvent.Name + "' is either being misused by another Mod or has been wrongly registered, as the stackSize of the Event-Stack is not 1.");
-        }
-        final OrePrefixes aPrefix = OrePrefixes.getOrePrefix(aEvent.Name);
-        final Materials aMaterial = (aPrefix == null) ? Materials._NULL : OrePrefixes.getRealMaterial(aEvent.Name, aPrefix);
-        if (aPrefix != null) {
-            if (!aPrefix.isIgnored(aMaterial)) {
-                aPrefix.processOre(aMaterial, aEvent.Name, aMod, GT_Utility.copyAmount(1L, aEvent.Ore));
-            }
-        }
-        else {
-            GT_Log.log.warn("Thingy Name: " + aEvent.Name + " !!!Unknown 'Thingy' detected!!! This Object seems to probably not follow a valid OreDictionary Convention, or I missed a Convention. Please report to GregTech Intergalactical for additional compatiblity. This is not an Error, it's just an Information.");
-        }
-    }
+//    public void registerRecipes(final OreDictionary.OreRegisterEvent aEvent, final String aMod) {
+//        if (aEvent.Ore == null || aEvent.Ore.getItem() == null) {
+//            return;
+//        }
+//        if (aEvent.Ore.stackSize != 1) {
+//            aEvent.Ore.stackSize = 1;
+//            GT_Log.log.error("WARNING: '" + aEvent.Name + "' is either being misused by another Mod or has been wrongly registered, as the stackSize of the Event-Stack is not 1.");
+//        }
+//        final OrePrefixes aPrefix = OrePrefixes.getOrePrefix(aEvent.Name);
+//        final Materials aMaterial = (aPrefix == null) ? Materials._NULL : OrePrefixes.getRealMaterial(aEvent.Name, aPrefix);
+//        if (aPrefix != null) {
+//            if (!aPrefix.isIgnored(aMaterial)) {
+//                aPrefix.processOre(aMaterial, aEvent.Name, aMod, GT_Utility.copyAmount(1L, aEvent.Ore));
+//            }
+//        }
+//        else {
+//            GT_Log.log.warn("Thingy Name: " + aEvent.Name + " !!!Unknown 'Thingy' detected!!! This Object seems to probably not follow a valid OreDictionary Convention, or I missed a Convention. Please report to GregTech Intergalactical for additional compatiblity. This is not an Error, it's just an Information.");
+//        }
+//    }
     
 	public void registerUnificationEntries() {
 		GregTech_API.sUnification.mConfig.save();
@@ -585,14 +570,18 @@ public class GT_OreDictHandler {
 			}
 			
 			for (OreDictEntry entry : e.getValue()) {
-				GT_OreDictUnificator.addAssociation(entry.oreDictName, entry.ore);
-				if (GT_OreDictUnificator.isBlacklisted(entry.ore)) {
-					continue;
-				}
-				if (!entry.modName.equals("UNKNOWN_MOD_ID") && GregTech_API.sUnification.get(GT_ConfigCategories.specialunificationtargets + "." + entry.modName, entry.oreDictName, false)) {
-					GT_OreDictUnificator.set(entry.oreDictName, entry.ore, true, true);
-				} else {
-					GT_OreDictUnificator.set(entry.oreDictName, entry.ore, false, true);
+				for (ItemStack ore : entry.ores) {
+					GT_OreDictUnificator.addAssociation(entry.oreDictName, ore);
+					String modName = GameData.getItemRegistry().getNameForObject(ore.getItem());
+					
+					if (GT_OreDictUnificator.isBlacklisted(ore)) {
+						continue;
+					}
+					if (!modName.equals("UNKNOWN_MOD_ID") && GregTech_API.sUnification.get(GT_ConfigCategories.specialunificationtargets + "." + modName, entry.oreDictName, false)) {
+						GT_OreDictUnificator.set(entry.oreDictName, ore, true, true);
+					} else {
+						GT_OreDictUnificator.set(entry.oreDictName, ore, false, true);
+					}
 				}
 			}
 		}

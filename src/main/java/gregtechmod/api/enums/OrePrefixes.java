@@ -3,8 +3,10 @@ package gregtechmod.api.enums;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.OreDictEntry;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import net.minecraft.item.ItemStack;
 
@@ -289,11 +291,9 @@ public enum OrePrefixes {
 		return mOreProcessing.add(aRegistrator);
 	}
 	
-	public void processOre(Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
-		if (aMaterial != null && (aMaterial != Materials._NULL || mIsSelfReferencing || !mIsMaterialBased) && GT_Utility.isStackValid(aStack)) {
-			for (IOreRecipeRegistrator tRegistrator : mOreProcessing) {
-				tRegistrator.registerOre(this, aMaterial, aOreDictName, aModName, GT_Utility.copyAmount(1, aStack));
-			}
+	public void processOre(List<OreDictEntry> entries) {
+		for (IOreRecipeRegistrator tRegistrator : mOreProcessing) {
+			tRegistrator.registerOre(this, entries);
 		}
 	}
 	

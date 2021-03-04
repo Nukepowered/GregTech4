@@ -18,7 +18,7 @@ public class ProcessingCrafting implements IOreRecipeRegistrator {
       OrePrefixes.crafting.add((IOreRecipeRegistrator)this);
    }
 
-   public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
       if(aOreDictName.equals(GT_OreDictNames.craftingRedstoneTorch.toString())) {
          GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copyAmount(1L, aStack), GT_OreDictUnificator.get(OrePrefixes.plate, (Object)Materials.Iron, 1L), GregTech_API.getGregTechComponent(30, 1), 800, 16);
          GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copyAmount(1L, aStack), GT_OreDictUnificator.get(OrePrefixes.plate, (Object)Materials.Aluminium, 1L), GregTech_API.getGregTechComponent(87, 1), 800, 16);

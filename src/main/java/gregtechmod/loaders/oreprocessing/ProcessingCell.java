@@ -9,6 +9,7 @@ import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -21,7 +22,7 @@ public class ProcessingCell implements IOreRecipeRegistrator {
       OrePrefixes.cell.add(this);
    }
 
-   public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
       if(aMaterial == Materials.Empty) {
          GT_ModHandler.removeRecipeByOutput(aStack);
          if(aModName.equalsIgnoreCase("AtomicScience")) {

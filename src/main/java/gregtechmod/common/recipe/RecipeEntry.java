@@ -14,6 +14,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 
+import gregtechmod.api.GregTech_API;
 import gregtechmod.api.recipe.Ingredient;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.ItemStackKey;
@@ -63,6 +64,13 @@ public class RecipeEntry implements Ingredient {
 	}
 	
 	/**
+	 * Will match damage & NBT
+	 */
+	public static Ingredient fromStacks(int count, Collection<ItemStack> stacks) {
+		return fromStacks(count, stacks, Match.DAMAGE, Match.NBT);
+	}
+	
+	/**
 	 * Create an Ingredient with size of count variable
 	 */
 	public static Ingredient fromStacks(int count, Collection<ItemStack> stacks, Match...options) {
@@ -72,7 +80,9 @@ public class RecipeEntry implements Ingredient {
 			result.addOptions(options);
 			for (ItemStack stack : stacks) {
 				assert GT_Utility.isStackValid(stack) : "Stack cannot be invalid, or null!";
-				result.variants.add(stack.copy());
+				ItemStack stack1 = stack.copy();
+				stack1.stackSize = count;
+				result.variants.add(stack1);
 			}
 			
 			return result;
@@ -174,7 +184,7 @@ public class RecipeEntry implements Ingredient {
 		if (GT_Utility.isStackValid(input)) {
 			for (ItemStack stack : variants) {
 				if (stack.getItem() == input.getItem() &&
-						(options.contains(Match.DAMAGE) ? stack.getItemDamage() == input.getItemDamage() : true) &&
+						(options.contains(Match.DAMAGE) ? (stack.getItemDamage() == GregTech_API.ITEM_WILDCARD_DAMAGE ? true : stack.getItemDamage() == input.getItemDamage()) : true) &&
 						(options.contains(Match.NBT) ? matchNBT(input, stack) : true)) {
 					return true;
 				}
@@ -187,7 +197,11 @@ public class RecipeEntry implements Ingredient {
 	@Override
 	public List<ItemStack> getVariants() {
 		List<ItemStack> vars = new ArrayList<>();
-		for (ItemStack stack : variants) vars.add(stack.copy());
+		for (ItemStack stack : variants) {
+			ItemStack copy = stack.copy();
+			copy.stackSize = count;
+			vars.add(copy);
+		}
 		return vars;
 	}
 	

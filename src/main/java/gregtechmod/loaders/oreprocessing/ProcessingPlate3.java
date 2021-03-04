@@ -3,14 +3,12 @@ package gregtechmod.loaders.oreprocessing;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_ConfigCategories;
 import gregtechmod.api.enums.GT_ToolDictNames;
-import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.enums.SubTag;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
-import net.minecraft.item.ItemStack;
 
 public class ProcessingPlate3 implements IOreRecipeRegistrator {
 
@@ -18,7 +16,7 @@ public class ProcessingPlate3 implements IOreRecipeRegistrator {
       OrePrefixes.plateTriple.add((IOreRecipeRegistrator)this);
    }
 
-   public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
       GT_ModHandler.removeRecipeByOutput(aStack);
       if(!aMaterial.contains(SubTag.NO_SMASHING)) {
          GregTech_API.sRecipeAdder.addBenderRecipe(GT_Utility.copyAmount(3L, new Object[]{aStack}), GT_OreDictUnificator.get(OrePrefixes.plateDense, (Object)aMaterial, 1L), Math.max(aMaterial.getMass() * 3, 1), 24);

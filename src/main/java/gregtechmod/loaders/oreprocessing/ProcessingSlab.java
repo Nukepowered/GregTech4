@@ -20,7 +20,7 @@ public class ProcessingSlab implements IOreRecipeRegistrator {
    }
 
    @SuppressWarnings("deprecation")
-   public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
       if(aOreDictName.startsWith("slabWood")) {
          if(aStack.getItem() instanceof ItemBlock && GT_Mod.sPlankStackSize < aStack.getItem().getItemStackLimit()) {
             aStack.getItem().setMaxStackSize(GT_Mod.sPlankStackSize);

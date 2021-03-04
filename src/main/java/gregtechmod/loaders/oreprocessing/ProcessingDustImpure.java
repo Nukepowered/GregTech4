@@ -16,7 +16,7 @@ public class ProcessingDustImpure implements IOreRecipeRegistrator {
       OrePrefixes.dustRefined.add((IOreRecipeRegistrator)this);
    }
 
-   public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
       Materials tByProduct = (Materials)GT_Utility.selectItemInList(aPrefix == OrePrefixes.dustPure?1:(aPrefix == OrePrefixes.dustRefined?2:0), aMaterial, aMaterial.mOreByProducts);
       ItemStack tStack = GT_OreDictUnificator.get(OrePrefixes.dustTiny, tByProduct, GT_OreDictUnificator.get(OrePrefixes.nugget, (Object)tByProduct, 1L), 1L);
       if(tStack == null) {

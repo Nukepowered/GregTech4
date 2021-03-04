@@ -1,22 +1,27 @@
 package gregtechmod.loaders.oreprocessing;
 
-import gregtechmod.api.enums.Materials;
+import java.util.List;
+
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
-import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.recipe.Ingredient;
+import gregtechmod.api.util.OreDictEntry;
+import gregtechmod.common.recipe.RecipeEntry;
 import gregtechmod.common.recipe.RecipeMaps;
-
-import net.minecraft.item.ItemStack;
 
 public class ProcessingWax implements IOreRecipeRegistrator {
 
-   public ProcessingWax() {
-      OrePrefixes.wax.add((IOreRecipeRegistrator)this);
-   }
+	public ProcessingWax() {
+		OrePrefixes.wax.add(this);
+	}
 
-   public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
-      if(aOreDictName.equals("waxMagical")) {
-         RecipeMaps.MAGIC_FUELS.factory().EUt(6).duration(1).input(GT_Utility.copyAmount(1L, aStack)).buildAndRegister();
-      }
-   }
+	@Override
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
+		for (OreDictEntry entry : dictEntry) {
+			if (entry.oreDictName.equals("waxMagical")) {
+				Ingredient recipeEntry = RecipeEntry.fromStacks(1, entry.ores);
+				RecipeMaps.MAGIC_FUELS.factory().EUt(6).duration(1).input(recipeEntry).buildAndRegister();
+			}
+		}
+	}
 }

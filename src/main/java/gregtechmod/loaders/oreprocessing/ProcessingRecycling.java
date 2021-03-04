@@ -25,7 +25,7 @@ public class ProcessingRecycling implements IOreRecipeRegistrator {
 
    }
 
-   public void registerOre(OrePrefixes aPrefix, Materials aMaterial, String aOreDictName, String aModName, ItemStack aStack) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
       if(!aPrefix.toString().startsWith("dust") && !aPrefix.toString().startsWith("crushed") && aMaterial != Materials.Blaze) {
          if(aPrefix.mIsContainer) {
             if(aMaterial != Materials.Empty) {
