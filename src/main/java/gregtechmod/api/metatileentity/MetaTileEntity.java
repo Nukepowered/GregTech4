@@ -531,10 +531,13 @@ public abstract class MetaTileEntity implements IMetaTileEntity {
 		ItemStack rStack = getStackInSlot(aIndex);
 		if (rStack != null) {
 			if (rStack.stackSize <= aAmount) {
-				if (setStackToZeroInsteadOfNull(aIndex))
+				if (setStackToZeroInsteadOfNull(aIndex)) {
+					int tmp = rStack.stackSize;
 					rStack.stackSize = 0;
-				else
+					return GT_Utility.copyAmount(tmp, rStack);
+				} else {
 					getBaseMetaTileEntity().setInventorySlotContents(aIndex, null);
+				}
 			} else {
 				rStack = rStack.splitStack(aAmount);
 				if (rStack.stackSize == 0) {

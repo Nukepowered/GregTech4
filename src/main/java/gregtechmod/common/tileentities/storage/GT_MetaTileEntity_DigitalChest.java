@@ -1,5 +1,7 @@
 package gregtechmod.common.tileentities.storage;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +21,6 @@ import net.minecraft.tileentity.TileEntity;
 
 public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
 
-   public int mItemCount = 0;
    public boolean isDigitalChest = true;
    public static int sDigitalItemCount = '\u8000';
 
@@ -34,9 +35,12 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
       sDigitalItemCount = Math.max(1024, aConfig.get(GT_ConfigCategories.machineconfig, "DigitalChest.MaxItems", sDigitalItemCount));
    }
 
+
+   @Override public void saveNBTData(NBTTagCompound aNBT) {}
+   @Override public void loadNBTData(NBTTagCompound aNBT) {}
    @Override public boolean unbreakable() 							{return true;}
    @Override public boolean isSimpleMachine() 						{return true;}
-   @Override  public int getInvSize() 								{return 1;}
+   @Override  public int getInvSize() 								{return 2;}
    @Override public boolean isFacingValid(byte aFacing) 			{return true;}
    @Override public boolean isAccessAllowed(EntityPlayer aPlayer) 	{return true;}
    @Override public boolean ownerControl() 							{return false;}
@@ -45,24 +49,48 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
    @Override public boolean isOutputFacing(byte aSide) 				{return false;}
    @Override public boolean isInputFacing(byte aSide) 				{return false;}
    @Override public boolean isDigitalChest() 						{return isDigitalChest;}
-   @Override public boolean isWrenchable()							{return this.mItemCount <= 0;}
-   @Override public void setItemCount(int aCount) 					{this.mItemCount = aCount; }
+   @Override public boolean isWrenchable()							{return mInventory[0] == null || mInventory[0].stackSize <= 0;}
+   @Override public void setItemCount(int aCount) 					{if (mInventory[0] != null) mInventory[0].stackSize = aCount; }
+   @Override public boolean setStackToZeroInsteadOfNull(int aIndex) {return !getBaseMetaTileEntity().isAllowedToWork();}
 
    public int getMaxItemCount() {
       return sDigitalItemCount - 192;
    }
-
+   
+   @Override
+   public void onPostTick() { // Second slot needed for inserting, stupid checks from other mods wouldn't let stack more than 64 items
+	   if (mInventory[0] != null) {
+		   if (mInventory[1] == null) {
+			   mInventory[1] = GT_Utility.copyAmount(0, mInventory);
+		   } else {
+			   if (mInventory[1].stackSize > 0) {
+				   mInventory[0].stackSize += mInventory[1].stackSize;
+				   mInventory[1].stackSize = 0;
+			   }
+		   }
+	   } else {
+		   if (mInventory[1] != null) {
+			   if (setStackToZeroInsteadOfNull(0)) {
+				   mInventory[0] = mInventory[1];
+				   mInventory[1] = null;
+			   } else {
+				   mInventory[1] = null;
+			   }
+		   }
+	   }
+   }
+   
    @Override
    public void onRightclick(EntityPlayer aPlayer) {
       ItemStack tPlayerItem = aPlayer.inventory.getCurrentItem();
       if(tPlayerItem == null) {
          if(mInventory[0] != null) {
-            for(int i = 0; this.mItemCount < this.getMaxItemCount() && i < aPlayer.inventory.getSizeInventory(); ++i) {
+            for(int i = 0; mInventory[0].stackSize < this.getMaxItemCount() && i < aPlayer.inventory.getSizeInventory(); ++i) {
             	ItemStack itemInSlot = aPlayer.inventory.getStackInSlot(i);
 				if (itemInSlot != null && itemInSlot.isItemEqual(getStoredItem()) && !itemInSlot.hasTagCompound()) {
-					int tmp = mItemCount;
-					mItemCount = Math.min(tmp + itemInSlot.stackSize, getMaxItemCount());
-					tmp = mItemCount - tmp;
+					int tmp = mInventory[0].stackSize;
+					mInventory[0].stackSize = Math.min(tmp + itemInSlot.stackSize, getMaxItemCount());
+					tmp = mInventory[0].stackSize - tmp;
 					if (tmp == itemInSlot.stackSize) {
 						aPlayer.inventory.setInventorySlotContents(i, null);
 					} else {
@@ -71,7 +99,7 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
 				}
 			}
 
-            GT_Utility.sendChatToPlayer(aPlayer, mItemCount + " of " + mInventory[0].getDisplayName());
+            GT_Utility.sendChatToPlayer(aPlayer, mInventory[0].stackSize + " of " + mInventory[0].getDisplayName());
          }
       } else {
          if(isDigitalChest && GT_OreDictUnificator.isItemStackInstanceOf(tPlayerItem, "craftingQuantumChestUpgrade")) {
@@ -91,12 +119,12 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
 
          if(mInventory[0] == null) {
             mInventory[0] = tPlayerItem;
-            this.mItemCount = tPlayerItem.stackSize;
+            mInventory[0].stackSize = tPlayerItem.stackSize;
             aPlayer.inventory.setInventorySlotContents(aPlayer.inventory.currentItem, null);
          } else if (tPlayerItem.isItemEqual(mInventory[0]) && !tPlayerItem.hasTagCompound()) {
-        	 int tmp = mItemCount;
-        	 mItemCount = Math.min(mItemCount + tPlayerItem.stackSize, getMaxItemCount());
-        	 tmp = mItemCount - tmp;
+        	 int tmp = mInventory[0].stackSize;
+        	 mInventory[0].stackSize = Math.min(mInventory[0].stackSize + tPlayerItem.stackSize, getMaxItemCount());
+        	 tmp = mInventory[0].stackSize - tmp;
         	 if (tmp == tPlayerItem.stackSize) {
         		 aPlayer.inventory.setInventorySlotContents(aPlayer.inventory.currentItem, null);
         	 } else {
@@ -104,7 +132,7 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
         	 }
         	 
          } else {
-        	 GT_Utility.sendChatToPlayer(aPlayer, this.mItemCount + " of " + mInventory[0].getDisplayName());
+        	 GT_Utility.sendChatToPlayer(aPlayer, mInventory[0].stackSize + " of " + mInventory[0].getDisplayName());
          }
       }
 
@@ -116,10 +144,10 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
    @Override
    public void onLeftclick(EntityPlayer aPlayer) {
 		if (mInventory[0] != null) {
-			if (mItemCount > 0) {
+			if (mInventory[0].stackSize > 0) {
 				ItemStack tOutput = mInventory[0].copy();
-				tOutput.stackSize = aPlayer.isSneaking() ? 1 : Math.min(tOutput.getMaxStackSize(), mItemCount);
-				mItemCount -= tOutput.stackSize;
+				tOutput.stackSize = aPlayer.isSneaking() ? 1 : Math.min(tOutput.getMaxStackSize(), mInventory[0].stackSize);
+				mInventory[0].stackSize -= tOutput.stackSize;
 				EntityItem tEntity = new EntityItem(this.getBaseMetaTileEntity().getWorld(),
 						(double) this.getBaseMetaTileEntity().getOffsetX(this.getBaseMetaTileEntity().getFrontFacing(), 1)
 								+ 0.5D,
@@ -134,7 +162,7 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
 				this.getBaseMetaTileEntity().getWorld().spawnEntityInWorld(tEntity);
 			}
 			
-			if (mItemCount <= 0 && getBaseMetaTileEntity().isAllowedToWork()) {
+			if (mInventory[0].stackSize <= 0 && getBaseMetaTileEntity().isAllowedToWork()) {
 				mInventory[0] = null;
 			}
 		} 
@@ -146,67 +174,8 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
    }
 
    @Override
-   public void saveNBTData(NBTTagCompound aNBT) {
-      aNBT.setInteger("mItemCount", this.mItemCount);
-   }
-
-   @Override
-   public void loadNBTData(NBTTagCompound aNBT) {
-      this.mItemCount = aNBT.getInteger("mItemCount");
-   }
-
-   @Override
    public boolean allowCoverOnSide(byte aSide, int aCoverID) {
       return aSide != this.getBaseMetaTileEntity().getFrontFacing();
-   }
-
-   @Override
-   public void onPostTick() {
-//      if(this.getBaseMetaTileEntity().isServerSide() && this.mItemID != null) {
-//         if(this.mItemID == null || this.getItemCount() <= 0 && this.getBaseMetaTileEntity().isAllowedToWork()) {
-//            this.mItemID = null;
-//            this.mItemMeta = 0;
-//            this.mItemCount = 0;
-//         }
-//
-//         if(super.mInventory[1] == null) {
-//            super.mInventory[1] = new ItemStack(this.mItemID, 0, this.mItemMeta);
-//         } else if(this.mItemCount < this.getMaxItemCount() && super.mInventory[1].getItem() == this.mItemID && super.mInventory[1].getItemDamage() == this.mItemMeta && !super.mInventory[1].hasTagCompound()) {
-//            this.mItemCount += super.mInventory[1].stackSize;
-//            if(this.mItemCount > this.getMaxItemCount()) {
-//               super.mInventory[1].stackSize = this.mItemCount - this.getMaxItemCount();
-//               this.mItemCount = this.getMaxItemCount();
-//            } else {
-//               super.mInventory[1].stackSize = 0;
-//            }
-//         }
-//
-//         if(super.mInventory[2] == null) {
-//            super.mInventory[2] = new ItemStack(this.mItemID, 0, this.mItemMeta);
-//         } else if(this.mItemCount < this.getMaxItemCount() && super.mInventory[2].getItem() == this.mItemID && super.mInventory[2].getItemDamage() == this.mItemMeta && !super.mInventory[2].hasTagCompound()) {
-//            this.mItemCount += super.mInventory[2].stackSize;
-//            if(this.mItemCount > this.getMaxItemCount()) {
-//               super.mInventory[2].stackSize = this.mItemCount - this.getMaxItemCount();
-//               this.mItemCount = this.getMaxItemCount();
-//            } else {
-//               super.mInventory[2].stackSize = 0;
-//            }
-//         }
-//
-//         if(this.mItemCount > 0) {
-//            if(super.mInventory[0] == null) {
-//               super.mInventory[0] = new ItemStack(this.mItemID, 0, this.mItemMeta);
-//            }
-//
-//            if(super.mInventory[0] != null && super.mInventory[0].getItem() == this.mItemID && super.mInventory[0].getItemDamage() == this.mItemMeta && !super.mInventory[0].hasTagCompound()) {
-//               while(super.mInventory[0].stackSize < super.mInventory[0].getMaxStackSize() && this.mItemCount > 0) {
-//                  --this.mItemCount;
-//                  ++super.mInventory[0].stackSize;
-//               }
-//            }
-//         }
-//      }
-
    }
 
    public int getTextureIndex(byte aSide, byte aFacing, boolean aActive, boolean aRedstone) {
@@ -224,9 +193,10 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
    
    @Override
    public Map<String, List<Object>> getInfoData() {
+	   ItemStack inventory = getStoredItem();
 	   return InfoBuilder.create()
-			   .newKey("metatileentity.GT_Barrel.item", GT_Utility.isStackValid(getStoredItem()) ? getStoredItem() : "materials.Empty")
-			   .newKey("metatileentity.GT_Barrel.count", GT_Utility.parseNumberToString(mItemCount), GT_Utility.parseNumberToString(getMaxItemCount()))
+			   .newKey("metatileentity.GT_Barrel.item", GT_Utility.isStackValid(inventory) ? inventory : "materials.Empty")
+			   .newKey("metatileentity.GT_Barrel.count", GT_Utility.parseNumberToString(GT_Utility.isStackValid(inventory) ? inventory.stackSize : 0), GT_Utility.parseNumberToString(getMaxItemCount()))
 			   .build();
    }
 
@@ -239,12 +209,30 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
    public String getDescription() {
       return "metatileentity.GT_Barrel.tooltip";
    }
-
+   
+   @Override
+   public ArrayList<String> getSpecialDebugInfo(EntityPlayer aPlayer, int aLogLevel, ArrayList<String> aList) {
+	   aList.add("Internal inventory: " + Arrays.asList(mInventory).toString());
+	   return aList;
+   }
+   
    @Override
    public ItemStack[] getStoredItemData() {
 		return mInventory;
    }
-
+   
+   @Override
+   public int getInventoryStackLimit() {
+	   return getMaxItemCount();
+   }
+   
+   @Override
+   public ItemStack getStackInSlot(int aIndex) {
+	   if (aIndex >= 0 && aIndex < mInventory.length) return mInventory[aIndex]; 
+	   
+	   return null;
+   }
+   
    @Override
    public boolean allowPullStack(int aIndex, byte aSide, ItemStack aStack) {
       return aIndex == 0;
@@ -252,6 +240,6 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
 
    @Override
    public boolean allowPutStack(int aIndex, byte aSide, ItemStack aStack) {
-      return (aIndex == 1 || aIndex == 2) && mInventory[0] == null || (mInventory[0].isItemEqual(aStack) && !aStack.hasTagCompound());
+      return aIndex == 1 && (mInventory[0] == null || (mInventory[0].isItemEqual(aStack) && !aStack.hasTagCompound()));
    }
 }
