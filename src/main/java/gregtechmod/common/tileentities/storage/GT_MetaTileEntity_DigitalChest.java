@@ -15,8 +15,10 @@ import gregtechmod.api.util.InfoBuilder;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 
 public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
@@ -36,8 +38,6 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
    }
 
 
-   @Override public void saveNBTData(NBTTagCompound aNBT) {}
-   @Override public void loadNBTData(NBTTagCompound aNBT) {}
    @Override public boolean unbreakable() 							{return true;}
    @Override public boolean isSimpleMachine() 						{return true;}
    @Override  public int getInvSize() 								{return 2;}
@@ -167,7 +167,38 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
 			}
 		} 
    }
-
+   
+   @Override
+   public void saveNBTData(NBTTagCompound aNBT) {
+	   NBTTagList list = new NBTTagList();
+	   for (int i = 0; i < mInventory.length; i++) {
+		   ItemStack stack = mInventory[i];
+		   if (GT_Utility.isStackValid(stack)) {
+			   NBTTagCompound item = new NBTTagCompound();
+			   item.setShort("id", (short)Item.getIdFromItem(stack.getItem()));
+			   item.setInteger("count", stack.stackSize);
+			   item.setShort("meta", (short)stack.getItemDamage());
+			   list.appendTag(item);
+		   }
+	   }
+	   
+	   
+	   aNBT.setTag("Inventory", list);
+   }
+   
+   @Override
+   public void loadNBTData(NBTTagCompound aNBT) {
+	   NBTTagList list = aNBT.getTagList("Inventory", 10);
+	   for (int i = 0; list != null && i < list.tagCount(); i++) {
+		   NBTTagCompound item = list.getCompoundTagAt(i);
+		   mInventory[i] = new ItemStack(
+				   Item.getItemById(item.getShort("id")),
+				   item.getInteger("count"),
+				   item.getShort("meta"));
+	   }
+	   
+   }
+   
    @Override
    public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
       return new GT_MetaTileEntity_DigitalChest();

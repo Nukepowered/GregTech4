@@ -7,7 +7,7 @@ import gregtechmod.api.util.GT_Config;
 
 public class GT_MetaTileEntity_QuantumChest extends GT_MetaTileEntity_DigitalChest {
 
-   public static int sQuantumItemCount = 2000000000;
+   public static int sQuantumItemCount = 2_000_000_000;
 
 
    public GT_MetaTileEntity_QuantumChest(int aID, String aName) {
