@@ -524,11 +524,19 @@ public class GT_OreDictHandler {
     			e.getKey().processOre(e.getValue());
     		} else {
     			StringBuilder app = new StringBuilder();
-    			app.append("Thingy Name: ");
-    			app.append(":");
-    			app.append(e.getValue());
-    			app.append(" !!!Unknown 'Thingy' detected!!! ");
-    			app.append("This Object seems to probably not follow a valid OreDictionary Convention, or I missed a Convention. ");
+    			app.append("WRONG ORE DICTIONARY NAMES DETECTED FOR PREFIX: ");
+    			app.append(e.getKey());
+    			app.append("\n");
+    			
+    			for (OreDictEntry entry : e.getValue()) {
+    				app.append('\t');
+    				app.append(entry.oreDictName);
+    				app.append(" - ");
+    				app.append(entry.ores.toString());
+    				app.append('\n');
+    			}
+    			
+    			app.append("This Objects seems to probably not follow a valid OreDictionary Convention, or I missed a Convention. ");
     			app.append("Please report to GregTech Intergalactical for additional compatiblity. ");
     			app.append("This is not an Error, it's just an Information.");
     			GT_Log.log.warn(app.toString());

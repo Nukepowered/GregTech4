@@ -389,7 +389,8 @@ public class GT_ModHandler {
 		if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.pulverization, input, true)) return false;
 		try {
 			// TODO null, maybe load later
-			cofh.thermalexpansion.api.crafting.CraftingHandlers.pulverizer.addRecipe(RF, input, primaryOutput, secondaryOutput, secondaryChance, true);
+//			cofh.thermalexpansion.api.crafting.CraftingHandlers.pulverizer.addRecipe(RF, input, primaryOutput, secondaryOutput, secondaryChance, true);
+			cofh.thermalexpansion.util.crafting.PulverizerManager.addRecipe(RF, input, primaryOutput, secondaryOutput, secondaryChance, true);
 		} catch(Throwable e) {/*Do nothing*/}
 		return true;
 	}

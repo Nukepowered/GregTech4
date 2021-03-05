@@ -1,5 +1,7 @@
 package gregtechmod.loaders.oreprocessing;
 
+import java.util.List;
+
 import gregtechmod.GT_Mod;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
@@ -7,21 +9,28 @@ import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.OreDictEntry;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class ProcessingSaplings implements IOreRecipeRegistrator {
 
-   public ProcessingSaplings() {
-      OrePrefixes.treeSapling.add((IOreRecipeRegistrator)this);
-   }
+	public ProcessingSaplings() {
+		OrePrefixes.treeSapling.add((IOreRecipeRegistrator) this);
+	}
 
-   @SuppressWarnings("deprecation")
-   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-      if(aStack.getItem() instanceof ItemBlock && GT_Mod.sWoodStackSize < aStack.getItem().getItemStackLimit()) {
-         aStack.getItem().setMaxStackSize(GT_Mod.sWoodStackSize);
-      }
-
-      GT_ModHandler.addPulverisationRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), GT_OreDictUnificator.get(OrePrefixes.dustSmall, (Object)Materials.Wood, 2L), (ItemStack)null, 0, false);
-   }
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
+		for (OreDictEntry entry : dictEntry) {
+			Materials aMaterial = this.getMaterial(aPrefix, entry);
+			if (this.isExecutable(aPrefix, aMaterial)) {
+				for (ItemStack aStack : entry.ores) {
+					if (aStack.getItem() instanceof ItemBlock && GT_Mod.sWoodStackSize < aStack.getItem().getItemStackLimit(aStack)) {
+						aStack.getItem().setMaxStackSize(GT_Mod.sWoodStackSize);
+					}
+					
+					GT_ModHandler.addPulverisationRecipe(GT_Utility.copyAmount(1, aStack), GT_OreDictUnificator.get(OrePrefixes.dustSmall, Materials.Wood, 2L), null, 0, false);
+				}
+			}
+		}
+	}
 }

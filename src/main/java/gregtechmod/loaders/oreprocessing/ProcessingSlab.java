@@ -1,7 +1,8 @@
 package gregtechmod.loaders.oreprocessing;
 
+import java.util.List;
+
 import gregtechmod.GT_Mod;
-import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
@@ -9,27 +10,36 @@ import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.OreDictEntry;
+import gregtechmod.common.recipe.RecipeEntry;
+import gregtechmod.common.recipe.RecipeMaps;
+import gregtechmod.common.recipe.RecipeEntry.Match;
+
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 public class ProcessingSlab implements IOreRecipeRegistrator {
 
-   public ProcessingSlab() {
-      OrePrefixes.slab.add((IOreRecipeRegistrator)this);
-   }
+	public ProcessingSlab() {
+		OrePrefixes.slab.add(this);
+	}
 
-   @SuppressWarnings("deprecation")
-   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-      if(aOreDictName.startsWith("slabWood")) {
-         if(aStack.getItem() instanceof ItemBlock && GT_Mod.sPlankStackSize < aStack.getItem().getItemStackLimit()) {
-            aStack.getItem().setMaxStackSize(GT_Mod.sPlankStackSize);
-         }
-
-         GT_ModHandler.addPulverisationRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), GT_OreDictUnificator.get(OrePrefixes.dustSmall, (Object)Materials.Wood, 2L), (ItemStack)null, 0, false);
-         GregTech_API.sRecipeAdder.addCannerRecipe(GT_ModHandler.getRCItem("fluid.creosote.bucket", 1L), GT_Utility.copyAmount(3L, new Object[]{aStack}), GT_ModHandler.getRCItem("part.tie.wood", 1L), new ItemStack(Items.bucket, 1), 200, 4);
-         GregTech_API.sRecipeAdder.addCannerRecipe(GT_OreDictUnificator.get(OrePrefixes.cell, (Object)Materials.Creosote, 1L), GT_Utility.copyAmount(3L, new Object[]{aStack}), GT_ModHandler.getRCItem("part.tie.wood", 1L), GT_Items.Cell_Empty.get(1L, new Object[0]), 200, 4);
-      }
-
-   }
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
+		for (OreDictEntry entry : dictEntry) {
+			Materials mat = this.getMaterial(aPrefix, entry);
+			if (this.isExecutable(aPrefix, mat) && mat == Materials.Wood) {
+				RecipeMaps.CANINNING.factory().EUt(4).duration(200).input(GT_ModHandler.getRCItem("fluid.creosote.bucket", 1L)).input(RecipeEntry.fromStacks(entry.ores, Match.DAMAGE)).outputs(GT_ModHandler.getRCItem("part.tie.wood", 1L), new ItemStack(Items.bucket, 1)).buildAndRegister();
+				RecipeMaps.CANINNING.factory().EUt(4).duration(200).input(OrePrefixes.cell, Materials.Creosote).input(RecipeEntry.fromStacks(entry.ores, Match.DAMAGE)).outputs(GT_ModHandler.getRCItem("part.tie.wood", 1L), GT_Items.Cell_Empty.get(1)).buildAndRegister();
+				
+				for (ItemStack aStack : entry.ores) {
+					if (aStack.getItem() instanceof ItemBlock && GT_Mod.sPlankStackSize < aStack.getItem().getItemStackLimit(aStack)) {
+						aStack.getItem().setMaxStackSize(GT_Mod.sPlankStackSize);
+					}
+					
+					GT_ModHandler.addPulverisationRecipe(GT_Utility.copyAmount(1L, aStack), GT_OreDictUnificator.get(OrePrefixes.dustSmall, Materials.Wood, 2), null, 0, false);
+				}
+			}
+		}
+	}
 }

@@ -194,7 +194,10 @@ public enum OrePrefixes {
 	compressed			(false, false, false, false, false, -1),
 	fertilizer			(false, false, false, false, false, -1),
 	chest				(false, false, false, false, false, -1),
-	raw					(false, false, false, false, false, -1);
+	raw					(false, false, false, false, false, -1),
+	pane				(false, false, false, false, false, -1), // New forge prefix for panes
+	chipset				(false, false, false, false, false, -1), // BuildCraft chipsets
+	slimeball			(false, false, false, false, false, -1); // Introduced by MFR
 	
 	static {
 		pulp.mPrefixInto = dust;

@@ -1,6 +1,7 @@
 package gregtechmod.loaders.oreprocessing;
 
-import gregtechmod.api.GregTech_API;
+import java.util.List;
+
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.enums.SubTag;
@@ -8,42 +9,60 @@ import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_RecipeRegistrator;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.OreDictEntry;
+import gregtechmod.common.recipe.RecipeMaps;
+
 import net.minecraft.item.ItemStack;
 
 public class ProcessingRecycling implements IOreRecipeRegistrator {
 
-   public ProcessingRecycling() {
-      OrePrefixes[] arr$ = OrePrefixes.values();
-      int len$ = arr$.length;
+	public ProcessingRecycling() {
+		for (OrePrefixes tPrefix : OrePrefixes.values()) {
+			if (tPrefix.mIsMaterialBased && tPrefix.mMaterialAmount > 0L && tPrefix != OrePrefixes.ingotHot && tPrefix != OrePrefixes.cellPlasma) {
+				tPrefix.add(this);
+			}
+		}
+	}
 
-      for(int i$ = 0; i$ < len$; ++i$) {
-         OrePrefixes tPrefix = arr$[i$];
-         if(tPrefix.mIsMaterialBased && tPrefix.mMaterialAmount > 0L && tPrefix != OrePrefixes.ingotHot) {
-            tPrefix.add((IOreRecipeRegistrator)this);
-         }
-      }
-
-   }
-
-   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-      if(!aPrefix.toString().startsWith("dust") && !aPrefix.toString().startsWith("crushed") && aMaterial != Materials.Blaze) {
-         if(aPrefix.mIsContainer) {
-            if(aMaterial != Materials.Empty) {
-               if(aMaterial == Materials.Mercury && aPrefix != OrePrefixes.cell) {
-                  GregTech_API.sRecipeAdder.addCannerRecipe(aStack, (ItemStack)null, GT_Utility.getContainerItem(aStack), GT_OreDictUnificator.get(OrePrefixes.gem, (Object)aMaterial, aPrefix.mMaterialAmount / 3628800L), Math.max(aMaterial.getMass() / 2, 1), 2);
-               }
-
-               if(aPrefix != OrePrefixes.cell || aMaterial != Materials.Creosote && aMaterial != Materials.SulfuricAcid && aMaterial != Materials.Mercury && aMaterial != Materials.CoalFuel && aMaterial != Materials.BioFuel && aMaterial != Materials.Water && aMaterial != Materials.Nitrogen && aMaterial != Materials.ConstructionFoam) {
-                  GregTech_API.sRecipeAdder.addCannerRecipe(aStack, (ItemStack)null, GT_Utility.getContainerItem(aStack), GT_OreDictUnificator.get(OrePrefixes.dust, (Object)aMaterial, aPrefix.mMaterialAmount / 3628800L), Math.max(aMaterial.getMass() / 2, 1), 2);
-               }
-            }
-         } else {
-            GT_RecipeRegistrator.registerBasicReverseMacerating(aStack, aMaterial, aPrefix.mMaterialAmount);
-            if(GT_OreDictUnificator.get(OrePrefixes.ingot, (Object)aMaterial, 1L) != null && !aMaterial.contains(SubTag.NO_SMELTING) && aPrefix != OrePrefixes.ingot && aPrefix != OrePrefixes.nugget) {
-               GT_RecipeRegistrator.registerBasicReverseSmelting(aStack, aMaterial, aPrefix.mMaterialAmount, true);
-            }
-         }
-      }
-
-   }
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
+		if (aPrefix != OrePrefixes.dust && aPrefix != OrePrefixes.crushed) {
+			for (OreDictEntry entry : dictEntry) {
+				Materials aMaterial = this.getMaterial(aPrefix, entry);
+				if (this.isExecutable(aPrefix, aMaterial) && aMaterial != Materials.Blaze) {
+					if (aPrefix.mIsContainer) {
+						for (ItemStack aStack : entry.ores) {
+							if (aMaterial != Materials.Empty && aPrefix != OrePrefixes.cell) {
+								if (aMaterial == Materials.Mercury) {
+									RecipeMaps.CANINNING.factory().EUt(2).duration(Math.max(aMaterial.getMass() / 2, 1))
+										.input(aStack)
+										.output(GT_Utility.getContainerItem(aStack))
+										.output(GT_OreDictUnificator.get(OrePrefixes.gem, aMaterial, aPrefix.mMaterialAmount / 3628800L))
+										.buildAndRegister();
+								}
+	
+								if ((aMaterial.mTypes & 15) != 0 && aMaterial != Materials.Creosote
+												&& aMaterial != Materials.Mercury && aMaterial != Materials.SulfuricAcid
+												&& aMaterial != Materials.BioFuel && aMaterial != Materials.Water
+												&& aMaterial != Materials.Nitrogen && aMaterial != Materials.ConstructionFoam) {
+									
+									RecipeMaps.CANINNING.factory().EUt(2).duration(Math.max(aMaterial.getMass() / 2, 1))
+										.input(aStack)
+										.output(GT_Utility.getContainerItem(aStack))
+										.output(GT_OreDictUnificator.get(OrePrefixes.dust, aMaterial, aPrefix.mMaterialAmount / 3628800L))
+										.buildAndRegister();
+								}
+							} else {
+								GT_RecipeRegistrator.registerBasicReverseMacerating(aStack, aMaterial, aPrefix.mMaterialAmount);
+								if (GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial) != null
+										&& !aMaterial.contains(SubTag.NO_SMELTING) && aPrefix != OrePrefixes.ingot
+										&& aPrefix != OrePrefixes.nugget) {
+									GT_RecipeRegistrator.registerBasicReverseSmelting(aStack, aMaterial, aPrefix.mMaterialAmount, true);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }

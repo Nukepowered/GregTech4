@@ -157,7 +157,7 @@ public abstract class RecipeFactory<F extends RecipeFactory<F>> {
 	
 	public RecipeFactory<F> output(ItemStack stack) {
 		if (GT_Utility.isStackInvalid(stack))
-			errors.append("Found non-valid stack: " + stack);
+			errors.append("Found non-valid stack on OUTPUT: " + stack);
 		this.outputItems.add(stack);
 		return this;
 	}

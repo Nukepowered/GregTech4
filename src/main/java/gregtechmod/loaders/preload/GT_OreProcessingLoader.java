@@ -62,9 +62,9 @@ public class GT_OreProcessingLoader implements Runnable {
 
    public void run() {
       GT_Log.log.info("GT_Mod: Register Ore processing.");
-//      new ProcessingBattery();
-//      new ProcessingBlock();
-//      new ProcessingBolt();
+      new ProcessingBattery();
+      new ProcessingBlock();
+      new ProcessingBolt();
 //      new ProcessingCell();
 //      new ProcessingCellPlasma();
 //      new ProcessingCircuit();
@@ -99,24 +99,24 @@ public class GT_OreProcessingLoader implements Runnable {
 //      new ProcessingPlate4();
 //      new ProcessingPlate5();
 //      new ProcessingPlate9();
-//      new ProcessingPlateAlloy();
-//      new ProcessingRecycling();
-//      new ProcessingRing();
-//      new ProcessingSand();
-//      new ProcessingSaplings();
-//      new ProcessingSlab();
-//      new ProcessingStick();
+      new ProcessingPlateAlloy();
+      new ProcessingRecycling();
+      new ProcessingRing();
+      new ProcessingSand();
+      new ProcessingSaplings();
+      new ProcessingSlab();
+      new ProcessingStick();
       new ProcessingStone();
-//      new ProcessingStoneCobble();
-//      new ProcessingStoneVarious();
-//      new ProcessingToolHeadAxe();
-//      new ProcessingToolHeadFile();
-//      new ProcessingToolHeadHammer();
-//      new ProcessingToolHeadHoe();
-//      new ProcessingToolHeadPickaxe();
-//      new ProcessingToolHeadSaw();
-//      new ProcessingToolHeadShovel();
-//      new ProcessingToolHeadSword();
+      new ProcessingStoneCobble();
+      new ProcessingStoneVarious();
+      new ProcessingToolHeadAxe();
+      new ProcessingToolHeadFile();
+      new ProcessingToolHeadHammer();
+      new ProcessingToolHeadHoe();
+      new ProcessingToolHeadPickaxe();
+      new ProcessingToolHeadSaw();
+      new ProcessingToolHeadShovel();
+      new ProcessingToolHeadSword();
       new ProcessingWax();
    }
 }

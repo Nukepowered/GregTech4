@@ -1,6 +1,8 @@
 package gregtechmod.loaders.load;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import gregtechmod.GT_Mod;
 import gregtechmod.api.GregTech_API;
@@ -17,6 +19,8 @@ import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_RecipeRegistrator;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.common.recipe.RecipeEntry;
+import gregtechmod.common.recipe.RecipeEntry.Match;
 import gregtechmod.common.recipe.RecipeMaps;
 
 import net.minecraft.block.Block;
@@ -248,8 +252,11 @@ public class GT_ItemIterator implements Runnable {
 					GT_OreDictUnificator.registerOre("paperResearch", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 				} else if (tName.equals("item.ItemThaumonomicon")) {
 					GT_OreDictUnificator.registerOre("bookThaumonomicon", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				} else if (tName.equals("item.ItemEssence")) {
-					RecipeMaps.MAGIC_FUELS.factory().EUt(20).duration(8).input(new ItemStack(tItem, 1, 1), true, false).output(new ItemStack(tItem, 1, 0)).buildAndRegister();
+				} else if (tName.equals("item.ItemEssence")) { // Added getSubItems cause of NEI not showing variants, it would work in previous impl as well
+					List<ItemStack> variants = new ArrayList<>();
+					tItem.getSubItems(tItem, null, variants);
+					variants.removeIf(item -> item.getItemDamage() != 1);
+					RecipeMaps.MAGIC_FUELS.factory().EUt(20).duration(8).input(RecipeEntry.fromStacks(1, variants, Match.DAMAGE)).output(new ItemStack(tItem, 1, 0)).buildAndRegister();
 				} else if (tName.equals("item.ItemWispEssence")) {
 					RecipeMaps.MAGIC_FUELS.factory().EUt(20).duration(4).input(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE)).buildAndRegister();
 				} else if (tName.equals("item.ItemResource")) {

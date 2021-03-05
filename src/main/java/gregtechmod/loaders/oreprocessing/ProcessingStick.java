@@ -1,18 +1,28 @@
 package gregtechmod.loaders.oreprocessing;
 
-import gregtechmod.api.GregTech_API;
+import java.util.List;
+
+import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.util.GT_OreDictUnificator;
-import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.OreDictEntry;
+import gregtechmod.common.recipe.RecipeEntry;
+import gregtechmod.common.recipe.RecipeMaps;
+import gregtechmod.common.recipe.RecipeEntry.Match;
 
 public class ProcessingStick implements IOreRecipeRegistrator {
 
-   public ProcessingStick() {
-      OrePrefixes.stick.add((IOreRecipeRegistrator)this);
-   }
+	public ProcessingStick() {
+		OrePrefixes.stick.add(this);
+	}
 
-   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-      GregTech_API.sRecipeAdder.addCutterRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), GT_OreDictUnificator.get(OrePrefixes.bolt, (Object)aMaterial, 4L), Math.max(aMaterial.getMass() * 2, 1), 4);
-   }
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
+		for (OreDictEntry entry : dictEntry) {
+			Materials aMaterial = this.getMaterial(aPrefix, entry);
+			if (this.isExecutable(aPrefix, aMaterial) && (aMaterial.mTypes & 2) != 0) {
+				RecipeMaps.CUTTING.factory().EUt(4).duration(aMaterial.getMass() * 2).input(RecipeEntry.fromStacks(entry.ores, Match.DAMAGE)).output(GT_OreDictUnificator.get(OrePrefixes.bolt, aMaterial, 4L)).buildAndRegister();
+			}
+		}
+	}
 }

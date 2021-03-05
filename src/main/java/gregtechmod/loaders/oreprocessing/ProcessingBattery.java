@@ -1,25 +1,40 @@
 package gregtechmod.loaders.oreprocessing;
 
+import java.util.List;
+
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.util.GT_ModHandler;
-import gregtechmod.api.util.GT_OreDictUnificator;
-import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.OreDictEntry;
+
+import gregtechmod.common.recipe.RecipeEntry;
+import gregtechmod.common.recipe.RecipeMaps;
+import gregtechmod.common.recipe.RecipeEntry.Match;
 
 public class ProcessingBattery implements IOreRecipeRegistrator {
 
-   public ProcessingBattery() {
-      OrePrefixes.battery.add((IOreRecipeRegistrator)this);
-   }
+	public ProcessingBattery() {
+		OrePrefixes.battery.add(this);
+	}
 
-   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-      if(aMaterial == Materials.Lithium) {
-         GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copyAmount(1L, aStack), GT_ModHandler.getIC2Item("cropnalyzer", 1L, 32767), GT_Items.Tool_Scanner.getAlmostBroken(1L, new Object[0]), 12800, 16);
-         GregTech_API.sRecipeAdder.addAssemblerRecipe(GT_Utility.copyAmount(1L, aStack), GT_OreDictUnificator.get(OrePrefixes.plate, (Object)Materials.Aluminium, 1L), GregTech_API.getGregTechComponent(26, 1), 3200, 4);
-      }
-
-   }
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
+		for (OreDictEntry entry : dictEntry) {
+			Materials material = this.getMaterial(aPrefix, entry);
+			if (material == Materials.Lithium && this.isExecutable(aPrefix, material)) {
+				RecipeMaps.ASSEMBLING.factory().EUt(16).duration(12800)
+					.input(RecipeEntry.fromStacks(entry.ores, Match.DAMAGE))
+					.input(GT_ModHandler.getIC2Item("cropnalyzer", 1L, 32767))
+					.output(GT_Items.Tool_Scanner.getAlmostBroken(1))
+					.buildAndRegister();
+				RecipeMaps.ASSEMBLING.factory().EUt(4).duration(3200)
+					.input(RecipeEntry.fromStacks(entry.ores, Match.DAMAGE))
+					.input(OrePrefixes.plate, Materials.Aluminium)
+					.output(GregTech_API.getGregTechComponent(26, 1))
+					.buildAndRegister();
+			}
+		}
+	}
 }

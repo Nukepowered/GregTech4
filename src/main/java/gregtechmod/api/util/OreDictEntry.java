@@ -44,6 +44,9 @@ public class OreDictEntry {
 	@Override
 	public String toString() {
 		ToStringBuilder.setDefaultStyle(ToStringStyle.SHORT_PREFIX_STYLE);
-		return new ToStringBuilder(this).toString();
+		return new ToStringBuilder(this)
+				.append("name", oreDictName)
+				.append("ores", ores.toString())
+				.toString();
 	}
 }
