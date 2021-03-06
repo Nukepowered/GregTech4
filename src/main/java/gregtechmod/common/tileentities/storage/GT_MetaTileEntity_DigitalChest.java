@@ -70,9 +70,11 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
 		   }
 	   } else {
 		   if (mInventory[1] != null) {
-			   if (setStackToZeroInsteadOfNull(0)) {
+			   if (mInventory[1].stackSize > 0) {
 				   mInventory[0] = mInventory[1];
 				   mInventory[1] = null;
+			   } else if (setStackToZeroInsteadOfNull(0)) {
+				   mInventory[0] = mInventory[1].copy();
 			   } else {
 				   mInventory[1] = null;
 			   }
