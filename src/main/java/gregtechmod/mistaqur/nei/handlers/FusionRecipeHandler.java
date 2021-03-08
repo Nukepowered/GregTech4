@@ -37,6 +37,16 @@ public class FusionRecipeHandler extends GT_RecipeHandler {
 		protected Pair<Integer, Integer> getOutputAligment(int itemIdx) {
 			return Pair.of(108 - sOffsetX, 35 - sOffsetY);
 		}
+		
+		@Override
+		protected Pair<Integer, Integer> getFluidInputAligment(int itemIdx) {
+			return this.getInputAligment(itemIdx);
+		}
+		
+		@Override
+		protected Pair<Integer, Integer> getFluidOutputAligment(int itemIdx) {
+			return this.getOutputAligment(itemIdx);
+		}
 	}
 
 	@Override
