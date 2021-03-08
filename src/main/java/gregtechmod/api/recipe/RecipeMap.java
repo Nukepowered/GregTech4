@@ -178,9 +178,10 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 	 */
 	public boolean register(Recipe recipe) {
 		this.assertValidRecipe(recipe);
-		if (recipeList.add(recipe)) {
-			 this.createMappings(recipe);
-			 return true;
+		if (recipeList.indexOf(recipe) < 0) {
+			recipeList.add(recipe);
+			this.createMappings(recipe);
+			return true;
 		}
 		
 		return false;
