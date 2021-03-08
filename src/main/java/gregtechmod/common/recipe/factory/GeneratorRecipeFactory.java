@@ -52,7 +52,7 @@ public class GeneratorRecipeFactory extends RecipeFactory<GeneratorRecipeFactory
 	
 	@Override
 	public GeneratorRecipeFactory input(OrePrefixes prefix, Materials material, int count) {
-		if (count < 0) errors.append("- Count less than ZERO!!!");
+		if (count < 0) errors.append("- Count less than ZERO!!!, idx: " + (inputItems.size() + 1) + "\n");
 		this.inputItems.add(new UnifierRecipeEntry(prefix, material, count));
 		return this;
 	}

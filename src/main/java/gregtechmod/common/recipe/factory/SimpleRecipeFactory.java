@@ -60,14 +60,14 @@ public class SimpleRecipeFactory extends RecipeFactory<SimpleRecipeFactory> {
 
 	@Override
 	public SimpleRecipeFactory input(String oreDict, int amount) {
-		if (amount < 0) errors.append("- Count less than ZERO!!!");
+		if (amount < 0) errors.append("- Count less than ZERO!!!, idx: " + (inputItems.size() + 1) + "\n");
 		super.input(RecipeEntry.oreDict(oreDict, amount, Match.DAMAGE));
 		return this;
 	}
 
 	@Override
 	public SimpleRecipeFactory input(OrePrefixes prefix, Materials material, int count) {
-		if (count < 0) errors.append("- Count less than ZERO!!!");
+		if (count < 0) errors.append("- Count less than ZERO!!!, idx: " + (inputItems.size() + 1) + "n");
 		inputItems.add(new UnifierRecipeEntry(prefix, material, count));
 		return this;
 	}

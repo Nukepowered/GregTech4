@@ -67,7 +67,7 @@ public class BlastFurnanceRecipeFactory extends RecipeFactory<BlastFurnanceRecip
 
 	@Override
 	public BlastFurnanceRecipeFactory input(OrePrefixes prefix, Materials material, int count) {
-		if (count < 0) errors.append("- Count less than ZERO!!!");
+		if (count < 0) errors.append("- Count less than ZERO!!!, idx: " + (inputItems.size() + 1) + "\n");
 		inputItems.add(new UnifierRecipeEntry(prefix, material, count));
 		return this;
 	}
