@@ -1,5 +1,7 @@
 package gregtechmod.loaders.preload;
 
+import java.util.Map.Entry;
+
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.loaders.oreprocessing.ProcessingBattery;
 import gregtechmod.loaders.oreprocessing.ProcessingBlock;
@@ -57,6 +59,7 @@ import gregtechmod.loaders.oreprocessing.ProcessingToolHeadSaw;
 import gregtechmod.loaders.oreprocessing.ProcessingToolHeadShovel;
 import gregtechmod.loaders.oreprocessing.ProcessingToolHeadSword;
 import gregtechmod.loaders.oreprocessing.ProcessingWax;
+import net.minecraftforge.fluids.FluidRegistry;
 
 public class GT_OreProcessingLoader implements Runnable {
 
@@ -65,7 +68,7 @@ public class GT_OreProcessingLoader implements Runnable {
       new ProcessingBattery();
       new ProcessingBlock();
       new ProcessingBolt();
-//      new ProcessingCell();
+      new ProcessingCell();
 //      new ProcessingCellPlasma();
 //      new ProcessingCircuit();
 //      new ProcessingCrafting();

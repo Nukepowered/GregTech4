@@ -277,8 +277,10 @@ public class GT_OreDictUnificator {
      */
     public static List<ItemStack> getOres(Object aOreName) {
     	String aName = aOreName==null?"":aOreName.toString();
-    	List<ItemStack> rList = new ArrayList<ItemStack>();
-    	if (GT_Utility.isStringValid(aName)) rList.addAll(OreDictionary.getOres(aName));
+    	List<ItemStack> rList = new ArrayList<>();
+    	if (GT_Utility.isStringValid(aName)) {
+    		rList.addAll(OreDictionary.getOres(aName));
+    	}
     	return rList;
     }
 }

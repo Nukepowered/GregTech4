@@ -54,7 +54,6 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
-import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 
@@ -666,11 +665,13 @@ public class GT_Utility {
 	
 	public static ItemStack getContainerForFilledItem(ItemStack aStack) {
 		if (isStackInvalid(aStack)) return null;
-		for (FluidContainerData tData : FluidContainerRegistry.getRegisteredFluidContainerData()) if (areStacksEqual(tData.filledContainer, aStack)) return copyAmount(1, tData.emptyContainer);
-		if (aStack.getItem() instanceof IFluidContainerItem) {
+		if (FluidContainerRegistry.isContainer(aStack))
+			return FluidContainerRegistry.drainFluidContainer(aStack);
+		else if (aStack.getItem() instanceof IFluidContainerItem) {
 			((IFluidContainerItem)aStack.getItem()).drain(aStack = copyAmount(1, aStack), Integer.MAX_VALUE, true);
 			return aStack;
 		}
+		
 		return null;
 	}
 	

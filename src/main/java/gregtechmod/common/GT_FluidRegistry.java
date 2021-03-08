@@ -16,7 +16,19 @@ public class GT_FluidRegistry {
 	public static ArrayList<Fluid> sFluids = new ArrayList<Fluid>();
 	
 	public static void addFluid(String aName, String aLocalized, Materials aMaterial, int aState, ItemStack aFullContainer, ItemStack aEmptyContainer) {
-		Fluid tFluid = new Fluid(aName.toLowerCase());
+		if (aFullContainer != null && aEmptyContainer != null)
+			FluidContainerRegistry.registerFluidContainer(GT_FluidRegistry.registerFluid(aName, aLocalized, aMaterial, aState), aFullContainer, aEmptyContainer);
+	}
+	
+	public static void addFluid(String aName, String aLocalized, Materials aMaterial, OrePrefixes aPrefix, int aState, ItemStack aEmptyContainer) {
+		FluidStack fluid = GT_FluidRegistry.registerFluid(aName, aLocalized, aMaterial, aState);
+		for (ItemStack stack : GT_OreDictUnificator.getOres(aPrefix, aMaterial)) {
+			FluidContainerRegistry.registerFluidContainer(fluid, stack, aEmptyContainer);
+		}
+	}
+	
+	private static FluidStack registerFluid(String aName, String aLocalized, Materials aMaterial, int aState) {
+ 		Fluid tFluid = new Fluid(aName.toLowerCase());
 		
 		if (FluidRegistry.registerFluid(tFluid)) {
 			sFluids.add(tFluid);
@@ -39,10 +51,6 @@ public class GT_FluidRegistry {
 			}
 		}
 		
-		if (aFullContainer != null && aEmptyContainer != null) FluidContainerRegistry.registerFluidContainer(new FluidStack(tFluid, 1000), aFullContainer, aEmptyContainer);
-	}
-	
-	public static void addFluid(String aName, String aLocalized, Materials aMaterial, OrePrefixes aPrefix, int aState, ItemStack aEmptyContainer) {
-		addFluid(aName, aLocalized, aMaterial, aState, GT_OreDictUnificator.get(aPrefix, aMaterial, 1), aEmptyContainer);
+		return new FluidStack(tFluid, 1000);
 	}
 }

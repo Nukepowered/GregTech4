@@ -56,6 +56,7 @@ public class PositionedFluidStack {
 			IIcon fluidIcon = fluid.getFluid().getIcon(fluid);
 			fluidIcon = fluidIcon != null ? fluidIcon : fluid.getFluid().getFlowingIcon();
 			fluidIcon = fluidIcon != null ? fluidIcon : fluid.getFluid().getStillIcon();
+			if (fluidIcon == null) return;
 			
 			GuiDraw.changeTexture(TextureMap.locationBlocksTexture);
 			int color = fluid.getFluid().getColor(fluid);
