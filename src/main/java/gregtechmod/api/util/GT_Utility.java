@@ -715,16 +715,15 @@ public class GT_Utility {
 		return null;
 	}
 	
-	public static synchronized boolean removeSimpleIC2MachineRecipe(ItemStack aInput, Map<IRecipeInput, RecipeOutput> aRecipeList, ItemStack aOutput) {
+	public static boolean removeSimpleIC2MachineRecipe(ItemStack aInput, Map<IRecipeInput, RecipeOutput> aRecipeList, ItemStack aOutput) {
 		if ((isStackInvalid(aInput) && isStackInvalid(aOutput)) || aRecipeList == null) return false;
 		boolean rReturn = false;
 		Iterator<Map.Entry<IRecipeInput, RecipeOutput>> tIterator = aRecipeList.entrySet().iterator();
-		aOutput = GT_OreDictUnificator.get(aOutput);
 		while (tIterator.hasNext()) {
 			Map.Entry<IRecipeInput, RecipeOutput> tEntry = tIterator.next();
 			if (aInput == null || tEntry.getKey().matches(aInput)) {
 				List<ItemStack> tList = tEntry.getValue().items;
-				if (tList != null) for (ItemStack tOutput : tList) if (aOutput == null || areStacksEqual(GT_OreDictUnificator.get(tOutput), aOutput)) {
+				if (tList != null) for (ItemStack tOutput : tList) if (aOutput == null || aOutput.isItemEqual(tOutput)) {
 					tIterator.remove();
 					rReturn = true;
 					break;
@@ -737,10 +736,11 @@ public class GT_Utility {
 	public static boolean addSimpleIC2MachineRecipe(ItemStack aInput, Map<IRecipeInput, RecipeOutput> aRecipeList, NBTTagCompound aNBT, Object... aOutput) {
 		if (isStackInvalid(aInput) || aOutput.length == 0 || aRecipeList == null) return false;
 		String tOreName = GT_OreDictUnificator.getAssociation(aInput);
+		RecipeOutput out = new RecipeOutput(aNBT, GT_OreDictUnificator.getStackArray(true, aOutput));
 		if (isStringValid(tOreName)) {
-			aRecipeList.put(new RecipeInputOreDict(tOreName, aInput.stackSize), new RecipeOutput(aNBT, GT_OreDictUnificator.getStackArray(true, aOutput)));
+			aRecipeList.put(new RecipeInputOreDict(tOreName, aInput.stackSize), out);
 		} else {
-			aRecipeList.put(new RecipeInputItemStack(copy(aInput), aInput.stackSize), new RecipeOutput(aNBT, GT_OreDictUnificator.getStackArray(true, aOutput)));
+			aRecipeList.put(new RecipeInputItemStack(copy(aInput), aInput.stackSize), out);
 		}
 		return true;
 	}

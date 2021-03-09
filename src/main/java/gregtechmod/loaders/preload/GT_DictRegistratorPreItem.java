@@ -21,7 +21,6 @@ public class GT_DictRegistratorPreItem implements Runnable {
     	GT_OreDictUnificator.registerOre("molecule_2o"								, GT_ModHandler.getIC2Item("airCell", 1));
     	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.Empty			, GT_ModHandler.getEmptyCell(1));
     	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.Empty			, GT_ModHandler.getIC2Item("cell", 1));
-    	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.Empty			, GT_ModHandler.getIC2Item("cellEmpty", 1));
     	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.Oxygen			, GT_ModHandler.getAirCell(1));
     	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.Oxygen			, GT_ModHandler.getIC2Item("airCell", 1));
     	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.Lava			, GT_ModHandler.getLavaCell(1));
@@ -30,7 +29,7 @@ public class GT_DictRegistratorPreItem implements Runnable {
     	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.Water			, GT_ModHandler.getIC2Item("waterCell", 1));
     	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.Creosote		, GT_ModHandler.getRCItem("fluid.creosote.cell", 1));
     	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.BioFuel			, GT_ModHandler.getIC2Item("biogasCell", 1));
-    	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.UUMatter		, GT_ModHandler.getIC2Item("UuMatterCell", 1));
+    	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.UUMatter		, GT_ModHandler.getIC2Item("uuMatterCell", 1));
     	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.ConstructionFoam, GT_ModHandler.getIC2Item("CFCell", 1));
     	
 		GT_OreDictUnificator.registerOre(OrePrefixes.gem, Materials.Diamond			, GT_ModHandler.getIC2Item("industrialDiamond", 1));
@@ -57,14 +56,14 @@ public class GT_DictRegistratorPreItem implements Runnable {
     	GT_OreDictUnificator.add("plateAlloyIridium"		, GT_ModHandler.getIC2Item("iridiumPlate", 1));
     	GT_OreDictUnificator.add("plateAlloyAdvanced"		, GT_ModHandler.getIC2Item("advancedAlloy", 1));
     	GT_OreDictUnificator.add("plateAlloyCarbon"			, GT_ModHandler.getIC2Item("carbonPlate", 1));
-    	GT_OreDictUnificator.add("plateDenseCopper"			, GT_ModHandler.getIC2Item("denseCopperPlate", 1, GT_ModHandler.getIC2Item("denseplatecopper", 1)));
+    	GT_OreDictUnificator.add("plateDenseCopper"			, GT_ModHandler.getIC2Item("denseplatecopper", 1));
     	GT_OreDictUnificator.add("plateDenseTin"			, GT_ModHandler.getIC2Item("denseplatetin", 1));
     	GT_OreDictUnificator.add("plateDenseBronze"			, GT_ModHandler.getIC2Item("denseplatebronze", 1));
     	GT_OreDictUnificator.add("plateDenseGold"			, GT_ModHandler.getIC2Item("denseplategold", 1));
     	GT_OreDictUnificator.add("plateDenseIron"			, GT_ModHandler.getIC2Item("denseplateiron", 1));
     	GT_OreDictUnificator.add("plateDenseRefinedIron"	, GT_ModHandler.getIC2Item("denseplateadviron", 1));
     	GT_OreDictUnificator.add("plateDenseLead"			, GT_ModHandler.getIC2Item("denseplatelead", 1));
-    	GT_OreDictUnificator.add("plateDenseLapis"			, GT_ModHandler.getIC2Item("denseplatelapi", 1, GT_ModHandler.getIC2Item("denseplatelapis", 1)));
+    	GT_OreDictUnificator.add("plateDenseLapis"			, GT_ModHandler.getIC2Item("denseplatelapi", 1));
     	GT_OreDictUnificator.add("plateDenseObsidian"		, GT_ModHandler.getIC2Item("denseplateobsidian", 1));
     	
     	GT_OreDictUnificator.registerOre("itemRecord" , new ItemStack(Items.record_13, 1));

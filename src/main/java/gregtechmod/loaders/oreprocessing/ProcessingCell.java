@@ -35,11 +35,11 @@ public class ProcessingCell implements IOreRecipeRegistrator {
 				if (aMaterial != Materials.Empty) {
 					RecipeFactory<?> factory;
 					if (aMaterial.mMaterialList.size() > 0 && (aMaterial.mExtraData & 3) != 0) {
-						int totalMaterialAmount = 0;
+						long totalMaterialAmount = 0;
 						for (MaterialStack tMat : aMaterial.mMaterialList)
 							totalMaterialAmount += tMat.mAmount;
 						int tItemAmount1 = 0;
-						int capsuleCount = -totalMaterialAmount;
+						long capsuleCount = -totalMaterialAmount;
 						int tDensityMultiplier = (int) (aMaterial.getDensity() > GregTech_API.MATERIAL_UNIT ? aMaterial.getDensity() / GregTech_API.MATERIAL_UNIT : 1L);
 						List<ItemStack> tList = new ArrayList<>();
 						

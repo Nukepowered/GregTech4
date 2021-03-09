@@ -321,10 +321,10 @@ public class GT_Mod implements IGT_Mod {
     	GregTech_API.sPreloadStarted = true;
     	
         GT_Log.log.info("Getting required Items of other Mods.");
-        GT_Items.Cell_Empty					.set(GT_ModHandler.getIC2Item("cell", 1L, GT_ModHandler.getIC2Item("cell", 1L, GT_ModHandler.getIC2Item("cell", 1L))));
-        GT_Items.Cell_Water					.set(GT_ModHandler.getIC2Item("waterCell", 1L, GT_ModHandler.getIC2Item("waterCell", 1L)));
-        GT_Items.Cell_Lava					.set(GT_ModHandler.getIC2Item("lavaCell", 1L, GT_ModHandler.getIC2Item("lavaCell", 1L)));
-        GT_Items.Cell_Air					.set(GT_ModHandler.getIC2Item("airCell", 1L, GT_ModHandler.getIC2Item("airCell", 1L, GT_ModHandler.getIC2Item("cellOxygen", 1L))));
+        GT_Items.Cell_Empty					.set(GT_ModHandler.getIC2Item("cell", 1L));
+        GT_Items.Cell_Water					.set(GT_ModHandler.getIC2Item("waterCell", 1L));
+        GT_Items.Cell_Lava					.set(GT_ModHandler.getIC2Item("lavaCell", 1L));
+        GT_Items.Cell_Air					.set(GT_ModHandler.getIC2Item("airCell", 1L));
         GT_Items.IC2_Mixed_Metal_Ingot		.set(GT_ModHandler.getIC2Item("mixedMetalIngot", 1L));
         GT_Items.IC2_Fertilizer				.set(GT_ModHandler.getIC2Item("fertilizer", 1L));
         GT_Items.IC2_Resin					.set(GT_ModHandler.getIC2Item("resin", 1L));

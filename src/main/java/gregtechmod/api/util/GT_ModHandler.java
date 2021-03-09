@@ -14,6 +14,7 @@ import ic2.api.recipe.RecipeOutput;
 
 import java.lang.reflect.Method;
 import java.util.*;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -306,16 +307,12 @@ public class GT_ModHandler {
 	 * Just simple Furnace smelting. Unbelievable how Minecraft fails at making a simple ItemStack->ItemStack mapping...
 	 */
 	@SuppressWarnings("deprecation")
-	public static synchronized boolean addSmeltingRecipe(ItemStack aInput, ItemStack aOutput) {
+	public static boolean addSmeltingRecipe(ItemStack aInput, ItemStack aOutput) {
 		aOutput = GT_OreDictUnificator.get(true, aOutput);
 		if (aInput == null || aOutput == null) return false;
 		if (aInput.getItem().hasContainerItem()) return false;
 		if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.smelting, aInput, true)) return false;
-		Map<?, ?> recipes = FurnaceRecipes.smelting().getSmeltingList();
-		synchronized (recipes) {
-			FurnaceRecipes.smelting().func_151394_a(aInput.copy(), aOutput.copy(), 0.0F);
-		}
-		
+		FurnaceRecipes.smelting().func_151394_a(aInput.copy(), aOutput.copy(), 0.0F);
 		return true;
 	}
 	
@@ -353,7 +350,7 @@ public class GT_ModHandler {
 		if (aEmptyContainer == null || aFullContainer == null || aLiquid == null) return false;
 		if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.liquidtransposer, aFullContainer, true)) return false;
 		try {
-			cofh.thermalexpansion.api.crafting.CraftingHandlers.transposer.addFillRecipe(aRF, aEmptyContainer, aFullContainer, aLiquid, true, true);
+			cofh.thermalexpansion.util.crafting.TransposerManager.addFillRecipe(aRF, aEmptyContainer, aFullContainer, aLiquid, true, true);
 		} catch(Throwable e) {/*Do nothing*/}
 		return true;
 	}
@@ -366,7 +363,7 @@ public class GT_ModHandler {
 		if (aEmptyContainer == null || aFullContainer == null || aLiquid == null) return false;
 		if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.liquidtransposerfilling, aFullContainer, true)) return false;
 		try {
-			cofh.thermalexpansion.api.crafting.CraftingHandlers.transposer.addFillRecipe(aRF, aEmptyContainer, aFullContainer, aLiquid, false, true);
+			cofh.thermalexpansion.util.crafting.TransposerManager.addFillRecipe(aRF, aEmptyContainer, aFullContainer, aLiquid, false, true);
 		} catch(Throwable e) {/*Do nothing*/}
 		return true;
 	}
@@ -379,7 +376,7 @@ public class GT_ModHandler {
 		if (aFullContainer == null || aEmptyContainer == null || aLiquid == null) return false;
 		if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.liquidtransposeremptying, aFullContainer, true)) return false;
 		try {
-			cofh.thermalexpansion.api.crafting.CraftingHandlers.transposer.addExtractionRecipe(aRF, aFullContainer, aEmptyContainer, aLiquid, 100, false, true);
+			cofh.thermalexpansion.util.crafting.TransposerManager.addExtractionRecipe(aRF, aFullContainer, aEmptyContainer, aLiquid, 100, false, true);
 		} catch(Throwable e) {/*Do nothing*/}
 		return true;
 	}
@@ -388,8 +385,6 @@ public class GT_ModHandler {
 	public static boolean addTCPulveriserRecipe(ItemStack input, ItemStack primaryOutput, ItemStack secondaryOutput, int secondaryChance, int RF) {
 		if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.pulverization, input, true)) return false;
 		try {
-			// TODO null, maybe load later
-//			cofh.thermalexpansion.api.crafting.CraftingHandlers.pulverizer.addRecipe(RF, input, primaryOutput, secondaryOutput, secondaryChance, true);
 			cofh.thermalexpansion.util.crafting.PulverizerManager.addRecipe(RF, input, primaryOutput, secondaryOutput, secondaryChance, true);
 		} catch(Throwable e) {/*Do nothing*/}
 		return true;
@@ -450,7 +445,11 @@ public class GT_ModHandler {
 	public static boolean addPulverisationRecipe(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2, int aChance, boolean aOverwrite) {
 		aOutput1 = GT_OreDictUnificator.get(true, aOutput1);
 		aOutput2 = GT_OreDictUnificator.get(true, aOutput2);
-		if (aInput == null || aOutput1 == null) return false;
+		
+		String assocIn = GT_OreDictUnificator.getAssociation(aInput);
+		String assocOut = GT_OreDictUnificator.getAssociation(aOutput1);
+		
+		if (aInput == null || aOutput1 == null || (assocIn != null ? assocIn.equals(assocOut) : false)) return false;
 		GT_Utility.removeSimpleIC2MachineRecipe(aInput, getMaceratorRecipeList(), null);
 		
 		if (GT_Utility.getContainerItem(aInput) == null) {
@@ -505,9 +504,36 @@ public class GT_ModHandler {
 		
 		if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.sawmill, aInput1, true)) return false;
 	    try {
-	    	cofh.thermalexpansion.api.crafting.CraftingHandlers.sawmill.addRecipe(aRF, aInput1, outputs[0], outputs.length > 1 ? outputs[1] : null, aChance, true);
+	    	cofh.thermalexpansion.util.crafting.SawmillManager.addRecipe(aRF, aInput1, outputs[0], outputs.length > 1 ? outputs[1] : null, aChance, true);
 		} catch(Throwable e) {/*Do nothing*/}
 	    RecipeMaps.SAWMILL.factory().EUt(30).duration(200*aInput1.stackSize).setShaped(true).inputs(aInput1).input(getWater(1000)).outputs(outputs).buildAndRegister();
+		return true;
+	}
+	
+	/**
+	 * Induction Smelter Recipes for TE
+	 */
+	public static boolean addInductionSmelterRecipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, ItemStack aOutput2, int aEnergy, int aChance) {
+		aOutput1 = GT_OreDictUnificator.get(true, aOutput1);
+		aOutput2 = GT_OreDictUnificator.get(true, aOutput2);
+		if (aInput1 == null || aOutput1 == null || GT_Utility.getContainerItem(aInput1) != null) return false;
+		if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.inductionsmelter, aInput2==null?aInput1:aOutput1, true)) return false;
+	    try {
+	    	cofh.thermalexpansion.util.crafting.SmelterManager.addRecipe(aEnergy, GT_Utility.copy(aInput1), aInput2==null?new ItemStack(Blocks.sand, 1, 0):aInput2, aOutput1, aOutput2, aChance, true);
+		} catch(Throwable e) {/*Do nothing*/}
+		return true;
+	}
+	
+	public static boolean removeInductionSmelterRecipe(ItemStack output) {
+		if (GT_Utility.isStackInvalid(output)) return false;
+		try {
+			for (cofh.thermalexpansion.api.crafting.recipes.ISmelterRecipe recipe : cofh.thermalexpansion.util.crafting.SmelterManager.getRecipeList()) {
+				if (recipe.getPrimaryOutput().isItemEqual(output)) {
+					cofh.thermalexpansion.util.crafting.SmelterManager.removeRecipe(recipe.getPrimaryInput(), recipe.getSecondaryInput());
+					break;
+				}
+			}
+		} catch(Throwable e) {/*Do nothing*/}
 		return true;
 	}
 	
@@ -521,28 +547,6 @@ public class GT_ModHandler {
 		if (RecipeMaps.ALLOY_SMELTING.factory().EUt(aEUt).duration(aDuration).inputs(aInput1, aInput2).output(aOutput1).buildAndRegister()) temp = true;
 		if (addInductionSmelterRecipe(aInput1, aInput2, aOutput1, null, aDuration * 2, 0)) temp = true;
 		return temp;
-	}
-	
-	/**
-	 * Induction Smelter Recipes for TE
-	 */
-	public static boolean addInductionSmelterRecipe(ItemStack aInput1, ItemStack aInput2, ItemStack aOutput1, ItemStack aOutput2, int aEnergy, int aChance) {
-		aOutput1 = GT_OreDictUnificator.get(true, aOutput1);
-		aOutput2 = GT_OreDictUnificator.get(true, aOutput2);
-		if (aInput1 == null || aOutput1 == null || GT_Utility.getContainerItem(aInput1) != null) return false;
-		if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.inductionsmelter, aInput2==null?aInput1:aOutput1, true)) return false;
-	    try {
-	    	cofh.thermalexpansion.api.crafting.CraftingHandlers.smelter.addRecipe(aEnergy, GT_Utility.copy(aInput1), aInput2==null?new ItemStack(Blocks.sand, 1, 0):aInput2, aOutput1, aOutput2, aChance, true);
-		} catch(Throwable e) {/*Do nothing*/}
-		return true;
-	}
-	
-	/**
-	 * Smelts dusts to Ingots
-	 */
-	@Deprecated
-	public static boolean addDustToIngotSmeltingRecipe(ItemStack aInput, ItemStack aOutput) {
-		return false;
 	}
 	
 	/**
@@ -676,15 +680,16 @@ public class GT_ModHandler {
 	}
 	
 	/**
-	 * @param aValue Scrap = 5000, Scrapbox = 45000, Diamond Dust 125000
+	 * @param aValue Scrap = 5000, Scrapbox = 45000
+	 * @param aAmplifiers stacks apply to
 	 */
-	public static synchronized boolean addIC2MatterAmplifier(ItemStack aAmplifier, int aValue) {
-		if (aAmplifier == null || aValue <= 0) return false;
-		if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.massfabamplifier, aAmplifier, true)) return false;
+	public static boolean addIC2MatterAmplifier(int aValue, String oreDict) {
+		if (GT_Utility.isStackInvalid(oreDict) || aValue <= 0) return false;
+		if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.massfabamplifier, oreDict, true)) return false;
 		try {
 			NBTTagCompound tNBT = new NBTTagCompound();
 			tNBT.setInteger("amplification", aValue);
-			GT_Utility.callMethod(ic2.api.recipe.Recipes.matterAmplifier, "addRecipe", false, false, false, aAmplifier, tNBT);
+			ic2.api.recipe.Recipes.matterAmplifier.addRecipe(new ic2.api.recipe.RecipeInputOreDict(oreDict), tNBT);
 		} catch(Throwable e) {/*Do nothing*/}
 		return true;
 	}
@@ -895,10 +900,11 @@ public class GT_ModHandler {
 	/**
 	 * Removes a Smelting Recipe
 	 */
-	public static synchronized boolean removeFurnaceSmelting(ItemStack aInput) {
-		if (aInput != null) {
-			FurnaceRecipes.smelting().getSmeltingList().remove(aInput);
-			return true;
+	public static boolean removeFurnaceSmelting(ItemStack aInput) {
+		if (aInput != null) {			
+			@SuppressWarnings("unchecked")
+			Map<ItemStack, ItemStack> recipes = FurnaceRecipes.smelting().getSmeltingList();
+			return recipes.entrySet().removeIf(e -> e.getKey().isItemEqual(aInput));
 		}
 		return false;
 	}

@@ -1,25 +1,45 @@
 package gregtechmod.loaders.oreprocessing;
 
-import gregtechmod.api.GregTech_API;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import gregtechmod.api.enums.Dyes;
 import gregtechmod.api.enums.GT_Items;
+import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.OreDictEntry;
+
+import gregtechmod.common.recipe.RecipeEntry;
+import gregtechmod.common.recipe.RecipeMaps;
+import gregtechmod.common.recipe.RecipeEntry.Match;
+
 import net.minecraft.item.ItemStack;
 
 public class ProcessingDye implements IOreRecipeRegistrator {
 
-   public ProcessingDye() {
-      OrePrefixes.dye.add((IOreRecipeRegistrator)this);
-   }
+	public ProcessingDye() {
+		OrePrefixes.dye.add(this);
+	}
 
-   @SuppressWarnings("deprecation")
-   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-      Dyes aDye = Dyes.get(aOreDictName);
-      if(aDye.mColor >= 0 && aDye.mColor < 16 && aStack.getItem().getItemStackLimit() >= 16 && GT_Utility.getContainerItem(aStack) == null) {
-         GregTech_API.sRecipeAdder.addCannerRecipe(GT_Utility.copyAmount(16L, new Object[]{aStack}), GT_Items.Spray_Empty.get(1L, new Object[0]), GT_Items.SPRAY_CAN_DYES[aDye.mColor].get(1L, new Object[0]), (ItemStack)null, 800, 1);
-      }
-
-   }
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
+		for (OreDictEntry entry : dictEntry) {
+			Materials aMaterial = this.getMaterial(aPrefix, entry);
+			if (this.isExecutable(aPrefix, aMaterial)) {
+				Dyes aDye = Dyes.get(entry.oreDictName);
+				if(aDye.mColor >= 0 && aDye.mColor < 16) {
+					List<ItemStack> ores = entry.ores.stream()
+							.filter(s -> s.getMaxStackSize() >= 16 && GT_Utility.getContainerItem(s) == null)
+							.collect(Collectors.toList());
+			        RecipeMaps.CANINNING.factory()
+			        	.EUt(1).duration(800)
+			        	.input(RecipeEntry.fromStacks(16, ores, Match.STRICT))
+			        	.input(GT_Items.Spray_Empty.get(1))
+			        	.output(GT_Items.SPRAY_CAN_DYES[aDye.mColor].get(1))
+			        	.buildAndRegister();
+			    }
+			}
+		}
+	}
 }

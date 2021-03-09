@@ -7,360 +7,266 @@ import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.enums.SubTag;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
+import gregtechmod.api.recipe.RecipeFactory;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
+import gregtechmod.api.util.GT_Shaped_Recipe;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.OreDictEntry;
+
+import gregtechmod.common.recipe.RecipeEntry;
+import gregtechmod.common.recipe.RecipeMaps;
+import gregtechmod.common.recipe.RecipeEntry.Match;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 public class ProcessingDust implements IOreRecipeRegistrator {
 
-   public ProcessingDust() {
-      OrePrefixes.dust.add((IOreRecipeRegistrator)this);
-   }
+	public ProcessingDust() {
+		OrePrefixes.dust.add(this);
+	}
 
-   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-      if(aMaterial.mFuelPower > 0) {
-         GregTech_API.sRecipeAdder.addFuel(GT_Utility.copyAmount(1L, new Object[]{aStack}), (ItemStack)null, aMaterial.mFuelPower, aMaterial.mFuelType);
-      }
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
+		for (OreDictEntry entry : dictEntry) {
+			Materials aMaterial = this.getMaterial(aPrefix, entry);
+			if (this.isExecutable(aPrefix, aMaterial)) {
+				RecipeFactory<?> factory;
+				if (aMaterial.mFuelPower > 0) {
+					switch(aMaterial.mFuelType) {
+					case 0:
+						factory = RecipeMaps.DIESEL_FUELS.factory();
+						break;
+					case 1:
+						factory = RecipeMaps.TURBINE_FUELS.factory();
+						break;
+					case 2:
+						factory = RecipeMaps.HOT_FUELS.factory();
+						break;
+					case 4:
+						factory = RecipeMaps.PLASMA_FUELS.factory();
+						break;
+					case 5:
+						factory = RecipeMaps.MAGIC_FUELS.factory();
+						break;
+					default:
+						factory = RecipeMaps.DENSE_FUELS.factory();
+						break;
+					}
+					
+					factory.EUt(1).duration(aMaterial.mFuelPower * 1000).input(RecipeEntry.fromStacks(entry.ores, Match.STRICT)).buildAndRegister();
+				}
 
-      if(aMaterial.mAmplificationValue > 0) {
-         GT_ModHandler.addIC2MatterAmplifier(GT_Utility.copyAmount(1L, new Object[]{aStack}), aMaterial.mAmplificationValue);
-      }
+				if (aMaterial.mAmplificationValue > 0) {
+					GT_ModHandler.addIC2MatterAmplifier(aMaterial.mAmplificationValue, entry.oreDictName);
+				}
+				
+				GameRegistry.addRecipe(new GT_Shaped_Recipe(GT_OreDictUnificator.get(OrePrefixes.dustSmall, aMaterial, 4), new Object[]{" X", "  ", 'X', entry.oreDictName}));
+				GameRegistry.addRecipe(new GT_Shaped_Recipe(GT_OreDictUnificator.get(OrePrefixes.dustTiny, aMaterial, 9), new Object[]{"X ", "  ", 'X', entry.oreDictName}));
+				
+				if (GT_OreDictUnificator.get(OrePrefixes.cell, aMaterial, 1) != null) {
+					RecipeMaps.CANINNING.factory().EUt(1).duration(100)
+						.input(RecipeEntry.fromStacks(entry.ores, Match.STRICT))
+						.input(aMaterial == Materials.Milk ? GT_Items.Cell_Water.get(1) : GT_Items.Cell_Empty.get(1))
+						.output(GT_OreDictUnificator.get(OrePrefixes.cell, aMaterial, 1))
+						.buildAndRegister();
+				}
+				
+				if (aMaterial.mMaterialList.size() > 0 && (aMaterial.mExtraData & 3) != 0) {
+					int tItemAmount = 0;
+					long tCapsuleCount = 0L;
+					long tDensityMultiplier = aMaterial.getDensity() > GregTech_API.MATERIAL_UNIT ? aMaterial.getDensity() / GregTech_API.MATERIAL_UNIT : 1L;
+					List<ItemStack> tList = new ArrayList<>();
+					for (MaterialStack tMat : aMaterial.mMaterialList) {
+						if (tMat.mAmount > 0L) {
+							ItemStack tStack;
+							if (tMat.mMaterial == Materials.Oxygen) {
+								tStack = GT_Items.Cell_Air.get(tMat.mAmount / 2);
+							} else {
+								tStack = GT_OreDictUnificator.get(OrePrefixes.dust, tMat.mMaterial, tMat.mAmount);
+								if (tStack == null) {
+									tStack = GT_OreDictUnificator.get(OrePrefixes.cell, tMat.mMaterial, tMat.mAmount);
+								}
+							}
 
-      GT_ModHandler.addCraftingRecipe(GT_OreDictUnificator.get(OrePrefixes.dustSmall, (Object)aMaterial, 4L), new Object[]{" X", "  ", Character.valueOf('X'), aOreDictName});
-      GT_ModHandler.addCraftingRecipe(GT_OreDictUnificator.get(OrePrefixes.dustTiny, (Object)aMaterial, 9L), new Object[]{"X ", "  ", Character.valueOf('X'), aOreDictName});
-      GregTech_API.sRecipeAdder.addCannerRecipe(aStack, aMaterial == Materials.Milk?GT_Items.Cell_Water.get(1L, new Object[0]):GT_Items.Cell_Empty.get(1L, new Object[0]), GT_OreDictUnificator.get(OrePrefixes.cell, (Object)aMaterial, 1L), (ItemStack)null, 100, 1);
-      ItemStack tStack;
-      if(null != (tStack = GT_OreDictUnificator.get(OrePrefixes.ingot, (Object)aMaterial, 1L)) && !aMaterial.contains(SubTag.NO_SMELTING)) {
-         if(aMaterial.mBlastFurnaceRequired) {
-            GT_ModHandler.removeFurnaceSmelting(aStack);
-            GregTech_API.sRecipeAdder.addBlastRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), (ItemStack)null, aMaterial.mBlastFurnaceTemp > 1750?GT_OreDictUnificator.get(OrePrefixes.ingotHot, aMaterial, tStack, 1L):GT_Utility.copyAmount(1L, new Object[]{tStack}), (ItemStack)null, Math.max(aMaterial.getMass() / 40, 1) * aMaterial.mBlastFurnaceTemp, 120, aMaterial.mBlastFurnaceTemp);
-            if(aMaterial.mBlastFurnaceTemp <= 1000) {
-               GT_ModHandler.addRCBlastFurnaceRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), GT_Utility.copyAmount(1L, new Object[]{tStack}), aMaterial.mBlastFurnaceTemp);
-            }
-         } else {
-            GT_ModHandler.addSmeltingRecipe(aStack, tStack);
-         }
-      } else {
-         if(!OrePrefixes.block.isIgnored(aMaterial) && null == GT_OreDictUnificator.get(OrePrefixes.gem, (Object)aMaterial, 1L)) {
-            GT_ModHandler.addCompressionRecipe(GT_Utility.copyAmount(9L, new Object[]{aStack}), GT_OreDictUnificator.get(OrePrefixes.block, (Object)aMaterial, 1L));
-         }
+							if (tItemAmount + tMat.mAmount * GregTech_API.MATERIAL_UNIT <= 64 * aMaterial.getDensity()) {
+								tItemAmount += tMat.mAmount * GregTech_API.MATERIAL_UNIT;
+								if (tStack != null) {
+									for (tStack.stackSize = (int) (tStack.stackSize * tDensityMultiplier); tStack.stackSize > 64 && tList.size() < 4 && tCapsuleCount + (GT_ModHandler.getCapsuleCellContainerCount(tStack) * 64) <= 64L; tStack.stackSize -= 64) {
+										tCapsuleCount += GT_ModHandler.getCapsuleCellContainerCount(tStack) * 64;
+										tList.add(GT_Utility.copyAmount(64, tStack ));
+									}
 
-         if((OrePrefixes.block.isIgnored(aMaterial) || null == GT_OreDictUnificator.get(OrePrefixes.block, (Object)aMaterial, 1L)) && aMaterial != Materials.GraniteRed && aMaterial != Materials.GraniteBlack && aMaterial != Materials.Obsidian && aMaterial != Materials.Glowstone && aMaterial != Materials.Paper) {
-            GT_ModHandler.addCompressionRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), GT_OreDictUnificator.get(OrePrefixes.plate, (Object)aMaterial, 1L));
-         }
-      }
+									if (tStack.stackSize > 0 && tList.size() < 4 && tCapsuleCount + GT_ModHandler.getCapsuleCellContainerCountMultipliedWithStackSize(tStack) <= 64L) {
+										tCapsuleCount += GT_ModHandler.getCapsuleCellContainerCountMultipliedWithStackSize(tStack);
+										tList.add(tStack);
+									}
+								}
+							}
+						}
+					}
 
-      if(aMaterial.mMaterialList.size() > 0 && (aMaterial.mExtraData & 3) != 0) {
-         long tItemAmount = 0L;
-         long tCapsuleCount = 0L;
-         long tDensityMultiplier = aMaterial.getDensity() > 3628800L?aMaterial.getDensity() / 3628800L:1L;
-         List<ItemStack> tList = new ArrayList<>();
-         Iterator<MaterialStack> iterator = aMaterial.mMaterialList.iterator();
+					tItemAmount = (int) ((tItemAmount * tDensityMultiplier % aMaterial.getDensity() > 0L ? 1 : 0) + tItemAmount * tDensityMultiplier / aMaterial.getDensity());
+					if (tList.size() > 0) {
+						if ((aMaterial.mExtraData & 1) != 0) {
+							factory = RecipeMaps.ELECTROLYZER.factory()
+								.setShaped(true)
+								.EUt(Math.min(4, tList.size()) * 30)
+								.duration(Math.max(1, Math.abs(aMaterial.getProtons() * 2 * tItemAmount)))
+								.input(RecipeEntry.fromStacks(tItemAmount, entry.ores, Match.STRICT));
+							if (tCapsuleCount > 0) 
+								factory.input(GT_Items.Cell_Empty.get(tCapsuleCount));
+							factory.outputs(tList.toArray(new ItemStack[0])).buildAndRegister();
+						}
 
-         while(iterator.hasNext()) {
-            MaterialStack tMat = (MaterialStack)iterator.next();
-            if(tMat.mAmount > 0L) {
-               if(tMat.mMaterial == Materials.Oxygen) {
-                  tStack = GT_Items.Cell_Air.get(tMat.mAmount / 2L, new Object[0]);
-               } else {
-                  tStack = GT_OreDictUnificator.get(OrePrefixes.dust, (Object)tMat.mMaterial, tMat.mAmount);
-                  if(tStack == null) {
-                     tStack = GT_OreDictUnificator.get(OrePrefixes.cell, (Object)tMat.mMaterial, tMat.mAmount);
-                  }
-               }
+						if ((aMaterial.mExtraData & 2) != 0) {
+							factory = RecipeMaps.CENTRIFUGE.factory()
+								.setShaped(true).EUt(5)
+								.duration(Math.max(1, Math.abs(aMaterial.getMass() * 8 * tItemAmount)))
+								.input(RecipeEntry.fromStacks(tItemAmount, entry.ores, Match.STRICT));
+							if (tCapsuleCount > 0) 
+								factory.input(GT_Items.Cell_Empty.get(tCapsuleCount));
+							factory.outputs(tList.toArray(new ItemStack[0])).buildAndRegister();
+						}
+					}
+				}
+				
+				switch (aMaterial) {
+				case _NULL:
+				case Empty:
+				default:
+					continue;
+				case Milk:
+					RecipeMaps.CANINNING.factory().EUt(1).duration(100)
+						.input(RecipeEntry.fromStacks(entry.ores, Match.STRICT))
+						.input(new ItemStack(Items.water_bucket, 1))
+						.output(new ItemStack(Items.milk_bucket, 1))
+						.buildAndRegister();
+					break;
+				case Mercury:
+					GT_Log.log.error("Quicksilver Dust?, To melt that, you don't even need a Furnace...");
+					break;
+				case Diamond:
+					RecipeMaps.IMPLOSION_COMPRESSOR.factory().EUt(30).duration(20)
+						.input(RecipeEntry.fromStacks(4, entry.ores, Match.STRICT))
+						.input(GT_ModHandler.getIC2Item("industrialTnt", 32))
+						.output(GT_Items.IC2_Industrial_Diamond.get(3))
+						.output(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 16L))
+						.buildAndRegister();
+					break;
+				case Opal:
+				case Olivine:
+				case Emerald:
+				case Ruby:
+				case Sapphire:
+				case GreenSapphire:
+				case Topaz:
+				case BlueTopaz:
+				case Tanzanite:
+					RecipeMaps.IMPLOSION_COMPRESSOR.factory().EUt(30).duration(20)
+						.input(RecipeEntry.fromStacks(4, entry.ores, Match.STRICT))
+						.input(GT_ModHandler.getIC2Item("industrialTnt", 24))
+						.output(GT_OreDictUnificator.get(OrePrefixes.gem, aMaterial, 3L))
+						.output(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 12L))
+						.buildAndRegister();
+					break;
+				case GarnetRed:
+				case GarnetYellow:
+				case Jasper:
+				case Amber:
+				case Monazite:
+				case Forcicium:
+				case Forcillium:
+				case Force:
+					RecipeMaps.IMPLOSION_COMPRESSOR.factory().EUt(30).duration(20)
+						.input(RecipeEntry.fromStacks(4, entry.ores, Match.STRICT))
+						.input(GT_ModHandler.getIC2Item("industrialTnt", 16))
+						.output(GT_OreDictUnificator.get(OrePrefixes.gem, aMaterial, 3L))
+						.output(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 8L))
+						.buildAndRegister();
+				}
+				
+				ItemStack tStack = GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial, 1L);
+				
+				if (aMaterial.mBlastFurnaceRequired && null != tStack && !aMaterial.contains(SubTag.NO_SMELTING)) {
+					factory = RecipeMaps.BLAST_FURNANCE.factory()
+						.minTemperature(aMaterial.mBlastFurnaceTemp).EUt(120)
+						.duration(Math.max(aMaterial.getMass() / 40, 1) * aMaterial.mBlastFurnaceTemp)
+						.input(RecipeEntry.fromStacks(entry.ores, Match.STRICT));
+					if (aMaterial.mBlastFurnaceTemp > 1750)
+						factory.output(GT_OreDictUnificator.get(OrePrefixes.ingotHot, aMaterial, tStack, 1));
+					else
+						factory.output(tStack);
+					factory.buildAndRegister();
+				}
+				
+				for (ItemStack aStack : entry.ores) {
+					if (null != tStack && !aMaterial.contains(SubTag.NO_SMELTING)) {
+						if (aMaterial.mBlastFurnaceRequired) {
+							GT_ModHandler.removeFurnaceSmelting(aStack);
+							if (aStack.isItemEqual(GT_ModHandler.getIC2Item("refinedIronIngot", 1)))
+								GT_ModHandler.removeInductionSmelterRecipe(aStack);
+							if (aMaterial.mBlastFurnaceTemp <= 1000)
+								GT_ModHandler.addRCBlastFurnaceRecipe(GT_Utility.copyAmount(1, aStack), GT_Utility.copyAmount(1, tStack), aMaterial.mBlastFurnaceTemp);
+						} else {
+							GT_ModHandler.addSmeltingRecipe(aStack, tStack);
+						}
+					} else {
+						if (!OrePrefixes.block.isIgnored(aMaterial) && null == GT_OreDictUnificator.get(OrePrefixes.gem, aMaterial, 1L)) {
+							GT_ModHandler.addCompressionRecipe(GT_Utility.copyAmount(9, aStack), GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L));
+						}
 
-               if(tItemAmount + tMat.mAmount * 3628800L <= (long)aStack.getMaxStackSize() * aMaterial.getDensity()) {
-                  tItemAmount += tMat.mAmount * 3628800L;
-                  if(tStack != null) {
-                     for(tStack.stackSize = (int)((long)tStack.stackSize * tDensityMultiplier); tStack.stackSize > 64 && tList.size() < 4 && tCapsuleCount + (long)(GT_ModHandler.getCapsuleCellContainerCount(tStack) * 64) <= 64L; tStack.stackSize -= 64) {
-                        tCapsuleCount += (long)(GT_ModHandler.getCapsuleCellContainerCount(tStack) * 64);
-                        tList.add(GT_Utility.copyAmount(64L, new Object[]{tStack}));
-                     }
+						if ((OrePrefixes.block.isIgnored(aMaterial)
+								|| null == GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L))
+								&& aMaterial != Materials.GraniteRed && aMaterial != Materials.GraniteBlack
+								&& aMaterial != Materials.Obsidian && aMaterial != Materials.Glowstone
+								&& aMaterial != Materials.Paper) {
+							GT_ModHandler.addCompressionRecipe(GT_Utility.copyAmount(1, aStack), GT_OreDictUnificator.get(OrePrefixes.plate, aMaterial, 1L));
+						}
+					}
 
-                     if(tStack.stackSize > 0 && tList.size() < 4 && tCapsuleCount + (long)GT_ModHandler.getCapsuleCellContainerCountMultipliedWithStackSize(new ItemStack[]{tStack}) <= 64L) {
-                        tCapsuleCount += (long)GT_ModHandler.getCapsuleCellContainerCountMultipliedWithStackSize(new ItemStack[]{tStack});
-                        tList.add(tStack);
-                     }
-                  }
-               }
-            }
-         }
-
-         tItemAmount = (long)(tItemAmount * tDensityMultiplier % aMaterial.getDensity() > 0L?1:0) + tItemAmount * tDensityMultiplier / aMaterial.getDensity();
-         if(tList.size() > 0) {
-            if((aMaterial.mExtraData & 1) != 0) {
-               GregTech_API.sRecipeAdder.addElectrolyzerRecipe(GT_Utility.copyAmount(tItemAmount, new Object[]{aStack}), (int)tCapsuleCount, (ItemStack)tList.get(0), tList.size() < 2?null:(ItemStack)tList.get(1), tList.size() < 3?null:(ItemStack)tList.get(2), tList.size() < 4?null:(ItemStack)tList.get(3), Math.max(1, Math.abs(aMaterial.getProtons() * 2 * (int)tItemAmount)), Math.min(4, tList.size()) * 30);
-            }
-
-            if((aMaterial.mExtraData & 2) != 0) {
-               GregTech_API.sRecipeAdder.addCentrifugeRecipe(GT_Utility.copyAmount(tItemAmount, new Object[]{aStack}), (int)tCapsuleCount, (ItemStack)tList.get(0), tList.size() < 2?null:(ItemStack)tList.get(1), tList.size() < 3?null:(ItemStack)tList.get(2), tList.size() < 4?null:(ItemStack)tList.get(3), Math.max(1, Math.abs(aMaterial.getMass() * 8 * (int)tItemAmount)));
-            }
-         }
-      }
-
-      switch(ProcessingDust.NamelessClass1657544856.$SwitchMap$gregtechmod$api$enums$Materials[aMaterial.ordinal()]) {
-      case 1:
-      default:
-         break;
-      case 2:
-         GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), new ItemStack(Items.bread, 1, 0));
-         break;
-      case 3:
-         GregTech_API.sRecipeAdder.addCannerRecipe(aStack, new ItemStack(Items.water_bucket, 1), new ItemStack(Items.milk_bucket, 1), (ItemStack)null, 100, 1);
-         break;
-      case 4:
-         GT_Log.log.error("Quicksilver Dust?, To melt that, you don\'t even need a Furnace...");
-         break;
-      case 5:
-      case 6:
-      case 7:
-         GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), GT_OreDictUnificator.get(OrePrefixes.nugget, (Object)Materials.Copper, 6L));
-         break;
-      case 8:
-         GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), GT_OreDictUnificator.get(OrePrefixes.nugget, (Object)Materials.Nickel, 6L));
-         break;
-      case 9:
-         GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), GT_OreDictUnificator.get(OrePrefixes.ingot, (Object)Materials.Nickel, 1L));
-         break;
-      case 10:
-         GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), GT_OreDictUnificator.get(OrePrefixes.ingot, (Object)Materials.Tin, 1L));
-         break;
-      case 11:
-         GT_ModHandler.addLiquidTransposerFillRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), GT_ModHandler.getWater(125L), GT_OreDictUnificator.get(OrePrefixes.dust, (Object)Materials.HydratedCoal, 1L), 125);
-         break;
-      case 12:
-         GT_ModHandler.addLiquidTransposerEmptyRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), GT_ModHandler.getWater(125L), GT_OreDictUnificator.get(OrePrefixes.dust, (Object)Materials.Coal, 1L), 125);
-         break;
-      case 13:
-         GregTech_API.sRecipeAdder.addImplosionRecipe(GT_Utility.copyAmount(4L, new Object[]{aStack}), 32, GT_Items.IC2_Industrial_Diamond.get(3L, new Object[0]), GT_OreDictUnificator.get(OrePrefixes.dust, (Object)Materials.DarkAsh, 16L));
-         break;
-      case 14:
-      case 15:
-      case 16:
-      case 17:
-      case 18:
-      case 19:
-      case 20:
-      case 21:
-      case 22:
-         GregTech_API.sRecipeAdder.addImplosionRecipe(GT_Utility.copyAmount(4L, new Object[]{aStack}), 24, GT_OreDictUnificator.get(OrePrefixes.gem, (Object)aMaterial, 3L), GT_OreDictUnificator.get(OrePrefixes.dust, (Object)Materials.DarkAsh, 12L));
-         break;
-      case 23:
-      case 24:
-      case 25:
-      case 26:
-      case 27:
-      case 28:
-      case 29:
-      case 30:
-      case 31:
-         GregTech_API.sRecipeAdder.addImplosionRecipe(GT_Utility.copyAmount(4L, new Object[]{aStack}), 16, GT_OreDictUnificator.get(OrePrefixes.gem, (Object)aMaterial, 3L), GT_OreDictUnificator.get(OrePrefixes.dust, (Object)Materials.DarkAsh, 8L));
-      }
-
-   }
-
-   // $FF: synthetic class
-   static class NamelessClass1657544856 {
-
-      // $FF: synthetic field
-      static final int[] $SwitchMap$gregtechmod$api$enums$Materials = new int[Materials.values().length];
-
-
-      static {
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials._NULL.ordinal()] = 1;
-         } catch (NoSuchFieldError var31) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Wheat.ordinal()] = 2;
-         } catch (NoSuchFieldError var30) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Milk.ordinal()] = 3;
-         } catch (NoSuchFieldError var29) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Mercury.ordinal()] = 4;
-         } catch (NoSuchFieldError var28) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Tetrahedrite.ordinal()] = 5;
-         } catch (NoSuchFieldError var27) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Chalcopyrite.ordinal()] = 6;
-         } catch (NoSuchFieldError var26) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Malachite.ordinal()] = 7;
-         } catch (NoSuchFieldError var25) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Pentlandite.ordinal()] = 8;
-         } catch (NoSuchFieldError var24) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Garnierite.ordinal()] = 9;
-         } catch (NoSuchFieldError var23) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Cassiterite.ordinal()] = 10;
-         } catch (NoSuchFieldError var22) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Coal.ordinal()] = 11;
-         } catch (NoSuchFieldError var21) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.HydratedCoal.ordinal()] = 12;
-         } catch (NoSuchFieldError var20) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Diamond.ordinal()] = 13;
-         } catch (NoSuchFieldError var19) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Opal.ordinal()] = 14;
-         } catch (NoSuchFieldError var18) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Olivine.ordinal()] = 15;
-         } catch (NoSuchFieldError var17) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Emerald.ordinal()] = 16;
-         } catch (NoSuchFieldError var16) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Ruby.ordinal()] = 17;
-         } catch (NoSuchFieldError var15) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Sapphire.ordinal()] = 18;
-         } catch (NoSuchFieldError var14) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.GreenSapphire.ordinal()] = 19;
-         } catch (NoSuchFieldError var13) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Topaz.ordinal()] = 20;
-         } catch (NoSuchFieldError var12) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.BlueTopaz.ordinal()] = 21;
-         } catch (NoSuchFieldError var11) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Tanzanite.ordinal()] = 22;
-         } catch (NoSuchFieldError var10) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.FoolsRuby.ordinal()] = 23;
-         } catch (NoSuchFieldError var9) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.GarnetRed.ordinal()] = 24;
-         } catch (NoSuchFieldError var8) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.GarnetYellow.ordinal()] = 25;
-         } catch (NoSuchFieldError var7) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Jasper.ordinal()] = 26;
-         } catch (NoSuchFieldError var6) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Amber.ordinal()] = 27;
-         } catch (NoSuchFieldError var5) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Monazite.ordinal()] = 28;
-         } catch (NoSuchFieldError var4) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Forcicium.ordinal()] = 29;
-         } catch (NoSuchFieldError var3) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Forcillium.ordinal()] = 30;
-         } catch (NoSuchFieldError var2) {
-            ;
-         }
-
-         try {
-            $SwitchMap$gregtechmod$api$enums$Materials[Materials.Force.ordinal()] = 31;
-         } catch (NoSuchFieldError var1) {
-            ;
-         }
-
-      }
-   }
+					switch (aMaterial) {
+					default:
+						break;
+					case Wheat:
+						GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, aStack), new ItemStack(Items.bread, 1, 0));
+						break;
+					case Tetrahedrite:
+					case Chalcopyrite:
+					case Malachite:
+						GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, aStack),
+								GT_OreDictUnificator.get(OrePrefixes.nugget, Materials.Copper, 6L));
+						break;
+					case Pentlandite:
+						GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, aStack),
+								GT_OreDictUnificator.get(OrePrefixes.nugget, Materials.Nickel, 6L));
+						break;
+					case Garnierite:
+						GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, aStack),
+								GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Nickel, 1L));
+						break;
+					case Cassiterite:
+						GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, aStack),
+								GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Tin, 1L));
+						break;
+					case Coal:
+						GT_ModHandler.addLiquidTransposerFillRecipe(GT_Utility.copyAmount(1, aStack),
+								GT_ModHandler.getWater(125L),
+								GT_OreDictUnificator.get(OrePrefixes.dust, Materials.HydratedCoal, 1L), 125);
+						break;
+					case HydratedCoal:
+						GT_ModHandler.addLiquidTransposerEmptyRecipe(GT_Utility.copyAmount(1, aStack),
+								GT_ModHandler.getWater(125L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Coal, 1L),
+								125);
+						break;
+					}
+				}
+			}
+		}
+	}
 }

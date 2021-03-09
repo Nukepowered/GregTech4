@@ -29,8 +29,8 @@ public class ProcessingRecycling implements IOreRecipeRegistrator {
 			for (OreDictEntry entry : dictEntry) {
 				Materials aMaterial = this.getMaterial(aPrefix, entry);
 				if (this.isExecutable(aPrefix, aMaterial) && aMaterial != Materials.Blaze) {
-					if (aPrefix.mIsContainer) {
-						for (ItemStack aStack : entry.ores) {
+					for (ItemStack aStack : entry.ores) {
+						if (aPrefix.mIsContainer) {
 							if (aMaterial != Materials.Empty && aPrefix != OrePrefixes.cell) {
 								if (aMaterial == Materials.Mercury) {
 									RecipeMaps.CANINNING.factory().EUt(2).duration(Math.max(aMaterial.getMass() / 2, 1))
@@ -51,13 +51,13 @@ public class ProcessingRecycling implements IOreRecipeRegistrator {
 										.output(GT_OreDictUnificator.get(OrePrefixes.dust, aMaterial, aPrefix.mMaterialAmount / 3628800L))
 										.buildAndRegister();
 								}
-							} else {
-								GT_RecipeRegistrator.registerBasicReverseMacerating(aStack, aMaterial, aPrefix.mMaterialAmount);
-								if (GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial) != null
-										&& !aMaterial.contains(SubTag.NO_SMELTING) && aPrefix != OrePrefixes.ingot
-										&& aPrefix != OrePrefixes.nugget) {
-									GT_RecipeRegistrator.registerBasicReverseSmelting(aStack, aMaterial, aPrefix.mMaterialAmount, true);
-								}
+							}
+						} else {
+							GT_RecipeRegistrator.registerBasicReverseMacerating(aStack, aMaterial, aPrefix.mMaterialAmount);
+							if (GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial) != null
+									&& !aMaterial.contains(SubTag.NO_SMELTING) && aPrefix != OrePrefixes.ingot
+									&& aPrefix != OrePrefixes.nugget) {
+								GT_RecipeRegistrator.registerBasicReverseSmelting(aStack, aMaterial, aPrefix.mMaterialAmount, true);
 							}
 						}
 					}
