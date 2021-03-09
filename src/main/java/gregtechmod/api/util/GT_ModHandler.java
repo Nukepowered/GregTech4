@@ -950,7 +950,7 @@ public class GT_ModHandler {
 	 * @param aOutput The output of the Recipe.
 	 * @return if it has removed at least one Recipe.
 	 */
-    public static synchronized boolean removeRecipeByOutput(ItemStack aOutput) {
+    public static boolean removeRecipeByOutput(ItemStack aOutput) {
     	if (aOutput == null) return false;
     	boolean rReturn = false;
 		@SuppressWarnings("unchecked")
