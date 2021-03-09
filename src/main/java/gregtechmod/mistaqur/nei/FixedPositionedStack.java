@@ -1,4 +1,4 @@
-package gregtechmod.mistaqur.nei.handlers;
+package gregtechmod.mistaqur.nei;
 
 import java.util.ArrayList;
 import java.util.List;

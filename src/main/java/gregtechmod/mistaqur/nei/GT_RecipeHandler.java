@@ -7,7 +7,6 @@ import gregtechmod.api.recipe.Ingredient;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_Utility;
-import gregtechmod.mistaqur.nei.handlers.FixedPositionedStack;
 
 import static codechicken.lib.gui.GuiDraw.changeTexture;
 

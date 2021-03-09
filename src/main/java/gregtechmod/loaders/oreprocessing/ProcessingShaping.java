@@ -1,135 +1,154 @@
 package gregtechmod.loaders.oreprocessing;
 
+import java.util.Arrays;
+import java.util.List;
+
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_Items;
+import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.enums.SubTag;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
-import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.OreDictEntry;
+
+import gregtechmod.common.items.GT_MetaGenerated_Item_02;
+import gregtechmod.common.recipe.RecipeEntry;
+import gregtechmod.common.recipe.RecipeMaps;
+import gregtechmod.common.recipe.RecipeEntry.Match;
 
 public class ProcessingShaping implements IOreRecipeRegistrator {
+	
+	public final static List<Materials> PIPES_MED_LARGE = Arrays.asList(new Materials[]{
+		Materials.Bronze,
+		Materials.Steel,
+		Materials.StainlessSteel,
+		Materials.TungstenSteel,
+		Materials.Brass,
+		Materials.Electrum,
+		Materials.Platinum
+	});
+	
+	public final static List<Materials> PIPES_SMALL = Arrays.asList(new Materials[]{
+			Materials.Bronze,
+			Materials.Steel,
+			Materials.StainlessSteel,
+			Materials.TungstenSteel
+	});
+	
+	public ProcessingShaping() {
+		OrePrefixes.ingot.add(this);
+	}
 
-   public ProcessingShaping() {
-      OrePrefixes.ingot.add((IOreRecipeRegistrator)this);
-   }
-
-   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-      if(GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial, 1L) != null && !aMaterial.contains(SubTag.NO_SMELTING)) {
-         int tAmount = (int)(aPrefix.mMaterialAmount / GregTech_API.MATERIAL_UNIT);
-         if(tAmount > 0 && tAmount <= 64 && aPrefix.mMaterialAmount % GregTech_API.MATERIAL_UNIT == 0L) {
-            if(!OrePrefixes.block.isIgnored(aMaterial)) {
-               GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(9, aStack), GT_Items.Shape_Extruder_Block.get(0), GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, tAmount), 10 * tAmount, 128);
-            }
-
-            GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(1, aStack), GT_Items.Shape_Extruder_Pipe_Small.get(0), GT_OreDictUnificator.get(OrePrefixes.pipeSmall, aMaterial, tAmount), 8 * tAmount, 128);
-            GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(3, aStack), GT_Items.Shape_Extruder_Pipe_Medium.get(0), GT_OreDictUnificator.get(OrePrefixes.pipeMedium, aMaterial, tAmount), 24 * tAmount, 128);
-            GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(6, aStack), GT_Items.Shape_Extruder_Pipe_Large.get(0), GT_OreDictUnificator.get(OrePrefixes.pipeLarge, aMaterial, tAmount), 48 * tAmount, 128);
-            GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(1, aStack), GT_Items.Shape_Extruder_Ingot.get(0), GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial, tAmount), 10, 80);
-            GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(1, aStack), GT_Items.Shape_Extruder_Plate.get(0), GT_OreDictUnificator.get(OrePrefixes.plate, aMaterial, tAmount), Math.max(aMaterial.getMass() * 1 * tAmount, tAmount), 128);
-            if(tAmount * 2 <= 64) {
-               GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(1, aStack), GT_Items.Shape_Extruder_Rod.get(0), GT_OreDictUnificator.get(OrePrefixes.stick, aMaterial, (tAmount * 2)), Math.max(aMaterial.getMass() * 2 * tAmount, tAmount), 96);
-            }
-
-            if(tAmount * 8 <= 64) {
-               GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(1, aStack), GT_Items.Shape_Extruder_Bolt.get(0), GT_OreDictUnificator.get(OrePrefixes.bolt, aMaterial, (tAmount * 8)), Math.max(aMaterial.getMass() * 2 * tAmount, tAmount), 128);
-            }
-
-            if(tAmount * 4 <= 64) {
-               GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(1, aStack), GT_Items.Shape_Extruder_Ring.get(0), GT_OreDictUnificator.get(OrePrefixes.ring, aMaterial, (tAmount * 4)), Math.max(aMaterial.getMass() * 2 * tAmount, tAmount), 96);
-            }
-
-            GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(2, aStack), GT_Items.Shape_Extruder_Sword.get(0), GT_OreDictUnificator.get(OrePrefixes.toolHeadSword, aMaterial, tAmount), Math.max(aMaterial.getMass() * 2 * tAmount, tAmount), 128);
-            GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(3, aStack), GT_Items.Shape_Extruder_Pickaxe.get(0), GT_OreDictUnificator.get(OrePrefixes.toolHeadPickaxe, aMaterial, tAmount), Math.max(aMaterial.getMass() * 3 * tAmount, tAmount), 128);
-            GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(1, aStack), GT_Items.Shape_Extruder_Shovel.get(0), GT_OreDictUnificator.get(OrePrefixes.toolHeadShovel, aMaterial, tAmount), Math.max(aMaterial.getMass() * 1 * tAmount, tAmount), 128);
-            GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(3, aStack), GT_Items.Shape_Extruder_Axe.get(0), GT_OreDictUnificator.get(OrePrefixes.toolHeadAxe, aMaterial, tAmount), Math.max(aMaterial.getMass() * 3 * tAmount, tAmount), 128);
-            GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(2, aStack), GT_Items.Shape_Extruder_Hoe.get(0), GT_OreDictUnificator.get(OrePrefixes.toolHeadHoe, aMaterial, tAmount), Math.max(aMaterial.getMass() * 2 * tAmount, tAmount), 128);
-            GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(6, aStack), GT_Items.Shape_Extruder_Hammer.get(0), GT_OreDictUnificator.get(OrePrefixes.toolHeadHammer, aMaterial, tAmount), Math.max(aMaterial.getMass() * 6 * tAmount, tAmount), 128);
-            GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(2, aStack), GT_Items.Shape_Extruder_File.get(0), GT_OreDictUnificator.get(OrePrefixes.toolHeadFile, aMaterial, tAmount), Math.max(aMaterial.getMass() * 2 * tAmount, tAmount), 128);
-            GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(2, aStack), GT_Items.Shape_Extruder_Saw.get(0), GT_OreDictUnificator.get(OrePrefixes.toolHeadSaw, aMaterial, tAmount), Math.max(aMaterial.getMass() * 2 * tAmount, tAmount), 128);
-            GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(4, aStack), GT_Items.Shape_Extruder_Gear.get(0), GT_OreDictUnificator.get(OrePrefixes.gearGt, aMaterial, tAmount), Math.max(aMaterial.getMass() * 5 * tAmount, tAmount), 128);
-            GregTech_API.sRecipeAdder.addAlloySmelterRecipe(GT_Utility.copyAmount(2, aStack), GT_Items.Shape_Mold_Plate.get(0), GT_OreDictUnificator.get(OrePrefixes.plate, aMaterial, tAmount), Math.max(aMaterial.getMass() * 2 * tAmount, tAmount), 32);
-            GregTech_API.sRecipeAdder.addAlloySmelterRecipe(GT_Utility.copyAmount(8, aStack), GT_Items.Shape_Mold_Gear.get(0), GT_OreDictUnificator.get(OrePrefixes.gearGt, aMaterial, tAmount), Math.max(aMaterial.getMass() * 10 * tAmount, tAmount), 32);
-            switch(aMaterial) {
-            case Iron:
-               if(tAmount * 6 <= 64) {
-                  GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(1, aStack), GT_Items.Shape_Extruder_Wire.get(0), GT_ModHandler.getIC2Item("ironCableItem", (tAmount * 6)), tAmount * 8, 64);
-               }
-
-               GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(1, aStack), GT_Items.Shape_Extruder_Cell.get(0), GT_ModHandler.getIC2Item("fuelRod", tAmount), tAmount * 32, 64);
-               if(tAmount * 2 <= 64) {
-                  GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(1, aStack), GT_Items.Shape_Extruder_Casing.get(0), GT_ModHandler.getIC2Item("casingiron", (tAmount * 2)), tAmount * 32, 48);
-               }
-
-               if(tAmount * 2 <= 64) {
-                  GregTech_API.sRecipeAdder.addAlloySmelterRecipe(GT_Utility.copyAmount(2, aStack), GT_Items.Shape_Mold_Casing.get(0), GT_ModHandler.getIC2Item("casingiron", (tAmount * 3)), tAmount * 128, 12);
-               }
-               break;
-            case Tin:
-               if(tAmount * 4 <= 64) {
-                  GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(1, aStack), GT_Items.Shape_Extruder_Wire.get(0), GT_ModHandler.getIC2Item("tinCableItem", (tAmount * 4)), tAmount * 3, 64);
-               }
-
-               GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(2, aStack), GT_Items.Shape_Extruder_Cell.get(0), GT_Items.Cell_Empty.get(tAmount), tAmount * 32, 64);
-               if(tAmount * 2 <= 64) {
-                  GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(1, aStack), GT_Items.Shape_Extruder_Casing.get(0), GT_ModHandler.getIC2Item("casingtin", (tAmount * 2)), tAmount * 32, 48);
-               }
-
-               if(tAmount * 2 <= 64) {
-                  GregTech_API.sRecipeAdder.addAlloySmelterRecipe(GT_Utility.copyAmount(2, aStack), GT_Items.Shape_Mold_Casing.get(0), GT_ModHandler.getIC2Item("casingtin", (tAmount * 3)), tAmount * 128, 12);
-               }
-               break;
-            case SolderingAlloy:
-               GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(1, aStack), GT_Items.Shape_Extruder_Wire.get(0), GT_Items.Tool_SolderingMaterial_Tin.get(tAmount), tAmount * 8, 64);
-               break;
-            case Lead:
-               GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(1, aStack), GT_Items.Shape_Extruder_Wire.get(0), GT_Items.Tool_SolderingMaterial_Lead.get(tAmount), tAmount * 8, 64);
-               if(tAmount * 2 <= 64) {
-                  GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(1, aStack), GT_Items.Shape_Extruder_Casing.get(0), GT_ModHandler.getIC2Item("casinglead", (tAmount * 2)), tAmount * 32, 48);
-               }
-
-               if(tAmount * 2 <= 64) {
-                  GregTech_API.sRecipeAdder.addAlloySmelterRecipe(GT_Utility.copyAmount(2, aStack), GT_Items.Shape_Mold_Casing.get(0), GT_ModHandler.getIC2Item("casinglead", (tAmount * 3)), tAmount * 128, 12);
-               }
-               break;
-            case Copper:
-               if(tAmount * 3 <= 64) {
-                  GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(1, aStack), GT_Items.Shape_Extruder_Wire.get(0), GT_ModHandler.getIC2Item("copperCableItem", (tAmount * 3)), tAmount * 4, 64);
-               }
-
-               if(tAmount * 2 <= 64) {
-                  GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(1, aStack), GT_Items.Shape_Extruder_Casing.get(0), GT_ModHandler.getIC2Item("casingcopper", (tAmount * 2)), tAmount * 32, 48);
-               }
-
-               if(tAmount * 2 <= 64) {
-                  GregTech_API.sRecipeAdder.addAlloySmelterRecipe(GT_Utility.copyAmount(2, aStack), GT_Items.Shape_Mold_Casing.get(0), GT_ModHandler.getIC2Item("casingcopper", (tAmount * 3)), tAmount * 128, 12);
-               }
-               break;
-            case Bronze:
-               if(tAmount * 2 <= 64) {
-                  GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(1, aStack), GT_Items.Shape_Extruder_Casing.get(0), GT_ModHandler.getIC2Item("casingbronze", (tAmount * 2)), tAmount * 32, 48);
-               }
-
-               if(tAmount * 2 <= 64) {
-                  GregTech_API.sRecipeAdder.addAlloySmelterRecipe(GT_Utility.copyAmount(2, aStack), GT_Items.Shape_Mold_Casing.get(0), GT_ModHandler.getIC2Item("casingbronze", (tAmount * 3)), tAmount * 128, 12);
-               }
-               break;
-            case Gold:
-               if(tAmount * 6 <= 64) {
-                  GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(1, aStack), GT_Items.Shape_Extruder_Wire.get(0), GT_ModHandler.getIC2Item("goldCableItem", (tAmount * 6)), tAmount * 4, 64);
-               }
-
-               if(tAmount * 2 <= 64) {
-                  GregTech_API.sRecipeAdder.addExtruderRecipe(GT_Utility.copyAmount(1, aStack), GT_Items.Shape_Extruder_Casing.get(0), GT_ModHandler.getIC2Item("casinggold", (tAmount * 2)), tAmount * 32, 48);
-               }
-
-               if(tAmount * 2 <= 64) {
-                  GregTech_API.sRecipeAdder.addAlloySmelterRecipe(GT_Utility.copyAmount(2, aStack), GT_Items.Shape_Mold_Casing.get(0), GT_ModHandler.getIC2Item("casinggold", (tAmount * 3)), tAmount * 128, 12);
-               }
-            default: break;
-            }
-         }
-      }
-   }
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
+		for (OreDictEntry e : dictEntry) {
+			Materials aMaterial = this.getMaterial(aPrefix, e);
+			if (this.isExecutable(aPrefix, aMaterial) && GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial, 1L) != null && !aMaterial.contains(SubTag.NO_SMELTING)) {
+				int tAmount = (int)(aPrefix.mMaterialAmount / GregTech_API.MATERIAL_UNIT);
+				if(tAmount > 0 && tAmount <= 64 && aPrefix.mMaterialAmount % GregTech_API.MATERIAL_UNIT == 0L) {
+					if (PIPES_MED_LARGE.contains(aMaterial)) {
+						RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(24 * tAmount)	.input(RecipeEntry.fromStacks(3, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Pipe_Medium	.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.pipeMedium	, aMaterial, tAmount)).buildAndRegister();
+						RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(48 * tAmount)	.input(RecipeEntry.fromStacks(6, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Pipe_Large	.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.pipeLarge	, aMaterial, tAmount)).buildAndRegister();
+					}
+					
+					if (PIPES_SMALL.contains(aMaterial)) {
+						RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(8 * tAmount)	.input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Pipe_Small	.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.pipeSmall	, aMaterial, tAmount)).buildAndRegister();
+					}
+					
+					if ((aMaterial.mTypes & 64) != 0 && GT_MetaGenerated_Item_02.sTempToolHeadMaterials.contains(aMaterial)) {
+						RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(Math.max(aMaterial.getMass() * 2 * tAmount, tAmount)).input(RecipeEntry.fromStacks(2, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Sword	.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.toolHeadSword	, aMaterial, tAmount)).buildAndRegister();
+						RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(Math.max(aMaterial.getMass() * 3 * tAmount, tAmount)).input(RecipeEntry.fromStacks(3, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Pickaxe .get(1)).output(GT_OreDictUnificator.get(OrePrefixes.toolHeadPickaxe, aMaterial, tAmount)).buildAndRegister();
+						RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(Math.max(aMaterial.getMass() * 1 * tAmount, tAmount)).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Shovel	.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.toolHeadShovel	, aMaterial, tAmount)).buildAndRegister();
+						RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(Math.max(aMaterial.getMass() * 3 * tAmount, tAmount)).input(RecipeEntry.fromStacks(3, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Axe		.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.toolHeadAxe	, aMaterial, tAmount)).buildAndRegister();
+						RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(Math.max(aMaterial.getMass() * 2 * tAmount, tAmount)).input(RecipeEntry.fromStacks(2, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Hoe		.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.toolHeadHoe	, aMaterial, tAmount)).buildAndRegister();
+						RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(Math.max(aMaterial.getMass() * 6 * tAmount, tAmount)).input(RecipeEntry.fromStacks(6, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Hammer	.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.toolHeadHammer	, aMaterial, tAmount)).buildAndRegister();
+						RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(Math.max(aMaterial.getMass() * 2 * tAmount, tAmount)).input(RecipeEntry.fromStacks(2, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_File	.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.toolHeadFile	, aMaterial, tAmount)).buildAndRegister();
+						RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(Math.max(aMaterial.getMass() * 2 * tAmount, tAmount)).input(RecipeEntry.fromStacks(2, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Saw		.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.toolHeadSaw	, aMaterial, tAmount)).buildAndRegister();
+					}
+					
+					if ((aMaterial.mTypes & 128) != 0) {
+						RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(Math.max(aMaterial.getMass() * 5 * tAmount, tAmount)).input(RecipeEntry.fromStacks(4, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Gear.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.gearGt, aMaterial, tAmount)).buildAndRegister();
+						RecipeMaps.ALLOY_SMELTING.factory().EUt(32).duration(Math.max(aMaterial.getMass() * 10 * tAmount, tAmount)).input(RecipeEntry.fromStacks(8, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Mold_Gear.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.gearGt, aMaterial, tAmount)).buildAndRegister();
+					}
+					
+					// wtf is this
+//					RecipeMaps.EXTRUDING.factory().EUt( 80).setShaped(true).duration(10)			.input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Ingot			.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial, tAmount)).buildAndRegister();
+					
+					if ((aMaterial.mTypes & 2) != 0) {
+						RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(Math.max(aMaterial.getMass() * 1 * tAmount, tAmount)).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Plate	.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.plate, aMaterial, tAmount)).buildAndRegister();
+						RecipeMaps.ALLOY_SMELTING.factory().EUt(32).duration(Math.max(aMaterial.getMass() *  2 * tAmount, tAmount)).input(RecipeEntry.fromStacks(2, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Mold_Plate.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.plate, aMaterial, tAmount)).buildAndRegister();
+						
+						if(tAmount * 2 <= 64)
+							RecipeMaps.EXTRUDING.factory().EUt( 96).setShaped(true).duration(Math.max(aMaterial.getMass() * 2 * tAmount, tAmount)).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Rod  .get(1)).output(GT_OreDictUnificator.get(OrePrefixes.stick, aMaterial, tAmount * 2)).buildAndRegister();
+						if (tAmount * 8 <= 64)
+							RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(Math.max(aMaterial.getMass() * 2 * tAmount, tAmount)).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Bolt .get(1)).output(GT_OreDictUnificator.get(OrePrefixes.bolt , aMaterial, tAmount * 8)).buildAndRegister();
+						if (tAmount * 4 <= 64)
+							RecipeMaps.EXTRUDING.factory().EUt( 96).setShaped(true).duration(Math.max(aMaterial.getMass() * 2 * tAmount, tAmount)).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Ring .get(1)).output(GT_OreDictUnificator.get(OrePrefixes.ring , aMaterial, tAmount * 4)).buildAndRegister();
+						if (!OrePrefixes.block.isIgnored(aMaterial) && GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1) != null)
+							RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(10 * tAmount										 ).input(RecipeEntry.fromStacks(9, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Block.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, tAmount * 1)).buildAndRegister();
+						
+						switch(aMaterial) {
+			            case Iron:
+			            	if(tAmount * 6 <= 64)
+			            		RecipeMaps.EXTRUDING.factory().EUt(64).setShaped(true).duration(tAmount * 8).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Wire.get(1)).output(GT_ModHandler.getIC2Item("ironCableItem", (tAmount * 6))).buildAndRegister();
+							if(tAmount * 2 <= 64) {
+								RecipeMaps.EXTRUDING.factory().EUt(48).setShaped(true).duration(tAmount * 32).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Casing.get(1)).output(GT_ModHandler.getIC2Item("casingiron", (tAmount * 2))).buildAndRegister();
+								RecipeMaps.ALLOY_SMELTING.factory().EUt(12).duration(tAmount * 128).input(RecipeEntry.fromStacks(2, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Mold_Casing.get(1)).output(GT_ModHandler.getIC2Item("casingiron", (tAmount * 3))).buildAndRegister();
+							}
+							RecipeMaps.EXTRUDING.factory().EUt(64).setShaped(true).duration(tAmount * 32).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Cell.get(1)).output(GT_ModHandler.getIC2Item("fuelRod", tAmount)).buildAndRegister();
+							break;
+			            case Tin:
+			               if(tAmount * 4 <= 64)
+			                  RecipeMaps.EXTRUDING.factory().EUt(64).setShaped(true).duration(tAmount * 3).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Wire.get(1)).output(GT_ModHandler.getIC2Item("tinCableItem", (tAmount * 4))).buildAndRegister();
+			               if(tAmount * 2 <= 64) {
+			                  RecipeMaps.EXTRUDING.factory().EUt(48).setShaped(true).duration(tAmount * 32).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Casing.get(1)).output(GT_ModHandler.getIC2Item("casingtin", (tAmount * 2))).buildAndRegister();
+			                  RecipeMaps.ALLOY_SMELTING.factory().EUt(12).duration(tAmount * 128).input(RecipeEntry.fromStacks(2, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Mold_Casing.get(1)).output(GT_ModHandler.getIC2Item("casingtin", (tAmount * 3))).buildAndRegister();
+			               }
+			               
+			               RecipeMaps.EXTRUDING.factory().EUt(64).setShaped(true).duration(tAmount * 32).input(RecipeEntry.fromStacks(2, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Cell.get(1)).output(GT_Items.Cell_Empty.get(tAmount)).buildAndRegister();
+			               break;
+			            case SolderingAlloy:
+			               RecipeMaps.EXTRUDING.factory().EUt(64).setShaped(true).duration(tAmount * 8).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Wire.get(1)).output(GT_Items.Tool_SolderingMaterial_Tin.get(tAmount)).buildAndRegister();
+			               break;
+			            case Lead:
+			            	RecipeMaps.EXTRUDING.factory().EUt(64).setShaped(true).duration(tAmount * 8).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Wire.get(1)).output(GT_Items.Tool_SolderingMaterial_Lead.get(tAmount)).buildAndRegister();
+	
+			            	if(tAmount * 2 <= 64) {
+								RecipeMaps.EXTRUDING.factory().EUt(48).setShaped(true).duration(tAmount * 32).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Casing.get(1)).output(GT_ModHandler.getIC2Item("casinglead", (tAmount * 2))).buildAndRegister();
+				                RecipeMaps.ALLOY_SMELTING.factory().EUt(12).duration(tAmount * 128).input(RecipeEntry.fromStacks(2, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Mold_Casing.get(1)).output(GT_ModHandler.getIC2Item("casinglead", (tAmount * 3))).buildAndRegister();
+							}
+							break;
+			            case Copper:
+			               if(tAmount * 3 <= 64) {
+			                  RecipeMaps.EXTRUDING.factory().EUt(64).setShaped(true).duration(tAmount * 4).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Wire.get(1)).output(GT_ModHandler.getIC2Item("copperCableItem", (tAmount * 3))).buildAndRegister();
+			               }
+	
+			               if(tAmount * 2 <= 64) {
+			                  RecipeMaps.EXTRUDING.factory().EUt(48).setShaped(true).duration(tAmount * 32).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Casing.get(1)).output(GT_ModHandler.getIC2Item("casingcopper", (tAmount * 2))).buildAndRegister();
+				              RecipeMaps.ALLOY_SMELTING.factory().EUt(12).duration(tAmount * 128).input(RecipeEntry.fromStacks(2, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Mold_Casing.get(1)).output(GT_ModHandler.getIC2Item("casingcopper", (tAmount * 3))).buildAndRegister();
+			               }
+			               break;
+			            case Bronze:
+			               if(tAmount * 2 <= 64) {
+			                  RecipeMaps.EXTRUDING.factory().EUt(48).setShaped(true).duration(tAmount * 32).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Casing.get(1)).output(GT_ModHandler.getIC2Item("casingbronze", (tAmount * 2))).buildAndRegister();
+				              RecipeMaps.ALLOY_SMELTING.factory().EUt(12).duration(tAmount * 128).input(RecipeEntry.fromStacks(2, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Mold_Casing.get(1)).output(GT_ModHandler.getIC2Item("casingbronze", (tAmount * 3))).buildAndRegister();
+			               }
+			               break;
+			            case Gold:
+			               if(tAmount * 6 <= 64) {
+			                  RecipeMaps.EXTRUDING.factory().EUt(64).setShaped(true).duration(tAmount * 4).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Wire.get(1)).output(GT_ModHandler.getIC2Item("goldCableItem", (tAmount * 6))).buildAndRegister();
+			               }
+	
+			               if(tAmount * 2 <= 64) {
+			                  RecipeMaps.EXTRUDING.factory().EUt(48).setShaped(true).duration(tAmount * 32).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Casing.get(1)).output(GT_ModHandler.getIC2Item("casinggold", (tAmount * 2))).buildAndRegister();
+				              RecipeMaps.ALLOY_SMELTING.factory().EUt(12).duration(tAmount * 128).input(RecipeEntry.fromStacks(2, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Mold_Casing.get(1)).output(GT_ModHandler.getIC2Item("casinggold", (tAmount * 3))).buildAndRegister();
+			               }
+			            default: break;
+			            }
+					}
+				}
+			}
+		}
+	}
 }

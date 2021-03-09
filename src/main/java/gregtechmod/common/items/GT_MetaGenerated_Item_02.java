@@ -9,7 +9,7 @@ import java.util.List;
 
 public class GT_MetaGenerated_Item_02 extends GT_MetaGenerated_Item {
 
-   private static final List<Materials> sTempToolHeadMaterials = Arrays.asList(new Materials[]{
+   public static final List<Materials> sTempToolHeadMaterials = Arrays.asList(new Materials[]{
 		   Materials.Wood,
 		   Materials.Stone,
 		   Materials.Iron,

@@ -169,7 +169,7 @@ public class GT_MetaTileEntityLoader implements Runnable {
 	    GT_Items.Pipe_Platinum_Medium.set(		new GT_MetaPipeEntity_Platinum				(1902, "GT_Pipe_Platinum"				).getStackForm(1)).registerOre(OrePrefixes.pipeMedium.get(Materials.Platinum));
 	    
 	    GT_Items.Pipe_Brass_Large.set(			new GT_MetaPipeEntity_Brass_Large			(1950, "GT_Pipe_Brass_Large"			).getStackForm(1)).registerOre(OrePrefixes.pipeLarge.get(Materials.Brass));
-	    GT_Items.Pipe_Electrum_Large.set(		new GT_MetaPipeEntity_Electrum_Large		(1951, "GT_Pipe_Electrum_Large"			).getStackForm(1)).registerOre(OrePrefixes.pipeLarge.get(Materials.Brass));
+	    GT_Items.Pipe_Electrum_Large.set(		new GT_MetaPipeEntity_Electrum_Large		(1951, "GT_Pipe_Electrum_Large"			).getStackForm(1)).registerOre(OrePrefixes.pipeLarge.get(Materials.Electrum));
 	    GT_Items.Pipe_Platinum_Large.set(		new GT_MetaPipeEntity_Platinum_Large		(1952, "GT_Pipe_Platinum_Large"			).getStackForm(1)).registerOre(OrePrefixes.pipeLarge.get(Materials.Platinum));
 	}
 }
