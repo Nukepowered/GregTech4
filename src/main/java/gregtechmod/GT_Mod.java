@@ -24,7 +24,11 @@ import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_RecipeRegistrator;
+import gregtechmod.api.util.GT_Shaped_Recipe;
+import gregtechmod.api.util.GT_Shapeless_NBT_Keeping_Recipe;
+import gregtechmod.api.util.GT_Shapeless_Recipe;
 import gregtechmod.api.util.GT_Utility;
+
 import gregtechmod.common.GT_DummyWorld;
 import gregtechmod.common.GT_GUIHandler;
 import gregtechmod.common.GT_OreDictHandler;
@@ -55,6 +59,7 @@ import gregtechmod.common.tileentities.deprecated.GT_TileEntity_LightSource;
 import gregtechmod.common.tileentities.deprecated.GT_TileEntity_PlayerDetector;
 import gregtechmod.common.tileentities.deprecated.GT_TileEntity_Sonictron;
 import gregtechmod.common.tileentities.deprecated.GT_TileEntity_Superconductor;
+
 import gregtechmod.loaders.load.GT_CoverBehaviorLoader;
 import gregtechmod.loaders.load.GT_ItemIterator;
 import gregtechmod.loaders.load.GT_LiquidAndFuelLoader;
@@ -115,6 +120,7 @@ import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerData;
 import net.minecraftforge.fluids.FluidContainerRegistry.FluidContainerRegisterEvent;
 import net.minecraftforge.oredict.OreDictionary;
+import net.minecraftforge.oredict.RecipeSorter;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 
 import cpw.mods.fml.common.LoadController;
@@ -529,6 +535,10 @@ public class GT_Mod implements IGT_Mod {
     	new GT_PacketHandler().run();
     	new GT_ConnectionHandler().run();
 
+    	RecipeSorter.register("gregtechmod:shaped"					, GT_Shaped_Recipe.class				, RecipeSorter.Category.SHAPED		, "after:minecraft:shaped");
+    	RecipeSorter.register("gregtechmod:shapeless"				, GT_Shapeless_Recipe.class				, RecipeSorter.Category.SHAPELESS	, "after:minecraft:shapeless");
+    	RecipeSorter.register("gregtechmod:shapeless_nbt_keeping"	, GT_Shapeless_NBT_Keeping_Recipe.class	, RecipeSorter.Category.SHAPELESS	, "after:minecraft:shapeless");
+    	
         GregTech_API.sPreloadFinished = true;
         GT_Log.log.info("Preload-Phase finished!");
     	for (Runnable tRunnable : GregTech_API.sAfterGTPreload) {
