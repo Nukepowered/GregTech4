@@ -1976,7 +1976,7 @@ oreprefixes.gem=%s
 oreprefixes.dustTiny=Tiny Pile of %s Dust
 oreprefixes.dustSmall=Small Pile of %s Dust
 oreprefixes.dustImpure=Impure Pile of %s Dust
-oreprefixes.dustRefined
+oreprefixes.dustRefined=Refined Pile of %s Dust
 oreprefixes.dustPure=Pure Pile of %s Dust
 oreprefixes.dust=%s Dust
 oreprefixes.nugget=%s Nugget
