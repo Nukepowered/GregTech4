@@ -2,7 +2,6 @@ package gregtechmod.api.recipe;
 
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
-import gregtechmod.common.recipe.RecipeEntry;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,7 +15,6 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -332,16 +330,18 @@ public class Recipe {
 	////////////////////
 	
 	public void writeToNBT(NBTTagCompound data) {
-		NBTTagList outputs = new NBTTagList();
-		for (ItemStack out : this.getResults(new Random())) {
-			NBTTagCompound stack = out.writeToNBT(new NBTTagCompound());
-			outputs.appendTag(stack);
-		}
+		NBTTagList itemOut = new NBTTagList();
+		NBTTagList fluidOut = new NBTTagList();
+		for (ItemStack out : this.getResults(new Random())) 
+			itemOut.appendTag(out.writeToNBT(new NBTTagCompound()));
+		for (FluidStack out : this.getFluidOutputs())
+			fluidOut.appendTag(out.writeToNBT(new NBTTagCompound()));
+		
 		data.setInteger("recipeHash", this.hashCode());
-		data.setTag("recipeOutput", outputs);
+		data.setTag("recipeItemOutput", itemOut);
+		data.setTag("recipeFluidOutput", fluidOut);
 	}
 	
-	// TODO still does not support fluid output saves
 	public static Recipe loadFromNBT(RecipeMap<?> recipeMap, NBTTagCompound data) {
 		if (recipeMap != null && data.hasKey("recipeHash")) {
 			int hash = data.getInteger("recipeHash");
@@ -352,21 +352,41 @@ public class Recipe {
 			}
 		}
 		
-		if (data.hasKey("recipeOutput")) {
-			NBTTagList recipe = data.getTagList("recipeOutput", 10);
+		if (data.hasKey("recipeItemOutput") || data.hasKey("recipeFluidOutput")) {
+			NBTTagList itemOut = data.getTagList("recipeItemOutput", 10);
+			NBTTagList fluidOut = data.getTagList("recipeFluidOutput", 10);
 			List<ItemStack> stacks = new ArrayList<>();
-			for (int i = 0; i < recipe.tagCount(); i++) {
-				NBTTagCompound stackData = recipe.getCompoundTagAt(i);
+			List<FluidStack> fluids = new ArrayList<>();
+			
+			for (int i = 0; itemOut != null && i < itemOut.tagCount(); i++) {
+				NBTTagCompound stackData = itemOut.getCompoundTagAt(i);
 				ItemStack stack = ItemStack.loadItemStackFromNBT(stackData);
 				if (stack != null) {
 					stacks.add(stack);
-				} else GT_Log.log.error("Unable to load stack from tag: " + stackData);
+				} else GT_Log.log.error("Unable to load item stack from tag: " + stackData);
+			}
+			
+			for (int i = 0; fluidOut != null && i < fluidOut.tagCount(); i++) {
+				NBTTagCompound stackData = fluidOut.getCompoundTagAt(i);
+				FluidStack stack = FluidStack.loadFluidStackFromNBT(stackData);
+				if (stack != null) {
+					fluids.add(stack);
+				} else GT_Log.log.error("Unable to load fluid stack from tag: " + stackData);
 			}
 			
 			return new Recipe(0, 0, 0, false,
-					Collections.singleton(RecipeEntry.singleton(new ItemStack(Blocks.bedrock))),
+					Collections.emptyList(),
 					stacks,
-					Collections.emptyList());
+					Collections.emptyList(),
+					Collections.emptyList(),
+					fluids,
+					Collections.emptyMap()) {
+				
+				@Override
+				public boolean matches(boolean decrease, List<ItemStack> input, List<FluidStack> fluidInputs) {
+					return false;
+				}
+			};
 		}
 		
 		return null;
@@ -378,13 +398,16 @@ public class Recipe {
 	
 	@Override
 	public int hashCode() {
-		return (startEU * EUt * duration) + (shaped ? 1 : 0)
+		int hash = (3 * startEU) + (3 * EUt) + (3 * duration) + (shaped ? 1 : 0)
 				+ itemInputs.hashCode()
 				+ itemOutputs.hashCode()
 				+ chancedOutputs.hashCode()
-				+ fluidInputs.hashCode()
-				+ fluidOutputs.hashCode()
 				+ metadata.hashCode();
+		for (FluidStack fluid : fluidInputs) 
+			hash += GT_Utility.hashFluidStack(fluid);
+		for (FluidStack fluid : fluidOutputs) 
+			hash += GT_Utility.hashFluidStack(fluid);
+		return hash;
 	}
 	
 	@Override

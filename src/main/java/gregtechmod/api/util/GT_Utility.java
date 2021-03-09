@@ -71,6 +71,29 @@ public class GT_Utility {
 	
 	public static final DecimalFormat sFormat = new DecimalFormat("###,###.##", new DecimalFormatSymbols(Locale.ENGLISH));
     
+	public static int hashFluidStack(FluidStack stack) {
+		int code = 1;
+    	code = 31*code + hashFluid(stack.getFluid());
+    	code = 31*code + stack.amount;
+    	if (stack.tag != null)
+    		code = 31*code + stack.tag.hashCode();
+    	return code;
+	}
+	
+	public static int hashFluid(Fluid fluid) {
+		int code = 1;
+		code = 31*code + fluid.getName().hashCode();
+		if (fluid.getUnlocalizedName() != null)
+			code = 31*code + fluid.getUnlocalizedName().hashCode();
+		code = 31*code + fluid.getColor();
+		code += fluid.getDensity() +
+				fluid.getLuminosity() +
+				fluid.getTemperature() +
+				fluid.getViscosity() +
+				(fluid.isGaseous() ? 1 : 0);
+		return code;
+	}
+	
 	public static String toIndexNumbers(String string) {
         char[] charArray = string.toCharArray();
         for (int i = 0; i < charArray.length; i++) {

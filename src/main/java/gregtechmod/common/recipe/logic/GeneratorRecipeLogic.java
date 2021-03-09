@@ -85,7 +85,7 @@ public class GeneratorRecipeLogic extends RecipeLogic {
 		if (getMachine().spaceForOutput(recipe)) {
 			previousRecipe = recipe;
 			progressTime = 1;
-			leftEU = (int) (recipe.getDuration() * recipe.getEUt() * (efficiency.getAsInt() / 100.0D));
+			leftEU = (long) (recipe.getDuration() * recipe.getEUt() * (efficiency.getAsInt() / 100.0D));
 			maxProgressTime = (int) Math.ceil(leftEU * 1.0D / ((MetaTileEntity) getMachine()).maxEUOutput());
 			if (consumeInputs(recipe)) {
 				triggerMachine(true);
