@@ -261,5 +261,7 @@ public class RecipeEntry implements Ingredient {
 		DAMAGE,
 		/** Check NBT match */
 		NBT;
+		
+		public static final Match[] STRICT = { DAMAGE, NBT };
 	}
 }

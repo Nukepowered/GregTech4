@@ -41,11 +41,11 @@ public class RecipeMaps {
 	public static final RecipeMapPrinter			   			PRINTER				= new RecipeMapPrinter(1, 3, 1, 2);
 	public static final PulverizerRecipeMap			   			PULVERIZING 		= new PulverizerRecipeMap(1, 2, 1, 4);
 	
-	public static final RecipeMap<GeneratorRecipeFactory> DIESEL_FUELS		= new RecipeMap<>(0, 1, 0, 1, 1, 1, 0, 0, new GeneratorRecipeFactory());
+	public static final RecipeMap<GeneratorRecipeFactory> DIESEL_FUELS		= new RecipeMap<>(0, 1, 0, 1, 0, 1, 0, 0, new GeneratorRecipeFactory());
 	public static final RecipeMap<GeneratorRecipeFactory> TURBINE_FUELS		= new RecipeMap<>(0, 1, 0, 1, 0, 1, 0, 0, new GeneratorRecipeFactory());
 	public static final RecipeMap<GeneratorRecipeFactory> HOT_FUELS			= new RecipeMap<>(0, 1, 0, 1, 0, 1, 0, 0, new GeneratorRecipeFactory());
-	public static final RecipeMap<GeneratorRecipeFactory> DENSE_FUELS		= new RecipeMap<>(0, 1, 0, 1, 1, 1, 0, 0, new GeneratorRecipeFactory());
-	public static final RecipeMap<GeneratorRecipeFactory> PLASMA_FUELS		= new RecipeMap<>(0, 1, 0, 1, 1, 1, 0, 0, new GeneratorRecipeFactory());
+	public static final RecipeMap<GeneratorRecipeFactory> DENSE_FUELS		= new RecipeMap<>(0, 1, 0, 1, 0, 1, 0, 0, new GeneratorRecipeFactory());
+	public static final RecipeMap<GeneratorRecipeFactory> PLASMA_FUELS		= new RecipeMap<>(0, 1, 0, 1, 0, 1, 0, 0, new GeneratorRecipeFactory());
 	public static final RecipeMap<GeneratorRecipeFactory> MAGIC_FUELS		= new RecipeMap<>(0, 1, 0, 1, 0, 1, 0, 0, new GeneratorRecipeFactory());
 	
 	// Fake RecipeMaps

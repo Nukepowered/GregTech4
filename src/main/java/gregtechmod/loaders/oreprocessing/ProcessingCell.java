@@ -150,14 +150,14 @@ public class ProcessingCell implements IOreRecipeRegistrator {
 							
 							FluidStack fuel = GT_Utility.getFluidForFilledItem(aStack);
 							if (fuel != null) {
-								factory.input(fuel);
+								factory.input(new FluidStack(fuel, 1)).duration(aMaterial.mFuelPower);
 							} else {
 								ItemStack container = GT_Utility.getContainerItem(aStack);
-								factory.input(aStack);
+								factory.input(aStack).duration(aMaterial.mFuelPower * 1000);
 								if (container != null) factory.output(container);
 							}
 							
-							factory.EUt(1).duration(aMaterial.mFuelPower).buildAndRegister();
+							factory.EUt(1).buildAndRegister();
 						}
 	
 						if (aMaterial == Materials.Ice) {

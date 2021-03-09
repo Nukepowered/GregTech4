@@ -69,7 +69,7 @@ public class GT_OreProcessingLoader implements Runnable {
       new ProcessingBlock();
       new ProcessingBolt();
       new ProcessingCell();
-//      new ProcessingCellPlasma();
+      new ProcessingCellPlasma();
 //      new ProcessingCircuit();
 //      new ProcessingCrafting();
 //      new ProcessingCrushed();
