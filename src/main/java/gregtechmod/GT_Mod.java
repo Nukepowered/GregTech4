@@ -36,6 +36,7 @@ import gregtechmod.common.GT_Proxy;
 import gregtechmod.common.GT_RecipeAdder;
 import gregtechmod.common.GT_TickHandler;
 import gregtechmod.common.GT_Worldgenerator;
+import gregtechmod.common.RecipeHandler;
 import gregtechmod.common.blocks.GT_BlockMetaID_Block;
 import gregtechmod.common.blocks.GT_BlockMetaID_Block2;
 import gregtechmod.common.blocks.GT_BlockMetaID_Machine;
@@ -263,7 +264,7 @@ public class GT_Mod implements IGT_Mod {
     	File tFile = new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "GregTech.cfg");
     	Configuration tConfig1 = new Configuration(tFile);
     	tConfig1.load();
-		GregTech_API.sRecipeFile = new GT_Config.JsonWrapper(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "DynamicConfig.json"));
+		GregTech_API.sRecipeFile = new GT_Config(new Configuration(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "DynamicConfig.cfg")));
 		GregTech_API.sMachineFile = new GT_Config(new Configuration(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "MachineStats.cfg")));
 		GregTech_API.sWorldgenFile = new GT_Config(new Configuration(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "WorldGeneration.cfg")));
 		GregTech_API.sMaterialProperties = new GT_Config(new Configuration(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "MaterialProperties.cfg")));
@@ -652,9 +653,14 @@ public class GT_Mod implements IGT_Mod {
         GT_RecipeRegistrator.registerUsagesForMaterials(new ItemStack(Blocks.planks, 1), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Wood, 1L), null, false, true, false);
         GT_Log.log.info("Activating OreDictionary Handler, this can take some time, as it scans the whole OreDictionary");
         
-        GT_Log.log.info("If your Log stops here, you were too impatient. Wait a bit more next time, before killing Minecraft with the Task Manager.");
+        GT_Log.log.info("Generating machine recipes");
         GT_OreDictHandler.instance.activateHandler();
+        
+        GT_Log.log.info("Activating Recipe handler");
+        GT_Log.log.info("If your Log stops here, you were too impatient. Wait a bit more next time, before killing Minecraft with the Task Manager.");
+        RecipeHandler.activateHandler();
         GT_Log.log.info("Congratulations, you have been waiting long enough. Have a Cake.");
+        
         
         GT_Log.log.info("Adding Stone related Recipes");
         GT_ModHandler.addSmeltingRecipe(new ItemStack(GregTech_API.sBlockList[5]	, 1		, 0)			, new ItemStack(GregTech_API.sBlockList[5]	, 1	, 7	));
@@ -864,7 +870,6 @@ public class GT_Mod implements IGT_Mod {
     	GregTech_API.sAfterGTLoad = null;
     	GregTech_API.sBeforeGTPostload = null;
     	GregTech_API.sAfterGTPostload = null;
-    	GregTech_API.sRecipeFile.save();
     }
 	
     	/*
