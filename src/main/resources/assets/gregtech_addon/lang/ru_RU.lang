@@ -1416,6 +1416,25 @@ item.GT_SensorCard_Item.tooltip.info.1=Устройство на:
 item.GT_SensorCard_Item.tooltip.info.2=x: %d y: %d z: %d
 item.GT_SensorCard_Item.tooltip.info.missing=Координаты утеряны!
 
+gt_crops.indigo=Индиго
+gt_crops.flax=Лён
+gt_crops.oilberries=Нефтяные ягоды
+gt_crops.bobsyeruncleranks=Bobs-Yer-Uncle-Berry
+gt_crops.diareed=Тростник с алмазными наростами
+gt_crops.withereed=Тростник роз визера
+gt_crops.blazereed=Тростник с наростами из блэйза
+gt_crops.eggplant=Яйцекуст
+gt_crops.corium=Кориум
+gt_crops.corpseplant=Куст мертвецов
+gt_crops.creeperweed=Дымная травка
+gt_crops.enderbloom=Цветение эндера
+gt_crops.meatrose=Мясная роза
+gt_crops.milkwart=Молочный нарост
+gt_crops.slimeplant=Рассада слизи
+gt_crops.spidernip=Укус паука
+gt_crops.tearstalks=Слёзный стебель
+gt_crops.tine=Оловняк
+
 metatileentity.GT_MetaTileEntity_BasicGenerator.tooltip=Генерирует: %d EU
 metatileentity.machines.input_allow=Вход через сторону выхода разрешён
 metatileentity.machines.input_deny=Вход череЗ сторону выхода запрещён
