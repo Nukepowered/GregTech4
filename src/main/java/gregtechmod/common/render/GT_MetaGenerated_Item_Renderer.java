@@ -48,7 +48,7 @@ public class GT_MetaGenerated_Item_Renderer implements IItemRenderer {
 			GT_MetaGenerated_Item item = (GT_MetaGenerated_Item) aStack.getItem();
 			int meta = aStack.getItemDamage();
 
-			GL11.glPushAttrib(GL11.GL_ENABLE_BIT);
+			GL11.glPushAttrib(GL11.GL_ENABLE_BIT | GL11.GL_COLOR_BUFFER_BIT);
 			GL11.glPushMatrix();
 			{
 				GL11.glDisable(GL11.GL_LIGHTING);
@@ -175,6 +175,8 @@ public class GT_MetaGenerated_Item_Renderer implements IItemRenderer {
 	 * Render enchant glith in GUI slot
 	 */
 	protected void renderEnchantGUI() {
+
+		
 		GL11.glDepthFunc(GL11.GL_EQUAL);
 		GL11.glDepthMask(false);
 		manager.bindTexture(ENCHANT_GLITH);
