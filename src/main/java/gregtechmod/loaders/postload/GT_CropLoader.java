@@ -1,10 +1,19 @@
 package gregtechmod.loaders.postload;
 
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import gregtechmod.api.GregTech_API;
+import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.util.GT_BaseCrop;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_OreDictUnificator;
+
 import gregtechmod.common.items.GT_MetaItem_Material;
+import ic2.api.crops.CropCard;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -27,11 +36,35 @@ public class GT_CropLoader implements Runnable {
 	        new GT_BaseCrop(134, "gt_crops.creeperweed"			, "General Spaz"			, GT_OreDictUnificator.get("dustGunpowder", 1)	, null																																						, null											, 7, 4,    0, 1, 4, 3, 0, 5, 1, 3, new String[] {"Creeper", "Vine", "Explosive", "Fire", "Sulfur", "Saltpeter", "Coal"});
 	        new GT_BaseCrop(135, "gt_crops.enderbloom"			, "RichardG"				, GT_OreDictUnificator.get("dustEnderPearl", 1)	, new ItemStack[] {new ItemStack(Items.ender_pearl, 1), new ItemStack(Items.ender_pearl , 1), new ItemStack(Items.ender_eye , 1)}							, null											,10, 4,    0, 1, 4, 5, 0, 2, 1, 6, new String[] {"Ender", "Flower", "Shiny"});
 	        new GT_BaseCrop(136, "gt_crops.meatrose"			, "VintageBeef"				, new ItemStack(Items.dye, 1, 9)				, new ItemStack[] {new ItemStack(Items.beef, 1), new ItemStack(Items.porkchop , 1), new ItemStack(Items.chicken , 1), new ItemStack(Items.fish , 1)}		, null											, 7, 4, 1500, 1, 4, 0, 4, 1, 3, 0, new String[] {"Edible", "Flower", "Cow", "Fish", "Chicken", "Pig"});
-	        new GT_BaseCrop(137, "gt_crops.milkwart"			, "Mr. Brain"				, new ItemStack(Items.milk_bucket, 1)			, null																																						, null											, 6, 3,  900, 1, 3, 0, 3, 0, 1, 0, new String[] {"Edible", "Milk", "Cow"});
+	        new GT_BaseCrop(137, "gt_crops.milkwart"			, "Mr. Brain"				, GT_Items.Crop_Drop_MilkWart.get(1)			, null																																						, null											, 6, 3,  900, 1, 3, 0, 3, 0, 1, 0, new String[] {"Edible", "Milk", "Cow"});
 	        new GT_BaseCrop(138, "gt_crops.slimeplant"			, "Neowulf"					, new ItemStack(Items.slime_ball, 1)			, null																																						, null											, 6, 4,    0, 3, 4, 3, 0, 0, 0, 2, new String[] {"Slime", "Bouncy", "Sticky", "Bush"});
 	        new GT_BaseCrop(139, "gt_crops.spidernip"			, "Mr. Kenny"				, new ItemStack(Items.string, 1)				, new ItemStack[] {new ItemStack(Items.spider_eye, 1), new ItemStack(Blocks.web , 1)}																		, null											, 4, 4,  600, 1, 4, 2, 1, 4, 1, 3, new String[] {"Toxic", "Silk", "Spider", "Flower", "Ingredient", "Addictive"});
 	        new GT_BaseCrop(140, "gt_crops.tearstalks"			, "Neowulf"					, new ItemStack(Items.ghast_tear, 1)			, null																																						, null											, 8, 4,    0, 1, 4, 1, 2, 0, 0, 0, new String[] {"Healing", "Nether", "Ingredient", "Reed", "Ghast"});
-	        new GT_BaseCrop(141, "gt_crops.tine"				, "Gregorius Techneticies"	, GT_OreDictUnificator.get("nuggetTin", 1)		, null																																						, null											, 5, 3,    0, 2, 3, 2, 0, 3, 0, 0, new String[] {"Shiny", "Metal", "Pine", "Tin", "Bush"});
+	        new GT_BaseCrop(141, "gt_crops.tine"				, "Gregorius Techneticies"	, GT_Items.Crop_Drop_Tine.get(1)				, null																																						, null											, 5, 3,    0, 2, 3, 2, 0, 3, 0, 0, new String[] {"Shiny", "Metal", "Pine", "Tin", "Bush"});
+	        
+	        // Changing drop of default IC2 crops
+	        GT_Log.log.info("Changing default IC2 crop loot");
+	        Map<CropCard, ItemStack> crops = new HashMap<>();
+	        
+	        crops.put(ic2.core.crop.IC2Crops.cropPlumbiscus	, GT_Items.Crop_Drop_Plumbilia	.get(1));
+	        crops.put(ic2.core.crop.IC2Crops.cropShining	, GT_Items.Crop_Drop_Argentia	.get(1));
+	        crops.put(ic2.core.crop.IC2Crops.cropFerru		, GT_Items.Crop_Drop_Ferru		.get(1));
+	        crops.put(ic2.core.crop.IC2Crops.cropAurelia	, GT_Items.Crop_Drop_Aurelia	.get(1));
+	        crops.put(ic2.core.crop.IC2Crops.cropCyprium	, GT_Items.Crop_Drop_Coppon		.get(1));
+	         
+	        for (Entry<CropCard, ItemStack> entry : crops.entrySet()) {
+	        	try {
+		        	Field f = entry.getKey().getClass().getDeclaredField("mDrop");
+		        	f.setAccessible(true);
+		        	f.set(entry.getKey(), entry.getValue());
+	        	} catch (Throwable e) {
+	        		GT_Log.log.error("Unable to change drop for IC2:" + entry.getKey().name());
+	        		if (GregTech_API.DEBUG_MODE) {
+	        			GT_Log.log.catching(e);
+	        		}
+	        	}
+	        }
+	        
         } catch(Throwable e) {
             GT_Log.log.error("GT_Mod: Failed to register Crops to IC2.");
             if (GregTech_API.DEBUG_MODE) {

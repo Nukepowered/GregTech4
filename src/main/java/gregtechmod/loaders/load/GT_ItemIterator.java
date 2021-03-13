@@ -210,6 +210,7 @@ public class GT_ItemIterator implements Runnable {
 				} else if (tName.equals("tile.TFRoots")) {
 					GT_ModHandler.addPulverisationRecipe(new ItemStack(tItem, 1, 0), new ItemStack(Items.stick, 2), new ItemStack(Items.stick, 1), 30);
 					GT_ModHandler.addSawmillRecipe(new ItemStack(tItem, 1, 0), new ItemStack(Items.stick, 4), new ItemStack(Items.stick, 2));
+					RecipeMaps.SAWMILL.factory().EUt(30).duration(200).setShaped(true).input(new ItemStack(tItem, 1, 0)).input(GT_ModHandler.getWater(1000)).outputs(new ItemStack(Items.stick, 1)).buildAndRegister();
 					RecipeMaps.MAGIC_FUELS.factory().EUt(16).duration(2).input(new ItemStack(tItem, 1, 1)).output(new ItemStack(Items.stick, 4)).buildAndRegister();
 				} else if (tName.equals("item.liveRoot")) {
 					RecipeMaps.MAGIC_FUELS.factory().EUt(16).duration(1).input(new ItemStack(tItem, 1, 0)).output(new ItemStack(Items.stick, 2)).buildAndRegister();

@@ -11,6 +11,8 @@ import gregtechmod.api.metatileentity.implementations.GT_MetaPipeEntity_Item;
 import gregtechmod.common.network.GT_PacketHandler;
 import gregtechmod.common.network.packet.GT_Packet;
 import gregtechmod.common.network.packet.GT_SoundPacket;
+import ic2.api.crops.CropCard;
+import ic2.api.crops.ICropTile;
 import ic2.api.recipe.IRecipeInput;
 import ic2.api.recipe.RecipeInputItemStack;
 import ic2.api.recipe.RecipeInputOreDict;
@@ -34,8 +36,10 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -56,6 +60,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.*;
 
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
 
 /**
  * NEVER INCLUDE THIS FILE IN YOUR MOD!!!
@@ -71,6 +76,23 @@ public class GT_Utility {
 	
 	public static final DecimalFormat sFormat = new DecimalFormat("###,###.##", new DecimalFormatSymbols(Locale.ENGLISH));
     
+	public static InventoryCrafting getInventoryFromArray(ItemStack...stacks) {
+		InventoryCrafting crafting = new InventoryCrafting(new Container() {
+			@Override
+			public boolean canInteractWith(EntityPlayer p_75145_1_) {
+				return false;
+			}
+		}, 3, 3);
+		
+		try {
+			ObfuscationReflectionHelper.setPrivateValue(InventoryCrafting.class, crafting, stacks, new String[]{"field_70466_a", "stackList"});
+		} catch (Throwable e) {
+			GT_Log.log.catching(e);
+		}
+		
+		return crafting;
+	}
+	
 	public static int hashFluidStack(FluidStack stack) {
 		int code = 1;
     	code = 31*code + hashFluid(stack.getFluid());
@@ -736,13 +758,15 @@ public class GT_Utility {
 	public static boolean addSimpleIC2MachineRecipe(ItemStack aInput, Map<IRecipeInput, RecipeOutput> aRecipeList, NBTTagCompound aNBT, Object... aOutput) {
 		if (isStackInvalid(aInput) || aOutput.length == 0 || aRecipeList == null) return false;
 		String tOreName = GT_OreDictUnificator.getAssociation(aInput);
-		RecipeOutput out = new RecipeOutput(aNBT, GT_OreDictUnificator.getStackArray(true, aOutput));
-		if (isStringValid(tOreName)) {
-			aRecipeList.put(new RecipeInputOreDict(tOreName, aInput.stackSize), out);
-		} else {
-			aRecipeList.put(new RecipeInputItemStack(copy(aInput), aInput.stackSize), out);
-		}
-		return true;
+		IRecipeInput in = isStringValid(tOreName) ? 
+				new RecipeInputOreDict(tOreName, aInput.stackSize) : 
+				new RecipeInputItemStack(copy(aInput), aInput.stackSize);
+		return addSimpleIC2MachineRecipe(in, aRecipeList, aNBT, GT_OreDictUnificator.getStackArray(true, aOutput));
+	}
+	
+	public static boolean addSimpleIC2MachineRecipe(IRecipeInput input, Map<IRecipeInput, RecipeOutput> aRecipeList, NBTTagCompound meta, ItemStack...outputs) {
+		if (input == null || outputs.length == 0 || aRecipeList == null) return false;
+		return aRecipeList.put(input, new RecipeOutput(meta, outputs)) != null;
 	}
 	
 	private static int sBookCount = 0;
@@ -1270,9 +1294,8 @@ public class GT_Utility {
 		return false;
 	}
 	
-	@SuppressWarnings("deprecation")
 	public static int getCoordinateScan(ArrayList<String> aList, EntityPlayer aPlayer, World aWorld, int aScanLevel, int aX, int aY, int aZ, int aSide, float aClickX, float aClickY, float aClickZ) {
-if (aList == null) return 0;
+		if (aList == null) return 0;
 		
 		ArrayList<String> tList = new ArrayList<String>();
 		int rEUAmount = 0;
@@ -1357,32 +1380,36 @@ if (aList == null) return 0;
 		    	tList.add("Owned by: " + ((IGregTechTileEntity)tTileEntity).getOwnerName());
 		    }} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 			try {if (tTileEntity instanceof ic2.api.crops.ICropTile) {
-				if (((ic2.api.crops.ICropTile)tTileEntity).getScanLevel() < 4) {
+				ICropTile crop = (ICropTile) tTileEntity;
+				CropCard card = crop.getCrop();
+				
+				if (crop.getScanLevel() < 4) {
 					rEUAmount+=10000;
-					((ic2.api.crops.ICropTile)tTileEntity).setScanLevel((byte)4);
+					crop.setScanLevel((byte)4);
 				}
-				if (((ic2.api.crops.ICropTile)tTileEntity).getID() >= 0 && ((ic2.api.crops.ICropTile)tTileEntity).getID() < ic2.api.crops.Crops.instance.getCropList().length && ic2.api.crops.Crops.instance.getCropList()[((ic2.api.crops.ICropTile)tTileEntity).getID()] != null) {
+				if (card != null) {
 					rEUAmount+=1000;
-					tList.add("Type -- Crop-Name: " + ic2.api.crops.Crops.instance.getCropList()[((ic2.api.crops.ICropTile)tTileEntity).getID()].name()
-			        		+ "  Growth: " + ((ic2.api.crops.ICropTile)tTileEntity).getGrowth()
-			        		+ "  Gain: " + ((ic2.api.crops.ICropTile)tTileEntity).getGain()
-			        		+ "  Resistance: " + ((ic2.api.crops.ICropTile)tTileEntity).getResistance()
+					tList.add("Type -- Crop-Name: " + card.name()
+			        		+ "  Growth: " + crop.getGrowth()
+			        		+ "  Gain: " + crop.getGain()
+			        		+ "  Resistance: " + crop.getResistance()
 			        		);
-			        tList.add("Plant -- Fertilizer: " + ((ic2.api.crops.ICropTile)tTileEntity).getNutrientStorage()
-			        		+ "  Water: " + ((ic2.api.crops.ICropTile)tTileEntity).getHydrationStorage()
-			        		+ "  Weed-Ex: " + ((ic2.api.crops.ICropTile)tTileEntity).getWeedExStorage()
-			        		+ "  Scan-Level: " + ((ic2.api.crops.ICropTile)tTileEntity).getScanLevel()
+			        tList.add("Plant -- Fertilizer: " + crop.getNutrientStorage()
+			        		+ "  Water: " + crop.getHydrationStorage()
+			        		+ "  Weed-Ex: " + crop.getWeedExStorage()
+			        		+ "  Scan-Level: " + crop.getScanLevel()
 			        		);
-			        tList.add("Environment -- Nutrients: " + ((ic2.api.crops.ICropTile)tTileEntity).getNutrients()
-			        		+ "  Humidity: " + ((ic2.api.crops.ICropTile)tTileEntity).getHumidity()
-			        		+ "  Air-Quality: " + ((ic2.api.crops.ICropTile)tTileEntity).getAirQuality()
+			        tList.add("Environment -- Nutrients: " + crop.getNutrients()
+			        		+ "  Humidity: " + crop.getHumidity()
+			        		+ "  Air-Quality: " + crop.getAirQuality()
 			        		);
 			        String tString = "";
-			        for (String tAttribute : ic2.api.crops.Crops.instance.getCropList()[((ic2.api.crops.ICropTile)tTileEntity).getID()].attributes()) {
+			        for (String tAttribute : card.attributes())
 			        	tString += ", " + tAttribute;
-			        }
 			        tList.add("Attributes:" + tString.replaceFirst(",", ""));
-			        tList.add("Discovered by: " + ic2.api.crops.Crops.instance.getCropList()[((ic2.api.crops.ICropTile)tTileEntity).getID()].discoveredBy());
+			        tList.add("Discovered by: " + card.discoveredBy());
+			        if (!aWorld.isRemote && aPlayer.capabilities.isCreativeMode) 
+			        	crop.setSize((byte) Math.min(crop.getSize() + 1, crop.getCrop().maxSize()));
 				}
 			}} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
     	}
