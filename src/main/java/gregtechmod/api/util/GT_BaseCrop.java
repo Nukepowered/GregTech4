@@ -7,9 +7,13 @@ import ic2.api.crops.ICropTile;
 import java.util.ArrayList;
 import java.util.Random;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 
 public class GT_BaseCrop extends CropCard {
 	private String mName = "", mDiscoveredBy = "Gregorius Techneticies", mAttributes[];
@@ -51,6 +55,7 @@ public class GT_BaseCrop extends CropCard {
 			mAttributes = aAttributes;
 			if (!Crops.instance.registerCrop(this, aID)) throw new GT_ItsNotMyFaultException("Make sure the Crop ID is valid!");
 			if (aBaseSeed != null) Crops.instance.registerBaseSeed(aBaseSeed, aID, 1, 1, 1, 1);
+			
 			sCropList.add(this);
 		}
 	}
@@ -129,7 +134,18 @@ public class GT_BaseCrop extends CropCard {
 		}
     	return false;
     }
+    
+    @Override
+	@SideOnly(Side.CLIENT)
+	public void registerSprites(IIconRegister iconRegister) {
+		textures = new IIcon[maxSize()];
 
+		for (int i = 1; i <= textures.length; i++) {
+			String name = GT_Utility.capitalizeString(mName.substring(9));
+			textures[i - 1] = iconRegister.registerIcon("ic2:crop/blockCrop." + name + "."+i);
+		}
+	}
+    
 	@Override
 	public int getOptimalHavestSize(ICropTile crop) {
 		return (byte)mAfterHarvestSize;

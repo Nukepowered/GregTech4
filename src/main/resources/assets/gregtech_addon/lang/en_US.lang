@@ -1416,6 +1416,25 @@ item.GT_SensorCard_Item.tooltip.info.1=Device at:
 item.GT_SensorCard_Item.tooltip.info.2=x: %d y: %d z: %d
 item.GT_SensorCard_Item.tooltip.info.missing=Missing Coordinates!
 
+gt_crops.indigo=Indigo
+gt_crops.flax=Flax
+gt_crops.oilberries=Oilberries
+gt_crops.bobsyeruncleranks=Bobsyeruncleranks
+gt_crops.diareed=Diareed
+gt_crops.withereed=Withereed
+gt_crops.blazereed=Blazereed
+gt_crops.eggplant=Eggplant
+gt_crops.corium=Corium
+gt_crops.corpseplant=Corpseplant
+gt_crops.creeperweed=Creeperweed
+gt_crops.enderbloom=Enderbloom
+gt_crops.meatrose=Meatrose
+gt_crops.milkwart=Milkwart
+gt_crops.slimeplant=Slimeplant
+gt_crops.spidernip=Spidernip
+gt_crops.tearstalks=Tearstalks
+gt_crops.tine=Tine
+
 metatileentity.GT_MetaTileEntity_BasicGenerator.tooltip=Generating: %d EU
 metatileentity.machines.input_allow=Input from Output Side allowed
 metatileentity.machines.input_deny=Input from Output Side forbidden

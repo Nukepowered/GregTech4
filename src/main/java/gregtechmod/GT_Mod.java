@@ -264,12 +264,15 @@ public class GT_Mod implements IGT_Mod {
     	File tFile = new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "GregTech.cfg");
     	Configuration tConfig1 = new Configuration(tFile);
     	tConfig1.load();
-		GregTech_API.sRecipeFile = new GT_Config(new Configuration(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "DynamicConfig.cfg")));
-		GregTech_API.sMachineFile = new GT_Config(new Configuration(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "MachineStats.cfg")));
-		GregTech_API.sWorldgenFile = new GT_Config(new Configuration(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "WorldGeneration.cfg")));
-		GregTech_API.sMaterialProperties = new GT_Config(new Configuration(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "MaterialProperties.cfg")));
-		GregTech_API.sUnification = new GT_Config(new Configuration(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "Unification.cfg")));
-		GregTech_API.sSpecialFile = new GT_Config(new Configuration(new File(new File(aEvent.getModConfigurationDirectory(), "GregTech"), "Other.cfg")));
+    	
+    	File gtDir = new File(aEvent.getModConfigurationDirectory(), "GregTech");
+		GregTech_API.sRecipeFile 			= new GT_Config(new Configuration(new File(gtDir, "DynamicConfig.cfg")));
+		GregTech_API.sMachineFile 			= new GT_Config(new Configuration(new File(gtDir, "MachineStats.cfg")));
+		GregTech_API.sWorldgenFile 			= new GT_Config(new Configuration(new File(gtDir, "WorldGeneration.cfg")));
+		GregTech_API.sMaterialProperties 	= new GT_Config(new Configuration(new File(gtDir, "MaterialProperties.cfg")));
+		GregTech_API.sUnification 			= new GT_Config(new Configuration(new File(gtDir, "Unification.cfg")));
+		GregTech_API.sSpecialFile			= new GT_Config(new Configuration(new File(gtDir, "Other.cfg")));
+		GregTech_API.sIDFile				= new GT_Config(GT_Config.sConfigFileIDs = new Configuration(new File(gtDir, "IDs.cfg")));
 		
     	mDoNotInit = (!tFile.getAbsolutePath().toLowerCase().contains("voltz")) && (tFile.getAbsolutePath().toLowerCase().contains(".technic") || tFile.getAbsolutePath().toLowerCase().contains("tekkit"));
     	if (mDoNotInit) {
@@ -294,7 +297,7 @@ public class GT_Mod implements IGT_Mod {
         	return;
     	}
     	
-    	GT_Log.mOreDictLogFile = new File(aEvent.getModConfigurationDirectory().getParentFile(), "OreDict.log");
+    	GT_Log.mOreDictLogFile = new File(aEvent.getModConfigurationDirectory().getParentFile(), "logs/GT_OreDict.log");
         if(!GT_Log.mOreDictLogFile.exists()) {
            try {
               GT_Log.mOreDictLogFile.createNewFile();
