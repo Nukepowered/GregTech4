@@ -12,6 +12,7 @@ import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.OreDictEntry;
+import gregtechmod.common.RecipeHandler;
 import gregtechmod.common.recipe.RecipeEntry;
 import gregtechmod.common.recipe.RecipeMaps;
 import gregtechmod.common.recipe.RecipeEntry.Match;
@@ -39,18 +40,18 @@ public class ProcessingBlock implements IOreRecipeRegistrator {
 				
 				if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.storageblockcrafting, OrePrefixes.block.get(aMaterial), false)) {
 					if (tStack1 == null && tStack2 == null && tStack3 != null) {
-						GT_ModHandler.addCraftingRecipe(GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L),
-								new Object[] { "XXX", "XXX", "XXX", Character.valueOf('X'), OrePrefixes.dust.get(aMaterial) });
+						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addCraftingRecipe(GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L),
+								new Object[] { "XXX", "XXX", "XXX", Character.valueOf('X'), OrePrefixes.dust.get(aMaterial) }));
 					}
 
 					if (tStack2 != null) {
-						GT_ModHandler.addCraftingRecipe(GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L),
-								new Object[] { "XXX", "XXX", "XXX", Character.valueOf('X'), OrePrefixes.gem.get(aMaterial) });
+						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addCraftingRecipe(GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L),
+								new Object[] { "XXX", "XXX", "XXX", Character.valueOf('X'), OrePrefixes.gem.get(aMaterial) }));
 					}
 
 					if (tStack1 != null) {
-						GT_ModHandler.addCraftingRecipe(GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L),
-								new Object[] { "XXX", "XXX", "XXX", Character.valueOf('X'), OrePrefixes.ingot.get(aMaterial) });
+						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addCraftingRecipe(GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L),
+								new Object[] { "XXX", "XXX", "XXX", Character.valueOf('X'), OrePrefixes.ingot.get(aMaterial) }));
 					}
 				}
 
@@ -68,15 +69,15 @@ public class ProcessingBlock implements IOreRecipeRegistrator {
 
 				if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.storageblockdecrafting, OrePrefixes.block.get(aMaterial), tStack2 != null)) {
 					if (tStack3 != null) {
-						GT_ModHandler.addShapelessCraftingRecipe(tStack3, new Object[] { OrePrefixes.block.get(aMaterial) });
+						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addShapelessCraftingRecipe(tStack3, new Object[] { OrePrefixes.block.get(aMaterial) }));
 					}
 
 					if (tStack2 != null) {
-						GT_ModHandler.addShapelessCraftingRecipe(tStack2, new Object[] { OrePrefixes.block.get(aMaterial) });
+						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addShapelessCraftingRecipe(tStack2, new Object[] { OrePrefixes.block.get(aMaterial) }));
 					}
 
 					if (tStack1 != null) {
-						GT_ModHandler.addShapelessCraftingRecipe(tStack1, new Object[] { OrePrefixes.block.get(aMaterial) });
+						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addShapelessCraftingRecipe(tStack1, new Object[] { OrePrefixes.block.get(aMaterial) }));
 					}
 				}
 

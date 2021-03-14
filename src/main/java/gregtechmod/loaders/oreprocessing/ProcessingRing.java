@@ -12,6 +12,7 @@ import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.OreDictEntry;
+import gregtechmod.common.RecipeHandler;
 import net.minecraft.item.ItemStack;
 
 public class ProcessingRing implements IOreRecipeRegistrator {
@@ -26,11 +27,13 @@ public class ProcessingRing implements IOreRecipeRegistrator {
 			if (this.isExecutable(aPrefix, aMaterial) && !aMaterial.contains(SubTag.NO_SMASHING)) {
 				for (ItemStack aStack : entry.ores) {
 					if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Tools.hammerrings, OrePrefixes.ring.get(aMaterial), true)) {
-						GT_ModHandler.addCraftingRecipe(GT_Utility.copyAmount(1L, new Object[] { aStack }),
-								new Object[] { "H ", " S", Character.valueOf('H'), GT_ToolDictNames.craftingToolHardHammer,
-										Character.valueOf('S'), OrePrefixes.stick.get(aMaterial) });
-						GT_ModHandler.addShapelessCraftingRecipe(GT_Utility.copyAmount(2L, new Object[] { aStack }),
-								new Object[] { GT_ToolDictNames.craftingToolForgeHammer, OrePrefixes.stick.get(aMaterial) });
+						RecipeHandler.executeOnFinish(() -> {
+							GT_ModHandler.addCraftingRecipe(GT_Utility.copyAmount(1L, new Object[] { aStack }),
+									new Object[] { "H ", " S", Character.valueOf('H'), GT_ToolDictNames.craftingToolHardHammer,
+											Character.valueOf('S'), OrePrefixes.stick.get(aMaterial) });
+							GT_ModHandler.addShapelessCraftingRecipe(GT_Utility.copyAmount(2L, new Object[] { aStack }),
+									new Object[] { GT_ToolDictNames.craftingToolForgeHammer, OrePrefixes.stick.get(aMaterial) });
+						});
 					}
 				}
 			}

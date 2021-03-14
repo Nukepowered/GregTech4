@@ -21,7 +21,7 @@ public class ProcessingItem implements IOreRecipeRegistrator {
 	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
 		for (OreDictEntry entry : dictEntry) {
 			if (this.isExecutable(aPrefix, this.getMaterial(aPrefix, entry))) {
-				for (ItemStack aStack : entry.ores) {
+				for (ItemStack aStack : entry.ores) { // TODO fix this shit
 					if (entry.oreDictName.equals("itemManganese")) {
 						GT_RecipeRegistrator.registerBasicReverseMaceratingAndSmelting(GT_Utility.copyAmount(1, aStack), Materials.Manganese, GregTech_API.MATERIAL_UNIT);
 					} else if (entry.oreDictName.equals("itemSalt")) {

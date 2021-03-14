@@ -228,7 +228,7 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
    public Map<String, List<Object>> getInfoData() {
 	   ItemStack inventory = getStoredItem();
 	   return InfoBuilder.create()
-			   .newKey("metatileentity.GT_Barrel.item", GT_Utility.isStackValid(inventory) ? inventory : "materials.Empty")
+			   .newKey("metatileentity.GT_Barrel.item", GT_Utility.isStackValid(inventory) ? inventory : "sensor.nodata")
 			   .newKey("metatileentity.GT_Barrel.count", GT_Utility.parseNumberToString(GT_Utility.isStackValid(inventory) ? inventory.stackSize : 0), GT_Utility.parseNumberToString(getMaxItemCount()))
 			   .build();
    }

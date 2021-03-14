@@ -435,7 +435,10 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 				if (tStats[3] == -2 && tCharge <= 0) {
 					aList.add(I18n.format("item.empty"));
 				} else {
-					aList.add(StatCollector.translateToLocalFormatted("util.GregTech_MetaGenerated_Item_01.charge", tCharge, tStats[0], GregTech_API.VOLTAGES[tStats[2]>0?tStats[2]<GregTech_API.VOLTAGES.length?tStats[2]:GregTech_API.VOLTAGES.length-1:1]));
+					aList.add(StatCollector.translateToLocalFormatted("util.GregTech_MetaGenerated_Item_01.charge",
+							GT_Utility.parseNumberToString(tCharge),
+							GT_Utility.parseNumberToString(tStats[0]),
+							GT_Utility.parseNumberToString(GregTech_API.VOLTAGES[tStats[2]>0?tStats[2]<GregTech_API.VOLTAGES.length?tStats[2]:GregTech_API.VOLTAGES.length-1:1])));
 				}
 			}
 		}

@@ -2,6 +2,8 @@ package gregtechmod.loaders.oreprocessing;
 
 import java.util.List;
 
+import gregtechmod.api.GregTech_API;
+import gregtechmod.api.enums.GT_ConfigCategories;
 import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
@@ -14,14 +16,16 @@ import gregtechmod.api.util.GT_RecipeRegistrator;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.OreDictEntry;
 
+import gregtechmod.common.RecipeHandler;
 import gregtechmod.common.recipe.RecipeEntry;
 import gregtechmod.common.recipe.RecipeMaps;
 import gregtechmod.common.recipe.RecipeEntry.Match;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 
 public class ProcessingGem implements IOreRecipeRegistrator {
-
+	
 	public ProcessingGem() {
 		OrePrefixes.gem.add(this);
 	}
@@ -30,6 +34,10 @@ public class ProcessingGem implements IOreRecipeRegistrator {
 		for (OreDictEntry entry : dictEntry) {
 			Materials aMaterial = this.getMaterial(aPrefix, entry);
 			if (this.isExecutable(aPrefix, aMaterial)) {
+				if ((aMaterial == Materials.Charcoal || aMaterial == Materials.Coal) && GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "torchesFromCoal", false)) {
+					RecipeHandler.scheduleCraftingToRemove(new RecipeHandler.InventoryRecipeMatcher(false, GT_OreDictUnificator.get(aPrefix, aMaterial), null, null, new ItemStack(Items.stick, 1, 0)));
+				}
+				
 				if (aMaterial.mFuelPower > 0) {
 					RecipeFactory<?> factory;
 					switch(aMaterial.mFuelType) {
@@ -82,7 +90,7 @@ public class ProcessingGem implements IOreRecipeRegistrator {
 					}
 
 					if (!aMaterial.contains(SubTag.NO_SMELTING)) {
-						GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, stack), GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial, 1L));
+						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, stack), GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial, 1L)));
 					}
 					
 					ItemStack tStack;
@@ -96,16 +104,5 @@ public class ProcessingGem implements IOreRecipeRegistrator {
 				}
 			}
 		}
-//		switch (aMaterial) { // TODO recipe remover
-//		case _NULL:
-//		default:
-//			break;
-//		case Coal:
-//		case Charcoal:
-//			if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "torchesFromCoal", false)) {
-//				GT_ModHandler.removeRecipe(new ItemStack[] { GT_Utility.copyAmount(1, aStack), null,
-//						null, new ItemStack(Items.stick, 1, 0) });
-//			}
-//			break;
 	}
 }

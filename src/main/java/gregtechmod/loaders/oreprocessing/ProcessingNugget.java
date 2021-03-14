@@ -11,7 +11,7 @@ import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Shapeless_Recipe;
 import gregtechmod.api.util.OreDictEntry;
-
+import gregtechmod.common.RecipeHandler;
 import gregtechmod.common.recipe.RecipeEntry;
 import gregtechmod.common.recipe.RecipeMaps;
 import gregtechmod.common.recipe.RecipeEntry.Match;
@@ -36,8 +36,10 @@ public class ProcessingNugget implements IOreRecipeRegistrator {
 					.output(GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial, 1L))
 					.buildAndRegister();
 				
-				GameRegistry.addRecipe(new GT_Shapeless_Recipe(GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial, 1L), new Object[] { entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName }));
-				GameRegistry.addRecipe(new GT_Shapeless_Recipe(GT_OreDictUnificator.get(OrePrefixes.round, aMaterial, 1L), new Object[] { GT_ToolDictNames.craftingToolFile.toString(), entry.oreDictName, entry.oreDictName }));
+				RecipeHandler.executeOnFinish(() -> {
+					GameRegistry.addRecipe(new GT_Shapeless_Recipe(GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial, 1L), new Object[] { entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName }));
+					GameRegistry.addRecipe(new GT_Shapeless_Recipe(GT_OreDictUnificator.get(OrePrefixes.round, aMaterial, 1L), new Object[] { GT_ToolDictNames.craftingToolFile.toString(), entry.oreDictName, entry.oreDictName }));
+				});
 			}
 		}
 	}

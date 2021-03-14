@@ -6,7 +6,9 @@ import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.items.GT_Tool_Item;
+import gregtechmod.common.recipe.RecipeEntry;
 import gregtechmod.common.recipe.RecipeMaps;
+import gregtechmod.common.recipe.RecipeEntry.Match;
 import ic2.api.item.IBoxable;
 import ic2.api.item.IElectricItem;
 import ic2.api.recipe.IRecipeInput;
@@ -382,7 +384,7 @@ public class GT_ModHandler {
 	}
 	
 	/** @param secondaryChance - 1-100%  */
-	public static boolean addTCPulveriserRecipe(ItemStack input, ItemStack primaryOutput, ItemStack secondaryOutput, int secondaryChance, int RF) {
+	public static boolean addTEPulveriserRecipe(ItemStack input, ItemStack primaryOutput, ItemStack secondaryOutput, int secondaryChance, int RF) {
 		if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.pulverization, input, true)) return false;
 		try {
 			cofh.thermalexpansion.util.crafting.PulverizerManager.addRecipe(RF, input, primaryOutput, secondaryOutput, secondaryChance, true);
@@ -402,6 +404,10 @@ public class GT_ModHandler {
 		return true;
 	}
 	
+	public static boolean addExtractionRecipe(IRecipeInput input, ItemStack output) {
+		return GT_Utility.addSimpleIC2MachineRecipe(input, getExtractorRecipeList(), null, output);
+	}
+	
 	/**
 	 * RC-BlastFurnace Recipes
 	 */
@@ -419,29 +425,32 @@ public class GT_ModHandler {
 		return true;
 	}
 	
+	@Deprecated
 	public static boolean addPulverisationRecipe(ItemStack aInput, ItemStack aOutput1) {
 		return addPulverisationRecipe(aInput, aOutput1, null, 0, false);
 	}
 	
+	@Deprecated
 	public static boolean addPulverisationRecipe(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2) {
 		return addPulverisationRecipe(aInput, aOutput1, aOutput2, 100, false);
 	}
 	
+	@Deprecated
 	public static boolean addPulverisationRecipe(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2, int aChance) {
 		return addPulverisationRecipe(aInput, aOutput1, aOutput2, aChance, false);
 	}
 	
+	@Deprecated
 	public static boolean addPulverisationRecipe(ItemStack aInput, ItemStack aOutput1, boolean aOverwrite) {
 		return addPulverisationRecipe(aInput, aOutput1, null, 0, aOverwrite);
 	}
 
+	@Deprecated
 	public static boolean addPulverisationRecipe(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2, boolean aOverwrite) {
 		return addPulverisationRecipe(aInput, aOutput1, aOutput2, 100, aOverwrite);
 	}
 	
-	/**
-	 * Adds Several Pulverizer-Type Recipes.
-	 */
+	@Deprecated
 	public static boolean addPulverisationRecipe(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2, int aChance, boolean aOverwrite) {
 		aOutput1 = GT_OreDictUnificator.get(true, aOutput1);
 		aOutput2 = GT_OreDictUnificator.get(true, aOutput2);
@@ -455,7 +464,6 @@ public class GT_ModHandler {
 		if (GT_Utility.getContainerItem(aInput) == null) {
 			if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.maceration, aInput, true)) {
 				GT_Utility.addSimpleIC2MachineRecipe(aInput, getMaceratorRecipeList(), null, aOutput1);
-				addTCPulveriserRecipe(aInput, aOutput1, aOutput2, aChance, 2400);
 			}
 			
 			if (!OrePrefixes.log.contains(aInput)) {
@@ -465,6 +473,7 @@ public class GT_ModHandler {
 							addSawmillRecipe(GT_Utility.copy(aInput), 80, GT_Utility.copy(aOutput1));
 						else
 							addSawmillRecipe(GT_Utility.copy(aInput), 80, aChance<=0?10:aChance, GT_Utility.copy(aOutput1), GT_Utility.copy(aOutput2));
+						
 					}
 				} else {
 					if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.rockcrushing, aInput, true)) {
@@ -477,14 +486,48 @@ public class GT_ModHandler {
 						} catch(Throwable e) {/*Do nothing*/}
 					}
 					if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.pulverization, aInput, true)) {
-						if (aOutput2 == null)
-							addSawmillRecipe(GT_Utility.copy(aInput), 80, GT_Utility.copy(aOutput1));
-						else
-							addSawmillRecipe(GT_Utility.copy(aInput), 80, aChance<=0?10:aChance, GT_Utility.copy(aOutput1), GT_Utility.copy(aOutput2));
+						addTEPulveriserRecipe(GT_Utility.copy(aInput), GT_Utility.copy(aOutput1), GT_Utility.copy(aOutput2), aChance<=0?10:aChance, 80);
 					}
 				}
 			}
 		}
+		return true;
+	}
+	
+	/**
+	 * Adds Several Pulverizer-Type Recipes.
+	 */
+	public static boolean addPulverisationRecipe(OreDictEntry aInput, int amount, ItemStack aOutput1, ItemStack aOutput2, int aChance) {
+		if (aInput == null || aOutput1 == null || GT_Utility.getContainerItem(aInput.ores.get(0)) != null) return false;
+		OrePrefixes pref = OrePrefixes.getOrePrefix(aInput.oreDictName);
+		Materials mat = OrePrefixes.getMaterial(aInput.oreDictName, pref);
+		
+		if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.maceration, aInput.oreDictName, true)) {
+			GT_Utility.addSimpleIC2MachineRecipe(RecipeEntry.fromStacks(amount, aInput.ores, Match.STRICT), getMaceratorRecipeList(), null, aOutput1);
+		}
+		
+		if (pref != OrePrefixes.log) {
+			if (mat == Materials.Wood) {
+				if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.pulverization, aInput.oreDictName, true)) {
+					addSawmillRecipe(aInput, amount, aChance, aOutput1, aOutput2);
+				}
+			} else {
+				if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.rockcrushing, aInput.oreDictName, true)) {
+					for (ItemStack stack : aInput.ores) {
+						if (Block.getBlockFromItem(stack.getItem()) != Blocks.obsidian) {
+							mods.railcraft.api.crafting.IRockCrusherRecipe tRecipe = mods.railcraft.api.crafting.RailcraftCraftingManager.rockCrusher.createNewRecipe(GT_Utility.copyAmount(1, stack), stack.getItemDamage() != GregTech_API.ITEM_WILDCARD_DAMAGE, false);
+							tRecipe.addOutput(GT_Utility.copy(aOutput1), 1.0F/stack.stackSize);
+							tRecipe.addOutput(GT_Utility.copy(aOutput2), (0.01F*(aChance<=0?10:aChance))/stack.stackSize);
+						}
+					}
+				}
+				
+				if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.pulverization, aInput.oreDictName, true)) {
+					addTEPulveriserRecipe(GT_Utility.copy(aInput.ores.get(0)), GT_Utility.copy(aOutput1), GT_Utility.copy(aOutput2), aChance<=0?10:aChance, 80);
+				}
+			}
+		}
+		
 		return true;
 	}
 	
@@ -500,14 +543,29 @@ public class GT_ModHandler {
 	}
 	
 	public static boolean addSawmillRecipe(ItemStack aInput1, int aRF, int aChance, ItemStack...outputs) {
-		if (aInput1 == null || outputs[0] == null) return false;
-		
-		if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.sawmill, aInput1, true)) return false;
+		if (aInput1 == null || outputs[0] == null || !GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.sawmill, aInput1, true)) return false;
+		boolean result = false;
 	    try {
-	    	cofh.thermalexpansion.util.crafting.SawmillManager.addRecipe(aRF, aInput1, outputs[0], outputs.length > 1 ? outputs[1] : null, aChance, true);
+	    	result = cofh.thermalexpansion.util.crafting.SawmillManager.addRecipe(aRF, aInput1, outputs[0], outputs.length > 1 ? outputs[1] : null, aChance, true);
 		} catch(Throwable e) {/*Do nothing*/}
-	    RecipeMaps.SAWMILL.factory().EUt(30).duration(200*aInput1.stackSize).setShaped(true).inputs(aInput1).input(getWater(1000)).outputs(outputs).buildAndRegister();
-		return true;
+		return result;
+	}
+	
+	/**
+	 * Adds a Recipe to the Sawmills of GregTech and ThermalCraft, but oredict
+	 */
+	public static boolean addSawmillRecipe(OreDictEntry entry, int inAmount, int aChance, ItemStack...outputs) {
+		return addSawmillRecipe(entry, inAmount, 160, aChance, outputs);
+	}
+	
+	public static boolean addSawmillRecipe(OreDictEntry entry, int inAmount, int aRF, int aChance, ItemStack...outputs) {
+		if (entry == null || entry.ores == null || entry.ores.size() == 0 || !GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.sawmill, entry.oreDictName, true)) return false;
+		boolean result = false;
+		try {
+			// Accroding on TE code, it saves all recipe OreDict format, so i can just create one recipe
+			result = cofh.thermalexpansion.util.crafting.SawmillManager.addRecipe(160, entry.ores.get(0), outputs[0], outputs.length > 1 ? outputs[1] : null, aChance, true);
+		} catch(Throwable e) {/*Do nothing*/}
+		return result;
 	}
 	
 	/**
@@ -559,53 +617,46 @@ public class GT_ModHandler {
 		return true;
 	}
 	
-	private static Map<IRecipeInput, RecipeOutput>	sExtractorRecipes			= new HashMap<IRecipeInput, RecipeOutput>();
-	private static Map<IRecipeInput, RecipeOutput>	sMaceratorRecipes			= new HashMap<IRecipeInput, RecipeOutput>();
-	private static Map<IRecipeInput, RecipeOutput>	sCompressorRecipes			= new HashMap<IRecipeInput, RecipeOutput>();
-	private static Map<IRecipeInput, RecipeOutput>	sOreWashingRecipes			= new HashMap<IRecipeInput, RecipeOutput>();
-	private static Map<IRecipeInput, RecipeOutput>	sThermalCentrifugeRecipes	= new HashMap<IRecipeInput, RecipeOutput>();
-	private static Map<IRecipeInput, RecipeOutput>	sMassfabRecipes				= new HashMap<IRecipeInput, RecipeOutput>();
-	
 	public static Map<IRecipeInput, RecipeOutput> getExtractorRecipeList() {
 		try {
 			return ic2.api.recipe.Recipes.extractor.getRecipes();
 		} catch(Throwable e) {/*Do nothing*/}
-		return sExtractorRecipes;
+		return Collections.emptyMap();
 	}
 	
 	public static Map<IRecipeInput, RecipeOutput> getCompressorRecipeList() {
 		try {
 			return ic2.api.recipe.Recipes.compressor.getRecipes();
 		} catch(Throwable e) {/*Do nothing*/}
-		return sCompressorRecipes;
+		return Collections.emptyMap();
 	}
 	
 	public static Map<IRecipeInput, RecipeOutput> getMaceratorRecipeList() {
 		try {
 			return ic2.api.recipe.Recipes.macerator.getRecipes();
 		} catch(Throwable e) {/*Do nothing*/}
-		return sMaceratorRecipes;
+		return Collections.emptyMap();
 	}
 
 	public static Map<IRecipeInput, RecipeOutput> getThermalCentrifugeRecipeList() {
 		try {
 			return ic2.api.recipe.Recipes.centrifuge.getRecipes();
 		} catch(Throwable e) {/*Do nothing*/}
-		return sThermalCentrifugeRecipes;
+		return Collections.emptyMap();
 	}
 	
 	public static Map<IRecipeInput, RecipeOutput> getOreWashingRecipeList() {
 		try {
 			return ic2.api.recipe.Recipes.oreWashing.getRecipes();
 		} catch(Throwable e) {/*Do nothing*/}
-		return sOreWashingRecipes;
+		return Collections.emptyMap();
 	}
 	
 	public static Map<IRecipeInput, RecipeOutput> getMassFabricatorList() {
 		try {
 			return ic2.api.recipe.Recipes.matterAmplifier.getRecipes();
 		} catch(Throwable e) {/*Do nothing*/}
-		return sMassfabRecipes;
+		return Collections.emptyMap();
 	}
 	
 	public static List<ItemStack> getMaceratorResult(ItemStack input) {

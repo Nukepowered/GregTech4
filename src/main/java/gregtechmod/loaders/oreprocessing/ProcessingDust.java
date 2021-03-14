@@ -14,7 +14,7 @@ import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Shaped_Recipe;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.OreDictEntry;
-
+import gregtechmod.common.RecipeHandler;
 import gregtechmod.common.recipe.RecipeEntry;
 import gregtechmod.common.recipe.RecipeMaps;
 import gregtechmod.common.recipe.RecipeEntry.Match;
@@ -66,9 +66,12 @@ public class ProcessingDust implements IOreRecipeRegistrator {
 					GT_ModHandler.addIC2MatterAmplifier(aMaterial.mAmplificationValue, entry.oreDictName);
 				}
 				
-				GameRegistry.addRecipe(new GT_Shaped_Recipe(GT_OreDictUnificator.get(OrePrefixes.dustSmall, aMaterial, 4), new Object[]{" X", "  ", 'X', entry.oreDictName}));
-				GameRegistry.addRecipe(new GT_Shaped_Recipe(GT_OreDictUnificator.get(OrePrefixes.dustTiny, aMaterial, 9), new Object[]{"X ", "  ", 'X', entry.oreDictName}));
-				
+				RecipeHandler.executeOnFinish(() -> {
+					GameRegistry.addRecipe(new GT_Shaped_Recipe(GT_OreDictUnificator.get(OrePrefixes.dustSmall, aMaterial, 4), new Object[]{" X", "  ", 'X', entry.oreDictName}));
+					GameRegistry.addRecipe(new GT_Shaped_Recipe(GT_OreDictUnificator.get(OrePrefixes.dustTiny, aMaterial, 9), new Object[]{"X ", "  ", 'X', entry.oreDictName}));
+
+				});
+								
 				if (GT_OreDictUnificator.get(OrePrefixes.cell, aMaterial, 1) != null) {
 					RecipeMaps.CANINNING.factory().EUt(1).duration(100)
 						.input(RecipeEntry.fromStacks(entry.ores, Match.STRICT))
@@ -208,13 +211,13 @@ public class ProcessingDust implements IOreRecipeRegistrator {
 				for (ItemStack aStack : entry.ores) {
 					if (null != tStack && !aMaterial.contains(SubTag.NO_SMELTING)) {
 						if (aMaterial.mBlastFurnaceRequired) {
-							GT_ModHandler.removeFurnaceSmelting(aStack);
+							RecipeHandler.scheduleSmeltingToRemove((in, out) -> in.isItemEqual(aStack));
 							if (aStack.isItemEqual(GT_ModHandler.getIC2Item("refinedIronIngot", 1)))
 								GT_ModHandler.removeInductionSmelterRecipe(aStack);
 							if (aMaterial.mBlastFurnaceTemp <= 1000)
 								GT_ModHandler.addRCBlastFurnaceRecipe(GT_Utility.copyAmount(1, aStack), GT_Utility.copyAmount(1, tStack), aMaterial.mBlastFurnaceTemp);
 						} else {
-							GT_ModHandler.addSmeltingRecipe(aStack, tStack);
+							RecipeHandler.executeOnFinish(() -> GT_ModHandler.addSmeltingRecipe(aStack, tStack));
 						}
 					} else {
 						if (!OrePrefixes.block.isIgnored(aMaterial) && null == GT_OreDictUnificator.get(OrePrefixes.gem, aMaterial, 1L)) {
@@ -234,25 +237,25 @@ public class ProcessingDust implements IOreRecipeRegistrator {
 					default:
 						break;
 					case Wheat:
-						GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, aStack), new ItemStack(Items.bread, 1, 0));
+						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, aStack), new ItemStack(Items.bread, 1, 0)));
 						break;
 					case Tetrahedrite:
 					case Chalcopyrite:
 					case Malachite:
-						GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, aStack),
-								GT_OreDictUnificator.get(OrePrefixes.nugget, Materials.Copper, 6L));
+						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, aStack),
+								GT_OreDictUnificator.get(OrePrefixes.nugget, Materials.Copper, 6L)));
 						break;
 					case Pentlandite:
-						GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, aStack),
-								GT_OreDictUnificator.get(OrePrefixes.nugget, Materials.Nickel, 6L));
+						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, aStack),
+								GT_OreDictUnificator.get(OrePrefixes.nugget, Materials.Nickel, 6L)));
 						break;
 					case Garnierite:
-						GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, aStack),
-								GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Nickel, 1L));
+						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, aStack),
+								GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Nickel, 1L)));
 						break;
 					case Cassiterite:
-						GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, aStack),
-								GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Tin, 1L));
+						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, aStack),
+								GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Tin, 1L)));
 						break;
 					case Coal:
 						GT_ModHandler.addLiquidTransposerFillRecipe(GT_Utility.copyAmount(1, aStack),

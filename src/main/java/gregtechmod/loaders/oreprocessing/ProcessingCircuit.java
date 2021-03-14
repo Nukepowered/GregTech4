@@ -13,6 +13,7 @@ import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.util.GT_Shaped_Recipe;
 import gregtechmod.api.util.OreDictEntry;
+import gregtechmod.common.RecipeHandler;
 
 public class ProcessingCircuit implements IOreRecipeRegistrator {
 
@@ -27,47 +28,42 @@ public class ProcessingCircuit implements IOreRecipeRegistrator {
 			if (this.isExecutable(aPrefix, aMaterial)) {
 				switch (aMaterial) {
 				case Basic:
-					GameRegistry.addRecipe(new GT_Shaped_Recipe(GT_Items.Circuit_Basic.get(1), new Object[] { "CCC", "SRS", "CCC",
+					RecipeHandler.executeOnFinish(() -> {
+						GameRegistry.addRecipe(new GT_Shaped_Recipe(GT_Items.Circuit_Basic.get(1), new Object[] { "CCC", "SRS", "CCC",
 							'C', GT_OreDictNames.craftingWireCopper.toString(),
 							'R', OrePrefixes.plate.get(Materials.Iron),
 							'S', GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.harderrecipes, "circuitRedAlloy", true) ? OrePrefixes.plate.get(Materials.RedAlloy) : OrePrefixes.dust.get(Materials.Redstone)
-					}));
-					GameRegistry.addRecipe(new GT_Shaped_Recipe(GT_Items.Circuit_Basic.get(1), new Object[] { "CSC", "CRC", "CSC",
-							'C', GT_OreDictNames.craftingWireCopper.toString(),
-							'R', OrePrefixes.plate.get(Materials.Iron),
-							'S', GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.harderrecipes, "circuitRedAlloy", true) ? OrePrefixes.plate.get(Materials.RedAlloy) : OrePrefixes.dust.get(Materials.Redstone)
-					}));
-					
-//					for (ItemStack aStack : entry.ores) {
-//						if (!GT_Utility.areStacksEqual(aStack, GT_Items.Circuit_Integrated.getWildcard(1))) {
-//							
-//						}
-//					}
+						}));
+						GameRegistry.addRecipe(new GT_Shaped_Recipe(GT_Items.Circuit_Basic.get(1), new Object[] { "CSC", "CRC", "CSC",
+								'C', GT_OreDictNames.craftingWireCopper.toString(),
+								'R', OrePrefixes.plate.get(Materials.Iron),
+								'S', GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.harderrecipes, "circuitRedAlloy", true) ? OrePrefixes.plate.get(Materials.RedAlloy) : OrePrefixes.dust.get(Materials.Redstone)
+						}));
+					});
 					break;
 				case Advanced:
-					GameRegistry.addRecipe(new GT_Shaped_Recipe(GT_Items.Circuit_Advanced.get(1), new Object[] { "SGS", "LCL", "SGS",
-							'C', OrePrefixes.circuit.get(Materials.Basic),
-							'S', GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.harderrecipes, "circuitRedAlloy", true) ? OrePrefixes.plate.get(Materials.RedAlloy) : OrePrefixes.dust.get(Materials.Redstone),
-							'G', OrePrefixes.dust.get(Materials.Glowstone),
-							'L', OrePrefixes.dust.get(Materials.Lazurite) }));
-					GameRegistry.addRecipe(new GT_Shaped_Recipe(GT_Items.Circuit_Advanced.get(1), new Object[] { "SLS", "GCG", "SLS",
-							'C', OrePrefixes.circuit.get(Materials.Basic),
-							'S', GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.harderrecipes, "circuitRedAlloy", true) ? OrePrefixes.plate.get(Materials.RedAlloy) : OrePrefixes.dust.get(Materials.Redstone),
-							'G', OrePrefixes.dust.get(Materials.Glowstone),
-							'L', OrePrefixes.dust.get(Materials.Lazurite) }));
-					GameRegistry.addRecipe(new GT_Shaped_Recipe(GT_Items.Circuit_Advanced.get(1), new Object[] { "SGS", "LCL", "SGS",
-							'C', OrePrefixes.circuit.get(Materials.Basic),
-							'S', GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.harderrecipes, "circuitRedAlloy", true) ? OrePrefixes.plate.get(Materials.RedAlloy) : OrePrefixes.dust.get(Materials.Redstone),
-							'G', OrePrefixes.dust.get(Materials.Glowstone),
-							'L', OrePrefixes.dust.get(Materials.Lapis) }));
-					GameRegistry.addRecipe(new GT_Shaped_Recipe(GT_Items.Circuit_Advanced.get(1), new Object[] { "SLS", "GCG", "SLS",
-							'C', OrePrefixes.circuit.get(Materials.Basic),
-							'S', GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.harderrecipes, "circuitRedAlloy", true) ? OrePrefixes.plate.get(Materials.RedAlloy) : OrePrefixes.dust.get(Materials.Redstone),
-							'G', OrePrefixes.dust.get(Materials.Glowstone),
-							'L', OrePrefixes.dust.get(Materials.Lapis) }));
-//					for (ItemStack aStack : entry.ores) {
-//
-//					}
+					RecipeHandler.executeOnFinish(() -> {
+						GameRegistry.addRecipe(new GT_Shaped_Recipe(GT_Items.Circuit_Advanced.get(1), new Object[] { "SGS", "LCL", "SGS",
+								'C', OrePrefixes.circuit.get(Materials.Basic),
+								'S', GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.harderrecipes, "circuitRedAlloy", true) ? OrePrefixes.plate.get(Materials.RedAlloy) : OrePrefixes.dust.get(Materials.Redstone),
+								'G', OrePrefixes.dust.get(Materials.Glowstone),
+								'L', OrePrefixes.dust.get(Materials.Lazurite) }));
+						GameRegistry.addRecipe(new GT_Shaped_Recipe(GT_Items.Circuit_Advanced.get(1), new Object[] { "SLS", "GCG", "SLS",
+								'C', OrePrefixes.circuit.get(Materials.Basic),
+								'S', GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.harderrecipes, "circuitRedAlloy", true) ? OrePrefixes.plate.get(Materials.RedAlloy) : OrePrefixes.dust.get(Materials.Redstone),
+								'G', OrePrefixes.dust.get(Materials.Glowstone),
+								'L', OrePrefixes.dust.get(Materials.Lazurite) }));
+						GameRegistry.addRecipe(new GT_Shaped_Recipe(GT_Items.Circuit_Advanced.get(1), new Object[] { "SGS", "LCL", "SGS",
+								'C', OrePrefixes.circuit.get(Materials.Basic),
+								'S', GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.harderrecipes, "circuitRedAlloy", true) ? OrePrefixes.plate.get(Materials.RedAlloy) : OrePrefixes.dust.get(Materials.Redstone),
+								'G', OrePrefixes.dust.get(Materials.Glowstone),
+								'L', OrePrefixes.dust.get(Materials.Lapis) }));
+						GameRegistry.addRecipe(new GT_Shaped_Recipe(GT_Items.Circuit_Advanced.get(1), new Object[] { "SLS", "GCG", "SLS",
+								'C', OrePrefixes.circuit.get(Materials.Basic),
+								'S', GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.harderrecipes, "circuitRedAlloy", true) ? OrePrefixes.plate.get(Materials.RedAlloy) : OrePrefixes.dust.get(Materials.Redstone),
+								'G', OrePrefixes.dust.get(Materials.Glowstone),
+								'L', OrePrefixes.dust.get(Materials.Lapis) }));
+					});
 					break;
 				default: break;
 				}

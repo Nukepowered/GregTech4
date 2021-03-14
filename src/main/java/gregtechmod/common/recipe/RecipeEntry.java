@@ -18,7 +18,7 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.recipe.Ingredient;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.ItemStackKey;
-
+import ic2.api.recipe.IRecipeInput;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -27,7 +27,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * NEVER INCLUDE ANYTHING FROM common PACKAGE IN YOUR MODS!
  * @author TheDarkDnKTv
  */
-public class RecipeEntry implements Ingredient {
+public class RecipeEntry implements Ingredient, IRecipeInput {
 	
 	/** For internal use only */
 	private Collection<ItemStackKey> comparableVariants;
@@ -45,7 +45,7 @@ public class RecipeEntry implements Ingredient {
 	/**
 	 * Will create singleton ingredient with size of stack
 	 */
-	public static Ingredient singleton(ItemStack stack, Match...options) {
+	public static RecipeEntry singleton(ItemStack stack, Match...options) {
 		assert GT_Utility.isStackValid(stack) : "Stack can not be null or invalid!";
 		return singleton(stack, stack.stackSize, options);
 	}
@@ -53,7 +53,7 @@ public class RecipeEntry implements Ingredient {
 	/**
 	 * Will create singleton ingredient with size of count variable
 	 */
-	public static Ingredient singleton(ItemStack stack, int count, Match...options) {
+	public static RecipeEntry singleton(ItemStack stack, int count, Match...options) {
 		assert GT_Utility.isStackValid(stack) : "Stack can not be invalid or null!";
 		
 		RecipeEntry result = new RecipeEntry();
@@ -66,14 +66,14 @@ public class RecipeEntry implements Ingredient {
 	/**
 	 * Will match damage & NBT
 	 */
-	public static Ingredient fromStacks(int count, Collection<ItemStack> stacks) {
+	public static RecipeEntry fromStacks(int count, Collection<ItemStack> stacks) {
 		return fromStacks(count, stacks, Match.DAMAGE, Match.NBT);
 	}
 	
 	/**
 	 * Create an Ingredient with size of count variable
 	 */
-	public static Ingredient fromStacks(int count, Collection<ItemStack> stacks, Match...options) {
+	public static RecipeEntry fromStacks(int count, Collection<ItemStack> stacks, Match...options) {
 		if (stacks.size() > 0) {
 			RecipeEntry result = new RecipeEntry();
 			result.count = count;
@@ -94,7 +94,7 @@ public class RecipeEntry implements Ingredient {
 	/**
 	 * Create an Ingredient with size of 1
 	 */
-	public static Ingredient fromStacks(Collection<ItemStack> stacks, Match...options) {
+	public static RecipeEntry fromStacks(Collection<ItemStack> stacks, Match...options) {
 		return fromStacks(1, stacks, options);
 	}
 	
@@ -108,7 +108,7 @@ public class RecipeEntry implements Ingredient {
 	 * @return
 	 */
 	@SuppressWarnings("deprecation")
-	public static Ingredient oreDict(ItemStack stack, int count, Match...options) {
+	public static RecipeEntry oreDict(ItemStack stack, int count, Match...options) {
 		assert GT_Utility.isStackValid(stack) : "Stack can not be invalid or null!";
 		
 		List<ItemStack> stacks = new ArrayList<>();
@@ -149,11 +149,11 @@ public class RecipeEntry implements Ingredient {
 	/**
 	 * Create an OreDict Ingredient with size of 1
 	 */
-	public static Ingredient oreDict(ItemStack stack, Match...options) {
+	public static RecipeEntry oreDict(ItemStack stack, Match...options) {
 		return oreDict(stack, 1, options);
 	}
 	
-	public static Ingredient oreDict(String name, int count, Match...options) {
+	public static RecipeEntry oreDict(String name, int count, Match...options) {
 		assert name != null && !name.isEmpty() : "Invalid OreDict name supplied";
 		
 		RecipeEntry result = new RecipeEntry();
@@ -170,7 +170,7 @@ public class RecipeEntry implements Ingredient {
 	/**
 	 * Create an OreDict Ingredient with size of 1
 	 */
-	public static Ingredient oreDict(String name, Match...options) {
+	public static RecipeEntry oreDict(String name, Match...options) {
 		return oreDict(name, 1, options);
 	}
 	
@@ -221,6 +221,27 @@ public class RecipeEntry implements Ingredient {
 				this.options.add(option);
 			} else throw new IllegalArgumentException("Options can not be null!");
 		}
+	}
+	
+	
+	//////////////////////
+	//    IC2 Compat    //
+	// mirrored methods //
+	//////////////////////
+	
+	@Override
+	public boolean matches(ItemStack subject) {
+		return match(subject);
+	}
+
+	@Override
+	public int getAmount() {
+		return count;
+	}
+
+	@Override
+	public List<ItemStack> getInputs() {
+		return getVariants();
 	}
 	
 	@Override

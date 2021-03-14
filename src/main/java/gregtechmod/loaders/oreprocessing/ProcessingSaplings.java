@@ -8,8 +8,8 @@ import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
-import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.OreDictEntry;
+
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
@@ -23,12 +23,12 @@ public class ProcessingSaplings implements IOreRecipeRegistrator {
 		for (OreDictEntry entry : dictEntry) {
 			Materials aMaterial = this.getMaterial(aPrefix, entry);
 			if (this.isExecutable(aPrefix, aMaterial)) {
+				GT_ModHandler.addPulverisationRecipe(entry, 1, GT_OreDictUnificator.get(OrePrefixes.dustSmall, Materials.Wood, 2L), null, 0);
+				
 				for (ItemStack aStack : entry.ores) {
 					if (aStack.getItem() instanceof ItemBlock && GT_Mod.sWoodStackSize < aStack.getItem().getItemStackLimit(aStack)) {
 						aStack.getItem().setMaxStackSize(GT_Mod.sWoodStackSize);
 					}
-					
-					GT_ModHandler.addPulverisationRecipe(GT_Utility.copyAmount(1, aStack), GT_OreDictUnificator.get(OrePrefixes.dustSmall, Materials.Wood, 2L), null, 0, false);
 				}
 			}
 		}

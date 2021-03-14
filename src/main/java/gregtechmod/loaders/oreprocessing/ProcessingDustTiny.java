@@ -12,7 +12,7 @@ import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Shapeless_Recipe;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.OreDictEntry;
-
+import gregtechmod.common.RecipeHandler;
 import gregtechmod.common.recipe.RecipeEntry;
 import gregtechmod.common.recipe.RecipeMaps;
 import gregtechmod.common.recipe.RecipeEntry.Match;
@@ -31,8 +31,8 @@ public class ProcessingDustTiny implements IOreRecipeRegistrator {
 			Materials aMaterial = this.getMaterial(aPrefix, entry);
 			if (this.isExecutable(aPrefix, aMaterial)) {
 				ItemStack ingot;
-				GameRegistry.addRecipe(new GT_Shapeless_Recipe(GT_OreDictUnificator.get(OrePrefixes.dust, aMaterial, 1L),
-						new Object[] { entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName }));
+				RecipeHandler.executeOnFinish(() -> GameRegistry.addRecipe(new GT_Shapeless_Recipe(GT_OreDictUnificator.get(OrePrefixes.dust, aMaterial, 1L),
+						new Object[] { entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName })));
 				if (!aMaterial.contains(SubTag.NO_SMELTING) && (ingot = GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial, 1L)) != null) {
 					if (aMaterial.mBlastFurnaceRequired) {
 						RecipeFactory<?> factory = RecipeMaps.BLAST_FURNANCE.factory()
@@ -51,7 +51,10 @@ public class ProcessingDustTiny implements IOreRecipeRegistrator {
 							.buildAndRegister();
 						
 						for (ItemStack stack : entry.ores) {
-							GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, stack), GT_OreDictUnificator.get(OrePrefixes.nugget, aMaterial, 1L));
+							RecipeHandler.executeOnFinish(() -> {
+								GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, stack), GT_OreDictUnificator.get(OrePrefixes.nugget, aMaterial, 1L));
+							});
+							
 							GT_ModHandler.addInductionSmelterRecipe(GT_Utility.copyAmount(9L, stack), null, ingot, null, 130 * 2, 0);
 						}
 					}

@@ -548,26 +548,6 @@ public class GT_OreDictHandler {
 		GT_Log.log.warn(String.format("Time spent for oredict iterating: %.3f seconds", (System.currentTimeMillis() - time) / 1000.0D));
     }
     
-//    public void registerRecipes(final OreDictionary.OreRegisterEvent aEvent, final String aMod) {
-//        if (aEvent.Ore == null || aEvent.Ore.getItem() == null) {
-//            return;
-//        }
-//        if (aEvent.Ore.stackSize != 1) {
-//            aEvent.Ore.stackSize = 1;
-//            GT_Log.log.error("WARNING: '" + aEvent.Name + "' is either being misused by another Mod or has been wrongly registered, as the stackSize of the Event-Stack is not 1.");
-//        }
-//        final OrePrefixes aPrefix = OrePrefixes.getOrePrefix(aEvent.Name);
-//        final Materials aMaterial = (aPrefix == null) ? Materials._NULL : OrePrefixes.getRealMaterial(aEvent.Name, aPrefix);
-//        if (aPrefix != null) {
-//            if (!aPrefix.isIgnored(aMaterial)) {
-//                aPrefix.processOre(aMaterial, aEvent.Name, aMod, GT_Utility.copyAmount(1L, aEvent.Ore));
-//            }
-//        }
-//        else {
-//            GT_Log.log.warn("Thingy Name: " + aEvent.Name + " !!!Unknown 'Thingy' detected!!! This Object seems to probably not follow a valid OreDictionary Convention, or I missed a Convention. Please report to GregTech Intergalactical for additional compatiblity. This is not an Error, it's just an Information.");
-//        }
-//    }
-    
 	public void registerUnificationEntries() {
 		GregTech_API.sUnification.mConfig.save();
 		GregTech_API.sUnification.mConfig.load();
@@ -580,7 +560,7 @@ public class GT_OreDictHandler {
 			for (OreDictEntry entry : e.getValue()) {
 				for (ItemStack ore : entry.ores) {
 					GT_OreDictUnificator.addAssociation(entry.oreDictName, ore);
-					String modName = GameData.getItemRegistry().getNameForObject(ore.getItem());
+					String modName = GameData.getItemRegistry().getNameForObject(ore.getItem()); // TODO get current mod properly
 					
 					if (GT_OreDictUnificator.isBlacklisted(ore)) {
 						continue;
