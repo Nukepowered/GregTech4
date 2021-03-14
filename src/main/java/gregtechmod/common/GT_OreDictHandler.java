@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.ProgressManager;
 import cpw.mods.fml.common.ProgressManager.ProgressBar;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -55,8 +57,11 @@ public class GT_OreDictHandler {
 			}
 			
 			aEvent.Ore.stackSize = 1;
-			String aMod = GameData.getItemRegistry().getNameForObject(aEvent.Ore.getItem()).split(":")[0]; // Best way to get modid
-	    	
+			
+			ModContainer tContainer = Loader.instance().activeModContainer();
+			String aMod = tContainer == null ? "minecraft" : tContainer.getModId();
+			
+			
 	    	if (aMod.toLowerCase().contains("tconstruct") || aMod.toLowerCase().contains("xycraft") || (aMod.toLowerCase().contains("natura") || aMod.toLowerCase().contains("natural"))) return;
 			if (mActivated || GregTech_API.sPostloadStarted || GT_Mod.sSortToTheEnd && GregTech_API.sLoadFinished) {
 				GT_Log.log.warn("WARNING: " + aMod + " attempted to register " + aEvent.Name + " very late at the OreDictionary! Some Functionality may not work as expected! Sometimes registration in Postload is required, but you should always register OreDictionary Items in the Load Phase whenever possible.");
@@ -471,16 +476,19 @@ public class GT_OreDictHandler {
 
                          GT_Log.ore.println(e);
                          List<OreDictEntry> list = mEvents.get(aPrefix);
+                         OreDictEntry entry = OreDictEntry.create(aEvent.Name);
                          if (list != null) {
-                        	 int idx = list.indexOf(OreDictEntry.create(aEvent.Name));
+                        	 int idx = list.indexOf(entry);
                         	 if (idx >= 0) {
-                        		 list.get(idx).ores.add(aEvent.Ore);
+                        		 list.get(idx).add(aMod, aEvent.Ore);
                         	 } else {
-                        		 list.add(OreDictEntry.create(aEvent.Name, aEvent.Ore));
+                        		 entry.add(aMod, aEvent.Ore);
+                        		 list.add(entry);
                         	 }
                          } else {
                         	 list = new ArrayList<>();
-                        	 list.add(OreDictEntry.create(aEvent.Name, aEvent.Ore));
+                        	 entry.add(aMod, aEvent.Ore);
+                    		 list.add(entry);
                          }
                          
                          this.mEvents.put(aPrefix, list);
@@ -518,7 +526,7 @@ public class GT_OreDictHandler {
     	ProgressBar bar = ProgressManager.push("Handling OreDict", mEvents.keySet().size(), false);
     	
     	for (Entry<OrePrefixes, List<OreDictEntry>> e : mEvents.entrySet()) {
-    		bar.step("prefix - " + e.getKey());
+    		bar.step(String.valueOf(e.getKey()));
     		
     		if (e.getKey() != null) {
     			e.getKey().processOre(e.getValue());
@@ -531,9 +539,16 @@ public class GT_OreDictHandler {
     			for (OreDictEntry entry : e.getValue()) {
     				app.append('\t');
     				app.append(entry.oreDictName);
-    				app.append(" - ");
-    				app.append(entry.ores.toString());
-    				app.append('\n');
+    				app.append(":\n");
+    				
+    				for (Entry<ItemStack, String> en : entry.modMap.entrySet()) {
+    					app.append("\t\t");
+    					app.append("mod: ");
+    					app.append(en.getValue());
+    					app.append(", stack: ");
+    					app.append(en.getKey());
+    					app.append('\n');
+    				}
     			}
     			
     			app.append("This Objects seems to probably not follow a valid OreDictionary Convention, or I missed a Convention. ");
@@ -560,12 +575,12 @@ public class GT_OreDictHandler {
 			for (OreDictEntry entry : e.getValue()) {
 				for (ItemStack ore : entry.ores) {
 					GT_OreDictUnificator.addAssociation(entry.oreDictName, ore);
-					String modName = GameData.getItemRegistry().getNameForObject(ore.getItem()); // TODO get current mod properly
+					String modName = GameData.getItemRegistry().getNameForObject(ore.getItem());
 					
 					if (GT_OreDictUnificator.isBlacklisted(ore)) {
 						continue;
 					}
-					if (!modName.equals("UNKNOWN_MOD_ID") && GregTech_API.sUnification.get(GT_ConfigCategories.specialunificationtargets + "." + modName, entry.oreDictName, false)) {
+					if (!modName.equals("minecraft") && GregTech_API.sUnification.get(GT_ConfigCategories.specialunificationtargets + "." + modName, entry.oreDictName, false)) {
 						GT_OreDictUnificator.set(entry.oreDictName, ore, true, true);
 					} else {
 						GT_OreDictUnificator.set(entry.oreDictName, ore, false, true);
