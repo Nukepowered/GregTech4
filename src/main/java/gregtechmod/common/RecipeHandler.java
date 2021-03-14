@@ -1,15 +1,24 @@
 package gregtechmod.common;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Objects;
 
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
+
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
+
+import ic2.api.recipe.IRecipeInput;
+import ic2.api.recipe.RecipeOutput;
+
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -25,6 +34,9 @@ public class RecipeHandler {
 	private static List<IRecipeMatcher> craftingRemove;
 	private static List<IFurnanceMatcher> smeltingRemove;
 	
+	private static Multimap<Integer, IIC2Matcher> IC2Remove;
+	private static Map<Integer, Map<IRecipeInput, RecipeOutput>> IC2Mapping;
+	
 	private static List<Runnable> onFinishTasks;
 	
 	//////////////////////
@@ -39,6 +51,14 @@ public class RecipeHandler {
 	public static void scheduleSmeltingToRemove(IFurnanceMatcher matcher) {
 		Objects.requireNonNull(matcher);
 		smeltingRemove.add(matcher);
+	}
+	
+	public static void scheduleIC2RecipeToRemove(Map<IRecipeInput, RecipeOutput> recipeMap, IIC2Matcher matcher) {
+		Objects.requireNonNull(recipeMap);
+		Objects.requireNonNull(matcher);
+		int hash = System.identityHashCode(recipeMap);
+		IC2Mapping.put(hash, recipeMap);
+		IC2Remove.put(hash, matcher);
 	}
 	
 	public static void executeOnFinish(Runnable runnable) {
@@ -100,6 +120,29 @@ public class RecipeHandler {
 		GT_Log.log.info(String.format("\tCrafting processor finished for %.3f seconds", (System.currentTimeMillis() - time) / 1000.0F));
 	}
 	
+	private static void processIC2() {
+		long time = System.currentTimeMillis();
+		
+		for (Entry<Integer, Collection<IIC2Matcher>> recipeMap : IC2Remove.asMap().entrySet()) {
+			Collection<IIC2Matcher> tasks = new ArrayList<>(recipeMap.getValue());
+			Iterator<Entry<IRecipeInput, RecipeOutput>> iter = IC2Mapping.get(recipeMap.getKey()).entrySet().iterator();
+			
+			while (iter.hasNext() && !tasks.isEmpty()) {
+				Entry<IRecipeInput, RecipeOutput> entry = iter.next();
+				Iterator<IIC2Matcher> iter2 = tasks.iterator();
+				while (iter2.hasNext()) {
+					IIC2Matcher matcher = iter2.next();
+					if (matcher.matches(entry.getKey(), entry.getValue())) {
+						iter.remove();
+						iter2.remove();
+					}
+				}
+			}
+		}
+		
+		GT_Log.log.info(String.format("\tIC2 Recipe processor finished for %.3f seconds", (System.currentTimeMillis() - time) / 1000.0F));
+	}
+	
 	/**
 	 * Called on POST to proceed all job 
 	 */
@@ -108,11 +151,14 @@ public class RecipeHandler {
 		
 		processSmelting();
 		processCrafting();
+		processIC2();
 		proceedTasks();
 		
 		craftingRemove = null;
 		smeltingRemove = null;
 		onFinishTasks = null;
+		IC2Mapping = null;
+		IC2Remove = null;
 		
 		GT_Log.log.info(String.format("Recipe handler finished for %.3f seconds", (System.currentTimeMillis() - time) / 1000.0F));
 	}
@@ -121,6 +167,9 @@ public class RecipeHandler {
 		craftingRemove = new ArrayList<>();
 		smeltingRemove = new ArrayList<>();
 		onFinishTasks = new ArrayList<>();
+		
+		IC2Remove = Multimaps.newListMultimap(new HashMap<>(), ArrayList::new);
+		IC2Mapping = new HashMap<>();
 	}
 	
 	/**
@@ -158,6 +207,21 @@ public class RecipeHandler {
 		default boolean isReusable() {
 			return true;
 		}
+	}
+	
+	/**
+	 * 
+	 * @author TheDarkDnKTv
+	 *
+	 */
+	@FunctionalInterface
+	public static interface IIC2Matcher {
+		
+		/**
+		 * 
+		 * Returns true if recipe matches some criteria
+		 */
+		boolean matches(IRecipeInput in, RecipeOutput out);
 	}
 	
 	/** Standard implementation, default use case of IRecipeMatcher

@@ -196,17 +196,34 @@ public class ProcessingDust implements IOreRecipeRegistrator {
 				
 				ItemStack tStack = GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial, 1L);
 				
-				if (aMaterial.mBlastFurnaceRequired && null != tStack && !aMaterial.contains(SubTag.NO_SMELTING)) {
-					factory = RecipeMaps.BLAST_FURNANCE.factory()
-						.minTemperature(aMaterial.mBlastFurnaceTemp).EUt(120)
-						.duration(Math.max(aMaterial.getMass() / 40, 1) * aMaterial.mBlastFurnaceTemp)
-						.input(RecipeEntry.fromStacks(entry.ores, Match.STRICT));
-					if (aMaterial.mBlastFurnaceTemp > 1750)
-						factory.output(GT_OreDictUnificator.get(OrePrefixes.ingotHot, aMaterial, tStack, 1));
-					else
-						factory.output(tStack);
-					factory.buildAndRegister();
+				if (!aMaterial.contains(SubTag.NO_SMELTING)) {
+					if (aMaterial.mBlastFurnaceRequired && null != tStack) {
+						factory = RecipeMaps.BLAST_FURNANCE.factory()
+							.minTemperature(aMaterial.mBlastFurnaceTemp).EUt(120)
+							.duration(Math.max(aMaterial.getMass() / 40, 1) * aMaterial.mBlastFurnaceTemp)
+							.input(RecipeEntry.fromStacks(entry.ores, Match.STRICT));
+						if (aMaterial.mBlastFurnaceTemp > 1750)
+							factory.output(GT_OreDictUnificator.get(OrePrefixes.ingotHot, aMaterial, tStack, 1));
+						else
+							factory.output(tStack);
+						factory.buildAndRegister();
+					}
+				} else {
+					if (!OrePrefixes.block.isIgnored(aMaterial) && null == GT_OreDictUnificator.get(OrePrefixes.gem, aMaterial, 1L)) {
+						RecipeHandler.scheduleIC2RecipeToRemove(GT_ModHandler.getCompressorRecipeList(), (in, out) -> in.matches(entry.ores.get(0)));
+						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addCompressionRecipe(entry, 1, GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L)));
+					}
+					
+					if ((OrePrefixes.block.isIgnored(aMaterial)
+							|| null == GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L))
+							&& aMaterial != Materials.GraniteRed && aMaterial != Materials.GraniteBlack
+							&& aMaterial != Materials.Obsidian && aMaterial != Materials.Glowstone
+							&& aMaterial != Materials.Paper) {
+						RecipeHandler.scheduleIC2RecipeToRemove(GT_ModHandler.getCompressorRecipeList(), (in, out) -> in.matches(GT_Utility.copyAmount(9, entry.ores.get(0))));
+						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addCompressionRecipe(entry, 1, GT_OreDictUnificator.get(OrePrefixes.plate, aMaterial, 1L)));
+					}
 				}
+				
 				
 				for (ItemStack aStack : entry.ores) {
 					if (null != tStack && !aMaterial.contains(SubTag.NO_SMELTING)) {
@@ -218,18 +235,6 @@ public class ProcessingDust implements IOreRecipeRegistrator {
 								GT_ModHandler.addRCBlastFurnaceRecipe(GT_Utility.copyAmount(1, aStack), GT_Utility.copyAmount(1, tStack), aMaterial.mBlastFurnaceTemp);
 						} else {
 							RecipeHandler.executeOnFinish(() -> GT_ModHandler.addSmeltingRecipe(aStack, tStack));
-						}
-					} else {
-						if (!OrePrefixes.block.isIgnored(aMaterial) && null == GT_OreDictUnificator.get(OrePrefixes.gem, aMaterial, 1L)) {
-							GT_ModHandler.addCompressionRecipe(GT_Utility.copyAmount(9, aStack), GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L));
-						}
-
-						if ((OrePrefixes.block.isIgnored(aMaterial)
-								|| null == GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L))
-								&& aMaterial != Materials.GraniteRed && aMaterial != Materials.GraniteBlack
-								&& aMaterial != Materials.Obsidian && aMaterial != Materials.Glowstone
-								&& aMaterial != Materials.Paper) {
-							GT_ModHandler.addCompressionRecipe(GT_Utility.copyAmount(1, aStack), GT_OreDictUnificator.get(OrePrefixes.plate, aMaterial, 1L));
 						}
 					}
 

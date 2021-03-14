@@ -12,7 +12,6 @@ import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.recipe.RecipeFactory;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
-import gregtechmod.api.util.GT_RecipeRegistrator;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.OreDictEntry;
 
@@ -84,22 +83,19 @@ public class ProcessingGem implements IOreRecipeRegistrator {
 						.buildAndRegister();
 				}
 				
-				for (ItemStack stack : entry.ores) { // FIXME cause real load lag
-					if (!OrePrefixes.block.isIgnored(aMaterial)) {
-						GT_ModHandler.addCompressionRecipe(GT_Utility.copyAmount(9, stack), GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L));
-					}
-
+				if (!OrePrefixes.block.isIgnored(aMaterial)) {
+					ItemStack a = entry.ores.get(0);
+					
+					if (GT_ModHandler.getRecipeOutput(a, a, a, a, a, a, a, a, a) != null)
+						if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.storageblockcrafting, OrePrefixes.block.get(aMaterial), false))
+							RecipeHandler.scheduleCraftingToRemove(new RecipeHandler.InventoryRecipeMatcher(false, a, a, a, a, a, a, a, a, a));
+					RecipeHandler.scheduleIC2RecipeToRemove(GT_ModHandler.getCompressorRecipeList(), (in, out) -> in.matches(entry.ores.get(0)));
+					RecipeHandler.executeOnFinish(() -> GT_ModHandler.addCompressionRecipe(entry, 9, GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L)));
+				}
+				
+				for (ItemStack stack : entry.ores) {
 					if (!aMaterial.contains(SubTag.NO_SMELTING)) {
 						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, stack), GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial, 1L)));
-					}
-					
-					ItemStack tStack;
-					if (null != (tStack = GT_OreDictUnificator.get(OrePrefixes.dust, aMaterial, 1L))) {
-						GT_RecipeRegistrator.registerUsagesForMaterials(GT_Utility.copyAmount(1, stack),
-								GT_Utility.copyAmount(1L, new Object[] { tStack }), (String) null, false, true, false);
-					} else {
-						GT_RecipeRegistrator.registerUsagesForMaterials(GT_Utility.copyAmount(1, stack),
-								GT_Utility.copyAmount(1, stack), (String) null, false, true, false);
 					}
 				}
 			}
