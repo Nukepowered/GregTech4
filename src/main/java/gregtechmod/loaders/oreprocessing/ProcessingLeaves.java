@@ -15,8 +15,8 @@ public class ProcessingLeaves implements IOreRecipeRegistrator {
 		OrePrefixes.treeLeaves.add(this);
 	}
 
-	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-		for (OreDictEntry entry : dictEntry) {
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
+		for (OreDictEntry entry : entries) {
 			if (this.isExecutable(aPrefix, this.getMaterial(aPrefix, entry))) {
 				for (ItemStack aStack : entry.ores) {
 					if (aStack.getItem() instanceof ItemBlock && GT_Mod.sWoodStackSize < aStack.getMaxStackSize()) {

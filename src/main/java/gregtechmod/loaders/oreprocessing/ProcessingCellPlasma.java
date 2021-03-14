@@ -22,11 +22,11 @@ public class ProcessingCellPlasma implements IOreRecipeRegistrator {
 		OrePrefixes.cellPlasma.add(this);
 	}
 
-	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
 //		if (aMaterial == Materials.Empty) {
 //			GT_ModHandler.removeRecipeByOutput(aStack);
 //		}
-		for (OreDictEntry entry : dictEntry) {
+		for (OreDictEntry entry : entries) {
 			Materials material = this.getMaterial(aPrefix, entry);
 			if (this.isExecutable(aPrefix, material) && material != Materials.Empty) {
 				RecipeFactory<?> factory = RecipeMaps.PLASMA_FUELS.factory().EUt(1);

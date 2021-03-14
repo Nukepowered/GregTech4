@@ -18,8 +18,8 @@ public class ProcessingItem implements IOreRecipeRegistrator {
 		OrePrefixes.item.add(this);
 	}
 
-	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-		for (OreDictEntry entry : dictEntry) {
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
+		for (OreDictEntry entry : entries) {
 			if (this.isExecutable(aPrefix, this.getMaterial(aPrefix, entry))) {
 				for (ItemStack aStack : entry.ores) { // TODO fix this shit
 					if (entry.oreDictName.equals("itemManganese")) {

@@ -16,7 +16,7 @@ public class ProcessingPlate3 implements IOreRecipeRegistrator {
       OrePrefixes.plateTriple.add((IOreRecipeRegistrator)this);
    }
 
-   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
       GT_ModHandler.removeRecipeByOutput(aStack);
       if(!aMaterial.contains(SubTag.NO_SMASHING)) {
          GregTech_API.sRecipeAdder.addBenderRecipe(GT_Utility.copyAmount(3L, new Object[]{aStack}), GT_OreDictUnificator.get(OrePrefixes.plateDense, (Object)aMaterial, 1L), Math.max(aMaterial.getMass() * 3, 1), 24);

@@ -19,7 +19,7 @@ public class ProcessingIngot1 implements IOreRecipeRegistrator {
       OrePrefixes.ingot.add((IOreRecipeRegistrator)this);
    }
 
-   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
       if(aMaterial.mFuelPower > 0) {
          GregTech_API.sRecipeAdder.addFuel(GT_Utility.copyAmount(1L, new Object[]{aStack}), (ItemStack)null, aMaterial.mFuelPower, aMaterial.mFuelType);
       }

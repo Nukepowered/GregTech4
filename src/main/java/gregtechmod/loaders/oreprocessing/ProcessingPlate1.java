@@ -19,7 +19,7 @@ public class ProcessingPlate1 implements IOreRecipeRegistrator {
       OrePrefixes.plate.add((IOreRecipeRegistrator)this);
    }
 
-   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
       GT_ModHandler.removeRecipeByOutput(aStack);
       GT_ModHandler.removeRecipe(new ItemStack[]{aStack});
       if(aMaterial.mFuelPower > 0) {

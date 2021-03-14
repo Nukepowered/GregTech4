@@ -17,8 +17,8 @@ public class ProcessingStick implements IOreRecipeRegistrator {
 		OrePrefixes.stick.add(this);
 	}
 
-	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-		for (OreDictEntry entry : dictEntry) {
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
+		for (OreDictEntry entry : entries) {
 			Materials aMaterial = this.getMaterial(aPrefix, entry);
 			if (this.isExecutable(aPrefix, aMaterial) && (aMaterial.mTypes & 2) != 0) {
 				RecipeMaps.CUTTING.factory().EUt(4).duration(aMaterial.getMass() * 2).input(RecipeEntry.fromStacks(entry.ores, Match.DAMAGE)).output(GT_OreDictUnificator.get(OrePrefixes.bolt, aMaterial, 4L)).buildAndRegister();

@@ -25,8 +25,8 @@ public class ProcessingCrafting implements IOreRecipeRegistrator {
 		OrePrefixes.crafting.add(this);
 	}
 
-	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-		for (OreDictEntry entry : dictEntry) {
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
+		for (OreDictEntry entry : entries) {
 			if (this.isExecutable(aPrefix, this.getMaterial(aPrefix, entry))) {
 				if (entry.oreDictName.equals(GT_OreDictNames.craftingRedstoneTorch.toString())) {
 					RecipeMaps.ASSEMBLING.factory().EUt(16).duration(800).input(RecipeEntry.fromStacks(entry.ores, Match.DAMAGE)).input(OrePrefixes.plate, Materials.Iron, 1).output(GregTech_API.getGregTechComponent(30, 1)).buildAndRegister();

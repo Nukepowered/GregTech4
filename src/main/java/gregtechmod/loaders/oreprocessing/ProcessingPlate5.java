@@ -15,7 +15,7 @@ public class ProcessingPlate5 implements IOreRecipeRegistrator {
       OrePrefixes.plateQuintuple.add((IOreRecipeRegistrator)this);
    }
 
-   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
       GT_ModHandler.removeRecipeByOutput(aStack);
       if(!aMaterial.contains(SubTag.NO_SMASHING) && GregTech_API.sRecipeFile.get(GT_ConfigCategories.Tools.hammerquintupleplate, OrePrefixes.plate.get(aMaterial), true)) {
          GT_ModHandler.addCraftingRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), new Object[]{"I", "B", "H", Character.valueOf('H'), GT_ToolDictNames.craftingToolHardHammer, Character.valueOf('I'), OrePrefixes.plateQuadruple.get(aMaterial), Character.valueOf('B'), OrePrefixes.plate.get(aMaterial)});

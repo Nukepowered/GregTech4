@@ -29,8 +29,8 @@ public class ProcessingGem implements IOreRecipeRegistrator {
 		OrePrefixes.gem.add(this);
 	}
 
-	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-		for (OreDictEntry entry : dictEntry) {
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
+		for (OreDictEntry entry : entries) {
 			Materials aMaterial = this.getMaterial(aPrefix, entry);
 			if (this.isExecutable(aPrefix, aMaterial)) {
 				if ((aMaterial == Materials.Charcoal || aMaterial == Materials.Coal) && GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "torchesFromCoal", false)) {

@@ -10,9 +10,9 @@ public interface IOreRecipeRegistrator {
 	/**
 	 * Contains a Code Fragment, used in the OrePrefix to register Recipes. Better than using a switch/case, like I did before.
 	 * @param aPrefix always != null
-	 * @param dictEntry TODO
+	 * @param entries TODO
 	 */
-	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry);
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries);
 	
 	/**
 	 * All checks from OrePrefixes and OreDictHandler classes was moved here, execute this method before executing processor

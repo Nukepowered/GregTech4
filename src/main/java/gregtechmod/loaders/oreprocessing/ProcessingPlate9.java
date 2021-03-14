@@ -10,7 +10,7 @@ public class ProcessingPlate9 implements IOreRecipeRegistrator {
       OrePrefixes.plateDense.add((IOreRecipeRegistrator)this);
    }
 
-   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
       GT_ModHandler.removeRecipeByOutput(aStack);
    }
 }

@@ -21,8 +21,8 @@ public class ProcessingRing implements IOreRecipeRegistrator {
 		OrePrefixes.ring.add((IOreRecipeRegistrator) this);
 	}
 
-	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-		for (OreDictEntry entry : dictEntry) {
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
+		for (OreDictEntry entry : entries) {
 			Materials aMaterial = this.getMaterial(aPrefix, entry);
 			if (this.isExecutable(aPrefix, aMaterial) && !aMaterial.contains(SubTag.NO_SMASHING)) {
 				for (ItemStack aStack : entry.ores) {

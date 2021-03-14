@@ -16,7 +16,7 @@ public class ProcessingIngot2 implements IOreRecipeRegistrator {
       OrePrefixes.ingotDouble.add((IOreRecipeRegistrator)this);
    }
 
-   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
       if(!aMaterial.contains(SubTag.NO_SMASHING)) {
          GregTech_API.sRecipeAdder.addBenderRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), GT_OreDictUnificator.get(OrePrefixes.plateDouble, (Object)aMaterial, 1L), Math.max(aMaterial.getMass() * 2, 1), 24);
          GregTech_API.sRecipeAdder.addBenderRecipe(GT_Utility.copyAmount(2L, new Object[]{aStack}), GT_OreDictUnificator.get(OrePrefixes.plateQuadruple, (Object)aMaterial, 1L), Math.max(aMaterial.getMass() * 4, 1), 24);

@@ -25,8 +25,8 @@ public class ProcessingSlab implements IOreRecipeRegistrator {
 		OrePrefixes.slab.add(this);
 	}
 
-	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-		for (OreDictEntry entry : dictEntry) {
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
+		for (OreDictEntry entry : entries) {
 			Materials mat = this.getMaterial(aPrefix, entry);
 			if (this.isExecutable(aPrefix, mat) && mat == Materials.Wood) {
 				RecipeMaps.CANINNING.factory().EUt(4).duration(200).input(GT_ModHandler.getRCItem("fluid.creosote.bucket", 1L)).input(RecipeEntry.fromStacks(entry.ores, Match.DAMAGE)).outputs(GT_ModHandler.getRCItem("part.tie.wood", 1L), new ItemStack(Items.bucket, 1)).buildAndRegister();

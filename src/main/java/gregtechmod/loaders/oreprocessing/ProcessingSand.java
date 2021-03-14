@@ -24,8 +24,8 @@ public class ProcessingSand implements IOreRecipeRegistrator {
 		OrePrefixes.sand.add(this);
 	}
 
-	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-		for (OreDictEntry entry : dictEntry) {
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
+		for (OreDictEntry entry : entries) {
 			if (this.isExecutable(aPrefix, this.getMaterial(aPrefix, entry))) {
 				if (entry.oreDictName.equals("sandCracked")) {
 					RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(2500)

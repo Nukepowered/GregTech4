@@ -22,8 +22,8 @@ public class ProcessingCircuit implements IOreRecipeRegistrator {
 	}
 
 	// FIXME removing all circuits crafing recipe, then register new
-	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-		for (OreDictEntry entry : dictEntry) {
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
+		for (OreDictEntry entry : entries) {
 			Materials aMaterial = this.getMaterial(aPrefix, entry);
 			if (this.isExecutable(aPrefix, aMaterial)) {
 				switch (aMaterial) {

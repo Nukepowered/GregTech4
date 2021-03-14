@@ -19,8 +19,8 @@ public class ProcessingPlateAlloy implements IOreRecipeRegistrator {
 		OrePrefixes.plateAlloy.add(this);
 	}
 
-	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-		for (OreDictEntry entry : dictEntry) {
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
+		for (OreDictEntry entry : entries) {
 			if (this.isExecutable(aPrefix, this.getMaterial(aPrefix, entry))) {
 				if (entry.oreDictName.equals("plateAlloyCarbon")) {
 					RecipeMaps.ASSEMBLING.factory().EUt(8).duration(6400)

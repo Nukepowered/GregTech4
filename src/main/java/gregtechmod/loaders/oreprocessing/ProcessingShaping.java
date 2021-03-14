@@ -41,8 +41,8 @@ public class ProcessingShaping implements IOreRecipeRegistrator {
 		OrePrefixes.ingot.add(this);
 	}
 
-	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-		for (OreDictEntry e : dictEntry) {
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
+		for (OreDictEntry e : entries) {
 			Materials aMaterial = this.getMaterial(aPrefix, e);
 			if (this.isExecutable(aPrefix, aMaterial) && GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial, 1L) != null && !aMaterial.contains(SubTag.NO_SMELTING)) {
 				int tAmount = (int)(aPrefix.mMaterialAmount / GregTech_API.MATERIAL_UNIT);

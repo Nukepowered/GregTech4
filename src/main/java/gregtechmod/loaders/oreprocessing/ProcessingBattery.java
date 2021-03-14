@@ -20,8 +20,8 @@ public class ProcessingBattery implements IOreRecipeRegistrator {
 		OrePrefixes.battery.add(this);
 	}
 
-	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-		for (OreDictEntry entry : dictEntry) {
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
+		for (OreDictEntry entry : entries) {
 			Materials material = this.getMaterial(aPrefix, entry);
 			if (material == Materials.Lithium && this.isExecutable(aPrefix, material)) {
 				RecipeMaps.ASSEMBLING.factory().EUt(16).duration(12800)

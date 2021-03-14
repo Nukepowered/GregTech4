@@ -31,8 +31,8 @@ public class ProcessingLog implements IOreRecipeRegistrator {
 		OrePrefixes.log.add(this);
 	}
 
-	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-		List<Integer> logs = dictEntry.stream()
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
+		List<Integer> logs = entries.stream()
 			.map(ent -> ent.ores)
 			.flatMap(List::stream)
 			.map(s -> GT_Utility.stackToInt(s))
@@ -42,7 +42,7 @@ public class ProcessingLog implements IOreRecipeRegistrator {
 			RecipeHandler.scheduleSmeltingToRemove((in, out) -> out.isItemEqual(new ItemStack(Items.coal, 1, 1)) && logs.contains(GT_Utility.stackToInt(in)));
 		}
 		
-		for (OreDictEntry entry : dictEntry) {
+		for (OreDictEntry entry : entries) {
 			Materials aMaterial = this.getMaterial(aPrefix, entry);
 			if (this.isExecutable(aPrefix, aMaterial)) {
 				RecipeEntry recEntry = RecipeEntry.fromStacks(entry.ores, Match.STRICT);

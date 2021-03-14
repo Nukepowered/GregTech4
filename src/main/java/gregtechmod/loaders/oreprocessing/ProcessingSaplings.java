@@ -19,8 +19,8 @@ public class ProcessingSaplings implements IOreRecipeRegistrator {
 		OrePrefixes.treeSapling.add((IOreRecipeRegistrator) this);
 	}
 
-	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-		for (OreDictEntry entry : dictEntry) {
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
+		for (OreDictEntry entry : entries) {
 			Materials aMaterial = this.getMaterial(aPrefix, entry);
 			if (this.isExecutable(aPrefix, aMaterial)) {
 				GT_ModHandler.addPulverisationRecipe(entry, 1, GT_OreDictUnificator.get(OrePrefixes.dustSmall, Materials.Wood, 2L), null, 0);

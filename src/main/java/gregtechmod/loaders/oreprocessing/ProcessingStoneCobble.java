@@ -21,8 +21,8 @@ public class ProcessingStoneCobble implements IOreRecipeRegistrator {
 	}
 
 	@Override
-	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-		for (OreDictEntry entry : dictEntry) { 
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
+		for (OreDictEntry entry : entries) { 
 			if (this.isExecutable(aPrefix, this.getMaterial(aPrefix, entry)))
 				RecipeMaps.ASSEMBLING.factory().EUt(1).duration(400).input(OrePrefixes.stick, Materials.Wood).input(RecipeEntry.fromStacks(entry.ores, Match.STRICT)).output(new ItemStack(Blocks.lever, 1)).buildAndRegister();
 		}

@@ -15,8 +15,8 @@ public class ProcessingWax implements IOreRecipeRegistrator {
 	}
 
 	@Override
-	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
-		for (OreDictEntry entry : dictEntry) {
+	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
+		for (OreDictEntry entry : entries) {
 			if (this.isExecutable(aPrefix, this.getMaterial(aPrefix, entry)) && entry.oreDictName.equals("waxMagical")) {
 				RecipeMaps.MAGIC_FUELS.factory().EUt(6).duration(1).input(RecipeEntry.fromStacks(1, entry.ores)).buildAndRegister();
 			}

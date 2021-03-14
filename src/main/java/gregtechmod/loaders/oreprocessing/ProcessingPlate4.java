@@ -16,7 +16,7 @@ public class ProcessingPlate4 implements IOreRecipeRegistrator {
       OrePrefixes.plateQuadruple.add((IOreRecipeRegistrator)this);
    }
 
-   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> dictEntry) {
+   public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
       GT_ModHandler.removeRecipeByOutput(aStack);
       GregTech_API.sRecipeAdder.addCNCRecipe(GT_Utility.copyAmount(1L, new Object[]{aStack}), GT_OreDictUnificator.get(OrePrefixes.gearGt, (Object)aMaterial, 1L), Math.max(aMaterial.getMass() * 2, 1), 32);
       if(!aMaterial.contains(SubTag.NO_SMASHING) && GregTech_API.sRecipeFile.get(GT_ConfigCategories.Tools.hammerquadrupleplate, OrePrefixes.plate.get(aMaterial), true)) {
