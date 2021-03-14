@@ -142,8 +142,9 @@ public class ProcessingDust implements IOreRecipeRegistrator {
 				switch (aMaterial) {
 				case _NULL:
 				case Empty:
-				default:
 					continue;
+				default:
+					break;
 				case Milk:
 					RecipeMaps.CANINNING.factory().EUt(1).duration(100)
 						.input(RecipeEntry.fromStacks(entry.ores, Match.STRICT))
@@ -229,8 +230,6 @@ public class ProcessingDust implements IOreRecipeRegistrator {
 					if (null != tStack && !aMaterial.contains(SubTag.NO_SMELTING)) {
 						if (aMaterial.mBlastFurnaceRequired) {
 							RecipeHandler.scheduleSmeltingToRemove((in, out) -> in.isItemEqual(aStack));
-							if (aStack.isItemEqual(GT_ModHandler.getIC2Item("refinedIronIngot", 1)))
-								GT_ModHandler.removeInductionSmelterRecipe(aStack);
 							if (aMaterial.mBlastFurnaceTemp <= 1000)
 								GT_ModHandler.addRCBlastFurnaceRecipe(GT_Utility.copyAmount(1, aStack), GT_Utility.copyAmount(1, tStack), aMaterial.mBlastFurnaceTemp);
 						} else {

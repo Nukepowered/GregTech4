@@ -30,7 +30,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 
-// FIXME Check turbine when recipes available!
 public class GT_MetaTileEntity_Multi_GasTurbine extends MTEWorkableMultiblock {
 
 	protected int mEfficiencyIncrease = 0;

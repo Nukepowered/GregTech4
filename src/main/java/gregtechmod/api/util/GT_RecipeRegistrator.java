@@ -181,7 +181,7 @@ public class GT_RecipeRegistrator {
 							if (tMat == sMt1) tAmount1++;
 							if (tMat == sMt2) tAmount2++;
 						}
-						for (ItemStack tCrafted : GT_ModHandler.getVanillyToolRecipeOutputs(tRecipe)) {
+						for (ItemStack tCrafted : GT_ModHandler.getVanillyToolRecipeOutputs(tRecipe)) { // TODO vanilla recipe replacement
 							if (aBackMacerating) GT_ModHandler.addPulverisationRecipe(tCrafted, GT_Utility.copyAmount(tAmount1, aOutput), tAmount2>0?GT_Utility.mul(tAmount2, tMt3):null, 100, false);
 							if (aBackSmelting) GT_ModHandler.addSmeltingAndAlloySmeltingRecipe(tCrafted, GT_Utility.copyAmount(tAmount1, tUnificated));
 							if (aRecipeReplacing && aPlate != null && sShapesA[i] != null && sShapesA[i].length > 1) {

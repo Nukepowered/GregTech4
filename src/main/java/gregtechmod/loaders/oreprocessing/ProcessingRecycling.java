@@ -25,7 +25,7 @@ public class ProcessingRecycling implements IOreRecipeRegistrator {
 	}
 
 	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries) {
-		if (aPrefix != OrePrefixes.dust && aPrefix != OrePrefixes.crushed) {
+		if (!aPrefix.toString().startsWith("dust") && !aPrefix.toString().startsWith("crushed")) {
 			for (OreDictEntry entry : entries) {
 				Materials aMaterial = this.getMaterial(aPrefix, entry);
 				if (this.isExecutable(aPrefix, aMaterial) && aMaterial != Materials.Blaze) {

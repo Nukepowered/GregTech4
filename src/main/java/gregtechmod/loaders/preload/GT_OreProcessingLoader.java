@@ -80,11 +80,11 @@ public class GT_OreProcessingLoader implements Runnable {
       new ProcessingShaping();
       new ProcessingGem();
       new ProcessingGear();
-//      new ProcessingIngot1();
-//      new ProcessingIngot2();
-//      new ProcessingIngot3();
-//      new ProcessingIngot4();
-//      new ProcessingIngot5();
+      new ProcessingIngot1();
+      new ProcessingIngot2();
+      new ProcessingIngot3();
+      new ProcessingIngot4();
+      new ProcessingIngot5();
       new ProcessingIngotHot();
       new ProcessingItem();
       new ProcessingLeaves();
