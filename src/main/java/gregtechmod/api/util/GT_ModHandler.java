@@ -425,32 +425,26 @@ public class GT_ModHandler {
 		return true;
 	}
 	
-	@Deprecated
 	public static boolean addPulverisationRecipe(ItemStack aInput, ItemStack aOutput1) {
 		return addPulverisationRecipe(aInput, aOutput1, null, 0, false);
 	}
 	
-	@Deprecated
 	public static boolean addPulverisationRecipe(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2) {
 		return addPulverisationRecipe(aInput, aOutput1, aOutput2, 100, false);
 	}
 	
-	@Deprecated
 	public static boolean addPulverisationRecipe(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2, int aChance) {
 		return addPulverisationRecipe(aInput, aOutput1, aOutput2, aChance, false);
 	}
 	
-	@Deprecated
 	public static boolean addPulverisationRecipe(ItemStack aInput, ItemStack aOutput1, boolean aOverwrite) {
 		return addPulverisationRecipe(aInput, aOutput1, null, 0, aOverwrite);
 	}
 
-	@Deprecated
 	public static boolean addPulverisationRecipe(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2, boolean aOverwrite) {
 		return addPulverisationRecipe(aInput, aOutput1, aOutput2, 100, aOverwrite);
 	}
 	
-	@Deprecated
 	public static boolean addPulverisationRecipe(ItemStack aInput, ItemStack aOutput1, ItemStack aOutput2, int aChance, boolean aOverwrite) {
 		aOutput1 = GT_OreDictUnificator.get(true, aOutput1);
 		aOutput2 = GT_OreDictUnificator.get(true, aOutput2);

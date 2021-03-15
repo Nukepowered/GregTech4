@@ -61,7 +61,7 @@ import gregtechmod.loaders.oreprocessing.ProcessingWax;
 public class GT_OreProcessingLoader implements Runnable {
 
    public void run() {
-      GT_Log.log.info("GT_Mod: Register Ore processing.");
+      GT_Log.log.info("Register Ore processing");
       new ProcessingBattery();
       new ProcessingBlock();
       new ProcessingBolt();
@@ -93,12 +93,12 @@ public class GT_OreProcessingLoader implements Runnable {
       new ProcessingOre();
       new ProcessingOreSmelting();
       new ProcessingPlank();
-//      new ProcessingPlate1();
-//      new ProcessingPlate2();
-//      new ProcessingPlate3();
-//      new ProcessingPlate4();
-//      new ProcessingPlate5();
-//      new ProcessingPlate9();
+      new ProcessingPlate1();
+      new ProcessingPlate2();
+      new ProcessingPlate3();
+      new ProcessingPlate4();
+      new ProcessingPlate5();
+      new ProcessingPlate9();
       new ProcessingPlateAlloy();
       new ProcessingRecycling();
       new ProcessingRing();

@@ -113,6 +113,7 @@ public class RecipeHandler {
 				if (matcher.matches(recipe)) {
 					if (!matcher.isReusable()) iter1.remove();
 					iter.remove();
+					break;
 				}
 			}
 		}
@@ -246,6 +247,33 @@ public class RecipeHandler {
 		@Override
 		public boolean matches(IRecipe recipe) {
 			return recipe.matches(crafting, GregTech_API.sDummyWorld);
+		}
+		
+		@Override
+		public boolean isReusable() {
+			return reusable;
+		}
+	}
+	
+	/**
+	 * An output finder implementation
+	 * @author TheDarkDnKTv
+	 *
+	 */
+	public static class OutputMatcher implements IRecipeMatcher {
+		
+		private final boolean reusable;
+		private final ItemStack output;
+		
+		public OutputMatcher(boolean reusable, ItemStack output) {
+			Objects.requireNonNull(output);
+			this.reusable = reusable;
+			this.output = output;
+		}
+
+		@Override
+		public boolean matches(IRecipe recipe) {
+			return recipe.getRecipeOutput().isItemEqual(output);
 		}
 		
 		@Override

@@ -34,13 +34,13 @@ public class ProcessingIngot2 implements IOreRecipeRegistrator {
 					RecipeMaps.BENDING.factory().EUt(24).setShaped(true)
 						.duration(Math.max(aMaterial.getMass() * 2, 1))
 						.input(RecipeEntry.fromStacks(entry.ores, Match.STRICT))
-						.input(GT_Items.Circuit_Integrated.getWithDamage(0, 1))
+						.nonConsumable(GT_Items.Circuit_Integrated.getWithDamage(0, 1))
 						.output(GT_OreDictUnificator.get(OrePrefixes.plateDouble, aMaterial, 1L))
 						.buildAndRegister();
 					RecipeMaps.BENDING.factory().EUt(24).setShaped(true)
 						.duration(Math.max(aMaterial.getMass() * 4, 1))
 						.input(RecipeEntry.fromStacks(2, entry.ores, Match.STRICT))
-						.input(GT_Items.Circuit_Integrated.getWithDamage(0, 2))
+						.nonConsumable(GT_Items.Circuit_Integrated.getWithDamage(0, 2))
 						.output(GT_OreDictUnificator.get(OrePrefixes.plateQuadruple, aMaterial, 1L))
 						.buildAndRegister();
 				}
