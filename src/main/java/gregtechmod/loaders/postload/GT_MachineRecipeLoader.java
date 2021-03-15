@@ -37,7 +37,6 @@ public class GT_MachineRecipeLoader implements Runnable
         GT_ModHandler.addSmeltingRecipe(GT_Items.Food_Potato_On_Stick.get(1L), GT_Items.Food_Potato_On_Stick_Roasted.get(1L));
         GT_ModHandler.addSmeltingRecipe(new ItemStack(Items.slime_ball, 1), GT_Items.IC2_Resin.get(1L));
         GT_ModHandler.addSmeltingRecipe(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.HydratedCoal, 1L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Coal, 1L));
-        // FIXME change names of recipes to OreDict entrties
         GT_ModHandler.addExtractionRecipe(new ItemStack(Items.slime_ball, 1), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Rubber, 2L));
         GT_ModHandler.addExtractionRecipe(GT_Items.IC2_Resin.get(1L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Rubber, 3L));
         GT_ModHandler.addExtractionRecipe(GT_ModHandler.getIC2Item("rubberSapling", 1L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Rubber, 1L));

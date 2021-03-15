@@ -5,13 +5,18 @@ import gregtechmod.api.enums.GT_ConfigCategories;
 import gregtechmod.api.enums.GT_ToolDictNames;
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
+import gregtechmod.common.RecipeHandler;
+import gregtechmod.common.RecipeHandler.IRecipeMatcher;
+import gregtechmod.common.RecipeHandler.InventoryRecipeMatcher;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 
 /**
  * Class for Automatic Recipe registering.
@@ -134,54 +139,40 @@ public class GT_RecipeRegistrator {
 		if (aPlate != null && GT_OreDictUnificator.getFirstOre(aPlate, 1) == null) aPlate = null;
 		
 		if (!GT_Utility.areStacksEqual(GT_OreDictUnificator.get(aMat), new ItemStack(Items.iron_ingot, 1))) {
-			if ((tStack = GT_ModHandler.getRecipeOutput(new ItemStack[] {aMat, null, aMat, null, aMat, null, null, null, null})) != null)
-				if (GT_Utility.areStacksEqual(tStack, new ItemStack(Items.bucket, 1)))
-					GT_ModHandler.removeRecipe(aMat, null, aMat, null, aMat, null, null, null, null);
-			if ((tStack = GT_ModHandler.getRecipeOutput(new ItemStack[] {null, null, null, aMat, null, aMat, null, aMat, null})) != null)
-				if (GT_Utility.areStacksEqual(tStack, new ItemStack(Items.bucket, 1)))
-					GT_ModHandler.removeRecipe(null, null, null, aMat, null, aMat, null, aMat, null);
-			if ((tStack = GT_ModHandler.getRecipeOutput(new ItemStack[] {aMat, null, aMat, aMat, aMat, aMat, null, null, null})) != null)
-				if (GT_Utility.areStacksEqual(tStack, new ItemStack(Items.minecart, 1)))
-					GT_ModHandler.removeRecipe(aMat, null, aMat, aMat, aMat, aMat, null, null, null);
-			if ((tStack = GT_ModHandler.getRecipeOutput(new ItemStack[] {null, null, null, aMat, null, aMat, aMat, aMat, aMat})) != null)
-				if (GT_Utility.areStacksEqual(tStack, new ItemStack(Items.minecart, 1)))
-					GT_ModHandler.removeRecipe(null, null, null, aMat, null, aMat, aMat, aMat, aMat);
+			RecipeHandler.scheduleCraftingToRemove(new DoubleMatcher(new ItemStack(Items.bucket, 1), false, aMat, null, aMat, null, aMat, null, null, null, null));
+			RecipeHandler.scheduleCraftingToRemove(new DoubleMatcher(new ItemStack(Items.bucket, 1), false, null, null, null, aMat, null, aMat, null, aMat, null));
+			RecipeHandler.scheduleCraftingToRemove(new DoubleMatcher(new ItemStack(Items.minecart, 1), false, aMat, null, aMat, aMat, aMat, aMat, null, null, null));
+			RecipeHandler.scheduleCraftingToRemove(new DoubleMatcher(new ItemStack(Items.minecart, 1), false, null, null, null, aMat, null, aMat, aMat, aMat, aMat));
 		}
 		
+		// Shitcode, but i do not want to solve it :P
 		if (aBackMacerating || aBackSmelting) {
 			sMt1.func_150996_a(aMat.getItem());
 			sMt1.stackSize = 1;
 			Items.feather.setDamage(sMt1, Items.feather.getDamage(aMat));
 			
-			for (ItemStack[] tRecipe : sShapes1) {
-				if (tRecipe != null) {
-					int tAmount1 = 0;
-					for (ItemStack tMat : tRecipe) {
-						if (tMat == sMt1) tAmount1++;
-					}
-					for (ItemStack tCrafted : GT_ModHandler.getRecipeOutputs(tRecipe)) {
-						if (aBackMacerating) GT_ModHandler.addPulverisationRecipe(tCrafted, GT_Utility.copyAmount(tAmount1, aOutput), null, 0, false);
-						if (aBackSmelting) GT_ModHandler.addSmeltingAndAlloySmeltingRecipe(tCrafted, GT_Utility.copyAmount(tAmount1, tUnificated));
-					}
+			for (int i = 0; i < sShapes1.length; i++) {
+				ItemStack[] tRecipe = sShapes1[i];
+				int tAmount1 = 0;
+				for (ItemStack tMat : tRecipe)
+					if (tMat == sMt1) tAmount1++;
+				for (ItemStack tCrafted : GT_ModHandler.getRecipeOutputs(tRecipe)) {
+					if (aBackMacerating) GT_ModHandler.addPulverisationRecipe(tCrafted, GT_Utility.copyAmount(tAmount1, aOutput), null, 0, false);
+					final ItemStack tmp = GT_Utility.copyAmount(tAmount1, tUnificated);
+					if (aBackSmelting) RecipeHandler.executeOnFinish(() -> GT_ModHandler.addSmeltingAndAlloySmeltingRecipe(tCrafted, tmp));
 				}
-			}
-			
-		    for (Materials tMaterial : sRodMaterialList) {
-		    	ItemStack tMt2 = GT_OreDictUnificator.get(OrePrefixes.stick, tMaterial, 1), tMt3 = GT_OreDictUnificator.get(OrePrefixes.dustSmall, tMaterial, 2);
-		    	if (tMt2 != null) {
-					sMt2.func_150996_a(tMt2.getItem());
-					sMt2.stackSize = 1;
-					Items.feather.setDamage(sMt2, Items.feather.getDamage(tMt2));
-					
-					for (int i = 0; i < sShapes1.length; i++) {
-						ItemStack[] tRecipe = sShapes1[i];
+				
+				for (Materials tMaterial : sRodMaterialList) {
+					ItemStack tMt2 = GT_OreDictUnificator.get(OrePrefixes.stick, tMaterial, 1), tMt3 = GT_OreDictUnificator.get(OrePrefixes.dustSmall, tMaterial, 2);
+			    	if (tMt2 != null) {
+						sMt2.func_150996_a(tMt2.getItem());
+						sMt2.stackSize = 1;
+						Items.feather.setDamage(sMt2, Items.feather.getDamage(tMt2));
 						
-						int tAmount1 = 0, tAmount2 = 0;
-						for (ItemStack tMat : tRecipe) {
-							if (tMat == sMt1) tAmount1++;
+						int tAmount2 = 0;
+						for (ItemStack tMat : tRecipe) 
 							if (tMat == sMt2) tAmount2++;
-						}
-						for (ItemStack tCrafted : GT_ModHandler.getVanillyToolRecipeOutputs(tRecipe)) { // TODO vanilla recipe replacement
+						for (ItemStack tCrafted : GT_ModHandler.getVanillyToolRecipeOutputs(tRecipe)) {
 							if (aBackMacerating) GT_ModHandler.addPulverisationRecipe(tCrafted, GT_Utility.copyAmount(tAmount1, aOutput), tAmount2>0?GT_Utility.mul(tAmount2, tMt3):null, 100, false);
 							if (aBackSmelting) GT_ModHandler.addSmeltingAndAlloySmeltingRecipe(tCrafted, GT_Utility.copyAmount(tAmount1, tUnificated));
 							if (aRecipeReplacing && aPlate != null && sShapesA[i] != null && sShapesA[i].length > 1) {
@@ -196,9 +187,9 @@ public class GT_RecipeRegistrator {
 								}
 							}
 						}
-					}
-		    	}
-		    }
+			    	}
+				}
+			}
 		}
 	}
 	
@@ -297,4 +288,31 @@ public class GT_RecipeRegistrator {
 		{"Scythe"						, s_I+s_P+s_H, s_R+s_F+s_P, s_R+" "+" "},
 		{"Scythe"						, s_H+s_P+s_I, s_P+s_F+s_R, " "+" "+s_R}
 	};
+	
+	/** Matches fisrt output, then check recipe
+	 * @author TheDarkDnKTv
+	 */
+	public static class DoubleMatcher implements IRecipeMatcher {
+		
+		private RecipeHandler.InventoryRecipeMatcher matcher;
+		private ItemStack output;
+		
+		public DoubleMatcher(ItemStack output, boolean reusable, ItemStack...pseudoInventory) {
+			Objects.requireNonNull(output);
+			Objects.requireNonNull(pseudoInventory);
+			if (GT_Utility.isStackInvalid(output) || pseudoInventory.length < 1) throw new IllegalArgumentException();
+			this.matcher = new InventoryRecipeMatcher(reusable, pseudoInventory);
+			this.output = output;
+		}
+		
+		@Override
+		public boolean matches(IRecipe recipe) {
+			return recipe.getRecipeOutput() != null && output.isItemEqual(recipe.getRecipeOutput()) && matcher.matches(recipe);
+		}
+		
+		@Override
+		public boolean isReusable() {
+			return matcher.isReusable();
+		}
+	}
 }

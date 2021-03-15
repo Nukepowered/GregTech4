@@ -14,6 +14,8 @@ import gregtechmod.api.recipe.RecipeFactory;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
+import gregtechmod.api.util.GT_RecipeRegistrator;
+import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.OreDictEntry;
 
 import gregtechmod.common.RecipeHandler;
@@ -114,13 +116,13 @@ public class ProcessingIngot1 implements IOreRecipeRegistrator {
 						RecipeHandler.scheduleSmeltingToRemove((in, out) -> in.isItemEqual(tStack));
 					}
 
-//					GT_RecipeRegistrator.registerUsagesForMaterials(GT_Utility.copyAmount(1, aStack), // TODO vanilla recipe replcer
-//							GT_Utility.copyAmount(1L, new Object[] { tStack }), OrePrefixes.plate.get(aMaterial),
-//							!aMaterial.contains(SubTag.NO_SMELTING), true, !aMaterial.contains(SubTag.NO_SMASHING));
+					GT_RecipeRegistrator.registerUsagesForMaterials(GT_Utility.copyAmount(1, entry.ores.get(0)), // TODO vanilla recipe replcer
+							GT_Utility.copyAmount(1, tStack), OrePrefixes.plate.get(aMaterial),
+							!aMaterial.contains(SubTag.NO_SMELTING), true, !aMaterial.contains(SubTag.NO_SMASHING));
 				} else {
-//					GT_RecipeRegistrator.registerUsagesForMaterials(GT_Utility.copyAmount(1, aStack),
-//							GT_Utility.copyAmount(1, aStack), OrePrefixes.plate.get(aMaterial),
-//							!aMaterial.contains(SubTag.NO_SMELTING), false, !aMaterial.contains(SubTag.NO_SMASHING));
+					GT_RecipeRegistrator.registerUsagesForMaterials(GT_Utility.copyAmount(1, entry.ores.get(0)),
+							GT_Utility.copyAmount(1, entry.ores.get(0)), OrePrefixes.plate.get(aMaterial),
+							!aMaterial.contains(SubTag.NO_SMELTING), false, !aMaterial.contains(SubTag.NO_SMASHING));
 				}
 
 				if (aMaterial == Materials.Mercury) {
