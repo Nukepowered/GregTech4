@@ -44,7 +44,12 @@ public class GT_CoolantCell_Item extends GT_Generic_Item {
 	@Override
 	public void addAdditionalToolTips(List aList, ItemStack aStack) {
 		super.addAdditionalToolTips(aList, aStack);
-		aList.add(I18n.format("item.coolant.stored.tooltip", getHeatOfStack(aStack)));
+		int heat = getHeatOfStack(aStack);
+		if (heat > 0) {
+			aList.add(I18n.format("ic2.reactoritem.heatwarning.line1"));
+			aList.add(I18n.format("ic2.reactoritem.heatwarning.line2"));
+		}
+		aList.add(I18n.format("item.coolant.stored.tooltip", heat));
 	}
 	
     protected static int getHeatOfStack(ItemStack aStack) {
