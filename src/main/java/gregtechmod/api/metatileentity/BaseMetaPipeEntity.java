@@ -7,6 +7,7 @@ import gregtechmod.api.util.*;
 import gregtechmod.common.network.packet.GT_TileEntityPacket;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,6 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
-import scala.actors.threadpool.Arrays;
 
 /**
  * NEVER INCLUDE THIS FILE IN YOUR MOD!!!

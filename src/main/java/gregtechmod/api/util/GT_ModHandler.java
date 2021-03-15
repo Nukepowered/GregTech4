@@ -9,6 +9,7 @@ import gregtechmod.api.items.GT_Tool_Item;
 import gregtechmod.common.recipe.RecipeEntry;
 import gregtechmod.common.recipe.RecipeMaps;
 import gregtechmod.common.recipe.RecipeEntry.Match;
+
 import ic2.api.item.IBoxable;
 import ic2.api.item.IElectricItem;
 import ic2.api.recipe.IRecipeInput;
@@ -17,6 +18,7 @@ import ic2.api.recipe.RecipeOutput;
 import java.lang.reflect.Method;
 import java.util.*;
 
+import cofh.thermalexpansion.api.crafting.recipes.ISmelterRecipe;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,6 +38,8 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.Event;
 import cpw.mods.fml.common.registry.GameRegistry;
 
@@ -506,7 +510,7 @@ public class GT_ModHandler {
 					addSawmillRecipe(aInput, amount, aChance, aOutput1, aOutput2);
 				}
 			} else {
-				if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.rockcrushing, aInput.oreDictName, true)) {
+				if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.rockcrushing, aInput.oreDictName, true) && Loader.isModLoaded("Railcraft")) {
 					for (ItemStack stack : aInput.ores) {
 						if (Block.getBlockFromItem(stack.getItem()) != Blocks.obsidian) {
 							mods.railcraft.api.crafting.IRockCrusherRecipe tRecipe = mods.railcraft.api.crafting.RailcraftCraftingManager.rockCrusher.createNewRecipe(GT_Utility.copyAmount(1, stack), stack.getItemDamage() != GregTech_API.ITEM_WILDCARD_DAMAGE, false);
@@ -579,7 +583,7 @@ public class GT_ModHandler {
 	public static boolean removeInductionSmelterRecipe(ItemStack output) {
 		if (GT_Utility.isStackInvalid(output)) return false;
 		try {
-			for (cofh.thermalexpansion.api.crafting.recipes.ISmelterRecipe recipe : cofh.thermalexpansion.util.crafting.SmelterManager.getRecipeList()) {
+			for (ISmelterRecipe recipe : cofh.thermalexpansion.util.crafting.SmelterManager.getRecipeList()) {
 				if (recipe.getPrimaryOutput().isItemEqual(output)) {
 					cofh.thermalexpansion.util.crafting.SmelterManager.removeRecipe(recipe.getPrimaryInput(), recipe.getSecondaryInput());
 					break;

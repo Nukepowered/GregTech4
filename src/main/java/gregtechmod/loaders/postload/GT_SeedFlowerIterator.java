@@ -6,13 +6,16 @@ import com.mojang.authlib.GameProfile;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_Items;
+import gregtechmod.api.enums.Materials;
+import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
+
 import gregtechmod.common.GT_DummyWorld;
-import gregtechmod.common.items.GT_MetaItem_Cell;
 import gregtechmod.common.recipe.RecipeMaps;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -41,17 +44,17 @@ public class GT_SeedFlowerIterator implements Runnable {
 					} else {
 						tSeed = GT_Utility.copy(tSeed);
 						tSeed.stackSize = 64;
-						RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(200).setShaped(true).inputs(GT_Items.Cell_Empty.get(1), tSeed).output(GT_MetaItem_Cell.instance.getStack(24, 1)).buildAndRegister();
+						RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(200).setShaped(true).input(tSeed).input(GT_Items.Cell_Empty.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.SeedOil)).buildAndRegister();
 					}
 				}
 			}
 			
 			GT_Log.log.info("GT_Mod: Iterating through the Grass-Flower-List of ForgeHooks, with a brilliant and 100% Reflection-free Method, to add Extractor Recipes for gaining more Dye from Flowers and also Compression Recipes for Plantballs.");
 			tWorld.mRandom.mIterationStep = Integer.MAX_VALUE;
-			while (tWorld.mRandom.mIterationStep > 0 && tWorld.mRandom.mIterationStep < 10000) {
+			while (tWorld.mRandom.mIterationStep > 1) {
 				try {
 //					ForgeHooks.plantGrass(tWorld, 24, 65, 24); // TODO; do not planting grass
-					ItemDye.applyBonemeal(new ItemStack(Items.dye, 64, 0), tWorld, 24, 65, 24, new EntityPlayer(tWorld, new GameProfile(UUID.randomUUID(), "ILYAPIDOR")) {
+					ItemDye.applyBonemeal(new ItemStack(Items.dye, 64, 0), tWorld, 24, 64, 24, new EntityPlayer(tWorld, new GameProfile(UUID.randomUUID(), "ILYAPIDOR")) {
 						@Override
 						public ChunkCoordinates getPlayerCoordinates() {return null;}
 						@Override
@@ -82,9 +85,9 @@ public class GT_SeedFlowerIterator implements Runnable {
 			GT_Log.log.info("GT_Mod: Forestry was properly loaded, so the Seed Recipes got added to the Squeezer.");
 		} else {
 			GT_Log.log.info("GT_Mod: Forestry was NOT loaded, so the Recipes got added to the Industrial Centrifuge.");
-			RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(200).setShaped(true).inputs(GT_Items.Cell_Empty.get(1), new ItemStack(Items.melon_seeds, 64, 0)).output(GT_MetaItem_Cell.instance.getStack(24, 1)).buildAndRegister();
-			RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(200).setShaped(true).inputs(GT_Items.Cell_Empty.get(1), new ItemStack(Items.pumpkin_seeds, 64, 0)).output(GT_MetaItem_Cell.instance.getStack(24, 1)).buildAndRegister();
-			RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(200).setShaped(true).inputs(GT_Items.Cell_Empty.get(1), new ItemStack(Items.wheat_seeds, 64, 0)).output(GT_MetaItem_Cell.instance.getStack(24, 1)).buildAndRegister();
+			RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(200).setShaped(true).input(new ItemStack(Items.melon_seeds, 64, 0)).input(GT_Items.Cell_Empty.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.SeedOil)).buildAndRegister();
+			RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(200).setShaped(true).input(new ItemStack(Items.pumpkin_seeds, 64, 0)).input(GT_Items.Cell_Empty.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.SeedOil)).buildAndRegister();
+			RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(200).setShaped(true).input(new ItemStack(Items.wheat_seeds, 64, 0)).input(GT_Items.Cell_Empty.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.SeedOil)).buildAndRegister();
 	    }
 		
         GT_ModHandler.addExtractionRecipe(new ItemStack(Blocks.red_flower, 1, 0), new ItemStack(Items.dye, 3, 1));

@@ -68,7 +68,7 @@ public final class ItemStackKey {
 	
 	@Override
 	public boolean equals(Object obj) {
-		return obj instanceof ItemStackKey ? this.isStackEquals(((ItemStackKey) obj).stack) : false;
+		return this == obj || obj instanceof ItemStackKey ? this.isStackEquals(((ItemStackKey) obj).stack) : false;
 	}
 	
 	@Override

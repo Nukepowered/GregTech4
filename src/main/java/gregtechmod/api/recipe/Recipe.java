@@ -2,6 +2,7 @@ package gregtechmod.api.recipe;
 
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.ItemStackKey;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,6 +15,8 @@ import java.util.Random;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
+
+import com.google.common.collect.Lists;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -392,6 +395,12 @@ public class Recipe {
 		return null;
 	}
 	
+	public static boolean doesListSame(List<ItemStack> list1, List<ItemStack> list2) {
+		List<ItemStackKey> comp1 = Lists.transform(list1, s -> ItemStackKey.from(s));
+		List<ItemStackKey> comp2 = Lists.transform(list2, s -> ItemStackKey.from(s));
+		return comp1.size() == comp2.size() && comp1.containsAll(comp2);
+	}
+	
 	///////////////
 	// OVERRIDES //
 	///////////////
@@ -419,7 +428,7 @@ public class Recipe {
 					r.EUt == this.EUt &&
 					r.startEU == this.startEU &&
 					r.itemInputs.equals(itemInputs)) &&
-					r.itemOutputs.equals(itemOutputs) &&
+					doesListSame(r.itemOutputs, itemOutputs) &&
 					r.chancedOutputs.equals(chancedOutputs) &&
 					r.fluidInputs.equals(fluidInputs) &&
 					r.fluidOutputs.equals(fluidOutputs) &&
