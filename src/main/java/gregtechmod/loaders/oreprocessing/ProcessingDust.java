@@ -11,9 +11,9 @@ import gregtechmod.api.recipe.RecipeFactory;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
-import gregtechmod.api.util.GT_Shaped_Recipe;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.OreDictEntry;
+
 import gregtechmod.common.RecipeHandler;
 import gregtechmod.common.recipe.RecipeEntry;
 import gregtechmod.common.recipe.RecipeMaps;
@@ -25,6 +25,7 @@ import java.util.List;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.ShapedOreRecipe;
 
 public class ProcessingDust implements IOreRecipeRegistrator {
 
@@ -67,9 +68,8 @@ public class ProcessingDust implements IOreRecipeRegistrator {
 				}
 				
 				RecipeHandler.executeOnFinish(() -> {
-					GameRegistry.addRecipe(new GT_Shaped_Recipe(GT_OreDictUnificator.get(OrePrefixes.dustSmall, aMaterial, 4), new Object[]{" X", "  ", 'X', entry.oreDictName}));
-					GameRegistry.addRecipe(new GT_Shaped_Recipe(GT_OreDictUnificator.get(OrePrefixes.dustTiny, aMaterial, 9), new Object[]{"X ", "  ", 'X', entry.oreDictName}));
-
+					GameRegistry.addRecipe(new ShapedOreRecipe(GT_OreDictUnificator.get(OrePrefixes.dustSmall, aMaterial, 4), new Object[]{" X", "  ", 'X', entry.oreDictName}).setMirrored(false));
+					GameRegistry.addRecipe(new ShapedOreRecipe(GT_OreDictUnificator.get(OrePrefixes.dustTiny, aMaterial, 9), new Object[]{"X ", "  ", 'X', entry.oreDictName}).setMirrored(false));
 				});
 								
 				if (GT_OreDictUnificator.get(OrePrefixes.cell, aMaterial, 1) != null) {

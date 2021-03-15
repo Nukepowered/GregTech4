@@ -27,7 +27,6 @@ import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.ProgressManager;
 import cpw.mods.fml.common.ProgressManager.ProgressBar;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.registry.GameData;
 
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
@@ -575,7 +574,7 @@ public class GT_OreDictHandler {
 			for (OreDictEntry entry : e.getValue()) {
 				for (ItemStack ore : entry.ores) {
 					GT_OreDictUnificator.addAssociation(entry.oreDictName, ore);
-					String modName = GameData.getItemRegistry().getNameForObject(ore.getItem());
+					String modName = entry.modMap.get(ore);
 					
 					if (GT_OreDictUnificator.isBlacklisted(ore)) {
 						continue;

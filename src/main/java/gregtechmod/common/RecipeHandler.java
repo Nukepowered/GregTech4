@@ -19,6 +19,8 @@ import gregtechmod.api.util.GT_Utility;
 import ic2.api.recipe.IRecipeInput;
 import ic2.api.recipe.RecipeOutput;
 
+import cpw.mods.fml.common.Loader;
+
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -144,6 +146,13 @@ public class RecipeHandler {
 		GT_Log.log.info(String.format("\tIC2 Recipe processor finished for %.3f seconds", (System.currentTimeMillis() - time) / 1000.0F));
 	}
 	
+	private static void processTE() {
+		// Removing TE recipes
+		if (Loader.isModLoaded("ThermalExpansion")) {
+			cofh.thermalexpansion.ThermalExpansion.config.set("RecipeManagers.Smelter.Recipes", "Steel", false);
+		}
+	}
+	
 	/**
 	 * Called on POST to proceed all job 
 	 */
@@ -153,6 +162,7 @@ public class RecipeHandler {
 		processSmelting();
 		processCrafting();
 		processIC2();
+		processTE();
 		proceedTasks();
 		
 		craftingRemove = null;

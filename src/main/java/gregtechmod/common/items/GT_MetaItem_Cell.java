@@ -5,6 +5,7 @@ import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
+import gregtechmod.common.RecipeHandler;
 import net.minecraft.item.ItemStack;
 
 public class GT_MetaItem_Cell extends GT_MetaItem_Abstract {
@@ -25,7 +26,7 @@ public class GT_MetaItem_Cell extends GT_MetaItem_Abstract {
 		
 		instance.mStackList[aMeta] = new ItemStack(instance, 1, aMeta);
 		
-		GT_ModHandler.addExtractionRecipe(instance.getUnunifiedStack(aMeta, 1), GT_ModHandler.getEmptyCell(1));
+		RecipeHandler.executeOnFinish(() -> GT_ModHandler.addExtractionRecipe(instance.getUnunifiedStack(aMeta, 1), GT_ModHandler.getEmptyCell(1)));
 		
 		if (aPlasma)
 			GT_OreDictUnificator.addLater(OrePrefixes.cellPlasma, aMaterial, instance.getUnunifiedStack(aMeta, 1));

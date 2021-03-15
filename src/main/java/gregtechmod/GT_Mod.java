@@ -1079,7 +1079,7 @@ public class GT_Mod implements IGT_Mod {
             		GT_Log.log.error("Sorry, but this Error is serious enough to justify this Wall-O-Text and the partially Allcapsed Language.");
             		item.setStackDisplayName("ERROR! PLEASE CHECK YOUR LOG FOR \'GT-ERR-01\'!");
             	} else {
-            		GT_OreDictUnificator.setStack(item);
+//            		GT_OreDictUnificator.setStack(item);
             	}
             }
 
