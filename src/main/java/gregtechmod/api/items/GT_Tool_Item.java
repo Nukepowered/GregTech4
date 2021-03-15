@@ -79,7 +79,7 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	}
 	
 	public final GT_Tool_Item addToBlockList(ItemStack aBlock) {
-		return addToBlockList(Block.getBlockFromItem(aBlock.getItem())); // TODO mb not work
+		return addToBlockList(Block.getBlockFromItem(aBlock.getItem()));
 	}
 	
 	public final GT_Tool_Item addToBlockList(Block aBlock) {
@@ -298,10 +298,10 @@ public class GT_Tool_Item extends GT_Generic_Item {
         return false;
     }
 	
-	@SuppressWarnings({ "rawtypes", "unchecked", "deprecation" })
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-    public Multimap getItemAttributeModifiers() {
-        Multimap multimap = super.getItemAttributeModifiers();
+    public Multimap getAttributeModifiers(ItemStack stack) {
+        Multimap multimap = super.getAttributeModifiers(stack);
         multimap.put(SharedMonsterAttributes.attackDamage.getAttributeUnlocalizedName(), new AttributeModifier(field_111210_e, "Weapon modifier", mEntityDamage>0?mEntityDamage:1, 0));
         return multimap;
     }

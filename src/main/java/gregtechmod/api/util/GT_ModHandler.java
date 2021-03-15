@@ -727,6 +727,10 @@ public class GT_ModHandler {
 		return true;
 	}
 	
+	public static boolean addCompressionRecipe(IRecipeInput aInput, ItemStack aOutput) {
+		return GT_Utility.addSimpleIC2MachineRecipe(aInput, getCompressorRecipeList(), null, aOutput);
+	}
+	
 	public static boolean addCompressionRecipe(OreDictEntry aInput, int amount, ItemStack aOutput) {
 		aOutput = GT_OreDictUnificator.get(true, aOutput);
 		if (aInput == null || aOutput == null) return false;

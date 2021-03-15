@@ -434,7 +434,6 @@ public abstract class MetaTileEntityMultiblock extends MetaTileEntity {
 					int toFill = resource.amount <= space  ? resource.amount : space;
 					if (doFill) {
 						stackInSlot.amount += toFill;
-						// TODO could be dupe, may change resource
 					}
 					
 					return toFill;

@@ -945,7 +945,7 @@ public class GT_Mod implements IGT_Mod {
 				}
 			}
             
-            GT_Log.log.info("Unificating outputs of all known Recipe Types."); // FIXME remove this нахуй
+            GT_Log.log.info("Unificating outputs of all known Recipe Types.");
             ArrayList<ItemStack> items = new ArrayList<ItemStack>();
             GT_Log.log.info("IC2 Machines");
             

@@ -11,6 +11,7 @@ import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.recipe.Ingredient;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
+import ic2.api.recipe.IRecipeInput;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -18,7 +19,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * @author TheDarkDnKTv
  *
  */
-public class UnifierRecipeEntry implements Ingredient {
+public class UnifierRecipeEntry implements Ingredient, IRecipeInput  {
 	
 	private final OrePrefixes prefix;
 	private final Materials material;
@@ -79,5 +80,24 @@ public class UnifierRecipeEntry implements Ingredient {
 	public String toString() {
 		ToStringBuilder.setDefaultStyle(ToStringStyle.SHORT_PREFIX_STYLE);
 		return new ToStringBuilder(this).build();
+	}
+
+	////////////////
+	// IC2 Compat //
+	////////////////
+	
+	@Override
+	public boolean matches(ItemStack subject) {
+		return match(subject);
+	}
+
+	@Override
+	public int getAmount() {
+		return getCount();
+	}
+
+	@Override
+	public List<ItemStack> getInputs() {
+		return getVariants();
 	}
 }

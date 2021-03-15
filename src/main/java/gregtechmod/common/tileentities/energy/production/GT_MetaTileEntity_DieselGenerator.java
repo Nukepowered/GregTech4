@@ -36,14 +36,4 @@ public class GT_MetaTileEntity_DieselGenerator extends GT_MetaTileEntity_BasicGe
 	public String getDescription() {
 		return "metatileentity.GT_DieselGenerator.tooltip";
 	}
-	
-//	@Override // TODO fuels!
-//	public int getFuelValue(ItemStack aStack) {
-//		int rValue = Math.max(GT_ModHandler.getFuelCanValue(aStack) * 6 / 5, super.getFuelValue(aStack));
-//		if (GT_Items.Fuel_Can_Plastic_Filled.isStackEqual(aStack, false, true)) {
-//			rValue = Math.max(rValue, GameRegistry.getFuelValue(aStack) * 3);
-//		}
-//
-//		return rValue;
-//	}
 }

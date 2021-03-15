@@ -10,7 +10,7 @@ public interface IOreRecipeRegistrator {
 	/**
 	 * Contains a Code Fragment, used in the OrePrefix to register Recipes. Better than using a switch/case, like I did before.
 	 * @param aPrefix always != null
-	 * @param entries TODO
+	 * @param entries
 	 */
 	public void registerOre(OrePrefixes aPrefix, List<OreDictEntry> entries);
 	

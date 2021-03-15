@@ -32,7 +32,7 @@ public class GT_MetaTileEntity_BronzeSteamHammer extends GT_MetaTileEntity_Basic
 //	@Override
 //    public void checkRecipe() {
 //		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 1, 2, (byte)64, (byte)1, (byte)64, (byte)1);
-//		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 3, 4, (byte)64, (byte)1, (byte)64, (byte)1); // TODO
+//		GT_Utility.moveStackFromSlotAToSlotB(getBaseMetaTileEntity(), getBaseMetaTileEntity(), 3, 4, (byte)64, (byte)1, (byte)64, (byte)1); // TODO Generater this recipes
 //    	if (mInventory[2] != null) {
 //			String tOreName = GT_OreDictUnificator.getAssociation(mInventory[2]);
 //	    	if (tOreName != null) {

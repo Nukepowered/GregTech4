@@ -37,7 +37,7 @@ public class RecipeMaps {
 	public static final RecipeMap<SimpleRecipeFactory> 			LATHE				= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory>			CUTTING				= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory());
 	public static final RecipeMap<SimpleRecipeFactory> 			EXTRUDING			= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory());
-	public static final RecipeMap<SimpleRecipeFactory>			HAMMER				= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory()); // TODO generate recipes according on code in Bronze hamerrer
+	public static final RecipeMap<SimpleRecipeFactory>			HAMMER				= new RecipeMap<>(1, 2, 1, 2, new SimpleRecipeFactory());
 	public static final RecipeMapPrinter			   			PRINTER				= new RecipeMapPrinter(1, 3, 1, 2);
 	public static final PulverizerRecipeMap			   			PULVERIZING 		= new PulverizerRecipeMap(1, 2, 1, 4);
 	
