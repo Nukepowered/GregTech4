@@ -968,7 +968,7 @@ public class BaseMetaPipeEntity extends BaseTileEntity implements IGregTechTileE
 	}
 	
 	@Override
-	public boolean injectEnergyUnits(byte aSide, int aVoltage, int aAmperage) {
+	public boolean injectEnergyUnits(byte aSide, int aVoltage, double aAmperage) {
 		return false;
 	}
 	

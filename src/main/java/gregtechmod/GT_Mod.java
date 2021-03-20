@@ -236,6 +236,12 @@ public class GT_Mod implements IGT_Mod {
         	}
         }
         
+        try {
+        	Class.forName("ic2.core.energy.Grid");
+        } catch (Throwable e) {
+        	GT_Log.log.catching(e);
+        }
+        
         MinecraftForge.EVENT_BUS.register(this);
     	new GT_Cover_None();
 		new GT_Cover_Generic();

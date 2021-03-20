@@ -61,6 +61,8 @@ repositories {
 jar {
 	manifest {
 		attributes 'FMLAT': 'gregtech_at.cfg'
+		attributes 'FMLCorePluginContainsFMLMod': 'true'
+		attributes 'FMLCorePlugin': 'gregtechmod.common.asm.GT_CoreMod'
 	}
 }
 

@@ -1192,7 +1192,7 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	}
 	
 	@Override
-	public boolean injectEnergyUnits(byte Side, int aVoltage, int aAmperage) {
+	public boolean injectEnergyUnits(byte Side, int aVoltage, double aAmperage) {
 		return false;
 	}
 	

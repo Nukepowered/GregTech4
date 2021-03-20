@@ -50,7 +50,7 @@ public interface IBasicEnergyContainer {
 	/**
 	 * Inject Energy Call for Electricity.
 	 */
-	public boolean injectEnergyUnits(byte aSide, int aVoltage, int aAmperage);
+	public boolean injectEnergyUnits(byte aSide, int aVoltage, double aAmperage);
 	
 	/**
 	 * Drain Energy Call for Electricity.

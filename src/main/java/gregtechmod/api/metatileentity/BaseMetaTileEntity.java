@@ -1419,13 +1419,13 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	}
 	
 	@Override
-	public boolean injectEnergyUnits(byte aSide, int aVoltage, int aAmperage) {
+	public boolean injectEnergyUnits(byte aSide, int aVoltage, double aAmperage) {
 		if (!hasValidMetaTileEntity() || !mMetaTileEntity.isElectric() || !inputEnergyFrom(aSide)) return false;
 		if (aVoltage > getInputVoltage()) {
 			doExplosion(aVoltage);
 			return true;
 		}
-		if (increaseStoredEnergyUnits(aVoltage*aAmperage, true)) {
+		if (increaseStoredEnergyUnits((int)Math.abs(aVoltage*aAmperage), true)) {
 			mAverageEUInput[mAverageEUInputIndex] += aVoltage*aAmperage;
 			return true;
 		}
