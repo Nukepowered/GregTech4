@@ -1,6 +1,8 @@
 package gregtechmod.api.items;
 
 import gregtechmod.api.GregTech_API;
+import gregtechmod.api.interfaces.IHeatComponent;
+import gregtechmod.api.util.GT_Utility;
 
 import java.util.List;
 
@@ -8,7 +10,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class GT_CoolantCell_Item extends GT_Generic_Item {
+public class GT_CoolantCell_Item extends GT_Generic_Item implements IHeatComponent {
     protected int heatStorage;
 	
     public GT_CoolantCell_Item(String aUnlocalized, int aMaxStore) {
@@ -60,4 +62,13 @@ public class GT_CoolantCell_Item extends GT_Generic_Item {
         }
         return tNBT.getInteger("heat");
     }
+
+	@Override
+	public int getHeatStored(ItemStack stack) {
+		if (GT_Utility.isStackValid(stack)) {
+			return getHeatOfStack(stack);
+		}
+		
+		return 0;
+	}
 }

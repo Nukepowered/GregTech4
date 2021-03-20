@@ -22,7 +22,8 @@ public class GT_CoreMod implements IFMLLoadingPlugin {
 	@Override
 	public String[] getASMTransformerClass() {
 		return new String[] {
-				"gregtechmod.common.asm.EnergyNetTransformer"
+				"gregtechmod.common.asm.EnergyNetTransformer",
+				"gregtechmod.common.asm.IC2ReactorSlotTransformer"
 		};
 	}
 

@@ -41,21 +41,19 @@ public class GT_CoolantCellIC_Item extends GT_CoolantCell_Item implements IReact
     public int alterHeat(IReactor aReactor, ItemStack aStack, int x, int y, int aHeat) {
         int tHeat = getHeatOfStack(aStack);
         
-        if (!aReactor.isFluidCooled() || aHeat > 0) {
-	        tHeat += aHeat;
-	        
-	        if (tHeat > heatStorage) {
-	            aReactor.setItemAt(x, y, (ItemStack)null);
-	            aHeat = heatStorage - tHeat + 1;
-	        } else {
-	            if (tHeat < 0) {
-	                aHeat = tHeat;
-	                tHeat = 0;
-	            } else {
-	                aHeat = 0;
-	            }
-	            setHeatForStack(aStack, tHeat);
-	        }
+        tHeat += aHeat;
+
+        if (tHeat > heatStorage) {
+            aReactor.setItemAt(x, y, (ItemStack)null);
+            aHeat = heatStorage - tHeat + 1;
+        } else {
+            if (tHeat < 0) {
+                aHeat = tHeat;
+                tHeat = 0;
+            } else {
+                aHeat = 0;
+            }
+            setHeatForStack(aStack, tHeat);
         }
         
         return aHeat;
