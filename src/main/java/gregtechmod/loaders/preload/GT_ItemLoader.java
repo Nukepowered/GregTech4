@@ -1,14 +1,10 @@
 package gregtechmod.loaders.preload;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+
 import gregtechmod.GT_Mod;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_Items;
@@ -35,6 +31,7 @@ import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
+
 import gregtechmod.common.items.GT_Dataorb_Item;
 import gregtechmod.common.items.GT_Debug_Item;
 import gregtechmod.common.items.GT_Destructopack_Item;
@@ -42,14 +39,8 @@ import gregtechmod.common.items.GT_FluidDisplayItem;
 import gregtechmod.common.items.GT_IntegratedCircuit_Item;
 import gregtechmod.common.items.GT_MetaGenerated_Item_01;
 import gregtechmod.common.items.GT_MetaGenerated_Item_02;
-import gregtechmod.common.items.GT_MetaItem_Cell;
 import gregtechmod.common.items.GT_MetaItem_Component;
-import gregtechmod.common.items.GT_MetaItem_DirtyDust;
-import gregtechmod.common.items.GT_MetaItem_Dust;
 import gregtechmod.common.items.GT_MetaItem_Material;
-import gregtechmod.common.items.GT_MetaItem_Nugget;
-import gregtechmod.common.items.GT_MetaItem_SmallDust;
-import gregtechmod.common.items.GT_MetaItem_TinyDust;
 import gregtechmod.common.items.GT_Mortar_Item;
 import gregtechmod.common.items.GT_NeutronReflector_Item;
 import gregtechmod.common.items.GT_Scanner_Item;
@@ -61,6 +52,7 @@ import gregtechmod.common.items.GT_Vanilla_Hoe;
 import gregtechmod.common.items.GT_Vanilla_Pickaxe;
 import gregtechmod.common.items.GT_Vanilla_Shovel;
 import gregtechmod.common.items.GT_Vanilla_Sword;
+
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
@@ -76,13 +68,8 @@ public class GT_ItemLoader implements Runnable {
 		
         GT_Log.log.info("Register Meta-ID Items.");
 		GregTech_API.sItemList[ 0] = new GT_MetaItem_Material	("GT_Materials");
-		GregTech_API.sItemList[ 1] = new GT_MetaItem_Dust		("GT_Dusts");
-		GregTech_API.sItemList[ 2] = new GT_MetaItem_Cell		("GT_Cells");
 		GregTech_API.sItemList[ 3] = new GT_MetaItem_Component	("GT_Components");
-		GregTech_API.sItemList[ 4] = new GT_MetaItem_SmallDust	("GT_SmallDusts");
-		GregTech_API.sItemList[ 5] = new GT_MetaItem_Nugget		("GT_Nuggets");
-		GregTech_API.sItemList[ 6] = new GT_MetaItem_DirtyDust	("GT_DirtyDusts");
-		GregTech_API.sItemList[ 7] = new GT_MetaItem_TinyDust	("GT_TinyDusts");
+
 		
         GT_Log.log.info("Adding All Sub-Items with their OreDict and LiquidDict Entries.");
         GT_Items.Credit_Copper.set(		GT_MetaItem_Material.addItem( 0, null	, "item.copper_credit.tooltip", false));
@@ -90,305 +77,16 @@ public class GT_ItemLoader implements Runnable {
         GT_Items.Credit_Gold.set(		GT_MetaItem_Material.addItem( 2, null	, "item.gold_credit.tooltip", false));
         GT_Items.Credit_Platinum.set(	GT_MetaItem_Material.addItem( 3, null	, "item.platinum_credit.tooltip", false));
         GT_Items.Credit_Osmium.set(		GT_MetaItem_Material.addItem(12, null	, "item.osmium_credit.tooltip", false));
-		GT_MetaItem_Material.addItem(  4, null					, null, false);
-		GT_MetaItem_Material.addItem(  5, OrePrefixes.ingotHot	, Materials.TungstenSteel	, false);
-		GT_MetaItem_Material.addItem(  6, OrePrefixes.ingot		, Materials.TungstenSteel	, false);
-		GT_MetaItem_Material.addItem(  7, null					, null, false);
-		GT_MetaItem_Material.addItem(  8, null					, null, false);
+		GT_MetaItem_Material.addItem(  4, null					, null, false); // Idirium allot
 		GT_MetaItem_Material.addItem(  9, OrePrefixes.dye		, "Blue"					, false);
 		
-		GT_MetaItem_Material.addItem( 13, OrePrefixes.plate		, Materials.Magnalium		, false);
 		GT_MetaItem_Material.addItem( 14, OrePrefixes.dust		, Materials.Wheat			, false);
 		GT_MetaItem_Material.addItem( 15, OrePrefixes.plank		, Materials.Wood			, false);
-		GT_MetaItem_Material.addItem( 16, OrePrefixes.ingot		, Materials.Iridium			, false);
-		GT_MetaItem_Material.addItem( 17, OrePrefixes.ingot		, Materials.Silver			, false);
-		GT_MetaItem_Material.addItem( 18, OrePrefixes.ingot		, Materials.Aluminium		, false);
-		GT_MetaItem_Material.addItem( 19, OrePrefixes.ingot		, Materials.Titanium		, false);
-		GT_MetaItem_Material.addItem( 20, OrePrefixes.ingot		, Materials.Chrome			, false);
-		GT_MetaItem_Material.addItem( 21, OrePrefixes.ingot		, Materials.Electrum		, false);
-		GT_MetaItem_Material.addItem( 22, OrePrefixes.ingot		, Materials.Tungsten		, false);
-		GT_MetaItem_Material.addItem( 23, OrePrefixes.ingot		, Materials.Lead			, false);
-		GT_MetaItem_Material.addItem( 24, OrePrefixes.ingot		, Materials.Zinc			, false);
-		GT_MetaItem_Material.addItem( 25, OrePrefixes.ingot		, Materials.Brass			, false);
-		GT_MetaItem_Material.addItem( 26, OrePrefixes.ingot		, Materials.Steel			, false);
-		GT_MetaItem_Material.addItem( 27, OrePrefixes.ingot		, Materials.Platinum		, false);
-		GT_MetaItem_Material.addItem( 28, OrePrefixes.ingot		, Materials.Nickel			, false);
-		GT_MetaItem_Material.addItem( 29, OrePrefixes.ingot		, Materials.Invar			, false);
-		GT_MetaItem_Material.addItem( 30, OrePrefixes.ingot		, Materials.Osmium			, false);
-		GT_MetaItem_Material.addItem( 31, OrePrefixes.ingot		, Materials.Antimony		, false);
-		GT_MetaItem_Material.addItem( 32, OrePrefixes.gem		, Materials.Ruby			, false);
-		GT_MetaItem_Material.addItem( 33, OrePrefixes.gem		, Materials.Sapphire		, false);
-		GT_MetaItem_Material.addItem( 34, OrePrefixes.gem		, Materials.GreenSapphire	, false);
 		GT_MetaItem_Material.addItem( 35, OrePrefixes.block		, Materials.Lazurite		, false);
-		GT_MetaItem_Material.addItem( 36, OrePrefixes.plate		, Materials.Silicon			, false);
-		GT_MetaItem_Material.addItem( 37, OrePrefixes.gem		, Materials.Olivine			, false);
-		GT_OreDictUnificator.addLater("gemPeridot", GT_MetaItem_Material.instance.getUnunifiedStack(37, 1));
-		GT_MetaItem_Material.addItem( 38, OrePrefixes.ingot		, Materials.Thorium			, true);
-		GT_MetaItem_Material.addItem( 39, OrePrefixes.ingot		, Materials.Plutonium		, true);
-		GT_MetaItem_Material.addItem( 40, OrePrefixes.ingot		, Materials.Magnalium		, false);
-		GT_MetaItem_Material.addItem( 41, OrePrefixes.ingot		, Materials.SolderingAlloy	, false);
-		GT_MetaItem_Material.addItem( 42, OrePrefixes.ingot		, Materials.BatteryAlloy	, false);
-		GT_MetaItem_Material.addItem( 43, OrePrefixes.ingot		, Materials.Uranium			, true);
-		GT_MetaItem_Material.addItem( 44, OrePrefixes.ingot		, Materials.StainlessSteel	, false);
-		GT_MetaItem_Material.addItem( 45, OrePrefixes.ingot		, Materials.Cupronickel		, false);
-		GT_MetaItem_Material.addItem( 46, OrePrefixes.ingot		, Materials.Nichrome		, false);
-		GT_MetaItem_Material.addItem( 47, OrePrefixes.ingot		, Materials.Kanthal			, false);
-		
-		GT_MetaItem_Material.addItem( 54, OrePrefixes.gem		, Materials.GarnetRed		, false);
-		GT_OreDictUnificator.addLater("gemGarnet", GT_MetaItem_Material.instance.getUnunifiedStack(54, 1));
-		GT_MetaItem_Material.addItem( 55, OrePrefixes.gem		, Materials.GarnetYellow	, false);
-		
-		GT_MetaItem_Material.addItem( 58, OrePrefixes.plate		, Materials.GarnetYellow	, false);
-		GT_MetaItem_Material.addItem( 59, OrePrefixes.plate		, Materials.GarnetRed		, false);
 		GT_MetaItem_Material.addItem( 60, null					, null						, false);
 		GT_MetaItem_Material.addItem( 61, null					, null						, false);
 		GT_MetaItem_Material.addItem( 62, null					, null						, false);
 		GT_MetaItem_Material.addItem( 63, null					, null						, false);
-		GT_MetaItem_Material.addItem( 64, OrePrefixes.plate		, Materials.Iron			, false);
-		GT_MetaItem_Material.addItem( 65, OrePrefixes.plate		, Materials.Gold			, false);
-		GT_MetaItem_Material.addItem( 66, OrePrefixes.plate		, Materials.StainlessSteel	, false);
-		GT_MetaItem_Material.addItem( 67, OrePrefixes.plate		, Materials.Tin				, false);
-		GT_MetaItem_Material.addItem( 68, OrePrefixes.plate		, Materials.Copper			, false);
-		GT_MetaItem_Material.addItem( 69, OrePrefixes.plate		, Materials.Silver			, false);
-		GT_MetaItem_Material.addItem( 70, OrePrefixes.plate		, Materials.Bronze			, false);
-		GT_MetaItem_Material.addItem( 71, OrePrefixes.plate		, Materials.Electrum		, false);
-		GT_MetaItem_Material.addItem( 72, OrePrefixes.plate		, Materials.Nickel			, false);
-		GT_MetaItem_Material.addItem( 73, OrePrefixes.plate		, Materials.Invar			, false);
-		GT_MetaItem_Material.addItem( 74, OrePrefixes.plate		, Materials.Lead			, false);
-		GT_MetaItem_Material.addItem( 75, OrePrefixes.plate		, Materials.Aluminium		, false);
-		GT_MetaItem_Material.addItem( 76, OrePrefixes.plate		, Materials.Chrome			, false);
-		GT_MetaItem_Material.addItem( 77, OrePrefixes.plate		, Materials.Titanium		, false);
-		GT_MetaItem_Material.addItem( 78, OrePrefixes.plate		, Materials.Steel			, false);
-		GT_MetaItem_Material.addItem( 79, OrePrefixes.plate		, Materials.Platinum		, false);
-		GT_MetaItem_Material.addItem( 80, OrePrefixes.plate		, Materials.Tungsten		, false);
-		GT_MetaItem_Material.addItem( 81, OrePrefixes.plate		, Materials.Brass			, false);
-		GT_MetaItem_Material.addItem( 82, OrePrefixes.plate		, Materials.Zinc			, false);
-		GT_MetaItem_Material.addItem( 83, OrePrefixes.plate		, Materials.TungstenSteel	, false);
-		GT_MetaItem_Material.addItem( 84, OrePrefixes.plate		, Materials.Osmium			, false);
-		GT_MetaItem_Material.addItem( 85, OrePrefixes.plate		, Materials.Iridium			, false);
-		GT_MetaItem_Material.addItem( 86, OrePrefixes.plate		, Materials.BatteryAlloy	, false);
-		GT_MetaItem_Material.addItem( 87, OrePrefixes.plate		, Materials.Diamond			, false);
-		GT_MetaItem_Material.addItem( 88, OrePrefixes.plate		, Materials.Emerald			, false);
-		GT_MetaItem_Material.addItem( 89, OrePrefixes.plate		, Materials.Ruby			, false);
-		GT_MetaItem_Material.addItem( 90, OrePrefixes.plate		, Materials.Sapphire		, false);
-		GT_MetaItem_Material.addItem( 91, OrePrefixes.plate		, Materials.GreenSapphire	, false);
-		GT_MetaItem_Material.addItem( 92, OrePrefixes.plate		, Materials.Olivine			, false);
-		GT_MetaItem_Material.addItem( 93, OrePrefixes.plate		, Materials.Redstone		, false);
-		GT_MetaItem_Material.addItem( 94, OrePrefixes.plate		, Materials.Lapis			, false);
-		GT_MetaItem_Material.addItem( 95, OrePrefixes.plate		, Materials.Coal			, false);
-		GT_MetaItem_Material.addItem( 96, OrePrefixes.stick		, Materials.Iron			, false);
-		GT_MetaItem_Material.addItem( 97, OrePrefixes.stick		, Materials.Gold			, false);
-		GT_MetaItem_Material.addItem( 98, OrePrefixes.stick		, Materials.StainlessSteel	, false);
-		GT_MetaItem_Material.addItem( 99, OrePrefixes.stick		, Materials.Tin				, false);
-		GT_MetaItem_Material.addItem(100, OrePrefixes.stick		, Materials.Copper			, false);
-		GT_MetaItem_Material.addItem(101, OrePrefixes.stick		, Materials.Silver			, false);
-		GT_MetaItem_Material.addItem(102, OrePrefixes.stick		, Materials.Bronze			, false);
-		GT_MetaItem_Material.addItem(103, OrePrefixes.stick		, Materials.Electrum		, false);
-		GT_MetaItem_Material.addItem(104, OrePrefixes.stick		, Materials.Nickel			, false);
-		GT_MetaItem_Material.addItem(105, OrePrefixes.stick		, Materials.Invar			, false);
-		GT_MetaItem_Material.addItem(106, OrePrefixes.stick		, Materials.Lead			, false);
-		GT_MetaItem_Material.addItem(107, OrePrefixes.stick		, Materials.Aluminium		, false);
-		GT_MetaItem_Material.addItem(108, OrePrefixes.stick		, Materials.Chrome			, false);
-		GT_MetaItem_Material.addItem(109, OrePrefixes.stick		, Materials.Titanium		, false);
-		GT_MetaItem_Material.addItem(110, OrePrefixes.stick		, Materials.Steel			, false);
-		GT_MetaItem_Material.addItem(111, OrePrefixes.stick		, Materials.Platinum		, false);
-		GT_MetaItem_Material.addItem(112, OrePrefixes.stick		, Materials.Tungsten		, false);
-		GT_MetaItem_Material.addItem(113, OrePrefixes.stick		, Materials.Brass			, false);
-		GT_MetaItem_Material.addItem(114, OrePrefixes.stick		, Materials.Zinc			, false);
-		GT_MetaItem_Material.addItem(115, OrePrefixes.stick		, Materials.TungstenSteel	, false);
-		GT_MetaItem_Material.addItem(116, OrePrefixes.stick		, Materials.Osmium			, false);
-		GT_MetaItem_Material.addItem(117, OrePrefixes.stick		, Materials.Iridium			, false);
-		
-		GT_MetaItem_Material.addItem(256, OrePrefixes.lense		, Materials.Diamond			, false);
-		GT_MetaItem_Material.addItem(257, OrePrefixes.lense		, Materials.Ruby			, false);
-		GT_MetaItem_Material.addItem(258, OrePrefixes.lense		, Materials.Emerald			, false);
-		GT_MetaItem_Material.addItem(259, OrePrefixes.lense		, Materials.Sapphire		, false);
-		GT_MetaItem_Material.addItem(260, OrePrefixes.lense		, Materials.GreenSapphire	, false);
-		GT_MetaItem_Material.addItem(261, OrePrefixes.lense		, Materials.GarnetYellow	, false);
-		GT_MetaItem_Material.addItem(262, OrePrefixes.lense		, Materials.GarnetRed		, false);
-		GT_MetaItem_Material.addItem(263, OrePrefixes.lense		, Materials.Olivine			, false);
-		GT_MetaItem_Material.addItem(264, OrePrefixes.lense		, Materials.Amber			, false);
-		GT_MetaItem_Material.addItem(265, OrePrefixes.lense		, Materials.Tanzanite		, false);
-		GT_MetaItem_Material.addItem(266, OrePrefixes.lense		, Materials.Topaz			, false);
-
-		GT_MetaItem_Material.addItem(320, OrePrefixes.bolt		, Materials.Iron			, false);
-		GT_MetaItem_Material.addItem(321, OrePrefixes.bolt		, Materials.Gold			, false);
-		GT_MetaItem_Material.addItem(322, OrePrefixes.bolt		, Materials.StainlessSteel	, false);
-		GT_MetaItem_Material.addItem(323, OrePrefixes.bolt		, Materials.Tin				, false);
-		GT_MetaItem_Material.addItem(324, OrePrefixes.bolt		, Materials.Copper			, false);
-		GT_MetaItem_Material.addItem(325, OrePrefixes.bolt		, Materials.Silver			, false);
-		GT_MetaItem_Material.addItem(326, OrePrefixes.bolt		, Materials.Bronze			, false);
-		GT_MetaItem_Material.addItem(327, OrePrefixes.bolt		, Materials.Electrum		, false);
-		GT_MetaItem_Material.addItem(328, OrePrefixes.bolt		, Materials.Nickel			, false);
-		GT_MetaItem_Material.addItem(329, OrePrefixes.bolt		, Materials.Invar			, false);
-		GT_MetaItem_Material.addItem(330, OrePrefixes.bolt		, Materials.Lead			, false);
-		GT_MetaItem_Material.addItem(331, OrePrefixes.bolt		, Materials.Aluminium		, false);
-		GT_MetaItem_Material.addItem(332, OrePrefixes.bolt		, Materials.Chrome			, false);
-		GT_MetaItem_Material.addItem(333, OrePrefixes.bolt		, Materials.Titanium		, false);
-		GT_MetaItem_Material.addItem(334, OrePrefixes.bolt		, Materials.Steel			, false);
-		GT_MetaItem_Material.addItem(335, OrePrefixes.bolt		, Materials.Platinum		, false);
-		GT_MetaItem_Material.addItem(336, OrePrefixes.bolt		, Materials.Tungsten		, false);
-		GT_MetaItem_Material.addItem(337, OrePrefixes.bolt		, Materials.Brass			, false);
-		GT_MetaItem_Material.addItem(338, OrePrefixes.bolt		, Materials.Zinc			, false);
-		GT_MetaItem_Material.addItem(339, OrePrefixes.bolt		, Materials.TungstenSteel	, false);
-		GT_MetaItem_Material.addItem(340, OrePrefixes.bolt		, Materials.Osmium			, false);
-		GT_MetaItem_Material.addItem(341, OrePrefixes.bolt		, Materials.Iridium			, false);
-
-		GT_MetaItem_Material.addItem(384, OrePrefixes.screw		, Materials.Iron			, false);
-		GT_MetaItem_Material.addItem(385, OrePrefixes.screw		, Materials.Gold			, false);
-		GT_MetaItem_Material.addItem(386, OrePrefixes.screw		, Materials.StainlessSteel	, false);
-		GT_MetaItem_Material.addItem(387, OrePrefixes.screw		, Materials.Tin				, false);
-		GT_MetaItem_Material.addItem(388, OrePrefixes.screw		, Materials.Copper			, false);
-		GT_MetaItem_Material.addItem(389, OrePrefixes.screw		, Materials.Silver			, false);
-		GT_MetaItem_Material.addItem(390, OrePrefixes.screw		, Materials.Bronze			, false);
-		GT_MetaItem_Material.addItem(391, OrePrefixes.screw		, Materials.Electrum		, false);
-		GT_MetaItem_Material.addItem(392, OrePrefixes.screw		, Materials.Nickel			, false);
-		GT_MetaItem_Material.addItem(393, OrePrefixes.screw		, Materials.Invar			, false);
-		GT_MetaItem_Material.addItem(394, OrePrefixes.screw		, Materials.Lead			, false);
-		GT_MetaItem_Material.addItem(395, OrePrefixes.screw		, Materials.Aluminium		, false);
-		GT_MetaItem_Material.addItem(396, OrePrefixes.screw		, Materials.Chrome			, false);
-		GT_MetaItem_Material.addItem(397, OrePrefixes.screw		, Materials.Titanium		, false);
-		GT_MetaItem_Material.addItem(398, OrePrefixes.screw		, Materials.Steel			, false);
-		GT_MetaItem_Material.addItem(399, OrePrefixes.screw		, Materials.Platinum		, false);
-		GT_MetaItem_Material.addItem(400, OrePrefixes.screw		, Materials.Tungsten		, false);
-		GT_MetaItem_Material.addItem(401, OrePrefixes.screw		, Materials.Brass			, false);
-		GT_MetaItem_Material.addItem(402, OrePrefixes.screw		, Materials.Zinc			, false);
-		GT_MetaItem_Material.addItem(403, OrePrefixes.screw		, Materials.TungstenSteel	, false);
-		GT_MetaItem_Material.addItem(404, OrePrefixes.screw		, Materials.Osmium			, false);
-		GT_MetaItem_Material.addItem(405, OrePrefixes.screw		, Materials.Iridium			, false);
-		
-		GT_MetaItem_Material.addItem(448, OrePrefixes.round		, Materials.Iron			, false);
-		GT_MetaItem_Material.addItem(449, OrePrefixes.round		, Materials.Gold			, false);
-		GT_MetaItem_Material.addItem(450, OrePrefixes.round		, Materials.StainlessSteel	, false);
-		GT_MetaItem_Material.addItem(451, OrePrefixes.round		, Materials.Tin				, false);
-		GT_MetaItem_Material.addItem(452, OrePrefixes.round		, Materials.Copper			, false);
-		GT_MetaItem_Material.addItem(453, OrePrefixes.round		, Materials.Silver			, false);
-		GT_MetaItem_Material.addItem(454, OrePrefixes.round		, Materials.Bronze			, false);
-		GT_MetaItem_Material.addItem(455, OrePrefixes.round		, Materials.Electrum		, false);
-		GT_MetaItem_Material.addItem(456, OrePrefixes.round		, Materials.Nickel			, false);
-		GT_MetaItem_Material.addItem(457, OrePrefixes.round		, Materials.Invar			, false);
-		GT_MetaItem_Material.addItem(458, OrePrefixes.round		, Materials.Lead			, false);
-		GT_MetaItem_Material.addItem(459, OrePrefixes.round		, Materials.Aluminium		, false);
-		GT_MetaItem_Material.addItem(460, OrePrefixes.round		, Materials.Chrome			, false);
-		GT_MetaItem_Material.addItem(461, OrePrefixes.round		, Materials.Titanium		, false);
-		GT_MetaItem_Material.addItem(462, OrePrefixes.round		, Materials.Steel			, false);
-		GT_MetaItem_Material.addItem(463, OrePrefixes.round		, Materials.Platinum		, false);
-		GT_MetaItem_Material.addItem(464, OrePrefixes.round		, Materials.Tungsten		, false);
-		GT_MetaItem_Material.addItem(465, OrePrefixes.round		, Materials.Brass			, false);
-		GT_MetaItem_Material.addItem(466, OrePrefixes.round		, Materials.Zinc			, false);
-		GT_MetaItem_Material.addItem(467, OrePrefixes.round		, Materials.TungstenSteel	, false);
-		GT_MetaItem_Material.addItem(468, OrePrefixes.round		, Materials.Osmium			, false);
-		GT_MetaItem_Material.addItem(469, OrePrefixes.round		, Materials.Iridium			, false);
-		
-		GT_MetaItem_Nugget.addItem( 16, Materials.Iridium		, false);
-		GT_MetaItem_Nugget.addItem( 17, Materials.Silver		, false);
-		GT_MetaItem_Nugget.addItem( 18, Materials.Aluminium		, false);
-		GT_MetaItem_Nugget.addItem( 19, Materials.Titanium		, false);
-		GT_MetaItem_Nugget.addItem( 20, Materials.Chrome		, false);
-		GT_MetaItem_Nugget.addItem( 21, Materials.Electrum		, false);
-		GT_MetaItem_Nugget.addItem( 22, Materials.Tungsten		, false);
-		GT_MetaItem_Nugget.addItem( 23, Materials.Lead			, false);
-		GT_MetaItem_Nugget.addItem( 24, Materials.Zinc			, false);
-		GT_MetaItem_Nugget.addItem( 25, Materials.Brass			, false);
-		GT_MetaItem_Nugget.addItem( 26, Materials.Steel			, false);
-		GT_MetaItem_Nugget.addItem( 27, Materials.Platinum		, false);
-		GT_MetaItem_Nugget.addItem( 28, Materials.Nickel		, false);
-		GT_MetaItem_Nugget.addItem( 29, Materials.Invar			, false);
-		GT_MetaItem_Nugget.addItem( 30, Materials.Osmium		, false);
-		GT_MetaItem_Nugget.addItem( 31, Materials.Antimony		, false);
-		
-		GT_MetaItem_Nugget.addItem(241, Materials.Iron			, false);
-		GT_MetaItem_Nugget.addItem(243, Materials.Copper		, false);
-		GT_MetaItem_Nugget.addItem(244, Materials.Tin			, false);
-		GT_MetaItem_Nugget.addItem(245, Materials.Bronze		, false);
-		
-		GT_MetaItem_Dust.addItem(  0, Materials.EnderPearl		, false);
-		GT_MetaItem_Dust.addItem(  1, Materials.EnderEye		, false);
-		GT_MetaItem_Dust.addItem(  2, Materials.Lazurite		, false);
-		GT_MetaItem_Dust.addItem(  3, Materials.Pyrite			, false);
-		GT_MetaItem_Dust.addItem(  4, Materials.Calcite			, false);
-		GT_MetaItem_Dust.addItem(  5, Materials.Sodalite		, false);
-		GT_MetaItem_Dust.addItem(  6, Materials.Netherrack		, false);
-		GT_MetaItem_Dust.addItem(  7, Materials.Flint			, false);
-		GT_MetaItem_Dust.addItem(  8, Materials.Sulfur			, false);
-		GT_MetaItem_Dust.addItem(  9, Materials.Saltpeter		, false);
-		GT_MetaItem_Dust.addItem( 10, Materials.Endstone		, false);
-		GT_MetaItem_Dust.addItem( 11, Materials.Cinnabar		, false);
-		GT_MetaItem_Dust.addItem( 12, Materials.Manganese		, false);
-		GT_MetaItem_Dust.addItem( 13, Materials.Magnesium		, false);
-		GT_MetaItem_Dust.addItem( 14, Materials.Sphalerite		, false);
-		GT_MetaItem_Dust.addItem( 15, Materials.Wood			, false);
-		GT_MetaItem_Dust.addItem( 16, Materials.Uranium			, true);
-		GT_MetaItem_Dust.addItem( 17, Materials.Bauxite			, false);
-		GT_MetaItem_Dust.addItem( 18, Materials.Aluminium		, false);
-		GT_MetaItem_Dust.addItem( 19, Materials.Titanium		, false);
-		GT_MetaItem_Dust.addItem( 20, Materials.Chrome			, false);
-		GT_MetaItem_Dust.addItem( 21, Materials.Electrum		, false);
-		GT_MetaItem_Dust.addItem( 22, Materials.Tungsten		, false);
-		GT_MetaItem_Dust.addItem( 23, Materials.Lead			, false);
-		GT_MetaItem_Dust.addItem( 24, Materials.Zinc			, false);
-		GT_MetaItem_Dust.addItem( 25, Materials.Brass			, false);
-		GT_MetaItem_Dust.addItem( 26, Materials.Steel			, false);
-		GT_MetaItem_Dust.addItem( 27, Materials.Platinum		, false);
-		GT_MetaItem_Dust.addItem( 28, Materials.Nickel			, false);
-		GT_MetaItem_Dust.addItem( 29, Materials.Invar			, false);
-		GT_MetaItem_Dust.addItem( 30, Materials.Osmium			, false);
-		GT_MetaItem_Dust.addItem( 31, Materials.Antimony		, false);
-		GT_MetaItem_Dust.addItem( 32, Materials.Ruby			, false);
-		GT_MetaItem_Dust.addItem( 33, Materials.Sapphire		, false);
-		GT_MetaItem_Dust.addItem( 34, Materials.GreenSapphire	, false);
-		GT_MetaItem_Dust.addItem( 35, Materials.Emerald			, false);
-		GT_MetaItem_Dust.addItem( 36, Materials.Diamond			, false);
-		GT_MetaItem_Dust.addItem( 37, Materials.Olivine			, false);
-		
-		GT_MetaItem_Dust.addItem( 40, Materials.Cupronickel		, false);
-		GT_MetaItem_Dust.addItem( 41, Materials.Nichrome		, false);
-		GT_MetaItem_Dust.addItem( 42, Materials.Kanthal			, false);
-		GT_MetaItem_Dust.addItem( 43, Materials.StainlessSteel	, false);
-		GT_MetaItem_Dust.addItem( 44, Materials.Galena			, false);
-		GT_MetaItem_Dust.addItem( 45, Materials.Phosphorus		, false);
-		GT_MetaItem_Dust.addItem( 46, Materials.Obsidian		, false);
-		GT_MetaItem_Dust.addItem( 47, Materials.Charcoal		, false);
-		
-		GT_MetaItem_Dust.addItem( 54, Materials.GarnetRed		, false);
-		GT_MetaItem_Dust.addItem( 55, Materials.GarnetYellow	, false);
-		GT_MetaItem_Dust.addItem( 56, Materials.Pyrope			, false);
-		GT_MetaItem_Dust.addItem( 57, Materials.Almandine		, false);
-		GT_MetaItem_Dust.addItem( 58, Materials.Spessartine		, false);
-		GT_MetaItem_Dust.addItem( 59, Materials.Andradite		, false);
-		GT_MetaItem_Dust.addItem( 60, Materials.Grossular		, false);
-		GT_MetaItem_Dust.addItem( 61, Materials.Uvarovite		, false);
-		GT_MetaItem_Dust.addItem( 62, Materials.Ash				, false);
-		GT_MetaItem_Dust.addItem( 63, Materials.DarkAsh			, false);
-		GT_MetaItem_Dust.addItem( 64, Materials.Redrock			, false);
-		GT_MetaItem_Dust.addItem( 65, Materials.Marble			, false);
-		GT_MetaItem_Dust.addItem( 66, Materials.Basalt			, false);
-		GT_MetaItem_Dust.addItem( 67, Materials.Iridium			, false);
-		GT_MetaItem_Dust.addItem( 68, Materials.GraniteBlack    , false);
-		GT_MetaItem_Dust.addItem( 69, Materials.GraniteRed		, false);
-		GT_MetaItem_Dust.addItem( 70, Materials.PotassiumFeldspar, false);
-		GT_MetaItem_Dust.addItem( 71, Materials.Biotite			, false);
-		
-		GT_MetaItem_Dust.addItem( 80, Materials.Thorium			, true);
-		GT_MetaItem_Dust.addItem( 81, Materials.Plutonium		, true);
-		
-		GT_MetaItem_Dust.addItem(238, Materials.Lapis			, false);
-		GT_MetaItem_Dust.addItem(239, Materials.Tetrahedrite	, false);
-		GT_MetaItem_Dust.addItem(240, Materials.Coal			, false);
-		GT_MetaItem_Dust.addItem(241, Materials.Iron			, false);
-		GT_MetaItem_Dust.addItem(242, Materials.Gold			, false);
-		GT_MetaItem_Dust.addItem(243, Materials.Copper			, false);
-		GT_MetaItem_Dust.addItem(244, Materials.Tin				, false);
-		GT_MetaItem_Dust.addItem(245, Materials.Bronze			, false);
-		GT_MetaItem_Dust.addItem(246, Materials.Silver			, false);
-		GT_MetaItem_Dust.addItem(247, Materials.Clay			, false);
-		
-		GT_MetaItem_SmallDust.addItem(248, Materials.Gunpowder	, false);
-		GT_MetaItem_SmallDust.addItem(249, Materials.Redstone	, false);
-		GT_MetaItem_SmallDust.addItem(250, Materials.Glowstone	, false);
-		GT_MetaItem_SmallDust.addItem(251, Materials.Blaze		, false);
-		
-		GT_MetaItem_Cell.addItem(4, "molecule_1w", false, Materials.Tungsten);
 		
 		GT_Items.Spray_Empty.set(				GT_MetaItem_Component.addItem(56, "", null));
 		
@@ -536,26 +234,6 @@ public class GT_ItemLoader implements Runnable {
 		GT_Items.Crop_Drop_Tine.set(				tMetaGenerated.addItem(540, "source_tin"			, "item.GregTech_MetaGenerated_Item_01.source_tin.tooltip"		, null));
 		tMetaGenerated.setBurnValue(32000 + tLastID1, 100);
 		
-		try {
-			Map<String, ItemStack> toChange = new HashMap<>();
-			toChange.put("aurelia", GT_Items.Crop_Drop_Aurelia.get(1));
-			toChange.put("ferru", GT_Items.Crop_Drop_Ferru.get(1));
-			
-			Class<?> cropsCl = Class.forName("ic2.api.crops.Crops");
-			Object instance = cropsCl.getField("instance").get(null);
-			Method getCrop = cropsCl.getMethod("getCropCard", String.class, String.class);
-			for (Entry<String, ItemStack> entry : toChange.entrySet()) {
-				Object crop = getCrop.invoke(instance, "IC2", entry.getKey());
-				Field mDrop = crop.getClass().getDeclaredField("mDrop");
-				mDrop.setAccessible(true);
-				mDrop.set(crop, entry.getValue());
-			}
-		} catch (Throwable e) {
-			if (GregTech_API.DEBUG_MODE) {
-				GT_Log.log.catching(e);
-			}
-		}
-		
 		GT_Items.Battery_Hull_LV.set(tMetaGenerated.addItem(600, "hull_battery_lv", "item.GregTech_MetaGenerated_Item_01.hull_battery_lv.tooltip", null));
 		GT_Items.Battery_Hull_MV.set(tMetaGenerated.addItem(601, "hull_battery_mv", "item.GregTech_MetaGenerated_Item_01.hull_battery_mv.tooltip", null));
 		tLastID1 = 610;
@@ -610,7 +288,7 @@ public class GT_ItemLoader implements Runnable {
 		GT_OreDictUnificator.addToBlacklist(GT_Items.Circuit_Integrated.getWildcard(1));
 		
 		GT_Log.log.info("Register Regular Items.");
-		GT_Items.Display_Fluid.set((GregTech_API.sItemList[15] = new GT_FluidDisplayItem("GregTech_FluidDisplay")));
+		GT_Items.Display_Fluid.set((GregTech_API.sItemList[15] = new GT_FluidDisplayItem("GregTech_FluidDisplay"))); // FIXME REMOVE
 		GT_Items.NC_SensorCard.set((GregTech_API.sItemList[16] = (GT_Generic_Item) GT_Utility.callConstructor("gregtechmod.common.items.GT_SensorCard_Item", 0, (Object) null, false, "GregTech_Sensorcard")));
 		if (GregTech_API.sItemList[16] == null) {
 			GT_Items.NC_SensorCard.set((GregTech_API.sItemList[16] = new GT_Generic_Item("GregTech_Sensorcard", "util.missIC2NC")));

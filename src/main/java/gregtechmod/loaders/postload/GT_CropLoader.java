@@ -11,7 +11,6 @@ import gregtechmod.api.util.GT_BaseCrop;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_OreDictUnificator;
 
-import gregtechmod.common.items.GT_MetaItem_Material;
 import ic2.api.crops.CropCard;
 
 import net.minecraft.init.Blocks;
@@ -23,10 +22,10 @@ public class GT_CropLoader implements Runnable {
 	public void run() {
         GT_Log.log.info("GT_Mod: Register Crops to IC2.");
         try {
-	        new GT_BaseCrop(124, "gt_crops.indigo"				, "Eloraam"					, GT_MetaItem_Material.instance.getStack(8, 1)	, null																																						, GT_MetaItem_Material.instance.getStack(8, 4)	, 2, 4,    0, 1, 4, 1, 1, 0, 4, 0, new String[] {"Flower", "Color", "Ingredient"});
+	        new GT_BaseCrop(124, "gt_crops.indigo"				, "Eloraam"					, GT_Items.Crop_Drop_Indigo.get(1)				, null																																						, GT_Items.Crop_Drop_Indigo.get(4)				, 2, 4,    0, 1, 4, 1, 1, 0, 4, 0, new String[] {"Flower", "Color", "Ingredient"});
 	        new GT_BaseCrop(125, "gt_crops.flax"				, "Eloraam"					, new ItemStack(Items.string, 1)				, null																																						, null											, 2, 4,    0, 1, 4, 1, 1, 2, 0, 1, new String[] {"Silk", "Vine", "Addictive"});
-	        new GT_BaseCrop(126, "gt_crops.oilberries"			, "Spacetoad"				, GT_MetaItem_Material.instance.getStack(7, 1)	, null																																						, null											, 9, 4,    0, 1, 4, 6, 1, 2, 1,12, new String[] {"Fire", "Dark", "Reed", "Rotten", "Coal", "Oil"});
-	        new GT_BaseCrop(127, "gt_crops.bobsyeruncleranks"	, "GenerikB"				, GT_OreDictUnificator.get("dustSmallEmerald",1), new ItemStack[] {new ItemStack(Items.emerald, 1)}																											, null											,11, 4,    0, 1, 4, 4, 0, 8, 2, 9, new String[] {"Shiny", "Vine", "Emerald", "Berylium", "Crystal"});
+	        new GT_BaseCrop(126, "gt_crops.oilberries"			, "Spacetoad"				, GT_Items.Crop_Drop_OilBerry.get(1)			, null																																						, null											, 9, 4,    0, 1, 4, 6, 1, 2, 1,12, new String[] {"Fire", "Dark", "Reed", "Rotten", "Coal", "Oil"});
+	        new GT_BaseCrop(127, "gt_crops.bobsyeruncleranks"	, "GenerikB"				, GT_Items.Crop_Drop_BobsYerUncleRanks.get(1)	, new ItemStack[] {new ItemStack(Items.emerald, 1)}																											, null											,11, 4,    0, 1, 4, 4, 0, 8, 2, 9, new String[] {"Shiny", "Vine", "Emerald", "Berylium", "Crystal"});
 	        new GT_BaseCrop(128, "gt_crops.diareed"				, "Direwolf20"				, GT_OreDictUnificator.get("dustSmallDiamond",1), new ItemStack[] {new ItemStack(Items.diamond, 1)}																											, null											,12, 4,    0, 1, 4, 5, 0,10, 2,10, new String[] {"Fire", "Shiny", "Reed", "Coal", "Diamond", "Crystal"});
 	        new GT_BaseCrop(129, "gt_crops.withereed"			, "CovertJaguar"			, GT_OreDictUnificator.get("dustCoal", 1)		, new ItemStack[] {new ItemStack(Items.coal, 1), new ItemStack(Items.coal, 1)}																				, null											, 8, 4,    0, 1, 4, 2, 0, 4, 1, 3, new String[] {"Fire", "Undead", "Reed", "Coal", "Rotten", "Wither"});
 	        new GT_BaseCrop(130, "gt_crops.blazereed"			, "Mr. Brain"				, new ItemStack(Items.blaze_powder, 1)			, new ItemStack[] {new ItemStack(Items.blaze_rod, 1)}																										, null											, 6, 4,    0, 1, 4, 0, 4, 1, 0, 0, new String[] {"Fire", "Blaze", "Reed", "Sulfur"});

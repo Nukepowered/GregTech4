@@ -21,7 +21,7 @@ import net.minecraft.item.ItemStack;
 public class GT_CraftingRecipeLoader implements Runnable {
 	@Override
 	public void run() {
-        GT_Log.log.info("GT_Mod: Adding Tool Recipes.");
+        GT_Log.log.info("Adding Tool Recipes.");
         GT_ModHandler.addCraftingRecipe(GT_Items.Tool_Sword_Flint			.getUndamaged(1), false, true, false, new Object[] { "F" ,  "F" ,  "S" , 'S', OrePrefixes.stick.get(Materials.Wood), 'F', new ItemStack(Items.flint, 1, GregTech_API.ITEM_WILDCARD_DAMAGE)});
         GT_ModHandler.addCraftingRecipe(GT_Items.Tool_Pickaxe_Flint			.getUndamaged(1), false, true, false, new Object[] {"FFF", " S ", " S ", 'S', OrePrefixes.stick.get(Materials.Wood), 'F', new ItemStack(Items.flint, 1, GregTech_API.ITEM_WILDCARD_DAMAGE)});
         GT_ModHandler.addCraftingRecipe(GT_Items.Tool_Shovel_Flint			.getUndamaged(1), false, true, false, new Object[] { "F" ,  "S" ,  "S" , 'S', OrePrefixes.stick.get(Materials.Wood), 'F', new ItemStack(Items.flint, 1, GregTech_API.ITEM_WILDCARD_DAMAGE)});
@@ -52,7 +52,7 @@ public class GT_CraftingRecipeLoader implements Runnable {
         GT_ModHandler.addCraftingRecipe(new ItemStack(Items.chainmail_leggings		, 1), false, true, false, new Object[] {"RRR", "RHR", "R R"	, 'R', OrePrefixes.ring.get(Materials.Steel), 'H', GT_ToolDictNames.craftingToolHardHammer});
         GT_ModHandler.addCraftingRecipe(new ItemStack(Items.chainmail_boots			, 1), false, true, false, new Object[] {"R R", "RHR"		, 'R', OrePrefixes.ring.get(Materials.Steel), 'H', GT_ToolDictNames.craftingToolHardHammer});
         
-        GT_Log.log.info("GT_Mod: Adding Wool and Color releated Recipes.");
+        GT_Log.log.info("Adding Wool and Color releated Recipes.");
 		GT_ModHandler.addShapelessCraftingRecipe(new ItemStack(Blocks.wool, 1,  0), false, new Object[] {new ItemStack(Blocks.wool, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), "dyeWhite"});
 		GT_ModHandler.addShapelessCraftingRecipe(new ItemStack(Blocks.wool, 1,  1), false, new Object[] {new ItemStack(Blocks.wool, 1,  0), "dyeOrange"});
 		GT_ModHandler.addShapelessCraftingRecipe(new ItemStack(Blocks.wool, 1,  2), false, new Object[] {new ItemStack(Blocks.wool, 1,  0), "dyeMagenta"});
@@ -70,11 +70,11 @@ public class GT_CraftingRecipeLoader implements Runnable {
 		GT_ModHandler.addShapelessCraftingRecipe(new ItemStack(Blocks.wool, 1, 14), false, new Object[] {new ItemStack(Blocks.wool, 1,  0), "dyeRed"});
 		GT_ModHandler.addShapelessCraftingRecipe(new ItemStack(Blocks.wool, 1, 15), false, new Object[] {new ItemStack(Blocks.wool, 1,  0), "dyeBlack"});
 		
-		GT_Log.log.info("GT_Mod: Putting a Potato on a Stick.");
+		GT_Log.log.info("Putting a Potato on a Stick.");
 	    GT_ModHandler.addShapelessCraftingRecipe(GT_Items.Food_Potato_On_Stick			.get(1), false, new Object[] {new ItemStack(Items.stick, 1), new ItemStack(Items.potato			, 1)});
 	    GT_ModHandler.addShapelessCraftingRecipe(GT_Items.Food_Potato_On_Stick_Roasted	.get(1), false, new Object[] {new ItemStack(Items.stick, 1), new ItemStack(Items.baked_potato	, 1)});
 		
-        GT_Log.log.info("GT_Mod: Adding 'The holy Planks of Sengir'.");
+        GT_Log.log.info("Adding 'The holy Planks of Sengir'.");
     	ItemStack tStack = GT_MetaItem_Material.instance.getStack(15, 1);
     	tStack.setStackDisplayName("The holy Planks of Sengir");
     	tStack.addEnchantment(Enchantment.smite, 10);
@@ -82,11 +82,11 @@ public class GT_CraftingRecipeLoader implements Runnable {
     	
     	GT_ModHandler.removeRecipe(new ItemStack[] {GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Copper, 1), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Tin, 1), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Copper, 1)});
     	if (null != GT_Utility.setStack(GT_ModHandler.getRecipeOutput(true, new ItemStack[] {GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Copper, 1), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Copper, 1), null, GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Copper, 1), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Tin, 1)}), GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Bronze, GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "bronzeingotcrafting", true) ? 1 : 2))) {
-			GT_Log.log.info("GT_Mod: Changing Forestrys Bronze Recipe");
+			GT_Log.log.info("Changing Forestrys Bronze Recipe");
 		}
     	
 		if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "enchantmenttable", false)) {
-			GT_Log.log.info("GT_Mod: Removing the Recipe of the Enchantment Table, to have more Fun at enchanting with the Anvil and Books from Dungeons.");
+			GT_Log.log.info("Removing the Recipe of the Enchantment Table, to have more Fun at enchanting with the Anvil and Books from Dungeons.");
 			GT_ModHandler.removeRecipe(new ItemStack(Blocks.enchanting_table, 1));
 		}
 		
@@ -94,7 +94,7 @@ public class GT_CraftingRecipeLoader implements Runnable {
 			GT_ModHandler.removeRecipe(new ItemStack(Blocks.ender_chest, 1));
 		}
 		
-        GT_Log.log.info("GT_Mod: Adding Mixed Metal Ingot Recipes.");
+        GT_Log.log.info("Adding Mixed Metal Ingot Recipes.");
         GT_ModHandler.removeRecipe(GT_ModHandler.getIC2Item("mixedMetalIngot", 1));
         
         GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("mixedMetalIngot", 1), new Object[] {"X", "Y", "Z", 'X', OrePrefixes.plate.get(Materials.Iron), 'Y', OrePrefixes.plate.get(Materials.Bronze), 'Z', OrePrefixes.plate.get(Materials.Tin)});
@@ -153,7 +153,7 @@ public class GT_CraftingRecipeLoader implements Runnable {
         GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("mixedMetalIngot", 5), new Object[] {"X", "Y", "Z", 'X', OrePrefixes.plate.get(Materials.TungstenSteel), 'Y', OrePrefixes.plate.get(Materials.Brass), 'Z', OrePrefixes.plate.get(Materials.Zinc)});
         GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("mixedMetalIngot", 6), new Object[] {"X", "Y", "Z", 'X', OrePrefixes.plate.get(Materials.TungstenSteel), 'Y', OrePrefixes.plate.get(Materials.Brass), 'Z', OrePrefixes.plate.get(Materials.Aluminium)});
         
-        GT_Log.log.info("GT_Mod: Adding Rolling Machine Recipes.");
+        GT_Log.log.info("Adding Rolling Machine Recipes.");
         GT_ModHandler.addRollingMachineRecipe(GT_ModHandler.getRCItem("part.rail.standard"		,  4), new Object[] {"X X", "X X", "X X", 'X', OrePrefixes.ingot.get(Materials.Aluminium)});
 	    GT_ModHandler.addRollingMachineRecipe(GT_ModHandler.getRCItem("part.rail.standard"		, 32), new Object[] {"X X", "X X", "X X", 'X', OrePrefixes.ingot.get(Materials.Titanium)});
 	    GT_ModHandler.addRollingMachineRecipe(GT_ModHandler.getRCItem("part.rail.standard"		, 32), new Object[] {"X X", "X X", "X X", 'X', "ingotTungsten"});
@@ -173,7 +173,7 @@ public class GT_CraftingRecipeLoader implements Runnable {
 	    GT_ModHandler.addRollingMachineRecipe(GT_ModHandler.getRCItem("post.metal.purple"		, 64), new Object[] {"X X", "XXX", "X X", 'X', OrePrefixes.ingot.get(Materials.Titanium)});
 	    GT_ModHandler.addRollingMachineRecipe(GT_ModHandler.getRCItem("post.metal.black"		, 64), new Object[] {"X X", "XXX", "X X", 'X', "ingotTungsten"});
 	    
-	    GT_Log.log.info("GT_Mod: Shape forming Recipes.");
+	    GT_Log.log.info("Shape forming Recipes.");
 	    GT_ModHandler.addCraftingRecipe(GT_Items.Shape_Empty				.get(1), false,  true, true, false, new Object[] {"HF", "PP", "PP"	 , 'H', GT_ToolDictNames.craftingToolHardHammer, 'F', GT_ToolDictNames.craftingToolFile, 'P', OrePrefixes.plate.get(Materials.Steel)});
 	    GT_ModHandler.addCraftingRecipe(GT_Items.Shape_Mold_Credit			.get(1), false, false, true, false, new Object[] {"H  ", " P ", "   ", 'H', GT_ToolDictNames.craftingToolHardHammer, 'P', GT_Items.Shape_Empty.get(1)});
 	    GT_ModHandler.addCraftingRecipe(GT_Items.Shape_Mold_Plate			.get(1), false, false, true, false, new Object[] {" H ", " P ", "   ", 'H', GT_ToolDictNames.craftingToolHardHammer, 'P', GT_Items.Shape_Empty.get(1)});
@@ -201,7 +201,7 @@ public class GT_CraftingRecipeLoader implements Runnable {
 	    GT_ModHandler.addCraftingRecipe(GT_Items.Shape_Extruder_Saw			.get(1), false, false, true, false, new Object[] {" C ", "   ", "  P", 'C', GT_ToolDictNames.craftingToolWireCutter, 'P', GT_Items.Shape_Empty.get(1)});
 	    GT_ModHandler.addCraftingRecipe(GT_Items.Shape_Extruder_Gear		.get(1), false, false, true, false, new Object[] {"C  ", "   ", "P  ", 'C', GT_ToolDictNames.craftingToolWireCutter, 'P', GT_Items.Shape_Empty.get(1)});
 	    
-	    GT_Log.log.info("GT_Mod: Basic Circuit adjustment Recipes.");
+	    GT_Log.log.info("Basic Circuit adjustment Recipes.");
 	    GT_ModHandler.addShapelessCraftingRecipe(GT_Items.Circuit_Integrated.getWithDamage(1, 0), new Object[] {OrePrefixes.circuit.get(Materials.Basic), GT_ToolDictNames.craftingToolScrewdriver, GT_ToolDictNames.craftingToolSolderingIron, GT_ToolDictNames.craftingToolSolderingMetal});
 	    GT_ModHandler.addCraftingRecipe(GT_Items.Circuit_Integrated.getWithDamage(1, 1)	, false, false, true, false, new Object[] {"C  ", " P ", "   ", 'C', GT_ToolDictNames.craftingToolScrewdriver, 'P', GT_Items.Circuit_Integrated.getWildcard(1)});
 	    GT_ModHandler.addCraftingRecipe(GT_Items.Circuit_Integrated.getWithDamage(1, 2)	, false, false, true, false, new Object[] {" C ", " P ", "   ", 'C', GT_ToolDictNames.craftingToolScrewdriver, 'P', GT_Items.Circuit_Integrated.getWildcard(1)});
@@ -228,7 +228,7 @@ public class GT_CraftingRecipeLoader implements Runnable {
 	    GT_ModHandler.addCraftingRecipe(GT_Items.Circuit_Integrated.getWithDamage(1, 23), false, false, true, false, new Object[] {"  C", "   ", "P  ", 'C', GT_ToolDictNames.craftingToolScrewdriver, 'P', GT_Items.Circuit_Integrated.getWildcard(1)});
 	    GT_ModHandler.addCraftingRecipe(GT_Items.Circuit_Integrated.getWithDamage(1, 24), false, false, true, false, new Object[] {"   ", "  C", "P  ", 'C', GT_ToolDictNames.craftingToolScrewdriver, 'P', GT_Items.Circuit_Integrated.getWildcard(1)});
 	  
-		GT_Log.log.info("GT_Mod: Beginning to add regular Crafting Recipes.");
+		GT_Log.log.info("Beginning to add regular Crafting Recipes.");
 		GT_ModHandler.addCraftingRecipe(GT_Items.Fuel_Can_Plastic_Empty.get(7), false, true, false, new Object[] {" PP", "P P", "PPP", 'P', OrePrefixes.plate.get(Materials.Plastic)});
 		GT_ModHandler.addCraftingRecipe(GregTech_API.getGregTechMaterial(60, 2), new Object[] {"S ", " P", 'S', GT_ToolDictNames.craftingToolSaw, 'P', new ItemStack(Blocks.wooden_slab, 1, 0)});
 	    GT_ModHandler.addCraftingRecipe(GregTech_API.getGregTechMaterial(61, 2), new Object[] {"S ", " P", 'S', GT_ToolDictNames.craftingToolSaw, 'P', new ItemStack(Blocks.wooden_slab, 1, 1)});
@@ -877,7 +877,7 @@ public class GT_CraftingRecipeLoader implements Runnable {
         GT_ModHandler.removeRecipe(new ItemStack[] {tStack = new ItemStack(Items.wheat_seeds, 1), tStack, tStack, tStack, null, tStack, tStack, tStack, tStack});
         GT_ModHandler.removeRecipe(new ItemStack[] {null, tStack = new ItemStack(Items.coal, 1), null, tStack, GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Iron, 1), tStack, null, tStack, null});
         
-        GT_Log.log.info("GT_Mod: Applying harder Recipes for several Blocks.");
+        GT_Log.log.info("Applying harder Recipes for several Blocks.");
         if (GT_ModHandler.removeRecipeByOutput(GT_OreDictUnificator.get(OrePrefixes.plateAlloy, Materials.Iridium, 1))) {
         	GT_ModHandler.addRollingMachineRecipe(GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.harderrecipes, "iridiumplate", true)?GregTech_API.getGregTechMaterial(4, 1):GT_OreDictUnificator.get(OrePrefixes.plateAlloy, Materials.Iridium, 1L), new Object[]{"IAI", "ADA", "IAI", 'D', GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.harderrecipes, "iridiumplate", true)?GT_OreDictNames.craftingIndustrialDiamond:OrePrefixes.dust.get(Materials.Diamond), Character.valueOf('A'), OrePrefixes.plateAlloy.get("Advanced"), 'I', OrePrefixes.plate.get(Materials.Iridium)});
             GT_ModHandler.addCraftingRecipe(GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.harderrecipes, "iridiumplate", true)?GregTech_API.getGregTechMaterial(4, 1):GT_OreDictUnificator.get(OrePrefixes.plateAlloy, Materials.Iridium, 1L), new Object[]{"IAI", "ADA", "IAI", 'D', GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.harderrecipes, "iridiumplate", true)?GT_OreDictNames.craftingIndustrialDiamond:OrePrefixes.dust.get(Materials.Diamond), Character.valueOf('A'), OrePrefixes.plateAlloy.get("Advanced"), 'I', OrePrefixes.plate.get(Materials.Iridium)});
@@ -915,7 +915,7 @@ public class GT_CraftingRecipeLoader implements Runnable {
             }
         }
         
-        GT_Log.log.info("GT_Mod: Applying Recipes for Tools");
+        GT_Log.log.info("Applying Recipes for Tools");
         
         if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.harderrecipes, "nanosaber", true)) {
         	if (GT_ModHandler.removeRecipeByOutput(GT_ModHandler.getIC2Item("nanoSaber", 1)))
@@ -965,7 +965,7 @@ public class GT_CraftingRecipeLoader implements Runnable {
         GT_ModHandler.addCraftingRecipe(GT_Items.Tool_Drill_Advanced			.getAlmostBroken(1), false, true, false, new Object[]{"DDD", "SCS", "SBS", 'C', OrePrefixes.circuit.get(Materials.Elite), 'B', OrePrefixes.battery.get(Materials.Lithium), 'S', OrePrefixes.plate.get(Materials.TungstenSteel), 'D', GT_OreDictNames.craftingIndustrialDiamond});
         GT_ModHandler.addCraftingRecipe(GT_Items.Tool_Screwdriver_Electric	.getAlmostBroken(1), false, true, false, new Object[]{"S  ", " SC", "  B", 'C', OrePrefixes.circuit.get(Materials.Basic), 'B', OrePrefixes.battery.get(Materials.Basic), 'S', OrePrefixes.stick.get(Materials.StainlessSteel)});
         
-        GT_Log.log.info("GT_Mod: Removing Q-Armor Recipes if configured.");
+        GT_Log.log.info("Removing Q-Armor Recipes if configured.");
         if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "QHelmet"		, false)) GT_ModHandler.removeRecipe(GT_ModHandler.getIC2Item("quantumHelmet", 1));
         if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "QPlate"		, false)) GT_ModHandler.removeRecipe(GT_ModHandler.getIC2Item("quantumBodyarmor", 1));
         if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "QLegs"		, false)) GT_ModHandler.removeRecipe(GT_ModHandler.getIC2Item("quantumLeggings", 1));

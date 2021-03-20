@@ -50,7 +50,6 @@ public class GT_MachineRecipeLoader implements Runnable
         GT_ModHandler.addExtractionRecipe(GT_Items.Battery_RE_LV_Sodium.get(1L), GT_Items.Battery_Hull_LV.get(1L));
         GT_ModHandler.addExtractionRecipe(GT_Items.Battery_RE_MV_Lithium.get(1L), GT_Items.Battery_Hull_MV.get(1L));
         GT_ModHandler.addExtractionRecipe(GT_Items.Battery_RE_MV_Sodium.get(1L), GT_Items.Battery_Hull_MV.get(1L));
-        GT_ModHandler.addExtractionRecipe(GregTech_API.getGregTechMaterial(8, 1), GregTech_API.getGregTechMaterial(9, 1));
         GT_ModHandler.addExtractionRecipe(GT_Items.Crop_Drop_Plumbilia.get(1L), GT_OreDictUnificator.get(OrePrefixes.dustTiny, Materials.Lead, 1L));
         GT_ModHandler.addExtractionRecipe(GT_Items.Crop_Drop_Argentia.get(1L), GT_OreDictUnificator.get(OrePrefixes.dustTiny, Materials.Silver, 1L));
         GT_ModHandler.addExtractionRecipe(GT_Items.Crop_Drop_Indigo.get(1L), GregTech_API.getGregTechMaterial(9, 1));
@@ -70,7 +69,6 @@ public class GT_MachineRecipeLoader implements Runnable
         GT_ModHandler.addCompressionRecipe(GT_Items.Crop_Drop_BobsYerUncleRanks.get(8L), GT_ModHandler.getIC2Item("plantBall", 1L));
         GT_ModHandler.addCompressionRecipe(GT_Items.Crop_Drop_Coppon.get(4L), new ItemStack(Blocks.wool, 1, 1));
         GT_ModHandler.addCompressionRecipe(GT_Items.Crop_Drop_Tine.get(4L), GT_ModHandler.getIC2Item("plantBall", 1L));
-        GT_ModHandler.addCompressionRecipe(GregTech_API.getGregTechMaterial(8, 8), GT_ModHandler.getIC2Item("plantBall", 1L));
         GT_ModHandler.addCompressionRecipe(GT_Items.IC2_Compressed_Coal_Chunk.get(1L), GT_Items.IC2_Industrial_Diamond.get(1L));
         
         GT_ModHandler.addCompressionRecipe(new UnifierRecipeEntry(OrePrefixes.dust, Materials.Wood, 8),  GT_OreDictUnificator.get(OrePrefixes.plank, Materials.Wood, 8L));

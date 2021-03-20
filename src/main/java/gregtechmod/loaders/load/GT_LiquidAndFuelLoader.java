@@ -7,9 +7,10 @@ import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
+
 import gregtechmod.common.GT_FluidRegistry;
-import gregtechmod.common.items.GT_MetaItem_Cell;
 import gregtechmod.common.recipe.RecipeMaps;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -81,7 +82,8 @@ public class GT_LiquidAndFuelLoader implements Runnable {
         RecipeMaps.MAGIC_FUELS.factory().EUt(24).duration(3125).input(new ItemStack(Items.ghast_tear, 1)).buildAndRegister();
         RecipeMaps.MAGIC_FUELS.factory().EUt(20).duration(Materials.NetherStar.mFuelPower * 2 / 20).input(new ItemStack(Blocks.beacon, 1)).buildAndRegister();
 		
-		GT_ModHandler.addBoilerFuel(GT_Utility.getFluidForFilledItem(GT_MetaItem_Cell.instance.getUnunifiedStack(35, 1)), 18000);
-		GT_ModHandler.addBoilerFuel(GT_Utility.getFluidForFilledItem(GT_MetaItem_Cell.instance.getUnunifiedStack( 5, 1)), 24000);
+        
+		GT_ModHandler.addBoilerFuel(GT_Utility.getFluidForFilledItem(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.NitroCoalFuel)), 18000);
+		GT_ModHandler.addBoilerFuel(GT_Utility.getFluidForFilledItem(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Lithium)), 24000);
 	}
 }

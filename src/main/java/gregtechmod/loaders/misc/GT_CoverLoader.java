@@ -6,6 +6,7 @@ import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.common.blocks.GT_BlockMetaID_Machine;
 import gregtechmod.common.items.GT_MetaItem_Component;
 import gregtechmod.common.items.GT_MetaItem_Material;
+
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -73,16 +74,16 @@ public class GT_CoverLoader implements Runnable {
 		GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateTin")				, GregTech_API.IC2_TEXTURE_PATH + "blockMetalTin");
 		GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateCopper")			, GregTech_API.IC2_TEXTURE_PATH + "blockMetalCopper");
 		GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateBronze")			, GregTech_API.IC2_TEXTURE_PATH + "blockMetalBronze");
-		GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateUranium")			, GregTech_API.IC2_TEXTURE_PATH + "blockMetalUranium");
+		GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateUranium")			, GregTech_API.IC2_TEXTURE_PATH + "blockMetalUranium:1");
 		GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateAlloyAdvanced")	, GregTech_API.IC2_TEXTURE_PATH + "blockAlloy");
 		
-		GregTech_API.registerCover(GT_ModHandler.getIC2Item("reactorPlating", 1)		, GregTech_API.IC2_TEXTURE_PATH + "generator/blockNuclearReactor");
-		GregTech_API.registerCover(GT_ModHandler.getIC2Item("reactorPlatingHeat", 1)	, GregTech_API.IC2_TEXTURE_PATH + "generator/blockNuclearReactor");
-		GregTech_API.registerCover(GT_ModHandler.getIC2Item("reactorPlatingExplosive",1), GregTech_API.IC2_TEXTURE_PATH + "generator/blockNuclearReactor");
-		GregTech_API.registerCover(GT_ModHandler.getIC2Item("reactorVent", 1)			, GT_BlockMetaID_Machine.mIcons[259]);
-		GregTech_API.registerCover(GT_ModHandler.getIC2Item("reactorVentCore", 1)		, GT_BlockMetaID_Machine.mIcons[259]);
-		GregTech_API.registerCover(GT_ModHandler.getIC2Item("reactorVentGold", 1)		, GT_BlockMetaID_Machine.mIcons[111]);
-		GregTech_API.registerCover(GT_ModHandler.getIC2Item("reactorVentSpread",1)		, GT_BlockMetaID_Machine.mIcons[258]);
-		GregTech_API.registerCover(GT_ModHandler.getIC2Item("reactorVentDiamond",1)		, GT_BlockMetaID_Machine.mIcons[111]);
+		GregTech_API.registerCover(GT_ModHandler.getIC2Item("reactorPlating", 1)		, GregTech_API.IC2_TEXTURE_PATH + "generator/blockNuclearReactor:1");
+		GregTech_API.registerCover(GT_ModHandler.getIC2Item("reactorPlatingHeat", 1)	, GregTech_API.IC2_TEXTURE_PATH + "generator/blockNuclearReactor:1");
+		GregTech_API.registerCover(GT_ModHandler.getIC2Item("reactorPlatingExplosive",1), GregTech_API.IC2_TEXTURE_PATH + "generator/blockNuclearReactor:1");
+		GregTech_API.registerCover(GT_ModHandler.getIC2Item("reactorVent", 1, 1)		, GT_BlockMetaID_Machine.mIcons[259]);
+		GregTech_API.registerCover(GT_ModHandler.getIC2Item("reactorVentCore", 1, 1)	, GT_BlockMetaID_Machine.mIcons[259]);
+		GregTech_API.registerCover(GT_ModHandler.getIC2Item("reactorVentGold", 1, 1)	, GT_BlockMetaID_Machine.mIcons[111]);
+		GregTech_API.registerCover(GT_ModHandler.getIC2Item("reactorVentSpread", 1)		, GT_BlockMetaID_Machine.mIcons[258]);
+		GregTech_API.registerCover(GT_ModHandler.getIC2Item("reactorVentDiamond",1, 1)	, GT_BlockMetaID_Machine.mIcons[111]);
 	}
 }
