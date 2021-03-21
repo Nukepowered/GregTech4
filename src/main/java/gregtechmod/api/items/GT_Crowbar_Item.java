@@ -7,6 +7,7 @@ import gregtechmod.api.util.GT_Utility;
 
 import java.util.List;
 
+import cpw.mods.fml.common.Loader;
 import net.minecraft.block.Block;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
@@ -23,8 +24,10 @@ public class GT_Crowbar_Item extends GT_Tool_Item {
 		addToBlockList(Blocks.golden_rail);
 		addToBlockList(Blocks.detector_rail);
 		addToBlockList(Blocks.activator_rail);
-		addToBlockList(GT_ModHandler.getRCItem("track.boarding", 1));
-		addToBlockList(GT_ModHandler.getRCItem("track.elevator", 1));
+		if (Loader.isModLoaded("Railcraft")) {
+			addToBlockList(GT_ModHandler.getRCItem("track.boarding", 1));
+			addToBlockList(GT_ModHandler.getRCItem("track.elevator", 1));
+		}
 		setUsageAmounts(1, 2, 1);
 	}
 	

@@ -414,7 +414,10 @@ public class GregTech_API {
 		} catch(Throwable e) {/*Do nothing*/}
 		try {
 			return (GT_Tool_Item)Class.forName("gregtechmod.api.items.GT_Crowbar_Item").getConstructors()[0].newInstance(aUnlocalized, aMaxDamage, aEntityDamage);
-		} catch(Throwable e) {/*Do nothing*/}
+		} catch(Throwable e) {
+			GT_Log.log.error("Unable to construct Crowbar!");
+			GT_Log.log.catching(e);
+		}
 		return new gregtechmod.api.items.GT_Tool_Item(aUnlocalized, "item.bug.tooltip", aMaxDamage, aEntityDamage, false);
 	}
 	
