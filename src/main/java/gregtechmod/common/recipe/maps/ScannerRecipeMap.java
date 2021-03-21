@@ -2,6 +2,7 @@ package gregtechmod.common.recipe.maps;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.recipe.Recipe;
@@ -22,7 +23,7 @@ public class ScannerRecipeMap extends DummyRecipeMap {
 	}
 	
 	@Override
-	public Recipe findRecipe(List<ItemStack> inputs, List<FluidStack> fluidInputs) {
+	public Recipe findRecipe(List<ItemStack> inputs, List<FluidStack> fluidInputs, Predicate<Recipe> metaChecker) {
 		for (int i = 0; i < inputs.size(); i++) {
 			ItemStack input = inputs.get(i);
 			if (GT_Utility.isStackValid(input) && GT_Items.IC2_Crop_Seeds.isStackEqual(input, true, true)) {

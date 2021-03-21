@@ -2,6 +2,7 @@ package gregtechmod.common.recipe.maps;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.recipe.Recipe;
@@ -23,7 +24,7 @@ public class RecyclerRecipeMap extends DummyRecipeMap {
 	}
 
 	@Override
-	public Recipe findRecipe(List<ItemStack> inputs, List<FluidStack> fluidInputs) {
+	public Recipe findRecipe(List<ItemStack> inputs, List<FluidStack> fluidInputs, Predicate<Recipe> metaChecker) {
 		for (ItemStack slot : inputs) {
 			if (GT_Utility.isStackValid(slot)) {
 	    		ItemStack instance = slot.copy();

@@ -8,6 +8,7 @@ import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_OreDictUnificator;
+import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.ListAdapter;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,12 +29,14 @@ public class GT_MetaTileEntity_E_Furnace extends GT_MetaTileEntity_BasicMachine 
 	// see @MetaTileEntity to register MetaTileEntities
 	public GT_MetaTileEntity_E_Furnace(int aID, String aName, RecipeMap<?> recipeMap) {
 		super(aID, aName, recipeMap);
+		loopLen = 90;
 	}
 	
 	// An empty constructor, which is needed for several Java reasons
 	public GT_MetaTileEntity_E_Furnace(RecipeMap<?> recipeMap) {
 		super(recipeMap);
 		recipeLogic.setProgressTimeManipulator(time -> time * (1 + mHeatingCoilTier));
+		loopLen = 90;
 	}
 	
 	// Apply your empty constructor here
@@ -95,6 +98,19 @@ public class GT_MetaTileEntity_E_Furnace extends GT_MetaTileEntity_BasicMachine 
 	@Override
     public List<ItemStack> getOutputItems() {
 		return new ListAdapter<>(mInventory, 3, 4);
+	}
+	
+	@Override
+	public void doSound(byte aIndex, double aX, double aY, double aZ) {
+		super.doSound(aIndex, aX, aY, aZ);
+		if (aIndex == 1) {
+			GT_Utility.doSoundAtClient(GregTech_API.sSoundList.get(207), 10, 1.0F, aX, aY, aZ);
+		}
+	}
+	
+	@Override
+	public void startProcess() {
+		this.sendLoopStart((byte) 1);
 	}
 	
 	@Override

@@ -36,18 +36,19 @@ public class GT_MetaTileEntity_Scanner extends GT_MetaTileEntity_BasicMachine {
    public boolean allowPutStack(int aIndex, byte aSide, ItemStack aStack) {
       return super.allowPutStack(aIndex, aSide, aStack) && GT_Items.IC2_Crop_Seeds.isStackEqual(aStack, true, true);
    }
-
-   public void startSoundLoop(byte aIndex, double aX, double aY, double aZ) {
-      super.startSoundLoop(aIndex, aX, aY, aZ);
-      if(aIndex == 1) {
-         GT_Utility.doSoundAtClient((String)GregTech_API.sSoundList.get(Integer.valueOf(212)), 10, 1.0F, aX, aY, aZ);
-      }
-
-   }
-
-   public void startProcess() {
-      this.sendLoopStart((byte)1);
-   }
+   
+	@Override
+	public void doSound(byte aIndex, double aX, double aY, double aZ) {
+		super.doSound(aIndex, aX, aY, aZ);
+		if (aIndex == 1) {
+			GT_Utility.doSoundAtClient(GregTech_API.sSoundList.get(212), 10, 1.0F, aX, aY, aZ);
+		}
+	}
+	
+	@Override
+	public void startProcess() {
+		this.sendLoopStart((byte) 1);
+	}
 
    public boolean hasTwoSeperateInputs() {
       return true;

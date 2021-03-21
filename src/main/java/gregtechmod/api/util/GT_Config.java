@@ -5,7 +5,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
 public class GT_Config {
-	public static volatile int VERSION = 410;
+	public static volatile int VERSION = 412;
 	
 	public static boolean system = false;
 	

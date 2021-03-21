@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.function.Predicate;
 import java.util.Optional;
 import java.util.Random;
 
@@ -34,8 +35,8 @@ public class PulverizerRecipeMap extends RecipeMap<SimpleRecipeFactory> {
 	}
 	
 	@Override
-	public Recipe findRecipe(List<ItemStack> inputs, List<FluidStack> fluidInputs) {
-		Recipe result = super.findRecipe(inputs, fluidInputs);
+	public Recipe findRecipe(List<ItemStack> inputs, List<FluidStack> fluidInputs, Predicate<Recipe> metaChecker) {
+		Recipe result = super.findRecipe(inputs, fluidInputs, metaChecker);
 		
 		for (int i = 0; i < inputs.size() && result == null; i++) {
 			ItemStack input = inputs.get(i);

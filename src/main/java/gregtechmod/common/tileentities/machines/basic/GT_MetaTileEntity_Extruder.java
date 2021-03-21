@@ -14,10 +14,12 @@ public class GT_MetaTileEntity_Extruder extends GT_MetaTileEntity_BasicMachine {
 
    public GT_MetaTileEntity_Extruder(int aID, String aName, RecipeMap<?> recipeMap) {
       super(aID, aName, recipeMap);
+      loopLen = 130;
    }
 
    public GT_MetaTileEntity_Extruder(RecipeMap<?> recipeMap) {
 	   super(recipeMap);
+	   loopLen = 130;
    }
 
    public int getElectricTier() {
@@ -32,14 +34,16 @@ public class GT_MetaTileEntity_Extruder extends GT_MetaTileEntity_BasicMachine {
       return new GT_MetaTileEntity_Extruder(recipeLogic.recipeMap);
    }
 
-   public void startSoundLoop(byte aIndex, double aX, double aY, double aZ) {
-      super.startSoundLoop(aIndex, aX, aY, aZ);
-      if(aIndex == 1) {
-         GT_Utility.doSoundAtClient((String)GregTech_API.sSoundList.get(Integer.valueOf(208)), 10, 1.0F, aX, aY, aZ);
-      }
-
+   @Override
+   public void doSound(byte aIndex, double aX, double aY, double aZ) {
+	   super.doSound(aIndex, aX, aY, aZ);
+	   if(aIndex == 1) {
+		   GT_Utility.doSoundAtClient((String)GregTech_API.sSoundList.get(Integer.valueOf(208)), 10, 1.0F, aX, aY, aZ);
+	   }
+		   
    }
 
+   @Override
    public void startProcess() {
       this.sendLoopStart((byte)1);
    }

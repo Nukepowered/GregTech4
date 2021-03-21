@@ -12,6 +12,8 @@ import net.minecraft.network.play.server.S02PacketChat;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.IChatComponent;
+import net.minecraftforge.common.ForgeHooks;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -37,10 +39,12 @@ public class GT_ConnectionHandler implements Runnable {
 		EntityPlayerMP aPlayer = handler.playerEntity;
 		if (aPlayer == null) return; 
 		String aUserName = aPlayer.getDisplayName();
-		if (!GT_Mod.mAlreadyPlayed || aUserName.equalsIgnoreCase("richardg867") || true) {
+		if (!GT_Mod.mAlreadyPlayed || aUserName.equalsIgnoreCase("richardg867")) {
 			handler.sendPacket(new S02PacketChat(new ChatComponentTranslation("gregtechmod.log_in.text_1")));
 			handler.sendPacket(new S02PacketChat(new ChatComponentTranslation("gregtechmod.log_in.text_2")));
-			handler.sendPacket(new S02PacketChat(new ChatComponentText("Github page: " + EnumChatFormatting.YELLOW.toString() + "https://github.com/Nukepowered/GregTech4")));
+			IChatComponent comp = ForgeHooks.newChatWithLinks("https://github.com/Nukepowered/GregTech4");
+			comp.getChatStyle().setColor(EnumChatFormatting.YELLOW);
+			handler.sendPacket(new S02PacketChat(new ChatComponentText("Github page: ").appendSibling(comp)));
 			handler.sendPacket(new S02PacketChat(new ChatComponentText("~ Gregorius Techneticies, TheDarkDnKTv")));
 			
 			if (aUserName.equalsIgnoreCase("richardg867")) {

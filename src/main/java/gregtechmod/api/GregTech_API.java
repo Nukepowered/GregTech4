@@ -42,7 +42,7 @@ import net.minecraftforge.oredict.OreDictionary;
  */
 public class GregTech_API {
 	/** For the API Version check */
-	public static volatile int VERSION = 410;
+	public static volatile int VERSION = 412;
 	
 	/** The Mod Object itself. That is the GT_Mod-Object. It's needed to open GUI's and similar. */
 	public static IGT_Mod gregtechmod;

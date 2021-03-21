@@ -1,10 +1,11 @@
 package gregtechmod.common.tileentities.machines.basic;
 
+import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
 import gregtechmod.api.recipe.RecipeMap;
-
+import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class GT_MetaTileEntity_Wiremill extends GT_MetaTileEntity_BasicMachine {
@@ -22,6 +23,19 @@ public class GT_MetaTileEntity_Wiremill extends GT_MetaTileEntity_BasicMachine {
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
 		return new GT_MetaTileEntity_Wiremill(recipeLogic.recipeMap);
+	}
+	
+	@Override
+	public void doSound(byte aIndex, double aX, double aY, double aZ) {
+		super.doSound(aIndex, aX, aY, aZ);
+		if (aIndex == 1) {
+			GT_Utility.doSoundAtClient(GregTech_API.sSoundList.get(204), 10, 1.0F, aX, aY, aZ);
+		}
+	}
+	
+	@Override
+	public void startProcess() {
+		this.sendLoopStart((byte) 1);
 	}
 	
 	@Override

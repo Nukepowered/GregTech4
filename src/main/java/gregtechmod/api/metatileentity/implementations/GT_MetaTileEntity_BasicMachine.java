@@ -31,6 +31,8 @@ import net.minecraftforge.fluids.FluidStack;
 public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity implements IRecipeWorkable {
 	public boolean bAlloyInputFromOutputSide = false, bOutput = false, bItemTransfer = false, bSeperatedInputs = false, bHasBeenUpdated = false, bStuttering = false;
 	public int mMainFacing = -1;
+	public int loopLen = 30;
+	public int lastLoopCall = Integer.MIN_VALUE;
 	
 	protected RecipeLogic recipeLogic;
 	
@@ -254,6 +256,16 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
 		super.doSound(aIndex, aX, aY, aZ);
 		if (aIndex == 8) GT_Utility.doSoundAtClient(GregTech_API.sSoundList.get(210), 100, 1.0F, aX, aY, aZ);
 	}
+	
+	@Override
+	public void startSoundLoop(byte aIndex, double aX, double aY, double aZ) {
+		super.startSoundLoop(aIndex, aX, aY, aZ);
+		long time = getBaseMetaTileEntity().getTimer();
+		if (lastLoopCall + loopLen < time) {
+			lastLoopCall = (int) time;
+			doSound(aIndex, aX, aY, aZ);
+		}
+	}	
 	
 	public boolean doesAutoOutput() {
 		return true;

@@ -2,6 +2,7 @@ package gregtechmod.common.recipe.maps;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_ModHandler;
@@ -27,7 +28,7 @@ public class FurnanceRecipeMap extends DummyRecipeMap {
 	}
 
 	@Override
-	public Recipe findRecipe(List<ItemStack> inputs, List<FluidStack> fluidInputs) {
+	public Recipe findRecipe(List<ItemStack> inputs, List<FluidStack> fluidInputs, Predicate<Recipe> metaChecker) {
 		ItemStack output;
 
 		for (int i = 0; i < inputs.size(); i++) {

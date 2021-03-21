@@ -3,6 +3,7 @@ package gregtechmod.common.recipe.maps;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Utility;
@@ -24,7 +25,7 @@ public class IC2RecipeMap extends DummyRecipeMap {
 	}
 	
 	@Override
-	public Recipe findRecipe(List<ItemStack> input, List<FluidStack> fluidInputs) {
+	public Recipe findRecipe(List<ItemStack> input, List<FluidStack> fluidInputs, Predicate<Recipe> metaChecker) {
 		for (ItemStack in : input) {
 			if (GT_Utility.isStackValid(in)) {
 				ItemStack inValid = in.copy();
