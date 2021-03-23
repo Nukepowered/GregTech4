@@ -1,11 +1,14 @@
 package gregtechmod.common.tileentities.machines.multi;
 
+import java.util.List;
+
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.metatileentity.implementations.BaseMultiFluidWorkable;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.ListAdapter;
 import gregtechmod.common.recipe.RecipeMaps;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -47,6 +50,11 @@ public class GT_MetaTileEntity_Grinder extends BaseMultiFluidWorkable {
     	}
     	return true;
     }
+    
+	@Override
+	public List<ItemStack> getOutputItems() {
+		return new ListAdapter<>(mInventory, 2, 5);
+	}
     
 	@Override
 	public boolean allowPullStack(int aIndex, byte aSide, ItemStack aStack) {
