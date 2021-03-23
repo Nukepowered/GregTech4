@@ -136,17 +136,29 @@ public abstract class BaseMultiFluidWorkable extends BaseMultiWorkable {
 	@Override
 	public int fill(FluidStack resource, boolean doFill) {
 		if (GT_Utility.isFluidStackValid(resource)) {
+			List<FluidStack> fluidInputs = this.getFluidInputs();
 			for (int i = 0; i < fluidInputs.size(); i++) {
 				FluidStack stackInSlot = fluidInputs.get(i);
-				if (!GT_Utility.isFluidStackValid(stackInSlot) || stackInSlot.isFluidEqual(resource)) {
-					int space = getCapacity() - stackInSlot.amount;
-					int toFill = resource.amount <= space  ? resource.amount : space;
-					if (doFill) {
-						stackInSlot.amount += toFill;
+				if (GT_Utility.isFluidStackValid(stackInSlot)) {
+					if (stackInSlot.isFluidEqual(resource)) {
+						int space = getCapacity() - stackInSlot.amount;
+						int toFill = resource.amount <= space  ? resource.amount : space;
+						if (doFill) {
+							stackInSlot.amount += toFill;
+						}
+						
+						return toFill;
 					}
+				} else {
+					int amount = Math.min(getCapacity(), resource.amount);
+					FluidStack copy = resource.copy();
+					copy.amount = amount;
+					if (doFill)
+						fluidInputs.set(i, copy);
 					
-					return toFill;
+					return amount;
 				}
+				
 			}
 		}
 		

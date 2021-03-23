@@ -27,7 +27,7 @@ public class GT_MetaTileEntity_BronzeFurnace extends GT_MetaTileEntity_BasicMach
 			protected void startRecipe(Recipe recipe) {
 				if (getMachine().spaceForOutput(recipe) && getMachine().getBaseMetaTileEntity().decreaseStoredEnergyUnits(recipe.getEUtoStart(), false)) {
 					previousRecipe = recipe;
-					maxProgressTime = GT_Utility.isDebugItem(getMachine().getStackInSlot(batterySlot)) ? 1 : 400;
+					maxProgressTime = GT_Utility.isDebugItem(getMachine().getStackIn(batterySlot)) ? 1 : 400;
 					progressTime = 1;
 					EUt = recipe.getEUt();
 					if (consumeInputs(recipe)) {

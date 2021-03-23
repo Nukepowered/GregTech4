@@ -1,8 +1,6 @@
 package gregtechmod.loaders.load;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import gregtechmod.GT_Mod;
 import gregtechmod.api.GregTech_API;
@@ -43,7 +41,7 @@ public class GT_ItemIterator implements Runnable {
 		ItemStack tCharmII = null;
 		ItemStack tCharmIII = null;
 
-		GT_Log.log.info("GT_Mod: Scanning for certain kinds of compatible Machineblocks.");
+		GT_Log.log.info("Scanning for certain kinds of compatible Machineblocks.");
 		final ItemStack itemStack = null;
 		final ItemStack[] aRecipe = new ItemStack[9];
 		ItemStack tStack2 = aRecipe[0] = GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Bronze, 1L);
@@ -105,18 +103,18 @@ public class GT_ItemIterator implements Runnable {
 			GT_ModHandler.addPulverisationRecipe(tStack3, GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Steel, 4L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Gold, 1L), 0, false);
 		}
 		        
-		GT_Log.log.info("GT_Mod: Registering various Tools to be usable on GregTech Machines");
+		GT_Log.log.info("Registering various Tools to be usable on GregTech Machines");
 		GregTech_API.registerScrewdriver(GT_ModHandler.getRecipeOutput(null, new ItemStack(Items.iron_ingot, 1), null, new ItemStack(Items.stick, 1)));
 		GregTech_API.registerScrewdriver(GT_ModHandler.getRecipeOutput(new ItemStack(Items.iron_ingot, 1), null, null, null, new ItemStack(Items.stick, 1)));
 
-		GT_Log.log.info("GT_Mod: Adding Food Recipes to the Automatic Canning Machine. (also during the following Item Iteration)");
+		GT_Log.log.info("Adding Food Recipes to the Automatic Canning Machine. (also during the following Item Iteration)");
 		RecipeMaps.CANINNING.factory().EUt(1).duration(100).inputs(new ItemStack(Items.rotten_flesh, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(2L)).output(GT_Items.IC2_Food_Can_Spoiled.get(2)).buildAndRegister();
 		RecipeMaps.CANINNING.factory().EUt(1).duration(100).inputs(new ItemStack(Items.spider_eye, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(1L)).output(GT_Items.IC2_Food_Can_Spoiled.get(1)).buildAndRegister();
 		RecipeMaps.CANINNING.factory().EUt(1).duration(100).inputs(new ItemStack(Items.poisonous_potato, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(1L)).output(GT_Items.IC2_Food_Can_Spoiled.get(1)).buildAndRegister();
 		RecipeMaps.CANINNING.factory().EUt(1).duration(600).inputs(new ItemStack(Items.cake, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(6L)).output(GT_Items.IC2_Food_Can_Filled.get(6)).buildAndRegister();
 		RecipeMaps.CANINNING.factory().EUt(1).duration(300).inputs(new ItemStack(Items.mushroom_stew, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(3L)).output(GT_Items.IC2_Food_Can_Filled.get(3)).output(new ItemStack(Items.bowl, 1)).buildAndRegister();
 		
-		GT_Log.log.info("GT_Mod: Scanning ItemList.");
+		GT_Log.log.info("Scanning ItemList.");
 		Iterator<Item> iterator = Item.itemRegistry.iterator();
 		while (iterator.hasNext()) {
 			final Item tItem = iterator.next();
@@ -126,10 +124,10 @@ public class GT_ItemIterator implements Runnable {
 					if (tItem instanceof mods.railcraft.api.core.items.IToolCrowbar) {
 						if (!tItem.isDamageable() && !GT_ModHandler.isElectricItem(new ItemStack(tItem, 1, 0))) {
 							if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "infiniteDurabilityRCCrowbars", false) && GT_ModHandler.removeRecipeByOutput(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) {
-								GT_Log.log.info("GT_Mod: Removed infinite RC Crowbar: " + tName);
+								GT_Log.log.info("Removed infinite RC Crowbar: " + tName);
 							}
 						} else if (GregTech_API.registerCrowbar(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) {
-							GT_Log.log.info("GT_Mod: Registered valid RC Crowbar: " + tName);
+							GT_Log.log.info("Registered valid RC Crowbar: " + tName);
 						}
 					}
 				} catch (Throwable e) {}
@@ -137,10 +135,10 @@ public class GT_ItemIterator implements Runnable {
 					if (tItem instanceof cofh.api.item.IToolHammer) {
 						if (!tItem.isDamageable() && !GT_ModHandler.isElectricItem(new ItemStack(tItem, 1, 0))) {
 							if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "infiniteDurabilityMFRHammers", false) && GT_ModHandler.removeRecipeByOutput(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) {
-								GT_Log.log.info("GT_Mod: Removed infinite MFR Hammer: " + tName);
+								GT_Log.log.info("Removed infinite MFR Hammer: " + tName);
 							}
 						} else if (GregTech_API.registerCrowbar(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) {
-							GT_Log.log.info("GT_Mod: Registered valid MFR Hammer: " + tName);
+							GT_Log.log.info("Registered valid MFR Hammer: " + tName);
 						}
 					}
 				} catch (Throwable e) {}
@@ -148,10 +146,10 @@ public class GT_ItemIterator implements Runnable {
 					if (tItem instanceof buildcraft.api.tools.IToolWrench && !(tItem instanceof mods.railcraft.api.core.items.IToolCrowbar)) {
 						if (!tItem.isDamageable() && !GT_ModHandler.isElectricItem(new ItemStack(tItem, 1, 0))) {
 							if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "infiniteDurabilityBCWrenches", false) && GT_ModHandler.removeRecipeByOutput(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) {
-								GT_Log.log.info("GT_Mod: Removed infinite BC Wrench: " + tName);
+								GT_Log.log.info("Removed infinite BC Wrench: " + tName);
 							}
 						} else if (GregTech_API.registerWrench(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE))) {
-							GT_Log.log.info("GT_Mod: Registered valid BC Wrench: " + tName);
+							GT_Log.log.info("Registered valid BC Wrench: " + tName);
 						}
 					}
 				} catch (Throwable e) {}
@@ -253,11 +251,8 @@ public class GT_ItemIterator implements Runnable {
 					GT_OreDictUnificator.registerOre("paperResearch", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 				} else if (tName.equals("item.ItemThaumonomicon")) {
 					GT_OreDictUnificator.registerOre("bookThaumonomicon", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				} else if (tName.equals("item.ItemEssence")) { // Added getSubItems cause of NEI not showing variants, it would work in previous impl as well
-					List<ItemStack> variants = new ArrayList<>();
-					tItem.getSubItems(tItem, null, variants);
-					variants.removeIf(item -> item.getItemDamage() != 1);
-					RecipeMaps.MAGIC_FUELS.factory().EUt(20).duration(8).input(RecipeEntry.fromStacks(1, variants, Match.DAMAGE)).output(new ItemStack(tItem, 1, 0)).buildAndRegister();
+				} else if (tName.equals("item.ItemEssence")) {
+					RecipeMaps.MAGIC_FUELS.factory().EUt(20).duration(8).input(RecipeEntry.singleton(new ItemStack(tItem, 1, 1), Match.DAMAGE)).output(new ItemStack(tItem, 1, 0)).buildAndRegister();
 				} else if (tName.equals("item.ItemWispEssence")) {
 					RecipeMaps.MAGIC_FUELS.factory().EUt(20).duration(4).input(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE)).buildAndRegister();
 				} else if (tName.equals("item.ItemResource")) {

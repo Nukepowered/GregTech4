@@ -57,6 +57,11 @@ public abstract class BaseMultiWorkable extends MetaTileEntity implements IRecip
 	
     protected abstract boolean checkMachine();
     
+    @Override
+    public ItemStack getStackIn(int idx) {
+    	return super.getStackInSlot(idx);
+    }
+    
     public boolean isStructComplete() {
     	return structComplete;
     }

@@ -69,6 +69,11 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
 	}
 	
 	@Override
+	public ItemStack getStackIn(int idx) {
+		return super.getStackInSlot(idx);
+	}
+	
+	@Override
 	public List<FluidStack> getFluidInputs() {
 		return new ListAdapter<FluidStack>(mFluid);
 	}
@@ -148,15 +153,26 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
 			List<FluidStack> fluidInputs = this.getFluidInputs();
 			for (int i = 0; i < fluidInputs.size(); i++) {
 				FluidStack stackInSlot = fluidInputs.get(i);
-				if (!GT_Utility.isFluidStackValid(stackInSlot) || stackInSlot.isFluidEqual(resource)) {
-					int space = getCapacity() - stackInSlot.amount;
-					int toFill = resource.amount <= space  ? resource.amount : space;
-					if (doFill) {
-						stackInSlot.amount += toFill;
+				if (GT_Utility.isFluidStackValid(stackInSlot)) {
+					if (stackInSlot.isFluidEqual(resource)) {
+						int space = getCapacity() - stackInSlot.amount;
+						int toFill = resource.amount <= space  ? resource.amount : space;
+						if (doFill) {
+							stackInSlot.amount += toFill;
+						}
+						
+						return toFill;
 					}
+				} else {
+					int amount = Math.min(getCapacity(), resource.amount);
+					FluidStack copy = resource.copy();
+					copy.amount = amount;
+					if (doFill)
+						fluidInputs.set(i, copy);
 					
-					return toFill;
+					return amount;
 				}
+				
 			}
 		}
 		

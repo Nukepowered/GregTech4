@@ -61,6 +61,11 @@ public class ElectrolyzerRecipeHandler extends GT_RecipeHandler {
 	public CachedGT_Recipe getRecipe(Recipe irecipe) {
 		return new CachedGT_Recipe(irecipe) {
 			@Override
+			protected Pair<Integer, Integer> getFluidInputAligment(int itemIdx) {
+				return Pair.of(110 - sOffsetX + (18 * itemIdx), 46 - sOffsetY);
+			}
+			
+			@Override
 			protected Pair<Integer, Integer> getInputAligment(int itemIdx) {
 				return Pair.of(80 - sOffsetX - (30 * itemIdx), 46 - sOffsetY);
 			}

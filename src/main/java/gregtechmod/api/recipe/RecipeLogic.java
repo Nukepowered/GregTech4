@@ -167,7 +167,7 @@ public class RecipeLogic {
 	protected void startRecipe(Recipe recipe) {
 		if (getMachine().spaceForOutput(recipe) && getMachine().getBaseMetaTileEntity().decreaseStoredEnergyUnits(recipe.getEUtoStart(), false)) {
 			previousRecipe = recipe;
-			maxProgressTime = GT_Utility.isDebugItem(getMachine().getStackInSlot(batterySlot)) ? 1 : recipe.getDuration();
+			maxProgressTime = GT_Utility.isDebugItem(getMachine().getStackIn(batterySlot)) ? 1 : recipe.getDuration();
 			progressTime = 1;
 			EUt = recipe.getEUt();
 			if (consumeInputs(recipe)) {

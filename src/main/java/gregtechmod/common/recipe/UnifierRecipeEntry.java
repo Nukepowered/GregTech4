@@ -33,7 +33,7 @@ public class UnifierRecipeEntry implements Ingredient, IRecipeInput  {
 		if (prefix == null || material == null) 
 			throw new IllegalArgumentException("Prefix: " + prefix + ", material: " + material);
 		if (!OreDictionary.doesOreNameExist(prefix.get(material)))
-			throw new IllegalArgumentException("OrePrefix & Materials combination returns null item!");
+			throw new IllegalArgumentException("OrePrefix & Materials combination returns null item! " + prefix.get(material));
 		this.prefix = prefix;
 		this.material = material;
 		this.count = count;

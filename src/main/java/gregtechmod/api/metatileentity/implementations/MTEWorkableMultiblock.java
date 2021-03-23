@@ -38,6 +38,11 @@ public abstract class MTEWorkableMultiblock extends MetaTileEntityMultiblock imp
 	@Override public RecipeLogic getRecipeLogic() 					{return recipeLogic;}
     @Override public int increaseProgress(int aProgress)			{recipeLogic.increaseProgressTime(aProgress);return recipeLogic.getMaxProgressTime()-recipeLogic.getProgressTime();}
 	
+    @Override
+    public ItemStack getStackIn(int idx) {
+    	return super.getStackInSlot(idx);
+    }
+    
 	@Override
 	public void saveNBTData(NBTTagCompound aNBT) {
 		super.saveNBTData(aNBT);

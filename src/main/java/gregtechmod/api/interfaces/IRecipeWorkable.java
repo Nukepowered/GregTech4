@@ -25,7 +25,7 @@ public interface IRecipeWorkable {
 	
 	public boolean spaceForOutput(Recipe recipe);
 	
-	public ItemStack getStackInSlot(int slotIdx);
+	public ItemStack getStackIn(int slotIdx);
 	
 	public List<ItemStack> getInputItems();
 	

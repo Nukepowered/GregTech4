@@ -72,6 +72,11 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
 	@Override public boolean isLiquidInput (byte aSide)				{return aSide != mMainFacing;}
 	@Override public boolean isLiquidOutput(byte aSide)				{return aSide != mMainFacing;}
     
+	@Override
+	public ItemStack getStackIn(int idx) {
+		return super.getStackInSlot(idx);
+	}
+	
 	protected void initRecipeLogic(RecipeMap<?> recipeMap) {
 		recipeLogic = new RecipeLogic(recipeMap, this);
 	}

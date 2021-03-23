@@ -689,4 +689,9 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity implements 
 			firstStart = data1.getBoolean("firstStart");
 		}
 	}
+
+	@Override
+	public ItemStack getStackIn(int slotIdx) {
+		return super.getStackInSlot(slotIdx);
+	}
 }

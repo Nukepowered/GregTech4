@@ -159,21 +159,21 @@ public class GT_MachineRecipeLoader implements Runnable
         RecipeMaps.FUSION_REACTOR.factory().EUt(32768).startEU(150000000).duration(512).inputs(GT_Utility.copy(Materials.Lithium.mFluid, 1000), GT_Utility.copy(Materials.Tungsten.mSolid, 1000)).output(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iridium, 1L)).buildAndRegister();
         RecipeMaps.FUSION_REACTOR.factory().EUt(32768).startEU(100000000).duration(512).inputs(GT_Utility.copy(Materials.Beryllium.mSolid, 1000), GT_Utility.copy(Materials.Tungsten.mSolid, 1000)).output(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Platinum, 1L)).buildAndRegister();
         
-        RecipeMaps.IMPLOSION_COMPRESSOR.factory().EUt(1).duration(800).setShaped(true).input(GregTech_API.getGregTechMaterial(4, 1)).input(GT_ModHandler.getIC2Item("industrialTnt", 8)).outputs(GT_OreDictUnificator.get(OrePrefixes.plateAlloy, Materials.Iridium, 1L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 4L)).buildAndRegister();
-        RecipeMaps.IMPLOSION_COMPRESSOR.factory().EUt(1).duration(800).setShaped(true).input(GT_Items.IC2_Compressed_Coal_Chunk.get(1)).input(GT_ModHandler.getIC2Item("industrialTnt", 8)).outputs(GT_Items.IC2_Industrial_Diamond.get(1L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 4L)).buildAndRegister();
+        RecipeMaps.IMPLOSION_COMPRESSOR.factory().EUt(30).duration(20).setShaped(true).input(GregTech_API.getGregTechMaterial(4, 1)).input(GT_ModHandler.getIC2Item("industrialTnt", 8)).outputs(GT_OreDictUnificator.get(OrePrefixes.plateAlloy, Materials.Iridium, 1L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 4L)).buildAndRegister();
+        RecipeMaps.IMPLOSION_COMPRESSOR.factory().EUt(30).duration(20).setShaped(true).input(GT_Items.IC2_Compressed_Coal_Chunk.get(1)).input(GT_ModHandler.getIC2Item("industrialTnt", 8)).outputs(GT_Items.IC2_Industrial_Diamond.get(1L), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 4L)).buildAndRegister();
         
         RecipeMaps.DISTILLATION.factory().EUt(64).duration(4000).setShaped(true).input(OrePrefixes.cell, Materials.Oil, 16).input(GT_Items.Cell_Empty.get(32)).outputs(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Fuel, 16L), GT_OreDictUnificator.get(OrePrefixes.cell, Materials.SulfuricAcid, 16L), GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Glyceryl, 1L), GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Methane, 15L)).buildAndRegister();
         RecipeMaps.DISTILLATION.factory().EUt(64).duration(500).setShaped(true).input(OrePrefixes.cell, Materials.Biomass, 3).outputs(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Ethanol, 1L), GT_Items.Cell_Water.get(1L), GT_Items.Cell_Empty.get(1L), GT_Items.IC2_Fertilizer.get(1L)).buildAndRegister();
         
         RecipeMaps.ELECTROLYZER.factory().EUt(120).duration(215).input(GT_ModHandler.getIC2Item("electrolyzedWaterCell", 6L)).outputs(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Hydrogen, 4L), GT_Items.Cell_Air.get(1L), GT_Items.Cell_Empty.get(1L)).buildAndRegister();
+        RecipeMaps.ELECTROLYZER.factory().EUt(120).duration(215).input(GT_Items.Cell_Empty.get(1L)).input(GT_ModHandler.getWater(1000)).output(GT_ModHandler.getIC2Item("electrolyzedWaterCell", 1L)).buildAndRegister();
         RecipeMaps.ELECTROLYZER.factory().EUt(120).duration(215).input(GT_Items.Cell_Water.get(1L)).output(GT_ModHandler.getIC2Item("electrolyzedWaterCell", 1L)).buildAndRegister();
-        RecipeMaps.ELECTROLYZER.factory().EUt(30).duration(100).inputs(new ItemStack(Items.water_bucket, 1), GT_Items.Cell_Empty.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Calcium, 1L)).buildAndRegister();
+        RecipeMaps.ELECTROLYZER.factory().EUt(120).duration(215).inputs(new ItemStack(Items.water_bucket, 1), GT_Items.Cell_Empty.get(1)).output(GT_ModHandler.getIC2Item("electrolyzedWaterCell", 1L)).output(new ItemStack(Items.bucket)).buildAndRegister();
         RecipeMaps.ELECTROLYZER.factory().EUt(106).duration(24).input(new ItemStack(Items.dye, 3, 15)).output(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Calcium, 1)).buildAndRegister();
         RecipeMaps.ELECTROLYZER.factory().EUt(25).duration(500).input("sand", 8).outputs(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.SiliconDioxide, 1L)).buildAndRegister();
         
         GT_ModHandler.removeRecipeByOutput(GT_Items.IC2_Fertilizer.get(1L));
         
-       
         RecipeMaps.CHEMICAL.factory().EUt(30).duration( 500).input(OrePrefixes.dust, Materials.NetherQuartz	, 3).input(OrePrefixes.dust, Materials.Sodium		, 1).output(GT_OreDictUnificator.get(OrePrefixes.gem, Materials.NetherQuartz, 1L)).buildAndRegister();
         RecipeMaps.CHEMICAL.factory().EUt(30).duration( 500).input(OrePrefixes.dust, Materials.CertusQuartz	, 3).input(OrePrefixes.dust, Materials.Sodium		, 1).output(GT_OreDictUnificator.get(OrePrefixes.gem, Materials.CertusQuartz, 1L)).buildAndRegister();
         RecipeMaps.CHEMICAL.factory().EUt(30).duration( 500).input(OrePrefixes.dust, Materials.Quartzite	, 3).input(OrePrefixes.dust, Materials.Sodium		, 1).output(GT_OreDictUnificator.get(OrePrefixes.gem, Materials.Quartzite, 1L)).buildAndRegister();
@@ -525,17 +525,50 @@ public class GT_MachineRecipeLoader implements Runnable
         }
         
         for (final MaterialStack[] tMats : this.mAlloySmelterList) {
+            final ItemStack tOutputIngot = GT_OreDictUnificator.get(OrePrefixes.ingot, tMats[2].mMaterial, tMats[2].mAmount);
             final ItemStack tDust1 = GT_OreDictUnificator.get(OrePrefixes.dust, tMats[0].mMaterial, tMats[0].mAmount);
             final ItemStack tDust2 = GT_OreDictUnificator.get(OrePrefixes.dust, tMats[1].mMaterial, tMats[1].mAmount);
             final ItemStack tIngot1 = GT_OreDictUnificator.get(OrePrefixes.ingot, tMats[0].mMaterial, tMats[0].mAmount);
             final ItemStack tIngot2 = GT_OreDictUnificator.get(OrePrefixes.ingot, tMats[1].mMaterial, tMats[1].mAmount);
-            final ItemStack tOutputIngot = GT_OreDictUnificator.get(OrePrefixes.ingot, tMats[2].mMaterial, tMats[2].mAmount);
             
             if (tOutputIngot != null) {
-                GT_ModHandler.addAlloySmelterRecipe(tIngot1, tDust2, tOutputIngot, (int)tMats[2].mAmount * 50, 16, false);
-                GT_ModHandler.addAlloySmelterRecipe(tIngot1, tIngot2, tOutputIngot, (int)tMats[2].mAmount * 50, 16, false);
-                GT_ModHandler.addAlloySmelterRecipe(tDust1, tIngot2, tOutputIngot, (int)tMats[2].mAmount * 50, 16, false);
-                GT_ModHandler.addAlloySmelterRecipe(tDust1, tDust2, tOutputIngot, (int)tMats[2].mAmount * 50, 16, false);
+            	int dur = (int)tMats[2].mAmount * 50;
+            	GT_ModHandler.addInductionSmelterRecipe(tDust1, tDust2, tOutputIngot, null, dur * 2, 0);
+            	RecipeMaps.ALLOY_SMELTING.factory().EUt(16).duration(dur)
+            		.input(OrePrefixes.dust, tMats[0].mMaterial, (int)tMats[0].mAmount)
+            		.input(OrePrefixes.dust, tMats[1].mMaterial, (int)tMats[1].mAmount)
+            		.output(tOutputIngot).buildAndRegister();
+            	
+            	
+            	if (tIngot1 != null && tIngot2 != null) {
+            		GT_ModHandler.addInductionSmelterRecipe(tIngot1, tIngot2, tOutputIngot, null, dur * 2, 0);
+	            	RecipeMaps.ALLOY_SMELTING.factory().EUt(16).duration(dur)
+		        		.input(OrePrefixes.ingot, tMats[0].mMaterial, (int)tMats[0].mAmount)
+		        		.input(OrePrefixes.ingot, tMats[1].mMaterial, (int)tMats[1].mAmount)
+		        		.output(tOutputIngot).buildAndRegister();
+            	}
+            	
+            	if (tIngot2 != null) {
+            		GT_ModHandler.addInductionSmelterRecipe(tDust1, tIngot2, tOutputIngot, null, dur * 2, 0);
+	            	RecipeMaps.ALLOY_SMELTING.factory().EUt(16).duration(dur)
+		        		.input(OrePrefixes.dust, tMats[0].mMaterial, (int)tMats[0].mAmount)
+		        		.input(OrePrefixes.ingot, tMats[1].mMaterial, (int)tMats[1].mAmount)
+		        		.output(tOutputIngot).buildAndRegister();
+            	}
+            	
+            	if (tIngot1 != null) {
+            		GT_ModHandler.addInductionSmelterRecipe(tIngot1, tDust2, tOutputIngot, null, dur * 2, 0);
+	            	RecipeMaps.ALLOY_SMELTING.factory().EUt(16).duration(dur)
+		        		.input(OrePrefixes.ingot, tMats[0].mMaterial, (int)tMats[0].mAmount)
+		        		.input(OrePrefixes.dust, tMats[1].mMaterial, (int)tMats[1].mAmount)
+		        		.output(tOutputIngot).buildAndRegister();
+            	}
+            	
+//            	
+//                GT_ModHandler.addAlloySmelterRecipe(tIngot1, tDust2, tOutputIngot, (int)tMats[2].mAmount * 50, 16, false);
+//                GT_ModHandler.addAlloySmelterRecipe(tIngot1, tIngot2, tOutputIngot, (int)tMats[2].mAmount * 50, 16, false);
+//                GT_ModHandler.addAlloySmelterRecipe(tDust1, tIngot2, tOutputIngot, (int)tMats[2].mAmount * 50, 16, false);
+//                GT_ModHandler.addAlloySmelterRecipe(tDust1, tDust2, tOutputIngot, (int)tMats[2].mAmount * 50, 16, false);
             }
         }
     }
