@@ -154,7 +154,7 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
 					break;
 				} else if (GT_Utility.areStacksEqual(slot, current)) {
 					int newSize = Math.min(slot.getMaxStackSize(), amount + slot.stackSize);
-					amount -= newSize;
+					amount -= newSize - slot.stackSize;
 				}
 			}
 			

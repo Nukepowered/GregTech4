@@ -212,7 +212,7 @@ public class RecipeLogic {
 			}
 			
 			if (amount > 0)
-				GT_Log.log.error("Output overflow detected! Left items: " + amount + " for output stack: " + recipeOut);
+				GT_Log.log.error(String.format("Output overflow detected for machine (%s) left amount: %s, stack: %s", getMachine().getClass(), amount, recipeOut));
 		}
 		
 		List<FluidStack> fluidOutputs = getMachine().getFluidOutputs();

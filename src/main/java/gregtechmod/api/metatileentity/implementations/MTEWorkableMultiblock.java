@@ -100,7 +100,7 @@ public abstract class MTEWorkableMultiblock extends MetaTileEntityMultiblock imp
 					break;
 				} else if (GT_Utility.areStacksEqual(slot, current)) {
 					int newSize = Math.min(slot.getMaxStackSize(), amount + slot.stackSize);
-					amount -= newSize;
+					amount -= newSize - slot.stackSize;
 				}
 			}
 			
