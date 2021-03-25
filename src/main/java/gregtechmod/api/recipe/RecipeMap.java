@@ -24,10 +24,10 @@ import net.minecraftforge.fluids.FluidStack;
  */
 public class RecipeMap<F extends RecipeFactory<F>> {
 	
-	private final transient Map<Integer, List<Recipe>> MAPPINGS = new HashMap<>(); 
+	protected final transient Map<Integer, List<Recipe>> MAPPINGS = new HashMap<>(); 
 	
-	private final F factory;
-	private final List<Recipe> recipeList;
+	protected final F factory;
+	protected final List<Recipe> recipeList;
 	
 	public final int minInputs;
 	public final int maxInputs;
@@ -72,27 +72,7 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 		return result != null && result.enabled ? result : null;
 	}
 	
-	public Recipe findRecipe(List<ItemStack> input, List<FluidStack> fluidInputs) {
-		Set<Recipe> recipesTotal = this.getMappedRecipes(input, fluidInputs);
-		Recipe result = null;
-		if (!recipesTotal.isEmpty())
-			result = findRecipe(recipesTotal, input, fluidInputs);
-		return result != null && result.enabled ? result : null;
-	}
-	
-	private Recipe findRecipe(Collection<Recipe> recipes, List<ItemStack> input, List<FluidStack> fluidInputs) {
-		if (recipes != null) {
-			for (Recipe recipe : recipes) {
-				if (recipe.matches(false, input, fluidInputs)) {
-					return recipe;
-				}
-			}
-		}
-		
-		return null;
-	}
-	
-	private Recipe findRecipe(Collection<Recipe> recipes, List<ItemStack> input, List<FluidStack> fluidInputs, Predicate<Recipe> metaChecker) {
+	protected Recipe findRecipe(Collection<Recipe> recipes, List<ItemStack> input, List<FluidStack> fluidInputs, Predicate<Recipe> metaChecker) {
 		if (recipes != null) {
 			for (Recipe recipe : recipes) {
 				if (metaChecker.test(recipe) && recipe.matches(false, input, fluidInputs)) {
@@ -104,7 +84,7 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 		return null;
 	}
 	
-	private Set<Recipe> getMappedRecipes(List<ItemStack> input, List<FluidStack> fluidInputs) {
+	public Set<Recipe> getMappedRecipes(List<ItemStack> input, List<FluidStack> fluidInputs) {
 		Set<Recipe> recipesTotal = new HashSet<>();
 		for (FluidStack fluid : fluidInputs) {
 			if (GT_Utility.isFluidStackValid(fluid)) {
@@ -133,7 +113,7 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 	 * @param recipe
 	 * @throws GT_RecipeException
 	 */
-	private void assertValidRecipe(Recipe recipe) {
+	protected void assertValidRecipe(Recipe recipe) {
 		String error = "";
 		
 		if (recipe.getInputs().size() < minInputs) 				error += " - Inputs size less than minimum required(" 				+ minInputs + 		"), current: " + recipe.getInputs().size();
@@ -150,7 +130,7 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 		if (!error.isEmpty()) throw new GT_RecipeException(recipe.toString() + " thrown exception on registeration for RecipeMap:\n" + error);
 	}
 	
-	private void createMappings(Recipe toMap) {
+	protected void createMappings(Recipe toMap) {
 		IntConsumer addToMap = value -> {
 			List<Recipe> recipes = MAPPINGS.get(value);
 			recipes = recipes == null ? new ArrayList<>() : recipes;

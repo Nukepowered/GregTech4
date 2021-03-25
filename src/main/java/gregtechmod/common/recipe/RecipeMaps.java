@@ -5,6 +5,7 @@ import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.common.recipe.factory.BlastFurnanceRecipeFactory;
 import gregtechmod.common.recipe.factory.GeneratorRecipeFactory;
 import gregtechmod.common.recipe.factory.SimpleRecipeFactory;
+import gregtechmod.common.recipe.factory.ThermalBoilerRecipeMap;
 import gregtechmod.common.recipe.maps.FurnanceRecipeMap;
 import gregtechmod.common.recipe.maps.IC2RecipeMap;
 import gregtechmod.common.recipe.maps.PulverizerRecipeMap;
@@ -55,4 +56,5 @@ public class RecipeMaps {
 	public static final RecyclerRecipeMap 	RECYCLING 		= new RecyclerRecipeMap(1, 2, 1, 2);
 	public static final ScannerRecipeMap 	SCANNING 		= new ScannerRecipeMap(1, 2, 1, 2);
 	public static final FurnanceRecipeMap 	MELTING			= new FurnanceRecipeMap(1, 2, 1, 2);
+	public static final ThermalBoilerRecipeMap THERMAL_BOILER = new ThermalBoilerRecipeMap();
 }

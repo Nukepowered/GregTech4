@@ -2,6 +2,7 @@ package gregtechmod.common.recipe.maps;
 
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.recipe.RecipeMap;
+import gregtechmod.api.util.GT_ItsNotMyFaultException;
 import gregtechmod.common.recipe.factory.SimpleRecipeFactory;
 
 /**
@@ -15,18 +16,22 @@ public abstract class DummyRecipeMap extends RecipeMap<SimpleRecipeFactory> {
 		super(minInputs, maxInputs, minOutputs, maxOutputs, null);
 	}
 	
-	@Override
-	public SimpleRecipeFactory factory() {
-		return null;
+	protected DummyRecipeMap(int minInputs, int maxInputs, int minOutputs, int maxOutputs, int minFluidInput, int maxFluidInput, int minFluidOutput, int maxFluidOutput) {
+		super(minInputs, maxInputs, minOutputs, maxOutputs, minFluidInput, maxFluidInput, minFluidOutput, maxFluidOutput, null);
 	}
 	
 	@Override
-	public boolean register(Recipe recipe) {
+	public final SimpleRecipeFactory factory() {
+		throw new GT_ItsNotMyFaultException("It is not allowed to call factory() method for Dummy recipe maps!\n This maps type created to GENERATE recipes in runtime, not to store it.");
+	}
+	
+	@Override
+	public final boolean register(Recipe recipe) {
 		return false;
 	}
 	
 	@Override
-	public boolean remove(Recipe recipe) {
+	public final boolean remove(Recipe recipe) {
 		return false;
 	}
 }

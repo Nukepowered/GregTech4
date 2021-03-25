@@ -41,11 +41,11 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends MTEWorkableMultiblock
 	@Override public int maxEUOutput() 								{return 400;}
 	
 	public GT_MetaTileEntity_Multi_ThermalBoiler(int aID, String mName) {
-		super(aID, mName, RecipeMaps.HOT_FUELS);
+		super(aID, mName, RecipeMaps.THERMAL_BOILER);
 	}
 	
 	public GT_MetaTileEntity_Multi_ThermalBoiler() {
-		super(RecipeMaps.HOT_FUELS);
+		super(RecipeMaps.THERMAL_BOILER);
 	}
 	
 	@Override
@@ -54,7 +54,7 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends MTEWorkableMultiblock
 	}
 	
 	protected void initRecipeLogic(RecipeMap<?> map) {
-		recipeLogic = new MultiblockGenerator(() -> mEfficiency, map, this);
+		recipeLogic = new ThermalBoilerLogic(() -> mEfficiency, map, this);
 	}
 	
 	@Override
@@ -158,7 +158,7 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends MTEWorkableMultiblock
 	@Override
 	public Map<String, List<Object>> getInfoData() {
 		return InfoBuilder.create()
-				.newKey("metatileentity.multiblock.thermalboiler.left_eu", ((MultiblockGenerator)recipeLogic).getLeftEU())
+				.newKey("metatileentity.multiblock.thermalboiler.left_eu", ((ThermalBoilerLogic)recipeLogic).getLeftEU())
 				.newKey("metatileentity.multiblock.malfunction_amount", getIdealStatus() - getRepairStatus())
 				.build();
 	}
@@ -189,9 +189,9 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends MTEWorkableMultiblock
 		return "metatileentity.GT_Multi_ThermalBoiler.tooltip";
 	}
 	
-	private static class MultiblockGenerator extends GeneratorRecipeLogic {
+	private static class ThermalBoilerLogic extends GeneratorRecipeLogic {
 	
-		protected MultiblockGenerator(IntSupplier efficiency, RecipeMap<?> recipeMap, IRecipeWorkable machine) {
+		protected ThermalBoilerLogic(IntSupplier efficiency, RecipeMap<?> recipeMap, IRecipeWorkable machine) {
 			super(efficiency, recipeMap, machine);
 		}
 		
@@ -201,21 +201,22 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends MTEWorkableMultiblock
 			MTEWorkableMultiblock machine = (MTEWorkableMultiblock) getMachine();
 			IGregTechTileEntity base = machine.getBaseMetaTileEntity();
 			
-			if (base.isAllowedToWork()) {
-				if (leftEU > 0) {
-					long tmp = leftEU;
-					success = updateRecipeProgress();
-					if (tmp == 0 && !success) {
-						throw new IllegalStateException();
-					}
+			if (leftEU > 0) {
+				long tmp = leftEU;
+				success = updateRecipeProgress();
+				if (tmp == 0 && !success) {
+					throw new IllegalStateException();
 				}
-				
+			}
+		
+			if (base.isAllowedToWork()) {
 				if (leftEU == 0) {
 					if (machine.hasInventoryBeenModified() || base.hasWorkJustBeenEnabled() || success || base.getTimer() % 600 == 0) {
 						trySerachRecipe();
 					}
 				}
-			} 
+			} else if (success)
+				triggerMachine(false); 
 			
 			return success;
 		}
@@ -223,28 +224,45 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends MTEWorkableMultiblock
 		@Override
 		protected boolean updateRecipeProgress() {
 			MTEWorkableMultiblock machine = (MTEWorkableMultiblock) getMachine();
-			if (leftEU > 0) {
-				int EU = (int) Math.min(((MetaTileEntity) getMachine()).maxEUOutput(), leftEU);
-				EU = progressTimeManipulator.applyAsInt(EU);
-				if (machine.depleteInput(GT_ModHandler.getWater((EU + 160) / 160))) {
-					machine.addOutput(GT_ModHandler.getSteam(EU * 2));
-					leftEU -= EU;
-					if (leftEU <= 0) {
-						progressTime = 0;
-						maxProgressTime = 0;
-						EUt = 0;
-						leftEU = 0;
+			int EU = (int) Math.min(((MetaTileEntity) getMachine()).maxEUOutput(), leftEU);
+			EU = progressTimeManipulator.applyAsInt(EU);
+			if (machine.depleteInput(GT_ModHandler.getWater((EU + 160) / 160))) {
+				this.addSteam(machine.getFluidOutputs(), EU * 2);
+				leftEU -= EU;
+				if (leftEU <= 0) {
+					progressTime = 0;
+					maxProgressTime = 0;
+					EUt = 0;
+					leftEU = 0;
 
-						if (previousRecipe != null) endRecipe(previousRecipe);
-						getMachine().endProcess();
-					}
-
+					if (previousRecipe != null) endRecipe(previousRecipe);
+					getMachine().endProcess();
 					return true;
 				}
-			}
+			} else machine.stopMachine();
 			
-			machine.stopMachine();
 			return false;
+		}
+		
+		@Override
+		public void stop() {
+			leftEU = 0;
+			super.stop();
+		}
+		
+		protected void addSteam(List<FluidStack> fluids, int amount) {
+			FluidStack steam = GT_ModHandler.getSteam(amount);
+			for (int i = 0; i < fluids.size(); i++) {
+				FluidStack slot = fluids.get(i);
+				if (slot == null) {
+					fluids.set(i, steam);
+				} else if (slot.isFluidEqual(steam)) {
+					int newSize = Math.min(MAX_FLUID_STACK, slot.amount + amount);
+					slot.amount = newSize;
+				} else continue;
+				
+				break;
+			}
 		}
 	}
 }

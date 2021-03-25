@@ -326,7 +326,7 @@ public abstract class MetaTileEntityMultiblock extends MetaTileEntity {
 		List<FluidStack> input = this.getFluidInputs();
 		int[] itemAmountInSlots = new int[input.size()];
 		int amount = fluid.amount;
-		for (int i = 0; i < input.size() && amount > 0; i++) {
+		for (int i = 0; i < input.size(); i++) {
 			FluidStack fluidInSlot = input.get(i);
 			
 			if (fluidInSlot == null) {
