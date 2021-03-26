@@ -191,6 +191,8 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends MTEWorkableMultiblock
 	
 	private static class ThermalBoilerLogic extends GeneratorRecipeLogic {
 	
+		protected boolean justFinished = false;
+		
 		protected ThermalBoilerLogic(IntSupplier efficiency, RecipeMap<?> recipeMap, IRecipeWorkable machine) {
 			super(efficiency, recipeMap, machine);
 		}
@@ -211,12 +213,12 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends MTEWorkableMultiblock
 		
 			if (base.isAllowedToWork()) {
 				if (leftEU == 0) {
-					if (machine.hasInventoryBeenModified() || base.hasWorkJustBeenEnabled() || success || base.getTimer() % 600 == 0) {
+					if (machine.hasInventoryBeenModified() || base.hasWorkJustBeenEnabled() || success || justFinished || base.getTimer() % 600 == 0) {
+						justFinished = false;
 						trySerachRecipe();
 					}
 				}
-			} else if (success)
-				triggerMachine(false); 
+			}
 			
 			return success;
 		}
@@ -242,6 +244,26 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends MTEWorkableMultiblock
 			} else machine.stopMachine();
 			
 			return false;
+		}
+		
+		@Override
+		protected void trySerachRecipe() {
+			if (getMachine().allowToCheckRecipe()) {
+				if (previousRecipe != null) {
+					if (match(previousRecipe)) {
+						startRecipe(previousRecipe);
+					} else {
+						previousRecipe = null;
+						justFinished = true;
+						triggerMachine(false);
+					}
+				} else {
+					// find new recipe
+					Recipe resRec = findRecipe();
+					if (resRec != null)
+						startRecipe(resRec);
+				}
+			}
 		}
 		
 		@Override

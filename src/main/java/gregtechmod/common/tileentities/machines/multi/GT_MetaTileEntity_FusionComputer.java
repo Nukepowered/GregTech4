@@ -118,28 +118,26 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity implements 
     
     @Override
     public void onPostTick() {
-	    if (getBaseMetaTileEntity().isServerSide()) {
-	    	if (getBaseMetaTileEntity().isServerSide()) {
-	    		if (needCheckStruct) {
-	    			reset();
-	    			structComplete = checkMachine();
-	        		needCheckStruct = false;
-	        		
-	        		if (structComplete) {
-	        			fluidInputs = new InventoryHandlerList<>(mPlasmaInjectors.stream().map(extr -> new ListAdapter<>(extr.mFluid)).collect(Collectors.toList()));
-	        			fluidOutputs = new InventoryHandlerList<>(mPlasmaExtractors.stream().map(extr -> new ListAdapter<>(extr.mFluid)).collect(Collectors.toList()));
-	        			itemInputs = new InventoryHandlerList<>(mPlasmaInjectors.stream().map(extr -> new ListAdapter<>(extr.mInventory, extr.getInputSlot(), extr.getInputSlot())).collect(Collectors.toList()));
-	        			itemOutputs = new InventoryHandlerList<>(mPlasmaExtractors.stream().map(extr -> new ListAdapter<>(extr.mInventory, extr.getOutputSlot(), extr.getOutputSlot())).collect(Collectors.toList()));
-	        		}
-	    		} else if (!structComplete && getBaseMetaTileEntity().getTimer() % 600 == 0) {
-	    			needCheckStruct = true;
-	    		}
-	    		
-	    		if (structComplete) {
-	    			recipeLogic.update();
-	    		} else recipeLogic.stop();
-	    	}
-		}
+    	if (getBaseMetaTileEntity().isServerSide()) {
+    		if (needCheckStruct) {
+    			reset();
+    			structComplete = checkMachine();
+        		needCheckStruct = false;
+        		
+        		if (structComplete) {
+        			fluidInputs = new InventoryHandlerList<>(mPlasmaInjectors.stream().map(extr -> new ListAdapter<>(extr.mFluid)).collect(Collectors.toList()));
+        			fluidOutputs = new InventoryHandlerList<>(mPlasmaExtractors.stream().map(extr -> new ListAdapter<>(extr.mFluid)).collect(Collectors.toList()));
+        			itemInputs = new InventoryHandlerList<>(mPlasmaInjectors.stream().map(extr -> new ListAdapter<>(extr.mInventory, extr.getInputSlot(), extr.getInputSlot())).collect(Collectors.toList()));
+        			itemOutputs = new InventoryHandlerList<>(mPlasmaExtractors.stream().map(extr -> new ListAdapter<>(extr.mInventory, extr.getOutputSlot(), extr.getOutputSlot())).collect(Collectors.toList()));
+        		}
+    		} else if (!structComplete && getBaseMetaTileEntity().getTimer() % 600 == 0) {
+    			needCheckStruct = true;
+    		}
+    		
+    		if (structComplete) {
+    			recipeLogic.update();
+    		} else recipeLogic.stop();
+    	}
     }
     
     public boolean hasInventoryBeenModified() {

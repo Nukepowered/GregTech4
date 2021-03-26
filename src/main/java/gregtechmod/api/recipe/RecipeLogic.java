@@ -215,6 +215,7 @@ public class RecipeLogic {
 			if (amount > 0) {
 				GT_Log.log.error(String.format("Output overflow detected for machine (%s) left amount: %s, stack: %s", getMachine().getClass().getName(), amount, recipeOut));
 				getMachine().getBaseMetaTileEntity().disableWorking();
+				triggerMachine(false);
 			}
 		}
 		
@@ -236,6 +237,7 @@ public class RecipeLogic {
 			if (amount > 0) {
 				GT_Log.log.error(String.format("Output overflow detected for machine (%s) left amount: %s, fluid: %s", getMachine().getClass().getName(), amount, FluidRegistry.getFluidName(fluid)));
 				getMachine().getBaseMetaTileEntity().disableWorking();
+				triggerMachine(false);
 			}
 		}
 		
