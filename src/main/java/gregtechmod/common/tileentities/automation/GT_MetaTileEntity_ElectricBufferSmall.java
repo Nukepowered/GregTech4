@@ -6,6 +6,7 @@ import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentTranslation;
 
 public class GT_MetaTileEntity_ElectricBufferSmall extends MetaTileEntity {
 
@@ -78,9 +79,9 @@ public class GT_MetaTileEntity_ElectricBufferSmall extends MetaTileEntity {
 		if (aSide == getBaseMetaTileEntity().getBackFacing()) {
 			mTargetStackSize=(byte)((mTargetStackSize+1)%64);
 			if (mTargetStackSize == 0) {
-				GT_Utility.sendChatToPlayer(aPlayer, "Do not regulate Item Stack Size"); // TODO locale
+				GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.regulate.0"));
 			} else {
-				GT_Utility.sendChatToPlayer(aPlayer, "Regulate Item Stack Size to: " + mTargetStackSize);
+				GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.regulate.1", mTargetStackSize));
 			}
 		}
 	}

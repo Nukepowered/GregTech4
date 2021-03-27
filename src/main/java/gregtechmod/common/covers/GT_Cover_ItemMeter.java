@@ -5,6 +5,7 @@ import gregtechmod.api.util.GT_CoverBehavior;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentTranslation;
 
 public class GT_Cover_ItemMeter extends GT_CoverBehavior {
 	
@@ -34,10 +35,7 @@ public class GT_Cover_ItemMeter extends GT_CoverBehavior {
 	
 	@Override
 	public int onCoverScrewdriverclick(byte aSide, int aCoverID, int aCoverVariable, ICoverable aTileEntity, EntityPlayer aPlayer, float aX, float aY, float aZ) {
-		if (aCoverVariable==0)
-			GT_Utility.sendChatToPlayer(aPlayer, "Inverted");
-		else
-			GT_Utility.sendChatToPlayer(aPlayer, "Normal");
+		GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.cover.meters." + aCoverVariable));
 		return aCoverVariable==0?1:0;
 	}
 	

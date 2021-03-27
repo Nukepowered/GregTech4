@@ -7,6 +7,7 @@ import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.StatCollector;
 
@@ -20,9 +21,9 @@ public class GT_GUIContainer_Quantumtank extends GT_GUIContainerMetaTile_Machine
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
     	FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
         fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
-        fontRenderer.drawString("Quantum Tank", 8, 6, 4210752);
+        fontRenderer.drawString(I18n.format("metatileentity.GT_QuantumTank.name"), 8, 6, 4210752);
         if (mContainer != null) {
-        	fontRenderer.drawString("Liquid Amount", 10, 20, 16448255);
+        	fontRenderer.drawString(I18n.format("metatileentity.HACTHES.amount"), 10, 20, 16448255);
         	fontRenderer.drawString(GT_Utility.parseNumberToString(((GT_Container_BasicTank)mContainer).mContent.get()), 10, 30, 16448255);
         }
     }

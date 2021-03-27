@@ -4,6 +4,7 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.gui.GT_GUIContainerMetaTile_Machine;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.common.containers.GT_Container_ImplosionCompressor;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.StatCollector;
 
@@ -16,9 +17,9 @@ public class GT_GUIContainer_ImplosionCompressor extends GT_GUIContainerMetaTile
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
         fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 94, 4210752);
-        fontRenderer.drawString("Implosion Compressor", 8,  4, 4210752);
-        if (!((GT_Container_ImplosionCompressor)mContainer).mMachine.get()) // TODO LOCALE
-        	fontRenderer.drawString("Incomplete Machine Casing!", 8, ySize - 103, 4210752);
+        fontRenderer.drawString(I18n.format("metatileentity.GT_ImplosionCompressor.name"), 8,  4, 4210752);
+        if (!((GT_Container_ImplosionCompressor)mContainer).mMachine.get());
+        	fontRenderer.drawString(I18n.format("metatileentity.status.multiblock.incomplete"), 8, ySize - 103, 0xF00000);
     }
 
     @Override

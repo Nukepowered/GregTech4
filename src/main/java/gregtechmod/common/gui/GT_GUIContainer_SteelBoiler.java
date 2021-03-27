@@ -4,6 +4,7 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.gui.GT_GUIContainerMetaTile_Machine;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.common.containers.GT_Container_SteelBoiler;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GT_GUIContainer_SteelBoiler extends GT_GUIContainerMetaTile_Machine {
@@ -14,7 +15,7 @@ public class GT_GUIContainer_SteelBoiler extends GT_GUIContainerMetaTile_Machine
     
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-        fontRenderer.drawString("High Pressure Coal Boiler", 8,  4, 4210752); // TODO locale
+        fontRenderer.drawString(I18n.format("metatileentity.GT_SteelBoiler.name"), 8,  4, 4210752);
     }
     
     @Override

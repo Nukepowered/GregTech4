@@ -7,6 +7,7 @@ import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentTranslation;
 
 public class GT_MetaTileEntity_Hatch_Output extends GT_MetaTileEntity_BasicTank {
 	
@@ -88,16 +89,7 @@ public class GT_MetaTileEntity_Hatch_Output extends GT_MetaTileEntity_BasicTank 
 	public void onScrewdriverRightClick(byte aSide, EntityPlayer aPlayer, float aX, float aY, float aZ) {
 		if (!getBaseMetaTileEntity().getCoverBehaviorAtSide(aSide).isGUIClickable(aSide, getBaseMetaTileEntity().getCoverIDAtSide(aSide), getBaseMetaTileEntity().getCoverDataAtSide(aSide), getBaseMetaTileEntity())) return;
 		mMode = (byte)((mMode + 1) % 8);
-		switch (mMode) {
-		case 0: GT_Utility.sendChatToPlayer(aPlayer, "Outputs Liquids, Steam and Items"); break;
-		case 1: GT_Utility.sendChatToPlayer(aPlayer, "Outputs Steam and Items"); break;
-		case 2: GT_Utility.sendChatToPlayer(aPlayer, "Outputs Steam and Liquids"); break;
-		case 3: GT_Utility.sendChatToPlayer(aPlayer, "Outputs Steam"); break;
-		case 4: GT_Utility.sendChatToPlayer(aPlayer, "Outputs Liquids and Items"); break;
-		case 5: GT_Utility.sendChatToPlayer(aPlayer, "Outputs only Items"); break;
-		case 6: GT_Utility.sendChatToPlayer(aPlayer, "Outputs only Liquids"); break;
-		case 7: GT_Utility.sendChatToPlayer(aPlayer, "Outputs nothing"); break;
-		}
+		GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.fluid_io." + mMode));
 	}
 	
 	public boolean outputsSteam() {

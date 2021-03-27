@@ -15,6 +15,7 @@ import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.IFluidBlock;
@@ -97,7 +98,7 @@ public class GT_HardHammer_Item extends GT_Tool_Item {
 	    
     	String tString = GT_OreDictUnificator.getAssociation(new ItemStack(aBlock, 1, aMeta));
     	if (tString != null && tString.startsWith("ore")) {
-			GT_Utility.sendChatToPlayer(aPlayer, "This is " + GT_Utility.capitalizeString(tString.replaceFirst("ore", "")) + " Ore.");
+			GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("gregtech.tool.hammer.ore.0", new ChatComponentTranslation("materials." + tString.replaceFirst("ore", ""))));
 			GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(1), 1.0F, -1, aX, aY, aZ);
     		return true;
     	}
@@ -114,19 +115,19 @@ public class GT_HardHammer_Item extends GT_Tool_Item {
 	            	
 			    	tBlock = aWorld.getBlock(tX, tY, tZ);
 		    		if (tBlock == Blocks.lava || tBlock == Blocks.flowing_lava) {
-		    			GT_Utility.sendChatToPlayer(aPlayer, "There is Lava behind this Rock.");
+		    			GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("gregtech.tool.hammer.lava"));
 				    	break;
 		    		}
 		    		if (tBlock == Blocks.water || tBlock == Blocks.flowing_water  || (tBlock !=null && tBlock instanceof IFluidBlock)) {
-		    			GT_Utility.sendChatToPlayer(aPlayer, "There is a Liquid behind this Rock.");
+		    			GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("gregtech.tool.hammer.liquid"));
 				    	break;
 			    	}
 		    		if (tBlock == Blocks.monster_egg || !GT_Utility.hasBlockHitBox(aWorld, tX, tY, tZ)) {
-		    			GT_Utility.sendChatToPlayer(aPlayer, "There is an Air Pocket behind this Rock.");
+		    			GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("gregtech.tool.hammer.air"));
 				    	break;
 		    		}
 		    		if (tBlock != aBlock) {
-		    			if (i < 4) GT_Utility.sendChatToPlayer(aPlayer, "Material is changing behind this Rock.");
+		    			if (i < 4) GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("gregtech.tool.hammer.diff"));
 				    	break;
 		    		}
 		    	}
@@ -140,12 +141,12 @@ public class GT_HardHammer_Item extends GT_Tool_Item {
 			    	tMetaID = aWorld.getBlockMetadata(tX, tY, tZ);
 			    	tString = GT_OreDictUnificator.getAssociation(new ItemStack(tBlock, 1, tMetaID));
 			    	if (tString != null && tString.startsWith("ore")) {
-					    GT_Utility.sendChatToPlayer(aPlayer, "Found traces of " + GT_Utility.capitalizeString(tString.replaceFirst("ore", "")) + " Ore.");
+			    		GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("gregtech.tool.hammer.ore.1", new ChatComponentTranslation("materials." + tString.replaceFirst("ore", ""))));
 						GT_Utility.sendSoundToPlayers(aWorld, GregTech_API.sSoundList.get(1), 1.0F, -1, aX, aY, aZ);
 			    		return true;
 			    	}
 			    }
-			    GT_Utility.sendChatToPlayer(aPlayer, "No Ores found.");
+			    GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("gregtech.tool.hammer.ore.2"));
 			}
     		return true;
 	    }

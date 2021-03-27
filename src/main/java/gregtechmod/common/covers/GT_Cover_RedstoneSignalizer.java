@@ -5,6 +5,7 @@ import gregtechmod.api.util.GT_CoverBehavior;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentTranslation;
 
 public class GT_Cover_RedstoneSignalizer extends GT_CoverBehavior {
 	public GT_Cover_RedstoneSignalizer(ItemStack aStack) {
@@ -14,7 +15,7 @@ public class GT_Cover_RedstoneSignalizer extends GT_CoverBehavior {
 	@Override
 	public int onCoverScrewdriverclick(byte aSide, int aCoverID, int aCoverVariable, ICoverable aTileEntity, EntityPlayer aPlayer, float aX, float aY, float aZ) {
 		aCoverVariable = (aCoverVariable + 1) & 15;
-		GT_Utility.sendChatToPlayer(aPlayer, "Signal = " + aCoverVariable);
+		GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.cover.redstone_singnalizer", aCoverVariable));
 		return aCoverVariable;
 	}
 	

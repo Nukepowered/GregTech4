@@ -18,6 +18,7 @@ import java.util.Random;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.world.WorldSettings.GameType;
 import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -164,10 +165,10 @@ public class GT_TickHandler {
     				boolean temp = event.player.capabilities.allowEdit || event.player.isCurrentToolAdventureModeExempt(0, -10000, 0);
     				event.player.capabilities.allowEdit = false;
     				if (temp) {
-    					GT_Utility.sendChatToPlayer(event.player, "Adventure Mode has been broken.");
+    					GT_Utility.sendChatToPlayer(event.player, new ChatComponentTranslation("gregtech.adventure.1"));
     				}
     				if (GT_Mod.sAxeWhenAdventure) {
-    					if (!temp) GT_Utility.sendChatToPlayer(event.player, "It's dangerous to go alone! Take this.");
+    					if (!temp) GT_Utility.sendChatToPlayer(event.player, new ChatComponentTranslation("gregtech.adventure.2"));
     					event.player.worldObj.spawnEntityInWorld(new EntityItem(event.player.worldObj, event.player.posX, event.player.posY, event.player.posZ, GT_Items.Tool_Axe_Flint.get(1)));
     				}
     			}

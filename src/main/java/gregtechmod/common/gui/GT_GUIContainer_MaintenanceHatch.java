@@ -4,6 +4,7 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.gui.GT_GUIContainerMetaTile_Machine;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.common.containers.GT_Container_MaintenanceHatch;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GT_GUIContainer_MaintenanceHatch extends GT_GUIContainerMetaTile_Machine {
@@ -14,8 +15,8 @@ public class GT_GUIContainer_MaintenanceHatch extends GT_GUIContainerMetaTile_Ma
     
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-        fontRenderer.drawString("Maintenance Hatch", 8,  4, 4210752);
-        fontRenderer.drawString("Click with Tool to repair.", 8,  12, 4210752); // TODO locale
+        fontRenderer.drawString(I18n.format("metatileentity.GT_Maintenance_Hatch.name"), 8,  4, 4210752);
+        fontRenderer.drawString(I18n.format("metatileentity.GT_Maintenance_Hatch.UI.info"), 8,  12, 4210752);
     }
     
     @Override

@@ -1,5 +1,6 @@
 package gregtechmod.common.gui;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.*;
 import gregtechmod.api.interfaces.*;
 import gregtechmod.common.containers.*;
@@ -13,7 +14,7 @@ public class GT_GUIContainer_TradeOMat_Inventory_Money extends GT_GUIContainerMe
     
     @Override
     protected void drawGuiContainerForegroundLayer(final int par1, final int par2) {
-        this.fontRenderer.drawString("Your Income", 8, 5, 4210752);
+        this.fontRenderer.drawString(I18n.format("util.GT_TradeOMat.income"), 8, 5, 4210752);
     }
     
     @Override

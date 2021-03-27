@@ -6,6 +6,8 @@ import gregtechmod.api.util.GT_CoverBehavior;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.StatCollector;
 
 public abstract class GT_Cover_RedstoneWirelessBase extends GT_CoverBehavior {
 	
@@ -25,7 +27,7 @@ public abstract class GT_Cover_RedstoneWirelessBase extends GT_CoverBehavior {
 			GregTech_API.sWirelessRedstone.put(aCoverVariable, (byte)0);
 			aCoverVariable = GT_Utility.stackToInt(aPlayer.inventory.getCurrentItem());
 			aTileEntity.setCoverDataAtSide(aSide, aCoverVariable);
-			GT_Utility.sendChatToPlayer(aPlayer, "Frequency: " + aCoverVariable); // TODO locale
+			GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.GT_Tesseract.message.1", aCoverVariable));
 			return true;
 		}
 		return false;
@@ -72,7 +74,7 @@ public abstract class GT_Cover_RedstoneWirelessBase extends GT_CoverBehavior {
 				break;
 			}
 		}
-		GT_Utility.sendChatToPlayer(aPlayer, "Frequency: " + aCoverVariable);
+		GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.GT_Tesseract.message.1", aCoverVariable));
 		return aCoverVariable;
 	}
 	
@@ -108,7 +110,7 @@ public abstract class GT_Cover_RedstoneWirelessBase extends GT_CoverBehavior {
 	
 	@Override
 	public String getDescription(byte aSide, int aCoverID, int aCoverVariable, ICoverable aTileEntity) {
-		return "Frequency: " + aCoverVariable;
+		return StatCollector.translateToLocalFormatted("metatileentity.GT_Tesseract.message.1", aCoverVariable);
 	}
 	
 	@Override

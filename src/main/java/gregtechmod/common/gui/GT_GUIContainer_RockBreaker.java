@@ -4,6 +4,7 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.gui.GT_GUIContainerMetaTile_Machine;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.common.containers.GT_Container_RockBreaker;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GT_GUIContainer_RockBreaker extends GT_GUIContainerMetaTile_Machine {
@@ -14,7 +15,7 @@ public class GT_GUIContainer_RockBreaker extends GT_GUIContainerMetaTile_Machine
     
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-    	fontRenderer.drawString("Rock Breaker", 5,  5, 4210752);
+    	fontRenderer.drawString(I18n.format("metatileentity.GT_RockBreaker.name"), 5,  5, 4210752);
     }
     
     @Override

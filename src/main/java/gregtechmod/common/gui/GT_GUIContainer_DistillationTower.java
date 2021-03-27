@@ -4,6 +4,7 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.gui.GT_GUIContainerMetaTile_Machine;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.common.containers.GT_Container_DistillationTower;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GT_GUIContainer_DistillationTower extends GT_GUIContainerMetaTile_Machine {
@@ -14,12 +15,11 @@ public class GT_GUIContainer_DistillationTower extends GT_GUIContainerMetaTile_M
     
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-        fontRenderer.drawString("Distillation"		, 116,  4, 4210752);
-        fontRenderer.drawString("Tower"				, 116, 12, 4210752);
+    	fontRenderer.drawSplitString(I18n.format("metatileentity.GT_DistillationTower.name"), 116, 4, 60, 4210752);
         if (!((GT_Container_DistillationTower)mContainer).mMachine.get())
-        	fontRenderer.drawSplitString("Incomplete Machine Casing!", 116, 20, 60, 4210752); // TODO locale
+        	fontRenderer.drawSplitString(I18n.format("metatileentity.status.multiblock.incomplete"), 116, 30, 60, 0xF00000);
         if (((mContainer).mDisplayErrorCode.get() & 1) != 0)
-        	fontRenderer.drawSplitString("Insufficient Energy Line!", 116, 48, 60, 4210752);
+        	fontRenderer.drawSplitString(I18n.format("metatileentity.NOT_ENOUGH_ENERGY"), 116, 48, 60, 4210752);
     }
     
     @Override

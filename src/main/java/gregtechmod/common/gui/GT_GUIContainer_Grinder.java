@@ -4,6 +4,7 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.gui.GT_GUIContainerMetaTile_Machine;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.common.containers.GT_Container_Grinder;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.StatCollector;
 
@@ -17,9 +18,9 @@ public class GT_GUIContainer_Grinder extends GT_GUIContainerMetaTile_Machine {
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
         fontRenderer.drawString("Industrial Grinder", 8,  4, 4210752);
         if (!((GT_Container_Grinder)mContainer).mMachine.get())
-        	fontRenderer.drawString("Incomplete Machine Casing!", 8, ySize - 104, 4210752); // TODO locale
+        	fontRenderer.drawString(I18n.format("metatileentity.status.multiblock.incomplete"), 8, ySize - 104, 0xF00000);
         if (((mContainer).mDisplayErrorCode.get() & 1) != 0)
-        	fontRenderer.drawString("Insufficient Energy Line!", 8, ySize - 94, 4210752);
+        	fontRenderer.drawString(I18n.format("metatileentity.NOT_ENOUGH_ENERGY"), 8, ySize - 94, 4210752);
         else
             fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 94, 4210752);
     }

@@ -9,6 +9,7 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.IFluidBlock;
@@ -65,12 +66,8 @@ public class GT_Cover_Drain extends GT_CoverBehavior {
 	@Override
 	public int onCoverScrewdriverclick(byte aSide, int aCoverID, int aCoverVariable, ICoverable aTileEntity, EntityPlayer aPlayer, float aX, float aY, float aZ) {
 		aCoverVariable=(aCoverVariable+1)%6;
-		if (aCoverVariable == 0) GT_Utility.sendChatToPlayer(aPlayer, "Import");
-		if (aCoverVariable == 1) GT_Utility.sendChatToPlayer(aPlayer, "Import (conditional)");
-		if (aCoverVariable == 2) GT_Utility.sendChatToPlayer(aPlayer, "Import (invert cond)");
-		if (aCoverVariable == 3) GT_Utility.sendChatToPlayer(aPlayer, "Keep Liquids Away");
-		if (aCoverVariable == 4) GT_Utility.sendChatToPlayer(aPlayer, "Keep Liquids Away (conditional)");
-		if (aCoverVariable == 5) GT_Utility.sendChatToPlayer(aPlayer, "Keep Liquids Away (invert cond)");
+		if (aCoverVariable < 3) GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.cover.io." + Math.max(1, aCoverVariable + (aCoverVariable * 2))));
+		else 					GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.cover.drain." + (aCoverVariable - 3)));
 		return aCoverVariable;
 	}
 	

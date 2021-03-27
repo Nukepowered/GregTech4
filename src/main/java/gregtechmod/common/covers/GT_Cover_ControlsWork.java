@@ -6,6 +6,7 @@ import gregtechmod.api.util.GT_CoverBehavior;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentTranslation;
 
 public class GT_Cover_ControlsWork extends GT_CoverBehavior {
 	
@@ -64,9 +65,7 @@ public class GT_Cover_ControlsWork extends GT_CoverBehavior {
 	@Override
 	public int onCoverScrewdriverclick(byte aSide, int aCoverID, int aCoverVariable, ICoverable aTileEntity, EntityPlayer aPlayer, float aX, float aY, float aZ) {
 		aCoverVariable=(aCoverVariable+1)%3;
-		if (aCoverVariable== 0) GT_Utility.sendChatToPlayer(aPlayer, "Normal");
-		if (aCoverVariable== 1) GT_Utility.sendChatToPlayer(aPlayer, "Inverted");
-		if (aCoverVariable== 2) GT_Utility.sendChatToPlayer(aPlayer, "No Work at all");
+		GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.cover.work." + aCoverVariable));
 		return aCoverVariable;
 	}
 	

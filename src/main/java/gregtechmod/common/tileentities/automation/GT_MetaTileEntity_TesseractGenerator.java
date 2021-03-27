@@ -20,7 +20,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -127,7 +126,8 @@ public class GT_MetaTileEntity_TesseractGenerator extends MetaTileEntity {
 				mFrequency+=1;
 				break;
 			}
-			GT_Utility.sendChatToPlayer(aPlayer, "Frequency: " + mFrequency + (sTesseractGenerators.get(mFrequency) != null && sTesseractGenerators.get(mFrequency) != this?EnumChatFormatting.RED+" (Occupied)":""));
+			int var = (sTesseractGenerators.get(mFrequency) != null && sTesseractGenerators.get(mFrequency) != this) ? 2 : 1;
+			GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.GT_Tesseract.message." + var, mFrequency));
 		}
 		
 		return true;

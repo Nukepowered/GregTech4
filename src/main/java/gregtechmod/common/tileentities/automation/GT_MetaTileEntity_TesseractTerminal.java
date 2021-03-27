@@ -9,12 +9,12 @@ import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_Config;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.InfoBuilder;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ChatComponentTranslation;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
@@ -139,7 +139,7 @@ public class GT_MetaTileEntity_TesseractTerminal extends MetaTileEntity {
 				mFrequency+=512;
 				break;
 			}
-			GT_Utility.sendChatToPlayer(aPlayer, "Frequency: " + mFrequency + (getTesseract(mFrequency, false)==null?"":EnumChatFormatting.GREEN+" (Connected)"));
+			GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.GT_Tesseract.message." + (getTesseract(mFrequency, false) == null ? 1 : 3), mFrequency));
 		}
 	}
 	

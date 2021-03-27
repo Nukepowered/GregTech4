@@ -1,5 +1,6 @@
 package gregtechmod.common.gui;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.*;
 import gregtechmod.api.interfaces.*;
 import gregtechmod.common.containers.*;
@@ -14,9 +15,9 @@ public class GT_GUIContainer_TradeOMat_Settings extends GT_GUIContainerMetaTile_
     
     @Override
     protected void drawGuiContainerForegroundLayer(final int par1, final int par2) {
-        this.fontRenderer.drawString("Settings", 8, 5, 4210752);
-        this.fontRenderer.drawString("Your Price", 30, 27, 4210752);
-        this.fontRenderer.drawString("Your Offer", 30, 45, 4210752); // TODO LOCALE
+        this.fontRenderer.drawString(I18n.format("util.GT_TradeOMat.settings"), 8, 5, 4210752);
+        this.fontRenderer.drawString(I18n.format("util.GT_TradeOMat.price"), 30, 27, 4210752);
+        this.fontRenderer.drawString(I18n.format("util.GT_TradeOMat.offer"), 30, 45, 4210752);
         if (this.mContainer != null) {
             this.fontRenderer.drawString("Performed Trades: " + GT_Utility.parseNumberToString(((GT_Container_TradeOMat_Settings)this.mContainer).mPerformedTrades.get()), 8, 64, 4210752);
         }

@@ -20,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ChatComponentTranslation;
 
 public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
 
@@ -100,8 +101,7 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
 					}
 				}
 			}
-
-            GT_Utility.sendChatToPlayer(aPlayer, mInventory[0].stackSize + " of " + mInventory[0].getDisplayName());
+            GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.GT_Barrel.count_msg", mInventory[0].stackSize, mInventory[0].getUnlocalizedName() + ".name"));
          }
       } else {
          if(isDigitalChest && GT_OreDictUnificator.isItemStackInstanceOf(tPlayerItem, "craftingQuantumChestUpgrade")) {
@@ -134,7 +134,7 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
         	 }
         	 
          } else {
-        	 GT_Utility.sendChatToPlayer(aPlayer, mInventory[0].stackSize + " of " + mInventory[0].getDisplayName());
+        	 GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.GT_Barrel.count_msg", mInventory[0].stackSize, mInventory[0].getUnlocalizedName() + ".name"));
          }
       }
 

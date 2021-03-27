@@ -73,6 +73,7 @@ tile.BlockMetaID_Machine.Sonictron.name=Sonictron
 tile.BlockMetaID_Machine.Lapotronic_Energystorageunit.name=Lapotronic Energy Storage Unit
 tile.BlockMetaID_Machine.Interdimensional_Energystorageunit.name=Interdimensional Energy Storage Unit
 tile.BlockMetaID_Machine.Adjustable_Energystorageunit.name=Adjustable Energy Storage Unit
+tile.BlockMetaID_Machine.Adjustable_Energystorageunit.UI.name=A.E.S.U
 tile.BlockMetaID_Machine.Charge_O_Mat.name=Charge-O-Mat
 tile.BlockMetaID_Machine.Industrial_Centrifuge.name=Industrial Centrifuge
 tile.BlockMetaID_Machine.Superconductorwire.name=Superconductor Wire
@@ -112,6 +113,7 @@ metatileentity.GT_Grinder.name=Industrial Grinder
 metatilentity.GT_Grinder.tooltip=Ultimaceratron 42b
 metatileentity.GT_BlastFurnace.name=Industrial Blast Furnace
 metatileentity.GT_BlastFurnace.tooltip=You'll have a Blast!
+metatileentity.GT_BlastFurnace.UI.heat_capacity=Heat Capacity: %s K
 metatileentity.GT_QuantumTank.name=Quantum Tank
 metatileentity.GT_QuantumTank.tooltip=With a capacity of 488.28125 Chunks!
 metatileentity.GT_ImplosionCompressor.name=Implosion Compressor
@@ -122,12 +124,14 @@ metatileentity.GT_DieselGenerator.name=Diesel Generator
 metatileentity.GT_DieselGenerator.tooltip=The burning Fuel as 100%% Efficiency
 metatileentity.GT_GasTurbine.name=Gas Turbine
 metatileentity.GT_GasTurbine.tooltip=Generate Power from Flatulence, uhh I mean Methane (75%%)
+metatileentity.GT_GasTurbine.amount=Gas Amount
 metatileentity.GT_ThermalGenerator.name=Thermal Generator
 metatileentity.GT_ThermalGenerator.tooltip=Generates Energy from Lava at 80%% Efficiency
 metatileentity.GT_SemifluidGenerator.name=Semifluid Generator
 metatileentity.GT_SemifluidGenerator.tooltip=Makes Energy of more dense Fluids (100%%)
 metatileentity.GT_PlasmaGenerator.name=Plasma Generator
 metatileentity.GT_PlasmaGenerator.tooltip=Harness 100%% of the immense Power of Plasma
+metatileentity.GT_PlasmaGenerator.amount=Plasma Amount
 metatileentity.GT_VacuumFreezer.name=Vacuum Freezer
 metatileentity.GT_VacuumFreezer.tooltip=Cools down anything
 metatileentity.GT_RegulatorAdvanced.name=Advanced Regulator
@@ -152,6 +156,7 @@ metatileentity.GT_Barrel.name=Digital Chest
 metatileentity.GT_Barrel.tooltip=To lock the saved Item as Filter, use Rubber Hammer on it.
 metatileentity.GT_Barrel.item=Item: %s
 metatileentity.GT_Barrel.count=%s / %s
+metatileentity.GT_Barrel.count_msg=%s of %s
 metatileentity.GT_QuantumChest.name=Quantum Chest
 metatileentity.GT_Macerator.name=Automatic Macerator
 metatileentity.GT_Macerator.tooltip=Maceratron-E-901
@@ -223,8 +228,8 @@ metatileentity.GT_Tesseract_Generator.tooltip=Generates a Tesseract for the atta
 metatileentity.GT_Tesseract_Terminal.name=Tesseract Terminal
 metatileentity.GT_Tesseract_Terminal.tooltip=Accesses Tesseracts remotely
 metatileentity.GT_Tesseract.message.1=Frequency: %s
-metatileentity.GT_Tesseract.message.2=Frequency: %d §c (Occupied)
-metatileentity.GT_Tesseract.message.3=Frequency: %d §a (Connected)
+metatileentity.GT_Tesseract.message.2=Frequency: %s §c (Occupied)
+metatileentity.GT_Tesseract.message.3=Frequency: %s §a (Connected)
 metatileentity.GT_Tesseract.status=Status: %s
 metatileentity.GT_Tesseract.status.1=Active
 metatileentity.GT_Tesseract.status.2=Inactive
@@ -244,8 +249,10 @@ metatileentity.GT_Input_Hatch.name=Input Hatch
 metatileentity.GT_Input_Hatch.tooltip=For inputting Materials into Multiblocks
 metatileentity.GT_Output_Hatch.name=Output Hatch
 metatileentity.GT_Output_Hatch.tooltip=Use Screwdriver to specify Output Type
+metatileentity.HACTHES.amount=Liquid Amount
 metatileentity.GT_Maintenance_Hatch.name=Maintenance Hatch
 metatileentity.GT_Maintenance_Hatch.tooltip=For maintaining Multiblocks
+metatileentity.GT_Maintenance_Hatch.UI.info=Click with Tool to repair.
 metatileentity.GT_Dynamo_Hatch.name=Dynamo Hatch
 metatileentity.GT_Dynamo_Hatch.tooltip=Generating electric Energy from Multiblocks
 metatileentity.GT_Energy_Hatch.name=Energy Hatch
@@ -260,6 +267,8 @@ metatileentity.GT_AESU.name=AESU
 metatileentity.GT_AESU.tooltip=Adjustable Energy Storage Unit
 metatileentity.GT_IDSU.name=IDSU
 metatileentity.GT_IDSU.tooltip=Interdimensional Storage Unit
+metatileentity.GT_IDSU.UI.name=I.D.S.U
+metatileentity.GT_IDSU.UI.ID=ID: %s
 metatileentity.GT_Lightningrod.name=Lightning Rod
 metatileentity.GT_Supercondensator.name=Supercondensator
 metatileentity.GT_Supercondensator.tooltip=To output massive amounts of Energy in a short period of time.
@@ -350,6 +359,10 @@ metatileentity.ENERGYCELLS.tooltip=%d Energy Cell Upgrades
 metatileentity.STEAMTANKS.tooltip=%d Steam Tank Upgrades
 metatileentity.EUSTORAGES.tooltip=%d Additional EU-Storage
 metatileentity.NOT_ENOUGH_ENERGY=Insufficient Energy Line!
+metatileentity.STORAGE_EU=EU: %s
+metatileentity.STORAGE_EU_MAX=MAX: %s
+metatileentity.STORAGE_EU_T_IN=MAX EU/t IN: %s
+metatileentity.STORAGE_EU_T_OUT=EU/t OUT: %s
 
 metatileentity.generator.efficiency=Efficiency: %s%%
 
@@ -375,6 +388,90 @@ metatileentity.status.ignore_nbt.true=Ignore NBT
 metatileentity.status.ignore_nbt.false=NBT has to match
 metatileentity.status.items_with_nbt.true=Allow Items with NBT
 metatileentity.status.items_with_nbt.false=Don't allow Items with NBT
+
+metatileentity.status.fluid_io.0=Outputs Liquids, Steam and Items
+metatileentity.status.fluid_io.1=Outputs Steam and Items
+metatileentity.status.fluid_io.2=Outputs Steam and Liquids
+metatileentity.status.fluid_io.3=Outputs Steam
+metatileentity.status.fluid_io.4=Outputs Liquids and Items
+metatileentity.status.fluid_io.5=Outputs only Items
+metatileentity.status.fluid_io.6=Outputs only Liquids
+metatileentity.status.fluid_io.7=Outputs nothing
+
+metatileentity.status.regulate.0=Do not regulate Item Stack Size
+metatileentity.status.regulate.1=Regulate Item Stack Size to: %s
+
+metatileentity.status.multiblock.incomplete=Incomplete Machine Casing!
+metatileentity.status.multiblock.running=Running perfectly.
+metatileentity.status.multiblock.idle=Hit with Rubber Hammer to (re-)start the Machine if it doesn't start.
+
+metatileentity.status.malfunction.0=Pipe is loose.
+metatileentity.status.malfunction.1=Screws are missing.
+metatileentity.status.malfunction.2=Something is stuck.
+metatileentity.status.malfunction.3=Platings are dented.
+metatileentity.status.malfunction.4=Circuitry burned out.
+metatileentity.status.malfunction.5=That doesn't belong there.
+metatileentity.status.malfunction.6=Incomplete Structure.
+
+metatileentity.cover.work.0=Normal
+metatileentity.cover.work.1=Inverted
+metatileentity.cover.work.2=No Work at all
+
+metatileentity.cover.work_1.2=Ready to work
+metatileentity.cover.work_1.3=Not ready to work
+
+metatileentity.cover.io.0=Export
+metatileentity.cover.io.1=Import
+metatileentity.cover.io.2=Export (conditional)
+metatileentity.cover.io.3=Import (conditional)
+metatileentity.cover.io.4=Export (invert cond)
+metatileentity.cover.io.5=Import (invert cond)
+metatileentity.cover.io.6=Export allow Input
+metatileentity.cover.io.7=Import allow Output
+metatileentity.cover.io.8=Export allow Input (conditional)
+metatileentity.cover.io.9=Import allow Output (conditional)
+metatileentity.cover.io.10=Export allow Input (invert cond)
+metatileentity.cover.io.11=Import allow Output (invert cond)
+
+metatileentity.cover.drain.0=Keep Liquids Away
+metatileentity.cover.drain.1=Keep Liquids Away (conditional)
+metatileentity.cover.drain.2=Keep Liquids Away (invert cond)
+
+metatileentity.cover.drain.energy_only.0=Allow
+metatileentity.cover.drain.energy_only.1=Allow (conditional)
+metatileentity.cover.drain.energy_only.2=Disallow (conditional)
+
+metatileentity.cover.drain.eu_meter.0=Normal Universal Storage
+metatileentity.cover.drain.eu_meter.1=Inverted Universal Storage
+metatileentity.cover.drain.eu_meter.2=Normal Electricity Storage
+metatileentity.cover.drain.eu_meter.3=Inverted Electricity Storage
+metatileentity.cover.drain.eu_meter.4=Normal RF Storage
+metatileentity.cover.drain.eu_meter.5=Inverted RF Storage
+metatileentity.cover.drain.eu_meter.6=Normal Steam Storage
+metatileentity.cover.drain.eu_meter.7=Inverted Steam Storage
+metatileentity.cover.drain.eu_meter.8=Normal Average Electric Input
+metatileentity.cover.drain.eu_meter.9=Inverted Average Electric Input
+metatileentity.cover.drain.eu_meter.10=Normal Average Electric Output
+metatileentity.cover.drain.eu_meter.11=Inverted Average Electric Output
+
+metatileentity.cover.generic.0=Redstone\s
+metatileentity.cover.generic.1=Energy\s
+metatileentity.cover.generic.2=Fluids\s
+metatileentity.cover.generic.3=Items\s
+
+metatileentity.cover.meters.0=Normal
+metatileentity.cover.meters.1=Inverted
+
+metatileentity.cover.redstone_conductor.0=Conducts strongest Input
+metatileentity.cover.redstone_conductor.1=Conducts from bottom Input
+metatileentity.cover.redstone_conductor.2=Conducts from top Input
+metatileentity.cover.redstone_conductor.3=Conducts from north Input
+metatileentity.cover.redstone_conductor.4=Conducts from south Input
+metatileentity.cover.redstone_conductor.5=Conducts from west Input
+metatileentity.cover.redstone_conductor.6=Conducts from east Input
+
+metatileentity.cover.redstone_singnalizer=Signal = %s
+
 
 metatileentity.turbine.speed=Speed: %s%%
 metatileentity.turbine.durability=Turbine HP: %s
@@ -942,14 +1039,28 @@ util.GT_TradeOMat.Infinite=Infinite
 util.GT_TradeOMat.received=Received: %s
 util.GT_TradeOMat.selling=Selling: %sx %s
 util.GT_TradeOMat.buying=Buying: %sx %s
+util.GT_TradeOMat.settings=Settings
+util.GT_TradeOMat.price=Your Price
+util.GT_TradeOMat.offer=Your Offer
+util.GT_TradeOMat.income=Your Income
 
 util.GregTech_MetaGenerated_Item_01.Contains_tier=Contains %d EU  Tier: %d
 util.GregTech_MetaGenerated_Item_01.charge=%d / %d EU - Voltage: %d
 util.missIC2NC=Nuclear Control not installed
 util.GT_IntegratedCircuit.configuration=Configuration: %s
 
+gregtech.tool.hammer.ore.0=This is %s ore.
+gregtech.tool.hammer.ore.1=Found traces of %s ore.
+gregtech.tool.hammer.ore.2=No Ores found.
+gregtech.tool.hammer.lava=There is Lava behind this Rock.
+gregtech.tool.hammer.liquid=There is a Liquid behind this Rock.
+gregtech.tool.hammer.air=There is an Air Pocket behind this Rock.
+gregtech.tool.hammer.diff=Material is changing behind this Rock.
+
 itemGroup.gregtech=GregTech Intergalactical
 itemGroup.gregtech_materials=GregTech Materials
+gregtech.adventure.1=Adventure Mode has been broken.
+gregtech.adventure.2=It's dangerous to go alone! Take this.
 block.deny_mobs_spawn.tooltip=Mobs can't spawn on this block
 sensor.progress.percentage=Progress: %s%%
 sensor.progress.secs=%s sec.

@@ -16,7 +16,7 @@ public class GT_GUIContainer_AdvancedPump extends GT_GUIContainerMetaTile_Machin
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
         fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
-        fontRenderer.drawString("Advanced Pump", 8, 6, 4210752);
+        fontRenderer.drawString(StatCollector.translateToLocal("metatileentity.GT_Pump.name"), 8, 6, 4210752);
         fontRenderer.drawString("", 10, 20, 16448255);
     }
 

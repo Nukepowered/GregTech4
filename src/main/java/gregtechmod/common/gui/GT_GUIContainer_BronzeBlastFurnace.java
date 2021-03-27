@@ -4,6 +4,8 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.gui.GT_GUIContainerMetaTile_Machine;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.common.containers.GT_Container_BronzeBlastFurnace;
+
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GT_GUIContainer_BronzeBlastFurnace extends GT_GUIContainerMetaTile_Machine {
@@ -14,7 +16,11 @@ public class GT_GUIContainer_BronzeBlastFurnace extends GT_GUIContainerMetaTile_
     
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-        fontRenderer.drawString("Bronze Blast Furnace", 8,  4, 4210752);
+        fontRenderer.drawString(I18n.format("metatileentity.GT_BronzeBlastFurnace.name"), 8,  4, 4210752);
+        if (mContainer != null) {
+        	if (((GT_Container_BronzeBlastFurnace) mContainer).mDisplayErrorCode.get() > 0)
+        		fontRenderer.drawString(I18n.format("metatileentity.status.multiblock.incomplete"), 8, ySize - 95, 0x9d2913);
+        }
     }
     
     @Override

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ChatComponentTranslation;
 
 public class GT_MetaTileEntity_ElectricSorter extends GT_MetaTileEntity_ElectricBufferSmall {
 	
@@ -61,9 +62,9 @@ public class GT_MetaTileEntity_ElectricSorter extends GT_MetaTileEntity_Electric
 		if (aSide == getBaseMetaTileEntity().getBackFacing() || aSide == mTargetDirection) {
 			mTargetStackSize=(byte)((mTargetStackSize+1)%64);
 			if (mTargetStackSize == 0) {
-				GT_Utility.sendChatToPlayer(aPlayer, "Do not regulate Item Stack Size"); // TODO locale
+				GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.regulate.0"));
 			} else {
-				GT_Utility.sendChatToPlayer(aPlayer, "Regulate Item Stack Size to: " + mTargetStackSize);
+				GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.regulate.1", mTargetStackSize));
 			}
 		}
 	}

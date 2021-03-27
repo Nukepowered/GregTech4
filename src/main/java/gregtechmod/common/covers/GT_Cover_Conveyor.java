@@ -7,6 +7,7 @@ import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentTranslation;
 
 public class GT_Cover_Conveyor extends GT_CoverBehavior {
 	
@@ -43,18 +44,7 @@ public class GT_Cover_Conveyor extends GT_CoverBehavior {
 	@Override
 	public int onCoverScrewdriverclick(byte aSide, int aCoverID, int aCoverVariable, ICoverable aTileEntity, EntityPlayer aPlayer, float aX, float aY, float aZ) {
 		aCoverVariable=(aCoverVariable+1)%12;
-		if (aCoverVariable== 0) GT_Utility.sendChatToPlayer(aPlayer, "Export");
-		if (aCoverVariable== 1) GT_Utility.sendChatToPlayer(aPlayer, "Import");
-		if (aCoverVariable== 2) GT_Utility.sendChatToPlayer(aPlayer, "Export (conditional)");
-		if (aCoverVariable== 3) GT_Utility.sendChatToPlayer(aPlayer, "Import (conditional)");
-		if (aCoverVariable== 4) GT_Utility.sendChatToPlayer(aPlayer, "Export (invert cond)");
-		if (aCoverVariable== 5) GT_Utility.sendChatToPlayer(aPlayer, "Import (invert cond)");
-		if (aCoverVariable== 6) GT_Utility.sendChatToPlayer(aPlayer, "Export allow Input");
-		if (aCoverVariable== 7) GT_Utility.sendChatToPlayer(aPlayer, "Import allow Output");
-		if (aCoverVariable== 8) GT_Utility.sendChatToPlayer(aPlayer, "Export allow Input (conditional)");
-		if (aCoverVariable== 9) GT_Utility.sendChatToPlayer(aPlayer, "Import allow Output (conditional)");
-		if (aCoverVariable==10) GT_Utility.sendChatToPlayer(aPlayer, "Export allow Input (invert cond)");
-		if (aCoverVariable==11) GT_Utility.sendChatToPlayer(aPlayer, "Import allow Output (invert cond)");
+		GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.cover.io." + aCoverVariable));
 		return aCoverVariable;
 	}
 	

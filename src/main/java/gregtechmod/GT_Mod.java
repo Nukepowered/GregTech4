@@ -458,6 +458,7 @@ public class GT_Mod implements IGT_Mod {
 		GregTech_API.registerMachineBlock(GregTech_API.sBlockList[0], new boolean[]{true, true, false, false, false, false, true, false, false, false, true, false, false, true, true, true});
 		GregTech_API.registerMachineBlock(GregTech_API.sBlockList[1], new boolean[]{true});
 		GregTech_API.registerMachineBlock(GregTech_API.sBlockList[4], new boolean[]{false, false, false, false, false, false, false, false, true, true, false, false, false, true});
+		GregTech_API.registerMachineBlock(GregTech_API.sBlockList[4], 13);
        
 		GT_Log.log.info("Register the few old TileEntities.");
 		GameRegistry.registerTileEntity(GT_TileEntity_ComputerCube.class	, "GregTech_Computercube");

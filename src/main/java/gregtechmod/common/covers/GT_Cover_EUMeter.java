@@ -5,6 +5,7 @@ import gregtechmod.api.util.GT_CoverBehavior;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentTranslation;
 
 public class GT_Cover_EUMeter extends GT_CoverBehavior {
 	
@@ -64,18 +65,7 @@ public class GT_Cover_EUMeter extends GT_CoverBehavior {
 	@Override
 	public int onCoverScrewdriverclick(byte aSide, int aCoverID, int aCoverVariable, ICoverable aTileEntity, EntityPlayer aPlayer, float aX, float aY, float aZ) {
 		aCoverVariable=(aCoverVariable+1)%12;
-		if (aCoverVariable ==  0) GT_Utility.sendChatToPlayer(aPlayer, "Normal Universal Storage");
-		if (aCoverVariable ==  1) GT_Utility.sendChatToPlayer(aPlayer, "Inverted Universal Storage");
-		if (aCoverVariable ==  2) GT_Utility.sendChatToPlayer(aPlayer, "Normal Electricity Storage");
-		if (aCoverVariable ==  3) GT_Utility.sendChatToPlayer(aPlayer, "Inverted Electricity Storage");
-		if (aCoverVariable ==  4) GT_Utility.sendChatToPlayer(aPlayer, "Normal MJ Storage");
-		if (aCoverVariable ==  5) GT_Utility.sendChatToPlayer(aPlayer, "Inverted MJ Storage");
-		if (aCoverVariable ==  6) GT_Utility.sendChatToPlayer(aPlayer, "Normal Steam Storage");
-		if (aCoverVariable ==  7) GT_Utility.sendChatToPlayer(aPlayer, "Inverted Steam Storage");
-		if (aCoverVariable ==  8) GT_Utility.sendChatToPlayer(aPlayer, "Normal Average Electric Input");
-		if (aCoverVariable ==  9) GT_Utility.sendChatToPlayer(aPlayer, "Inverted Average Electric Input");
-		if (aCoverVariable == 10) GT_Utility.sendChatToPlayer(aPlayer, "Normal Average Electric Output");
-		if (aCoverVariable == 11) GT_Utility.sendChatToPlayer(aPlayer, "Inverted Average Electric Output");
+		GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.cover.drain.eu_meter." + aCoverVariable));
 		return aCoverVariable;
 	}
 	

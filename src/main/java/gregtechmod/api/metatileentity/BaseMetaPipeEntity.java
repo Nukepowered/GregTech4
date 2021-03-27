@@ -23,6 +23,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
+import net.minecraft.util.ChatComponentTranslation;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
@@ -592,7 +593,7 @@ public class BaseMetaPipeEntity extends BaseTileEntity implements IGregTechTileE
 			if (GT_Utility.isItemStackInList(aPlayer.inventory.getCurrentItem(), GregTech_API.sSolderingToolList, true)) {
 				if (GT_ModHandler.useSolderingIron(aPlayer.inventory.getCurrentItem(), aPlayer)) {
 					mStrongRedstone ^= (1 << tSide);
-					GT_Utility.sendChatToPlayer(aPlayer, "Redstone Output at Side " + tSide + " set to: " + ((mStrongRedstone & (1 << tSide))!=0?"Strong":"Weak"));
+					GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.redstone", tSide, new ChatComponentTranslation("metatileentity.status." + ((mStrongRedstone & (1 << tSide))!=0?"redstone_strong":"redstone_weak"))));
 					GT_Utility.sendSoundToPlayers(worldObj, GregTech_API.sSoundList.get(103), 3.0F, -1, xCoord, yCoord, zCoord);
 				}
 				return true;

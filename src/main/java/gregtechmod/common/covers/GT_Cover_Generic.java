@@ -5,6 +5,9 @@ import gregtechmod.api.interfaces.ICoverable;
 import gregtechmod.api.util.GT_CoverBehavior;
 import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.ChatComponentTranslation;
+import net.minecraft.util.IChatComponent;
 
 public class GT_Cover_Generic extends GT_CoverBehavior {
 	/**
@@ -23,7 +26,18 @@ public class GT_Cover_Generic extends GT_CoverBehavior {
 	@Override
 	public int onCoverScrewdriverclick(byte aSide, int aCoverID, int aCoverVariable, ICoverable aTileEntity, EntityPlayer aPlayer, float aX, float aY, float aZ) {
 		aCoverVariable=((aCoverVariable+1)&15);
-		GT_Utility.sendChatToPlayer(aPlayer, ((aCoverVariable & 1) != 0?"Redstone ":"") + ((aCoverVariable & 2) != 0?"Energy ":"") + ((aCoverVariable & 4) != 0?"Fluids ":"") + ((aCoverVariable & 8) != 0?"Items ":""));
+		IChatComponent result = new ChatComponentText("");
+		if ((aCoverVariable & 1) != 0)
+			result.appendSibling(new ChatComponentTranslation("metatileentity.cover.generic.0"));
+		if ((aCoverVariable & 2) != 0)
+			result.appendSibling(new ChatComponentTranslation("metatileentity.cover.generic.1"));
+		if ((aCoverVariable & 4) != 0)
+			result.appendSibling(new ChatComponentTranslation("metatileentity.cover.generic.2"));
+		if ((aCoverVariable & 8) != 0)
+			result.appendSibling(new ChatComponentTranslation("metatileentity.cover.generic.3"));
+		
+		if (!result.getUnformattedText().isEmpty())
+			GT_Utility.sendChatToPlayer(aPlayer, result);
 		return aCoverVariable;
 	}
 	

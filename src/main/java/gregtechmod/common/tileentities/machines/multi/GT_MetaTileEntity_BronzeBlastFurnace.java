@@ -86,6 +86,7 @@ public class GT_MetaTileEntity_BronzeBlastFurnace extends BaseMultiWorkable {
 	    	if (needCheckStruct) {
 	    		structComplete = checkMachine();
 	    		needCheckStruct = false;
+	    		getBaseMetaTileEntity().setErrorDisplayID(structComplete ? 0 : 1);
 	    	} else if (!needCheckStruct && !structComplete && getBaseMetaTileEntity().getTimer() % 600 == 0) {
 	    		structComplete = checkMachine();
 	    	}

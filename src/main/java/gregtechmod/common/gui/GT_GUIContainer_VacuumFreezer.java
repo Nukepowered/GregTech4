@@ -4,6 +4,7 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.gui.GT_GUIContainerMetaTile_Machine;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.common.containers.GT_Container_VacuumFreezer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.StatCollector;
 
@@ -16,12 +17,12 @@ public class GT_GUIContainer_VacuumFreezer extends GT_GUIContainerMetaTile_Machi
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
         if (((mContainer).mDisplayErrorCode.get() & 1) != 0)
-        	fontRenderer.drawString("Insufficient Energy Line!", 8, ySize - 94, 4210752);
+        	fontRenderer.drawString(I18n.format("metatileentity.NOT_ENOUGH_ENERGY"), 8, ySize - 94, 4210752);
         else
             fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 94, 4210752);
-        fontRenderer.drawString("Vacuum Freezer", 8,  4, 4210752);
+        fontRenderer.drawString(I18n.format("metatileentity.GT_VacuumFreezer.name"), 8,  4, 4210752);
         if (!((GT_Container_VacuumFreezer)mContainer).mMachine.get())
-        	fontRenderer.drawString("Incomplete Machine Casing!", 8, ySize - 103, 4210752); // TODO LOCALE
+        	fontRenderer.drawString(I18n.format("metatileentity.status.multiblock.incomplete"), 8, ySize - 103, 0xF00000);
     }
 
     @Override

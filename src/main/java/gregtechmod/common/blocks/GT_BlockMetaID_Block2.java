@@ -73,7 +73,8 @@ public class GT_BlockMetaID_Block2 extends Block {
 	
 	@Override
     public void onBlockAdded(World aWorld, int aX, int aY, int aZ) {
-		if (GregTech_API.isMachineBlock(this, aWorld.getBlockMetadata(aX, aY, aZ))) {
+		int meta = aWorld.getBlockMetadata(aX, aY, aZ);
+		if (GregTech_API.isMachineBlock(this, meta) || (GregTech_API.sMachineIDs.containsKey(this) && meta == 13)) {
 			GregTech_API.causeMachineUpdate(aWorld, aX, aY, aZ);
 		}
 	}
