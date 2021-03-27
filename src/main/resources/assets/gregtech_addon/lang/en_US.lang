@@ -361,6 +361,21 @@ metatileentity.status.redstone=Redstone Output at Side %d set to: %s
 metatileentity.status.redstone_weak=Weak
 metatileentity.status.redstone_strong=Strong
 
+metatileentity.status.energy_out.true=Emit Energy to Outputside
+metatileentity.status.energy_out.false=Don't emit Energy
+metatileentity.status.filter.normal=Filter works normal
+metatileentity.status.filter.invert=Inverted the Filter
+metatileentity.status.partial_req.true=Partial Requests allowed
+metatileentity.status.partial_req.false=Partial Requests forbidden
+metatileentity.status.redstone_if_full.true=Emit Redstone if slot contains something
+metatileentity.status.redstone_if_full.false=Don't emit Redstone
+metatileentity.status.redstone_invert.true=Invert Redstone
+metatileentity.status.redstone_invert.false=Don't invert Redstone
+metatileentity.status.ignore_nbt.true=Ignore NBT
+metatileentity.status.ignore_nbt.false=NBT has to match
+metatileentity.status.items_with_nbt.true=Allow Items with NBT
+metatileentity.status.items_with_nbt.false=Don't allow Items with NBT
+
 metatileentity.turbine.speed=Speed: %s%%
 metatileentity.turbine.durability=Turbine HP: %s
 metatileentity.turbine.no_turbine=No turbine installed

@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ChatComponentTranslation;
 
 public class GT_Container_Translocator extends GT_ContainerMetaTile_Machine {
 
@@ -37,22 +38,19 @@ public class GT_Container_Translocator extends GT_ContainerMetaTile_Machine {
     	Slot tSlot = (Slot)inventorySlots.get(aSlotIndex);
 	    if (tSlot != null) {
 	    	if (mTileEntity.getMetaTileEntity() == null) return null;
+	    	GT_MetaTileEntity_Translocator mte = (GT_MetaTileEntity_Translocator)mTileEntity.getMetaTileEntity();
 		    if (aSlotIndex < 9) {
 		    	tSlot.putStack(GT_Utility.copy(1, aPlayer.inventory.getItemStack()));
 		    	return null;
 		    } else if (aSlotIndex == 9) {
-		    	((GT_MetaTileEntity_Translocator)mTileEntity.getMetaTileEntity()).bOutput = !((GT_MetaTileEntity_Translocator)mTileEntity.getMetaTileEntity()).bOutput;
-			    if (((GT_MetaTileEntity_Translocator)mTileEntity.getMetaTileEntity()).bOutput)
-			    	GT_Utility.sendChatToPlayer(aPlayer, "Emit Energy to Outputside");
-			    else
-			    	GT_Utility.sendChatToPlayer(aPlayer, "Don't emit Energy");
+		    	mte.bOutput = !mte.bOutput;
+			    if (aPlayer.worldObj.isRemote)
+			    	GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.energy_out." + mte.bOutput));
 		    	return null;
 		    } else if (aSlotIndex == 10) {
-		    	((GT_MetaTileEntity_Translocator)mTileEntity.getMetaTileEntity()).bInvertFilter = !((GT_MetaTileEntity_Translocator)mTileEntity.getMetaTileEntity()).bInvertFilter;
-			    if (((GT_MetaTileEntity_Translocator)mTileEntity.getMetaTileEntity()).bInvertFilter)
-			    	GT_Utility.sendChatToPlayer(aPlayer, "Inverted the Filter");
-			    else
-			    	GT_Utility.sendChatToPlayer(aPlayer, "Filter works normal");
+		    	mte.bInvertFilter = !mte.bInvertFilter;
+		    	if (aPlayer.worldObj.isRemote)
+			    	GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.filter." + (mte.bInvertFilter ? "invert" : "normal")));
 		    	return null;
 		    }
 	    }

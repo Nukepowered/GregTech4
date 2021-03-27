@@ -5,6 +5,7 @@ import net.minecraft.inventory.*;
 import gregtechmod.api.gui.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.util.ChatComponentTranslation;
 import gregtechmod.api.util.*;
 import gregtechmod.common.tileentities.automation.*;
 
@@ -67,56 +68,33 @@ public class GT_Container_ElectricFilter extends GT_ContainerMetaTile_Machine
                 }
                 return null;
             }
+            GT_MetaTileEntity_ElectricFilter mte = (GT_MetaTileEntity_ElectricFilter)this.mTileEntity.getMetaTileEntity();
             if (aSlotIndex == 18) {
-                ((GT_MetaTileEntity_ElectricFilter)this.mTileEntity.getMetaTileEntity()).bOutput = !((GT_MetaTileEntity_ElectricFilter)this.mTileEntity.getMetaTileEntity()).bOutput;
-                if (((GT_MetaTileEntity_ElectricFilter)this.mTileEntity.getMetaTileEntity()).bOutput) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Emit Energy to Outputside");
-                }
-                else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Don't emit Energy");
-                }
-                return null;
-            }
-            if (aSlotIndex == 19) {
-                ((GT_MetaTileEntity_ElectricFilter)this.mTileEntity.getMetaTileEntity()).bRedstoneIfFull = !((GT_MetaTileEntity_ElectricFilter)this.mTileEntity.getMetaTileEntity()).bRedstoneIfFull;
-                if (((GT_MetaTileEntity_ElectricFilter)this.mTileEntity.getMetaTileEntity()).bRedstoneIfFull) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Emit Redstone if slots contain something");
-                }
-                else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Don't emit Redstone");
-                }
-                return null;
-            }
-            if (aSlotIndex == 20) {
-                ((GT_MetaTileEntity_ElectricFilter)this.mTileEntity.getMetaTileEntity()).bInvert = !((GT_MetaTileEntity_ElectricFilter)this.mTileEntity.getMetaTileEntity()).bInvert;
-                if (((GT_MetaTileEntity_ElectricFilter)this.mTileEntity.getMetaTileEntity()).bInvert) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Invert Redstone");
-                }
-                else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Don't invert Redstone");
-                }
-                return null;
-            }
-            if (aSlotIndex == 21) {
-                ((GT_MetaTileEntity_ElectricFilter)this.mTileEntity.getMetaTileEntity()).bInvertFilter = !((GT_MetaTileEntity_ElectricFilter)this.mTileEntity.getMetaTileEntity()).bInvertFilter;
-                if (((GT_MetaTileEntity_ElectricFilter)this.mTileEntity.getMetaTileEntity()).bInvertFilter) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Invert Filter");
-                }
-                else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Don't invert Filter");
-                }
-                return null;
-            }
-            if (aSlotIndex == 22) {
-                ((GT_MetaTileEntity_ElectricFilter)this.mTileEntity.getMetaTileEntity()).bIgnoreNBT = !((GT_MetaTileEntity_ElectricFilter)this.mTileEntity.getMetaTileEntity()).bIgnoreNBT;
-                if (((GT_MetaTileEntity_ElectricFilter)this.mTileEntity.getMetaTileEntity()).bIgnoreNBT) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Ignore NBT");
-                }
-                else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "NBT has to match");
-                }
-                return null;
-            }
+				mte.bOutput = !mte.bOutput;
+				if (aPlayer.worldObj.isRemote)
+					GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.energy_out." + mte.bOutput));
+				return null;
+			} else if (aSlotIndex == 19) {
+				mte.bRedstoneIfFull = !mte.bRedstoneIfFull;
+				if (aPlayer.worldObj.isRemote)
+					GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.redstone_if_full." + mte.bRedstoneIfFull));
+				return null;
+			} else if (aSlotIndex == 20) {
+				mte.bInvert = !mte.bInvert;
+				if (aPlayer.worldObj.isRemote)
+					GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.redstone_invert." + mte.bInvert));
+				return null;
+			 }else if (aSlotIndex == 21) {
+				mte.bInvertFilter = !mte.bInvertFilter;
+				if (aPlayer.worldObj.isRemote)
+					GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.filter." + (mte.bInvertFilter ? "invert" : "normal")));
+				return null;
+			} else if (aSlotIndex == 22) {
+				mte.bIgnoreNBT = !mte.bIgnoreNBT;
+				if (aPlayer.worldObj.isRemote)
+					GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.ignore_nbt." + mte.bIgnoreNBT));
+				return null;
+			}
         }
         return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
     }

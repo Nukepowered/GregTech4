@@ -13,7 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-
+import net.minecraft.util.ChatComponentTranslation;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -46,6 +46,8 @@ public class GT_Container_AdvancedTranslocator extends GT_ContainerMetaTile_Mach
     	Slot tSlot = (Slot)inventorySlots.get(aSlotIndex);
 	    if (tSlot != null) {
 	    	if (mTileEntity.getMetaTileEntity() == null) return null;
+	    	GT_MetaTileEntity_AdvancedTranslocator mte = (GT_MetaTileEntity_AdvancedTranslocator)mTileEntity.getMetaTileEntity();
+	    	
 		    if (aSlotIndex < 9) {
 		    	ItemStack tStack = aPlayer.inventory.getItemStack();
 		    	if (tStack != null) {
@@ -54,23 +56,19 @@ public class GT_Container_AdvancedTranslocator extends GT_ContainerMetaTile_Mach
 		    	tSlot.putStack(tStack);
 		    	return null;
 		    } else if (aSlotIndex == 9) {
-		    	((GT_MetaTileEntity_AdvancedTranslocator)mTileEntity.getMetaTileEntity()).bOutput = !((GT_MetaTileEntity_AdvancedTranslocator)mTileEntity.getMetaTileEntity()).bOutput;
-			    if (((GT_MetaTileEntity_AdvancedTranslocator)mTileEntity.getMetaTileEntity()).bOutput)
-			    	GT_Utility.sendChatToPlayer(aPlayer, "Emit Energy to Outputside");
-			    else
-			    	GT_Utility.sendChatToPlayer(aPlayer, "Don't emit Energy");
+		    	mte.bOutput = !mte.bOutput;
+		    	if (aPlayer.worldObj.isRemote) 
+		    		GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.energy_out." + mte.bOutput));
 		    	return null;
 		    } else if (aSlotIndex == 10) {
-		    	((GT_MetaTileEntity_AdvancedTranslocator)mTileEntity.getMetaTileEntity()).bInvertFilter = !((GT_MetaTileEntity_AdvancedTranslocator)mTileEntity.getMetaTileEntity()).bInvertFilter;
-			    if (((GT_MetaTileEntity_AdvancedTranslocator)mTileEntity.getMetaTileEntity()).bInvertFilter)
-			    	GT_Utility.sendChatToPlayer(aPlayer, "Inverted the Filter");
-			    else
-			    	GT_Utility.sendChatToPlayer(aPlayer, "Filter works normal");
+		    	mte.bInvertFilter = !mte.bInvertFilter;
+		    	if (aPlayer.worldObj.isRemote) 
+		    		GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.filter." + (mte.bInvertFilter ? "invert" : "normal")));
 		    	return null;
 		    } else if (aSlotIndex == 11) {
-		    	((GT_MetaTileEntity_AdvancedTranslocator)mTileEntity.getMetaTileEntity()).mInputSide = (byte) ((((GT_MetaTileEntity_AdvancedTranslocator)mTileEntity.getMetaTileEntity()).mInputSide + 1) % 6);
+		    	mte.mInputSide = (byte) ((mte.mInputSide + 1) % 6);
 		    } else if (aSlotIndex == 12) {
-		    	((GT_MetaTileEntity_AdvancedTranslocator)mTileEntity.getMetaTileEntity()).mOutputSide = (byte) ((((GT_MetaTileEntity_AdvancedTranslocator)mTileEntity.getMetaTileEntity()).mOutputSide + 1) % 6);
+		    	mte.mOutputSide = (byte) ((mte.mOutputSide + 1) % 6);
 		    }
     	}
 	    

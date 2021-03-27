@@ -5,6 +5,7 @@ import net.minecraft.inventory.*;
 import gregtechmod.api.gui.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.util.ChatComponentTranslation;
 import gregtechmod.common.tileentities.automation.*;
 import gregtechmod.api.util.*;
 
@@ -40,63 +41,38 @@ public class GT_Container_ElectricTypeFilter extends GT_ContainerMetaTile_Machin
         }
         final Slot tSlot = (Slot) this.inventorySlots.get(aSlotIndex);
         if (tSlot != null) {
-            if (this.mTileEntity.getMetaTileEntity() == null) {
-                return null;
-            }
+            if (this.mTileEntity.getMetaTileEntity() == null) return null;
+            GT_MetaTileEntity_ElectricTypeFilter mte = (GT_MetaTileEntity_ElectricTypeFilter)this.mTileEntity.getMetaTileEntity();
+            
             if (aSlotIndex == 9) {
-                ((GT_MetaTileEntity_ElectricTypeFilter)this.mTileEntity.getMetaTileEntity()).clickTypeIcon(aMouseclick != 0);
+                mte.clickTypeIcon(aMouseclick != 0);
                 return null;
-            }
-            if (aSlotIndex == 10) {
-                ((GT_MetaTileEntity_ElectricTypeFilter)this.mTileEntity.getMetaTileEntity()).bOutput = !((GT_MetaTileEntity_ElectricTypeFilter)this.mTileEntity.getMetaTileEntity()).bOutput;
-                if (((GT_MetaTileEntity_ElectricTypeFilter)this.mTileEntity.getMetaTileEntity()).bOutput) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Emit Energy to Outputside");
-                }
-                else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Don't emit Energy");
-                }
-                return null;
-            }
-            if (aSlotIndex == 11) {
-                ((GT_MetaTileEntity_ElectricTypeFilter)this.mTileEntity.getMetaTileEntity()).bRedstoneIfFull = !((GT_MetaTileEntity_ElectricTypeFilter)this.mTileEntity.getMetaTileEntity()).bRedstoneIfFull;
-                if (((GT_MetaTileEntity_ElectricTypeFilter)this.mTileEntity.getMetaTileEntity()).bRedstoneIfFull) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Emit Redstone if slots contain something");
-                }
-                else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Don't emit Redstone");
-                }
-                return null;
-            }
-            if (aSlotIndex == 12) {
-                ((GT_MetaTileEntity_ElectricTypeFilter)this.mTileEntity.getMetaTileEntity()).bInvert = !((GT_MetaTileEntity_ElectricTypeFilter)this.mTileEntity.getMetaTileEntity()).bInvert;
-                if (((GT_MetaTileEntity_ElectricTypeFilter)this.mTileEntity.getMetaTileEntity()).bInvert) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Invert Redstone");
-                }
-                else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Don't invert Redstone");
-                }
-                return null;
-            }
-            if (aSlotIndex == 13) {
-                ((GT_MetaTileEntity_ElectricTypeFilter)this.mTileEntity.getMetaTileEntity()).bInvertFilter = !((GT_MetaTileEntity_ElectricTypeFilter)this.mTileEntity.getMetaTileEntity()).bInvertFilter;
-                if (((GT_MetaTileEntity_ElectricTypeFilter)this.mTileEntity.getMetaTileEntity()).bInvertFilter) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Invert Filter");
-                }
-                else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Don't invert Filter");
-                }
-                return null;
-            }
-            if (aSlotIndex == 14) {
-                ((GT_MetaTileEntity_ElectricTypeFilter)this.mTileEntity.getMetaTileEntity()).bNBTAllowed = !((GT_MetaTileEntity_ElectricTypeFilter)this.mTileEntity.getMetaTileEntity()).bNBTAllowed;
-                if (((GT_MetaTileEntity_ElectricTypeFilter)this.mTileEntity.getMetaTileEntity()).bNBTAllowed) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Allow Items with NBT");
-                }
-                else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Don't allow Items with NBT");
-                }
-                return null;
-            }
+            } else if (aSlotIndex == 10) {
+				mte.bOutput = !mte.bOutput;
+				if (aPlayer.worldObj.isRemote)
+					GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.energy_out." + mte.bOutput));
+				return null;
+			} else if (aSlotIndex == 11) {
+				mte.bRedstoneIfFull = !mte.bRedstoneIfFull;
+				if (aPlayer.worldObj.isRemote)
+					GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.redstone_if_full." + mte.bRedstoneIfFull));
+				return null;
+			} else if (aSlotIndex == 12) {
+				mte.bInvert = !mte.bInvert;
+				if (aPlayer.worldObj.isRemote)
+					GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.redstone_invert." + mte.bInvert));
+				return null;
+			} else if (aSlotIndex == 13) {
+				mte.bInvertFilter = !mte.bInvertFilter;
+				if (aPlayer.worldObj.isRemote)
+					GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.filter." + (mte.bInvertFilter ? "invert" : "normal")));
+				return null;
+			} else if (aSlotIndex == 14) {
+				mte.bNBTAllowed = !mte.bNBTAllowed;
+				if (aPlayer.worldObj.isRemote)
+					GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.items_with_nbt." + mte.bNBTAllowed));
+				return null;
+			}
         }
         return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
     }

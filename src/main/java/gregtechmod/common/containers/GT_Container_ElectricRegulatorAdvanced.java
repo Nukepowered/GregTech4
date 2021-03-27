@@ -13,7 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-
+import net.minecraft.util.ChatComponentTranslation;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -66,13 +66,12 @@ public class GT_Container_ElectricRegulatorAdvanced extends GT_ContainerMetaTile
     	Slot tSlot = (Slot)inventorySlots.get(aSlotIndex);
 	    if (tSlot != null) {
 	    	if (mTileEntity.getMetaTileEntity() == null) return null;
+	    	GT_MetaTileEntity_ElectricRegulatorAdvanced mte = (GT_MetaTileEntity_ElectricRegulatorAdvanced)mTileEntity.getMetaTileEntity();
 		    if (aSlotIndex == 27) {
-		    	((GT_MetaTileEntity_ElectricRegulatorAdvanced)mTileEntity.getMetaTileEntity()).bOutput = !((GT_MetaTileEntity_ElectricRegulatorAdvanced)mTileEntity.getMetaTileEntity()).bOutput;
-			    if (((GT_MetaTileEntity_ElectricRegulatorAdvanced)mTileEntity.getMetaTileEntity()).bOutput)
-			    	GT_Utility.sendChatToPlayer(aPlayer, "Emit Energy to Outputside");
-			    else
-			    	GT_Utility.sendChatToPlayer(aPlayer, "Don't emit Energy");
-		    	return null;
+		    	mte.bOutput = !mte.bOutput;
+	    		if (aPlayer.worldObj.isRemote)
+					GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.energy_out." + mte.bOutput));
+				return null;
 		    } else if (aSlotIndex >= 9 && aSlotIndex < 18) {
 		    	ItemStack tStack = aPlayer.inventory.getItemStack();
 		    	if (tStack != null) {
@@ -94,7 +93,7 @@ public class GT_Container_ElectricRegulatorAdvanced extends GT_ContainerMetaTile
 		    	}
 		    	return null;
 		    } else if (aSlotIndex >= 18 && aSlotIndex < 27) {
-		    	((GT_MetaTileEntity_ElectricRegulatorAdvanced)mTileEntity.getMetaTileEntity()).mTargetSlots[aSlotIndex-18]=Math.min(99, Math.max(0, ((GT_MetaTileEntity_ElectricRegulatorAdvanced)mTileEntity.getMetaTileEntity()).mTargetSlots[aSlotIndex-18] + ((aMouseclick==0?-1:+1)*(aShifthold==0?1:16))));
+		    	mte.mTargetSlots[aSlotIndex-18]=Math.min(99, Math.max(0, mte.mTargetSlots[aSlotIndex-18] + ((aMouseclick==0?-1:+1)*(aShifthold==0?1:16))));
 		    	return null;
 		    }
     	}

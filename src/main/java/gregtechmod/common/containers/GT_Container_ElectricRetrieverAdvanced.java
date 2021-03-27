@@ -4,6 +4,7 @@ import gregtechmod.api.interfaces.*;
 import gregtechmod.api.gui.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import net.minecraft.util.ChatComponentTranslation;
 import gregtechmod.common.network.SyncedField;
 import gregtechmod.common.tileentities.automation.*;
 import gregtechmod.api.util.*;
@@ -56,27 +57,18 @@ public class GT_Container_ElectricRetrieverAdvanced extends GT_ContainerMetaTile
         }
         final Slot tSlot = (Slot) this.inventorySlots.get(aSlotIndex);
         if (tSlot != null) {
-            if (this.mTileEntity.getMetaTileEntity() == null) {
-                return null;
-            }
+            if (this.mTileEntity.getMetaTileEntity() == null) return null;
+            GT_MetaTileEntity_ElectricRetrieverAdvanced mte = (GT_MetaTileEntity_ElectricRetrieverAdvanced)this.mTileEntity.getMetaTileEntity();
             if (aSlotIndex == 18) {
-                ((GT_MetaTileEntity_ElectricRetrieverAdvanced)this.mTileEntity.getMetaTileEntity()).bOutput = !((GT_MetaTileEntity_ElectricRetrieverAdvanced)this.mTileEntity.getMetaTileEntity()).bOutput;
-                if (((GT_MetaTileEntity_ElectricRetrieverAdvanced)this.mTileEntity.getMetaTileEntity()).bOutput) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Emit Energy to Outputside");
-                }
-                else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Don't emit Energy"); // TODO locale & side mesg
-                }
+                mte.bOutput = !mte.bOutput;
+                if (aPlayer.worldObj.isRemote) 
+                	GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.energy_out." + mte.bOutput));
                 return null;
             }
             if (aSlotIndex == 19) {
-                ((GT_MetaTileEntity_ElectricRetrieverAdvanced)this.mTileEntity.getMetaTileEntity()).mPartialRequests = !((GT_MetaTileEntity_ElectricRetrieverAdvanced)this.mTileEntity.getMetaTileEntity()).mPartialRequests;
-                if (((GT_MetaTileEntity_ElectricRetrieverAdvanced)this.mTileEntity.getMetaTileEntity()).mPartialRequests) {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Partial Requests allowed");
-                }
-                else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Partial Requests forbidden");
-                }
+                mte.mPartialRequests = !mte.mPartialRequests;
+                if (aPlayer.worldObj.isRemote)
+                	GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.status.partial_req." + mte.mPartialRequests));
                 return null;
             }
             if (aSlotIndex >= 0 && aSlotIndex < 9) {

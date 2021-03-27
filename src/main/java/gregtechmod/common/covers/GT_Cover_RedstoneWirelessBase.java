@@ -25,7 +25,7 @@ public abstract class GT_Cover_RedstoneWirelessBase extends GT_CoverBehavior {
 			GregTech_API.sWirelessRedstone.put(aCoverVariable, (byte)0);
 			aCoverVariable = GT_Utility.stackToInt(aPlayer.inventory.getCurrentItem());
 			aTileEntity.setCoverDataAtSide(aSide, aCoverVariable);
-			GT_Utility.sendChatToPlayer(aPlayer, "Frequency: " + aCoverVariable);
+			GT_Utility.sendChatToPlayer(aPlayer, "Frequency: " + aCoverVariable); // TODO locale
 			return true;
 		}
 		return false;
