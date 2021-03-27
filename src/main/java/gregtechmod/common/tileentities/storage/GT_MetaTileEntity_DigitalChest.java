@@ -101,7 +101,7 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
 					}
 				}
 			}
-            GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.GT_Barrel.count_msg", mInventory[0].stackSize, mInventory[0].getUnlocalizedName() + ".name"));
+            GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.GT_Barrel.count_msg", mInventory[0].stackSize, mInventory[0].getDisplayName()));
          }
       } else {
          if(isDigitalChest && GT_OreDictUnificator.isItemStackInstanceOf(tPlayerItem, "craftingQuantumChestUpgrade")) {
@@ -134,7 +134,7 @@ public class GT_MetaTileEntity_DigitalChest extends MetaTileEntity {
         	 }
         	 
          } else {
-        	 GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.GT_Barrel.count_msg", mInventory[0].stackSize, mInventory[0].getUnlocalizedName() + ".name"));
+        	 GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.GT_Barrel.count_msg", mInventory[0].stackSize, mInventory[0].getDisplayName()));
          }
       }
 

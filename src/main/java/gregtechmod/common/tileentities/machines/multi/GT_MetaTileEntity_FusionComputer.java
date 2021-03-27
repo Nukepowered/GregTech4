@@ -580,15 +580,16 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity implements 
 			GT_MetaTileEntity_FusionComputer machine = (GT_MetaTileEntity_FusionComputer)getMachine();
 			overclockersCount = base.getOverclockerUpgradeCount();
 			
-			if (base.isAllowedToWork()) {
-				if (progressTime > 0) {
-					int tmp = progressTime;
-					success = updateRecipeProgress();
-					if (tmp == 0 && !success) {
-						throw new IllegalStateException();
-					}
+			
+			if (progressTime > 0) {
+				int tmp = progressTime;
+				success = updateRecipeProgress();
+				if (tmp == 0 && !success) {
+					throw new IllegalStateException();
 				}
+			}
 				
+			if (base.isAllowedToWork()) {
 				if (progressTime == 0) {
 					if (machine.hasInventoryBeenModified() || base.hasWorkJustBeenEnabled() || success || base.getTimer() % 600 == 0 || wasNoEnergy) {
 						if (machine.getStoredEU() >= machine.getMinimumStoredEU() - 100) {
@@ -603,8 +604,8 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity implements 
 						previousRecipe = null;
 					}
 				}
-			} 
-			
+			} else if (success) stop();
+					
 			return success;
 		}
 		
@@ -672,6 +673,7 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity implements 
 			super.stop();
 			getMachine().getBaseMetaTileEntity().disableWorking();
 			triggerMachine(false);
+			previousRecipe = null;
 			firstStart = true;
 		}
 		
