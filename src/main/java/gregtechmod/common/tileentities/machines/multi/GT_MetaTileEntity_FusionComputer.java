@@ -129,6 +129,9 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity implements 
         			fluidOutputs = new InventoryHandlerList<>(mPlasmaExtractors.stream().map(extr -> new ListAdapter<>(extr.mFluid)).collect(Collectors.toList()));
         			itemInputs = new InventoryHandlerList<>(mPlasmaInjectors.stream().map(extr -> new ListAdapter<>(extr.mInventory, extr.getInputSlot(), extr.getInputSlot())).collect(Collectors.toList()));
         			itemOutputs = new InventoryHandlerList<>(mPlasmaExtractors.stream().map(extr -> new ListAdapter<>(extr.mInventory, extr.getOutputSlot(), extr.getOutputSlot())).collect(Collectors.toList()));
+        			getBaseMetaTileEntity().setErrorDisplayID(0);
+        		} else {
+        			getBaseMetaTileEntity().setErrorDisplayID(1);
         		}
     		} else if (!structComplete && getBaseMetaTileEntity().getTimer() % 600 == 0) {
     			needCheckStruct = true;

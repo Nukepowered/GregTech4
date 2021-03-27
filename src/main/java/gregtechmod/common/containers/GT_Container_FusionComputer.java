@@ -8,7 +8,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 public class GT_Container_FusionComputer extends GT_ContainerMetaTile_Machine {
 	
 	public GT_Container_FusionComputer(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
-		super(aInventoryPlayer, aTileEntity); // FIXME add indicator
+		super(aInventoryPlayer, aTileEntity);
 	}
 	
     public void addSlots(InventoryPlayer aInventoryPlayer) {

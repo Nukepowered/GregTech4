@@ -4,6 +4,8 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.gui.GT_GUIContainerMetaTile_Machine;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.common.containers.GT_Container_FusionComputer;
+
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GT_GUIContainer_FusionComputer extends GT_GUIContainerMetaTile_Machine {
@@ -14,8 +16,13 @@ public class GT_GUIContainer_FusionComputer extends GT_GUIContainerMetaTile_Mach
     
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-    	
+    	if (mContainer != null) {
+    		GT_Container_FusionComputer m = (GT_Container_FusionComputer) mContainer;
+    		if (m.mDisplayErrorCode.get() > 0)
+    			fontRenderer.drawString(I18n.format("metatileentity.status.malfunction.6"), 7, 100, 0xF00000);
+        }
     }
+    	
     
     @Override
     protected void drawGuiContainerBackgroundLayer(float par1, int par2, int par3) {
