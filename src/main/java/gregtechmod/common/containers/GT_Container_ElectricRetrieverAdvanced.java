@@ -16,7 +16,7 @@ import cpw.mods.fml.relauncher.*;
 
 public class GT_Container_ElectricRetrieverAdvanced extends GT_ContainerMetaTile_Machine
 {
-    public final SyncedField<Integer[]> mTargetSlots; // FIXME TEST this
+    public final SyncedField<Integer[]> mTargetSlots;
     
     public GT_Container_ElectricRetrieverAdvanced(final InventoryPlayer aInventoryPlayer, final IGregTechTileEntity aTileEntity) {
         super(aInventoryPlayer, aTileEntity);

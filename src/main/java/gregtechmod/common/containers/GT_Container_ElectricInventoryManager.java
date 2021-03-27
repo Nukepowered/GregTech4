@@ -26,7 +26,7 @@ public class GT_Container_ElectricInventoryManager extends GT_ContainerMetaTile_
     public final SyncedField<Integer> mTargetEnergy		= new SyncedField<>("mTargetEnergy"		, new Integer(0));
 	
 	public GT_Container_ElectricInventoryManager(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
-		super(aInventoryPlayer, aTileEntity); // FIXME TEST THIS
+		super(aInventoryPlayer, aTileEntity);
 	}
 
     public void addSlots(InventoryPlayer aInventoryPlayer) {

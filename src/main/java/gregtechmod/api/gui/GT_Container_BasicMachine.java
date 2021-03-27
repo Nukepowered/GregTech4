@@ -42,26 +42,30 @@ public class GT_Container_BasicMachine extends GT_ContainerMetaTile_Machine {
     
     @Override
 	public ItemStack slotClick(int aSlotIndex, int aMouseclick, int aShifthold, EntityPlayer aPlayer) {
-    	if (aSlotIndex < 5) return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
-	    
+    	if (aSlotIndex < getSlotCount()) return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
+    	return this.handleClick(aSlotIndex, aMouseclick, aShifthold, aPlayer) ? null : super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
+    }
+    
+    /**
+     * Custom slotClick to handle buttons and etc
+     * @return true if super call is not needed
+     */
+    public boolean handleClick(int aSlotIndex, int aMouseclick, int aShifthold, EntityPlayer aPlayer) {
     	Slot tSlot = (Slot)inventorySlots.get(aSlotIndex);
-	    if (tSlot != null) {
-	    	if (mTileEntity.getMetaTileEntity() == null) return null;
+	    if (mTileEntity.getMetaTileEntity() != null && tSlot != null) {
 		    if (aSlotIndex == 5) {
 		    	((GT_MetaTileEntity_BasicMachine)mTileEntity.getMetaTileEntity()).bOutput = !((GT_MetaTileEntity_BasicMachine)mTileEntity.getMetaTileEntity()).bOutput;
-			    return null;
-		    }
-		    if (aSlotIndex == 6) {
+		    	return true;
+		    } else if (aSlotIndex == 6) {
 		    	((GT_MetaTileEntity_BasicMachine)mTileEntity.getMetaTileEntity()).bItemTransfer = !((GT_MetaTileEntity_BasicMachine)mTileEntity.getMetaTileEntity()).bItemTransfer;
-			    return null;
-		    }
-		    if (aSlotIndex == 7) {
+		    	return true;
+		    } else if (aSlotIndex == 7) {
 		    	((GT_MetaTileEntity_BasicMachine)mTileEntity.getMetaTileEntity()).bSeperatedInputs = !((GT_MetaTileEntity_BasicMachine)mTileEntity.getMetaTileEntity()).bSeperatedInputs;
-			    return null;
+		    	return true;
 		    }
     	}
 	    
-    	return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
+	    return false;
     }
     
     @Override

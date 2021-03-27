@@ -37,9 +37,9 @@ public class GUI_UniversalMacerator extends GT_GUIContainerMetaTile_Machine {
         int y = (height - ySize) / 2;
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
         if (mContainer != null) {
-        	if (((UniversalMacerator)mContainer).mOutputting)		drawTexturedModalRect(x +  7, y + 62, 176, 18, 18, 18);
-        	if (((UniversalMacerator)mContainer).mItemTransfer)		drawTexturedModalRect(x + 25, y + 62, 176, 36, 18, 18);
-        	if (((UniversalMacerator)mContainer).mSeperatedInputs)	drawTexturedModalRect(x + 43, y + 62, 176, 54, 18, 18);
+        	if (((UniversalMacerator)mContainer).mOutputting.get())			drawTexturedModalRect(x +  7, y + 62, 176, 18, 18, 18);
+        	if (((UniversalMacerator)mContainer).mItemTransfer.get())		drawTexturedModalRect(x + 25, y + 62, 176, 36, 18, 18);
+        	if (((UniversalMacerator)mContainer).mSeperatedInputs.get())	drawTexturedModalRect(x + 43, y + 62, 176, 54, 18, 18);
         	
         	if (mContainer.mMaxProgressTime.get() > 0) {
 	        	int tSize = 20, tProgress = Math.max(1, Math.min(tSize, (mContainer.mProgressTime.get()>0?1:0) + (mContainer.mProgressTime.get() * tSize) / mContainer.mMaxProgressTime.get())) % (tSize+1);

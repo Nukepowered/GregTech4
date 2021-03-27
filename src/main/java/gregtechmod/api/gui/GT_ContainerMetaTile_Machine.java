@@ -31,7 +31,6 @@ public class GT_ContainerMetaTile_Machine extends GT_Container {
     	if (mTileEntity != null && mTileEntity.getMetaTileEntity() != null) {
             addSlots(aInventoryPlayer);
             if (doesBindPlayerInventory()) bindPlayerInventory(aInventoryPlayer);
-//            detectAndSendChanges(); // FIXME check all UIs
     	} else {
     		aInventoryPlayer.player.closeScreen();
     	}
@@ -74,19 +73,6 @@ public class GT_ContainerMetaTile_Machine extends GT_Container {
     		}
     	}
     }
-    
-//    @Override
-//    public void prepareChanges(JsonObject data, boolean force) {
-//    	super.prepareChanges(data, force);
-//    	
-//    }
-//    
-//    @Override
-//    @SideOnly(Side.CLIENT)    
-//    public void processChanges(JsonObject data) {
-//    	super.processChanges(data);
-//    	
-//    }
     
     /**
      * Server side method to write changes to data object
