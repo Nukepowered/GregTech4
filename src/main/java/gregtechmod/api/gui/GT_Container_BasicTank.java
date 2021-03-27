@@ -2,11 +2,11 @@ package gregtechmod.api.gui;
 
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicTank;
+import gregtechmod.common.network.SyncedField;
 
-import java.util.Iterator;
+import com.google.gson.JsonObject;
 
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -29,34 +29,23 @@ public class GT_Container_BasicTank extends GT_ContainerMetaTile_Machine {
         addSlotToContainer(new GT_Slot_Render(mTileEntity, 2,  59,  42));
     }
     
-    public int mContent = 0;
+    public SyncedField<Integer> mContent = new SyncedField<>("mContent", Integer.valueOf(0));
     
     @Override
-	public void detectAndSendChanges() {
-        super.detectAndSendChanges();
-    	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
+    public void prepareChanges(JsonObject data, boolean force) {
+    	super.prepareChanges(data, force);
     	if (((GT_MetaTileEntity_BasicTank)mTileEntity.getMetaTileEntity()).mFluid[0] != null)
-    		mContent = ((GT_MetaTileEntity_BasicTank)mTileEntity.getMetaTileEntity()).mFluid[0].amount;
-    	else
-    		mContent = 0;
+    		mContent.set(((GT_MetaTileEntity_BasicTank)mTileEntity.getMetaTileEntity()).mFluid[0].amount);
+    	else 
+    		mContent.set(0);
     	
-        @SuppressWarnings("rawtypes")
-		Iterator var2 = this.crafters.iterator();
-        while (var2.hasNext()) {
-            ICrafting var1 = (ICrafting)var2.next();
-            var1.sendProgressBarUpdate(this, 100, mContent & 65535);
-            var1.sendProgressBarUpdate(this, 101, mContent >>> 16);
-        }
+    	mContent.writeChanges(data, force);
     }
     
     @Override
-	@SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2) {
-    	super.updateProgressBar(par1, par2);
-    	switch (par1) {
-    	case 100: mContent = mContent & -65536 | par2; break;
-    	case 101: mContent = mContent &  65535 | par2 << 16; break;
-    	}
+    @SideOnly(Side.CLIENT)    
+    public void processChanges(JsonObject data) {
+    	mContent.readChanges(data);
     }
     
     @Override

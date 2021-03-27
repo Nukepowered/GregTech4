@@ -16,9 +16,9 @@ public class GT_GUIContainer_DistillationTower extends GT_GUIContainerMetaTile_M
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
         fontRenderer.drawString("Distillation"		, 116,  4, 4210752);
         fontRenderer.drawString("Tower"				, 116, 12, 4210752);
-        if (!((GT_Container_DistillationTower)mContainer).mMachine)
-        	fontRenderer.drawSplitString("Incomplete Machine Casing!", 116, 20, 60, 4210752);
-        if (((mContainer).mDisplayErrorCode & 1) != 0)
+        if (!((GT_Container_DistillationTower)mContainer).mMachine.get())
+        	fontRenderer.drawSplitString("Incomplete Machine Casing!", 116, 20, 60, 4210752); // TODO locale
+        if (((mContainer).mDisplayErrorCode.get() & 1) != 0)
         	fontRenderer.drawSplitString("Insufficient Energy Line!", 116, 48, 60, 4210752);
     }
     
@@ -29,9 +29,9 @@ public class GT_GUIContainer_DistillationTower extends GT_GUIContainerMetaTile_M
         int y = (height - ySize) / 2;
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
         
-        if (mContainer != null && mContainer.mProgressTime>0) {
+        if (mContainer != null && mContainer.mProgressTime.get()>0) {
         	GT_Container_DistillationTower cont = (GT_Container_DistillationTower)mContainer;
-        	int tScale = Math.max(0, Math.min(72, (cont.mProgressTime>0?1:0) + (cont.mProgressTime * 72) / (cont.mMaxProgressTime<1?1:cont.mMaxProgressTime)));
+        	int tScale = Math.max(0, Math.min(72, (cont.mProgressTime.get()>0?1:0) + (cont.mProgressTime.get() * 72) / (cont.mMaxProgressTime.get()<1?1:cont.mMaxProgressTime.get())));
         	drawTexturedModalRect(x + 80, y + 76-tScale, 176, 76-tScale, 16, tScale);
         }
     }

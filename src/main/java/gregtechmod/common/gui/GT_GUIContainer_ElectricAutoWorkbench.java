@@ -25,9 +25,9 @@ public class GT_GUIContainer_ElectricAutoWorkbench extends GT_GUIContainerMetaTi
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
         
         if (mContainer != null) {
-        	int tMode = ((GT_Container_ElectricAutoWorkbench)mContainer).mMode;
+        	int tMode = ((GT_Container_ElectricAutoWorkbench)mContainer).mMode.get();
         	if (tMode != 0) drawTexturedModalRect(x + 120, y + 40, tMode*18, 166, 18, 18);
-        	tMode = ((GT_Container_ElectricAutoWorkbench)mContainer).mThroughPut;
+        	tMode = ((GT_Container_ElectricAutoWorkbench)mContainer).mThroughPut.get();
         	drawTexturedModalRect(x + 120, y + 4, tMode*18, 184, 18, 18);
         }
     }

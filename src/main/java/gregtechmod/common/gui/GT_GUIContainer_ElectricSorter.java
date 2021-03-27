@@ -25,7 +25,7 @@ public class GT_GUIContainer_ElectricSorter extends GT_GUIContainerMetaTile_Mach
     	default: tINString = "FAIL"; break;
     	}
     	
-    	switch (((GT_Container_ElectricSorter)mContainer).mTargetDirection) {
+    	switch (((GT_Container_ElectricSorter)mContainer).mTargetDirection.get()) {
     	case  0: tOUTString = "DOWN"; break;
     	case  1: tOUTString = "UP"; break;
     	case  2: tOUTString = "NORTH"; break;

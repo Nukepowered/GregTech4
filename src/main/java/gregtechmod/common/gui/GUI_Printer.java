@@ -32,12 +32,13 @@ public class GUI_Printer extends GT_GUIContainerMetaTile_Machine {
         int y = (height - ySize) / 2;
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
         if (mContainer != null) {
-        	if (((GT_Container_Printer)mContainer).mOutputting)		drawTexturedModalRect(x +  7, y + 62, 176, 18, 18, 18);
-        	if (((GT_Container_Printer)mContainer).mItemTransfer)		drawTexturedModalRect(x + 25, y + 62, 176, 36, 18, 18);
-        	if (((GT_Container_Printer)mContainer).mSeperatedInputs)	drawTexturedModalRect(x + 43, y + 62, 176, 54, 18, 18);
+        	GT_Container_Printer m = (GT_Container_Printer)mContainer;
+        	if (m.mOutputting.get())		drawTexturedModalRect(x +  7, y + 62, 176, 18, 18, 18);
+        	if (m.mItemTransfer.get())		drawTexturedModalRect(x + 25, y + 62, 176, 36, 18, 18);
+        	if (m.mSeperatedInputs.get())	drawTexturedModalRect(x + 43, y + 62, 176, 54, 18, 18);
         	
-        	if (mContainer.mMaxProgressTime > 0) {
-	        	int tSize = 20, tProgress = Math.max(1, Math.min(tSize, (mContainer.mProgressTime>0?1:0) + (mContainer.mProgressTime * tSize) / mContainer.mMaxProgressTime)) % (tSize+1);
+        	if (mContainer.mMaxProgressTime.get() > 0) {
+	        	int tSize = 20, tProgress = Math.max(1, Math.min(tSize, (mContainer.mProgressTime.get()>0?1:0) + (mContainer.mProgressTime.get() * tSize) / mContainer.mMaxProgressTime.get())) % (tSize+1);
 	        	drawTexturedModalRect(x + 78, y + 24, 176, 0, tProgress	, 18);
         	}
         }

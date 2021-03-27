@@ -20,7 +20,7 @@ public class GT_GUIContainer_ThermalGenerator extends GT_GUIContainerMetaTile_Ma
         fontRenderer.drawString("Thermal Generator", 8, 6, 4210752);
         if (mContainer != null) {
         	fontRenderer.drawString("Liquid Amount", 10, 20, 16448255);
-        	fontRenderer.drawString(GT_Utility.parseNumberToString(((GT_Container_BasicTank)mContainer).mContent), 10, 30, 16448255);
+        	fontRenderer.drawString(GT_Utility.parseNumberToString(((GT_Container_BasicTank)mContainer).mContent.get()), 10, 30, 16448255);
         }
     }
 

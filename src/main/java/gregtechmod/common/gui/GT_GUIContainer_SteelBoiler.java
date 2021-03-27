@@ -14,7 +14,7 @@ public class GT_GUIContainer_SteelBoiler extends GT_GUIContainerMetaTile_Machine
     
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-        fontRenderer.drawString("High Pressure Coal Boiler", 8,  4, 4210752);
+        fontRenderer.drawString("High Pressure Coal Boiler", 8,  4, 4210752); // TODO locale
     }
     
     @Override
@@ -26,13 +26,13 @@ public class GT_GUIContainer_SteelBoiler extends GT_GUIContainerMetaTile_Machine
         
         if (mContainer != null) {
         	int tScale;
-        	tScale = ((GT_Container_SteelBoiler)mContainer).mSteamAmount;
+        	tScale = ((GT_Container_SteelBoiler)mContainer).mSteamAmount.get();
         	if (tScale > 0) drawTexturedModalRect(x + 70, y + 25 + 54-tScale, 194, 54-tScale, 10, tScale);
-        	tScale = ((GT_Container_SteelBoiler)mContainer).mWaterAmount;
+        	tScale = ((GT_Container_SteelBoiler)mContainer).mWaterAmount.get();
         	if (tScale > 0) drawTexturedModalRect(x + 83, y + 25 + 54-tScale, 204, 54-tScale, 10, tScale);
-        	tScale = ((GT_Container_SteelBoiler)mContainer).mTemperature;
+        	tScale = ((GT_Container_SteelBoiler)mContainer).mTemperature.get();
         	if (tScale > 0) drawTexturedModalRect(x + 96, y + 25 + 54-tScale, 214, 54-tScale, 10, tScale);
-        	tScale = ((GT_Container_SteelBoiler)mContainer).mProcessingEnergy;
+        	tScale = ((GT_Container_SteelBoiler)mContainer).mProcessingEnergy.get();
         	if (tScale > 0) drawTexturedModalRect(x +117, y + 44 + 14-tScale, 177, 14-tScale, 15, tScale+1);
         }
     }

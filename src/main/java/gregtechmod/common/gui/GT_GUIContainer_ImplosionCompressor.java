@@ -17,7 +17,7 @@ public class GT_GUIContainer_ImplosionCompressor extends GT_GUIContainerMetaTile
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
         fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 94, 4210752);
         fontRenderer.drawString("Implosion Compressor", 8,  4, 4210752);
-        if (!((GT_Container_ImplosionCompressor)mContainer).mMachine)
+        if (!((GT_Container_ImplosionCompressor)mContainer).mMachine.get()) // TODO LOCALE
         	fontRenderer.drawString("Incomplete Machine Casing!", 8, ySize - 103, 4210752);
     }
 
@@ -28,9 +28,9 @@ public class GT_GUIContainer_ImplosionCompressor extends GT_GUIContainerMetaTile
         int y = (height - ySize) / 2;
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
         
-        if (mContainer != null && mContainer.mProgressTime>0) {
+        if (mContainer != null && mContainer.mProgressTime.get()>0) {
         	GT_Container_ImplosionCompressor cont = (GT_Container_ImplosionCompressor) mContainer;
-        	int tScale = Math.max(0, Math.min(20, (cont.mProgressTime>0?1:0) + (cont.mProgressTime * 20) / (cont.mMaxProgressTime<1?1:cont.mMaxProgressTime)));
+        	int tScale = Math.max(0, Math.min(20, (cont.mProgressTime.get()>0?1:0) + (cont.mProgressTime.get() * 20) / (cont.mMaxProgressTime.get()<1?1:cont.mMaxProgressTime.get())));
         	this.drawTexturedModalRect(x + 58, y + 28, 176, 0, tScale, 11);
         }
     }

@@ -4,15 +4,16 @@ import gregtechmod.api.gui.GT_ContainerMetaTile_Machine;
 import gregtechmod.api.gui.GT_Slot_Holo;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.common.network.SyncedField;
 import gregtechmod.common.tileentities.automation.GT_MetaTileEntity_AdvancedTranslocator;
 
-import java.util.Iterator;
+import com.google.gson.JsonObject;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -76,33 +77,25 @@ public class GT_Container_AdvancedTranslocator extends GT_ContainerMetaTile_Mach
     	return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
     }
     
-    public int mInputSide, mOutputSide;
+    public SyncedField<Byte> mInputSide 	= new SyncedField<>("mInputSide" , Byte.valueOf((byte)0));
+    public SyncedField<Byte> mOutputSide 	= new SyncedField<>("mOutputSide", Byte.valueOf((byte)0));
     
-    @SuppressWarnings("rawtypes")
-	public void detectAndSendChanges() {
-        super.detectAndSendChanges();
-    	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
-    	mInputSide  = ((GT_MetaTileEntity_AdvancedTranslocator)mTileEntity.getMetaTileEntity()).mInputSide;
-    	mOutputSide = ((GT_MetaTileEntity_AdvancedTranslocator)mTileEntity.getMetaTileEntity()).mOutputSide;
+    @Override
+    public void prepareChanges(JsonObject data, boolean force) {
+    	super.prepareChanges(data, force);
+    	mInputSide.set(((GT_MetaTileEntity_AdvancedTranslocator)mTileEntity.getMetaTileEntity()).mInputSide);
+    	mOutputSide.set(((GT_MetaTileEntity_AdvancedTranslocator)mTileEntity.getMetaTileEntity()).mOutputSide);
     	
-        Iterator var2 = this.crafters.iterator();
-        while (var2.hasNext()) {
-            ICrafting var1 = (ICrafting)var2.next();
-            var1.sendProgressBarUpdate(this, 100, mInputSide);
-            var1.sendProgressBarUpdate(this, 101, mOutputSide);
-        }
+    	mInputSide.writeChanges(data, force);
+    	mOutputSide.writeChanges(data, force);
     }
     
-    public void addCraftingToCrafters(ICrafting par1ICrafting) {
-        super.addCraftingToCrafters(par1ICrafting);
-    }
-    
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2) {
-    	super.updateProgressBar(par1, par2);
-    	switch (par1) {
-    	case 100: mInputSide = par2; break;
-    	case 101: mOutputSide = par2; break;
-    	}
+    @Override
+    @SideOnly(Side.CLIENT)    
+    public void processChanges(JsonObject data) {
+    	super.processChanges(data);
+    	
+    	mInputSide.readChanges(data);
+    	mInputSide.readChanges(data);
     }
 }

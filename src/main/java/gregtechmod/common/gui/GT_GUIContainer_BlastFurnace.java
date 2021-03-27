@@ -16,11 +16,11 @@ public class GT_GUIContainer_BlastFurnace extends GT_GUIContainerMetaTile_Machin
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
         fontRenderer.drawString("Industrial Blast Furnace", 8,  4, 4210752);
-        if (((GT_Container_BlastFurnace)mContainer).mMachine)
-        	fontRenderer.drawString("Heat Capacity: " + ((GT_Container_BlastFurnace)mContainer).mHeatCapacity + " K", 8, ySize - 103, 4210752);
+        if (((GT_Container_BlastFurnace)mContainer).mMachine.get())
+        	fontRenderer.drawString("Heat Capacity: " + ((GT_Container_BlastFurnace)mContainer).mHeatCapacity.get() + " K", 8, ySize - 103, 4210752);
         else
-        	fontRenderer.drawString("Incomplete Machine Casing!", 8, ySize - 103, 4210752);
-        if (((mContainer).mDisplayErrorCode & 1) != 0)
+        	fontRenderer.drawString("Incomplete Machine Casing!", 8, ySize - 103, 4210752); // FIXME locale
+        if (((mContainer).mDisplayErrorCode.get() & 1) != 0)
         	fontRenderer.drawString("Insufficient Energy Line!", 8, ySize - 94, 4210752);
         else
             fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 94, 4210752);
@@ -35,8 +35,8 @@ public class GT_GUIContainer_BlastFurnace extends GT_GUIContainerMetaTile_Machin
         
         if (mContainer != null) {
         	GT_Container_BlastFurnace cont = (GT_Container_BlastFurnace) mContainer;
-        	int tScale = Math.max(0, Math.min(20, (cont.mProgressTime>0?1:0) + (cont.mProgressTime * 20) / (cont.mMaxProgressTime<1?1:cont.mMaxProgressTime)));
-        	if (mContainer.mProgressTime>0) drawTexturedModalRect(x + 58, y + 28, 176, 0, tScale, 11);
+        	int tScale = Math.max(0, Math.min(20, (cont.mProgressTime.get()>0?1:0) + (cont.mProgressTime.get() * 20) / (cont.mMaxProgressTime.get()<1?1:cont.mMaxProgressTime.get())));
+        	if (mContainer.mProgressTime.get()>0) drawTexturedModalRect(x + 58, y + 28, 176, 0, tScale, 11);
         }
     }
 }

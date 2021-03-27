@@ -3,12 +3,14 @@ package gregtechmod.common.containers;
 import gregtechmod.api.gui.GT_ContainerMetaTile_Machine;
 import gregtechmod.api.gui.GT_Slot_Armor;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
+import gregtechmod.common.network.SyncedField;
 import gregtechmod.common.tileentities.energy.storage.GT_MetaTileEntity_IDSU;
 
-import java.util.Iterator;
+import com.google.gson.JsonObject;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 
 public class GT_Container_IDSU_Meta extends GT_ContainerMetaTile_Machine {
@@ -28,33 +30,23 @@ public class GT_Container_IDSU_Meta extends GT_ContainerMetaTile_Machine {
         addSlotToContainer(new GT_Slot_Armor(aInventoryPlayer, 39, 152,  5, 0, aInventoryPlayer.player));
     }
 	
-    public int mPlayerHash;
-    
-    @SuppressWarnings("rawtypes")
-	@Override
-    public void detectAndSendChanges() {
-        super.detectAndSendChanges();
-        if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
-        
-        mPlayerHash = ((GT_MetaTileEntity_IDSU)mTileEntity.getMetaTileEntity()).mFrequency;
-    	
-        Iterator var2 = this.crafters.iterator();
-        while (var2.hasNext()) {
-            ICrafting var1 = (ICrafting)var2.next();
-            var1.sendProgressBarUpdate(this, 100, mPlayerHash & 65535);
-            var1.sendProgressBarUpdate(this, 101, mPlayerHash >>> 16);
-        }
-    }
+    public SyncedField<Integer> mPlayerHash = new SyncedField<Integer>("mPlayerHash", new Integer(0));
     
     @Override
-    public void updateProgressBar(int par1, int par2) {
-    	super.updateProgressBar(par1, par2);
-    	switch (par1) {
-    	case 100: mPlayerHash = mPlayerHash & -65536 | par2; break;
-    	case 101: mPlayerHash = mPlayerHash &  65535 | par2 << 16; break;
+    public void prepareChanges(JsonObject data, boolean force) {
+    	super.prepareChanges(data, force);
+    	if (mPlayerHash != null) {
+    		mPlayerHash.updateAndWriteChanges(data, force, ((GT_MetaTileEntity_IDSU)mTileEntity.getMetaTileEntity()).mFrequency);
     	}
     }
     
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void processChanges(JsonObject data) {
+    	super.processChanges(data);
+    	if (mPlayerHash != null) mPlayerHash.readChanges(data);
+    }
+
 	@Override
     public int getSlotCount() {
     	return 2;

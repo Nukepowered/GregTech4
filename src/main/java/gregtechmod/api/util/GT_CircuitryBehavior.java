@@ -21,7 +21,7 @@ import cpw.mods.fml.relauncher.SideOnly;
  * All Functions run usually in a seperate try/catch Block, so that failed Logic won't crash the TileEntity.
  */
 public abstract class GT_CircuitryBehavior {
-	public static volatile int VERSION = 412;
+	public static volatile int VERSION = 413;
 	
 	/**
 	 * @param aIndex 0 - 1023 are my own Indices, so use other Numbers!
@@ -79,6 +79,13 @@ public abstract class GT_CircuitryBehavior {
 	@SideOnly(Side.CLIENT)
 	public abstract String getDataDescription(int[] aCircuitData, int aCircuitDataIndex);
 	
+	@SideOnly(Side.CLIENT)
+	public String getDataDescription(Integer[] aCircuitData, int aCircuitDataIndex) {
+		int[] tmp = new int[aCircuitData.length];
+		for (int i = 0; i < tmp.length; i++) tmp[i] = aCircuitData[i].intValue();
+		return this.getDataDescription(tmp, aCircuitDataIndex);
+	}
+	
 	/**
 	 * How the Integer should be displayed in the GUI.
 	 * null means, that it just displays as regular Number.
@@ -88,6 +95,12 @@ public abstract class GT_CircuitryBehavior {
 		return null;
 	}
 	
+	@SideOnly(Side.CLIENT)
+	public String getDataDisplay(Integer[] aCircuitData, int aCircuitDataIndex) {
+		int[] tmp = new int[aCircuitData.length];
+		for (int i = 0; i < tmp.length; i++) tmp[i] = aCircuitData[i].intValue();
+		return null;
+	}
 	
 	/****************************
 	 * Useful Utility Functions *

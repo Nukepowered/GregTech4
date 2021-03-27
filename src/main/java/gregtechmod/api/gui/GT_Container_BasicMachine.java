@@ -2,12 +2,12 @@ package gregtechmod.api.gui;
 
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMachine;
+import gregtechmod.common.network.SyncedField;
 
-import java.util.Iterator;
+import com.google.gson.JsonObject;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import cpw.mods.fml.relauncher.Side;
@@ -36,7 +36,9 @@ public class GT_Container_BasicMachine extends GT_ContainerMetaTile_Machine {
         addSlotToContainer(new GT_Slot_Holo(mTileEntity, 0, 44, 63, false, true, 1));
     }
     
-    public boolean mOutputting = false, mItemTransfer = false, mSeperatedInputs = false;
+    public final SyncedField<Boolean> mOutputting		= new SyncedField<Boolean>("mOutputting", Boolean.FALSE);
+    public final SyncedField<Boolean> mItemTransfer		= new SyncedField<Boolean>("mItemTransfer", Boolean.FALSE);
+    public final SyncedField<Boolean> mSeperatedInputs	= new SyncedField<Boolean>("mSeperatedInputs", Boolean.FALSE);
     
     @Override
 	public ItemStack slotClick(int aSlotIndex, int aMouseclick, int aShifthold, EntityPlayer aPlayer) {
@@ -63,38 +65,25 @@ public class GT_Container_BasicMachine extends GT_ContainerMetaTile_Machine {
     }
     
     @Override
-	public void detectAndSendChanges() {
-        super.detectAndSendChanges();
-    	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
-    	
-    	mOutputting = ((GT_MetaTileEntity_BasicMachine)mTileEntity.getMetaTileEntity()).bOutput;
-    	mItemTransfer = ((GT_MetaTileEntity_BasicMachine)mTileEntity.getMetaTileEntity()).bItemTransfer;
-    	mSeperatedInputs = ((GT_MetaTileEntity_BasicMachine)mTileEntity.getMetaTileEntity()).bSeperatedInputs;
-    	
-        @SuppressWarnings("rawtypes")
-		Iterator var2 = this.crafters.iterator();
-        while (var2.hasNext()) {
-            ICrafting var1 = (ICrafting)var2.next();
-            var1.sendProgressBarUpdate(this, 101, mOutputting?1:0);
-            var1.sendProgressBarUpdate(this, 102, mItemTransfer?1:0);
-            var1.sendProgressBarUpdate(this, 103, mSeperatedInputs?1:0);
-        }
+    public void prepareChanges(JsonObject data, boolean force) {
+    	super.prepareChanges(data, force);
+    	GT_MetaTileEntity_BasicMachine m = (GT_MetaTileEntity_BasicMachine) mTileEntity.getMetaTileEntity();
+    	mOutputting.set(m.bOutput);
+    	mItemTransfer.set(m.bItemTransfer);
+    	mSeperatedInputs.set(m.bSeperatedInputs);
+
+    	mOutputting.writeChanges(data, force);
+    	mItemTransfer.writeChanges(data, force);
+    	mSeperatedInputs.writeChanges(data, force);
     }
     
     @Override
-	public void addCraftingToCrafters(ICrafting par1ICrafting) {
-        super.addCraftingToCrafters(par1ICrafting);
-    }
-    
-    @Override
-	@SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2) {
-    	super.updateProgressBar(par1, par2);
-    	switch (par1) {
-    	case 101: mOutputting = (par2 != 0); break;
-    	case 102: mItemTransfer = (par2 != 0); break;
-    	case 103: mSeperatedInputs = (par2 != 0); break;
-    	}
+    @SideOnly(Side.CLIENT)    
+    public void processChanges(JsonObject data) {
+    	super.processChanges(data);
+    	mOutputting.readChanges(data);
+    	mItemTransfer.readChanges(data);
+    	mSeperatedInputs.readChanges(data);
     }
     
     @Override

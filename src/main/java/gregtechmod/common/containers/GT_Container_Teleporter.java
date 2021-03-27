@@ -3,20 +3,30 @@ package gregtechmod.common.containers;
 import gregtechmod.api.gui.GT_ContainerMetaTile_Machine;
 import gregtechmod.api.gui.GT_Slot_Holo;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
+import gregtechmod.common.network.SyncedField;
 import gregtechmod.common.tileentities.machines.GT_MetaTileEntity_Teleporter;
 
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
+
+import com.google.gson.JsonObject;
+
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.DimensionManager;
 
 public class GT_Container_Teleporter extends GT_ContainerMetaTile_Machine {
+	
+	public final SyncedField<Integer> mTargetX 	= new SyncedField<>("mTargetX", Integer.valueOf(0));
+	public final SyncedField<Integer> mTargetY 	= new SyncedField<>("mTargetY", Integer.valueOf(0));
+	public final SyncedField<Integer> mTargetZ 	= new SyncedField<>("mTargetZ", Integer.valueOf(0));
+	public final SyncedField<Integer> mTargetD 	= new SyncedField<>("mTargetD", Integer.valueOf(0));
+	public final SyncedField<Boolean> mEgg		= new SyncedField<>("mEgg", Boolean.FALSE);
 	
 	public GT_Container_Teleporter(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
 		super(aInventoryPlayer, aTileEntity);
@@ -118,49 +128,26 @@ public class GT_Container_Teleporter extends GT_ContainerMetaTile_Machine {
 		newIdx = idx + offset;
 		return newIdx < 0 || newIdx >= IDs.size() ? ((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetD : IDs.get(newIdx);
 	}
-	
-	public int mTargetX = 0, mTargetY = 0, mTargetZ = 0, mTargetD = 0, mEgg = 0;
-	
-    @SuppressWarnings("rawtypes")
-	@Override
-    public void detectAndSendChanges() {
-        super.detectAndSendChanges();
-        if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
-        
-        mTargetX = ((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetX;
-        mTargetY = ((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetY;
-        mTargetZ = ((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetZ;
-        mTargetD = ((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).mTargetD;
-        mEgg     = ((GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity()).hasDimensionalTeleportCapability()?1:0;
-    	
-        Iterator var2 = this.crafters.iterator();
-        while (var2.hasNext()) {
-            ICrafting var1 = (ICrafting)var2.next();
-            var1.sendProgressBarUpdate(this, 100, mTargetX & 65535);
-            var1.sendProgressBarUpdate(this, 101, mTargetX >>> 16);
-            var1.sendProgressBarUpdate(this, 102, mTargetY & 65535);
-            var1.sendProgressBarUpdate(this, 103, mTargetY >>> 16);
-            var1.sendProgressBarUpdate(this, 104, mTargetZ & 65535);
-            var1.sendProgressBarUpdate(this, 105, mTargetZ >>> 16);
-            var1.sendProgressBarUpdate(this, 106, mTargetD & 65535);
-            var1.sendProgressBarUpdate(this, 107, mTargetD >>> 16);
-            var1.sendProgressBarUpdate(this, 108, mEgg);
-        }
-    }
     
-    @Override
-    public void updateProgressBar(int par1, int par2) {
-    	super.updateProgressBar(par1, par2);
-    	switch (par1) {
-    	case 100: mTargetX = mTargetX & -65536 | par2; break;
-    	case 101: mTargetX = mTargetX &  65535 | par2 << 16; break;
-    	case 102: mTargetY = mTargetY & -65536 | par2; break;
-    	case 103: mTargetY = mTargetY &  65535 | par2 << 16; break;
-    	case 104: mTargetZ = mTargetZ & -65536 | par2; break;
-    	case 105: mTargetZ = mTargetZ &  65535 | par2 << 16; break;
-    	case 106: mTargetD = mTargetD & -65536 | par2; break;
-    	case 107: mTargetD = mTargetD &  65535 | par2 << 16; break;
-    	case 108: mEgg = par2; break;
-    	}
-    }
+	@Override
+	public void prepareChanges(JsonObject data, boolean force) {
+		super.prepareChanges(data, force);
+		GT_MetaTileEntity_Teleporter m = (GT_MetaTileEntity_Teleporter)mTileEntity.getMetaTileEntity();
+		mTargetX.updateAndWriteChanges(data, force, m.mTargetX);
+		mTargetY.updateAndWriteChanges(data, force, m.mTargetY);
+		mTargetZ.updateAndWriteChanges(data, force, m.mTargetZ);
+		mTargetD.updateAndWriteChanges(data, force, m.mTargetD);
+		mEgg.updateAndWriteChanges(data, force, m.hasDimensionalTeleportCapability());
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void processChanges(JsonObject data) {
+		super.processChanges(data);
+		mTargetX.readChanges(data);
+		mTargetY.readChanges(data);
+		mTargetZ.readChanges(data);
+		mTargetD.readChanges(data);
+		mEgg.readChanges(data);
+	}
 }

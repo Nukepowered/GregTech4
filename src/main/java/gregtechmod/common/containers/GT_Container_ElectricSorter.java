@@ -5,21 +5,24 @@ import gregtechmod.api.gui.GT_ContainerMetaTile_Machine;
 import gregtechmod.api.gui.GT_Slot_Holo;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.common.network.SyncedField;
 import gregtechmod.common.tileentities.automation.GT_MetaTileEntity_ElectricBufferSmall;
 import gregtechmod.common.tileentities.automation.GT_MetaTileEntity_ElectricSorter;
 
-import java.util.Iterator;
+import com.google.gson.JsonObject;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_Container_ElectricSorter extends GT_ContainerMetaTile_Machine {
 
+	public final SyncedField<Byte> mTargetDirection = new SyncedField<>("mTargetDirection", new Byte((byte) 0));
+	
 	public GT_Container_ElectricSorter(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
 		super(aInventoryPlayer, aTileEntity);
 	}
@@ -92,33 +95,19 @@ public class GT_Container_ElectricSorter extends GT_ContainerMetaTile_Machine {
 	    
     	return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
     }
-    
-    public int mTargetDirection;
-    
-    @SuppressWarnings("rawtypes")
-	public void detectAndSendChanges() {
-        super.detectAndSendChanges();
-    	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
-    	mTargetDirection  = ((GT_MetaTileEntity_ElectricSorter)mTileEntity.getMetaTileEntity()).mTargetDirection;
-    	
-        Iterator var2 = this.crafters.iterator();
-        while (var2.hasNext()) {
-            ICrafting var1 = (ICrafting)var2.next();
-            var1.sendProgressBarUpdate(this, 100, mTargetDirection);
-        }
-    }
-    
-    public void addCraftingToCrafters(ICrafting par1ICrafting) {
-        super.addCraftingToCrafters(par1ICrafting);
-    }
-    
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2) {
-    	super.updateProgressBar(par1, par2);
-    	switch (par1) {
-    	case 100: mTargetDirection = par2; break;
-    	}
-    }
+
+	@Override
+	public void prepareChanges(JsonObject data, boolean force) {
+		super.prepareChanges(data, force);
+		mTargetDirection.updateAndWriteChanges(data, force, ((GT_MetaTileEntity_ElectricSorter)mTileEntity.getMetaTileEntity()).mTargetDirection);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void processChanges(JsonObject data) {
+		super.processChanges(data);
+		mTargetDirection.readChanges(data);
+	}
     
     public int getSlotCount() {
     	return 1;

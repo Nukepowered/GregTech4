@@ -5,22 +5,28 @@ import gregtechmod.api.gui.GT_ContainerMetaTile_Machine;
 import gregtechmod.api.gui.GT_Slot_Holo;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.common.network.SyncedField;
 import gregtechmod.common.tileentities.automation.GT_MetaTileEntity_ElectricInventoryManager;
 
-import java.util.Iterator;
+import com.google.gson.JsonObject;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_Container_ElectricInventoryManager extends GT_ContainerMetaTile_Machine {
 
+    public final SyncedField<Byte[]> mTargetDirections	= new SyncedField<>("mTargetDirections"	, Byte[].class);
+    public final SyncedField<Byte[]> mRangeDirections	= new SyncedField<>("mRangeDirections"	, Byte[].class);
+    public final SyncedField<Integer> mTargetInOut		= new SyncedField<>("mTargetInOut"		, new Integer(0));
+    public final SyncedField<Integer> mTargetEnergy		= new SyncedField<>("mTargetEnergy"		, new Integer(0));
+	
 	public GT_Container_ElectricInventoryManager(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
-		super(aInventoryPlayer, aTileEntity);
+		super(aInventoryPlayer, aTileEntity); // FIXME TEST THIS
 	}
 
     public void addSlots(InventoryPlayer aInventoryPlayer) {
@@ -63,8 +69,6 @@ public class GT_Container_ElectricInventoryManager extends GT_ContainerMetaTile_
         addSlotToContainer(new GT_Slot_Holo(mTileEntity, 15,  61, 60, false, true, 1));
         addSlotToContainer(new GT_Slot_Holo(mTileEntity, 15,  80, 60, false, true, 1));
         addSlotToContainer(new GT_Slot_Holo(mTileEntity, 15, 136, 60, false, true, 1));
-        
-        
     }
 
     public ItemStack slotClick(int aSlotIndex, int aMouseclick, int aShifthold, EntityPlayer aPlayer) {
@@ -119,94 +123,93 @@ public class GT_Container_ElectricInventoryManager extends GT_ContainerMetaTile_
     	}
     	return null;
     }
+    
+//    @SuppressWarnings("rawtypes")
+//	public void detectAndSendChanges() {
+//        super.detectAndSendChanges();
+//    	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
+//    	mTargetDirections = new int[] {0,0,0,0,0,0,0,0,0,0,0,0};
+//    	mRangeDirections = new int[] {0,0,0,0};
+//    	
+//    	mRangeDirections[0] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getRangeDirection(0);
+//    	mRangeDirections[1] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getRangeDirection(1);
+//    	mRangeDirections[2] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getRangeDirection(2);
+//    	mRangeDirections[3] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getRangeDirection(3);
+//    	
+//    	mTargetDirections[ 0] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot1Direction(0);
+//    	mTargetDirections[ 1] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot2Direction(0);
+//    	mTargetDirections[ 2] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot3Direction(0);
+//    	mTargetDirections[ 3] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot1Direction(1);
+//    	mTargetDirections[ 4] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot2Direction(1);
+//    	mTargetDirections[ 5] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot3Direction(1);
+//    	mTargetDirections[ 6] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot1Direction(2);
+//    	mTargetDirections[ 7] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot2Direction(2);
+//    	mTargetDirections[ 8] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot3Direction(2);
+//    	mTargetDirections[ 9] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot1Direction(3);
+//    	mTargetDirections[10] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot2Direction(3);
+//    	mTargetDirections[11] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot3Direction(3);
+//    	
+//    	mTargetInOut = 0;
+//    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot1InOut(0)?1<< 0:0;
+//    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot2InOut(0)?1<< 1:0;
+//    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot3InOut(0)?1<< 2:0;
+//    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot1InOut(1)?1<< 3:0;
+//    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot2InOut(1)?1<< 4:0;
+//    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot3InOut(1)?1<< 5:0;
+//    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot1InOut(2)?1<< 6:0;
+//    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot2InOut(2)?1<< 7:0;
+//    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot3InOut(2)?1<< 8:0;
+//    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot1InOut(3)?1<< 9:0;
+//    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot2InOut(3)?1<<10:0;
+//    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot3InOut(3)?1<<11:0;
+//    	
+//    	mTargetEnergy = 0;
+//    	mTargetEnergy |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getRangeEnergy(0)?1<<0:0;
+//    	mTargetEnergy |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getRangeEnergy(1)?1<<1:0;
+//    	mTargetEnergy |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getRangeEnergy(2)?1<<2:0;
+//    	mTargetEnergy |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getRangeEnergy(3)?1<<3:0;
+//    }
+    
+	@Override
+	public void prepareChanges(JsonObject data, boolean force) {
+		super.prepareChanges(data, force);
+		GT_MetaTileEntity_ElectricInventoryManager m = (GT_MetaTileEntity_ElectricInventoryManager) mTileEntity.getMetaTileEntity();
+		
+		Byte[] arr = new Byte[4];
+		int value = 0;
+		for (int i = 0; i < arr.length; i++) {
+			arr[i] = m.getRangeDirection(i);
+			value |= m.getRangeEnergy(i) ? 1 << i : 0;
+		}
+		
+		mRangeDirections.updateAndWriteChanges(data, force, arr);
+		mTargetEnergy.updateAndWriteChanges(data, force, value);
+		
+		arr = new Byte[12];
+		value = 0;
+		for (int i = 0; i < arr.length; i += 3) {
+			arr[ i ] = m.getSlot1Direction(i / 3);
+			arr[i+1] = m.getSlot2Direction(i / 3);
+			arr[i+2] = m.getSlot3Direction(i / 3);
+			
+			value |= m.getSlot1InOut(i / 3) ? 1 << i+0 : 0;
+			value |= m.getSlot2InOut(i / 3) ? 1 << i+1 : 0;
+			value |= m.getSlot3InOut(i / 3) ? 1 << i+2 : 0;
+		}
+		
+		mTargetDirections.updateAndWriteChanges(data, force, arr);
+		mTargetInOut.updateAndWriteChanges(data, force, value);
+	}
 
-    public int[] mTargetDirections = new int[] {0,0,0,0,0,0,0,0,0,0,0,0}, mRangeDirections = new int[] {0,0,0,0};
-    public int mTargetInOut = 0, mTargetEnergy = 0;
-    
-    @SuppressWarnings("rawtypes")
-	public void detectAndSendChanges() {
-        super.detectAndSendChanges();
-    	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
-    	mTargetDirections = new int[] {0,0,0,0,0,0,0,0,0,0,0,0};
-    	mRangeDirections = new int[] {0,0,0,0};
-    	
-    	mRangeDirections[0] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getRangeDirection(0);
-    	mRangeDirections[1] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getRangeDirection(1);
-    	mRangeDirections[2] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getRangeDirection(2);
-    	mRangeDirections[3] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getRangeDirection(3);
-    	
-    	mTargetDirections[ 0] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot1Direction(0);
-    	mTargetDirections[ 1] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot2Direction(0);
-    	mTargetDirections[ 2] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot3Direction(0);
-    	mTargetDirections[ 3] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot1Direction(1);
-    	mTargetDirections[ 4] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot2Direction(1);
-    	mTargetDirections[ 5] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot3Direction(1);
-    	mTargetDirections[ 6] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot1Direction(2);
-    	mTargetDirections[ 7] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot2Direction(2);
-    	mTargetDirections[ 8] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot3Direction(2);
-    	mTargetDirections[ 9] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot1Direction(3);
-    	mTargetDirections[10] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot2Direction(3);
-    	mTargetDirections[11] = ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot3Direction(3);
-    	
-    	mTargetInOut = 0;
-    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot1InOut(0)?1<< 0:0;
-    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot2InOut(0)?1<< 1:0;
-    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot3InOut(0)?1<< 2:0;
-    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot1InOut(1)?1<< 3:0;
-    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot2InOut(1)?1<< 4:0;
-    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot3InOut(1)?1<< 5:0;
-    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot1InOut(2)?1<< 6:0;
-    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot2InOut(2)?1<< 7:0;
-    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot3InOut(2)?1<< 8:0;
-    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot1InOut(3)?1<< 9:0;
-    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot2InOut(3)?1<<10:0;
-    	mTargetInOut |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getSlot3InOut(3)?1<<11:0;
-    	
-    	mTargetEnergy = 0;
-    	mTargetEnergy |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getRangeEnergy(0)?1<<0:0;
-    	mTargetEnergy |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getRangeEnergy(1)?1<<1:0;
-    	mTargetEnergy |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getRangeEnergy(2)?1<<2:0;
-    	mTargetEnergy |= ((GT_MetaTileEntity_ElectricInventoryManager)mTileEntity.getMetaTileEntity()).getRangeEnergy(3)?1<<3:0;
-    	
-        Iterator var2 = this.crafters.iterator();
-        while (var2.hasNext()) {
-            ICrafting var1 = (ICrafting)var2.next();
-            for (int i = 0; i < 12; i++) var1.sendProgressBarUpdate(this, 100+i, mTargetDirections[i]);
-            var1.sendProgressBarUpdate(this, 113, mTargetInOut);
-            var1.sendProgressBarUpdate(this, 114, mTargetEnergy);
-            for (int i = 0; i < 4; i++) var1.sendProgressBarUpdate(this, 115+i, mRangeDirections[i]);
-        }
-    }
-    
-    public void addCraftingToCrafters(ICrafting par1ICrafting) {
-        super.addCraftingToCrafters(par1ICrafting);
-    }
-    
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2) {
-    	super.updateProgressBar(par1, par2);
-    	switch (par1) {
-    	case 100: mTargetDirections[ 0] = par2; break;
-    	case 101: mTargetDirections[ 1] = par2; break;
-    	case 102: mTargetDirections[ 2] = par2; break;
-    	case 103: mTargetDirections[ 3] = par2; break;
-    	case 104: mTargetDirections[ 4] = par2; break;
-    	case 105: mTargetDirections[ 5] = par2; break;
-    	case 106: mTargetDirections[ 6] = par2; break;
-    	case 107: mTargetDirections[ 7] = par2; break;
-    	case 108: mTargetDirections[ 8] = par2; break;
-    	case 109: mTargetDirections[ 9] = par2; break;
-    	case 110: mTargetDirections[10] = par2; break;
-    	case 111: mTargetDirections[11] = par2; break;
-    	
-    	case 113: mTargetInOut  = par2; break;
-    	case 114: mTargetEnergy = par2; break;
-    	case 115: mRangeDirections[ 0] = par2; break;
-    	case 116: mRangeDirections[ 1] = par2; break;
-    	case 117: mRangeDirections[ 2] = par2; break;
-    	case 118: mRangeDirections[ 3] = par2; break;
-    	}
-    }
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void processChanges(JsonObject data) {
+		super.processChanges(data);
+		mTargetDirections.readChanges(data);
+		mRangeDirections.readChanges(data);
+		mTargetInOut.readChanges(data);
+		mTargetEnergy.readChanges(data);
+	}
     
     public int getSlotCount() {
     	return 3;

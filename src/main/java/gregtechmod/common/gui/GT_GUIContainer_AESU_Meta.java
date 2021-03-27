@@ -17,10 +17,10 @@ public class GT_GUIContainer_AESU_Meta extends GT_GUIContainerMetaTile_Machine {
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
     	fontRenderer.drawString("A.E.S.U.", 11, 8, 16448255);
         if (mContainer != null) {
-        	fontRenderer.drawString("EU: " + GT_Utility.parseNumberToString(mContainer.mEnergy), 11, 16, 16448255);
-        	fontRenderer.drawString("MAX: " + GT_Utility.parseNumberToString(mContainer.mStorage), 11, 24, 16448255);
-        	fontRenderer.drawString("MAX EU/t IN: " + GT_Utility.parseNumberToString(mContainer.mInput), 11, 32, 16448255);
-        	fontRenderer.drawString("EU/t OUT: " + GT_Utility.parseNumberToString(mContainer.mOutput), 11, 40, 16448255);
+        	fontRenderer.drawString("EU: " + GT_Utility.parseNumberToString(mContainer.mEnergy.get()), 11, 16, 16448255);
+        	fontRenderer.drawString("MAX: " + GT_Utility.parseNumberToString(mContainer.mStorage.get()), 11, 24, 16448255);
+        	fontRenderer.drawString("MAX EU/t IN: " + GT_Utility.parseNumberToString(mContainer.mInput.get()), 11, 32, 16448255);
+        	fontRenderer.drawString("EU/t OUT: " + GT_Utility.parseNumberToString(mContainer.mOutput.get()), 11, 40, 16448255);
         }
     }
     
@@ -32,7 +32,7 @@ public class GT_GUIContainer_AESU_Meta extends GT_GUIContainerMetaTile_Machine {
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
         
         if (mContainer != null) {
-        	int tScale = (int) (97 * (mContainer.mEnergy * 1.0D / mContainer.mStorage));
+        	int tScale = (int) (97 * (mContainer.mEnergy.get() * 1.0D / mContainer.mStorage.get()));
     		drawTexturedModalRect(x + 8, y + 73, 0, 251, tScale, 5);
         }
     }

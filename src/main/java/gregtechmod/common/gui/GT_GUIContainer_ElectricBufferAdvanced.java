@@ -14,7 +14,7 @@ public class GT_GUIContainer_ElectricBufferAdvanced extends GT_GUIContainerMetaT
     
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-    	fontRenderer.drawString("" + ((GT_Container_ElectricBufferAdvanced)mContainer).mTargetSlot, 100, 65, 16448255);
+    	fontRenderer.drawString("" + ((GT_Container_ElectricBufferAdvanced)mContainer).mTargetSlot.get(), 100, 65, 16448255);
     }
     
     @Override

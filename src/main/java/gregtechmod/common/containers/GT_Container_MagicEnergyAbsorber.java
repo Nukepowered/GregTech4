@@ -4,20 +4,24 @@ import gregtechmod.api.gui.GT_ContainerMetaTile_Machine;
 import gregtechmod.api.gui.GT_Slot_Holo;
 import gregtechmod.api.gui.GT_Slot_Output;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
+import gregtechmod.common.network.SyncedField;
 import gregtechmod.common.tileentities.energy.production.GT_MetaTileEntity_MagicEnergyAbsorber;
 
-import java.util.Iterator;
+import com.google.gson.JsonObject;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_Container_MagicEnergyAbsorber extends GT_ContainerMetaTile_Machine {
-
+	
+	public final SyncedField<Boolean> isActive1 = new SyncedField<>("isActive1", Boolean.FALSE);
+	public final SyncedField<Boolean> isActive2 = new SyncedField<>("isActive2", Boolean.FALSE);
+	
 	public GT_Container_MagicEnergyAbsorber(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
 		super(aInventoryPlayer, aTileEntity);
 	}
@@ -44,32 +48,21 @@ public class GT_Container_MagicEnergyAbsorber extends GT_ContainerMetaTile_Machi
     	}
     	return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
     }
-    
-    public boolean isActive1 = false, isActive2 = false;
 
-    @SuppressWarnings("rawtypes")
-	public void detectAndSendChanges() {
-        super.detectAndSendChanges();
-    	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
-    	isActive1 = ((GT_MetaTileEntity_MagicEnergyAbsorber)mTileEntity.getMetaTileEntity()).isActive1;
-    	isActive2 = ((GT_MetaTileEntity_MagicEnergyAbsorber)mTileEntity.getMetaTileEntity()).isActive2;
-    	
-        Iterator var2 = this.crafters.iterator();
-        while (var2.hasNext()) {
-            ICrafting var1 = (ICrafting)var2.next();
-            var1.sendProgressBarUpdate(this, 100, isActive1?1:0);
-            var1.sendProgressBarUpdate(this, 101, isActive2?1:0);
-        }
-    }
-    
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2) {
-    	super.updateProgressBar(par1, par2);
-    	switch (par1) {
-    	case 100: isActive1 = (par2!=0); break;
-    	case 101: isActive2 = (par2!=0); break;
-    	}
-    }
+	@Override
+	public void prepareChanges(JsonObject data, boolean force) {
+		super.prepareChanges(data, force);
+		isActive1.updateAndWriteChanges(data, force, ((GT_MetaTileEntity_MagicEnergyAbsorber)mTileEntity.getMetaTileEntity()).isActive1);
+		isActive2.updateAndWriteChanges(data, force, ((GT_MetaTileEntity_MagicEnergyAbsorber)mTileEntity.getMetaTileEntity()).isActive2);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void processChanges(JsonObject data) {
+		super.processChanges(data);
+		isActive1.readChanges(data);
+		isActive2.readChanges(data);
+	}
     
     public int getSlotCount() {
     	return 2;

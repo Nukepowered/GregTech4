@@ -18,8 +18,6 @@ public class GT_Container_AdvancedPump extends GT_ContainerMetaTile_Machine {
         addSlotToContainer(new GT_Slot_Output(mTileEntity, 2,  80,  53));
     }
     
-    public int mContent = 0;
-    
     public int getSlotCount() {
     	return 3;
     }

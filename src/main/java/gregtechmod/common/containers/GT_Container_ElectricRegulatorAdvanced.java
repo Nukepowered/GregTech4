@@ -4,27 +4,28 @@ import gregtechmod.api.gui.GT_ContainerMetaTile_Machine;
 import gregtechmod.api.gui.GT_Slot_Holo;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.common.network.SyncedField;
 import gregtechmod.common.tileentities.automation.GT_MetaTileEntity_ElectricRegulatorAdvanced;
 
-import java.util.Iterator;
+import com.google.gson.JsonObject;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_Container_ElectricRegulatorAdvanced extends GT_ContainerMetaTile_Machine {
-
+	
+	public final SyncedField<Integer[]> mTargetSlots = new SyncedField<>("mTargetSlots", Integer[].class);
+	
 	public GT_Container_ElectricRegulatorAdvanced(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
 		super(aInventoryPlayer, aTileEntity);
 	}
 
     public void addSlots(InventoryPlayer aInventoryPlayer) {
-    	mTargetSlots = new int[] {0,0,0,0,0,0,0,0,0};
-    	
         addSlotToContainer(new Slot(mTileEntity,  0,   8,  6));
         addSlotToContainer(new Slot(mTileEntity,  1,  26,  6));
         addSlotToContainer(new Slot(mTileEntity,  2,  44,  6));
@@ -100,41 +101,22 @@ public class GT_Container_ElectricRegulatorAdvanced extends GT_ContainerMetaTile
     	return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
     }
     
-    public int[] mTargetSlots = new int[] {0,0,0,0,0,0,0,0,0};
-    
-    @SuppressWarnings("rawtypes")
-	public void detectAndSendChanges() {
-        super.detectAndSendChanges();
-    	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
-    	mTargetSlots = new int[9];
-    	for (int i = 0; i < 9; i++) mTargetSlots[i] = (((GT_MetaTileEntity_ElectricRegulatorAdvanced)mTileEntity.getMetaTileEntity()).mTargetSlots[i]);
-    	
-        Iterator var2 = crafters.iterator();
-        while (var2.hasNext()) {
-            ICrafting var1 = (ICrafting)var2.next();
-            for (int i = 0; i < 9; i++) var1.sendProgressBarUpdate(this, 100+i, mTargetSlots[i]);
-        }
-    }
-    
-    public void addCraftingToCrafters(ICrafting par1ICrafting) {
-        super.addCraftingToCrafters(par1ICrafting);
-    }
-    
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2) {
-    	super.updateProgressBar(par1, par2);
-    	switch (par1) {
-    	case 100: mTargetSlots[0] = par2; break;
-    	case 101: mTargetSlots[1] = par2; break;
-    	case 102: mTargetSlots[2] = par2; break;
-    	case 103: mTargetSlots[3] = par2; break;
-    	case 104: mTargetSlots[4] = par2; break;
-    	case 105: mTargetSlots[5] = par2; break;
-    	case 106: mTargetSlots[6] = par2; break;
-    	case 107: mTargetSlots[7] = par2; break;
-    	case 108: mTargetSlots[8] = par2; break;
-    	}
-    }
+	@Override
+	public void prepareChanges(JsonObject data, boolean force) {
+		super.prepareChanges(data, force);
+		GT_MetaTileEntity_ElectricRegulatorAdvanced m = (GT_MetaTileEntity_ElectricRegulatorAdvanced)mTileEntity.getMetaTileEntity();
+		Integer[] arr = new Integer[9];
+		for (int i = 0; i < arr.length; i++) 
+			arr[i] = m.mTargetSlots[i];
+		mTargetSlots.updateAndWriteChanges(data, force, arr);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void processChanges(JsonObject data) {
+		super.processChanges(data);
+		mTargetSlots.readChanges(data);
+	}
     
     public int getSlotCount() {
     	return 9;

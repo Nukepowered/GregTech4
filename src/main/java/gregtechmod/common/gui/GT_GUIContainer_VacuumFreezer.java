@@ -15,13 +15,13 @@ public class GT_GUIContainer_VacuumFreezer extends GT_GUIContainerMetaTile_Machi
     
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-        if (((mContainer).mDisplayErrorCode & 1) != 0)
+        if (((mContainer).mDisplayErrorCode.get() & 1) != 0)
         	fontRenderer.drawString("Insufficient Energy Line!", 8, ySize - 94, 4210752);
         else
             fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 94, 4210752);
         fontRenderer.drawString("Vacuum Freezer", 8,  4, 4210752);
-        if (!((GT_Container_VacuumFreezer)mContainer).mMachine)
-        	fontRenderer.drawString("Incomplete Machine Casing!", 8, ySize - 103, 4210752);
+        if (!((GT_Container_VacuumFreezer)mContainer).mMachine.get())
+        	fontRenderer.drawString("Incomplete Machine Casing!", 8, ySize - 103, 4210752); // TODO LOCALE
     }
 
     @Override
@@ -31,9 +31,9 @@ public class GT_GUIContainer_VacuumFreezer extends GT_GUIContainerMetaTile_Machi
         int y = (height - ySize) / 2;
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
         
-        if (mContainer != null && mContainer.mProgressTime>0) {
+        if (mContainer != null && mContainer.mProgressTime.get()>0) {
         	GT_Container_VacuumFreezer cont = (GT_Container_VacuumFreezer) mContainer;
-        	int tScale = Math.max(0, Math.min(20, (cont.mProgressTime>0?1:0) + (cont.mProgressTime * 20) / (cont.mMaxProgressTime<1?1:cont.mMaxProgressTime)));
+        	int tScale = Math.max(0, Math.min(20, (cont.mProgressTime.get()>0?1:0) + (cont.mProgressTime.get() * 20) / (cont.mMaxProgressTime.get()<1?1:cont.mMaxProgressTime.get())));
         	this.drawTexturedModalRect(x + 58, y + 28, 176, 0, tScale, 11);
         }
     }

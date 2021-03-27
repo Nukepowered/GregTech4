@@ -25,7 +25,7 @@ public class GT_GUIContainer_BronzeBlastFurnace extends GT_GUIContainerMetaTile_
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
         
         if (mContainer != null) {
-        	if (mContainer.mProgressTime>0) drawTexturedModalRect(x + 58, y + 28, 176, 0, Math.max(0, Math.min(20, (mContainer.mProgressTime>0?1:0) + (mContainer.mProgressTime * 20) / (mContainer.mMaxProgressTime<1?1:mContainer.mMaxProgressTime))), 11);
+        	if (mContainer.mProgressTime.get()>0) drawTexturedModalRect(x + 58, y + 28, 176, 0, Math.max(0, Math.min(20, (mContainer.mProgressTime.get()>0?1:0) + (mContainer.mProgressTime.get() * 20) / (mContainer.mMaxProgressTime.get()<1?1:mContainer.mMaxProgressTime.get()))), 11);
         }
     }
 }

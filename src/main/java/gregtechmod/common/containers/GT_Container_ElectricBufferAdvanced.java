@@ -4,21 +4,24 @@ import gregtechmod.api.gui.GT_ContainerMetaTile_Machine;
 import gregtechmod.api.gui.GT_Slot_Holo;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.common.network.SyncedField;
 import gregtechmod.common.tileentities.automation.GT_MetaTileEntity_ElectricBufferAdvanced;
 import gregtechmod.common.tileentities.automation.GT_MetaTileEntity_ElectricBufferSmall;
 
-import java.util.Iterator;
+import com.google.gson.JsonObject;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_Container_ElectricBufferAdvanced extends GT_ContainerMetaTile_Machine {
 
+	public final SyncedField<Integer> mTargetSlot = new SyncedField<>("mTargetSlot", Integer.valueOf(0));
+	
 	public GT_Container_ElectricBufferAdvanced(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
 		super(aInventoryPlayer, aTileEntity);
 	}
@@ -43,7 +46,7 @@ public class GT_Container_ElectricBufferAdvanced extends GT_ContainerMetaTile_Ma
 			    if (((GT_MetaTileEntity_ElectricBufferSmall)mTileEntity.getMetaTileEntity()).bOutput)
 			    	GT_Utility.sendChatToPlayer(aPlayer, "Emit Energy to Outputside");
 			    else
-			    	GT_Utility.sendChatToPlayer(aPlayer, "Don't emit Energy");
+			    	GT_Utility.sendChatToPlayer(aPlayer, "Don't emit Energy"); // TODO locale & side messages
 		    	return null;
 		    } else if (aSlotIndex == 2) {
 		    	((GT_MetaTileEntity_ElectricBufferSmall)mTileEntity.getMetaTileEntity()).bRedstoneIfFull = !((GT_MetaTileEntity_ElectricBufferSmall)mTileEntity.getMetaTileEntity()).bRedstoneIfFull;
@@ -71,32 +74,18 @@ public class GT_Container_ElectricBufferAdvanced extends GT_ContainerMetaTile_Ma
     	return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
     }
     
-    public int mTargetSlot;
-    
-    @SuppressWarnings("rawtypes")
-	public void detectAndSendChanges() {
-        super.detectAndSendChanges();
-    	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
-    	mTargetSlot = ((GT_MetaTileEntity_ElectricBufferAdvanced)mTileEntity.getMetaTileEntity()).mTargetSlot;
-    	
-        Iterator var2 = this.crafters.iterator();
-        while (var2.hasNext()) {
-            ICrafting var1 = (ICrafting)var2.next();
-            var1.sendProgressBarUpdate(this, 100, mTargetSlot);
-        }
-    }
-    
-    public void addCraftingToCrafters(ICrafting par1ICrafting) {
-        super.addCraftingToCrafters(par1ICrafting);
-    }
-    
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2) {
-    	super.updateProgressBar(par1, par2);
-    	switch (par1) {
-    	case 100: mTargetSlot = par2; break;
-    	}
-    }
+	@Override
+	public void prepareChanges(JsonObject data, boolean force) {
+		super.prepareChanges(data, force);
+		mTargetSlot.updateAndWriteChanges(data, force, ((GT_MetaTileEntity_ElectricBufferAdvanced)mTileEntity.getMetaTileEntity()).mTargetSlot);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void processChanges(JsonObject data) {
+		super.processChanges(data);
+		mTargetSlot.readChanges(data);
+	}
     
     public int getSlotCount() {
     	return 1;

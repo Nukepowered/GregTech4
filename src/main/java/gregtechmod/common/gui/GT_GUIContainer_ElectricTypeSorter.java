@@ -25,7 +25,7 @@ public class GT_GUIContainer_ElectricTypeSorter extends GT_GUIContainerMetaTile_
     	default: tINString = "FAIL"; break;
     	}
     	
-    	switch (((GT_Container_ElectricTypeSorter)mContainer).mTargetDirection) {
+    	switch (((GT_Container_ElectricTypeSorter)mContainer).mTargetDirection.get()) {
     	case  0: tOUTString = "DOWN"; break;
     	case  1: tOUTString = "UP"; break;
     	case  2: tOUTString = "NORTH"; break;
@@ -47,7 +47,7 @@ public class GT_GUIContainer_ElectricTypeSorter extends GT_GUIContainerMetaTile_
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
         
         if (mContainer != null) {
-        	drawTexturedModalRect(x + 70, y + 22, ((GT_Container_ElectricTypeSorter)mContainer).mMode*18, 166, 18, 18);
+        	drawTexturedModalRect(x + 70, y + 22, ((GT_Container_ElectricTypeSorter)mContainer).mMode.get()*18, 166, 18, 18);
         }
     }
 }

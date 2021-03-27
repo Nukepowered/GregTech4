@@ -13,15 +13,17 @@ public class GT_GUIContainer_ElectricRetrieverAdvanced extends GT_GUIContainerMe
     
     @Override
     protected void drawGuiContainerForegroundLayer(final int par1, final int par2) {
-        this.fontRenderer.drawString("" + ((GT_Container_ElectricRetrieverAdvanced)this.mContainer).mTargetSlots[0], 120, 9, 16448255);
-        this.fontRenderer.drawString("" + ((GT_Container_ElectricRetrieverAdvanced)this.mContainer).mTargetSlots[1], 137, 9, 16448255);
-        this.fontRenderer.drawString("" + ((GT_Container_ElectricRetrieverAdvanced)this.mContainer).mTargetSlots[2], 155, 9, 16448255);
-        this.fontRenderer.drawString("" + ((GT_Container_ElectricRetrieverAdvanced)this.mContainer).mTargetSlots[3], 120, 26, 16448255);
-        this.fontRenderer.drawString("" + ((GT_Container_ElectricRetrieverAdvanced)this.mContainer).mTargetSlots[4], 137, 26, 16448255);
-        this.fontRenderer.drawString("" + ((GT_Container_ElectricRetrieverAdvanced)this.mContainer).mTargetSlots[5], 155, 26, 16448255);
-        this.fontRenderer.drawString("" + ((GT_Container_ElectricRetrieverAdvanced)this.mContainer).mTargetSlots[6], 120, 43, 16448255);
-        this.fontRenderer.drawString("" + ((GT_Container_ElectricRetrieverAdvanced)this.mContainer).mTargetSlots[7], 137, 43, 16448255);
-        this.fontRenderer.drawString("" + ((GT_Container_ElectricRetrieverAdvanced)this.mContainer).mTargetSlots[8], 155, 43, 16448255);
+    	Integer[] arr = ((GT_Container_ElectricRetrieverAdvanced)this.mContainer).mTargetSlots.get();
+    	
+        this.fontRenderer.drawString("" + arr[0], 120, 9, 16448255);
+        this.fontRenderer.drawString("" + arr[1], 137, 9, 16448255);
+        this.fontRenderer.drawString("" + arr[2], 155, 9, 16448255);
+        this.fontRenderer.drawString("" + arr[3], 120, 26, 16448255);
+        this.fontRenderer.drawString("" + arr[4], 137, 26, 16448255);
+        this.fontRenderer.drawString("" + arr[5], 155, 26, 16448255);
+        this.fontRenderer.drawString("" + arr[6], 120, 43, 16448255);
+        this.fontRenderer.drawString("" + arr[7], 137, 43, 16448255);
+        this.fontRenderer.drawString("" + arr[8], 155, 43, 16448255);
     }
     
     @Override

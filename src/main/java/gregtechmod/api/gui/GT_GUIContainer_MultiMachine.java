@@ -26,21 +26,23 @@ public class GT_GUIContainer_MultiMachine extends GT_GUIContainerMetaTile_Machin
         fontRenderer.drawString(I18n.format("metatileentity." + mName), 10,  8, 16448255);
         
         if (mContainer != null) {
-        	if ((((GT_Container_MultiMachine)mContainer).mDisplayErrorCode &  1) != 0) fontRenderer.drawString("Pipe is loose.", 10, 16, 16448255);
-        	if ((((GT_Container_MultiMachine)mContainer).mDisplayErrorCode &  2) != 0) fontRenderer.drawString("Screws are missing.", 10, 24, 16448255);
-        	if ((((GT_Container_MultiMachine)mContainer).mDisplayErrorCode &  4) != 0) fontRenderer.drawString("Something is stuck.", 10, 32, 16448255);
-        	if ((((GT_Container_MultiMachine)mContainer).mDisplayErrorCode &  8) != 0) fontRenderer.drawString("Platings are dented.", 10, 40, 16448255);
-        	if ((((GT_Container_MultiMachine)mContainer).mDisplayErrorCode & 16) != 0) fontRenderer.drawString("Circuitry burned out.", 10, 48, 16448255);
-        	if ((((GT_Container_MultiMachine)mContainer).mDisplayErrorCode & 32) != 0) fontRenderer.drawString("That doesn't belong there.", 10, 56, 16448255);
-        	if ((((GT_Container_MultiMachine)mContainer).mDisplayErrorCode & 64) != 0) fontRenderer.drawString("Incomplete Structure.", 10, 64, 16448255);
+        	GT_Container_MultiMachine m = (GT_Container_MultiMachine) mContainer;
+        	int errorCode = m.mDisplayErrorCode.get();
+        	if ((errorCode &  1) != 0) fontRenderer.drawString("Pipe is loose.", 10, 16, 16448255); // FIXME locale
+        	if ((errorCode &  2) != 0) fontRenderer.drawString("Screws are missing.", 10, 24, 16448255);
+        	if ((errorCode &  4) != 0) fontRenderer.drawString("Something is stuck.", 10, 32, 16448255);
+        	if ((errorCode &  8) != 0) fontRenderer.drawString("Platings are dented.", 10, 40, 16448255);
+        	if ((errorCode & 16) != 0) fontRenderer.drawString("Circuitry burned out.", 10, 48, 16448255);
+        	if ((errorCode & 32) != 0) fontRenderer.drawString("That doesn't belong there.", 10, 56, 16448255);
+        	if ((errorCode & 64) != 0) fontRenderer.drawString("Incomplete Structure.", 10, 64, 16448255);
         	
-        	if (((GT_Container_MultiMachine)mContainer).mDisplayErrorCode == 0) {
-        		if (((GT_Container_MultiMachine)mContainer).mActive == 0) {
-    				fontRenderer.drawString("Hit with Rubber Hammer", 10, 16, 16448255);
+        	if (errorCode == 0) {
+        		if (m.mActive.get()) {
+        			fontRenderer.drawString("Running perfectly.", 10, 16, 16448255);
+    			} else {
+    				fontRenderer.drawString("Hit with Rubber Hammer", 10, 16, 16448255); // FIXME locale
     				fontRenderer.drawString("to (re-)start the Machine", 10, 24, 16448255);
     				fontRenderer.drawString("if it doesn't start.", 10, 32, 16448255);
-    			} else {
-    				fontRenderer.drawString("Running perfectly.", 10, 16, 16448255);
     			}
         	}
         }

@@ -155,7 +155,7 @@ public class GT_Mod implements IGT_Mod {
     @SidedProxy(clientSide = "gregtechmod.common.GT_Client", serverSide = "gregtechmod.common.GT_Server")
     public static GT_Proxy gregtechproxy;
     
-	public static volatile int VERSION = 412;
+	public static volatile int VERSION = 413;
 	public static volatile int REQUIRED_IC2 = 397;
     public static boolean 
     		sThaumiumObtainable = false,

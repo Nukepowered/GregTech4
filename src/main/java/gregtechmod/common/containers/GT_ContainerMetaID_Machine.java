@@ -1,11 +1,17 @@
 package gregtechmod.common.containers;
 
 import gregtechmod.api.gui.GT_Container;
+import gregtechmod.common.network.GT_PacketHandler;
+import gregtechmod.common.network.SyncedField;
+import gregtechmod.common.network.packet.MachineUIPacket;
 import gregtechmod.common.tileentities.deprecated.GT_TileEntityMetaID_Machine;
 
-import java.util.Iterator;
+import java.util.List;
+
+import com.google.gson.JsonObject;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.ICrafting;
 import cpw.mods.fml.relauncher.Side;
@@ -14,60 +20,53 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class GT_ContainerMetaID_Machine extends GT_Container {
 
 	protected GT_TileEntityMetaID_Machine mOldTileEntity;
-    public int mEnergy, mStorage, mOutput, mInput, mID;
+	
+	public int mTimer = 0;
+	
+    public final SyncedField<Integer> mEnergy 	= new SyncedField<>("mEnergy", new Integer(0));
+    public final SyncedField<Integer> mStorage 	= new SyncedField<>("mStorage", new Integer(0));
+    public final SyncedField<Integer> mOutput 	= new SyncedField<>("mOutput", new Integer(0));
+    public final SyncedField<Integer> mInput 	= new SyncedField<>("mInput", new Integer(0));
     
     public GT_ContainerMetaID_Machine (InventoryPlayer aInventoryPlayer, GT_TileEntityMetaID_Machine aTileEntity) {
         super(aInventoryPlayer, aTileEntity);
         mOldTileEntity = aTileEntity;
-        
         addSlots(aInventoryPlayer);
-        
         if (doesBindPlayerInventory()) bindPlayerInventory(aInventoryPlayer);
-        
-        detectAndSendChanges();
+//        detectAndSendChanges();
     }
     
-
-    
-    @SuppressWarnings("rawtypes")
+    @SuppressWarnings("unchecked")
 	@Override
     public void detectAndSendChanges() {
         super.detectAndSendChanges();
+        mTimer++;
     	if (mTileEntity.getWorld().isRemote) return;
-        mStorage = mOldTileEntity.maxEUStore();
-    	mEnergy = mOldTileEntity.getStored();
-    	mOutput = mOldTileEntity.maxEUOutput();
-    	mInput = mOldTileEntity.maxEUInput();
-    	 
-        Iterator var2 = this.crafters.iterator();
-        while (var2.hasNext()) {
-            ICrafting var1 = (ICrafting)var2.next();
-            var1.sendProgressBarUpdate(this, 0, mEnergy & 65535);
-            var1.sendProgressBarUpdate(this, 1, mEnergy >>> 16);
-            var1.sendProgressBarUpdate(this, 2, mStorage & 65535);
-            var1.sendProgressBarUpdate(this, 3, mStorage >>> 16);
-            var1.sendProgressBarUpdate(this, 4, mOutput);
-            var1.sendProgressBarUpdate(this, 5, mInput);
-        }
-    }
-
-    @Override
-    public void addCraftingToCrafters(ICrafting par1ICrafting) {
-        super.addCraftingToCrafters(par1ICrafting);
+    	
+    	JsonObject json = new JsonObject();
+        mStorage.updateAndWriteChanges(json, mTimer % 500 == 10, mOldTileEntity.maxEUStore());
+        mEnergy.updateAndWriteChanges(json, mTimer % 500 == 10, mOldTileEntity.getStored());
+        mOutput.updateAndWriteChanges(json, mTimer % 500 == 10, mOldTileEntity.maxEUOutput());
+        mInput.updateAndWriteChanges(json, mTimer % 500 == 10, mOldTileEntity.maxEUInput());
+        if (!json.entrySet().isEmpty()) {
+    		MachineUIPacket packet = new MachineUIPacket(windowId, json);
+    		for (ICrafting player : (List<ICrafting>)this.crafters) {
+    			if (player instanceof EntityPlayerMP) {
+        			GT_PacketHandler.sendPacket(packet, (EntityPlayerMP)player);
+    			}
+    		}
+    	}
     }
     
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void updateProgressBar(int par1, int par2) {
-    	super.updateProgressBar(par1, par2);
-    	switch (par1) {
-    	case 0: mEnergy = mEnergy & -65536 | par2; break;
-    	case 1: mEnergy = mEnergy &  65535 | par2 << 16; break;
-    	case 2: mStorage = mStorage & -65536 | par2; break;
-    	case 3: mStorage = mStorage &  65535 | par2 << 16; break;
-    	case 4: mOutput = par2; break;
-    	case 5: mInput = par2; break;
-    	}
+    /**
+     * Client side method to read changes from data
+     */
+    @SideOnly(Side.CLIENT)    
+    public void processChanges(JsonObject data) {
+    	mStorage.readChanges(data);
+    	mEnergy.readChanges(data);
+    	mOutput.readChanges(data);
+    	mInput.readChanges(data);
     }
     
     @Override

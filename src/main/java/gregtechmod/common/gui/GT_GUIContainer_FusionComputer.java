@@ -25,7 +25,7 @@ public class GT_GUIContainer_FusionComputer extends GT_GUIContainerMetaTile_Mach
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
         
         if (mContainer != null) {
-        	int tScale = (int)(147 * (mContainer.mEnergy * 1.0D / mContainer.mStorage));
+        	int tScale = (int)(147 * (mContainer.mEnergy.get() * 1.0D / mContainer.mStorage.get()));
     		drawTexturedModalRect(x + 5, y + 156, 0, 251, tScale, 5);
         }
     }

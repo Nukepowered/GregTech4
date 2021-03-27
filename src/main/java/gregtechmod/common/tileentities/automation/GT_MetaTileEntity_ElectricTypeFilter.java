@@ -138,7 +138,7 @@ public class GT_MetaTileEntity_ElectricTypeFilter extends GT_MetaTileEntity_Elec
    }
 
    public String getDescription() {
-      return "metatileentity.GT_E_T_Filter.tooltipr";
+      return "metatileentity.GT_E_T_Filter.tooltip";
    }
 
    public int getTextureIndex(byte aSide, byte aFacing, boolean aActive, boolean aRedstone) {

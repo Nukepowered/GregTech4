@@ -1,7 +1,12 @@
 package gregtechmod.common.network.packet;
 
 import cpw.mods.fml.common.network.ByteBufUtils;
+import cpw.mods.fml.common.network.simpleimpl.IMessage;
+import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import cpw.mods.fml.relauncher.Side;
+import gregtechmod.api.util.GT_Utility;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
 
 public class GT_SoundPacket extends GT_Packet {
 	public int aX;
@@ -43,5 +48,13 @@ public class GT_SoundPacket extends GT_Packet {
 		ByteBufUtils.writeUTF8String(buf, aSoundName);
 		super.toBytes(buf);
 	}
-	
+
+	@Override
+	public IMessage handle(MessageContext context) {
+		if (context.side == Side.CLIENT && Minecraft.getMinecraft().thePlayer != null) {
+			GT_Utility.doSoundAtClient(aSoundName, 0, aSoundStrength, aSoundModulation, aX, aY, aZ);
+		}
+		
+		return null;
+	}
 }

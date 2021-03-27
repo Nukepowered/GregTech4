@@ -4,21 +4,25 @@ import gregtechmod.api.gui.GT_ContainerMetaTile_Machine;
 import gregtechmod.api.gui.GT_Slot_Holo;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.common.network.SyncedField;
 import gregtechmod.common.tileentities.automation.GT_MetaTileEntity_ElectricBufferSmall;
 import gregtechmod.common.tileentities.automation.GT_MetaTileEntity_ElectricTypeSorter;
 
-import java.util.Iterator;
+import com.google.gson.JsonObject;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_Container_ElectricTypeSorter extends GT_ContainerMetaTile_Machine {
 
+	public final SyncedField<Byte> mTargetDirection = new SyncedField<>("mTargetDirection"	, Byte.valueOf((byte)0));
+	public final SyncedField<Byte> mMode			= new SyncedField<>("mMode"				, Byte.valueOf((byte)0));
+	
 	public GT_Container_ElectricTypeSorter(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
 		super(aInventoryPlayer, aTileEntity);
 	}
@@ -32,8 +36,7 @@ public class GT_Container_ElectricTypeSorter extends GT_ContainerMetaTile_Machin
         addSlotToContainer(new GT_Slot_Holo(mTileEntity, 1, 134, 63, false, true, 1));
     }
 
-    public ItemStack slotClick(int aSlotIndex, int aMouseclick, int aShifthold, EntityPlayer aPlayer) {
-    	if (aSlotIndex < 1) return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
+    public ItemStack slotClick(int aSlotIndex, int aMouseclick, int aShifthold, EntityPlayer aPlayer) {    	if (aSlotIndex < 1) return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
 	    
     	Slot tSlot = (Slot)inventorySlots.get(aSlotIndex);
 	    if (tSlot != null) {
@@ -73,35 +76,20 @@ public class GT_Container_ElectricTypeSorter extends GT_ContainerMetaTile_Machin
     	return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
     }
     
-    public int mTargetDirection = 0, mMode = 0;
-    
-    @SuppressWarnings("rawtypes")
-	public void detectAndSendChanges() {
-        super.detectAndSendChanges();
-    	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
-    	mMode  = ((GT_MetaTileEntity_ElectricTypeSorter)mTileEntity.getMetaTileEntity()).mMode;
-    	mTargetDirection  = ((GT_MetaTileEntity_ElectricTypeSorter)mTileEntity.getMetaTileEntity()).mTargetDirection;
-    	
-        Iterator var2 = this.crafters.iterator();
-        while (var2.hasNext()) {
-            ICrafting var1 = (ICrafting)var2.next();
-            var1.sendProgressBarUpdate(this, 100, mMode);
-            var1.sendProgressBarUpdate(this, 101, mTargetDirection);
-        }
-    }
-    
-    public void addCraftingToCrafters(ICrafting par1ICrafting) {
-        super.addCraftingToCrafters(par1ICrafting);
-    }
-    
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2) {
-    	super.updateProgressBar(par1, par2);
-    	switch (par1) {
-    	case 100: mMode = par2; break;
-    	case 101: mTargetDirection = par2; break;
-    	}
-    }
+	@Override
+	public void prepareChanges(JsonObject data, boolean force) {
+		super.prepareChanges(data, force);
+		mMode.updateAndWriteChanges(data, force, ((GT_MetaTileEntity_ElectricTypeSorter)mTileEntity.getMetaTileEntity()).mMode);
+		mTargetDirection.updateAndWriteChanges(data, force, ((GT_MetaTileEntity_ElectricTypeSorter)mTileEntity.getMetaTileEntity()).mTargetDirection);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void processChanges(JsonObject data) {
+		super.processChanges(data);
+		mMode.readChanges(data);
+		mTargetDirection.readChanges(data);
+	}
     
     public int getSlotCount() {
     	return 1;

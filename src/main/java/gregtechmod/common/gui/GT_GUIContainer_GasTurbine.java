@@ -19,8 +19,8 @@ public class GT_GUIContainer_GasTurbine extends GT_GUIContainerMetaTile_Machine 
         fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 96 + 2, 4210752);
         fontRenderer.drawString("Gas Turbine", 8, 6, 4210752);
         if (mContainer != null) {
-        	fontRenderer.drawString("Gas Amount", 10, 20, 16448255);
-        	fontRenderer.drawString(GT_Utility.parseNumberToString(((GT_Container_BasicTank)mContainer).mContent), 10, 30, 16448255);
+        	fontRenderer.drawString("Gas Amount", 10, 20, 16448255); // TODO locale
+        	fontRenderer.drawString(GT_Utility.parseNumberToString(((GT_Container_BasicTank)mContainer).mContent.get()), 10, 30, 16448255);
         }
     }
 

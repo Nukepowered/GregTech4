@@ -15,7 +15,7 @@ public class GT_GUIContainer_AdvancedTranslocator extends GT_GUIContainerMetaTil
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
     	String tINString = "", tOUTString = "";
-    	switch (((GT_Container_AdvancedTranslocator)mContainer).mInputSide) {
+    	switch (((GT_Container_AdvancedTranslocator)mContainer).mInputSide.get()) {
     	case  0: tINString = "DOWN"; break;
     	case  1: tINString = "UP"; break;
     	case  2: tINString = "NORTH"; break;
@@ -25,7 +25,7 @@ public class GT_GUIContainer_AdvancedTranslocator extends GT_GUIContainerMetaTil
     	default: tINString = "FAIL"; break;
     	}
     	
-    	switch (((GT_Container_AdvancedTranslocator)mContainer).mOutputSide) {
+    	switch (((GT_Container_AdvancedTranslocator)mContainer).mOutputSide.get()) {
     	case  0: tOUTString = "DOWN"; break;
     	case  1: tOUTString = "UP"; break;
     	case  2: tOUTString = "NORTH"; break;

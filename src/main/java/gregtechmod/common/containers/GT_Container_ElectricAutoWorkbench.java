@@ -5,19 +5,23 @@ import gregtechmod.api.gui.GT_Slot_Holo;
 import gregtechmod.api.gui.GT_Slot_Output;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.common.network.SyncedField;
 import gregtechmod.common.tileentities.automation.GT_MetaTileEntity_ElectricAutoWorkbench;
 
-import java.util.Iterator;
+import com.google.gson.JsonObject;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_Container_ElectricAutoWorkbench extends GT_ContainerMetaTile_Machine {
+	
+	public final SyncedField<Integer> mMode 		= new SyncedField<>("mMode"			, Integer.valueOf(0));
+	public final SyncedField<Integer> mThroughPut 	= new SyncedField<>("mThroughPut"	, Integer.valueOf(0));
 
 	public GT_Container_ElectricAutoWorkbench(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
 		super(aInventoryPlayer, aTileEntity);
@@ -92,35 +96,20 @@ public class GT_Container_ElectricAutoWorkbench extends GT_ContainerMetaTile_Mac
 	    
     	return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
     }
-
-    public int mMode, mThroughPut;
     
-    @SuppressWarnings("rawtypes")
-	public void detectAndSendChanges() {
-        super.detectAndSendChanges();
-    	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
-    	mMode = ((GT_MetaTileEntity_ElectricAutoWorkbench)mTileEntity.getMetaTileEntity()).mMode;
-    	mThroughPut = ((GT_MetaTileEntity_ElectricAutoWorkbench)mTileEntity.getMetaTileEntity()).mThroughPut;
-    	
-        Iterator var2 = this.crafters.iterator();
-        while (var2.hasNext()) {
-            ICrafting var1 = (ICrafting)var2.next();
-            var1.sendProgressBarUpdate(this, 100, mMode);
-            var1.sendProgressBarUpdate(this, 101, mThroughPut);
-        }
+    @Override
+    public void prepareChanges(JsonObject data, boolean force) {
+    	super.prepareChanges(data, force);
+    	GT_MetaTileEntity_ElectricAutoWorkbench m = (GT_MetaTileEntity_ElectricAutoWorkbench) mTileEntity.getMetaTileEntity();
+    	mMode.updateAndWriteChanges(data, force, m.mMode);
+    	mThroughPut.updateAndWriteChanges(data, force, m.mThroughPut);
     }
     
-    public void addCraftingToCrafters(ICrafting par1ICrafting) {
-        super.addCraftingToCrafters(par1ICrafting);
-    }
-    
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2) {
-    	super.updateProgressBar(par1, par2);
-    	switch (par1) {
-    	case 100: mMode = par2; break;
-    	case 101: mThroughPut = par2; break;
-    	}
+    @SideOnly(Side.CLIENT)    
+    public void processChanges(JsonObject data) {
+    	super.processChanges(data);
+    	mMode.readChanges(data);
+    	mThroughPut.readChanges(data);
     }
     
     public int getSlotCount() {

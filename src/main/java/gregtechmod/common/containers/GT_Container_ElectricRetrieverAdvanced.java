@@ -4,24 +4,29 @@ import gregtechmod.api.interfaces.*;
 import gregtechmod.api.gui.*;
 import net.minecraft.entity.player.*;
 import net.minecraft.item.*;
+import gregtechmod.common.network.SyncedField;
 import gregtechmod.common.tileentities.automation.*;
 import gregtechmod.api.util.*;
 import net.minecraft.inventory.*;
 import java.util.*;
+
+import com.google.gson.JsonObject;
+
 import cpw.mods.fml.relauncher.*;
 
 public class GT_Container_ElectricRetrieverAdvanced extends GT_ContainerMetaTile_Machine
 {
-    public int[] mTargetSlots;
+    public final SyncedField<Integer[]> mTargetSlots; // FIXME TEST this
     
     public GT_Container_ElectricRetrieverAdvanced(final InventoryPlayer aInventoryPlayer, final IGregTechTileEntity aTileEntity) {
         super(aInventoryPlayer, aTileEntity);
-        this.mTargetSlots = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        Integer[] vals = new Integer[9];
+    	Arrays.fill(vals, new Integer(0));
+    	mTargetSlots = new SyncedField<>("mTargetSlots", vals);
     }
     
     @Override
     public void addSlots(final InventoryPlayer aInventoryPlayer) {
-        this.mTargetSlots = new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         this.addSlotToContainer(new GT_Slot_Holo((IInventory)this.mTileEntity, 0, 64, 7, false, true, 1));
         this.addSlotToContainer(new GT_Slot_Holo((IInventory)this.mTileEntity, 1, 81, 7, false, true, 1));
         this.addSlotToContainer(new GT_Slot_Holo((IInventory)this.mTileEntity, 2, 98, 7, false, true, 1));
@@ -60,7 +65,7 @@ public class GT_Container_ElectricRetrieverAdvanced extends GT_ContainerMetaTile
                     GT_Utility.sendChatToPlayer(aPlayer, "Emit Energy to Outputside");
                 }
                 else {
-                    GT_Utility.sendChatToPlayer(aPlayer, "Don't emit Energy");
+                    GT_Utility.sendChatToPlayer(aPlayer, "Don't emit Energy"); // TODO locale & side mesg
                 }
                 return null;
             }
@@ -98,75 +103,30 @@ public class GT_Container_ElectricRetrieverAdvanced extends GT_ContainerMetaTile
                 return null;
             }
             if (aSlotIndex >= 9 && aSlotIndex < 18) {
-                ((GT_MetaTileEntity_ElectricRetrieverAdvanced)this.mTileEntity.getMetaTileEntity()).mTargetSlots[aSlotIndex - 9] = Math.min(99, Math.max(0, ((GT_MetaTileEntity_ElectricRetrieverAdvanced)this.mTileEntity.getMetaTileEntity()).mTargetSlots[aSlotIndex - 9] + ((aMouseclick == 0) ? -1 : 1) * ((aShifthold == 0) ? 1 : 16)));
+            	GT_MetaTileEntity_ElectricRetrieverAdvanced m = (GT_MetaTileEntity_ElectricRetrieverAdvanced)this.mTileEntity.getMetaTileEntity();
+                m.mTargetSlots[aSlotIndex - 9] = Math.min(99, Math.max(0, m.mTargetSlots[aSlotIndex - 9] + ((aMouseclick == 0) ? -1 : 1) * ((aShifthold != 1) ? 1 : 16)));
                 return null;
             }
         }
         return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
     }
     
-    @Override
-    public void detectAndSendChanges() {
-        super.detectAndSendChanges();
-        if (this.mTileEntity.isClientSide() || this.mTileEntity.getMetaTileEntity() == null) {
-            return;
-        }
-        this.mTargetSlots = new int[9];
-        for (int i = 0; i < 9; ++i) {
-            this.mTargetSlots[i] = ((GT_MetaTileEntity_ElectricRetrieverAdvanced)this.mTileEntity.getMetaTileEntity()).mTargetSlots[i];
-        }
-        
-        @SuppressWarnings("rawtypes")
-		Iterator var2 = crafters.iterator();
-        while (var2.hasNext()) {
-            ICrafting var1 = (ICrafting)var2.next();
-            for (int i = 0; i < 9; i++) var1.sendProgressBarUpdate(this, 100+i, mTargetSlots[i]);
-        }
-    }
-    
-    @SideOnly(Side.CLIENT)
-    @Override
-    public void updateProgressBar(final int par1, final int par2) {
-        super.updateProgressBar(par1, par2);
-        switch (par1) {
-            case 100: {
-                this.mTargetSlots[0] = par2;
-                break;
-            }
-            case 101: {
-                this.mTargetSlots[1] = par2;
-                break;
-            }
-            case 102: {
-                this.mTargetSlots[2] = par2;
-                break;
-            }
-            case 103: {
-                this.mTargetSlots[3] = par2;
-                break;
-            }
-            case 104: {
-                this.mTargetSlots[4] = par2;
-                break;
-            }
-            case 105: {
-                this.mTargetSlots[5] = par2;
-                break;
-            }
-            case 106: {
-                this.mTargetSlots[6] = par2;
-                break;
-            }
-            case 107: {
-                this.mTargetSlots[7] = par2;
-                break;
-            }
-            case 108: {
-                this.mTargetSlots[8] = par2;
-                break;
-            }
-        }
-    }
+	@Override
+	public void prepareChanges(JsonObject data, boolean force) {
+		super.prepareChanges(data, force);
+		GT_MetaTileEntity_ElectricRetrieverAdvanced m = (GT_MetaTileEntity_ElectricRetrieverAdvanced) this.mTileEntity.getMetaTileEntity();
+		Integer[] arr = new Integer[9];
+		for (int i = 0; i < 9; i++)
+			arr[i] = Integer.valueOf(m.mTargetSlots[i]);
+		mTargetSlots.updateAndWriteChanges(data, force, arr);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void processChanges(JsonObject data) {
+		super.processChanges(data);
+		mTargetSlots.readChanges(data);
+	}
     
     @Override
     public int getSlotCount() {

@@ -16,7 +16,7 @@ public class GT_GUIContainer_Electrolyzer extends GT_GUIContainerMetaTile_Machin
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
         fontRenderer.drawString("Industrial Electrolyzer", 8,  4, 4210752);
-        if (((mContainer).mDisplayErrorCode & 1) != 0)
+        if (((mContainer).mDisplayErrorCode.get() & 1) != 0)
         	fontRenderer.drawString("Insufficient Energy Line!", 8, ySize - 94, 4210752);
         else
             fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 94, 4210752);
@@ -29,8 +29,8 @@ public class GT_GUIContainer_Electrolyzer extends GT_GUIContainerMetaTile_Machin
         int y = (height - ySize) / 2;
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
         
-        if (mContainer != null && mContainer.mProgressTime>0) {
-        	int tScale = (int) ((mContainer.mProgressTime * 1.0D / mContainer.mMaxProgressTime * 10));
+        if (mContainer != null && mContainer.mProgressTime.get()>0) {
+        	int tScale = (int) ((mContainer.mProgressTime.get() * 1.0D / mContainer.mMaxProgressTime.get() * 10));
         	tScale = tScale < 0 || tScale > 10 ? 0 : tScale;
         	drawTexturedModalRect(x + 73, y + 44 - tScale, 183, 44 - tScale, 30, tScale);
         }

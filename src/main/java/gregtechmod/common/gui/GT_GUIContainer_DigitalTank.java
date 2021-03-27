@@ -18,7 +18,7 @@ public class GT_GUIContainer_DigitalTank extends GT_GUIContainerMetaTile_Machine
         this.fontRenderer.drawString("Digital Tank", 8, 6, 4210752);
         if (this.mContainer != null) {
             this.fontRenderer.drawString("Liquid Amount", 10, 20, 16448255);
-            this.fontRenderer.drawString(GT_Utility.parseNumberToString(((GT_Container_BasicTank)this.mContainer).mContent), 10, 30, 16448255);
+            this.fontRenderer.drawString(GT_Utility.parseNumberToString(((GT_Container_BasicTank)this.mContainer).mContent.get()), 10, 30, 16448255);
         }
     }
     

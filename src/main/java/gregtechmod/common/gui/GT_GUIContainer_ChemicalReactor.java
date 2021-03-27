@@ -16,7 +16,7 @@ public class GT_GUIContainer_ChemicalReactor extends GT_GUIContainerMetaTile_Mac
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
         fontRenderer.drawString("Chemical Reactor", 8,  4, 4210752);
-        if (((mContainer).mDisplayErrorCode & 1) != 0)
+        if (((mContainer).mDisplayErrorCode.get() & 1) != 0)
         	fontRenderer.drawString("Insufficient Energy Line!", 8, ySize - 94, 4210752);
         else
             fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 94, 4210752);
@@ -29,8 +29,8 @@ public class GT_GUIContainer_ChemicalReactor extends GT_GUIContainerMetaTile_Mac
         int y = (height - ySize) / 2;
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
         
-        if (mContainer != null && mContainer.mProgressTime>0) {
-        	int tScale = Math.max(0, Math.min(10, (mContainer.mProgressTime>0?1:0) + (mContainer.mProgressTime * 10) / (mContainer.mMaxProgressTime<1?1:mContainer.mMaxProgressTime)));
+        if (mContainer != null && mContainer.mProgressTime.get()>0) {
+        	int tScale = Math.max(0, Math.min(10, (mContainer.mProgressTime.get()>0?1:0) + (mContainer.mProgressTime.get() * 10) / (mContainer.mMaxProgressTime.get()<1?1:mContainer.mMaxProgressTime.get())));
         	drawTexturedModalRect(x + 73, y + 34, 183, 34, 30, tScale);
         }
     }

@@ -41,12 +41,13 @@ public class GT_GUIContainer_BasicMachine extends GT_GUIContainerMetaTile_Machin
         int y = (height - ySize) / 2;
         drawTexturedModalRect(x, y, 0, 0, xSize, ySize);
         if (mContainer != null) {
-        	if (((GT_Container_BasicMachine)mContainer).mOutputting)			drawTexturedModalRect(x +  7, y + 62, 176, 18, 18, 18);
-        	if (((GT_Container_BasicMachine)mContainer).mItemTransfer)		drawTexturedModalRect(x + 25, y + 62, 176, 36, 18, 18);
-        	if (((GT_Container_BasicMachine)mContainer).mSeperatedInputs)	drawTexturedModalRect(x + 43, y + 62, 176, 54, 18, 18);
+        	GT_Container_BasicMachine m = (GT_Container_BasicMachine) mContainer;
+        	if (m.mOutputting.get())			drawTexturedModalRect(x +  7, y + 62, 176, 18, 18, 18);
+        	if (m.mItemTransfer.get())			drawTexturedModalRect(x + 25, y + 62, 176, 36, 18, 18);
+        	if (m.mSeperatedInputs.get())		drawTexturedModalRect(x + 43, y + 62, 176, 54, 18, 18);
         	
-        	if (mContainer.mMaxProgressTime > 0) {
-	        	int tSize = (mProgressBarDirection < 2 ? 20 : 18), tProgress = Math.max(1, Math.min(tSize * mProgressBarAmount, (mContainer.mProgressTime>0?1:0) + (mContainer.mProgressTime * tSize * mProgressBarAmount) / mContainer.mMaxProgressTime)) % (tSize+1);
+        	if (mContainer.mMaxProgressTime.get() > 0) {
+	        	int tSize = (mProgressBarDirection < 2 ? 20 : 18), tProgress = Math.max(1, Math.min(tSize * mProgressBarAmount, (mContainer.mProgressTime.get()>0?1:0) + (mContainer.mProgressTime.get() * tSize * mProgressBarAmount) / mContainer.mMaxProgressTime.get())) % (tSize+1);
 	        	
 	        	switch (mProgressBarDirection) { // yes, my OCD was mad at me before I did the Tabs.
 	        	case 0:								drawTexturedModalRect(x + 78					, y + 24					, 176					, 0					, tProgress	, 18		); break;

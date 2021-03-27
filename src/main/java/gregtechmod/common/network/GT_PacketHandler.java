@@ -3,12 +3,14 @@ package gregtechmod.common.network;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
+import gregtechmod.common.network.packet.MachineUIPacket;
 import gregtechmod.common.network.packet.GT_Packet;
 import gregtechmod.common.network.packet.GT_SoundPacket;
 import gregtechmod.common.network.packet.GT_TileEntityPacket;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 public final class GT_PacketHandler implements Runnable {
+	
 	private static byte discriminator = 0;
 	
 	public final static SimpleNetworkWrapper GENERIC_CHANNEL;
@@ -22,7 +24,7 @@ public final class GT_PacketHandler implements Runnable {
 	}
 	
 	public void run() {
-		GT_PacketHandler.registerClientMessage(GENERIC_CHANNEL, GT_Packet.class);
+		GT_PacketHandler.registerClientMessage(GENERIC_CHANNEL, MachineUIPacket.class);
 		GT_PacketHandler.registerClientMessage(TILEENTITY_PACKET_CHANNEL, GT_TileEntityPacket.class);
 		GT_PacketHandler.registerClientMessage(SOUND_PACKET_CHANNEL, GT_SoundPacket.class);
 	}
@@ -46,6 +48,6 @@ public final class GT_PacketHandler implements Runnable {
 	}
 	
 	private static <T extends GT_Packet> void register(SimpleNetworkWrapper channel, Class<T> type, Side side) {
-		channel.registerMessage(new GT_NetworkHandler<T>() {}, type, discriminator++, side);
+		channel.registerMessage(GT_NetworkHandler.INSTANCE, type, discriminator++, side);
 	}
 }

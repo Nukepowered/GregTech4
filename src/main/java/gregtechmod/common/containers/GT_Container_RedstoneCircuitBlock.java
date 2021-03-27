@@ -5,20 +5,24 @@ import gregtechmod.api.gui.GT_ContainerMetaTile_Machine;
 import gregtechmod.api.gui.GT_Slot_Holo;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.common.network.SyncedField;
 import gregtechmod.common.tileentities.redstone.GT_MetaTileEntity_RedstoneCircuitBlock;
 
-import java.util.Iterator;
+import com.google.gson.JsonObject;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_Container_RedstoneCircuitBlock extends GT_ContainerMetaTile_Machine {
 
+	public final SyncedField<Integer[]> mData 	= new SyncedField<>("mData", Integer[].class);
+	public final SyncedField<Integer> mGate 	= new SyncedField<>("mGate", new Integer(0));
+	
 	public GT_Container_RedstoneCircuitBlock(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
 		super(aInventoryPlayer, aTileEntity);
 	}
@@ -69,65 +73,23 @@ public class GT_Container_RedstoneCircuitBlock extends GT_ContainerMetaTile_Mach
     	return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);
     }
     
-    public int mData[] = new int[] {0,0,0,0,0,0,0,0}, mGate = 0;
-    
-    @SuppressWarnings("rawtypes")
-	public void detectAndSendChanges() {
-        super.detectAndSendChanges();
-    	if (mTileEntity.isClientSide() || mTileEntity.getMetaTileEntity() == null) return;
-    	mGate = ((GT_MetaTileEntity_RedstoneCircuitBlock)mTileEntity.getMetaTileEntity()).mGate;
-    	mData = ((GT_MetaTileEntity_RedstoneCircuitBlock)mTileEntity.getMetaTileEntity()).mGateData;
-    	
-        Iterator var2 = this.crafters.iterator();
-        while (var2.hasNext()) {
-            ICrafting var1 = (ICrafting)var2.next();
-            var1.sendProgressBarUpdate(this, 100, mGate & 65535);
-            var1.sendProgressBarUpdate(this, 101, mGate >>> 16);
-            var1.sendProgressBarUpdate(this, 102, mData[0] & 65535);
-            var1.sendProgressBarUpdate(this, 103, mData[0] >>> 16);
-            var1.sendProgressBarUpdate(this, 104, mData[1] & 65535);
-            var1.sendProgressBarUpdate(this, 105, mData[1] >>> 16);
-            var1.sendProgressBarUpdate(this, 106, mData[2] & 65535);
-            var1.sendProgressBarUpdate(this, 107, mData[2] >>> 16);
-            var1.sendProgressBarUpdate(this, 108, mData[3] & 65535);
-            var1.sendProgressBarUpdate(this, 109, mData[3] >>> 16);
-            var1.sendProgressBarUpdate(this, 110, mData[4] & 65535);
-            var1.sendProgressBarUpdate(this, 111, mData[4] >>> 16);
-            var1.sendProgressBarUpdate(this, 112, mData[5] & 65535);
-            var1.sendProgressBarUpdate(this, 113, mData[5] >>> 16);
-            var1.sendProgressBarUpdate(this, 114, mData[6] & 65535);
-            var1.sendProgressBarUpdate(this, 115, mData[6] >>> 16);
-            var1.sendProgressBarUpdate(this, 116, mData[7] & 65535);
-            var1.sendProgressBarUpdate(this, 117, mData[7] >>> 16);
-        }
-    }
-    
-    public void addCraftingToCrafters(ICrafting par1ICrafting) {
-        super.addCraftingToCrafters(par1ICrafting);
-    }
-    
-    @SideOnly(Side.CLIENT)
-    public void updateProgressBar(int par1, int par2) {
-    	super.updateProgressBar(par1, par2);
-    	switch (par1) {
-    	case 100: mGate    = mGate    & -65536 | par2; break;
-    	case 101: mGate    = mGate    &  65535 | par2 << 16; break;
-    	case 102: mData[0] = mData[0] & -65536 | par2; break;
-    	case 103: mData[0] = mData[0] &  65535 | par2 << 16; break;
-    	case 104: mData[1] = mData[1] & -65536 | par2; break;
-    	case 105: mData[1] = mData[1] &  65535 | par2 << 16; break;
-    	case 106: mData[2] = mData[2] & -65536 | par2; break;
-    	case 107: mData[2] = mData[2] &  65535 | par2 << 16; break;
-    	case 108: mData[3] = mData[3] & -65536 | par2; break;
-    	case 109: mData[3] = mData[3] &  65535 | par2 << 16; break;
-    	case 110: mData[4] = mData[4] & -65536 | par2; break;
-    	case 111: mData[4] = mData[4] &  65535 | par2 << 16; break;
-    	case 112: mData[5] = mData[5] & -65536 | par2; break;
-    	case 113: mData[5] = mData[5] &  65535 | par2 << 16; break;
-    	case 114: mData[6] = mData[6] & -65536 | par2; break;
-    	case 115: mData[6] = mData[6] &  65535 | par2 << 16; break;
-    	case 116: mData[7] = mData[7] & -65536 | par2; break;
-    	case 117: mData[7] = mData[7] &  65535 | par2 << 16; break;
-    	}
-    }
+	@Override
+	public void prepareChanges(JsonObject data, boolean force) {
+		super.prepareChanges(data, force);
+		GT_MetaTileEntity_RedstoneCircuitBlock m = (GT_MetaTileEntity_RedstoneCircuitBlock)mTileEntity.getMetaTileEntity();
+		Integer[] arr = new Integer[8];
+		for (int i = 0; i < arr.length; i++)
+			arr[i] = m.mGateData[i];
+		
+		mGate.updateAndWriteChanges(data, force, m.mGate);
+		mData.updateAndWriteChanges(data, force, arr);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void processChanges(JsonObject data) {
+		super.processChanges(data);
+		mGate.readChanges(data);
+		mData.readChanges(data);
+	}
 }

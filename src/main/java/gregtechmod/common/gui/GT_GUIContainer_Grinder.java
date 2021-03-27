@@ -16,9 +16,9 @@ public class GT_GUIContainer_Grinder extends GT_GUIContainerMetaTile_Machine {
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
         fontRenderer.drawString("Industrial Grinder", 8,  4, 4210752);
-        if (!((GT_Container_Grinder)mContainer).mMachine)
-        	fontRenderer.drawString("Incomplete Machine Casing!", 8, ySize - 104, 4210752);
-        if (((mContainer).mDisplayErrorCode & 1) != 0)
+        if (!((GT_Container_Grinder)mContainer).mMachine.get())
+        	fontRenderer.drawString("Incomplete Machine Casing!", 8, ySize - 104, 4210752); // TODO locale
+        if (((mContainer).mDisplayErrorCode.get() & 1) != 0)
         	fontRenderer.drawString("Insufficient Energy Line!", 8, ySize - 94, 4210752);
         else
             fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 94, 4210752);
@@ -33,10 +33,10 @@ public class GT_GUIContainer_Grinder extends GT_GUIContainerMetaTile_Machine {
         
         if (mContainer != null) {
         	GT_Container_Grinder cont = (GT_Container_Grinder) mContainer;
-        	int tScale = Math.max(0, Math.min(20, (cont.mProgressTime>0?1:0) + (cont.mProgressTime * 20) / (cont.mMaxProgressTime<1?1:cont.mMaxProgressTime)));
-        	if (mContainer.mProgressTime > 0) drawTexturedModalRect(x + 58, y + 28, 176, 0, tScale, 11);
+        	int tScale = Math.max(0, Math.min(20, (cont.mProgressTime.get()>0?1:0) + (cont.mProgressTime.get() * 20) / (cont.mMaxProgressTime.get()<1?1:cont.mMaxProgressTime.get())));
+        	if (mContainer.mProgressTime.get() > 0) drawTexturedModalRect(x + 58, y + 28, 176, 0, tScale, 11);
 
-        	tScale = cont.mWaterAmount/550;
+        	tScale = cont.mWaterAmount.get()/550;
         	if (tScale > 0)
         		drawTexturedModalRect(x + 33, y + 33 + 18 - tScale, 176, 33 + 18 - tScale, 18, tScale);
         }

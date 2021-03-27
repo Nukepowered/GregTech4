@@ -20,13 +20,13 @@ public class GT_GUIContainer_Teleporter extends GT_GUIContainerMetaTile_Machine 
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
     	FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
-    	fontRenderer.drawString("Teleporter", 46, 8, 16448255);
+    	fontRenderer.drawString("Teleporter", 46, 8, 16448255); // TODO LOCALE
         if (mContainer != null) {
-        	fontRenderer.drawString("X: "   + GT_Utility.parseNumberToString(((GT_Container_Teleporter)mContainer).mTargetX), 46, 16, 16448255);
-        	fontRenderer.drawString("Y: "   + GT_Utility.parseNumberToString(((GT_Container_Teleporter)mContainer).mTargetY), 46, 24, 16448255);
-        	fontRenderer.drawString("Z: "   + GT_Utility.parseNumberToString(((GT_Container_Teleporter)mContainer).mTargetZ), 46, 32, 16448255);
-        	if (((GT_Container_Teleporter)mContainer).mEgg>0) {
-        		int sID = ((GT_Container_Teleporter)mContainer).mTargetD;
+        	fontRenderer.drawString("X: "   + GT_Utility.parseNumberToString(((GT_Container_Teleporter)mContainer).mTargetX.get()), 46, 16, 16448255);
+        	fontRenderer.drawString("Y: "   + GT_Utility.parseNumberToString(((GT_Container_Teleporter)mContainer).mTargetY.get()), 46, 24, 16448255);
+        	fontRenderer.drawString("Z: "   + GT_Utility.parseNumberToString(((GT_Container_Teleporter)mContainer).mTargetZ.get()), 46, 32, 16448255);
+        	if (((GT_Container_Teleporter)mContainer).mEgg.get()) {
+        		int sID = ((GT_Container_Teleporter)mContainer).mTargetD.get();
         		String dimName = null;
         		if (DimensionManager.isDimensionRegistered(sID)) {
         			WorldProvider w = DimensionManager.createProviderFor(sID);
