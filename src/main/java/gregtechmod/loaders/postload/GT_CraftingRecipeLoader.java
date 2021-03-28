@@ -552,8 +552,19 @@ public class GT_CraftingRecipeLoader implements Runnable {
     		// Adv. Buffer
     		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,21), new Object[] {"GBG", "CHC", "GAG", 'B', OrePrefixes.battery.get(Materials.Basic), 'A', GT_OreDictNames.craftingMonitorTier02		, 'C', OrePrefixes.circuit.get(Materials.Advanced), 'G', OrePrefixes.plate.get(Materials.Electrum), 'H', new ItemStack(GregTech_API.sBlockList[1], 1,18)});
     		
+    		//Adv.Retriever
+    		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,116), new Object[] {"SSS", "CHC", "SSS", 'S', OrePrefixes.plate.get(Materials.StainlessSteel), 'C', OrePrefixes.circuit.get(Materials.Elite), 'H', new ItemStack(GregTech_API.sBlockList[1], 1,39)});
+    		
+    		// Electric Filter
+    		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,127), new Object[] {"PPP", "MCN", "PPP", 'P', OrePrefixes.plate.get(Materials.Iron), 'C', OrePrefixes.circuit.get(Materials.Basic), 'M', new ItemStack(GregTech_API.sBlockList[1], 1,23), 'N', new ItemStack(GregTech_API.sBlockList[1], 1,19)});
+    		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,127), new Object[] {"PPP", "MCN", "PPP", 'P', OrePrefixes.plate.get(Materials.Aluminium), 'C', OrePrefixes.circuit.get(Materials.Basic), 'M', new ItemStack(GregTech_API.sBlockList[1], 1,23), 'N', new ItemStack(GregTech_API.sBlockList[1], 1,19)});
+    		
     		// Electric Regulator
     		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,39), new Object[] {"CHC", "HAH", "CHC", 'A', GT_OreDictNames.craftingMonitorTier02, 'C', OrePrefixes.circuit.get(Materials.Advanced), 'H', new ItemStack(GregTech_API.sBlockList[1], 1,21)});
+    		
+    		// Electric Type Filter
+    		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,126), new Object[] {"PPP", "MCN", "PPP", 'P', OrePrefixes.plate.get(Materials.Iron), 'C', OrePrefixes.circuit.get(Materials.Advanced), 'M', new ItemStack(GregTech_API.sBlockList[1], 1,23), 'N', new ItemStack(GregTech_API.sBlockList[1], 1,19)});
+    		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,126), new Object[] {"PPP", "MCN", "PPP", 'P', OrePrefixes.plate.get(Materials.Aluminium), 'C', OrePrefixes.circuit.get(Materials.Advanced), 'M', new ItemStack(GregTech_API.sBlockList[1], 1,23), 'N', new ItemStack(GregTech_API.sBlockList[1], 1,19)});
     		
     		// large Electric Buffer
     		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,19), new Object[] {"GBG", "CBC", "GBG", 'C', OrePrefixes.circuit.get(Materials.Advanced), 'G', OrePrefixes.plate.get(Materials.Electrum), 'B', GT_OreDictNames.craftingConveyor});
