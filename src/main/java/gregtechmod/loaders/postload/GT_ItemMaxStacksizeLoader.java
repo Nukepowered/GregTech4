@@ -10,7 +10,7 @@ import net.minecraft.item.Item;
 public class GT_ItemMaxStacksizeLoader implements Runnable {
 	@Override
 	public void run() {
-        GT_Log.log.info("GT_Mod: Changing maximum Stacksizes if configured.");
+        GT_Log.log.info("Changing maximum Stacksizes if configured.");
         
     	GT_ModHandler.getIC2Item("overclockerUpgrade", 1).getItem().setMaxStackSize(GT_Mod.sUpgradeCount);
     	Items.cake.setMaxStackSize(64);

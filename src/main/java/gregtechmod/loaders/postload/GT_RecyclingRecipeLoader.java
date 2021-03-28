@@ -16,9 +16,9 @@ import net.minecraft.item.ItemStack;
 public class GT_RecyclingRecipeLoader implements Runnable {
 	@Override
 	public void run() {
-        GT_Log.log.info("GT_Mod: Adding all the Reverse Recipes for the Furnace/Macerator/Sawmill.");
+        GT_Log.log.info("Adding all the Reverse Recipes for the Furnace/Macerator/Sawmill.");
         
-        GT_Log.log.info("GT_Mod: Adding all the Reverse Recipes for the Furnace/Macerator/Sawmill.");
+        GT_Log.log.info("Adding all the Reverse Recipes for the Furnace/Macerator/Sawmill.");
         if(!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.storageblockcrafting, "tile.glowstone", false)) {
            GT_ModHandler.removeRecipe(new ItemStack[]{new ItemStack(Items.glowstone_dust, 1), new ItemStack(Items.glowstone_dust, 1), null, new ItemStack(Items.glowstone_dust, 1), new ItemStack(Items.glowstone_dust, 1)});
         }

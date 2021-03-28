@@ -15,7 +15,7 @@ import net.minecraftforge.common.ChestGenHooks;
 public class GT_BookAndLootLoader implements Runnable {
 	@Override
 	public void run() {
-        GT_Log.log.info("GT_Mod: Adding worldgenerated Chest Content.");
+        GT_Log.log.info("Adding worldgenerated Chest Content.");
         
         if (GT_Mod.sIncreaseDungeonLoot) {
         	ChestGenHooks tChest;

@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 public class GT_MinableRegistrator implements Runnable {
 	@Override
 	public void run() {
-        GT_Log.log.info("GT_Mod: Adding JackHammer minable Blocks.");
+        GT_Log.log.info("Adding JackHammer minable Blocks.");
     	ItemStack tStack;
     	GregTech_API.sRecipeAdder.addJackHammerMinableBlock(Blocks.glowstone, false);
     	tStack = GT_ModHandler.getIC2Item("constructionFoam", 1);
@@ -24,7 +24,7 @@ public class GT_MinableRegistrator implements Runnable {
     	tStack = GT_ModHandler.getIC2Item("reinforcedDoorBlock", 1);
     	if (tStack != null) GregTech_API.sRecipeAdder.addJackHammerMinableBlock(Block.getBlockFromItem(tStack.getItem()), true);
     	
-        GT_Log.log.info("GT_Mod: Adding Blocks to the Miners Valuable List.");
+        GT_Log.log.info("Adding Blocks to the Miners Valuable List.");
     	GT_ModHandler.addValuableOre(new ItemStack(Blocks.glowstone), 1);
     	GT_ModHandler.addValuableOre(new ItemStack(Blocks.soul_sand), 1);
 	}

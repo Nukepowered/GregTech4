@@ -20,7 +20,7 @@ import net.minecraft.item.ItemStack;
 public class GT_CropLoader implements Runnable {
 	@Override
 	public void run() {
-        GT_Log.log.info("GT_Mod: Register Crops to IC2.");
+        GT_Log.log.info("Register Crops to IC2.");
         try {
 	        new GT_BaseCrop(124, "gt_crops.indigo"				, "Eloraam"					, GT_Items.Crop_Drop_Indigo.get(1)				, null																																						, GT_Items.Crop_Drop_Indigo.get(4)				, 2, 4,    0, 1, 4, 1, 1, 0, 4, 0, new String[] {"Flower", "Color", "Ingredient"});
 	        new GT_BaseCrop(125, "gt_crops.flax"				, "Eloraam"					, new ItemStack(Items.string, 1)				, null																																						, null											, 2, 4,    0, 1, 4, 1, 1, 2, 0, 1, new String[] {"Silk", "Vine", "Addictive"});
@@ -65,7 +65,7 @@ public class GT_CropLoader implements Runnable {
 	        }
 	        
         } catch(Throwable e) {
-            GT_Log.log.error("GT_Mod: Failed to register Crops to IC2.");
+            GT_Log.log.error("Failed to register Crops to IC2.");
             if (GregTech_API.DEBUG_MODE) {
             	GT_Log.log.catching(e);
             }

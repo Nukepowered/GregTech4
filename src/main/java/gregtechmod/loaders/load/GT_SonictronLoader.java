@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 public class GT_SonictronLoader implements Runnable {
 	@Override
 	public void run() {
-		GT_Log.log.info("GT_Mod: Loading Sonictron Sounds");
+		GT_Log.log.info("Loading Sonictron Sounds");
     	GT_Mod.mSoundItems.add(new ItemStack(Blocks.iron_block, 1));
     	GT_Mod.mSoundNames.add("note.harp");
     	GT_Mod.mSoundCounts.add(25);

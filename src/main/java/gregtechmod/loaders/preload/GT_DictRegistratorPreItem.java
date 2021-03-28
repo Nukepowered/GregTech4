@@ -13,10 +13,10 @@ import net.minecraft.item.ItemStack;
 public class GT_DictRegistratorPreItem implements Runnable {
 	@Override
 	public void run() {
-        GT_Log.log.info("GT_Mod: Adding certain Items to the Unification Blacklist.");
+        GT_Log.log.info("Adding certain Items to the Unification Blacklist.");
 		GT_OreDictUnificator.addToBlacklist(GT_ModHandler.getIC2Item("industrialDiamond", 1));
 		
-        GT_Log.log.info("GT_Mod: Register OreDict Entries of Non-GT-Items.");
+        GT_Log.log.info("Register OreDict Entries of Non-GT-Items.");
         GT_OreDictUnificator.registerOre("molecule_2o"								, GT_ModHandler.getAirCell(1));
     	GT_OreDictUnificator.registerOre("molecule_2o"								, GT_ModHandler.getIC2Item("airCell", 1));
     	GT_OreDictUnificator.add(OrePrefixes.cell		, Materials.Empty			, GT_ModHandler.getEmptyCell(1));
@@ -85,7 +85,7 @@ public class GT_DictRegistratorPreItem implements Runnable {
     	GT_OreDictUnificator.registerOre("glassReinforced"		, GT_ModHandler.getIC2Item("reinforcedGlass", 1));
     	GT_OreDictUnificator.registerOre("glassReinforced"		, GT_ModHandler.getTEItem("hardenedGlass", 1));
     	
-        GT_Log.log.info("GT_Mod: Register Unification Entries");
+        GT_Log.log.info("Register Unification Entries");
         
     	GT_OreDictUnificator.add("oreCoal"			, new ItemStack(Blocks.coal_ore, 1));
     	GT_OreDictUnificator.add("oreIron"			, new ItemStack(Blocks.iron_ore, 1));
@@ -192,7 +192,7 @@ public class GT_DictRegistratorPreItem implements Runnable {
         GT_OreDictUnificator.add(OrePrefixes.block	, Materials.GarnetYellow	, new ItemStack(GregTech_API.sBlockList[4], 1,14));
         GT_OreDictUnificator.add(OrePrefixes.block	, Materials.GarnetRed		, new ItemStack(GregTech_API.sBlockList[4], 1,15));
         
-        GT_Log.log.info("GT_Mod: Register other Mods Unification Targets.");
+        GT_Log.log.info("Register other Mods Unification Targets.");
 //        if (GT_Mod.sUnificatorFR) {
 //        	GT_OreDictUnificator.override("ingotCopper"		, GT_ModHandler.getFRItem("ingotCopper", 1));
 //        	GT_OreDictUnificator.override("ingotTin"		, GT_ModHandler.getFRItem("ingotTin", 1));

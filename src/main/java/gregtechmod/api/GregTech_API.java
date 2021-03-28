@@ -515,7 +515,7 @@ public class GregTech_API {
 		try {
 			return (BaseMetaTileEntity)(sBaseMetaTileEntityClass.newInstance());
 		} catch(Throwable e) {
-			GT_Log.log.error("GT_Mod: Fatal Error ocurred while initializing TileEntities, crashing Minecraft.");
+			GT_Log.log.error("Fatal Error ocurred while initializing TileEntities, crashing Minecraft.");
 			throw new RuntimeException(e);
 		}
 	}

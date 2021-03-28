@@ -16,7 +16,7 @@ import net.minecraft.item.ItemStack;
 public class GT_DictRegistratorPostItem implements Runnable {
 	@Override
 	public void run() {
-		GT_Log.log.info("GT_Mod: Registering other Stuff to the OreDict.");
+		GT_Log.log.info("Registering other Stuff to the OreDict.");
 		GT_OreDictUnificator.set(OrePrefixes.plate, Materials.Iron					, GT_ModHandler.getRCItem("part.plate.iron", 1L));
 		GT_OreDictUnificator.set(OrePrefixes.plate, Materials.Steel					, GT_ModHandler.getRCItem("part.plate.steel", 1L));
 		

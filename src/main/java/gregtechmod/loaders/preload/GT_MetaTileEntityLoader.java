@@ -24,7 +24,7 @@ import gregtechmod.common.tileentities.storage.GT_MetaTileEntity_BronzeCraftingT
 public class GT_MetaTileEntityLoader implements Runnable {
 	@Override
 	public void run() {
-		GT_Log.log.info("GT_Mod: Register MetaTileEntities.");
+		GT_Log.log.info("Register MetaTileEntities.");
 		new GT_MetaTileEntity_ElectricAutoWorkbench		( 16, "GT_E_Craftingtable");
 		new GT_MetaTileEntity_Translocator				( 17, "GT_Translocator");
 		new GT_MetaTileEntity_ElectricBufferSmall		( 18, "GT_E_Buffer_Small");

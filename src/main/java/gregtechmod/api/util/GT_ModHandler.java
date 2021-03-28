@@ -1170,7 +1170,7 @@ public class GT_ModHandler {
     				}
     			}
     		}
-    		GT_Log.log.info("GT_Mod: Created a List of Tool Recipes containing " + sSingleNonBlockDamagableRecipeList.size() + " Recipes for recycling." + (sSingleNonBlockDamagableRecipeList.size()>2048?" Scanning all these Recipes is the reason for the startup Lag you receive right now.":""));
+    		GT_Log.log.info("Created a List of Tool Recipes containing " + sSingleNonBlockDamagableRecipeList.size() + " Recipes for recycling." + (sSingleNonBlockDamagableRecipeList.size()>2048?" Scanning all these Recipes is the reason for the startup Lag you receive right now.":""));
     	}
     	ArrayList<ItemStack> rList = getRecipeOutputs(sSingleNonBlockDamagableRecipeList, true, aRecipe);
     	if (!GregTech_API.sPostloadStarted || GregTech_API.sPostloadFinished) sSingleNonBlockDamagableRecipeList.clear();

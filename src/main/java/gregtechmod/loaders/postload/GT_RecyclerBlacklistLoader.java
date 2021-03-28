@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 public class GT_RecyclerBlacklistLoader implements Runnable {
 	@Override
 	public void run() {
-        GT_Log.log.info("GT_Mod: Adding Stuff to the Recycler Blacklist.");
+        GT_Log.log.info("Adding Stuff to the Recycler Blacklist.");
         
         if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "easymobgrinderrecycling", true)) {
         	// Skeletons

@@ -345,10 +345,10 @@ public abstract class GT_MetaGenerated_Item extends GT_Generic_Item implements I
 	@Override
     @SideOnly(Side.CLIENT)
     public final void registerIcons(IIconRegister aIconRegister) {
-		GT_Log.log.info("GT_Mod: Setting up Icon Register for Items");
+		GT_Log.log.info("Setting up Icon Register for Items");
     	GregTech_API.sItemIcons = aIconRegister;
     	
-    	GT_Log.log.info("GT_Mod: Starting Item Icon Load Phase Clientside");
+    	GT_Log.log.info("Starting Item Icon Load Phase Clientside");
     	for (Runnable tRunnable : GregTech_API.sGTItemIconload) {
     		try {
     			tRunnable.run();

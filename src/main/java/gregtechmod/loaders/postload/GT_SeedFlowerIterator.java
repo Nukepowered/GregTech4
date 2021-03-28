@@ -30,7 +30,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class GT_SeedFlowerIterator implements Runnable {
 	@Override
 	public void run() {
-        GT_Log.log.info("GT_Mod: Iterating through the Seed-List of ForgeHooks, with a brilliant and 100% Reflection-free Method, to add Recipes for gaining Seed Oil from Seeds.");
+        GT_Log.log.info("Iterating through the Seed-List of ForgeHooks, with a brilliant and 100% Reflection-free Method, to add Recipes for gaining Seed Oil from Seeds.");
 		boolean temp = false;
         try {
         	GT_DummyWorld tWorld = (GT_DummyWorld)GregTech_API.sDummyWorld;
@@ -49,7 +49,7 @@ public class GT_SeedFlowerIterator implements Runnable {
 				}
 			}
 			
-			GT_Log.log.info("GT_Mod: Iterating through the Grass-Flower-List of ForgeHooks, with a brilliant and 100% Reflection-free Method, to add Extractor Recipes for gaining more Dye from Flowers and also Compression Recipes for Plantballs.");
+			GT_Log.log.info("Iterating through the Grass-Flower-List of ForgeHooks, with a brilliant and 100% Reflection-free Method, to add Extractor Recipes for gaining more Dye from Flowers and also Compression Recipes for Plantballs.");
 			tWorld.mRandom.mIterationStep = Integer.MAX_VALUE;
 			while (tWorld.mRandom.mIterationStep > 1) {
 				try {
@@ -69,7 +69,7 @@ public class GT_SeedFlowerIterator implements Runnable {
 							tColor.stackSize++;
 							GT_ModHandler.addExtractionRecipe(tWorld.mLastSetBlock, tColor);
 						}
-						GT_ModHandler.addCompressionRecipe(GT_Utility.copy(8, tWorld.mLastSetBlock), GT_ModHandler.getIC2Item("compressedPlantBall", 1));
+						GT_ModHandler.addCompressionRecipe(GT_Utility.copy(8, tWorld.mLastSetBlock), GT_ModHandler.getIC2Item("plantBall", 1));
 					}
 				} catch(Throwable e) {
 					GT_Log.log.warn("Minor Bug: Wasn't able to simulate the planting of a Flower with Bonemeal, to add Extractor Recipe for Dye:\n");
@@ -77,14 +77,14 @@ public class GT_SeedFlowerIterator implements Runnable {
 				}
 			}
         } catch (Throwable e) {
-        	GT_Log.log.warn("GT_Mod: failed to iterate somehow, maybe it's your Forge Version causing it. But it's not that important\n");
+        	GT_Log.log.warn("failed to iterate somehow, maybe it's your Forge Version causing it. But it's not that important\n");
         	GT_Log.log.catching(e);
         }
         
 		if (temp) {
-			GT_Log.log.info("GT_Mod: Forestry was properly loaded, so the Seed Recipes got added to the Squeezer.");
+			GT_Log.log.info("Forestry was properly loaded, so the Seed Recipes got added to the Squeezer.");
 		} else {
-			GT_Log.log.info("GT_Mod: Forestry was NOT loaded, so the Recipes got added to the Industrial Centrifuge.");
+			GT_Log.log.info("Forestry was NOT loaded, so the Recipes got added to the Industrial Centrifuge.");
 			RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(200).setShaped(true).input(new ItemStack(Items.melon_seeds, 64, 0)).input(GT_Items.Cell_Empty.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.SeedOil)).buildAndRegister();
 			RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(200).setShaped(true).input(new ItemStack(Items.pumpkin_seeds, 64, 0)).input(GT_Items.Cell_Empty.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.SeedOil)).buildAndRegister();
 			RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(200).setShaped(true).input(new ItemStack(Items.wheat_seeds, 64, 0)).input(GT_Items.Cell_Empty.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.SeedOil)).buildAndRegister();

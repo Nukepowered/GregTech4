@@ -14,7 +14,7 @@ import net.minecraft.item.ItemStack;
 public class GT_ScrapboxDropLoader implements Runnable {
 	@Override
 	public void run() {
-        GT_Log.log.info("GT_Mod: (re-)adding Scrapbox Drops.");
+        GT_Log.log.info("(re-)adding Scrapbox Drops.");
         
         GT_ModHandler.addScrapboxDrop(9.50F, new ItemStack(Items.wooden_hoe));
         GT_ModHandler.addScrapboxDrop(2.00F, new ItemStack(Items.wooden_axe));

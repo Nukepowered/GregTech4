@@ -22,7 +22,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class GT_LiquidAndFuelLoader implements Runnable {
 	@Override
 	public void run() {
-        GT_Log.log.info("GT_Mod: Grabbing Liquids of other Mods to register Liquid Cells, and adding Liquid Transposer Recipes for them");
+        GT_Log.log.info("Grabbing Liquids of other Mods to register Liquid Cells, and adding Liquid Transposer Recipes for them");
 
         ItemStack tStack = GT_ModHandler.getRCItem("fluid.creosote.cell", 1);
         FluidStack tLiquid = GT_Utility.getFluidForFilledItem(tStack);;
@@ -75,7 +75,7 @@ public class GT_LiquidAndFuelLoader implements Runnable {
 		GT_FluidRegistry.addFluid("glyceryl"			, null					, Materials.Glyceryl		, OrePrefixes.cell, 1, GT_ModHandler.getEmptyCell(1));
 		GT_FluidRegistry.addFluid("nitrocoalfuel"		, null					, Materials.NitroCoalFuel	, OrePrefixes.cell, 1, GT_ModHandler.getEmptyCell(1));
 		
-        GT_Log.log.info("GT_Mod: Initializing various Fuels.");
+        GT_Log.log.info("Initializing various Fuels.");
         RecipeMaps.HOT_FUELS.factory().EUt(20).duration(1000).input(new FluidStack(FluidRegistry.LAVA, 1000)).buildAndRegister();
         RecipeMaps.HOT_FUELS.factory().EUt(20).duration(1000).input(FluidRegistry.getFluidStack("ic2hotcoolant", 1000)).input(GT_Items.Cell_Empty.get(1)).output(GT_ModHandler.getIC2Item("coolantCell", 1)).buildAndRegister(); // TODO change thermal generator UI for output fluid slot
         RecipeMaps.MAGIC_FUELS.factory().EUt(20).duration(500).input(new ItemStack(Items.experience_bottle, 1)).buildAndRegister();

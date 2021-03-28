@@ -515,10 +515,10 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 	    mIcons[ 412] = aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + getUnlocalizedName() + "/high_voltage_charger_top_active");
 		
 	    if (GregTech_API.sPostloadFinished) {
-	    	GT_Log.log.info("GT_Mod: Setting up Icon Register for Blocks");
+	    	GT_Log.log.info("Setting up Icon Register for Blocks");
 			GregTech_API.sBlockIcons = aIconRegister;
 			
-			GT_Log.log.info("GT_Mod: Registering MetaTileEntity specific Textures");
+			GT_Log.log.info("Registering MetaTileEntity specific Textures");
 			for (IMetaTileEntity tMetaTileEntity : GregTech_API.mMetaTileList) {
 				try {
 					if (tMetaTileEntity != null) tMetaTileEntity.registerIcons(aIconRegister);
@@ -527,7 +527,7 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 				}
 			}
 			
-			GT_Log.log.info("GT_Mod: Registering Crop specific Textures");
+			GT_Log.log.info("Registering Crop specific Textures");
 			try {
 				for (gregtechmod.api.util.GT_BaseCrop tCrop : gregtechmod.api.util.GT_BaseCrop.sCropList) {
 					tCrop.registerSprites(aIconRegister);
@@ -536,12 +536,12 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 				GT_Log.log.catching(e);
 			}
 			
-			GT_Log.log.info("GT_Mod: Loading Fluid Icons");
+			GT_Log.log.info("Loading Fluid Icons");
 	    	for (Fluid tFluid : GT_FluidRegistry.sFluids) {
 	    		tFluid.setIcons(aIconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + "fluids/" + tFluid.getUnlocalizedName()));
 	    	}
 	    	
-	    	GT_Log.log.info("GT_Mod: Starting Cover Load Phase Clientside");
+	    	GT_Log.log.info("Starting Cover Load Phase Clientside");
 	    	for (Runnable tRunnable : GregTech_API.sGTCoverload) {
 	    		try {
 	    			tRunnable.run();
@@ -550,7 +550,7 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 	    		}
 	    	}
 	    	
-	    	GT_Log.log.info("GT_Mod: Starting Block Icon Load Phase Clientside");
+	    	GT_Log.log.info("Starting Block Icon Load Phase Clientside");
 	    	for (Runnable tRunnable : GregTech_API.sGTBlockIconload) {
 	    		try {
 	    			tRunnable.run();

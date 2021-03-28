@@ -26,7 +26,7 @@ public class GT_MachineRecipeLoader implements Runnable
 	@Override
     public void run() {
     	
-        GT_Log.log.info("GT_Mod: Adding non-OreDict Machine Recipes.");
+        GT_Log.log.info("Adding non-OreDict Machine Recipes.");
         
         try {
             GT_Utility.removeSimpleIC2MachineRecipe(null, Recipes.metalformerExtruding.getRecipes(), GT_Items.Cell_Empty.get(3L));

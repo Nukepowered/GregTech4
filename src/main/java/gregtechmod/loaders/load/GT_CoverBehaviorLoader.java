@@ -30,7 +30,7 @@ import net.minecraft.item.ItemStack;
 public class GT_CoverBehaviorLoader implements Runnable {
 	@Override
 	public void run() {
-		GT_Log.log.info("GT_Mod: Adding Cover Behaviors");
+		GT_Log.log.info("Adding Cover Behaviors");
 		new GT_Cover_Vent(new ItemStack[] {GT_ModHandler.getIC2Item("reactorVent", 1), GT_ModHandler.getIC2Item("reactorVentCore", 1), GT_ModHandler.getIC2Item("reactorVentSpread", 1)}, 1);
 		new GT_Cover_Vent(new ItemStack[] {GT_ModHandler.getIC2Item("reactorVentDiamond", 1), GT_ModHandler.getIC2Item("reactorVentGold", 1)}, 2);
 		new GT_Cover_DoesWork(GT_MetaItem_Component.instance.getStack(30, 1));

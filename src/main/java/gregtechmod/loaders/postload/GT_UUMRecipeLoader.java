@@ -3,8 +3,8 @@ package gregtechmod.loaders.postload;
 public class GT_UUMRecipeLoader implements Runnable {
 	@Override
 	public void run() {
-        
-//        GT_Log.log.info("GT_Mod: Adding/Removing/Overloading UUM Recipes.");
+//        FIXME: UU M RECIPES
+//        GT_Log.log.info("Adding/Removing/Overloading UUM Recipes.");
 //        
 //        String tMat = "craftingUUMatter";
 //        
