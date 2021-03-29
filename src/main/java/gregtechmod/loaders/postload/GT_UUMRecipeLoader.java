@@ -1,15 +1,18 @@
 package gregtechmod.loaders.postload;
 
+import gregtechmod.api.util.GT_Log;
+
 public class GT_UUMRecipeLoader implements Runnable {
 	@Override
 	public void run() {
 //        FIXME: UU M RECIPES
-//        GT_Log.log.info("Adding/Removing/Overloading UUM Recipes.");
+        GT_Log.log.info("Adding/Removing/Overloading UUM Recipes.");
+        
+//        UuIndex.instance.add(null, 0);
+//        
 //        
 //        String tMat = "craftingUUMatter";
 //        
-//        GT_ModHandler.addUUMRecipe(GT_OreDictUnificator.get("gemDiamond"		, 1)	, new Object[] {"UUU", "UUU", "UUU", true, 'U', tMat});
-//        GT_ModHandler.addUUMRecipe(GT_OreDictUnificator.get("gemEmerald"		, 2)	, new Object[] {"UUU", "UUU", " U ", true, 'U', tMat});
 //        GT_ModHandler.addUUMRecipe(GT_OreDictUnificator.get("gemRuby"			, 2)	, new Object[] {" UU", "UUU", "UU ", true, 'U', tMat});
 //        GT_ModHandler.addUUMRecipe(GT_OreDictUnificator.get("gemSapphire"		, 2)	, new Object[] {"UU ", "UUU", " UU", true, 'U', tMat});
 //        GT_ModHandler.addUUMRecipe(GT_OreDictUnificator.get("gemGreenSapphire"	, 2)	, new Object[] {" UU", "UUU", " UU", true, 'U', tMat});
@@ -65,8 +68,5 @@ public class GT_UUMRecipeLoader implements Runnable {
 //        GT_ModHandler.addUUMRecipe(new ItemStack(Blocks.mycelium, 24)					, new Object[] {"   ", "U U", "UUU", true, 'U', tMat});
 //        GT_ModHandler.addUUMRecipe(GT_ModHandler.getIC2Item("resin", 21)				, new Object[] {"U U", "   ", "U U", true, 'U', tMat});
 //        GT_ModHandler.addUUMRecipe(GT_ModHandler.getIC2Item("iridiumOre", 1)			, new Object[] {"UUU", " U ", "UUU", true, 'U', tMat});
-//        
-//        GT_ModHandler.removeRecipe(new ItemStack[] {null, null, null, null, null, null, GT_ModHandler.getIC2Item("matter", 1), GT_ModHandler.getIC2Item("matter", 1), GT_ModHandler.getIC2Item("matter", 1)});
-		
 	}
 }

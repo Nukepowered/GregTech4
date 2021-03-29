@@ -8,6 +8,9 @@ import net.minecraftforge.oredict.OreDictionary;
 import gregtechmod.api.util.*;
 import gregtechmod.common.recipe.RecipeMaps;
 import gregtechmod.common.recipe.UnifierRecipeEntry;
+
+import com.google.common.base.Optional;
+
 import cpw.mods.fml.common.Loader;
 import gregtechmod.api.*;
 import net.minecraft.block.*;
@@ -171,6 +174,23 @@ public class GT_MachineRecipeLoader implements Runnable
         RecipeMaps.ELECTROLYZER.factory().EUt(120).duration(215).inputs(new ItemStack(Items.water_bucket, 1), GT_Items.Cell_Empty.get(1)).output(GT_ModHandler.getIC2Item("electrolyzedWaterCell", 1L)).output(new ItemStack(Items.bucket)).buildAndRegister();
         RecipeMaps.ELECTROLYZER.factory().EUt(106).duration(24).input(new ItemStack(Items.dye, 3, 15)).output(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Calcium, 1)).buildAndRegister();
         RecipeMaps.ELECTROLYZER.factory().EUt(25).duration(500).input("sand", 8).outputs(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.SiliconDioxide, 1L)).buildAndRegister();
+        
+        if (Loader.isModLoaded("appliedenergistics2")) {
+        	Optional<ItemStack> chargedCrystal = appeng.api.AEApi.instance()
+        			.definitions()
+        			.materials()
+        			.certusQuartzCrystalCharged()
+        			.maybeStack(1);
+        	
+        	if (chargedCrystal.isPresent()) {
+            	RecipeMaps.ELECTROLYZER.factory()
+            		.EUt(30).duration(200)
+            		.input(OrePrefixes.gem, Materials.CertusQuartz, 1)
+            		.outputs(chargedCrystal.get())
+            		.buildAndRegister();        		
+        	}
+        }
+       
         
         GT_ModHandler.removeRecipeByOutput(GT_Items.IC2_Fertilizer.get(1L));
         
