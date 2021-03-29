@@ -657,11 +657,10 @@ public class GT_Mod implements IGT_Mod {
         GT_RecipeRegistrator.registerUsagesForMaterials(new ItemStack(Blocks.planks, 1), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Wood, 1L), null, false, true, false);
         GT_Log.log.info("Activating OreDictionary Handler, this can take some time, as it scans the whole OreDictionary");
         
-        GT_Log.log.info("Generating machine recipes");
+        GT_Log.log.info("If your Log stops here, you were too impatient. Wait a bit more next time, before killing Minecraft with the Task Manager.");
         GT_OreDictHandler.instance.activateHandler();
         
         GT_Log.log.info("Activating Recipe handler");
-        GT_Log.log.info("If your Log stops here, you were too impatient. Wait a bit more next time, before killing Minecraft with the Task Manager.");
         RecipeHandler.activateHandler();
         GT_Log.log.info("Congratulations, you have been waiting long enough. Have a Cake.");
         
