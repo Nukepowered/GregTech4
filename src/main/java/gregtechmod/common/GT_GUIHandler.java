@@ -219,8 +219,7 @@ public class GT_GUIHandler implements IGuiHandler {
         if (ID == 154) return new GT_Container_BasicTank				(player.inventory, (IGregTechTileEntity)				tTileEntity);
         if (ID == 155) return new GT_Container_MaintenanceHatch			(player.inventory, (IGregTechTileEntity)				tTileEntity);
         if (ID == 156) return new GT_Container_MultiMachine				(player.inventory, (IGregTechTileEntity)				tTileEntity);
-        if (ID == 157) return new GT_Container_MultiMachine				(player.inventory, (IGregTechTileEntity)				tTileEntity);
-        if (ID == 158) return new GT_Container_MultiMachine				(player.inventory, (IGregTechTileEntity)				tTileEntity);
+        // free 157-158
         if (ID == 159) return new GT_Container_BasicMachine				(player.inventory, (IGregTechTileEntity)				tTileEntity);
         if (ID == 160) return new GT_Container_AdvancedWorkbench		(player.inventory, (IGregTechTileEntity)				tTileEntity);
         if (ID == 161) return new GT_Container_BronzeWorkbench			(player.inventory, (IGregTechTileEntity)				tTileEntity);
@@ -317,9 +316,8 @@ public class GT_GUIHandler implements IGuiHandler {
         if (ID == 153) return new GT_GUIContainer_Hatch_Input				(player.inventory, (IGregTechTileEntity)tTileEntity);
         if (ID == 154) return new GT_GUIContainer_Hatch_Output				(player.inventory, (IGregTechTileEntity)tTileEntity);
         if (ID == 155) return new GT_GUIContainer_MaintenanceHatch			(player.inventory, (IGregTechTileEntity)tTileEntity);
-        if (ID == 156) return new GT_GUIContainer_MultiMachine				(player.inventory, (IGregTechTileEntity)tTileEntity, "GT_Multi_GasTurbine.name", "MultiblockDisplay.png");
-        if (ID == 157) return new GT_GUIContainer_MultiMachine				(player.inventory, (IGregTechTileEntity)tTileEntity, "GT_Multi_SteamTurbine.name", "MultiblockDisplay.png");
-        if (ID == 158) return new GT_GUIContainer_MultiMachine				(player.inventory, (IGregTechTileEntity)tTileEntity, "GT_Multi_ThermalBoiler.name", "MultiblockDisplay.png");
+        if (ID == 156) return new GT_GUIContainer_MultiMachine				(player.inventory, (IGregTechTileEntity)tTileEntity);
+        // free 157-158
         if (ID == 159) return new GT_GUIContainer_BasicMachine_Lathe		(player.inventory, (IGregTechTileEntity)tTileEntity, "GT_Lathe.name", "Lathe.png");
         if (ID == 160) return new GT_GUIContainer_AdvancedWorkbench			(player.inventory, (IGregTechTileEntity)tTileEntity);
         if (ID == 161) return new GT_GUIContainer_BronzeWorkbench			(player.inventory, (IGregTechTileEntity)tTileEntity);

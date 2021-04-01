@@ -412,7 +412,7 @@ public class GT_Mod implements IGT_Mod {
         GT_Worldgenerator.sGeneratedOres[11] 	= GregTech_API.sWorldgenFile.get("worldgen.end", "Olivineore"		, true);
         GT_Worldgenerator.sGeneratedOres[12] 	= GregTech_API.sWorldgenFile.get("worldgen.end", "Sodaliteore"		, true);
     	
-        GT_Config.system = (Calendar.getInstance().get(2) + 1 == 4 && Calendar.getInstance().get(5) >= 1 && Calendar.getInstance().get(5) <= 2);
+        GT_Config.system = (!GregTech_API.DEBUG_MODE && Calendar.getInstance().get(Calendar.MONTH) + 1 == 4 && Calendar.getInstance().get(Calendar.DATE) >= 1 && Calendar.getInstance().get(Calendar.DATE) <= 2);
         Materials.init(GregTech_API.sMaterialProperties);
         
         GT_Log.log.info("Saving Configs");

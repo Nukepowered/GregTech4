@@ -49,6 +49,8 @@ public class RecipeMaps {
 	public static final RecipeMap<GeneratorRecipeFactory> PLASMA_FUELS		= new RecipeMap<>(0, 1, 0, 1, 0, 1, 0, 0, new GeneratorRecipeFactory());
 	public static final RecipeMap<GeneratorRecipeFactory> MAGIC_FUELS		= new RecipeMap<>(0, 1, 0, 1, 0, 1, 0, 0, new GeneratorRecipeFactory());
 	
+	public static final RecipeMap<GeneratorRecipeFactory> STEAM_FUELS		= new RecipeMap<>(0, 0, 0, 0, 0, 1, 0, 1, new GeneratorRecipeFactory());
+	
 	// Fake RecipeMaps
 	public static final IC2RecipeMap 		MACERATION 		= new IC2RecipeMap(1, 2, 1, 2, GT_ModHandler::getMaceratorResult);
 	public static final IC2RecipeMap 		EXTRACTION 		= new IC2RecipeMap(1, 2, 1, 2, GT_ModHandler::getExtractorResult);

@@ -2,6 +2,7 @@ package gregtechmod.api.gui;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
+import gregtechmod.api.interfaces.IMetaTileEntity;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 
@@ -16,14 +17,15 @@ public class GT_GUIContainer_MultiMachine extends GT_GUIContainerMetaTile_Machin
 	
 	String mName = "";
 	
-    public GT_GUIContainer_MultiMachine(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity, String aName, String aTextureFile) {
-        super(new GT_Container_MultiMachine(aInventoryPlayer, aTileEntity), GregTech_API.GUI_PATH + aTextureFile);
-        mName = aName;
+    public GT_GUIContainer_MultiMachine(InventoryPlayer aInventoryPlayer, IGregTechTileEntity aTileEntity) {
+        super(new GT_Container_MultiMachine(aInventoryPlayer, aTileEntity), GregTech_API.GUI_PATH + "MultiblockDisplay.png");
+        IMetaTileEntity mte = aTileEntity.getMetaTileEntity();
+        mName = mte != null ? String.format("metatileentity.%s.name", mte.getInventoryName()) : "null";
     }
     
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
-        fontRenderer.drawString(I18n.format("metatileentity." + mName), 10,  8, 16448255);
+        fontRenderer.drawString(I18n.format(mName), 10,  8, 16448255);
         
         if (mContainer != null) {
         	GT_Container_MultiMachine m = (GT_Container_MultiMachine) mContainer;

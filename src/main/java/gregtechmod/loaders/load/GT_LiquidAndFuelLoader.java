@@ -82,6 +82,9 @@ public class GT_LiquidAndFuelLoader implements Runnable {
         RecipeMaps.MAGIC_FUELS.factory().EUt(24).duration(3125).input(new ItemStack(Items.ghast_tear, 1)).buildAndRegister();
         RecipeMaps.MAGIC_FUELS.factory().EUt(20).duration(Materials.NetherStar.mFuelPower * 2 / 20).input(new ItemStack(Blocks.beacon, 1)).buildAndRegister();
 		
+        FluidStack steam = null;
+        if ((steam = GT_ModHandler.getSteam(2)) != null) 	 RecipeMaps.STEAM_FUELS.factory().EUt(1).duration(1).input(steam).buildAndRegister();
+        if ((steam = GT_ModHandler.getIC2Steam(2)) != null)  RecipeMaps.STEAM_FUELS.factory().EUt(1).duration(1).input(steam).buildAndRegister();
         
 		GT_ModHandler.addBoilerFuel(GT_Utility.getFluidForFilledItem(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.NitroCoalFuel)), 18000);
 		GT_ModHandler.addBoilerFuel(GT_Utility.getFluidForFilledItem(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Lithium)), 24000);

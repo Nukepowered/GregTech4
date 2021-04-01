@@ -179,7 +179,7 @@ public class Recipe {
 			itemAmountInSlots[i] = itemInSlot == null ? 0 : itemInSlot.stackSize;
 		}
 		
-		for (Ingredient ingr : itemInputs) {
+		for (Ingredient ingr : getInputs()) {
 			int ingrAmount = ingr.getCount();
 			boolean consumed = false;
 			
@@ -213,7 +213,7 @@ public class Recipe {
 			fluidAmountInSlots[i] = fluidInSlot == null ? 0 : fluidInSlot.amount;
 		}
 		
-		for (FluidStack ingr : fluidInputs) {
+		for (FluidStack ingr : getFluidInputs()) {
 			int ingrAmount = ingr.amount;
 			boolean consumed = false;
 			

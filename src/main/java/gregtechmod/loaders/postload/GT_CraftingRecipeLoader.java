@@ -664,6 +664,10 @@ public class GT_CraftingRecipeLoader implements Runnable {
     		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,109), new Object[] {"XXX", "GMG", "XCX", 'G', OrePrefixes.gearGt.get(Materials.Steel), 'X', new ItemStack(GregTech_API.sBlockList[1], 1,34), 'M', GT_OreDictNames.craftingRawMachineTier02, 'C', OrePrefixes.circuit.get(Materials.Advanced)});
         }
     	
+    	if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.gregtechrecipes, "multi_plasmaturbine", true)) {
+    		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,117), new Object[] {"XCX", "XMX", "GCG", 'G', OrePrefixes.gearGt.get(Materials.TungstenSteel), 'X', new ItemStack(GregTech_API.sBlockList[1], 1,37), 'M', GT_OreDictNames.craftingRawMachineTier04, 'C', OrePrefixes.circuit.get(Materials.Master)});
+        }
+    	
     	if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.gregtechrecipes, "multi_thermalboiler", true)) {
     		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,110), new Object[] {"XMX", "GCG", "XMX", 'G', OrePrefixes.gearGt.get(Materials.Titanium), 'X', new ItemStack(GregTech_API.sBlockList[1], 1,35), 'M', GT_OreDictNames.craftingCentrifuge, 'C', OrePrefixes.circuit.get(Materials.Elite)});
     		GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,110), new Object[] {"XMX", "GCG", "XMX", 'G', OrePrefixes.gearGt.get(Materials.TungstenSteel), 'X', new ItemStack(GregTech_API.sBlockList[1], 1,35), 'M', GT_OreDictNames.craftingCentrifuge, 'C', OrePrefixes.circuit.get(Materials.Elite)});

@@ -37,7 +37,7 @@ import net.minecraftforge.fluids.FluidStack;
 public class GT_MetaTileEntity_Multi_ThermalBoiler extends MTEWorkableMultiblock {
 
 	@Override public boolean isFacingValid(byte aFacing)			{return aFacing > 1;}
-	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 158, GregTech_API.gregtechmod);}
+	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 156, GregTech_API.gregtechmod);}
 	@Override public int maxEUOutput() 								{return 400;}
 	
 	public GT_MetaTileEntity_Multi_ThermalBoiler(int aID, String mName) {

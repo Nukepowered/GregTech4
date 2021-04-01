@@ -23,8 +23,8 @@ public class GT_MetaTileEntity_Hatch_Dynamo extends MetaTileEntity {
 	@Override public boolean isOutputFacing(byte aSide)				{return aSide==getBaseMetaTileEntity().getFrontFacing();}
 	@Override public int getInvSize()								{return 0;}
 	@Override public int getMinimumStoredEU()						{return 512;}
-    @Override public int maxEUOutput()								{return Math.max(0, Math.min(getEUVar() - getMinimumStoredEU(), GregTech_API.VOLTAGE_EXTREME));}
-    @Override public int maxEUStore()								{return GregTech_API.VOLTAGE_EXTREME * 4 + getMinimumStoredEU();}
+    @Override public int maxEUOutput()								{return Math.max(0, Math.min(getEUVar() - getMinimumStoredEU(), GregTech_API.VOLTAGE_INSANE));}
+    @Override public int maxEUStore()								{return GregTech_API.VOLTAGE_INSANE * 4 + getMinimumStoredEU();}
     @Override public String getSpecialVoltageToolTip()				{return "metatileentity.TileEntity_EUp_OUT.Dynamo_Hatch.tooltip";}
 	
 	@Override

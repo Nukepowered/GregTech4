@@ -103,6 +103,12 @@ public class GeneratorRecipeLogic extends RecipeLogic {
 	}
 	
 	@Override
+	public void stop() {
+		super.stop();
+		leftEU = 0;
+	}
+	
+	@Override
 	public void saveToNBT(NBTTagCompound data) {
 		super.saveToNBT(data);
 		NBTTagCompound tag = data.getCompoundTag("RecipeLogic");

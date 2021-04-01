@@ -4,8 +4,9 @@ import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.util.GT_Config;
 import gregtechmod.api.util.GT_OreDictUnificator;
-import gregtechmod.common.tileentities.machines.multi.GT_MetaTileEntity_Multi_SteamTurbine;
-import gregtechmod.common.tileentities.machines.multi.GT_MetaTileEntity_Multi_GasTurbine;
+import gregtechmod.common.tileentities.energy.production.multi.GT_MetaTileEntity_Multi_GasTurbine;
+import gregtechmod.common.tileentities.energy.production.multi.GT_MetaTileEntity_Multi_SteamTurbine;
+import gregtechmod.common.tileentities.energy.production.multi.MultiPlasmaTurbine;
 
 import java.util.List;
 import java.util.Random;
@@ -27,7 +28,13 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class GT_BlockMetaID_Block extends Block {
 	
-	public static IIcon[] mIcons = new IIcon[52], mIconGasTurbine = new IIcon[9], mIconGasTurbineActive = new IIcon[9], mIconSteamTurbine = new IIcon[9], mIconSteamTurbineActive = new IIcon[9];
+	public static IIcon[] mIcons 	= new IIcon[52],
+			mIconGasTurbine 		= new IIcon[9],
+			mIconGasTurbineActive 	= new IIcon[9],
+			mIconSteamTurbine 		= new IIcon[9],
+			mIconSteamTurbineActive = new IIcon[9],
+			mIconPlasmaTurbine 		= new IIcon[9],
+			mIconPlasmaTurbineActive= new IIcon[9];
 	
 	public static boolean mConnectedMachineTextures = true;
 	
@@ -49,6 +56,8 @@ public class GT_BlockMetaID_Block extends Block {
     	for (int i = 0; i < mIconGasTurbineActive	.length; i++) mIconGasTurbineActive		[i] = par1IconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + (GT_Config.system?"troll":"tile.GasTurbine/GasTurbineActive" + (i+1)));
     	for (int i = 0; i < mIconSteamTurbine		.length; i++) mIconSteamTurbine			[i] = par1IconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + (GT_Config.system?"troll":"tile.SteamTurbine/SteamTurbine" + (i+1)));
     	for (int i = 0; i < mIconSteamTurbineActive	.length; i++) mIconSteamTurbineActive	[i] = par1IconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + (GT_Config.system?"troll":"tile.SteamTurbine/SteamTurbineActive" + (i+1)));
+    	for (int i = 0; i < mIconPlasmaTurbine		.length; i++) mIconPlasmaTurbine		[i] = par1IconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + (GT_Config.system?"troll":"tile.PlasmaTurbine/PlasmaTurbine" + (i+1)));
+    	for (int i = 0; i < mIconPlasmaTurbineActive.length; i++) mIconPlasmaTurbineActive	[i] = par1IconRegister.registerIcon(GregTech_API.TEXTURE_PATH_BLOCK + (GT_Config.system?"troll":"tile.PlasmaTurbine/PlasmaTurbineActive" + (i+1)));
     	
     	if(GregTech_API.sPostloadFinished) {
 	    	GregTech_API.registerCover(GT_OreDictUnificator.getOres("plateSilver")			, mIcons[ 3]);
@@ -266,6 +275,62 @@ public class GT_BlockMetaID_Block extends Block {
         		}
         		if (null != (tTileEntity = aWorld.getTileEntity(xCoord, yCoord - 1, zCoord + (aSide==5?+1:-1))) && tTileEntity instanceof IGregTechTileEntity && ((IGregTechTileEntity)tTileEntity).getFrontFacing() == aSide && null != (tMetaTileEntity = ((IGregTechTileEntity)tTileEntity).getMetaTileEntity()) && tMetaTileEntity instanceof GT_MetaTileEntity_Multi_GasTurbine) {
         			if (((IGregTechTileEntity)tTileEntity).isActive()) return mIconGasTurbineActive[2];  return mIconGasTurbine[2];
+        		}
+        	}
+        }
+        
+        if (tMeta == 15) {
+        	TileEntity tTileEntity;
+        	Object tMetaTileEntity;
+        	if (aSide == 2 || aSide == 3) {
+        		if (null != (tTileEntity = aWorld.getTileEntity(xCoord + (aSide==3?+1:-1), yCoord - 1, zCoord)) && tTileEntity instanceof IGregTechTileEntity && ((IGregTechTileEntity)tTileEntity).getFrontFacing() == aSide && null != (tMetaTileEntity = ((IGregTechTileEntity)tTileEntity).getMetaTileEntity()) && tMetaTileEntity instanceof MultiPlasmaTurbine) {
+        			if (((IGregTechTileEntity)tTileEntity).isActive()) return mIconPlasmaTurbineActive[0];  return mIconPlasmaTurbine[0];
+        		}
+        		if (null != (tTileEntity = aWorld.getTileEntity(xCoord + (aSide==3?+1:-1), yCoord    , zCoord)) && tTileEntity instanceof IGregTechTileEntity && ((IGregTechTileEntity)tTileEntity).getFrontFacing() == aSide && null != (tMetaTileEntity = ((IGregTechTileEntity)tTileEntity).getMetaTileEntity()) && tMetaTileEntity instanceof MultiPlasmaTurbine) {
+        			if (((IGregTechTileEntity)tTileEntity).isActive()) return mIconPlasmaTurbineActive[3];  return mIconPlasmaTurbine[3];
+        		}
+        		if (null != (tTileEntity = aWorld.getTileEntity(xCoord + (aSide==3?+1:-1), yCoord + 1, zCoord)) && tTileEntity instanceof IGregTechTileEntity && ((IGregTechTileEntity)tTileEntity).getFrontFacing() == aSide && null != (tMetaTileEntity = ((IGregTechTileEntity)tTileEntity).getMetaTileEntity()) && tMetaTileEntity instanceof MultiPlasmaTurbine) {
+        			if (((IGregTechTileEntity)tTileEntity).isActive()) return mIconPlasmaTurbineActive[6];  return mIconPlasmaTurbine[6];
+        		}
+        		if (null != (tTileEntity = aWorld.getTileEntity(xCoord                   , yCoord - 1, zCoord)) && tTileEntity instanceof IGregTechTileEntity && ((IGregTechTileEntity)tTileEntity).getFrontFacing() == aSide && null != (tMetaTileEntity = ((IGregTechTileEntity)tTileEntity).getMetaTileEntity()) && tMetaTileEntity instanceof MultiPlasmaTurbine) {
+        			if (((IGregTechTileEntity)tTileEntity).isActive()) return mIconPlasmaTurbineActive[1];  return mIconPlasmaTurbine[1];
+        		}
+        		if (null != (tTileEntity = aWorld.getTileEntity(xCoord                   , yCoord + 1, zCoord)) && tTileEntity instanceof IGregTechTileEntity && ((IGregTechTileEntity)tTileEntity).getFrontFacing() == aSide && null != (tMetaTileEntity = ((IGregTechTileEntity)tTileEntity).getMetaTileEntity()) && tMetaTileEntity instanceof MultiPlasmaTurbine) {
+        			if (((IGregTechTileEntity)tTileEntity).isActive()) return mIconPlasmaTurbineActive[7];  return mIconPlasmaTurbine[7];
+        		}
+        		if (null != (tTileEntity = aWorld.getTileEntity(xCoord + (aSide==2?+1:-1), yCoord + 1, zCoord)) && tTileEntity instanceof IGregTechTileEntity && ((IGregTechTileEntity)tTileEntity).getFrontFacing() == aSide && null != (tMetaTileEntity = ((IGregTechTileEntity)tTileEntity).getMetaTileEntity()) && tMetaTileEntity instanceof MultiPlasmaTurbine) {
+        			if (((IGregTechTileEntity)tTileEntity).isActive()) return mIconPlasmaTurbineActive[8];  return mIconPlasmaTurbine[8];
+        		}
+        		if (null != (tTileEntity = aWorld.getTileEntity(xCoord + (aSide==2?+1:-1), yCoord    , zCoord)) && tTileEntity instanceof IGregTechTileEntity && ((IGregTechTileEntity)tTileEntity).getFrontFacing() == aSide && null != (tMetaTileEntity = ((IGregTechTileEntity)tTileEntity).getMetaTileEntity()) && tMetaTileEntity instanceof MultiPlasmaTurbine) {
+        			if (((IGregTechTileEntity)tTileEntity).isActive()) return mIconPlasmaTurbineActive[5];  return mIconPlasmaTurbine[5];
+        		}
+        		if (null != (tTileEntity = aWorld.getTileEntity(xCoord + (aSide==2?+1:-1), yCoord - 1, zCoord)) && tTileEntity instanceof IGregTechTileEntity && ((IGregTechTileEntity)tTileEntity).getFrontFacing() == aSide && null != (tMetaTileEntity = ((IGregTechTileEntity)tTileEntity).getMetaTileEntity()) && tMetaTileEntity instanceof MultiPlasmaTurbine) {
+        			if (((IGregTechTileEntity)tTileEntity).isActive()) return mIconPlasmaTurbineActive[2];  return mIconPlasmaTurbine[2];
+        		}
+        	} else if (aSide == 4 || aSide == 5) {
+        		if (null != (tTileEntity = aWorld.getTileEntity(xCoord, yCoord - 1, zCoord + (aSide==4?+1:-1))) && tTileEntity instanceof IGregTechTileEntity && ((IGregTechTileEntity)tTileEntity).getFrontFacing() == aSide && null != (tMetaTileEntity = ((IGregTechTileEntity)tTileEntity).getMetaTileEntity()) && tMetaTileEntity instanceof MultiPlasmaTurbine) {
+        			if (((IGregTechTileEntity)tTileEntity).isActive()) return mIconPlasmaTurbineActive[0];  return mIconPlasmaTurbine[0];
+        		}
+        		if (null != (tTileEntity = aWorld.getTileEntity(xCoord, yCoord    , zCoord + (aSide==4?+1:-1))) && tTileEntity instanceof IGregTechTileEntity && ((IGregTechTileEntity)tTileEntity).getFrontFacing() == aSide && null != (tMetaTileEntity = ((IGregTechTileEntity)tTileEntity).getMetaTileEntity()) && tMetaTileEntity instanceof MultiPlasmaTurbine) {
+        			if (((IGregTechTileEntity)tTileEntity).isActive()) return mIconPlasmaTurbineActive[3];  return mIconPlasmaTurbine[3];
+        		}
+        		if (null != (tTileEntity = aWorld.getTileEntity(xCoord, yCoord + 1, zCoord + (aSide==4?+1:-1))) && tTileEntity instanceof IGregTechTileEntity && ((IGregTechTileEntity)tTileEntity).getFrontFacing() == aSide && null != (tMetaTileEntity = ((IGregTechTileEntity)tTileEntity).getMetaTileEntity()) && tMetaTileEntity instanceof MultiPlasmaTurbine) {
+        			if (((IGregTechTileEntity)tTileEntity).isActive()) return mIconPlasmaTurbineActive[6];  return mIconPlasmaTurbine[6];
+        		}
+        		if (null != (tTileEntity = aWorld.getTileEntity(xCoord, yCoord - 1, zCoord                   )) && tTileEntity instanceof IGregTechTileEntity && ((IGregTechTileEntity)tTileEntity).getFrontFacing() == aSide && null != (tMetaTileEntity = ((IGregTechTileEntity)tTileEntity).getMetaTileEntity()) && tMetaTileEntity instanceof MultiPlasmaTurbine) {
+        			if (((IGregTechTileEntity)tTileEntity).isActive()) return mIconPlasmaTurbineActive[1];  return mIconPlasmaTurbine[1];
+        		}
+        		if (null != (tTileEntity = aWorld.getTileEntity(xCoord, yCoord + 1, zCoord                   )) && tTileEntity instanceof IGregTechTileEntity && ((IGregTechTileEntity)tTileEntity).getFrontFacing() == aSide && null != (tMetaTileEntity = ((IGregTechTileEntity)tTileEntity).getMetaTileEntity()) && tMetaTileEntity instanceof MultiPlasmaTurbine) {
+        			if (((IGregTechTileEntity)tTileEntity).isActive()) return mIconPlasmaTurbineActive[7];  return mIconPlasmaTurbine[7];
+        		}
+        		if (null != (tTileEntity = aWorld.getTileEntity(xCoord, yCoord + 1, zCoord + (aSide==5?+1:-1))) && tTileEntity instanceof IGregTechTileEntity && ((IGregTechTileEntity)tTileEntity).getFrontFacing() == aSide && null != (tMetaTileEntity = ((IGregTechTileEntity)tTileEntity).getMetaTileEntity()) && tMetaTileEntity instanceof MultiPlasmaTurbine) {
+        			if (((IGregTechTileEntity)tTileEntity).isActive()) return mIconPlasmaTurbineActive[8];  return mIconPlasmaTurbine[8];
+        		}
+        		if (null != (tTileEntity = aWorld.getTileEntity(xCoord, yCoord    , zCoord + (aSide==5?+1:-1))) && tTileEntity instanceof IGregTechTileEntity && ((IGregTechTileEntity)tTileEntity).getFrontFacing() == aSide && null != (tMetaTileEntity = ((IGregTechTileEntity)tTileEntity).getMetaTileEntity()) && tMetaTileEntity instanceof MultiPlasmaTurbine) {
+        			if (((IGregTechTileEntity)tTileEntity).isActive()) return mIconPlasmaTurbineActive[5];  return mIconPlasmaTurbine[5];
+        		}
+        		if (null != (tTileEntity = aWorld.getTileEntity(xCoord, yCoord - 1, zCoord + (aSide==5?+1:-1))) && tTileEntity instanceof IGregTechTileEntity && ((IGregTechTileEntity)tTileEntity).getFrontFacing() == aSide && null != (tMetaTileEntity = ((IGregTechTileEntity)tTileEntity).getMetaTileEntity()) && tMetaTileEntity instanceof MultiPlasmaTurbine) {
+        			if (((IGregTechTileEntity)tTileEntity).isActive()) return mIconPlasmaTurbineActive[2];  return mIconPlasmaTurbine[2];
         		}
         	}
         }

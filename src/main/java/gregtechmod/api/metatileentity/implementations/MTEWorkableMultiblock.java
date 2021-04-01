@@ -40,7 +40,7 @@ public abstract class MTEWorkableMultiblock extends MetaTileEntityMultiblock imp
 	
     @Override
     public ItemStack getStackIn(int idx) {
-    	return super.getStackInSlot(idx);
+    	return this.getStackInSlot(idx);
     }
     
 	@Override

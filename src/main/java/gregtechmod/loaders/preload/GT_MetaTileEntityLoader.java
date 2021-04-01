@@ -9,6 +9,9 @@ import gregtechmod.api.util.GT_Log;
 import gregtechmod.common.recipe.RecipeMaps;
 import gregtechmod.common.tileentities.automation.*;
 import gregtechmod.common.tileentities.energy.production.*;
+import gregtechmod.common.tileentities.energy.production.multi.GT_MetaTileEntity_Multi_GasTurbine;
+import gregtechmod.common.tileentities.energy.production.multi.GT_MetaTileEntity_Multi_SteamTurbine;
+import gregtechmod.common.tileentities.energy.production.multi.MultiPlasmaTurbine;
 import gregtechmod.common.tileentities.energy.storage.*;
 import gregtechmod.common.tileentities.frames.*;
 import gregtechmod.common.tileentities.machines.*;
@@ -125,7 +128,8 @@ public class GT_MetaTileEntityLoader implements Runnable {
 	    new GT_MetaTileEntity_Scanner					(114, "GT_Scanner"				, RecipeMaps.SCANNING);
 	    new GT_MetaTileEntity_Extruder					(115, "GT_Extruder"				, RecipeMaps.EXTRUDING);
 	    new GT_MetaTileEntity_ElectricRetrieverAdvanced	(116, "GT_RetrieverAdvanced");
-		
+		new MultiPlasmaTurbine							(117, "GT_Multi_PlasmaTurbine");
+	    
 	    new GT_MetaTileEntity_ElectricTypeFilter		(126, "GT_E_T_Filter");
 	    new GT_MetaTileEntity_ElectricFilter			(127, "GT_E_Filter");
 		
