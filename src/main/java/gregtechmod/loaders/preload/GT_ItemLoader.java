@@ -270,7 +270,6 @@ public class GT_ItemLoader implements Runnable {
 		
 		GregTech_API.sItemList[9] = new GT_MetaGenerated_Item_02();
 		GT_Items.Circuit_Integrated.set((GregTech_API.sItemList[10] = new GT_IntegratedCircuit_Item("GregTech_Integrated_Circuit")));
-		GT_OreDictUnificator.addToBlacklist(GT_Items.Circuit_Integrated.getWildcard(1));
 		
 		GT_Log.log.info("Register Regular Items.");
 		GT_Items.Display_Fluid.set((GregTech_API.sItemList[15] = new GT_FluidDisplayItem("GregTech_FluidDisplay"))); // FIXME REMOVE
@@ -427,6 +426,10 @@ public class GT_ItemLoader implements Runnable {
 				GameRegistry.registerItem(item, item.getUnlocalizedName());
 			}
 		}
+		
+		GT_Log.log.info("Loading item related stuff"); 
+		GT_OreDictUnificator.addToBlacklist(GT_Items.Circuit_Integrated.getWildcard(1));
+		
 		
         GT_Log.log.info("Hiding certain Items from NEI.");
 		try {

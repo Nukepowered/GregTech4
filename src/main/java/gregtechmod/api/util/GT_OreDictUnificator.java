@@ -104,7 +104,6 @@ public class GT_OreDictUnificator {
 		isAddingOre++;
 		aStack = GT_Utility.copyAmount(1, aStack);
 		if (!aAlreadyRegistered) sToRegister.put(aStack, aName.toString());
-		addAssociation(aName, aStack);
 		if (aOverwrite || GT_Utility.isStackInvalid(sName2OreMap.get(aName.toString()))) {
 			sName2OreMap.put(aName.toString(), aStack);
 		}

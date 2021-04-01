@@ -41,7 +41,6 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -850,7 +849,7 @@ public class GT_Utility {
 		return parseNumberToString(chance * 1.0D / 100.0D);
 	}
 	
-	public static int stackToInt1(ItemStack aStack) {
+	public static int stackToInt(ItemStack aStack) {
 		if (isStackInvalid(aStack)) return -1;
 		return stackToInt(aStack, aStack.getItemDamage() == GregTech_API.ITEM_WILDCARD_DAMAGE);
 	}
@@ -865,16 +864,6 @@ public class GT_Utility {
 		int code = aStack.getItem().delegate.name().hashCode();
 		code = 31 * code + (aForceWildcard ? GregTech_API.ITEM_WILDCARD_DAMAGE : Items.feather.getDamage(aStack));
 		return code;
-	}
-	
-	public static int stackToInt(ItemStack aStack) {
-		if (isStackInvalid(aStack)) return 0;
-		return Item.getIdFromItem(aStack.getItem()) | (Items.feather.getDamage(aStack) << 16);
-	}
-	
-	public static int stackToWildcard(ItemStack aStack) {
-		if (isStackInvalid(aStack)) return 0;
-		return Item.getIdFromItem(aStack.getItem()) | (GregTech_API.ITEM_WILDCARD_DAMAGE << 16);
 	}
 	
 	public static int fluidStackToInt(FluidStack fluid) {

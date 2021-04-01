@@ -529,7 +529,7 @@ public class GregTech_API {
 	 * Best is you make a Runnable with all Cover Registrations, and add it to the Cover Registration ArrayList ontop of this File.
 	 */
 	public static void registerCover(ItemStack aStack, IIcon aCover) {
-		int tStack = GT_Utility.stackToInt1(aStack);
+		int tStack = GT_Utility.stackToInt(aStack);
 		if (tStack != 0 && sCovers.get(tStack) == null) {
 			sCoversItems.put(tStack, aStack.copy());
 			sCovers.put(tStack, aCover);
@@ -574,7 +574,7 @@ public class GregTech_API {
 	 * returns a Cover behavior, guaranteed to not return null after preload
 	 */
 	public static GT_CoverBehavior getCoverBehavior(ItemStack aStack) {
-		return getCoverBehavior(GT_Utility.stackToInt1(aStack));
+		return getCoverBehavior(GT_Utility.stackToInt(aStack));
 	}
 	
 	/**

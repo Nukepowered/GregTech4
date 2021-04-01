@@ -25,7 +25,7 @@ public abstract class GT_Cover_RedstoneWirelessBase extends GT_CoverBehavior {
 	public boolean onCoverRightclick(byte aSide, int aCoverID, int aCoverVariable, ICoverable aTileEntity, EntityPlayer aPlayer, float aX, float aY, float aZ) {
 		if (((aX > 0.375 && aX < 0.625) || aSide > 3) && ((aY > 0.375 && aY < 0.625) || aSide < 2) && ((aZ > 0.375 && aZ < 0.625) || aSide == 2 || aSide == 3)) {
 			GregTech_API.sWirelessRedstone.put(aCoverVariable, (byte)0);
-			aCoverVariable = GT_Utility.stackToInt1(aPlayer.inventory.getCurrentItem());
+			aCoverVariable = GT_Utility.stackToInt(aPlayer.inventory.getCurrentItem());
 			aTileEntity.setCoverDataAtSide(aSide, aCoverVariable);
 			GT_Utility.sendChatToPlayer(aPlayer, new ChatComponentTranslation("metatileentity.GT_Tesseract.message.1", aCoverVariable));
 			return true;

@@ -96,7 +96,7 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 		
 		for (ItemStack item : input) {
 			if (GT_Utility.isStackValid(item)) {
-				List<Recipe> recipesItems = MAPPINGS.get(GT_Utility.stackToInt1(item));
+				List<Recipe> recipesItems = MAPPINGS.get(GT_Utility.stackToInt(item));
 				List<Recipe> recipesItemsWild = MAPPINGS.get(GT_Utility.stackToInt(item, true));
 				if (recipesItems != null) 
 					recipesTotal.addAll(recipesItems);
@@ -175,7 +175,7 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 		
 		for (Ingredient ingr : recipe.getInputs()) {
 			for (ItemStack var : ingr.getVariants()) {
-				int value = GT_Utility.stackToInt1(var);
+				int value = GT_Utility.stackToInt(var);
 				int wild = GT_Utility.stackToInt(var, true);
 				List<Recipe> var1 = MAPPINGS.get(value);
 				List<Recipe> var2 = MAPPINGS.get(wild);
