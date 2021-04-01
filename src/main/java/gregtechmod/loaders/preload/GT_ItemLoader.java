@@ -184,20 +184,20 @@ public class GT_ItemLoader implements Runnable {
 		GT_MetaItem_Component.addItem(88, GT_OreDictNames.craftingLock					, null);
 		GT_MetaItem_Component.addItem(89, GT_OreDictNames.craftingMuffler				, null);
 		
-		GT_MetaItem_Component.addItem(96, "gearGtIron"					, null);
-		GT_OreDictUnificator.registerOreLater("craftingGearTier01"			, GT_MetaItem_Component.instance.getUnunifiedStack( 96, 1));
-		GT_MetaItem_Component.addItem(97, "gearGtBronze"				, null);
-		GT_OreDictUnificator.registerOreLater("craftingGearTier01"			, GT_MetaItem_Component.instance.getUnunifiedStack( 97, 1));
-		GT_MetaItem_Component.addItem(98, "gearGtSteel"					, null);
-		GT_OreDictUnificator.registerOreLater("craftingGearTier02"			, GT_MetaItem_Component.instance.getUnunifiedStack( 98, 1));
-		GT_MetaItem_Component.addItem(99, "gearGtTitanium"				, null);
-		GT_OreDictUnificator.registerOreLater("craftingGearTier03"			, GT_MetaItem_Component.instance.getUnunifiedStack( 99, 1));
-		GT_MetaItem_Component.addItem(100, "gearGtTungstenSteel"		, null);
-		GT_OreDictUnificator.registerOreLater("craftingGearTier03"			, GT_MetaItem_Component.instance.getUnunifiedStack(100, 1));
-		GT_MetaItem_Component.addItem(101, "gearGtIridium"				, null);
-		GT_OreDictUnificator.registerOreLater("craftingGearTier04"			, GT_MetaItem_Component.instance.getUnunifiedStack(101, 1));
-		GT_MetaItem_Component.addItem(102, "gearGtStainlessSteel"		, null);
-		GT_OreDictUnificator.registerOreLater("craftingGearTier02"			, GT_MetaItem_Component.instance.getUnunifiedStack(102, 1));
+//		GT_MetaItem_Component.addItem(96, "gearGtIron"					, null);
+//		GT_OreDictUnificator.registerOreLater("craftingGearTier01"			, GT_MetaItem_Component.instance.getUnunifiedStack( 96, 1));
+//		GT_MetaItem_Component.addItem(97, "gearGtBronze"				, null);
+//		GT_OreDictUnificator.registerOreLater("craftingGearTier01"			, GT_MetaItem_Component.instance.getUnunifiedStack( 97, 1));
+//		GT_MetaItem_Component.addItem(98, "gearGtSteel"					, null);
+//		GT_OreDictUnificator.registerOreLater("craftingGearTier02"			, GT_MetaItem_Component.instance.getUnunifiedStack( 98, 1));
+//		GT_MetaItem_Component.addItem(99, "gearGtTitanium"				, null);
+//		GT_OreDictUnificator.registerOreLater("craftingGearTier03"			, GT_MetaItem_Component.instance.getUnunifiedStack( 99, 1));
+//		GT_MetaItem_Component.addItem(100, "gearGtTungstenSteel"		, null);
+//		GT_OreDictUnificator.registerOreLater("craftingGearTier03"			, GT_MetaItem_Component.instance.getUnunifiedStack(100, 1));
+//		GT_MetaItem_Component.addItem(101, "gearGtIridium"				, null);
+//		GT_OreDictUnificator.registerOreLater("craftingGearTier04"			, GT_MetaItem_Component.instance.getUnunifiedStack(101, 1));
+//		GT_MetaItem_Component.addItem(102, "gearGtStainlessSteel"		, null);
+//		GT_OreDictUnificator.registerOreLater("craftingGearTier02"			, GT_MetaItem_Component.instance.getUnunifiedStack(102, 1));
 		
 		GT_MetaGenerated_Item_01 tMetaGenerated;
 		GregTech_API.sItemList[8] = tMetaGenerated = new GT_MetaGenerated_Item_01();
