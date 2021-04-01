@@ -129,7 +129,7 @@ public class GT_MetaTileEntity_RedstoneCircuitBlock extends MetaTileEntity imple
 	}
 	
 	public void stackGateData(int aIndex, ItemStack aStack) {
-		mGateData[aIndex] = GT_Utility.stackToInt(aStack);
+		mGateData[aIndex] = GT_Utility.stackToInt1(aStack);
 		validateGateData();
 	}
 	
@@ -162,10 +162,10 @@ public class GT_MetaTileEntity_RedstoneCircuitBlock extends MetaTileEntity imple
 			    	GT_CircuitryBehavior tBehaviour = GregTech_API.sCircuitryBehaviors.get(mGate);
 			    	if (tBehaviour != null) {try{
 			    		tBehaviour.onTick(mGateData, this);
-				    	if (tBehaviour.displayItemStack(mGateData, this, 0)) mInventory[1] = GT_Utility.intToStack(mGateData[0]);
-				    	if (tBehaviour.displayItemStack(mGateData, this, 1)) mInventory[2] = GT_Utility.intToStack(mGateData[1]);
-				    	if (tBehaviour.displayItemStack(mGateData, this, 2)) mInventory[3] = GT_Utility.intToStack(mGateData[2]);
-				    	if (tBehaviour.displayItemStack(mGateData, this, 3)) mInventory[4] = GT_Utility.intToStack(mGateData[3]);
+				    	if (tBehaviour.displayItemStack(mGateData, this, 0)) mInventory[1] = GT_Utility.getCoverByID(mGateData[0]);
+				    	if (tBehaviour.displayItemStack(mGateData, this, 1)) mInventory[2] = GT_Utility.getCoverByID(mGateData[1]);
+				    	if (tBehaviour.displayItemStack(mGateData, this, 2)) mInventory[3] = GT_Utility.getCoverByID(mGateData[2]);
+				    	if (tBehaviour.displayItemStack(mGateData, this, 3)) mInventory[4] = GT_Utility.getCoverByID(mGateData[3]);
 			    	} catch(Throwable e) {GT_Log.log.catching(e);}}
 		    	}
 				getBaseMetaTileEntity().setErrorDisplayID(0);

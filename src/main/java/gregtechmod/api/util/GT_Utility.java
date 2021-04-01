@@ -862,40 +862,14 @@ public class GT_Utility {
 	public static int stackToInt(ItemStack aStack, boolean aForceWildcard) {
 		if (isStackInvalid(aStack)) return -1;
 		if (aStack.getItem().delegate == null || aStack.getItem().delegate.name() == null) throw new IllegalStateException();
-		return aStack.getItem().delegate.name().hashCode() | ((aForceWildcard ? GregTech_API.ITEM_WILDCARD_DAMAGE : Items.feather.getDamage(aStack)) << 16);
+		int code = aStack.getItem().delegate.name().hashCode();
+		code = 31 * code + (aForceWildcard ? GregTech_API.ITEM_WILDCARD_DAMAGE : Items.feather.getDamage(aStack));
+		return code;
 	}
 	
 	public static int stackToInt(ItemStack aStack) {
 		if (isStackInvalid(aStack)) return 0;
 		return Item.getIdFromItem(aStack.getItem()) | (Items.feather.getDamage(aStack) << 16);
-	}
-	
-	public static int stackArrayToInt(ItemStack[] stacks) {
-		int result = 0;
-		for (ItemStack stack : stacks) result += stackToInt(stack);
-		return result;
-	}
-	
-	public static boolean doesStackArraysSame(ItemStack[] stacks1, ItemStack[] stacks2) {
-		List<ItemStackKey> l1 = Arrays.stream(stacks1).map(stk -> ItemStackKey.from(stk)).collect(Collectors.toList());
-		List<ItemStackKey> l2 = Arrays.stream(stacks2).map(stk -> ItemStackKey.from(stk)).collect(Collectors.toList());
-		return l1.size() == l2.size() && l1.containsAll(l2);
-	}
-	
-	public static boolean doesRecipeInputsSame(ItemStack[][] s1, ItemStack[][] s2) {
-		if (s1.length == s2.length) {
-			List<List<ItemStackKey>> l1 = Arrays.stream(s1)
-					.map(arr -> Arrays.stream(arr).map(stack -> ItemStackKey.from(stack)).sorted().collect(Collectors.toList()))
-					.sorted()
-					.collect(Collectors.toList());
-			List<List<ItemStackKey>> l2 = Arrays.stream(s2)
-					.map(arr -> Arrays.stream(arr).map(stack -> ItemStackKey.from(stack)).sorted().collect(Collectors.toList()))
-					.sorted()
-					.collect(Collectors.toList());
-			return l1.containsAll(l2);
-		}
-		
-		return false;
 	}
 	
 	public static int stackToWildcard(ItemStack aStack) {
@@ -911,35 +885,8 @@ public class GT_Utility {
 		return code < 0 ? code : -code;
 	}
 	
-	public static ItemStack intToStack(int aStack) {
-		int tID = aStack&(~0>>>16), tMeta = aStack>>>16;
-		Item tItem = (Item) Item.itemRegistry.getObjectById(tID);
-		if (tID > 0 && tItem != null) return new ItemStack(tItem, 1, tMeta);
-		return null;
-	}
-
-	public static Integer[] stacksToIntegerArray(ItemStack... aStacks) {
-		Integer[] rArray = new Integer[aStacks.length];
-		for (int i = 0; i < rArray.length; i++) {
-			rArray[i] = stackToInt(aStacks[i]);
-		}
-		return rArray;
-	}
-	
-	public static int[] stacksToIntArray(ItemStack... aStacks) {
-		int[] rArray = new int[aStacks.length];
-		for (int i = 0; i < rArray.length; i++) {
-			rArray[i] = stackToInt(aStacks[i]);
-		}
-		return rArray;
-	}
-	
-	public static long stacksToLong(ItemStack aStack1, ItemStack aStack2) {
-		return stackToInt(aStack1) | (((long)stackToInt(aStack2)) << 32);
-	}
-	
-	public static boolean arrayContains(Object aObject, Object... aObjects) {
-		return Arrays.asList(aObjects).contains(aObject);
+	public static ItemStack getCoverByID(int aStack) {
+		return GregTech_API.sCoversItems.get(Integer.valueOf(aStack));
 	}
 	
 	public static boolean isBlockValid(Object aBlock) {
@@ -976,7 +923,7 @@ public class GT_Utility {
 	
 	public static boolean isItemStackInIntList(ItemStack aStack, Collection<Integer> aList) {
 		if (isStackInvalid(aStack) || aList == null) return false;
-		return aList.contains(stackToInt(aStack)) || aList.contains(stackToWildcard(aStack));
+		return aList.contains(stackToInt(aStack, false)) || aList.contains(stackToInt(aStack, true));
 	}
 	
 	public static boolean isItemStackInList(ItemStack aStack, Collection<ItemStackKey> aList) {

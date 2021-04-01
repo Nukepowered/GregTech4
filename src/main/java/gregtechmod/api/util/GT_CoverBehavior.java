@@ -15,7 +15,7 @@ public abstract class GT_CoverBehavior {
 	 * Gives all Covers which are out of these Stacks a special behavior.
 	 */
 	public GT_CoverBehavior(ItemStack[] aCovers) {
-		for (ItemStack tCover : aCovers) GregTech_API.sCoverBehaviors.put(GT_Utility.stackToInt(tCover), this);
+		for (ItemStack tCover : aCovers) GregTech_API.sCoverBehaviors.put(GT_Utility.stackToInt1(tCover), this);
 	}
 	
 	/**
@@ -29,7 +29,7 @@ public abstract class GT_CoverBehavior {
 	 * Gives Cover which is out of this Stack a special behavior.
 	 */
 	public GT_CoverBehavior(ItemStack aCover) {
-		GregTech_API.sCoverBehaviors.put(GT_Utility.stackToInt(aCover), this);
+		GregTech_API.sCoverBehaviors.put(GT_Utility.stackToInt1(aCover), this);
 	}
 	
 	/**
