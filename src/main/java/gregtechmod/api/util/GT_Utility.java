@@ -850,6 +850,21 @@ public class GT_Utility {
 		return parseNumberToString(chance * 1.0D / 100.0D);
 	}
 	
+	public static int stackToInt1(ItemStack aStack) {
+		if (isStackInvalid(aStack)) return -1;
+		return stackToInt(aStack, aStack.getItemDamage() == GregTech_API.ITEM_WILDCARD_DAMAGE);
+	}
+	
+	/**
+	 * Could be used to save items to NBT, but only to match existing stacks, not load it from this number
+	 * For saving with ability to load better to save stack direct to NBT
+	 */
+	public static int stackToInt(ItemStack aStack, boolean aForceWildcard) {
+		if (isStackInvalid(aStack)) return -1;
+		if (aStack.getItem().delegate == null || aStack.getItem().delegate.name() == null) throw new IllegalStateException();
+		return aStack.getItem().delegate.name().hashCode() | ((aForceWildcard ? GregTech_API.ITEM_WILDCARD_DAMAGE : Items.feather.getDamage(aStack)) << 16);
+	}
+	
 	public static int stackToInt(ItemStack aStack) {
 		if (isStackInvalid(aStack)) return 0;
 		return Item.getIdFromItem(aStack.getItem()) | (Items.feather.getDamage(aStack) << 16);
