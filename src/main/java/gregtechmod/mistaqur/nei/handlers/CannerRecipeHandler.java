@@ -16,6 +16,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
 public class CannerRecipeHandler extends GT_RecipeHandler {
@@ -59,8 +60,8 @@ public class CannerRecipeHandler extends GT_RecipeHandler {
 	}
 	
 	@Override
-	public CachedGT_Recipe getRecipe(Recipe irecipe) {
-		return new CachedGT_Recipe(irecipe) {
+	public CachedGT_Recipe getRecipe(Recipe irecipe, ItemStack activatedStack, boolean crafting) {
+		return new CachedGT_Recipe(irecipe, activatedStack, crafting) {
 			@Override
 			protected Pair<Integer, Integer> getInputAligment(int itemIdx) {
 				return Pair.of(35 - sOffsetX + (18 * itemIdx), 25 - sOffsetY);

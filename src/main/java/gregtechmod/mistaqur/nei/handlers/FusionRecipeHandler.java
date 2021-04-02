@@ -16,6 +16,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
 public class FusionRecipeHandler extends GT_RecipeHandler {
@@ -23,8 +24,8 @@ public class FusionRecipeHandler extends GT_RecipeHandler {
 	public class CachedFusionRecipe extends CachedGT_Recipe {
 		public int mStartEU;
 		
-		public CachedFusionRecipe(Recipe irecipe) {
-			super(irecipe);
+		public CachedFusionRecipe(Recipe irecipe, ItemStack activatedStack, boolean crafting) {
+			super(irecipe, activatedStack, crafting);
 			mStartEU = irecipe.getEUtoStart();
 		}
 		
@@ -88,8 +89,8 @@ public class FusionRecipeHandler extends GT_RecipeHandler {
 	}
 	
 	@Override
-	public CachedFusionRecipe getRecipe(Recipe irecipe) {
-		return new CachedFusionRecipe(irecipe);
+	public CachedFusionRecipe getRecipe(Recipe irecipe, ItemStack activatedStack, boolean crafting) {
+		return new CachedFusionRecipe(irecipe, activatedStack, crafting);
 	}
 
 	@Override

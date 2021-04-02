@@ -24,6 +24,8 @@ import net.minecraftforge.fluids.FluidStack;
 import org.apache.commons.lang3.tuple.Pair;
 import org.lwjgl.opengl.GL11;
 
+import com.google.common.collect.Lists;
+
 import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.NEIClientConfig;
 import codechicken.nei.PositionedStack;
@@ -58,7 +60,7 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 		
 		public int mDuration, mEUt;
 		
-		public CachedGT_Recipe(Recipe recipe) {
+		public CachedGT_Recipe(Recipe recipe, ItemStack activatedStack, boolean crafting) {
 			resources 		= new ArrayList<>();
 			products 		= new ArrayList<>();
 			fluidResources	= new ArrayList<>();
@@ -67,6 +69,7 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 			chanced			= new HashMap<>();
 			
 			List<Ingredient> inputs = recipe.getInputs();
+
 			for (int i = 0; i < inputs.size(); i++) {
 				Ingredient input = inputs.get(i);
 				Pair<Integer, Integer> offsets = getInputAligment(i);
@@ -75,7 +78,12 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 						nonConsumables.add(GT_Utility.stackToInt(s));
 					}
 				}
-				resources.add(new FixedPositionedStack(input.getVariants(), offsets.getKey(), offsets.getValue()));
+				
+				
+				List<ItemStack> items = !crafting && activatedStack != null && input.match(activatedStack) ?
+						Lists.newArrayList(GT_Utility.copyAmount(input.getCount() > 0 ? input.getCount() : 1, activatedStack)) :
+							input.getVariants();
+				resources.add(new FixedPositionedStack(items, offsets.getKey(), offsets.getValue()));
 			}
 			
 			int offset = 0;
@@ -155,7 +163,7 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 	
 	public abstract RecipeMap<?> getRecipeList();
 	
-	public abstract CachedGT_Recipe getRecipe(Recipe irecipe);
+	public abstract CachedGT_Recipe getRecipe(Recipe irecipe, ItemStack activatedStack, boolean crafting);
 	
 	protected void provideTooltip(GuiRecipe gui, ItemStack stack, List<String> currenttip, CachedGT_Recipe recipe, Point relMouse) {
 		for (PositionedFluidStack fluid : recipe.fluidResources) {
@@ -282,7 +290,7 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 			this.loadCraftingRecipes((FluidStack) results[0]);
 		} else if(outputId.equals(getRecipeId())) {
 			for (Recipe irecipe : getRecipeList().getRecipes()) {
-				arecipes.add(getRecipe(irecipe));
+				arecipes.add(getRecipe(irecipe, null, false));
 			}
 		} else super.loadCraftingRecipes(outputId, results);
 	}
@@ -300,7 +308,7 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 	public void loadCraftingRecipes(ItemStack result) {
 		FluidStack fluid = GT_Utility.getFluidForFilledItem(result);
 		for (Recipe irecipe : getRecipeList().getRecipes()) {
-			CachedGT_Recipe recipe = getRecipe(irecipe);
+			CachedGT_Recipe recipe = getRecipe(irecipe, result, true);
 			if (recipe.contains(recipe.products,result) || irecipe.getFluidOutputs().contains(fluid)) {
 				arecipes.add(recipe);
 			}
@@ -311,7 +319,7 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
 	public void loadUsageRecipes(ItemStack ingredient) {
 		FluidStack fluid = GT_Utility.getFluidForFilledItem(ingredient);
 		for (Recipe irecipe : getRecipeList().getRecipes()) {
-			CachedGT_Recipe recipe = getRecipe(irecipe);
+			CachedGT_Recipe recipe = getRecipe(irecipe, ingredient, false);
 			if (recipe.contains(recipe.resources,ingredient) || irecipe.getFluidInputs().contains(fluid)) {
 				arecipes.add(recipe);
 			}
@@ -321,14 +329,14 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
     public void loadUsageRecipes(FluidStack ingredient) {
     	for (Recipe irecipe : getRecipeList().getRecipes()) {
 			if (irecipe.getFluidInputs().contains(ingredient)) {
-				arecipes.add(getRecipe(irecipe));
+				arecipes.add(getRecipe(irecipe, null, false));
 				continue;
 			}
 			
 			for (Ingredient ingr : irecipe.getInputs()) {
 				ItemStack cell = GT_Utility.fillFluidContainer(ingredient, GT_Items.Cell_Empty.get(1));
 				if (ingr.match(cell)) {
-					arecipes.add(getRecipe(irecipe));
+					arecipes.add(getRecipe(irecipe, cell, false));
 				}
 			}
 		}
@@ -337,14 +345,14 @@ public abstract class GT_RecipeHandler extends TemplateRecipeHandler {
     public void loadCraftingRecipes(FluidStack result) {
 		for (Recipe irecipe : getRecipeList().getRecipes()) {
 			if (irecipe.getFluidOutputs().contains(result)) {
-				arecipes.add(getRecipe(irecipe));
+				arecipes.add(getRecipe(irecipe, null, true));
 				continue;
 			}
 			
 			for (ItemStack stack : irecipe.getAllOutputs()) {
 				FluidStack stack1 = GT_Utility.getFluidForFilledItem(stack);
 				if (stack1 != null && result.isFluidEqual(stack1)) {
-					arecipes.add(getRecipe(irecipe));
+					arecipes.add(getRecipe(irecipe, stack, true));
 				}
 			}
 		}

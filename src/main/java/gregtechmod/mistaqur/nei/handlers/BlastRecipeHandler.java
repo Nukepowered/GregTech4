@@ -16,6 +16,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
 public class BlastRecipeHandler extends GT_RecipeHandler {
@@ -23,8 +24,8 @@ public class BlastRecipeHandler extends GT_RecipeHandler {
 	public class CachedBlastRecipe extends CachedGT_Recipe {
 		public int minTemp;
 
-		public CachedBlastRecipe(Recipe aRecipe) {
-			super(aRecipe);
+		public CachedBlastRecipe(Recipe aRecipe, ItemStack activatedStack, boolean crafting) {
+			super(aRecipe, activatedStack, crafting);
 			minTemp = ((Integer)aRecipe.getMeta("minTemp")).intValue();
 		}
 		
@@ -78,8 +79,8 @@ public class BlastRecipeHandler extends GT_RecipeHandler {
 	}
 	
 	@Override
-	public CachedGT_Recipe getRecipe(Recipe irecipe) {
-		return new CachedBlastRecipe(irecipe);
+	public CachedGT_Recipe getRecipe(Recipe irecipe, ItemStack activatedStack, boolean crafting) {
+		return new CachedBlastRecipe(irecipe, activatedStack, crafting);
 	}
 	
 	@Override

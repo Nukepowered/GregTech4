@@ -14,6 +14,7 @@ import gregtechmod.common.recipe.RecipeMaps;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.StatCollector;
 
 /**
@@ -24,8 +25,8 @@ public class BronzeBlastRecipeHandler extends BlastRecipeHandler {
 
 	
 	public class CachedBronzeBlastRecipe extends CachedGT_Recipe {
-		public CachedBronzeBlastRecipe(Recipe recipe) {
-			super(recipe);
+		public CachedBronzeBlastRecipe(Recipe recipe, ItemStack activatedStack, boolean crafting) {
+			super(recipe, activatedStack, crafting);
 		}
 		
 		@Override
@@ -73,8 +74,8 @@ public class BronzeBlastRecipeHandler extends BlastRecipeHandler {
 	}
 	
 	@Override
-	public CachedGT_Recipe getRecipe(Recipe irecipe) {
-		return new CachedBronzeBlastRecipe(irecipe);
+	public CachedGT_Recipe getRecipe(Recipe irecipe, ItemStack activatedStack, boolean crafting) {
+		return new CachedBronzeBlastRecipe(irecipe, activatedStack, crafting);
 	}
 	
 	@Override
