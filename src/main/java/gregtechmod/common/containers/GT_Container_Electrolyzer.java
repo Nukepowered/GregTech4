@@ -1,7 +1,7 @@
 package gregtechmod.common.containers;
 
 import gregtechmod.api.gui.GT_ContainerMetaTile_Machine;
-import gregtechmod.api.gui.GT_Slot_Holo;
+import gregtechmod.api.gui.GT_FluidSlot;
 import gregtechmod.api.gui.GT_Slot_Output;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 
@@ -21,7 +21,7 @@ public class GT_Container_Electrolyzer extends GT_ContainerMetaTile_Machine {
         addSlotToContainer(new GT_Slot_Output	(mTileEntity, 3,  70,  16));
         addSlotToContainer(new GT_Slot_Output	(mTileEntity, 4,  90,  16));
         addSlotToContainer(new GT_Slot_Output	(mTileEntity, 5, 110,  16));
-        addSlotToContainer(new GT_Slot_Holo		(mTileEntity, 6, 110,  46, false, false, 64));
+        addFluidSlot(new GT_FluidSlot(mTileEntity, 6, 110, 46, 0));
     }
     
     public int getSlotCount() {

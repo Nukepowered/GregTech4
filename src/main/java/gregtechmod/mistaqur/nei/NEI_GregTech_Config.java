@@ -11,6 +11,7 @@ import gregtechmod.common.gui.GT_GUIContainer_PlasmaGenerator;
 import gregtechmod.common.gui.GT_GUIContainer_SemifluidGenerator;
 import gregtechmod.common.gui.GT_GUIContainer_ThermalGenerator;
 import gregtechmod.common.recipe.RecipeMaps;
+import gregtechmod.mistaqur.nei.handlers.AlloySmelterRecipeHandler;
 import gregtechmod.mistaqur.nei.handlers.AssemblerRecipeHandler;
 import gregtechmod.mistaqur.nei.handlers.BenderRecipeHandler;
 import gregtechmod.mistaqur.nei.handlers.BlastRecipeHandler;
@@ -31,6 +32,7 @@ import gregtechmod.mistaqur.nei.handlers.SawmillRecipeHandler;
 import gregtechmod.mistaqur.nei.handlers.VacuumFreezerRecipeHandler;
 import gregtechmod.mistaqur.nei.handlers.WiremillRecipeHandler;
 import codechicken.nei.api.IConfigureNEI;
+import codechicken.nei.guihook.GuiContainerManager;
 
 public class NEI_GregTech_Config implements IConfigureNEI {
 	public static boolean sIsAdded = true;
@@ -65,6 +67,8 @@ public class NEI_GregTech_Config implements IConfigureNEI {
 		new GeneratorHandler(RecipeMaps.PLASMA_FUELS	, "plasma_generator"	, GT_GUIContainer_PlasmaGenerator.class);
 		new GeneratorHandler(RecipeMaps.MAGIC_FUELS		, "magic_generator"		, GT_GUIContainer_MagicEnergyConverter.class);
 		
+		GuiContainerManager.addInputHandler(new GT_NEIInputHandler());
+		
         try {
     		Class.forName("codechicken.nei.api.API");
     		codechicken.nei.api.API.registerGuiOverlay(GT_GUIContainer_AdvancedWorkbench.class, "crafting", 57, 22);
@@ -89,6 +93,5 @@ public class NEI_GregTech_Config implements IConfigureNEI {
 	public String getVersion() {
 		return "(3.08)";
 	}
-
 }
 
