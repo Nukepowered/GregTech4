@@ -17,6 +17,7 @@ public class GT_GUIContainer_Centrifuge extends GT_GUIContainerMetaTile_Machine 
     
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
+    	super.drawGuiContainerForegroundLayer(par1, par2);
     	FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
         fontRenderer.drawString("Industrial", 110,  4, 4210752);
         fontRenderer.drawString("Centrifuge", 110, 12, 4210752);

@@ -1031,6 +1031,9 @@ metatileentity.GT_MetaTileEntity_BasicGenerator.tooltip=Generating: %d EU
 metatileentity.machines.input_allow=Input from Output Side allowed
 metatileentity.machines.input_deny=Input from Output Side forbidden
 metatileentity.fluid.amount=%s mb
+metatileentity.fluid.empty=Empty
+metatileentity.fluid.fill=Left-click to fill with liquid
+metatileentity.fluid.drain=Right-click to drain liquid
 
 pipes.fluid.capacity=Fluid Capacity: %s L/sec
 pipes.item.capacity=Item Capacity: %s Stacks/sec

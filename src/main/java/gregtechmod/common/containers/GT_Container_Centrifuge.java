@@ -1,7 +1,7 @@
 package gregtechmod.common.containers;
 
 import gregtechmod.api.gui.GT_ContainerMetaTile_Machine;
-import gregtechmod.api.gui.GT_Slot_Holo;
+import gregtechmod.api.gui.GT_FluidSlot;
 import gregtechmod.api.gui.GT_Slot_Output;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -20,7 +20,7 @@ public class GT_Container_Centrifuge extends GT_ContainerMetaTile_Machine {
         addSlotToContainer(new GT_Slot_Output	(mTileEntity, 3, 110,  35));
         addSlotToContainer(new GT_Slot_Output	(mTileEntity, 4,  80,  65));
         addSlotToContainer(new GT_Slot_Output	(mTileEntity, 5,  50,  35));
-        addSlotToContainer(new GT_Slot_Holo		(mTileEntity, 6, 110,  65, false, false, 64));
+        addFluidSlot(new GT_FluidSlot(mTileEntity, 100, 110, 65, 0));
     }
     
     public int getSlotCount() {

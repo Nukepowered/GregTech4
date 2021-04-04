@@ -1,18 +1,27 @@
 package gregtechmod.api.gui;
 
 import gregtechmod.api.interfaces.IGregTechTileEntity;
+import gregtechmod.api.interfaces.IMetaTileEntity;
+import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicTank;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.common.network.GT_NetworkHandler;
+import gregtechmod.common.network.packet.FluidInventoryPacket;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ICrafting;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fluids.FluidStack;
 
 /**
  * NEVER INCLUDE THIS FILE IN YOUR MOD!!!
@@ -22,10 +31,12 @@ import net.minecraft.item.ItemStack;
 public class GT_Container extends Container {
     public IGregTechTileEntity mTileEntity;
 	public InventoryPlayer mPlayerInventory;
+	public List<GT_FluidSlot> fluidSlots;
 	
     public GT_Container (InventoryPlayer aPlayerInventory, IGregTechTileEntity aTileEntityInventory) {
         mTileEntity = aTileEntityInventory;
         mPlayerInventory = aPlayerInventory;
+        fluidSlots = new ArrayList<>();
     }
     
     /**
@@ -33,6 +44,11 @@ public class GT_Container extends Container {
      */
     public void addSlots(InventoryPlayer aPlayerInventory) {
     	//
+    }
+    
+    public void addFluidSlot(GT_FluidSlot slot) {
+    	addSlotToContainer(slot);
+    	fluidSlots.add(slot);
     }
     
     /**
@@ -96,16 +112,20 @@ public class GT_Container extends Container {
 	
     @Override
 	public ItemStack slotClick(int aSlotIndex, int aMouseclick, int aShifthold, EntityPlayer aPlayer) {
+    	Slot aSlot;
+    	
     	if (aSlotIndex >= 0) {
-    		if (inventorySlots.get(aSlotIndex) == null || inventorySlots.get(aSlotIndex) instanceof GT_Slot_Holo) return null;
-    		if (!(inventorySlots.get(aSlotIndex) instanceof GT_Slot_Armor)) if (aSlotIndex < getAllSlotCount()) if (aSlotIndex < getSlotStartIndex() || aSlotIndex >= getSlotStartIndex() + getSlotCount()) return null;
+    		aSlot = (Slot) inventorySlots.get(aSlotIndex);
+    		
+    		if (aSlot == null || aSlot instanceof GT_Slot_Holo) return null;
+    		if (aSlot instanceof GT_FluidSlot) if(((GT_FluidSlot)aSlot).onClick(aMouseclick, aShifthold, aPlayer)) return null; 
+    		if (!(aSlot instanceof GT_Slot_Armor)) if (aSlotIndex < getAllSlotCount()) if (aSlotIndex < getSlotStartIndex() || aSlotIndex >= getSlotStartIndex() + getSlotCount()) return null;
     	}
     	
     	try {return super.slotClick(aSlotIndex, aMouseclick, aShifthold, aPlayer);} catch (Throwable e) {GT_Log.log.catching(e);}
     	
         ItemStack rStack = null;
         InventoryPlayer aPlayerInventory = aPlayer.inventory;
-        Slot aSlot;
         ItemStack tTempStack;
         int tTempStackSize;
         ItemStack aHoldStack;
@@ -371,10 +391,29 @@ public class GT_Container extends Container {
     	return par1Slot;
     }
 
-    @Override
+    @SuppressWarnings("unchecked")
+	@Override
     public void addCraftingToCrafters(ICrafting par1ICrafting) {
     	try {
-    		super.addCraftingToCrafters(par1ICrafting);
+    		if (this.crafters.contains(par1ICrafting)) {
+                throw new IllegalArgumentException("Listener already listening");
+            } else {
+                this.crafters.add(par1ICrafting);
+                par1ICrafting.sendContainerAndContentsToPlayer(this, this.getInventory());
+                IMetaTileEntity mte = mTileEntity.getMetaTileEntity();
+            	if (!fluidSlots.isEmpty() && mte instanceof GT_MetaTileEntity_BasicTank) {
+            		GT_MetaTileEntity_BasicTank mte1 = (GT_MetaTileEntity_BasicTank)mte;
+            		Map<Integer, GT_FluidSlot> toUpdate = new HashMap<>();
+            		for (int i = 0; i < fluidSlots.size(); ++i) {
+            			GT_FluidSlot slot = fluidSlots.get(i);
+            			slot.fluid = mte1.mFluid[i] == null ? null : mte1.mFluid[i].copy();
+            			toUpdate.put(i, slot);
+            		}
+            		
+            		GT_NetworkHandler.sendPacket(new FluidInventoryPacket(toUpdate, this.windowId), (EntityPlayerMP)par1ICrafting);
+            	}
+                this.detectAndSendChanges();
+            }
     	} catch(Throwable e) {
     		GT_Log.log.catching(e);
     	}
@@ -404,6 +443,28 @@ public class GT_Container extends Container {
     public void detectAndSendChanges() {
     	try {
             super.detectAndSendChanges();
+            
+            IMetaTileEntity mte = mTileEntity.getMetaTileEntity();
+        	if (!fluidSlots.isEmpty() && mte instanceof GT_MetaTileEntity_BasicTank) {
+        		Map<Integer, GT_FluidSlot> toUpdate = new HashMap<>();
+        		GT_MetaTileEntity_BasicTank tank = (GT_MetaTileEntity_BasicTank) mte;
+        		
+        		for (int i = 0; i < fluidSlots.size(); ++i)  {
+        			GT_FluidSlot slot = fluidSlots.get(i);
+        			FluidStack f1 = tank.mFluid[slot.fluidIdx];
+        			FluidStack f2 = slot.fluid;
+        			
+        			if (!GT_Utility.areFluidStackSame(f1, f2)) {
+        				f1 = f2 == null ? null : f2.copy();
+        				tank.mFluid[slot.fluidIdx] = f1;
+        				toUpdate.put(i, slot);
+        			}
+                }
+        		
+        		for (int j = 0; !toUpdate.isEmpty() && j < this.crafters.size(); ++j) {
+					GT_NetworkHandler.sendPacket(new FluidInventoryPacket(toUpdate, this.windowId), ((EntityPlayerMP)this.crafters.get(j)));
+                }
+        	}
     	} catch(Throwable e) {
     		GT_Log.log.catching(e);
     	}

@@ -8,7 +8,7 @@ import gregtechmod.api.interfaces.*;
 import gregtechmod.api.items.GT_EnergyArmor_Item;
 import gregtechmod.api.metatileentity.BaseMetaPipeEntity;
 import gregtechmod.api.metatileentity.implementations.GT_MetaPipeEntity_Item;
-import gregtechmod.common.network.GT_PacketHandler;
+import gregtechmod.common.network.GT_NetworkHandler;
 import gregtechmod.common.network.packet.GT_Packet;
 import gregtechmod.common.network.packet.GT_SoundPacket;
 
@@ -681,6 +681,10 @@ public class GT_Utility {
 		return getFluidName(aFluid.getFluid(), aLocalized);
 	}
 	
+	public static boolean areFluidStackSame(FluidStack f1, FluidStack f2) {
+		return f1 == null && f2 == null ? true : (f1 != null && f2 != null ? f1.isFluidEqual(f2) && f1.amount == f2.amount : false);
+	}
+	
     public static ItemStack fillFluidContainer(FluidStack aFluid, ItemStack aStack) {
 		if (isStackInvalid(aStack) || aFluid == null) return null;
     	if (aStack.getItem() instanceof IFluidContainerItem && ((IFluidContainerItem)aStack.getItem()).getFluid(aStack) == null && ((IFluidContainerItem)aStack.getItem()).getCapacity(aStack) <= aFluid.amount) {
@@ -718,6 +722,14 @@ public class GT_Utility {
 		}
 		
 		return null;
+	}
+	
+	public static int getFilledContainerCapacity(ItemStack container) {
+		if (container.getItem() instanceof IFluidContainerItem) {
+			return ((IFluidContainerItem)container.getItem()).getFluid(container).amount;
+		} else {
+			return FluidContainerRegistry.getContainerCapacity(container);
+		}
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -837,7 +849,7 @@ public class GT_Utility {
 				Chunk tChunk = aWorld.getChunkFromBlockCoords(aX, aZ);
 				if (tPlayer.getServerForPlayer().getPlayerManager().isPlayerWatchingChunk(tPlayer, tChunk.xPosition, tChunk.zPosition)) {
 					if (GregTech_API.DEBUG_MODE) GT_Log.log.info("sent Packet to " + tPlayer.getDisplayName());
-					GT_PacketHandler.sendPacket(aPacket, tPlayer);
+					GT_NetworkHandler.sendPacket(aPacket, tPlayer);
 				}
         	} else {
         		break;

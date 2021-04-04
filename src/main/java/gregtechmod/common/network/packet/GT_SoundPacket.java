@@ -9,52 +9,57 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 
 public class GT_SoundPacket extends GT_Packet {
-	public int aX;
-	public int aY;
-	public int aZ;
-	public String aSoundName;
-	public float aSoundStrength;
-	public float aSoundModulation;
+	public int x;
+	public int y;
+	public int z;
+	public String soundName;
+	public float soundStrength;
+	public float soundModulation;
 	
 	public GT_SoundPacket() {}
 	
 	public GT_SoundPacket(String soundName, int x, int y, int z, float volume, float modulation) {
-		this.aSoundName = soundName;
-		this.aX = x;
-		this.aY = y;
-		this.aZ = z;
-		this.aSoundStrength = volume;
-		this.aSoundModulation = modulation;
+		this.soundName = soundName;
+		this.x = x;
+		this.y = y;
+		this.z = z;
+		this.soundStrength = volume;
+		this.soundModulation = modulation;
 	}
 	
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		aX = buf.readInt();
-		aY = buf.readInt();
-		aZ = buf.readInt();
-		aSoundStrength = buf.readFloat();
-		aSoundModulation = buf.readFloat();
-		aSoundName = ByteBufUtils.readUTF8String(buf);
+		x = buf.readInt();
+		y = buf.readInt();
+		z = buf.readInt();
+		soundStrength = buf.readFloat();
+		soundModulation = buf.readFloat();
+		soundName = ByteBufUtils.readUTF8String(buf);
 		super.fromBytes(buf);
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		buf.writeInt(aX);
-		buf.writeInt(aY);
-		buf.writeInt(aZ);
-		buf.writeFloat(aSoundStrength);
-		buf.writeFloat(aSoundModulation);
-		ByteBufUtils.writeUTF8String(buf, aSoundName);
+		buf.writeInt(x);
+		buf.writeInt(y);
+		buf.writeInt(z);
+		buf.writeFloat(soundStrength);
+		buf.writeFloat(soundModulation);
+		ByteBufUtils.writeUTF8String(buf, soundName);
 		super.toBytes(buf);
 	}
 
 	@Override
 	public IMessage handle(MessageContext context) {
 		if (context.side == Side.CLIENT && Minecraft.getMinecraft().thePlayer != null) {
-			GT_Utility.doSoundAtClient(aSoundName, 0, aSoundStrength, aSoundModulation, aX, aY, aZ);
+			GT_Utility.doSoundAtClient(soundName, 0, soundStrength, soundModulation, x, y, z);
 		}
 		
 		return null;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("[x=%d, y=%d, z=%d, name=%s, strengh=%f, modulation=%f]", x, y, z, soundName, soundStrength, soundModulation);
 	}
 }

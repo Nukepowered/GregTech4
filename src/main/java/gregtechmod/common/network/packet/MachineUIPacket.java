@@ -75,5 +75,9 @@ public class MachineUIPacket extends GT_Packet {
 		
 		return null;
 	}
-
+	
+	@Override
+	public String toString() {
+		return String.format("[windowId=%d, data=%s]", windowId, data);
+	}
 }

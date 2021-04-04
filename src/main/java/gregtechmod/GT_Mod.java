@@ -52,7 +52,7 @@ import gregtechmod.common.items.GT_MetaMachine_Item;
 import gregtechmod.common.items.GT_MetaOre_Item;
 import gregtechmod.common.items.GT_MetaStone1_Item;
 import gregtechmod.common.network.GT_ConnectionHandler;
-import gregtechmod.common.network.GT_PacketHandler;
+import gregtechmod.common.network.GT_NetworkHandler;
 import gregtechmod.common.recipe.RecipeMaps;
 import gregtechmod.common.render.GT_Block_Renderer;
 import gregtechmod.common.tileentities.deprecated.GT_TileEntity_ComputerCube;
@@ -537,7 +537,7 @@ public class GT_Mod implements IGT_Mod {
 			}
 		}
 		
-    	new GT_PacketHandler().run();
+    	new GT_NetworkHandler().run();
     	new GT_ConnectionHandler().run();
 
     	RecipeSorter.register("gregtechmod:shaped"					, GT_Shaped_Recipe.class				, RecipeSorter.Category.SHAPED		, "after:minecraft:shaped");

@@ -1,7 +1,7 @@
 package gregtechmod.api.gui;
 
 import gregtechmod.api.interfaces.IGregTechTileEntity;
-import gregtechmod.common.network.GT_PacketHandler;
+import gregtechmod.common.network.GT_NetworkHandler;
 import gregtechmod.common.network.SyncedField;
 import gregtechmod.common.network.packet.MachineUIPacket;
 
@@ -68,7 +68,7 @@ public class GT_ContainerMetaTile_Machine extends GT_Container {
     		MachineUIPacket packet = new MachineUIPacket(windowId, json);
     		for (ICrafting player : (List<ICrafting>)this.crafters) {
     			if (player instanceof EntityPlayerMP) {
-        			GT_PacketHandler.sendPacket(packet, (EntityPlayerMP)player);
+        			GT_NetworkHandler.sendPacket(packet, (EntityPlayerMP)player);
     			}
     		}
     	}
