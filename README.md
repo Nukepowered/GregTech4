@@ -7,6 +7,8 @@
 
 [Discord Channel](https://discord.gg/bpvXStD)
 
+For any questions or discussion about development, please use #dev channel in our discord group.
+
 The mod is planned to keep original look of GregTech 4 with some technical improvements, time to time extra improvements could be done of visual(as UIs, textures), but not minor one. there was only one non-original thing implemented - Large plasma turbine, and was a reason. 
 
 ## Features
