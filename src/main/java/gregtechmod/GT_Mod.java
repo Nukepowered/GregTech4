@@ -147,7 +147,7 @@ import cpw.mods.fml.relauncher.Side;
 /**
  * @author Gregorius Techneticies
  */
-@Mod(modid = "gregtech_addon", name="GregTech-Addon", version="4.12", useMetadata=false, dependencies="required-after:IC2; after:Railcraft; after:ThermalExpansion; after:ThermalExpansion|Transport; after:ThermalExpansion|Energy; after:ThermalExpansion|Factory; before:RedPowerCore; before:RedPowerBase; before:RedPowerMachine; before:RedPowerCompat; before:RedPowerWiring; before:RedPowerLogic; before:RedPowerLighting; before:RedPowerWorld; before:RedPowerControl;")
+@Mod(modid = "gregtech_addon", name="GregTech-Addon", version="4.13.11", useMetadata=false, dependencies="required-after:IC2; after:Railcraft; after:ThermalExpansion; after:ThermalExpansion|Transport; after:ThermalExpansion|Energy; after:ThermalExpansion|Factory; before:RedPowerCore; before:RedPowerBase; before:RedPowerMachine; before:RedPowerCompat; before:RedPowerWiring; before:RedPowerLogic; before:RedPowerLighting; before:RedPowerWorld; before:RedPowerControl;")
 public class GT_Mod implements IGT_Mod {
     @Instance
     public static GT_Mod instance;

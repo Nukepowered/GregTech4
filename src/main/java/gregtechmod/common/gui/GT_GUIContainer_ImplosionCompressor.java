@@ -18,7 +18,7 @@ public class GT_GUIContainer_ImplosionCompressor extends GT_GUIContainerMetaTile
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
         fontRenderer.drawString(StatCollector.translateToLocal("container.inventory"), 8, ySize - 94, 4210752);
         fontRenderer.drawString(I18n.format("metatileentity.GT_ImplosionCompressor.name"), 8,  4, 4210752);
-        if (!((GT_Container_ImplosionCompressor)mContainer).mMachine.get());
+        if (!((GT_Container_ImplosionCompressor)mContainer).mMachine.get())
         	fontRenderer.drawString(I18n.format("metatileentity.status.multiblock.incomplete"), 8, ySize - 103, 0xF00000);
     }
 
