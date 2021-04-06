@@ -39,8 +39,7 @@ public class GT_MetaTileEntity_Centrifuge extends BasicFluidWorkable {
 	
 	@Override public int getInputSlot() 						{return 1;}
 	@Override public int getOutputSlot() 						{return 2;}
-	@Override public int getStackDisplaySlot() 					{return 6;}
-	@Override public int getInvSize()							{return 7;}
+	@Override public int getInvSize()							{return 6;}
 	@Override public void onRightclick(EntityPlayer aPlayer)	{getBaseMetaTileEntity().openGUI(aPlayer, 146);}
 	@Override public List<ItemStack> getInputItems() 			{return new ListAdapter<>(mInventory, 0, 1);}
 	@Override public List<ItemStack> getOutputItems() 			{return new ListAdapter<>(mInventory, 2, 5);} 

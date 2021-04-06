@@ -123,7 +123,6 @@ public enum GT_Items implements IItemContainer {
 	Upgrade_Transformer,
 	Upgrade_Battery,
 	McGuffium_239,
-	Display_Fluid,
 	NC_SensorCard,
 	NC_SensorKit,
 	Tool_Mortar_Iron,

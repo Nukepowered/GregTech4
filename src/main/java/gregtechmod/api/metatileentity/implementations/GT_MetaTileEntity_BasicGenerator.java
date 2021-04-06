@@ -51,7 +51,6 @@ public abstract class GT_MetaTileEntity_BasicGenerator extends BasicFluidWorkabl
 	@Override public boolean canTankBeEmptied()		{return getBaseMetaTileEntity().isAllowedToWork();}
 	@Override public int getInputSlot() 			{return 0;}
 	@Override public int getOutputSlot() 			{return 1;}
-	@Override public int getStackDisplaySlot() 		{return 2;}
 	@Override public List<ItemStack> getInputItems() { return new ListAdapter<>(mInventory, 0, 0); }
 	@Override public List<ItemStack> getOutputItems() { return new ListAdapter<>(mInventory, 1, 1); }
 	@Override public boolean displaysItemStack()	{return true;}

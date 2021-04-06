@@ -21,7 +21,7 @@ public final class GT_PacketHandler implements IMessageHandler<GT_Packet, IMessa
 	@Override
 	public IMessage onMessage(GT_Packet message, MessageContext ctx) {
 		if (GregTech_API.DEBUG_MODE && GregTech_API.SECONDARY_DEBUG_MODE) {
-			GT_Log.log.info("Processing income packet " + message.getClass().getSimpleName() + " on side " + ctx.side);
+			GT_Log.log.info("Processing " + message.getClass().getSimpleName() + " on side " + ctx.side + " " + message.toString());
 		}
 		
 		IMessage value = null;

@@ -26,8 +26,6 @@ import net.minecraftforge.fluids.FluidStack;
 public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank implements IRecipeWorkable {
 	protected RecipeLogic recipeLogic;
 	
-	public int MAX_FLUID_STACK = 16_000;
-	
 	public BasicFluidWorkable(int aID, String aName, RecipeMap<?> recipeMap) {
 		super(aID, aName);
 		initRecipeLogic(recipeMap);
@@ -62,7 +60,7 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
 	
 	@Override public int getInputSlot() 			{return 1;}
 	@Override public int getOutputSlot() 			{return 2;}
-	@Override public int getStackDisplaySlot() 		{return 6;}
+	@Override public int getCapacity() 				{return 16_000;}
 	
 	protected void initRecipeLogic(RecipeMap<?> recipeMap) {
 		recipeLogic = new RecipeLogic(recipeMap, this);
@@ -135,7 +133,7 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
 			for (int i = 0; amount > 0 && i < fluidOutputs.size(); i++) {
 				FluidStack stackInSlot = fluidOutputs.get(i);
 				if (GT_Utility.isFluidStackValid(stackInSlot) && stackInSlot.isFluidEqual(fluid)) {
-					int tmp = Math.min(MAX_FLUID_STACK, stackInSlot.amount + fluid.amount);
+					int tmp = Math.min(getCapacity(), stackInSlot.amount + fluid.amount);
 					amount -= tmp - stackInSlot.amount;
 				} else if (stackInSlot == null) amount = 0;
 			}

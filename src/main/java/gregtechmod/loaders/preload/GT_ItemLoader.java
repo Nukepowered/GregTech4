@@ -35,7 +35,6 @@ import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.items.GT_Dataorb_Item;
 import gregtechmod.common.items.GT_Debug_Item;
 import gregtechmod.common.items.GT_Destructopack_Item;
-import gregtechmod.common.items.GT_FluidDisplayItem;
 import gregtechmod.common.items.GT_IntegratedCircuit_Item;
 import gregtechmod.common.items.GT_MetaGenerated_Item_01;
 import gregtechmod.common.items.GT_MetaGenerated_Item_02;
@@ -272,7 +271,7 @@ public class GT_ItemLoader implements Runnable {
 		GT_Items.Circuit_Integrated.set((GregTech_API.sItemList[10] = new GT_IntegratedCircuit_Item("GregTech_Integrated_Circuit")));
 		
 		GT_Log.log.info("Register Regular Items.");
-		GT_Items.Display_Fluid.set((GregTech_API.sItemList[15] = new GT_FluidDisplayItem("GregTech_FluidDisplay"))); // FIXME REMOVE
+		// GregTech_API.sItemList[15] is free
 		GT_Items.NC_SensorCard.set((GregTech_API.sItemList[16] = (GT_Generic_Item) GT_Utility.callConstructor("gregtechmod.common.items.GT_SensorCard_Item", 0, (Object) null, false, "GregTech_Sensorcard")));
 		if (GregTech_API.sItemList[16] == null) {
 			GT_Items.NC_SensorCard.set((GregTech_API.sItemList[16] = new GT_Generic_Item("GregTech_Sensorcard", "util.missIC2NC")));

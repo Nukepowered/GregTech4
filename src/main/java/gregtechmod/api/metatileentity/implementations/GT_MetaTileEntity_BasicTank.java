@@ -1,6 +1,5 @@
 package gregtechmod.api.metatileentity.implementations;
 
-import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.metatileentity.MetaTileEntity;
 import gregtechmod.api.util.GT_Utility;
 
@@ -28,7 +27,7 @@ public abstract class GT_MetaTileEntity_BasicTank extends MetaTileEntity {
 	
 	@Override public boolean isSimpleMachine()						{return false;}
 	@Override public boolean isValidSlot(int aIndex)				{return aIndex < 2;}
-	@Override public int getInvSize()								{return 3;}
+	@Override public int getInvSize()								{return 2;}
 	
 	@Override
 	public void saveNBTData(NBTTagCompound aNBT) {
@@ -59,7 +58,6 @@ public abstract class GT_MetaTileEntity_BasicTank extends MetaTileEntity {
 	public abstract boolean displaysStackSize();
 	public int getInputSlot() {return 0;}
 	public int getOutputSlot() {return 1;}
-	public int getStackDisplaySlot() {return 2;}
 	
 	public boolean isFluidInputAllowed(FluidStack aFluid) {return true;}
 	public boolean isFluidChangingAllowed() {return true;}
@@ -73,19 +71,6 @@ public abstract class GT_MetaTileEntity_BasicTank extends MetaTileEntity {
 	public void onPreTick() {
 		if (getBaseMetaTileEntity().isServerSide()) {
 			if (isFluidChangingAllowed() && mFluid[0] != null && mFluid[0].amount <= 0) mFluid[0] = null;
-			
-			if (displaysItemStack()) {
-				if (getDrainableStack() != null) {
-					ItemStack fluidDisplay = GT_Items.Display_Fluid.getWithDamage(displaysStackSize()?Math.max(1, Math.min(getDrainableStack().amount/1000, 64)):1, getDrainableStack().getFluidID());;
-					NBTTagCompound data = new NBTTagCompound();
-					data.setInteger("amount", mFluid[0].amount);
-					fluidDisplay.setTagCompound(data);
-					mInventory[getStackDisplaySlot()] = fluidDisplay;
-					
-				} else {
-					if (GT_Items.Display_Fluid.isStackEqual(mInventory[getStackDisplaySlot()], true, true)) mInventory[getStackDisplaySlot()] = null;
-				}
-			}
 			
 			if (doesEmptyContainers()) {
 				FluidStack tFluid = GT_Utility.getFluidForFilledItem(mInventory[getInputSlot()]);

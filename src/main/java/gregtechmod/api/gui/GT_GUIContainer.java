@@ -16,6 +16,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fluids.FluidStack;
 
 /**
  * NEVER INCLUDE THIS FILE IN YOUR MOD!!!
@@ -41,9 +42,10 @@ public class GT_GUIContainer extends GuiContainer {
 		    	GL11.glPushAttrib(GL11.GL_COLOR_BUFFER_BIT);
 		    	{
 			    	List<String> tooltipData = Lists.newArrayList();
-			    	if (slot.fluid != null) {
-			    		tooltipData.add(slot.fluid.getLocalizedName());
-			    		tooltipData.add(EnumChatFormatting.GRAY + I18n.format("metatileentity.fluid.amount", GT_Utility.parseNumberToString(slot.fluid.amount)));
+			    	FluidStack fluid = slot.getFluid();
+			    	if (GT_Utility.isFluidStackValid(fluid)) {
+			    		tooltipData.add(fluid.getLocalizedName());
+			    		tooltipData.add(EnumChatFormatting.GRAY + I18n.format("metatileentity.fluid.amount", GT_Utility.parseNumberToString(fluid.amount)));
 			    	} else {
 			    		tooltipData.add(I18n.format("metatileentity.fluid.empty"));
 			    	}

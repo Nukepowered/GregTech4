@@ -26,7 +26,8 @@ public class GT_Container_BasicTank extends GT_ContainerMetaTile_Machine {
 	public void addSlots(InventoryPlayer aInventoryPlayer) {
         addSlotToContainer(new Slot(mTileEntity, 0,  80,  17));
         addSlotToContainer(new GT_Slot_Output(mTileEntity, 1,  80,  53));
-        addSlotToContainer(new GT_Slot_Render(mTileEntity, 2,  59,  42));
+        GT_MetaTileEntity_BasicTank tank = (GT_MetaTileEntity_BasicTank) mTileEntity.getMetaTileEntity();
+        addFluidSlot(new GT_FluidSlot(mTileEntity, 2, 59, 42, 0, tank.canTankBeEmptied(), tank.canTankBeFilled()).setRenderAmount(false).setRenderOverlay(false));
     }
     
     public SyncedField<Integer> mContent = new SyncedField<>("mContent", Integer.valueOf(0));

@@ -1,8 +1,6 @@
 package gregtechmod.api.gui;
 
 import gregtechmod.api.interfaces.IGregTechTileEntity;
-import gregtechmod.api.interfaces.IMetaTileEntity;
-import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicTank;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.network.GT_NetworkHandler;
@@ -32,11 +30,15 @@ public class GT_Container extends Container {
     public IGregTechTileEntity mTileEntity;
 	public InventoryPlayer mPlayerInventory;
 	public List<GT_FluidSlot> fluidSlots;
+	public List<FluidStack> fluidInventory;
 	
-    public GT_Container (InventoryPlayer aPlayerInventory, IGregTechTileEntity aTileEntityInventory) {
+	protected int updateTimer;
+	
+    public GT_Container(InventoryPlayer aPlayerInventory, IGregTechTileEntity aTileEntityInventory) {
         mTileEntity = aTileEntityInventory;
         mPlayerInventory = aPlayerInventory;
         fluidSlots = new ArrayList<>();
+        fluidInventory = new ArrayList<>();
     }
     
     /**
@@ -48,6 +50,7 @@ public class GT_Container extends Container {
     
     public void addFluidSlot(GT_FluidSlot slot) {
     	addSlotToContainer(slot);
+    	fluidInventory.add(null);
     	fluidSlots.add(slot);
     }
     
@@ -118,7 +121,10 @@ public class GT_Container extends Container {
     		aSlot = (Slot) inventorySlots.get(aSlotIndex);
     		
     		if (aSlot == null || aSlot instanceof GT_Slot_Holo) return null;
-    		if (aSlot instanceof GT_FluidSlot) if(((GT_FluidSlot)aSlot).onClick(aMouseclick, aShifthold, aPlayer)) return null; 
+    		if (aSlot instanceof GT_FluidSlot) if(((GT_FluidSlot)aSlot).onClick(aMouseclick, aShifthold, aPlayer)) {
+    			mTileEntity.decrStackSize(-1, 0); // Some shitcode here, this IS a problem from anywhre already p.s marking inventory dirty to recipe check
+    			return null; 
+    		}
     		if (!(aSlot instanceof GT_Slot_Armor)) if (aSlotIndex < getAllSlotCount()) if (aSlotIndex < getSlotStartIndex() || aSlotIndex >= getSlotStartIndex() + getSlotCount()) return null;
     	}
     	
@@ -400,16 +406,10 @@ public class GT_Container extends Container {
             } else {
                 this.crafters.add(par1ICrafting);
                 par1ICrafting.sendContainerAndContentsToPlayer(this, this.getInventory());
-                IMetaTileEntity mte = mTileEntity.getMetaTileEntity();
-            	if (!fluidSlots.isEmpty() && mte instanceof GT_MetaTileEntity_BasicTank) {
-            		GT_MetaTileEntity_BasicTank mte1 = (GT_MetaTileEntity_BasicTank)mte;
+            	if (!fluidSlots.isEmpty()) {
             		Map<Integer, GT_FluidSlot> toUpdate = new HashMap<>();
-            		for (int i = 0; i < fluidSlots.size(); ++i) {
-            			GT_FluidSlot slot = fluidSlots.get(i);
-            			slot.fluid = mte1.mFluid[i] == null ? null : mte1.mFluid[i].copy();
-            			toUpdate.put(i, slot);
-            		}
-            		
+            		for (int i = 0; i < fluidSlots.size(); ++i)
+            			toUpdate.put(i, fluidSlots.get(i));
             		GT_NetworkHandler.sendPacket(new FluidInventoryPacket(toUpdate, this.windowId), (EntityPlayerMP)par1ICrafting);
             	}
                 this.detectAndSendChanges();
@@ -443,20 +443,17 @@ public class GT_Container extends Container {
     public void detectAndSendChanges() {
     	try {
             super.detectAndSendChanges();
-            
-            IMetaTileEntity mte = mTileEntity.getMetaTileEntity();
-        	if (!fluidSlots.isEmpty() && mte instanceof GT_MetaTileEntity_BasicTank) {
+
+        	if (!fluidSlots.isEmpty() && ++updateTimer % 2 == 0) { // Added timer to update only 10 times per second
         		Map<Integer, GT_FluidSlot> toUpdate = new HashMap<>();
-        		GT_MetaTileEntity_BasicTank tank = (GT_MetaTileEntity_BasicTank) mte;
-        		
         		for (int i = 0; i < fluidSlots.size(); ++i)  {
         			GT_FluidSlot slot = fluidSlots.get(i);
-        			FluidStack f1 = tank.mFluid[slot.fluidIdx];
-        			FluidStack f2 = slot.fluid;
+        			FluidStack f1 = fluidInventory.get(i);
+        			FluidStack f2 = slot.getFluid();
         			
         			if (!GT_Utility.areFluidStackSame(f1, f2)) {
         				f1 = f2 == null ? null : f2.copy();
-        				tank.mFluid[slot.fluidIdx] = f1;
+        				fluidInventory.set(i, f1);
         				toUpdate.put(i, slot);
         			}
                 }

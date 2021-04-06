@@ -1,5 +1,6 @@
 package gregtechmod.api.gui;
 
+import java.util.List;
 import java.util.Objects;
 
 import org.lwjgl.opengl.GL11;
@@ -10,7 +11,9 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
+import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicTank;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.api.util.ListAdapter;
 import gregtechmod.common.render.GTRenderHelper;
 
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -37,9 +40,11 @@ public class GT_FluidSlot extends Slot {
 	
 	@SideOnly(Side.CLIENT)
 	protected ResourceLocation customOverlay;
+	protected List<FluidStack> fluidInvenotry;
 	protected boolean renderOverlay;
-	protected FluidStack fluid;
+	protected boolean renderAmount;
 	
+	/** Index of internal mFluid array */
 	public final int fluidIdx;
 	public final boolean canDrain;
 	public final boolean canFill;
@@ -51,15 +56,17 @@ public class GT_FluidSlot extends Slot {
 	}
 	
 	public GT_FluidSlot(IGregTechTileEntity te, int slotIndex, int x, int y, int fluidIdx) {
-		this(te, slotIndex, x, y, fluidIdx, true, true, true);
+		this(te, slotIndex, x, y, fluidIdx, true, true);
 	}
 	
-	public GT_FluidSlot(IGregTechTileEntity te, int slotIndex, int x, int y, int fluidIdx, boolean canDrain, boolean canFill, boolean renderOverlay) {
+	public GT_FluidSlot(IGregTechTileEntity te, int slotIndex, int x, int y, int fluidIdx, boolean canDrain, boolean canFill) {
 		super(te, slotIndex, x, y);
 		this.fluidIdx = fluidIdx;
 		this.canDrain = canDrain;
 		this.canFill = canFill;
-		this.renderOverlay = renderOverlay;
+		this.renderOverlay = true;
+		this.renderAmount = true;
+		this.fluidInvenotry = new ListAdapter<>(((GT_MetaTileEntity_BasicTank)te.getMetaTileEntity()).mFluid);
 	}
 	
 	/*
@@ -105,6 +112,7 @@ public class GT_FluidSlot extends Slot {
 		}
 		
 		// Fluid render
+		FluidStack fluid = getFluid();
 		if (GT_Utility.isFluidStackValid(fluid)) {
 			IIcon text = fluid.getFluid().getIcon(fluid);
 			if (text != null) {
@@ -113,9 +121,11 @@ public class GT_FluidSlot extends Slot {
 			}
 			
 			// Amount render
+			if (renderAmount) {
 			int amount = fluid.amount / 1000;
 			if (amount > 0) 
 				GTRenderHelper.drawStackAmount(posX, posY, 0xFFFFFF, Integer.toString(amount));
+			}
 		}
 		
 		if (isMouseOver)
@@ -138,30 +148,31 @@ public class GT_FluidSlot extends Slot {
 		
 		if (GT_Utility.isStackValid(held)) {
 			FluidStack fluid = GT_Utility.getFluidForFilledItem(held);
+			FluidStack fluidInv = getFluid();
 			int amount;
 			if (mouseClick == 1 && canDrain && fluid != null) { // Fill (Right click to fill container with liquid)
 				amount = Math.min(getSpace(), fluid.amount);
 				if (amount > 0) {
-					if (this.fluid == null) { // Fill empty slot
+					if (!GT_Utility.isFluidStackValid(fluidInv)) { // Fill empty slot
 						FluidStack actual = fluid.copy();
 						actual.amount = amount;
 						
 						if (this.useFluidContainer(inv, held, amount)) {
-							this.fluid = actual;
+							setFluid(actual);
 							return true;
 						}
-					} else if (this.fluid.isFluidEqual(fluid)) { // Add fluid if same
+					} else if (fluidInv.isFluidEqual(fluid)) { // Add fluid if same
 						if (this.useFluidContainer(inv, held, amount)) {
-							this.fluid.amount += amount;
+							fluidInv.amount += amount;
 							return true;
 						}
 					}
 				}
-			} else if (mouseClick == 0 && canFill && this.fluid != null) {  // Epmty (Left click to drain liquid from container)
-				if ((amount = this.tryFill(inv, held, this.fluid.copy())) > 0) {
-					this.fluid.amount -= amount;
-					if (this.fluid.amount <= 0) 
-						this.fluid = null;
+			} else if (mouseClick == 0 && canFill && GT_Utility.isFluidStackValid(fluidInv)) {  // Epmty (Left click to drain liquid from container)
+				if ((amount = this.tryFill(inv, held, fluidInv.copy())) > 0) {
+					fluidInv.amount -= amount;
+					if (fluidInv.amount <= 0) 
+						setFluid(null);
 					
 					return true;
 				}
@@ -243,9 +254,17 @@ public class GT_FluidSlot extends Slot {
 	 * @return free space to fill
 	 */
 	protected int getSpace() {
-		int availableSpace = this.getSlotStackLimit() * 1000;
-		if (this.fluid != null)
-			availableSpace -= this.fluid.amount;
+		IGregTechTileEntity te = (IGregTechTileEntity)inventory;
+		int availableSpace = 0;
+		
+		if (te.getMetaTileEntity() instanceof GT_MetaTileEntity_BasicTank) {
+			availableSpace = ((GT_MetaTileEntity_BasicTank)te.getMetaTileEntity()).getCapacity();
+		} else
+			availableSpace = this.getSlotStackLimit() * 1000;
+		
+		FluidStack fluid = getFluid();
+		if (GT_Utility.isFluidStackValid(fluid))
+			availableSpace -= fluid.amount;
 		return availableSpace;
 	}
 	
@@ -255,6 +274,15 @@ public class GT_FluidSlot extends Slot {
 	 */
 	public GT_FluidSlot setRenderOverlay(boolean value) {
 		this.renderOverlay = value;
+		return this;
+	}
+	
+	/**
+	 * Disable or enable amount string rendering
+	 * Default value set to true
+	 */
+	public GT_FluidSlot setRenderAmount(boolean value) {
+		this.renderAmount = value;
 		return this;
 	}
 	
@@ -270,10 +298,10 @@ public class GT_FluidSlot extends Slot {
 	}
 	
 	public FluidStack getFluid() {
-		return fluid;
+		return fluidInvenotry.get(fluidIdx);
 	}
 	
 	public void setFluid(FluidStack fluid) {
-		this.fluid = fluid;
+		fluidInvenotry.set(fluidIdx, fluid);
 	}
 }
