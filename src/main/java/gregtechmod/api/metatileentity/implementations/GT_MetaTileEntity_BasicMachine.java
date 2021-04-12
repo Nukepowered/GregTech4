@@ -20,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ChatComponentTranslation;
+import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.FluidStack;
 
 /**
@@ -50,7 +51,7 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
 	@Override public boolean isTransformerUpgradable()				{return getElectricTier()>0;}
 	@Override public boolean isBatteryUpgradable()					{return getElectricTier()>0;}
 	@Override public boolean isElectric()							{return getElectricTier()>0;}
-	@Override public boolean isValidSlot(int aIndex)				{return aIndex > 0;}
+	@Override public boolean isValidSlot(int aIndex)				{return aIndex > 0 && aIndex < dechargerSlotStartIndex();}
 	@Override public boolean isFacingValid(byte aFacing)			{return (mMainFacing > 1 || aFacing > 1);}
 	@Override public boolean isEnetInput() 							{return getElectricTier()>0;}
 	@Override public boolean isEnetOutput() 						{return getElectricTier()>0;}
@@ -348,6 +349,18 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
 	public boolean allowPutStack(int aIndex, byte aSide, ItemStack aStack) {
 		if (aSide == mMainFacing || (!bAlloyInputFromOutputSide && aSide == getBaseMetaTileEntity().getFrontFacing())) return false;
 		if (hasTwoSeperateInputs()&&GT_Utility.areStacksEqual(GT_OreDictUnificator.get(aStack), mInventory[aIndex==1?2:1])) return false;
-		return bSeperatedInputs?aSide<2?aIndex==1:aIndex==2:aIndex==1||aIndex==2;
+		if (bSeperatedInputs) {
+			ForgeDirection dir = ForgeDirection.getOrientation(aSide);
+			ForgeDirection front = ForgeDirection.getOrientation(mMainFacing);
+			if (front.getRotation(ForgeDirection.UP) == dir) {
+				return aIndex == 1;
+			} else if (front.getRotation(ForgeDirection.DOWN) == dir) {
+				return aIndex == 2;
+			} else {
+				return false;
+			}
+		} else {
+			return aIndex==1||aIndex==2;
+		}
 	}
 }
