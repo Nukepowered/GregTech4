@@ -88,7 +88,7 @@ public class GT_ModHandler {
 	 */
 	public static boolean isSteam(FluidStack aLiquid) {
 		if (aLiquid == null) return false;
-		return aLiquid.isFluidEqual(getSteam(1));
+		return aLiquid.isFluidEqual(getSteam(1)) || aLiquid.isFluidEqual(getIC2Steam(1));
 	}
 	
 	/**

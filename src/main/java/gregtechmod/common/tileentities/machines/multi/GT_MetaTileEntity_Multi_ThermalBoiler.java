@@ -274,6 +274,7 @@ public class GT_MetaTileEntity_Multi_ThermalBoiler extends MTEWorkableMultiblock
 		
 		protected void addSteam(List<FluidStack> fluids, int amount) {
 			FluidStack steam = GT_ModHandler.getSteam(amount);
+			if (steam == null) steam = GT_ModHandler.getIC2Steam(amount);
 			for (int i = 0; i < fluids.size(); i++) {
 				FluidStack slot = fluids.get(i);
 				if (slot == null) {
