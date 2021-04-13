@@ -157,6 +157,9 @@ public class GT_MachineRecipeLoader implements Runnable
         RecipeMaps.CANINNING.factory().EUt(1).duration(100).inputs(new ItemStack(Items.lava_bucket), GT_Items.Cell_Empty.get(1L)).outputs(GT_Items.Cell_Lava.get(1L), new ItemStack(Items.bucket, 1)).buildAndRegister();
         RecipeMaps.CANINNING.factory().EUt(1).duration(100).inputs(new ItemStack(Items.water_bucket), GT_Items.Cell_Empty.get(1L)).outputs(GT_Items.Cell_Water.get(1L), new ItemStack(Items.bucket, 1)).buildAndRegister();
         
+        RecipeMaps.CANINNING.factory().EUt(8).duration(100).inputs(GT_Items.IC2_Fuel_Rod_Empty.get(1), GT_ModHandler.getIC2Item("UranFuel", 1)).output(GT_ModHandler.getIC2Item("reactorUraniumSimple", 1)).buildAndRegister();
+        RecipeMaps.CANINNING.factory().EUt(8).duration(100).inputs(GT_Items.IC2_Fuel_Rod_Empty.get(1), GT_ModHandler.getIC2Item("MOXFuel", 1)).output(GT_ModHandler.getIC2Item("reactorMOXSimple", 1)).buildAndRegister();
+        
         RecipeMaps.FUSION_REACTOR.factory().EUt(4096).startEU(40000000).duration(128).inputs(GT_Utility.copy(Materials.Deuterium.mGas, 1000), GT_Utility.copy(Materials.Tritium.mGas, 1000)).output(GT_Utility.copy(Materials.Helium.mPlasma, 1000)).buildAndRegister();
         RecipeMaps.FUSION_REACTOR.factory().EUt(2048).startEU(60000000).duration(128).inputs(GT_Utility.copy(Materials.Deuterium.mGas, 1000), GT_Utility.copy(Materials.Helium_3.mGas, 1000)).output(GT_Utility.copy(Materials.Helium.mPlasma, 1000)).buildAndRegister();
         RecipeMaps.FUSION_REACTOR.factory().EUt(32768).startEU(150000000).duration(512).inputs(GT_Utility.copy(Materials.Lithium.mFluid, 1000), GT_Utility.copy(Materials.Tungsten.mSolid, 1000)).output(GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Iridium, 1L)).buildAndRegister();
