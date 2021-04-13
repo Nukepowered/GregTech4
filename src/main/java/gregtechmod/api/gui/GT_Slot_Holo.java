@@ -29,6 +29,11 @@ public class GT_Slot_Holo extends Slot {
     }
     
     @Override
+    public ItemStack getStack() {
+    	return super.getStack();
+    }
+    
+    @Override
 	public boolean getHasStack() {
         return false;
     }

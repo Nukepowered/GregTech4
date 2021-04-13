@@ -28,7 +28,7 @@ public class RecipeLogic {
 	public final RecipeMap<?> recipeMap;
 	
 	public int MAX_FLUID_STACK = 16_000;
-	public int batterySlot 		= 5;
+	public int batterySlot 		= 4;
 	/** Custom fucntion called every recipe progress time update, if you want to speed up machine because of some factor, just increase the value up */
 	protected IntUnaryOperator progressTimeManipulator = i -> i;
 	protected Predicate<Recipe> metadataVerifier = recipe -> true;

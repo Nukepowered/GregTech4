@@ -30,19 +30,19 @@ public class UniversalMacerator extends GT_Container_BasicMachine {
 	
 	@Override
 	public void addSlots(InventoryPlayer aInventoryPlayer) {
-        addSlotToContainer(new Slot(mTileEntity,  1,  35,  25));
-        addSlotToContainer(new Slot(mTileEntity,  2,  53,  25));
-        addSlotToContainer(new Slot(mTileEntity,  7,  80,  63));
+        addSlotToContainer(new Slot(mTileEntity,  0,  35,  25));
+        addSlotToContainer(new Slot(mTileEntity,  1,  53,  25));
+        addSlotToContainer(new Slot(mTileEntity,  6,  80,  63));
         List<ItemStack> outputs = ((IRecipeWorkable) mTileEntity.getMetaTileEntity()).getOutputItems();
         for (int i = 0; i < outputs.size(); i++) {
         	int xOffset = 18 * (i % 2);
         	int yOffset = 18 * (i / 2);
         	
-        	addSlotToContainer(new GT_Slot_Output(mTileEntity,  3 + i, 107 + xOffset, 16 + yOffset));
+        	addSlotToContainer(new GT_Slot_Output(mTileEntity,  2 + i, 107 + xOffset, 16 + yOffset));
         }
-        addSlotToContainer(new GT_Slot_Holo(mTileEntity, 0,  8, 63, false, true, 1));
-        addSlotToContainer(new GT_Slot_Holo(mTileEntity, 0, 26, 63, false, true, 1));
-        addSlotToContainer(new GT_Slot_Holo(mTileEntity, 0, 44, 63, false, true, 1));
+        addSlotToContainer(new GT_Slot_Holo(mTileEntity, -1,  8, 63, false, true, 1));
+        addSlotToContainer(new GT_Slot_Holo(mTileEntity, -1, 26, 63, false, true, 1));
+        addSlotToContainer(new GT_Slot_Holo(mTileEntity, -1, 44, 63, false, true, 1));
 	}
 	
 	@Override

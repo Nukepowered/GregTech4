@@ -49,7 +49,7 @@ public class GT_MetaTileEntity_Extruder extends GT_MetaTileEntity_BasicMachine {
    }
 
    public boolean allowPutStack(int aIndex, byte aSide, ItemStack aStack) {
-      return aIndex == 1 && super.allowPutStack(aIndex, aSide, aStack);
+      return aIndex == 0 && super.allowPutStack(aIndex, aSide, aStack);
    }
 
    public int getTopFacingInactive() {

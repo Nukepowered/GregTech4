@@ -51,7 +51,7 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
 	@Override public boolean isTransformerUpgradable()				{return getElectricTier()>0;}
 	@Override public boolean isBatteryUpgradable()					{return getElectricTier()>0;}
 	@Override public boolean isElectric()							{return getElectricTier()>0;}
-	@Override public boolean isValidSlot(int aIndex)				{return aIndex > 0 && aIndex < dechargerSlotStartIndex();}
+	@Override public boolean isValidSlot(int aIndex)				{return aIndex >= 0 && aIndex < dechargerSlotStartIndex();}
 	@Override public boolean isFacingValid(byte aFacing)			{return (mMainFacing > 1 || aFacing > 1);}
 	@Override public boolean isEnetInput() 							{return getElectricTier()>0;}
 	@Override public boolean isEnetOutput() 						{return getElectricTier()>0;}
@@ -64,8 +64,8 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
     @Override public int maxEUStore()								{return getElectricTier()*getElectricTier()*2000;}
     @Override public int maxRFStore()								{return maxEUStore();}
     @Override public int maxSteamStore()							{return maxEUStore();}
-	@Override public int getInvSize()								{return 6;}
-	@Override public int dechargerSlotStartIndex()					{return 5;}
+	@Override public int getInvSize()								{return 5;}
+	@Override public int dechargerSlotStartIndex()					{return 4;}
 	@Override public int dechargerSlotCount()						{return getElectricTier()>0?1:0;}
 	@Override public boolean isAccessAllowed(EntityPlayer aPlayer)	{return true;}
 	@Override public RecipeLogic getRecipeLogic() 					{return recipeLogic;}
@@ -173,12 +173,12 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
     
     @Override
     public List<ItemStack> getInputItems() {
-    	return new ListAdapter<>(mInventory, 1, 2);
+    	return new ListAdapter<>(mInventory, 0, 1);
     }
     
     @Override
     public List<ItemStack> getOutputItems() {
-    	return new ListAdapter<>(mInventory, 3, 4);
+    	return new ListAdapter<>(mInventory, 2, 3);
     }
     
     @Override
@@ -342,25 +342,25 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
 	
 	@Override
 	public boolean allowPullStack(int aIndex, byte aSide, ItemStack aStack) {
-		return aSide!=mMainFacing?aIndex==3||aIndex==4:false;
+		return aSide!=mMainFacing?aIndex==2||aIndex==3:false;
 	}
 	
 	@Override
 	public boolean allowPutStack(int aIndex, byte aSide, ItemStack aStack) {
 		if (aSide == mMainFacing || (!bAlloyInputFromOutputSide && aSide == getBaseMetaTileEntity().getFrontFacing())) return false;
-		if (hasTwoSeperateInputs()&&GT_Utility.areStacksEqual(GT_OreDictUnificator.get(aStack), mInventory[aIndex==1?2:1])) return false;
+		if (hasTwoSeperateInputs()&&GT_Utility.areStacksEqual(GT_OreDictUnificator.get(aStack), mInventory[aIndex==0?1:0])) return false;
 		if (bSeperatedInputs) {
 			ForgeDirection dir = ForgeDirection.getOrientation(aSide);
 			ForgeDirection front = ForgeDirection.getOrientation(mMainFacing);
 			if (front.getRotation(ForgeDirection.UP) == dir) {
-				return aIndex == 1;
+				return aIndex == 0;
 			} else if (front.getRotation(ForgeDirection.DOWN) == dir) {
-				return aIndex == 2;
+				return aIndex == 1;
 			} else {
 				return false;
 			}
 		} else {
-			return aIndex==1||aIndex==2;
+			return aIndex==0||aIndex==1;
 		}
 	}
 }

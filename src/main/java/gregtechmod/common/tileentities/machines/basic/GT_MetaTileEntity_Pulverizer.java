@@ -24,8 +24,15 @@ public class GT_MetaTileEntity_Pulverizer extends GT_MetaTileEntity_BasicMachine
 		loopLen = 290;
 	}
 	
-	@Override public void onRightclick(EntityPlayer aPlayer) {
+	@Override
+	public void onRightclick(EntityPlayer aPlayer) {
 		getBaseMetaTileEntity().openGUI(aPlayer, 149);
+	}
+	
+	@Override
+	protected void initRecipeLogic(RecipeMap<?> recipeMap) {
+		super.initRecipeLogic(recipeMap);
+		this.recipeLogic.batterySlot = 6;
 	}
 	
 	@Override
@@ -48,27 +55,27 @@ public class GT_MetaTileEntity_Pulverizer extends GT_MetaTileEntity_BasicMachine
 	
 	@Override
     public List<ItemStack> getInputItems() {
-    	return new ListAdapter<>(mInventory, 1, 2);
+    	return new ListAdapter<>(mInventory, 0, 1);
     }
 	
 	@Override
 	public List<ItemStack> getOutputItems() {
-		return new ListAdapter<>(mInventory, 3, 6);
+		return new ListAdapter<>(mInventory, 2, 5);
 	}
 	
 	@Override
 	public boolean allowPullStack(int aIndex, byte aSide, ItemStack aStack) {
-		return aSide!=mMainFacing?aIndex>=3||aIndex<8:false;
+		return aSide!=mMainFacing?aIndex>=2&&aIndex<7:false;
 	}
 	
 	@Override
 	public int getInvSize() {
-		return 8;
+		return 7;
 	}
 	
 	@Override
 	public int dechargerSlotStartIndex() {
-		return 7;
+		return 6;
 	}
 	
 	@Override

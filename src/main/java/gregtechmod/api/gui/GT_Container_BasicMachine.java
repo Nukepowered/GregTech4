@@ -26,14 +26,14 @@ public class GT_Container_BasicMachine extends GT_ContainerMetaTile_Machine {
 	
     @Override
 	public void addSlots(InventoryPlayer aInventoryPlayer) {
-        addSlotToContainer(new Slot(mTileEntity,  1,  35,  25));
-        addSlotToContainer(new Slot(mTileEntity,  2,  53,  25));
-        addSlotToContainer(new Slot(mTileEntity,  5,  80,  63));
-        addSlotToContainer(new GT_Slot_Output(mTileEntity,  3, 107,  25));
-        addSlotToContainer(new GT_Slot_Output(mTileEntity,  4, 125,  25));
-        addSlotToContainer(new GT_Slot_Holo(mTileEntity, 0,  8, 63, false, true, 1));
-        addSlotToContainer(new GT_Slot_Holo(mTileEntity, 0, 26, 63, false, true, 1));
-        addSlotToContainer(new GT_Slot_Holo(mTileEntity, 0, 44, 63, false, true, 1));
+        addSlotToContainer(new Slot(mTileEntity,  0,  35,  25));
+        addSlotToContainer(new Slot(mTileEntity,  1,  53,  25));
+        addSlotToContainer(new Slot(mTileEntity,  4,  80,  63));
+        addSlotToContainer(new GT_Slot_Output(mTileEntity,  2, 107,  25));
+        addSlotToContainer(new GT_Slot_Output(mTileEntity,  3, 125,  25));
+        addSlotToContainer(new GT_Slot_Holo(mTileEntity, -1,  8, 63, false, true, 1));
+        addSlotToContainer(new GT_Slot_Holo(mTileEntity, -1, 26, 63, false, true, 1));
+        addSlotToContainer(new GT_Slot_Holo(mTileEntity, -1, 44, 63, false, true, 1));
     }
     
     public final SyncedField<Boolean> mOutputting		= new SyncedField<Boolean>("mOutputting", Boolean.FALSE);

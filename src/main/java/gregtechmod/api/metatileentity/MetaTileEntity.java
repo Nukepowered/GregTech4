@@ -9,6 +9,7 @@ import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.FluidTankInfo;
+
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -389,6 +391,12 @@ public abstract class MetaTileEntity implements IMetaTileEntity {
     
 	@Override
 	public ArrayList<String> getSpecialDebugInfo(EntityPlayer aPlayer, int aLogLevel, ArrayList<String> aList) {
+		if (!aPlayer.worldObj.isRemote && mInventory != null) {
+			aList.add("Facing: " + ForgeDirection.getOrientation(getBaseMetaTileEntity().getFrontFacing()));
+			aList.add("Inventory size: " + mInventory.length);
+			aList.add("Inventory: " + Arrays.toString(mInventory));
+		}
+		
 		return aList;
 	}
 	

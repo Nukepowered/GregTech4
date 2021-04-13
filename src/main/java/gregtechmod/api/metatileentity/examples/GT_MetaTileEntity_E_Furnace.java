@@ -1,7 +1,5 @@
 package gregtechmod.api.metatileentity.examples;
 
-import java.util.List;
-
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
@@ -9,7 +7,6 @@ import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_BasicMac
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
-import gregtechmod.api.util.ListAdapter;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -88,16 +85,6 @@ public class GT_MetaTileEntity_E_Furnace extends GT_MetaTileEntity_BasicMachine 
 	    }
 	    // Opens the GUI of your Machine. Replace GregTech_API.gregtechmod with your Mod to call your GUI.
 		getBaseMetaTileEntity().openGUI(aPlayer, 135, GregTech_API.gregtechmod);
-	}
-	
-	@Override
-    public List<ItemStack> getInputItems() {
-    	return new ListAdapter<>(mInventory, 1, 2);
-	}
-	
-	@Override
-    public List<ItemStack> getOutputItems() {
-		return new ListAdapter<>(mInventory, 3, 4);
 	}
 	
 	@Override
