@@ -33,7 +33,7 @@ import net.minecraftforge.fluids.FluidStack;
  * I know this File causes some Errors, because of missing Main Functions, but if you just need to compile Stuff, then remove said erroreous Functions.
  */
 public class Recipe {
-	public static volatile int VERSION = 413;
+	public static volatile int VERSION = 414;
 	
 	private List<Ingredient> itemInputs;
 	private List<ItemStack> itemOutputs;
