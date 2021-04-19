@@ -55,7 +55,7 @@ public class GT_Renderer extends RenderPlayer {
     			tResource = new ResourceLocation(GregTech_API.MOD_ID, "textures/GregTechCape.png");
     		
     		
-	        if (!aPlayer.getHideCape()) {
+	        if (tResource != null && !aPlayer.getHideCape()) {
 	        	bindTexture(tResource);
 	            GL11.glPushMatrix();
 	            GL11.glTranslatef(0.0F, 0.0F, 0.125F);
