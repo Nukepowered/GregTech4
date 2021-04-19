@@ -85,7 +85,7 @@ public class GT_MetaGenerated_Item_01 extends GT_MetaGenerated_Item {
          case ingotHot:
             return (aMaterial.mTypes & 2) != 0 && aMaterial.mBlastFurnaceTemp > 1750;
          case plate:
-            return (aMaterial.mTypes & 6) != 0 || aMaterial == Materials.Paper || aMaterial == Materials.Redstone || aMaterial == Materials.GraniteRed || aMaterial == Materials.GraniteBlack || aMaterial == Materials.Glowstone || aMaterial == Materials.Nikolite || aMaterial == Materials.Obsidian || aMaterial == Materials.Wood;
+            return (aMaterial.mTypes & 6) != 0 || aMaterial == Materials.Paper || aMaterial == Materials.Redstone || aMaterial == Materials.GraniteRed || aMaterial == Materials.GraniteBlack || aMaterial == Materials.Glowstone || aMaterial == Materials.Nikolite || aMaterial == Materials.Electrotine || aMaterial == Materials.Obsidian || aMaterial == Materials.Wood;
          case plateDouble:
             return aMaterial == Materials.Paper;
          case plateTriple:

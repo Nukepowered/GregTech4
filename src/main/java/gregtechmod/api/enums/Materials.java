@@ -228,6 +228,7 @@ public enum Materials {
 	NetherQuartz		( 522, GT_ItemTextures.SET_QUARTZ			, 1  |4|8                               , 230, 210, 210,   0,	0,    0,       0,          0,          0,          0,    false, false, 2,   1,   1,   Dyes.dyeWhite		),
 	NetherStar			( 506, GT_ItemTextures.SET_NETHERSTAR		, 1  |4                                 , 255, 255, 255,   0,	5,    50000,   0,          0,          0,          0,    false, false, 15,  1,   1,   Dyes.dyeWhite		),
 	Nikolite			( 812, GT_ItemTextures.SET_SHINY			, 1    |8                               ,  60, 180, 200,   0,	0,    0,       5000,       0,          0,          0,    false, false, 3,   1,   1,   Dyes.dyeCyan		),
+	Electrotine			( 819, GT_ItemTextures.SET_SHINY			, 1    |8                               ,  60, 180, 200,   0,	0,    0,       5000,       0,          0,          0,    false, false, 3,   1,   1,   Dyes.dyeCyan		),
 	ObsidianFlux		(  -1, GT_ItemTextures.SET_DULL				, 1|2                                   ,  80,  50, 100,   0,	0,    0,       0,          0,          0,          0,    false, false, 1,   1,   1,   Dyes.dyePurple		),
 	Oilsands			(  -1, GT_ItemTextures.SET_NONE				, 1    |8                               , 255, 255, 255,   0,	0,    0,       0,          0,          0,          0,    false, false, 1,   1,   1,   Dyes._NULL			),
 	Onyx				(  -1, GT_ItemTextures.SET_NONE				, 1                                     , 255, 255, 255,   0,	0,    0,       0,          0,          0,          0,    false, false, 3,   1,   1,   Dyes._NULL			),
@@ -455,6 +456,7 @@ public enum Materials {
 	Mithril				( 331, GT_ItemTextures.SET_SHINY			, 1|2  |8      |64                      , 255, 255, 210,   0,	0,    0,       0,          0,          0,          0,    false, false, 4,   3,   2,   Dyes.dyeLightBlue	, 2, Arrays.asList(new MaterialStack(Platinum, 2), new MaterialStack(Magic, 1))),
 	BlueAlloy			( 309, GT_ItemTextures.SET_DULL				, 1|2                                   , 100, 180, 255,   0,	0,    0,       0,          0,          0,          0,    false, false, 3,   5,   1,   Dyes.dyeLightBlue	, 2, Arrays.asList(new MaterialStack(Silver, 1), new MaterialStack(Nikolite, 4))),
 	RedAlloy			( 308, GT_ItemTextures.SET_DULL				, 1|2                                   , 200,   0,   0,   0,	0,    0,       0,          0,          0,          0,    false, false, 3,   5,   1,   Dyes.dyeRed		, 2, Arrays.asList(new MaterialStack(Metal, 1), new MaterialStack(Redstone, 4))),
+	ElectrotineAlloy	( 345, GT_ItemTextures.SET_DULL				, 1|2                                   , 90, 160, 255,   0,	0,    0,       0,          0,          0,          0,    false, false, 3,   5,   1,   Dyes.dyeLightBlue	, 2, Arrays.asList(new MaterialStack(Iron, 1), new MaterialStack(Electrotine, 8))),
 	CobaltBrass			( 343, GT_ItemTextures.SET_METALLIC			, 1|2          |64|128                  , 180, 180, 160,   0,	0,    0,       0,          0,          0,          0,    false, false, 3,   1,   1,   Dyes.dyeOrange	, 2, Arrays.asList(new MaterialStack(Brass, 7), new MaterialStack(Aluminium, 1), new MaterialStack(Cobalt, 1))),
 	Phosphorus			( 534, GT_ItemTextures.SET_FLINT			, 1  |4|8|16                            , 255, 255,   0,   0,	0,    0,       0,          0,          0,          0,    false, false, 3,   1,   1,   Dyes.dyeYellow	, 2, Arrays.asList(new MaterialStack(Calcium, 3), new MaterialStack(Phosphate, 2))),
 	Basalt				( 844, GT_ItemTextures.SET_ROUGH			, 1                                     ,  30,  20,  20,   0,	0,    0,       0,          0,          0,          0,    false, false, 2,   1,   1,   Dyes.dyeBlack		, 2, Arrays.asList(new MaterialStack(Olivine, 1), new MaterialStack(Calcite, 3), new MaterialStack(Flint, 8), new MaterialStack(DarkAsh, 4))),
@@ -623,6 +625,7 @@ public enum Materials {
 		Saltpeter		.setOreMultiplier( 4).setSmeltingMultiplier( 4);
 		Apatite			.setOreMultiplier( 4).setSmeltingMultiplier( 4).setByProductMultiplier(2);
 		Nikolite		.setOreMultiplier( 5).setSmeltingMultiplier( 5);
+		Electrotine		.setOreMultiplier( 5).setSmeltingMultiplier( 5);
 		Redstone		.setOreMultiplier( 5).setSmeltingMultiplier( 5);
 		Glowstone		.setOreMultiplier( 5).setSmeltingMultiplier( 5);
 		Lapis			.setOreMultiplier( 6).setSmeltingMultiplier( 6).setByProductMultiplier(4);
@@ -777,6 +780,7 @@ public enum Materials {
 		Apatite			.addOreByProduct(Phosphorus		);
 		Zinc			.addOreByProduct(Tin			);
 		Nikolite		.addOreByProduct(Diamond		);
+		Electrotine		.addOreByProduct(Diamond		);
 		Magnesite		.addOreByProduct(Magnesium		);
 		NetherQuartz	.addOreByProduct(Netherrack		);
 		PigIron			.addOreByProduct(Iron			);
