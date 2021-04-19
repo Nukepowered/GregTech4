@@ -544,7 +544,7 @@ public class GT_MachineRecipeLoader implements Runnable
         RecipeMaps.PRINTER.factory().EUt(2).duration(400).setShaped(true).input(new ItemStack(Items.paper, 3)).input(new ItemStack(Items.leather)).output(new ItemStack(Items.book)).buildAndRegister();
         RecipeMaps.PRINTER.factory().EUt(2).duration(400).setShaped(true).input(new ItemStack(Items.paper, 8)).input(new ItemStack(Items.compass)).output(new ItemStack(Items.map)).buildAndRegister();
         if (Loader.isModLoaded("arsmagica2")) {
-        	RecipeMaps.PRINTER.factory().EUt(2).duration(400).setShaped(true).input("paper", 8).input(OrePrefixes.stick, Materials.Wood, 2).output(GT_OreDictUnificator.getFirstOre("paperArsSpellParchment", 1)).buildAndRegister();
+        	RecipeMaps.PRINTER.factory().EUt(2).duration(400).setShaped(true).input("paperEmpty", 8).input(OrePrefixes.stick, Materials.Wood, 2).output(GT_OreDictUnificator.getFirstOre("paperArsSpellParchment", 1)).buildAndRegister();
         }
         
         for (final MaterialStack[] tMats : this.mAlloySmelterList) {

@@ -195,10 +195,10 @@ public class GT_ItemIterator implements Runnable {
 					if (tBlock != null) {
 						((GT_Tool_Item) GT_Items.Tool_Scoop_Aluminium.getItem()) .addToMaterialList(tBlock.getMaterial());
 					}
-				} else if (tName.equals("tile.ArsMagica:ore_vinteum")) {
+				} else if (tName.equals("tile.arsmagica2:ores.0")) {
 					GT_OreDictUnificator.set(OrePrefixes.ore, Materials.Vinteum, new ItemStack(tItem, 1, 0));
-				} else if (tName.equals("item.ArsMagica:purified_vinteum")) {
-					RecipeMaps.MAGIC_FUELS.factory().EUt(16).duration(16).input(new ItemStack(tItem, 1)).buildAndRegister();
+				} else if (tName.equals("item.arsmagica2:itemOre")) {
+					RecipeMaps.MAGIC_FUELS.factory().EUt(16).duration(16).input(new ItemStack(tItem, 3)).buildAndRegister();
 				} else if (tName.equals("item.meefSteak") || tName.equals("item.venisonCooked")) {
 					RecipeMaps.CENTRIFUGE.factory().EUt(5).duration(5000).setShaped(true).inputs(GT_Items.Cell_Empty.get(1), new ItemStack(tItem, 16, 0)).output(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Methane, 1L)).buildAndRegister();
 				} else if (tName.equals("item.meefRaw") || tName.equals("item.venisonRaw")) {
@@ -221,11 +221,11 @@ public class GT_ItemIterator implements Runnable {
 					GT_OreDictUnificator.set(OrePrefixes.ingot, Materials.FieryBlood, new ItemStack(tItem, 1, 0));
 				} else if (tName.equals("item.tconstruct.manual")) {
 					GT_OreDictUnificator.registerOre("bookTinkersManual", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				} else if (tName.equals("item.ArsMagica:spell_parchment")) {
+				} else if (tName.equals("item.arsmagica2:spell_parchment")) {
 					GT_OreDictUnificator.registerOre("paperArsSpellParchment", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				} else if (tName.equals("item.ArsMagica:spell_recipe")) {
+				} else if (tName.equals("item.arsmagica2:spell_recipe")) {
 					GT_OreDictUnificator.registerOre("paperArsSpellRecipe", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
-				} else if (tName.equals("item.ArsMagica:spell_book")) {
+				} else if (tName.equals("item.arsmagica2:spell_book")) {
 					GT_OreDictUnificator.registerOre("bookArsSpells", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
 				} else if (tName.equals("item.myst.page")) {
 					GT_OreDictUnificator.registerOre("paperMystcraft", new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE));
