@@ -16,6 +16,7 @@ import gregtechmod.api.util.OreDictEntry;
 import gregtechmod.common.items.GT_MetaGenerated_Item_02;
 import gregtechmod.common.recipe.RecipeEntry;
 import gregtechmod.common.recipe.RecipeMaps;
+import net.minecraft.item.ItemStack;
 import gregtechmod.common.recipe.RecipeEntry.Match;
 
 public class ProcessingShaping implements IOreRecipeRegistrator {
@@ -76,17 +77,20 @@ public class ProcessingShaping implements IOreRecipeRegistrator {
 //					RecipeMaps.EXTRUDING.factory().EUt( 80).setShaped(true).duration(10)			.input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Ingot			.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial, tAmount)).buildAndRegister();
 					
 					if ((aMaterial.mTypes & 2) != 0) {
-						RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(Math.max(aMaterial.getMass() * 1 * tAmount, tAmount)).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Plate	.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.plate, aMaterial, tAmount)).buildAndRegister();
-						RecipeMaps.ALLOY_SMELTING.factory().EUt(32).duration(Math.max(aMaterial.getMass() *  2 * tAmount, tAmount)).input(RecipeEntry.fromStacks(2, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Mold_Plate.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.plate, aMaterial, tAmount)).buildAndRegister();
+						ItemStack tItem = null;
+						if ((tItem = GT_OreDictUnificator.get(OrePrefixes.plate, aMaterial, tAmount)) != null) {
+							RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(Math.max(aMaterial.getMass() * 1 * tAmount, tAmount)).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Plate	.get(1)).output(tItem).buildAndRegister();
+							RecipeMaps.ALLOY_SMELTING.factory().EUt(32).duration(Math.max(aMaterial.getMass() *  2 * tAmount, tAmount)).input(RecipeEntry.fromStacks(2, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Mold_Plate.get(1)).output(tItem).buildAndRegister();
+						}
 						
-						if(tAmount * 2 <= 64)
-							RecipeMaps.EXTRUDING.factory().EUt( 96).setShaped(true).duration(Math.max(aMaterial.getMass() * 2 * tAmount, tAmount)).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Rod  .get(1)).output(GT_OreDictUnificator.get(OrePrefixes.stick, aMaterial, tAmount * 2)).buildAndRegister();
-						if (tAmount * 8 <= 64)
-							RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(Math.max(aMaterial.getMass() * 2 * tAmount, tAmount)).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Bolt .get(1)).output(GT_OreDictUnificator.get(OrePrefixes.bolt , aMaterial, tAmount * 8)).buildAndRegister();
-						if (tAmount * 4 <= 64)
-							RecipeMaps.EXTRUDING.factory().EUt( 96).setShaped(true).duration(Math.max(aMaterial.getMass() * 2 * tAmount, tAmount)).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Ring .get(1)).output(GT_OreDictUnificator.get(OrePrefixes.ring , aMaterial, tAmount * 4)).buildAndRegister();
-						if (!OrePrefixes.block.isIgnored(aMaterial) && GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1) != null)
-							RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(10 * tAmount										 ).input(RecipeEntry.fromStacks(9, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Block.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, tAmount * 1)).buildAndRegister();
+						if(tAmount * 2 <= 64 && (tItem = GT_OreDictUnificator.get(OrePrefixes.stick, aMaterial, 2)) != null)
+							RecipeMaps.EXTRUDING.factory().EUt( 96).setShaped(true).duration(Math.max(aMaterial.getMass() * 2 * tAmount, tAmount)).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Rod  .get(1)).output(tItem).buildAndRegister();
+						if (tAmount * 8 <= 64 && (tItem = GT_OreDictUnificator.get(OrePrefixes.bolt, aMaterial, 8)) != null)
+							RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(Math.max(aMaterial.getMass() * 2 * tAmount, tAmount)).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Bolt .get(1)).output(tItem).buildAndRegister();
+						if (tAmount * 4 <= 64 && (tItem = GT_OreDictUnificator.get(OrePrefixes.ring, aMaterial, 4)) != null)
+							RecipeMaps.EXTRUDING.factory().EUt( 96).setShaped(true).duration(Math.max(aMaterial.getMass() * 2 * tAmount, tAmount)).input(RecipeEntry.fromStacks(1, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Ring .get(1)).output(tItem).buildAndRegister();
+						if (!OrePrefixes.block.isIgnored(aMaterial) && (tItem = GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1)) != null)
+							RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(10 * tAmount										 ).input(RecipeEntry.fromStacks(9, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Block.get(1)).output(tItem).buildAndRegister();
 						
 						switch(aMaterial) {
 			            case Iron:

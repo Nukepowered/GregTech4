@@ -9,6 +9,7 @@ import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.enums.SubTag;
 import gregtechmod.api.interfaces.IOreRecipeRegistrator;
+import gregtechmod.api.recipe.RecipeFactory;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
@@ -208,171 +209,189 @@ public class ProcessingOre implements IOreRecipeRegistrator {
 				final ItemStack out1 =tMaterial.contains(SubTag.PULVERIZING_CINNABAR) ? GT_OreDictUnificator.get(OrePrefixes.crystal, Materials.Cinnabar, GT_Utility.copyAmount(1, tPrimaryByProduct), 1L) : GT_Utility.copyAmount(1, tPrimaryByProduct);
 				final int val = tPrimaryByProduct == null ? 0 : tPrimaryByProduct.stackSize * 10 * aMultiplier * aMaterial.mByProductMultiplier;
 				RecipeHandler.executeOnFinish(() -> GT_ModHandler.addPulverisationRecipe(entry, 1, GT_Utility.mul(2L, copy), out1, val));
+				RecipeFactory<?> factory;
 				if (tGem != null) {
-					RecipeMaps.GRINDER.factory()
+					factory = RecipeMaps.GRINDER.factory()
 						.EUt(120).duration(100)
 						.input(ingr)
 						.input(GT_ModHandler.getWater(1000 * aMultiplier))
 						.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier, tGem))
 						.output(tSmall == null
 									? GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier * 2, tCleaned)
-									: GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier * 6, tSmall))
-						.output(GT_Utility.mul(aMultiplier * 2 * aMaterial.mByProductMultiplier, tPrimaryByProductSmall))
-						.buildAndRegister();
+									: GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier * 6, tSmall));
+					if (tPrimaryByProductSmall != null)
+						factory.output(GT_Utility.mul(aMultiplier * 2 * aMaterial.mByProductMultiplier, tPrimaryByProductSmall));
+					factory.buildAndRegister();
 					
 					if (tMaterial.contains(SubTag.WASHING_MERCURY)) {
 						if (tSmall == null) {
-							RecipeMaps.GRINDER.factory()
+							factory = RecipeMaps.GRINDER.factory()
 								.EUt(120).duration(100).setShaped(true)
 								.input(ingr)
 								.input(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Mercury, aMultiplier))
-								.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier, tGem))
-								.output(GT_Utility.mul(aMultiplier * 3 * aMaterial.mOreMultiplier, tCleaned))
-								.output(GT_Utility.mul(aMultiplier * 2 * aMaterial.mByProductMultiplier, tPrimaryByProductSmall))
-								.output(GT_Items.Cell_Empty.get(aMultiplier))
-								.buildAndRegister();
+								.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier, tGem));
+							if (tCleaned != null)
+								factory.output(GT_Utility.mul(aMultiplier * 3 * aMaterial.mOreMultiplier, tCleaned));
+							if (tPrimaryByProductSmall != null)
+								factory.output(GT_Utility.mul(aMultiplier * 2 * aMaterial.mByProductMultiplier, tPrimaryByProductSmall));
+								
+							factory.output(GT_Items.Cell_Empty.get(aMultiplier)).buildAndRegister();
 						}
 						
-						RecipeMaps.GRINDER.factory()
+						factory = RecipeMaps.GRINDER.factory()
 							.EUt(120).duration(100).setShaped(true)
 							.input(ingr)
 							.input(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Mercury, aMultiplier))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier, tGem))
-							.output(GT_Utility.mul(aMultiplier * 3 * aMaterial.mOreMultiplier, tDust))
-							.output(GT_Utility.mul(aMultiplier * 2 * aMaterial.mByProductMultiplier, tPrimaryByProductSmall))
-							.output(GT_Items.Cell_Empty.get(aMultiplier))
-							.buildAndRegister();
+							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier, tGem));
+						if (tCleaned != null)
+							factory.output(GT_Utility.mul(aMultiplier * 3 * aMaterial.mOreMultiplier, tDust));
+						if (tPrimaryByProductSmall != null)
+							factory.output(GT_Utility.mul(aMultiplier * 2 * aMaterial.mByProductMultiplier, tPrimaryByProductSmall));
+						factory.output(GT_Items.Cell_Empty.get(aMultiplier)).buildAndRegister();
 					}
 
 
 					if (tPrimaryByMaterial.contains(SubTag.WASHING_MERCURY)) {
-						RecipeMaps.GRINDER.factory()
+						factory = RecipeMaps.GRINDER.factory()
 							.EUt(120).duration(100).setShaped(true)
 							.input(ingr)
 							.input(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Mercury, aMultiplier))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier, tGem))
-							.output(tSmall == null
+							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier, tGem));
+						if (tCleaned != null || tSmall != null)	
+							factory.output(tSmall == null
 									? GT_Utility.mul((aMultiplier * 2 * aMaterial.mOreMultiplier), tCleaned)
-									: GT_Utility.mul((aMultiplier * 6 * aMaterial.mOreMultiplier), tSmall))
-							.output(GT_Utility.mul(aMultiplier * 2 * aMaterial.mByProductMultiplier, tPrimaryByProduct))
-							.output(GT_Items.Cell_Empty.get(aMultiplier))
-							.buildAndRegister();
+									: GT_Utility.mul((aMultiplier * 6 * aMaterial.mOreMultiplier), tSmall));
+						if (tPrimaryByProductSmall != null)
+							factory.output(GT_Utility.mul(aMultiplier * 2 * aMaterial.mByProductMultiplier, tPrimaryByProduct));
+						factory.output(GT_Items.Cell_Empty.get(aMultiplier)).buildAndRegister();
 					}
 					
 					if (tMaterial.contains(SubTag.WASHING_SODIUMPERSULFATE)) {
 						if (tSmall == null) {
-							RecipeMaps.GRINDER.factory()
+							factory = RecipeMaps.GRINDER.factory()
 								.EUt(120).duration(100).setShaped(true)
 								.input(ingr)
 								.input(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.SodiumPersulfate, aMultiplier))
-								.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier, tGem))
-								.output(GT_Utility.mul(aMultiplier * 3 * aMaterial.mOreMultiplier, tCleaned))
-								.output(GT_Utility.mul(aMultiplier * 2 * aMaterial.mByProductMultiplier, tPrimaryByProductSmall))
-								.output(GT_Items.Cell_Empty.get(aMultiplier))
-								.buildAndRegister();
+								.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier, tGem));
+							if (tCleaned != null)	
+								factory.output(GT_Utility.mul(aMultiplier * 3 * aMaterial.mOreMultiplier, tCleaned));
+							if (tPrimaryByProductSmall != null)
+								factory.output(GT_Utility.mul(aMultiplier * 2 * aMaterial.mByProductMultiplier, tPrimaryByProductSmall));
+							factory.output(GT_Items.Cell_Empty.get(aMultiplier)).buildAndRegister();
 						}
 						
-						RecipeMaps.GRINDER.factory()
+						factory = RecipeMaps.GRINDER.factory()
 							.EUt(120).duration(100).setShaped(true)
 							.input(ingr)
 							.input(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.SodiumPersulfate, aMultiplier))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier, tGem))
-							.output(GT_Utility.mul(aMultiplier * 3 * aMaterial.mOreMultiplier, tDust))
-							.output(GT_Utility.mul(aMultiplier * 2 * aMaterial.mByProductMultiplier, tPrimaryByProductSmall))
-							.output(GT_Items.Cell_Empty.get(aMultiplier))
-							.buildAndRegister();
+							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier, tGem));
+						if (tDust != null)	
+							factory.output(GT_Utility.mul(aMultiplier * 3 * aMaterial.mOreMultiplier, tDust));
+						if (tPrimaryByProductSmall != null)	
+							factory.output(GT_Utility.mul(aMultiplier * 2 * aMaterial.mByProductMultiplier, tPrimaryByProductSmall));
+						factory.output(GT_Items.Cell_Empty.get(aMultiplier)).buildAndRegister();
 					}
 
 					if (tPrimaryByMaterial.contains(SubTag.WASHING_SODIUMPERSULFATE)) {
-						RecipeMaps.GRINDER.factory()
+						factory = RecipeMaps.GRINDER.factory()
 							.EUt(120).duration(100).setShaped(true)
 							.input(ingr)
 							.input(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.SodiumPersulfate, aMultiplier))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier, tGem))
-							.output(tSmall == null
+							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier, tGem));
+							if (tSmall != null || tCleaned != null)
+								factory.output(tSmall == null
 									? GT_Utility.mul((aMultiplier * 2 * aMaterial.mOreMultiplier), tCleaned)
-									: GT_Utility.mul((aMultiplier * 6 * aMaterial.mOreMultiplier), tSmall))
-							.output(GT_Utility.mul(aMultiplier * 2 * aMaterial.mByProductMultiplier, tPrimaryByProduct))
-							.output(GT_Items.Cell_Empty.get(aMultiplier))
-							.buildAndRegister();
+									: GT_Utility.mul((aMultiplier * 6 * aMaterial.mOreMultiplier), tSmall));
+							if (tPrimaryByProduct != null)
+								factory.output(GT_Utility.mul(aMultiplier * 2 * aMaterial.mByProductMultiplier, tPrimaryByProduct));
+							factory.output(GT_Items.Cell_Empty.get(aMultiplier)).buildAndRegister();
 					}
-				} else {
-					RecipeMaps.GRINDER.factory()
+				} else if (tCleaned != null) {
+					factory = RecipeMaps.GRINDER.factory()
 						.EUt(120).duration(100)
 						.input(ingr)
 						.input(GT_ModHandler.getWater(1000 * aMultiplier))
-						.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier * 2, tCleaned))
-						.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProductSmall))
-						.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProductSmall))
-						.buildAndRegister();
+						.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier * 2, tCleaned));
+					if (tPrimaryByProductSmall != null)
+						factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProductSmall));
+					if (tSecondaryByProductSmall != null)
+						factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProductSmall));
+					factory.buildAndRegister();
+					
 					if (tMaterial.contains(SubTag.WASHING_MERCURY)) {
-						RecipeMaps.GRINDER.factory()
+						factory = RecipeMaps.GRINDER.factory()
 							.EUt(120).duration(100).setShaped(true)
 							.input(ingr)
 							.input(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Mercury, aMultiplier))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier * 3, tCleaned))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProductSmall))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProductSmall))
-							.output(GT_Items.Cell_Empty.get(aMultiplier))
-							.buildAndRegister();
+							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier * 3, tCleaned));
+						if (tPrimaryByProductSmall != null)
+							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProductSmall));
+						if (tSecondaryByProductSmall != null)
+							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProductSmall));
+						factory.output(GT_Items.Cell_Empty.get(aMultiplier)).buildAndRegister();
 					}
 
 					if (tPrimaryByMaterial.contains(SubTag.WASHING_MERCURY)) {
-						RecipeMaps.GRINDER.factory()
+						factory = RecipeMaps.GRINDER.factory()
 							.EUt(120).duration(100).setShaped(true)
 							.input(ingr)
 							.input(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Mercury, aMultiplier))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier * 2, tCleaned))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProduct))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProductSmall))
-							.output(GT_Items.Cell_Empty.get(aMultiplier))
-							.buildAndRegister();
+							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier * 2, tCleaned));
+						if (tPrimaryByProductSmall != null)
+							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProductSmall));
+						if (tSecondaryByProductSmall != null)
+							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProductSmall));
+						factory.output(GT_Items.Cell_Empty.get(aMultiplier)).buildAndRegister();
 					}
 
 					if (tSecondaryByMaterial.contains(SubTag.WASHING_MERCURY)) {
-						RecipeMaps.GRINDER.factory()
+						factory = RecipeMaps.GRINDER.factory()
 							.EUt(120).duration(100).setShaped(true)
 							.input(ingr)
 							.input(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Mercury, aMultiplier))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier * 2, tCleaned))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProductSmall))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProduct))
-							.output(GT_Items.Cell_Empty.get(aMultiplier))
-							.buildAndRegister();
+							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier * 2, tCleaned));
+						if (tPrimaryByProductSmall != null)
+							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProductSmall));
+						if (tSecondaryByProductSmall != null)
+							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProductSmall));
+						factory.output(GT_Items.Cell_Empty.get(aMultiplier)).buildAndRegister();
 					}
 
 					if (tMaterial.contains(SubTag.WASHING_SODIUMPERSULFATE)) {
-						RecipeMaps.GRINDER.factory()
+						factory = RecipeMaps.GRINDER.factory()
 							.EUt(120).duration(100).setShaped(true)
 							.input(ingr)
 							.input(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.SodiumPersulfate, aMultiplier))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier * 3, tCleaned))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProductSmall))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProductSmall))
-							.output(GT_Items.Cell_Empty.get(aMultiplier))
-							.buildAndRegister();
+							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier * 3, tCleaned));
+						if (tPrimaryByProductSmall != null)
+							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProductSmall));
+						if (tSecondaryByProductSmall != null)
+							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProductSmall));
+						factory.output(GT_Items.Cell_Empty.get(aMultiplier)).buildAndRegister();
 					}
 
 					if (tPrimaryByMaterial.contains(SubTag.WASHING_SODIUMPERSULFATE)) {
-						RecipeMaps.GRINDER.factory()
+						factory = RecipeMaps.GRINDER.factory()
 							.EUt(120).duration(100).setShaped(true)
 							.input(ingr)
 							.input(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.SodiumPersulfate, aMultiplier))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier * 2, tCleaned))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProduct))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProductSmall))
-							.output(GT_Items.Cell_Empty.get(aMultiplier))
-							.buildAndRegister();
+							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier * 2, tCleaned));
+						if (tPrimaryByProductSmall != null)
+							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProductSmall));
+						if (tSecondaryByProductSmall != null)
+							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProductSmall));
+						factory.output(GT_Items.Cell_Empty.get(aMultiplier)).buildAndRegister();
 					} else if (tSecondaryByMaterial.contains(SubTag.WASHING_SODIUMPERSULFATE)) {
-						RecipeMaps.GRINDER.factory()
+						factory = RecipeMaps.GRINDER.factory()
 							.EUt(120).duration(100).setShaped(true)
 							.input(ingr)
 							.input(GT_OreDictUnificator.get(OrePrefixes.cell, Materials.SodiumPersulfate, aMultiplier))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier * 2, tCleaned))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProductSmall))
-							.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProduct))
-							.output(GT_Items.Cell_Empty.get(aMultiplier))
-							.buildAndRegister();
+							.output(GT_Utility.mul(aMultiplier * aMaterial.mOreMultiplier * 2, tCleaned));
+						if (tPrimaryByProductSmall != null)
+							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tPrimaryByProductSmall));
+						if (tSecondaryByProductSmall != null)
+							factory.output(GT_Utility.mul(aMultiplier * aMaterial.mByProductMultiplier, tSecondaryByProductSmall));
+						factory.output(GT_Items.Cell_Empty.get(aMultiplier)).buildAndRegister();
 					}
 				}
 			}

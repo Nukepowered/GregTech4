@@ -68,8 +68,12 @@ public class ProcessingDust implements IOreRecipeRegistrator {
 				}
 				
 				RecipeHandler.executeOnFinish(() -> {
-					GameRegistry.addRecipe(new ShapedOreRecipe(GT_OreDictUnificator.get(OrePrefixes.dustSmall, aMaterial, 4), new Object[]{" X", "  ", 'X', entry.oreDictName}).setMirrored(false));
-					GameRegistry.addRecipe(new ShapedOreRecipe(GT_OreDictUnificator.get(OrePrefixes.dustTiny, aMaterial, 9), new Object[]{"X ", "  ", 'X', entry.oreDictName}).setMirrored(false));
+					ItemStack tStack;
+					
+					if ((tStack = GT_OreDictUnificator.get(OrePrefixes.dustSmall, aMaterial, 4)) != null)
+						GameRegistry.addRecipe(new ShapedOreRecipe(tStack, new Object[]{" X", "  ", 'X', entry.oreDictName}).setMirrored(false));
+					if ((tStack = GT_OreDictUnificator.get(OrePrefixes.dustTiny, aMaterial, 9)) != null)
+						GameRegistry.addRecipe(new ShapedOreRecipe(tStack, new Object[]{"X ", "  ", 'X', entry.oreDictName}).setMirrored(false));
 				});
 								
 				if (GT_OreDictUnificator.get(OrePrefixes.cell, aMaterial, 1) != null) {
