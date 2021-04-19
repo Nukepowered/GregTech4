@@ -97,7 +97,6 @@ import java.util.EnumMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Scanner;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -107,14 +106,10 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.network.Packet;
-import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.common.ChestGenHooks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fluids.FluidContainerRegistry;
@@ -945,143 +940,143 @@ public class GT_Mod implements IGT_Mod {
 				}
 			}
             
-            GT_Log.log.info("Unificating outputs of all known Recipe Types.");
-            ArrayList<ItemStack> items = new ArrayList<ItemStack>();
-            GT_Log.log.info("IC2 Machines");
-            
-            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.cannerBottle.getRecipes().values()) {
-            	for (ItemStack recipeItem : recipeOut.items) {
-            		items.add(recipeItem);
-            	}
-            }
-            
-            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.centrifuge.getRecipes().values()) {
-            	for (ItemStack recipeItem : recipeOut.items) {
-            		items.add(recipeItem);
-            	}
-            }
-            
-            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.compressor.getRecipes().values()) {
-            	for (ItemStack recipeItem : recipeOut.items) {
-            		items.add(recipeItem);
-            	}
-            }
-            
-            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.extractor.getRecipes().values()) {
-            	for (ItemStack recipeItem : recipeOut.items) {
-            		items.add(recipeItem);
-            	}
-            }
-            
-            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.macerator.getRecipes().values()) {
-            	for (ItemStack recipeItem : recipeOut.items) {
-            		items.add(recipeItem);
-            	}
-            }
-            
-            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.metalformerCutting.getRecipes().values()) {
-            	for (ItemStack recipeItem : recipeOut.items) {
-            		items.add(recipeItem);
-            	}
-            }
-
-            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.metalformerRolling.getRecipes().values()) {
-            	for (ItemStack recipeItem : recipeOut.items) {
-            		items.add(recipeItem);
-            	}
-            }
-            
-            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.matterAmplifier.getRecipes().values()) {
-            	for (ItemStack recipeItem : recipeOut.items) {
-            		items.add(recipeItem);
-            	}
-            }
-            
-            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.oreWashing.getRecipes().values()) {
-            	for (ItemStack recipeItem : recipeOut.items) {
-            		items.add(recipeItem);
-            	}
-            }
-
-            GT_Log.log.info("Dungeon Loot");
-            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("dungeonChest").getItems(new Random())) {
-            	items.add(chestContent.theItemId);
-            }
-            
-            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("bonusChest").getItems(new Random())) {
-            	items.add(chestContent.theItemId);
-            }
-            
-            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("villageBlacksmith").getItems(new Random())) {
-            	items.add(chestContent.theItemId);
-            }
-            
-            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("strongholdCrossing").getItems(new Random())) {
-            	items.add(chestContent.theItemId);
-            }
-
-            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("strongholdLibrary").getItems(new Random())) {
-            	items.add(chestContent.theItemId);
-            }
-
-            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("strongholdCorridor").getItems(new Random())) {
-            	items.add(chestContent.theItemId);
-            }
-            
-            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("pyramidJungleDispenser").getItems(new Random())) {
-            	items.add(chestContent.theItemId);
-            }
-            
-            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("pyramidJungleChest").getItems(new Random())) {
-            	items.add(chestContent.theItemId);
-            }
-            
-            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("pyramidDesertyChest").getItems(new Random())) {
-            	items.add(chestContent.theItemId);
-            }
-            
-            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("mineshaftCorridor").getItems(new Random())) {
-            	items.add(chestContent.theItemId);
-            }
-
-            GT_Log.log.info("Smelting");
-            @SuppressWarnings("unchecked")
-            List<ItemStack> furnItems = new ArrayList<>(FurnaceRecipes.smelting().getSmeltingList().values());
-            for (ItemStack item : furnItems) {
-            	items.add(item);
-            }
-
-            if(sCraftingUnification) {
-               GT_Log.log.info("Crafting Recipes");
-               @SuppressWarnings("unchecked")
-               List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
-               for (IRecipe recipe : recipes) {
-            	   items.add(recipe.getRecipeOutput());
-               }
-            }
-            
-            items.removeIf(item -> item == null);
-            for (ItemStack item : items) {
-            	if (GT_OreDictHandler.instance.mRegisteredStacks.contains(item)) {
-            		GT_Log.log.error("GT-ERR-01: @ " + item.getUnlocalizedName() + "   " + item.getDisplayName());
-            		GT_Log.log.error("A Recipe used an OreDict Item as Output directly, without copying it before!!! This is a typical CallByReference/CallByValue Error");
-            		GT_Log.log.error("Said Item will be renamed to make the invalid Recipe visible, so that you can report it properly.");
-            		GT_Log.log.error("Please check all Recipes outputting this Item, and report the Recipes to their Owner.");
-            		GT_Log.log.error("The Owner of the ==>RECIPE<==, NOT the Owner of the Item, which has been mentioned above!!!");
-            		GT_Log.log.error("And ONLY Recipes which are ==>OUTPUTTING<== the Item, sorry but I don\'t want failed Bug Reports.");
-            		GT_Log.log.error("GregTech just reports this Error to you, so you can report it to the Mod causing the Problem.");
-            		GT_Log.log.error("Even though I make that Bug visible, I can not and will not fix that for you, that\'s for the causing Mod to fix.");
-            		GT_Log.log.error("And speaking of failed Reports:");
-            		GT_Log.log.error("Both IC2 and GregTech CANNOT be the CAUSE of this Problem, so don\'t report it to either of them.");
-            		GT_Log.log.error("I REPEAT, BOTH, IC2 and GregTech CANNOT be the source of THIS BUG. NO MATTER WHAT.");
-            		GT_Log.log.error("Asking in the IC2 Forums, which Mod is causing that won\'t help anyone, since it is not possible to determine, which Mod it is.");
-            		GT_Log.log.error("If it would be possible, then I would have had added the Mod which is causing it to the Message already. But it is not possible.");
-            		GT_Log.log.error("Sorry, but this Error is serious enough to justify this Wall-O-Text and the partially Allcapsed Language.");
-            		item.setStackDisplayName("ERROR! PLEASE CHECK YOUR LOG FOR \'GT-ERR-01\'!");
-            	} else {
-//            		GT_OreDictUnificator.setStack(item);
-            	}
-            }
+//            GT_Log.log.info("Unificating outputs of all known Recipe Types.");
+//            ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+//            GT_Log.log.info("IC2 Machines");
+//            
+//            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.cannerBottle.getRecipes().values()) {
+//            	for (ItemStack recipeItem : recipeOut.items) {
+//            		items.add(recipeItem);
+//            	}
+//            }
+//            
+//            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.centrifuge.getRecipes().values()) {
+//            	for (ItemStack recipeItem : recipeOut.items) {
+//            		items.add(recipeItem);
+//            	}
+//            }
+//            
+//            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.compressor.getRecipes().values()) {
+//            	for (ItemStack recipeItem : recipeOut.items) {
+//            		items.add(recipeItem);
+//            	}
+//            }
+//            
+//            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.extractor.getRecipes().values()) {
+//            	for (ItemStack recipeItem : recipeOut.items) {
+//            		items.add(recipeItem);
+//            	}
+//            }
+//            
+//            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.macerator.getRecipes().values()) {
+//            	for (ItemStack recipeItem : recipeOut.items) {
+//            		items.add(recipeItem);
+//            	}
+//            }
+//            
+//            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.metalformerCutting.getRecipes().values()) {
+//            	for (ItemStack recipeItem : recipeOut.items) {
+//            		items.add(recipeItem);
+//            	}
+//            }
+//
+//            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.metalformerRolling.getRecipes().values()) {
+//            	for (ItemStack recipeItem : recipeOut.items) {
+//            		items.add(recipeItem);
+//            	}
+//            }
+//            
+//            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.matterAmplifier.getRecipes().values()) {
+//            	for (ItemStack recipeItem : recipeOut.items) {
+//            		items.add(recipeItem);
+//            	}
+//            }
+//            
+//            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.oreWashing.getRecipes().values()) {
+//            	for (ItemStack recipeItem : recipeOut.items) {
+//            		items.add(recipeItem);
+//            	}
+//            }
+//
+//            GT_Log.log.info("Dungeon Loot");
+//            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("dungeonChest").getItems(new Random())) {
+//            	items.add(chestContent.theItemId);
+//            }
+//            
+//            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("bonusChest").getItems(new Random())) {
+//            	items.add(chestContent.theItemId);
+//            }
+//            
+//            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("villageBlacksmith").getItems(new Random())) {
+//            	items.add(chestContent.theItemId);
+//            }
+//            
+//            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("strongholdCrossing").getItems(new Random())) {
+//            	items.add(chestContent.theItemId);
+//            }
+//
+//            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("strongholdLibrary").getItems(new Random())) {
+//            	items.add(chestContent.theItemId);
+//            }
+//
+//            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("strongholdCorridor").getItems(new Random())) {
+//            	items.add(chestContent.theItemId);
+//            }
+//            
+//            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("pyramidJungleDispenser").getItems(new Random())) {
+//            	items.add(chestContent.theItemId);
+//            }
+//            
+//            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("pyramidJungleChest").getItems(new Random())) {
+//            	items.add(chestContent.theItemId);
+//            }
+//            
+//            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("pyramidDesertyChest").getItems(new Random())) {
+//            	items.add(chestContent.theItemId);
+//            }
+//            
+//            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("mineshaftCorridor").getItems(new Random())) {
+//            	items.add(chestContent.theItemId);
+//            }
+//
+//            GT_Log.log.info("Smelting");
+//            @SuppressWarnings("unchecked")
+//            List<ItemStack> furnItems = new ArrayList<>(FurnaceRecipes.smelting().getSmeltingList().values());
+//            for (ItemStack item : furnItems) {
+//            	items.add(item);
+//            }
+//
+//            if(sCraftingUnification) {
+//               GT_Log.log.info("Crafting Recipes");
+//               @SuppressWarnings("unchecked")
+//               List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
+//               for (IRecipe recipe : recipes) {
+//            	   items.add(recipe.getRecipeOutput());
+//               }
+//            }
+//            
+//            items.removeIf(item -> item == null);
+//            for (ItemStack item : items) {
+//            	if (GT_OreDictHandler.instance.mRegisteredStacks.contains(item)) {
+//            		GT_Log.log.error("GT-ERR-01: @ " + item.getUnlocalizedName() + "   " + item.getDisplayName());
+//            		GT_Log.log.error("A Recipe used an OreDict Item as Output directly, without copying it before!!! This is a typical CallByReference/CallByValue Error");
+//            		GT_Log.log.error("Said Item will be renamed to make the invalid Recipe visible, so that you can report it properly.");
+//            		GT_Log.log.error("Please check all Recipes outputting this Item, and report the Recipes to their Owner.");
+//            		GT_Log.log.error("The Owner of the ==>RECIPE<==, NOT the Owner of the Item, which has been mentioned above!!!");
+//            		GT_Log.log.error("And ONLY Recipes which are ==>OUTPUTTING<== the Item, sorry but I don\'t want failed Bug Reports.");
+//            		GT_Log.log.error("GregTech just reports this Error to you, so you can report it to the Mod causing the Problem.");
+//            		GT_Log.log.error("Even though I make that Bug visible, I can not and will not fix that for you, that\'s for the causing Mod to fix.");
+//            		GT_Log.log.error("And speaking of failed Reports:");
+//            		GT_Log.log.error("Both IC2 and GregTech CANNOT be the CAUSE of this Problem, so don\'t report it to either of them.");
+//            		GT_Log.log.error("I REPEAT, BOTH, IC2 and GregTech CANNOT be the source of THIS BUG. NO MATTER WHAT.");
+//            		GT_Log.log.error("Asking in the IC2 Forums, which Mod is causing that won\'t help anyone, since it is not possible to determine, which Mod it is.");
+//            		GT_Log.log.error("If it would be possible, then I would have had added the Mod which is causing it to the Message already. But it is not possible.");
+//            		GT_Log.log.error("Sorry, but this Error is serious enough to justify this Wall-O-Text and the partially Allcapsed Language.");
+//            		item.setStackDisplayName("ERROR! PLEASE CHECK YOUR LOG FOR \'GT-ERR-01\'!");
+//            	} else {
+////            		GT_OreDictUnificator.setStack(item);
+//            	}
+//            }
 
 			GT_Log.log.info("ServerStart-Phase finished!");
 			for (Runnable toRun : GregTech_API.sAfterGTServerstart) {

@@ -777,7 +777,7 @@ public class GT_Utility {
 	}
 	
 	public static boolean addSimpleIC2MachineRecipe(IRecipeInput input, Map<IRecipeInput, RecipeOutput> aRecipeList, NBTTagCompound meta, ItemStack...outputs) {
-		if (input == null || outputs.length == 0 || aRecipeList == null) return false;
+ 		if (input == null || outputs.length == 0 || aRecipeList == null) return false;
 		return aRecipeList.put(input, new RecipeOutput(meta, outputs)) != null;
 	}
 	
@@ -863,7 +863,7 @@ public class GT_Utility {
 	
 	public static int stackToInt(ItemStack aStack) {
 		if (isStackInvalid(aStack)) return -1;
-		return stackToInt(aStack, aStack.getItemDamage() == GregTech_API.ITEM_WILDCARD_DAMAGE);
+		return stackToInt(aStack, Items.feather.getDamage(aStack) == GregTech_API.ITEM_WILDCARD_DAMAGE);
 	}
 	
 	/**
@@ -873,9 +873,8 @@ public class GT_Utility {
 	public static int stackToInt(ItemStack aStack, boolean aForceWildcard) {
 		if (isStackInvalid(aStack)) return -1;
 		if (aStack.getItem().delegate == null || aStack.getItem().delegate.name() == null) throw new IllegalStateException();
-		int code = aStack.getItem().delegate.name().hashCode();
-		code = 31 * code + (aForceWildcard ? GregTech_API.ITEM_WILDCARD_DAMAGE : Items.feather.getDamage(aStack));
-		return code;
+		int meta = aForceWildcard ? GregTech_API.ITEM_WILDCARD_DAMAGE : Items.feather.getDamage(aStack);
+		return System.identityHashCode(aStack.getItem()) * 11 + meta;
 	}
 	
 	public static int fluidStackToInt(FluidStack fluid) {
