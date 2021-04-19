@@ -85,10 +85,6 @@ public class ProcessingStone implements IOreRecipeRegistrator {
 					}
 					break;
 				case GraniteBlack:
-					RecipeMaps.ASSEMBLING.factory().EUt(4).duration(400)
-							.inputs(GT_OreDictUnificator.get(OrePrefixes.plateAlloy, Materials.Advanced, 1L))
-							.input(RecipeEntry.fromStacks(1, entry.ores))
-							.output(GT_ModHandler.getIC2Item("reinforcedStone", 8L)).buildAndRegister();
 					RecipeMaps.GRINDER.factory().EUt(120).duration(16 * 100).input(RecipeEntry.fromStacks(16, entry.ores))
 							.input(GT_ModHandler.getWater(1000))
 							.outputs(GT_OreDictUnificator.get(OrePrefixes.dust, aMaterial, 16L),
@@ -98,13 +94,9 @@ public class ProcessingStone implements IOreRecipeRegistrator {
 							.output(GT_OreDictUnificator.get(OrePrefixes.plate, aMaterial, 1L)).buildAndRegister();
 					GT_ModHandler.addPulverisationRecipe(entry, 1,
 							GT_OreDictUnificator.get(OrePrefixes.dustImpure, aMaterial, 1L),
-							GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Thorium, 1L), 1);
+							GT_OreDictUnificator.get(OrePrefixes.dustTiny, Materials.Thorium, 1L), 1);
 					break;
 				case GraniteRed:
-					RecipeMaps.ASSEMBLING.factory().EUt(4).duration(400)
-							.inputs(GT_OreDictUnificator.get(OrePrefixes.plateAlloy, Materials.Advanced, 1L))
-							.input(RecipeEntry.fromStacks(8, entry.ores))
-							.output(GT_ModHandler.getIC2Item("reinforcedStone", 8L)).buildAndRegister();
 					RecipeMaps.GRINDER.factory().EUt(120).duration(16 * 100).input(RecipeEntry.fromStacks(16, entry.ores))
 							.input(GT_ModHandler.getWater(1000))
 							.outputs(GT_OreDictUnificator.get(OrePrefixes.dust, aMaterial, 16L),
@@ -114,7 +106,7 @@ public class ProcessingStone implements IOreRecipeRegistrator {
 							.output(GT_OreDictUnificator.get(OrePrefixes.plate, aMaterial, 1L)).buildAndRegister();
 					GT_ModHandler.addPulverisationRecipe(entry, 1,
 							GT_OreDictUnificator.get(OrePrefixes.dustImpure, aMaterial, 1L),
-							GT_OreDictUnificator.get(OrePrefixes.dustSmall, Materials.Uranium, 1L), 1);
+							GT_OreDictUnificator.get(OrePrefixes.dustTiny, Materials.Uranium, 1L), 1);
 					break;
 				case Sand:
 					GT_ModHandler.addPulverisationRecipe(entry, 1, new ItemStack(Blocks.sand, 1, 0), null, 10);

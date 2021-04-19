@@ -61,6 +61,7 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 	 * @see RecipeFactory
 	 */
 	public F factory() {
+		factory.reset();
 		return factory;
 	}
 	
