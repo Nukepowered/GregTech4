@@ -872,7 +872,6 @@ public class GT_Utility {
 	 */
 	public static int stackToInt(ItemStack aStack, boolean aForceWildcard) {
 		if (isStackInvalid(aStack)) return -1;
-		if (aStack.getItem().delegate == null || aStack.getItem().delegate.name() == null) throw new IllegalStateException();
 		int meta = aForceWildcard ? GregTech_API.ITEM_WILDCARD_DAMAGE : Items.feather.getDamage(aStack);
 		return System.identityHashCode(aStack.getItem()) * 11 + meta;
 	}
