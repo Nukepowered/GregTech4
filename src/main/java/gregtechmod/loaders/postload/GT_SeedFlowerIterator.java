@@ -56,7 +56,7 @@ public class GT_SeedFlowerIterator implements Runnable {
 //					ForgeHooks.plantGrass(tWorld, 24, 65, 24); // TODO; do not planting grass
 					ItemDye.applyBonemeal(new ItemStack(Items.dye, 64, 0), tWorld, 24, 64, 24, new EntityPlayer(tWorld, new GameProfile(UUID.randomUUID(), "ILYAPIDOR")) {
 						@Override
-						public ChunkCoordinates getPlayerCoordinates() {return null;}
+						public ChunkCoordinates getPlayerCoordinates() {return new ChunkCoordinates(24, 64, 24);}
 						@Override
 						public boolean canCommandSenderUseCommand(int p_70003_1_, String p_70003_2_) {return false;}
 						@Override
