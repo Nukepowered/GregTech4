@@ -117,7 +117,7 @@ public class GT_FluidSlot extends Slot {
 			IIcon text = fluid.getFluid().getIcon(fluid);
 			if (text != null) {
 				GTRenderHelper.bindTexture(TextureMap.locationBlocksTexture);
-				GTRenderHelper.drawQuad(posX, posY, 50, text);
+				GTRenderHelper.drawQuad(posX, posY, 50, 16, 16, text.getMinU(), text.getMaxU(), text.getMinV(), text.getMaxV());
 			}
 			
 			// Amount render

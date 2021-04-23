@@ -84,7 +84,7 @@ public class PositionedFluidStack {
 			int color = fluid.getFluid().getColor(fluid);
 			GL11.glColor3ub((byte) (color >> 16 & 0xFF), (byte) (color >> 8 & 0xFF), (byte) (color & 0xFF));
 			GL11.glDisable(GL11.GL_BLEND);
-			GTRenderHelper.drawQuad(x, y, 0, fluidIcon);
+			GTRenderHelper.drawQuad(x, y, 0, 16, 16, fluidIcon.getMinU(), fluidIcon.getMaxU(), fluidIcon.getMinV(), fluidIcon.getMaxV());
             GL11.glEnable(GL11.GL_BLEND);
 		}
 	}
