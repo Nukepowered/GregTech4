@@ -1,8 +1,5 @@
 package gregtechmod.loaders.preload;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import cpw.mods.fml.common.registry.GameRegistry;
 
 import gregtechmod.GT_Mod;
@@ -55,7 +52,6 @@ import gregtechmod.common.items.GT_Vanilla_Sword;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 
@@ -416,15 +412,129 @@ public class GT_ItemLoader implements Runnable {
 	    GregTech_API.sItemList[141] = GregTech_API.constructEmptyElectricToolItem("Empty_Screwdriver_Electric", 16, 140);
 	    GT_Items.Tool_Hammer_Plastic.set((GregTech_API.sItemList[142] = new GT_SoftHammer_Item("GT_Hammer_Plastic", 1280, 5)));
 
-	    
+		
 		GT_Log.log.info("Register items"); 
-		ArrayList<Item> gtItems = new ArrayList<>(Arrays.asList(GregTech_API.sItemList));
-		gtItems.removeIf(i -> i == null);
-		for (Item item : GregTech_API.sItemList) {
-			if (item != null) {
-				GameRegistry.registerItem(item, item.getUnlocalizedName());
-			}
-		}
+		GameRegistry.registerItem(GregTech_API.sItemList[  0], "materials");
+		
+		GameRegistry.registerItem(GregTech_API.sItemList[  3], "components");
+		
+		GameRegistry.registerItem(GregTech_API.sItemList[  8], "metaitem_1");
+		GameRegistry.registerItem(GregTech_API.sItemList[  9], "metaitem_2");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 10], "integrated_circuit");
+		
+		GameRegistry.registerItem(GregTech_API.sItemList[ 16], "sensor_card");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 17], "sensor_kit");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 18], "ultimate_cheat_armor");
+		
+		GameRegistry.registerItem(GregTech_API.sItemList[ 30], "iron_mortar");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 31], "flint_mortar");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 32], "sonictron");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 33], "destructopack");
+		
+		GameRegistry.registerItem(GregTech_API.sItemList[ 34], "helium_coolantcell_60");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 35], "helium_coolantcell_180");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 36], "helium_coolantcell_360");
+		
+		GameRegistry.registerItem(GregTech_API.sItemList[ 38], "cloaking_device");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 39], "bronze_jack_hammer");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 40], "iridium_neutronreflector");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 41], "steel_jack_hammer");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 42], "diamond_jack_hammer");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 43], "dataorb");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 44], "lighthelmet");
+		
+		GameRegistry.registerItem(GregTech_API.sItemList[ 45], "lapotronpack");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 46], "rockcutter");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 47], "teslastaff");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 48], "aluminium_scoop");
+		
+		GameRegistry.registerItem(GregTech_API.sItemList[ 55], "debug_scanner");
+		
+		GameRegistry.registerItem(GregTech_API.sItemList[ 60], "nak_coolantcell_60");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 61], "nak_coolantcell_180");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 62], "nak_coolantcell_360");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 63], "scanner");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 64], "crowbar");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 65], "screwdriver");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 66], "steel_wrench");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 67], "iron_wrench");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 68], "tungstensteel_wrench");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 69], "bronze_wrench");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 70], "electric_wrench");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 71], "wrench_advanced");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 72], "mallet");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 73], "iron_hammer");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 74], "bronze_hammer");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 75], "steel_hammer");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 76], "tungstensteel_hammer");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 77], "soldering_iron");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 78], "solder_tin");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 79], "solder_lead");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 80], "bronze_turbine");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 81], "steel_turbine");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 82], "magnalium_turbine");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 83], "tungstensteel_turbine");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 84], "carbon_turbine");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 85], "lava_filter");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 86], "iron_file");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 87], "bronze_file");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 88], "steel_file");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 89], "tungstensteel_file");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 90], "bug_spray");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 91], "ice_spray");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 92], "hardener_spray");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 93], "foam_spray");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 94], "pepper_spray");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 95], "hydration_spray");
+		
+		GameRegistry.registerItem(GregTech_API.sItemList[ 96], "black_spray");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 97], "red_spray"); // наоборот цвета
+		GameRegistry.registerItem(GregTech_API.sItemList[ 98], "green_spray");
+		GameRegistry.registerItem(GregTech_API.sItemList[ 99], "brown_spray");
+		GameRegistry.registerItem(GregTech_API.sItemList[100], "blue_spray");
+		GameRegistry.registerItem(GregTech_API.sItemList[101], "purple_spray");
+		GameRegistry.registerItem(GregTech_API.sItemList[102], "cyan_spray");
+		GameRegistry.registerItem(GregTech_API.sItemList[103], "lightgray_spray");
+		GameRegistry.registerItem(GregTech_API.sItemList[104], "gray_spray");
+		GameRegistry.registerItem(GregTech_API.sItemList[105], "pink_spray");
+		GameRegistry.registerItem(GregTech_API.sItemList[106], "lime_spray");
+		GameRegistry.registerItem(GregTech_API.sItemList[107], "yellow_spray");
+		GameRegistry.registerItem(GregTech_API.sItemList[108], "lightblue_spray");
+		GameRegistry.registerItem(GregTech_API.sItemList[109], "magenta_spray");
+		GameRegistry.registerItem(GregTech_API.sItemList[110], "orange_spray");
+		GameRegistry.registerItem(GregTech_API.sItemList[111], "white_spray");
+		
+		GameRegistry.registerItem(GregTech_API.sItemList[112], "empty_electric_wrench");
+		GameRegistry.registerItem(GregTech_API.sItemList[113], "empty_advanced_wrench");
+		GameRegistry.registerItem(GregTech_API.sItemList[114], "empty_soldering_iron");
+		GameRegistry.registerItem(GregTech_API.sItemList[115], "iron_saw");
+		GameRegistry.registerItem(GregTech_API.sItemList[116], "bronze_saw");
+		GameRegistry.registerItem(GregTech_API.sItemList[117], "steel_saw");
+		GameRegistry.registerItem(GregTech_API.sItemList[118], "tungstensteel_saw");
+		GameRegistry.registerItem(GregTech_API.sItemList[119], "electric_saw");
+		GameRegistry.registerItem(GregTech_API.sItemList[120], "advanced_saw");
+		GameRegistry.registerItem(GregTech_API.sItemList[121], "empty_electric_Saw");
+		GameRegistry.registerItem(GregTech_API.sItemList[122], "empty_advanced_saw");
+		GameRegistry.registerItem(GregTech_API.sItemList[123], "advanced_drill");
+		GameRegistry.registerItem(GregTech_API.sItemList[124], "flint_sword");
+		GameRegistry.registerItem(GregTech_API.sItemList[125], "flint_pickaxe");
+		GameRegistry.registerItem(GregTech_API.sItemList[126], "flint_shovel");
+		GameRegistry.registerItem(GregTech_API.sItemList[127], "flint_axe");
+		GameRegistry.registerItem(GregTech_API.sItemList[128], "flint_hoe");
+		GameRegistry.registerItem(GregTech_API.sItemList[129], "steel_sword");
+		GameRegistry.registerItem(GregTech_API.sItemList[130], "steel_pickaxe");
+		GameRegistry.registerItem(GregTech_API.sItemList[131], "steel_shovel");
+		GameRegistry.registerItem(GregTech_API.sItemList[132], "steel_axe");
+		GameRegistry.registerItem(GregTech_API.sItemList[133], "steel_hoe");
+		GameRegistry.registerItem(GregTech_API.sItemList[134], "tunstensteel_sword");
+		GameRegistry.registerItem(GregTech_API.sItemList[135], "tunstensteel_pickaxe");
+		GameRegistry.registerItem(GregTech_API.sItemList[136], "tunstensteel_shovel");
+		GameRegistry.registerItem(GregTech_API.sItemList[137], "tunstensteel_axe");
+		GameRegistry.registerItem(GregTech_API.sItemList[138], "tunstensteel_hoe");
+		GameRegistry.registerItem(GregTech_API.sItemList[139], "tungstensteel_screwdriver");
+		GameRegistry.registerItem(GregTech_API.sItemList[140], "electric_screwdriver");
+		GameRegistry.registerItem(GregTech_API.sItemList[141], "empty_electric_screwdriver");
+		GameRegistry.registerItem(GregTech_API.sItemList[142], "plastic_mallet");
 		
 		GT_Log.log.info("Loading item related stuff"); 
 		GT_OreDictUnificator.addToBlacklist(GT_Items.Circuit_Integrated.getWildcard(1));
