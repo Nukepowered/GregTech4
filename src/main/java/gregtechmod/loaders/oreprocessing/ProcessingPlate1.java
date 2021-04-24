@@ -140,7 +140,7 @@ public class ProcessingPlate1 implements IOreRecipeRegistrator {
 				}
 				
 				for (ItemStack aStack : entry.ores) {
-					RecipeHandler.scheduleCraftingToRemove(rec -> rec == null || rec.getRecipeOutput() == null || rec.getRecipeOutput().isItemEqual(aStack));
+					RecipeHandler.scheduleCraftingToRemove(rec -> rec != null && rec.getRecipeOutput() != null && rec.getRecipeOutput().isItemEqual(aStack));
 					
 					if (!aMaterial.contains(SubTag.NO_SMELTING)) {
 						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, aStack),

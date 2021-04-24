@@ -54,7 +54,7 @@ public class ProcessingPlate3 implements IOreRecipeRegistrator {
 				}
 				
 				for (final ItemStack tStack : entry.ores) {
-					RecipeHandler.scheduleCraftingToRemove(rec -> rec == null || rec.getRecipeOutput() == null || rec.getRecipeOutput().isItemEqual(tStack));
+					RecipeHandler.scheduleCraftingToRemove(rec -> rec != null && rec.getRecipeOutput() != null && rec.getRecipeOutput().isItemEqual(tStack));
 				}
 			}
 		}

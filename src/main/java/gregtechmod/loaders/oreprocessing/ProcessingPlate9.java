@@ -21,7 +21,7 @@ public class ProcessingPlate9 implements IOreRecipeRegistrator {
 			Materials aMaterial = this.getMaterial(aPrefix, entry);
 			if (this.isExecutable(aPrefix, aMaterial)) {
 				for (final ItemStack tStack : entry.ores) {
-					RecipeHandler.scheduleCraftingToRemove(rec -> rec == null || rec.getRecipeOutput() == null || rec.getRecipeOutput().isItemEqual(tStack));
+					RecipeHandler.scheduleCraftingToRemove(rec -> rec != null && rec.getRecipeOutput() != null && rec.getRecipeOutput().isItemEqual(tStack));
 				}
 			}
 		}
