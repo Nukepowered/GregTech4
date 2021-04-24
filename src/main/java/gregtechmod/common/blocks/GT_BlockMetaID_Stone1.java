@@ -10,7 +10,9 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -79,6 +81,15 @@ public class GT_BlockMetaID_Stone1 extends Block {
 	@Override
 	public boolean isReplaceableOreGen(World world, int x, int y, int z, Block target) {
 		return true;
+	}
+	
+	@Override
+	public float getExplosionResistance(Entity ent) {
+		if (ent instanceof IBossDisplayData) {
+			return blockResistance / 10.0F;
+		}
+		
+		return super.getExplosionResistance(ent);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
