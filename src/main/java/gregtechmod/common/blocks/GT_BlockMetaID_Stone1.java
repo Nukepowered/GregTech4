@@ -76,6 +76,11 @@ public class GT_BlockMetaID_Stone1 extends Block {
         return 1;
     }
 	
+	@Override
+	public boolean isReplaceableOreGen(World world, int x, int y, int z, Block target) {
+		return true;
+	}
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override @SideOnly(Side.CLIENT)
     public void getSubBlocks(Item par1, CreativeTabs par2CreativeTabs, List par3List) {
