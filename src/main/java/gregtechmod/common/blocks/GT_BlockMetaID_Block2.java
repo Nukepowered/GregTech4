@@ -13,6 +13,7 @@ import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.entity.boss.IBossDisplayData;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IIcon;
@@ -247,6 +248,15 @@ public class GT_BlockMetaID_Block2 extends Block {
     	}
     }
     
+	@Override
+	public boolean canEntityDestroy(IBlockAccess world, int x, int y, int z, Entity entity) {
+		if (entity instanceof IBossDisplayData && world.getBlockMetadata(x, y, z) == 9) { // Make wither unable to break iridium reinforced stone
+			return false;
+		}
+		
+		return super.canEntityDestroy(world, x, y, z, entity);
+	}
+	
 	@Override
 	public IIcon getIcon(int aSide, int aMeta) {
 		if (aMeta < 0 || aMeta >= mIcons.length) return null;

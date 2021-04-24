@@ -589,6 +589,13 @@ public class GT_Mod implements IGT_Mod {
 			}
 		}
 		
+		// Changing blast resistance for reinforced stone, wither should break this
+		try {
+			ItemStack reinforcedStone = GT_ModHandler.getIC2Item("reinforcedStone", 1);
+			ItemBlock block = (ItemBlock) reinforcedStone.getItem();
+			block.field_150939_a.setResistance(30.0F);
+		} catch (Throwable e) {}
+		
     	GregTech_API.sLoadFinished = true;
         GT_Log.log.info("Load-Phase finished!");
     	for (Runnable tRunnable : GregTech_API.sAfterGTLoad) {
