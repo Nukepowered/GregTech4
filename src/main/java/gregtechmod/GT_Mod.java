@@ -535,9 +535,10 @@ public class GT_Mod implements IGT_Mod {
     	new GT_NetworkHandler().run();
     	new GT_ConnectionHandler().run();
 
-    	RecipeSorter.register("gregtechmod:shaped"					, GT_Shaped_Recipe.class				, RecipeSorter.Category.SHAPED		, "after:minecraft:shaped");
-    	RecipeSorter.register("gregtechmod:shapeless"				, GT_Shapeless_Recipe.class				, RecipeSorter.Category.SHAPELESS	, "after:minecraft:shapeless");
-    	RecipeSorter.register("gregtechmod:shapeless_nbt_keeping"	, GT_Shapeless_NBT_Keeping_Recipe.class	, RecipeSorter.Category.SHAPELESS	, "after:minecraft:shapeless");
+    	RecipeSorter.register("gregtech_addon:shaped"					, GT_Shaped_Recipe.class				, RecipeSorter.Category.SHAPED		, "after:forge:shapedore before:minecraft:shapeless");
+    	RecipeSorter.register("gregtech_addon:shaped_nbt_keeping"		, GT_Shapeless_NBT_Keeping_Recipe.class	, RecipeSorter.Category.SHAPED		, "after:gregtech_addon:shaped before:minecraft:shapeless");
+    	RecipeSorter.register("gregtech_addon:shapeless"				, GT_Shapeless_Recipe.class				, RecipeSorter.Category.SHAPELESS	, "after:minecraft:shapeless");
+    	RecipeSorter.register("gregtech_addon:shapeless_nbt_keeping"	, GT_Shapeless_NBT_Keeping_Recipe.class	, RecipeSorter.Category.SHAPELESS	, "after:gregtech_addon:shapeless");
     	
         GregTech_API.sPreloadFinished = true;
         GT_Log.log.info("Preload-Phase finished!");
@@ -896,9 +897,9 @@ public class GT_Mod implements IGT_Mod {
     	});} catch(Throwable e) {}
     	*/
     
-    @EventHandler
-    public void start(FMLServerStartingEvent aEvent) {
-    	if(!mDoNotInit) {
+	@EventHandler
+	public void start(FMLServerStartingEvent aEvent) {
+		if (!mDoNotInit) {
 			for (Runnable tRunnable : GregTech_API.sBeforeGTServerstart) {
 				try {
 					tRunnable.run();
@@ -906,31 +907,12 @@ public class GT_Mod implements IGT_Mod {
 					GT_Log.log.catching(e);
 				}
 			}
-        	
-        	mUniverse = null;
-        	GT_TickHandler.isFirstTick = true;
-    		NetworkRegistry.INSTANCE.registerGuiHandler(GregTech_API.gregtechmod, new GT_GUIHandler());
-        	
-        	try {
-    	    	for (IMetaTileEntity tMetaTileEntity : GregTech_API.mMetaTileList) {
-    	    		if (tMetaTileEntity != null) tMetaTileEntity.onServerStart();
-    	    	}
-        	} catch(Throwable e) {
-        		GT_Log.log.catching(e);
-        	}
-            
-            for (FluidContainerData data : FluidContainerRegistry.getRegisteredFluidContainerData()) {
-            	if (data.filledContainer.getItem() == Items.potionitem) {
-            		data.fluid.amount = 0;
-            		break;
-            	}
-            }
 
-            GT_Log.log.info("ServerStart-Phase started!");
-            mUniverse = null;
-            GT_TickHandler.isFirstTick = true;
-            NetworkRegistry.INSTANCE.registerGuiHandler(GregTech_API.gregtechmod, new GT_GUIHandler());
-            
+			GT_Log.log.info("ServerStart-Phase started!");
+			mUniverse = null;
+			GT_TickHandler.isFirstTick = true;
+			NetworkRegistry.INSTANCE.registerGuiHandler(GregTech_API.gregtechmod, new GT_GUIHandler());
+
 			for (IMetaTileEntity mte : GregTech_API.mMetaTileList) {
 				try {
 					if (mte != null)
@@ -939,144 +921,12 @@ public class GT_Mod implements IGT_Mod {
 					GT_Log.log.catching(e);
 				}
 			}
-            
-//            GT_Log.log.info("Unificating outputs of all known Recipe Types.");
-//            ArrayList<ItemStack> items = new ArrayList<ItemStack>();
-//            GT_Log.log.info("IC2 Machines");
-//            
-//            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.cannerBottle.getRecipes().values()) {
-//            	for (ItemStack recipeItem : recipeOut.items) {
-//            		items.add(recipeItem);
-//            	}
-//            }
-//            
-//            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.centrifuge.getRecipes().values()) {
-//            	for (ItemStack recipeItem : recipeOut.items) {
-//            		items.add(recipeItem);
-//            	}
-//            }
-//            
-//            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.compressor.getRecipes().values()) {
-//            	for (ItemStack recipeItem : recipeOut.items) {
-//            		items.add(recipeItem);
-//            	}
-//            }
-//            
-//            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.extractor.getRecipes().values()) {
-//            	for (ItemStack recipeItem : recipeOut.items) {
-//            		items.add(recipeItem);
-//            	}
-//            }
-//            
-//            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.macerator.getRecipes().values()) {
-//            	for (ItemStack recipeItem : recipeOut.items) {
-//            		items.add(recipeItem);
-//            	}
-//            }
-//            
-//            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.metalformerCutting.getRecipes().values()) {
-//            	for (ItemStack recipeItem : recipeOut.items) {
-//            		items.add(recipeItem);
-//            	}
-//            }
-//
-//            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.metalformerRolling.getRecipes().values()) {
-//            	for (ItemStack recipeItem : recipeOut.items) {
-//            		items.add(recipeItem);
-//            	}
-//            }
-//            
-//            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.matterAmplifier.getRecipes().values()) {
-//            	for (ItemStack recipeItem : recipeOut.items) {
-//            		items.add(recipeItem);
-//            	}
-//            }
-//            
-//            for (ic2.api.recipe.RecipeOutput recipeOut : ic2.api.recipe.Recipes.oreWashing.getRecipes().values()) {
-//            	for (ItemStack recipeItem : recipeOut.items) {
-//            		items.add(recipeItem);
-//            	}
-//            }
-//
-//            GT_Log.log.info("Dungeon Loot");
-//            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("dungeonChest").getItems(new Random())) {
-//            	items.add(chestContent.theItemId);
-//            }
-//            
-//            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("bonusChest").getItems(new Random())) {
-//            	items.add(chestContent.theItemId);
-//            }
-//            
-//            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("villageBlacksmith").getItems(new Random())) {
-//            	items.add(chestContent.theItemId);
-//            }
-//            
-//            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("strongholdCrossing").getItems(new Random())) {
-//            	items.add(chestContent.theItemId);
-//            }
-//
-//            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("strongholdLibrary").getItems(new Random())) {
-//            	items.add(chestContent.theItemId);
-//            }
-//
-//            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("strongholdCorridor").getItems(new Random())) {
-//            	items.add(chestContent.theItemId);
-//            }
-//            
-//            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("pyramidJungleDispenser").getItems(new Random())) {
-//            	items.add(chestContent.theItemId);
-//            }
-//            
-//            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("pyramidJungleChest").getItems(new Random())) {
-//            	items.add(chestContent.theItemId);
-//            }
-//            
-//            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("pyramidDesertyChest").getItems(new Random())) {
-//            	items.add(chestContent.theItemId);
-//            }
-//            
-//            for (WeightedRandomChestContent chestContent : ChestGenHooks.getInfo("mineshaftCorridor").getItems(new Random())) {
-//            	items.add(chestContent.theItemId);
-//            }
-//
-//            GT_Log.log.info("Smelting");
-//            @SuppressWarnings("unchecked")
-//            List<ItemStack> furnItems = new ArrayList<>(FurnaceRecipes.smelting().getSmeltingList().values());
-//            for (ItemStack item : furnItems) {
-//            	items.add(item);
-//            }
-//
-//            if(sCraftingUnification) {
-//               GT_Log.log.info("Crafting Recipes");
-//               @SuppressWarnings("unchecked")
-//               List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
-//               for (IRecipe recipe : recipes) {
-//            	   items.add(recipe.getRecipeOutput());
-//               }
-//            }
-//            
-//            items.removeIf(item -> item == null);
-//            for (ItemStack item : items) {
-//            	if (GT_OreDictHandler.instance.mRegisteredStacks.contains(item)) {
-//            		GT_Log.log.error("GT-ERR-01: @ " + item.getUnlocalizedName() + "   " + item.getDisplayName());
-//            		GT_Log.log.error("A Recipe used an OreDict Item as Output directly, without copying it before!!! This is a typical CallByReference/CallByValue Error");
-//            		GT_Log.log.error("Said Item will be renamed to make the invalid Recipe visible, so that you can report it properly.");
-//            		GT_Log.log.error("Please check all Recipes outputting this Item, and report the Recipes to their Owner.");
-//            		GT_Log.log.error("The Owner of the ==>RECIPE<==, NOT the Owner of the Item, which has been mentioned above!!!");
-//            		GT_Log.log.error("And ONLY Recipes which are ==>OUTPUTTING<== the Item, sorry but I don\'t want failed Bug Reports.");
-//            		GT_Log.log.error("GregTech just reports this Error to you, so you can report it to the Mod causing the Problem.");
-//            		GT_Log.log.error("Even though I make that Bug visible, I can not and will not fix that for you, that\'s for the causing Mod to fix.");
-//            		GT_Log.log.error("And speaking of failed Reports:");
-//            		GT_Log.log.error("Both IC2 and GregTech CANNOT be the CAUSE of this Problem, so don\'t report it to either of them.");
-//            		GT_Log.log.error("I REPEAT, BOTH, IC2 and GregTech CANNOT be the source of THIS BUG. NO MATTER WHAT.");
-//            		GT_Log.log.error("Asking in the IC2 Forums, which Mod is causing that won\'t help anyone, since it is not possible to determine, which Mod it is.");
-//            		GT_Log.log.error("If it would be possible, then I would have had added the Mod which is causing it to the Message already. But it is not possible.");
-//            		GT_Log.log.error("Sorry, but this Error is serious enough to justify this Wall-O-Text and the partially Allcapsed Language.");
-//            		item.setStackDisplayName("ERROR! PLEASE CHECK YOUR LOG FOR \'GT-ERR-01\'!");
-//            	} else {
-////            		GT_OreDictUnificator.setStack(item);
-//            	}
-//            }
+
+			for (FluidContainerData data : FluidContainerRegistry.getRegisteredFluidContainerData()) {
+				if (data.filledContainer.getItem() == Items.potionitem) {
+					data.fluid.amount = 0;
+				}
+			}
 
 			GT_Log.log.info("ServerStart-Phase finished!");
 			for (Runnable toRun : GregTech_API.sAfterGTServerstart) {
@@ -1086,8 +936,8 @@ public class GT_Mod implements IGT_Mod {
 					GT_Log.log.catching(e);
 				}
 			}
-         }
-    }
+		}
+	}
     
     @EventHandler
     public void start(FMLServerStartedEvent aEvent) {
@@ -1228,18 +1078,12 @@ public class GT_Mod implements IGT_Mod {
     @SubscribeEvent
 	public void onFluidContainerRegistration(FluidContainerRegisterEvent aFluidEvent) {
 		if (this.tNothingRegistered) {
-			FluidContainerData[] arr$ = FluidContainerRegistry.getRegisteredFluidContainerData();
-			int len$ = arr$.length;
-
-			for (int i$ = 0; i$ < len$; ++i$) {
-				FluidContainerData tData = arr$[i$];
+			for (FluidContainerData tData : FluidContainerRegistry.getRegisteredFluidContainerData()) {
 				if (tData.filledContainer.getItem() == Items.potionitem) {
 					tData.fluid.amount = 0;
 				}
-
-				GT_OreDictUnificator.addToBlacklist(tData.filledContainer);
 			}
-
+			
 			this.tNothingRegistered = false;
 		}
 

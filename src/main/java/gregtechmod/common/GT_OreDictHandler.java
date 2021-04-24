@@ -43,7 +43,6 @@ public class GT_OreDictHandler {
 	private final List<String> mIgnoredNames = Arrays.asList(new String[]{"whiteStone", "stoneSlab", "clayBowl", "clayPlate", "ceramicBowl", "ceramicPlate", "ovenRack", "clayCup", "ceramicCup", "batteryBox", "transmutationStone", "torchRedstoneActive", "coal", "charcoal", "cloth", "cobblestoneSlab", "stoneBrickSlab", "cobblestoneWall", "stoneBrickWall", "cobblestoneStair", "stoneBrickStair", "blockCloud", "blockDirt", "blockTyrian", "blockCarpet", "blockFft", "blockLavastone", "blockHolystone", "blockConcrete", "sunnariumPart", "brSmallMachineCyaniteProcessor", "meteoriteCoal", "blockCobble", "pressOreProcessor", "crusherOreProcessor", "grinderOreProcessor", "blockRubber", "blockHoney", "blockHoneydew", "blockPeat", "blockRadioactive", "blockSlime", "blockCocoa", "blockSugarCane", "blockLeather", "blockClayBrick", "solarPanelHV", "cableRedNet", "stoneBowl", "crafterWood", "taintedSoil", "brickXyEngineering", "breederUranium", "wireMill", "chunkLazurite", "aluminumNatural", "aluminiumNatural", "naturalAluminum", "naturalAluminium", "antimatterMilligram", "antimatterGram", "strangeMatter", "coalGenerator", "electricFurnace", "unfinishedTank", "valvePart", "aquaRegia", "leatherSeal", "leatherSlimeSeal", "hambone", "slimeball", "enrichedUranium", "camoPaste"});
 	private final List<String> mInvalidNames = Arrays.asList(new String[]{"bloodstoneOre", "universalCable", "bronzeTube", "ironTube", "netherTube", "obbyTube", "infiniteBattery", "eliteBattery", "advancedBattery", "10kEUStore", "blueDye", "MonazitOre", "quartzCrystal", "whiteLuminiteCrystal", "darkStoneIngot", "invisiumIngot", "demoniteOrb", "enderGem", "starconiumGem", "osmoniumIngot", "tapaziteGem", "zectiumIngot", "foolsRubyGem", "rubyGem", "meteoriteGem", "adamiteShard", "sapphireGem", "copperIngot", "ironStick", "goldStick", "diamondStick", "reinforcedStick", "draconicStick", "emeraldStick", "copperStick", "tinStick", "silverStick", "bronzeStick", "steelStick", "leadStick", "manyullynStick", "arditeStick", "cobaltStick", "aluminiumStick", "alumiteStick", "oilsandsOre", "copperWire", "superconductorWire", "sulfuricAcid", "conveyorBelt", "ironWire", "aluminumWire", "aluminiumWire", "silverWire", "tinWire", "dustSiliconSmall", "AluminumOre", "plateHeavyT2", "blockWool", "alloyPlateEnergizedHardened", "gasWood", "alloyPlateEnergized", "SilverOre", "LeadOre", "TinOre", "CopperOre", "silverOre", "leadOre", "tinOre", "copperOre", "bauxiteOre", "HSLivingmetalIngot", "oilMoving", "oilStill", "oilBucket", "petroleumOre", "dieselFuel", "diamondNugget", "planks", "wood", "stick", "sticks", "naquadah", "obsidianRod", "stoneRod", "thaumiumRod", "steelRod", "netherrackRod", "woodRod", "ironRod", "cactusRod", "flintRod", "copperRod", "cobaltRod", "alumiteRod", "blueslimeRod", "arditeRod", "manyullynRod", "bronzeRod", "boneRod", "slimeRod"});
 	private final List<String> mIgnoredPrefixes = Arrays.asList(new String[]{"reactor", "mffs", "projred", "ganys"});
-	public  final List<ItemStack> mRegisteredStacks = new ArrayList<>();
 	private boolean mActivated = false;
 	
 	@SubscribeEvent
@@ -72,7 +71,6 @@ public class GT_OreDictHandler {
                 GT_Log.ore.println(e + " is ambiguous, this is an Error.");
                 GT_Log.log.warn("WARNING: The OreDict-Registration of " + aEvent.Name + " by " + aMod + " is ambiguous. Please check if the Item hasn\'t already been registered under that Name, before registering it a second time!");
              } else {
-            	 this.mRegisteredStacks.add(aEvent.Ore);
             	 if (aEvent.Name.startsWith("item") && this.mIgnoredItems.contains(aEvent.Name)) {
             		 GT_Log.ore.println(e);
             		 if (aEvent.Name.equals("itemCopperWire")) {
@@ -104,7 +102,6 @@ public class GT_OreDictHandler {
                          GT_Log.ore.println(e + " is getting re-registered because the OreDict Name containing invalid spaces.");
                          GT_Log.log.warn("WARNING: \'" + aEvent.Name + "\' is an invalid OreDictionary Name, as it contains spaces! Register it without spaces to fix that.");
                          GT_OreDictUnificator.registerOre(aEvent.Name.replaceAll(" ", ""), GT_Utility.copyAmount(1L, aEvent.Ore));
-                         aEvent.Ore.setStackDisplayName("Invalid OreDictionary Tag");
                       } else if(this.mInvalidNames.contains(aEvent.Name)) {
                          GT_Log.ore.println(e + " is wrongly registered and therefor getting ignored.");
                          GT_Log.log.error("WARNING: \'" + aEvent.Name + "\' is an invalid OreDictionary Name. The Name doesn\'t fit to the Type of Item and/or doesn\'t follow a proper OreDictionary Convention. If you are the Owner of the Mod who adds this Item, please do the following: ");
@@ -161,7 +158,7 @@ public class GT_OreDictHandler {
                          OrePrefixes aPrefix = OrePrefixes.getOrePrefix(aEvent.Name);
                          String tName = "";
                          if(aPrefix == null) {
-                            if(aEvent.Name.toLowerCase().equals(aEvent.Name)) {
+                            if(aEvent.Name.toLowerCase().equals(aEvent.Name) && !aEvent.Name.equals("glowstone")) {
                                GT_Log.log.error("Improperly registered Ore: " + aEvent.Name + " !!!Improperly registered Ore detected!!! This Object does not follow any OreDictionary Convention, as it is 100% lowercased!!! Please report this to its Modauthor for a fix. If nothing proper is found, a good suggestion for its Name would be \'" + aMod + ":" + aEvent.Name + "\' don\'t forget to insert the \':\' inbetween the Mod ID and OreDict Name, that is the most important part.");
                                GT_Log.ore.println(e + " is invalid due to being solely lowercased.");
                                return;
@@ -396,12 +393,15 @@ public class GT_OreDictHandler {
                                   }
                                }
                             } else {
-                               if(!aPrefix.mIsSelfReferencing) {
-                                  GT_Log.log.error("WARNING: \'" + aEvent.Name + "\' is an OreDictionary Name which may cause Problems, due to being a Prefix, please use another one.");
-                                  GT_Log.log.error("Private Prefixes are a solution. Please use \'" + aMod + ":" + aEvent.Name + "\' don\'t forget to insert the \':\' inbetween the Mod ID and OreDict Name, that is the most important part.");
-                                  GT_Log.ore.println(e + " uses a Prefix as full OreDict Name, and is therefor invalid.");
-                                  aEvent.Ore.setStackDisplayName("Invalid OreDictionary Tag");
-                                  return;
+                            	if (aEvent.Name.equals("sand")) {
+                            		GT_OreDictUnificator.registerOre(OrePrefixes.block, Materials.Sand, aEvent.Ore);
+                            	} else if (aEvent.Name.equals("dye")) { 
+                            		GT_OreDictUnificator.registerOre(Dyes.dyeWhite, aEvent.Ore);
+                            	} else if (!aPrefix.mIsSelfReferencing) {
+                            		GT_Log.log.error("WARNING: \'" + aEvent.Name + "\' is an OreDictionary Name which may cause Problems, due to being a Prefix, please use another one.");
+                            		GT_Log.log.error("Private Prefixes are a solution. Please use \'" + aMod + ":" + aEvent.Name + "\' don\'t forget to insert the \':\' inbetween the Mod ID and OreDict Name, that is the most important part.");
+                            		GT_Log.ore.println(e + " uses a Prefix as full OreDict Name, and is therefor invalid.");
+                            		return;
                                }
 
                                aPrefix.add(GT_Utility.copyAmount(1L, aEvent.Ore));
@@ -476,25 +476,22 @@ public class GT_OreDictHandler {
                          GT_Log.ore.println(e);
                          List<OreDictEntry> list = mEvents.get(aPrefix);
                          OreDictEntry entry = OreDictEntry.create(aEvent.Name);
+                         ItemStack copy = aEvent.Ore.copy();
                          if (list != null) {
                         	 int idx = list.indexOf(entry);
                         	 if (idx >= 0) {
-                        		 list.get(idx).add(aMod, aEvent.Ore);
+                        		 list.get(idx).add(aMod, copy);
                         	 } else {
-                        		 entry.add(aMod, aEvent.Ore);
+                        		 entry.add(aMod, copy);
                         		 list.add(entry);
                         	 }
                          } else {
                         	 list = new ArrayList<>();
-                        	 entry.add(aMod, aEvent.Ore);
+                        	 entry.add(aMod, copy);
                     		 list.add(entry);
                          }
                          
                          this.mEvents.put(aPrefix, list);
-//                         if(this.mActivated) {
-//                            this.registerRecipes(aEvent, aMod);
-//                         }
-
                       }
                    } else {
                       GT_Log.ore.println(e + " is using a private Prefix and is therefor getting ignored properly.");
