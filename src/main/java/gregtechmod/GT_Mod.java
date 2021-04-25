@@ -562,9 +562,7 @@ public class GT_Mod implements IGT_Mod {
         GT_Items.TE_Rockwool				.set(GT_ModHandler.getTEItem("rockwool", 1L));
         try {
         	 GT_Items.TE_Hardened_Glass.set(new ItemStack(cofh.thermalexpansion.block.TEBlocks.blockGlass));
-        } catch (Throwable e) {
-        	GT_Log.log.catching(e);
-        }
+        } catch (Throwable e) {}
     	
     	for (Runnable tRunnable : GregTech_API.sBeforeGTLoad) {
     		try {
