@@ -23,6 +23,7 @@ import gregtechmod.api.items.GT_Spray_Hardener_Item;
 import gregtechmod.api.items.GT_Spray_Hydration_Item;
 import gregtechmod.api.items.GT_Spray_Ice_Item;
 import gregtechmod.api.items.GT_Spray_Pepper_Item;
+import gregtechmod.api.items.GT_Tool_Item;
 import gregtechmod.api.util.GT_FoodStat;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
@@ -52,6 +53,7 @@ import gregtechmod.common.items.GT_Vanilla_Sword;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 
@@ -513,7 +515,7 @@ public class GT_ItemLoader implements Runnable {
 		GameRegistry.registerItem(GregTech_API.sItemList[118], "tungstensteel_saw");
 		GameRegistry.registerItem(GregTech_API.sItemList[119], "electric_saw");
 		GameRegistry.registerItem(GregTech_API.sItemList[120], "advanced_saw");
-		GameRegistry.registerItem(GregTech_API.sItemList[121], "empty_electric_Saw");
+		GameRegistry.registerItem(GregTech_API.sItemList[121], "empty_electric_saw");
 		GameRegistry.registerItem(GregTech_API.sItemList[122], "empty_advanced_saw");
 		GameRegistry.registerItem(GregTech_API.sItemList[123], "advanced_drill");
 		GameRegistry.registerItem(GregTech_API.sItemList[124], "flint_sword");
@@ -535,6 +537,15 @@ public class GT_ItemLoader implements Runnable {
 		GameRegistry.registerItem(GregTech_API.sItemList[140], "electric_screwdriver");
 		GameRegistry.registerItem(GregTech_API.sItemList[141], "empty_electric_screwdriver");
 		GameRegistry.registerItem(GregTech_API.sItemList[142], "plastic_mallet");
+		
+		GT_Log.log.info("Loading tools");
+		for (Item item : GregTech_API.sItemList) {
+			if (item instanceof GT_Tool_Item) {
+				GT_Tool_Item.registerTool((GT_Tool_Item)item);
+			}
+		}
+		
+		GregTech_API.sSpecialFile.mConfig.save();
 		
 		GT_Log.log.info("Loading item related stuff"); 
 		GT_OreDictUnificator.addToBlacklist(GT_Items.Circuit_Integrated.getWildcard(1));

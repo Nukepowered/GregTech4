@@ -6,6 +6,7 @@ import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -29,6 +30,7 @@ import net.minecraft.world.World;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.MultimapBuilder;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -37,8 +39,8 @@ import cpw.mods.fml.relauncher.SideOnly;
  * This is just a basic Tool, which has normal durability and could break Blocks.
  */
 public class GT_Tool_Item extends GT_Generic_Item {
-	
-	public static final List<Integer> allowedEnchantIDs = new ArrayList<>();
+
+	private static final Multimap<String, Integer> toolEnchants = MultimapBuilder.hashKeys().hashSetValues().build();
 	
 	public final List<String> mEffectiveAgainstList = new ArrayList<String>();
 	public final List<Block> mEffectiveBlocksList = new ArrayList<Block>();
@@ -75,6 +77,17 @@ public class GT_Tool_Item extends GT_Generic_Item {
 		setNoRepair();
 		setFull3D();
 		GT_ModHandler.registerBoxableItemToToolBox(this);
+	}
+	
+	// Registry for enhantability config
+	public final static void registerTool(GT_Tool_Item item) {
+		if (item.delegate == null || GT_Utility.isStringInvalid(item.delegate.name()))
+			throw new IllegalArgumentException("Wrong item was supplied! May be it still not registered in GameRegistry");
+		String regName = item.delegate.name();
+		int[] enchantIDs = GregTech_API.sSpecialFile.mConfig.get("enchants", regName, new int[0]).getIntList();
+		for (int i : enchantIDs) {
+			toolEnchants.put(regName, Integer.valueOf(i));
+		}
 	}
 	
 	public final GT_Tool_Item addToEffectiveList(String aEntityClassName) {
@@ -201,12 +214,15 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	
 	public void checkEnchantmentEffects(ItemStack aStack) {
 		if (aStack != null) {
+			Collection<Integer> allowedEnchantIDs = toolEnchants.get(delegate.name());
+			
 			if (aStack.isItemEnchanted()) {
 				@SuppressWarnings("unchecked")
 				Map<Integer, Integer> enchs = EnchantmentHelper.getEnchantments(aStack);
-				enchs = Maps.filterEntries(enchs, e -> allowedEnchantIDs.contains(e.getKey()));
+				enchs = Maps.filterEntries(enchs, e -> allowedEnchantIDs != null && allowedEnchantIDs.contains(e.getKey()));
 				EnchantmentHelper.setEnchantments(enchs, aStack);
 			}
+			
 			if (!GT_ModHandler.isElectricItem(aStack) || GT_ModHandler.canUseElectricItem(aStack, mEUperBrokenBlock < 0 ? getDamagePerBlockBreak() * 1000 : mEUperBrokenBlock)) {
 				if (mSilklevel		> 0) aStack.addEnchantment(Enchantment.silkTouch	, mSilklevel);
 				if (mFortunelevel	> 0) aStack.addEnchantment(Enchantment.fortune		, mFortunelevel);
@@ -217,10 +233,14 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	
 	/**
 	 * Will called through hook in ContainerRepair
-	 * TODO: add configurable mappings, remove class check
 	 */
 	public boolean checkEnchant(Enchantment ench, ItemStack stack) {
-		return allowedEnchantIDs.contains(ench.effectId) && stack.getItem() instanceof GT_Saw_Item;
+		Collection<Integer> IDs;
+		if (this == stack.getItem() && (IDs = toolEnchants.get(delegate.name())) != null) {
+			return IDs.contains(ench.effectId);
+		}
+		
+		return false;
 	}
 	
 	@Override
@@ -272,13 +292,12 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	
 	@Override
     public boolean isBookEnchantable(ItemStack aStack, ItemStack aBook) {
-		if (aBook.hasEffect(0)) {
-			@SuppressWarnings("unchecked")
-			Map<Integer, Integer> enchs = EnchantmentHelper.getEnchantments(aBook);
-			Entry<Integer, Integer> enchant = enchs.entrySet().parallelStream().findAny().get();
-			if (enchant != null) {
-				return allowedEnchantIDs.contains(enchant.getKey());
-			}
+		@SuppressWarnings("unchecked")
+		Map<Integer, Integer> enchs = EnchantmentHelper.getEnchantments(aBook);
+		Entry<Integer, Integer> enchant = enchs.entrySet().parallelStream().findAny().get();
+		Collection<Integer> IDs;
+		if (enchant != null && (IDs = toolEnchants.get(delegate.name())) != null) {
+			return IDs.contains(enchant.getKey());
 		}
 		
 		
@@ -316,7 +335,7 @@ public class GT_Tool_Item extends GT_Generic_Item {
 //		checkEnchantmentEffects(aStack); // Seriosly? pinging every render tick poor item?
 		@SuppressWarnings("unchecked")
 		Set<Integer> enchsIds = EnchantmentHelper.getEnchantments(aStack).keySet();
-		enchsIds.retainAll(allowedEnchantIDs);
+		enchsIds.retainAll(toolEnchants.get(delegate.name()));
         return enchsIds.size() > 0;
     }
 	
