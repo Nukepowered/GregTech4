@@ -784,7 +784,7 @@ public class GT_Mod implements IGT_Mod {
         if (sNerfedWoodenTools) {
     		GT_Log.log.info("Nerfing Wood Tool Durability");
         	Items.wooden_sword.setMaxDamage(12);
-        	Items.stone_pickaxe.setMaxDamage(12);
+        	Items.wooden_pickaxe.setMaxDamage(12);
         	Items.wooden_shovel.setMaxDamage(12);
         	Items.wooden_axe.setMaxDamage(12);
         	Items.wooden_hoe.setMaxDamage(12);
