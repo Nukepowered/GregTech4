@@ -10,6 +10,7 @@ import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
 import gregtechmod.api.interfaces.IGT_Mod;
 import gregtechmod.api.interfaces.IMetaTileEntity;
+import gregtechmod.api.items.GT_Tool_Item;
 import gregtechmod.api.metatileentity.BaseMetaPipeEntity;
 import gregtechmod.api.metatileentity.BaseMetaTileEntity;
 import gregtechmod.api.metatileentity.MetaPipeEntity;
@@ -98,6 +99,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -291,6 +293,10 @@ public class GT_Mod implements IGT_Mod {
     		tConfig1.save();
         	return;
     	}
+    	
+    	GT_Tool_Item.allowedEnchantIDs.addAll( // TODO make per different tool type
+    			Arrays.stream(tConfig1.get("general", "allowedEnchantmnetsIDs", new int[0], "List of enchantment IDs allowed to use any GT tools in anvil (No enchantment table :P)").getIntList())
+    				.boxed().collect(Collectors.toList()));
     	
     	GT_Log.mOreDictLogFile = new File(aEvent.getModConfigurationDirectory().getParentFile(), "logs/GT_OreDict.log");
         if(!GT_Log.mOreDictLogFile.exists()) {

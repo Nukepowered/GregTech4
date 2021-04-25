@@ -14,6 +14,7 @@ import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 @IFMLLoadingPlugin.Name(GT_CoreMod.NAME)
 @IFMLLoadingPlugin.MCVersion("1.7.10")
 @IFMLLoadingPlugin.TransformerExclusions({"gregtechmod.common.asm."})
+@IFMLLoadingPlugin.SortingIndex(1001)
 public class GT_CoreMod implements IFMLLoadingPlugin {
 	
 	public static final String NAME = "GregTech-Core";
@@ -23,7 +24,8 @@ public class GT_CoreMod implements IFMLLoadingPlugin {
 	public String[] getASMTransformerClass() {
 		return new String[] {
 				"gregtechmod.common.asm.EnergyNetTransformer",
-				"gregtechmod.common.asm.IC2ReactorSlotTransformer"
+				"gregtechmod.common.asm.IC2ReactorSlotTransformer",
+				"gregtechmod.common.asm.AnvilTransformer"
 		};
 	}
 

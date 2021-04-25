@@ -7,12 +7,16 @@ import gregtechmod.api.util.GT_Utility;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -22,6 +26,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
+
+import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 
 import cpw.mods.fml.relauncher.Side;
@@ -31,6 +37,9 @@ import cpw.mods.fml.relauncher.SideOnly;
  * This is just a basic Tool, which has normal durability and could break Blocks.
  */
 public class GT_Tool_Item extends GT_Generic_Item {
+	
+	public static final List<Integer> allowedEnchantIDs = new ArrayList<>();
+	
 	public final List<String> mEffectiveAgainstList = new ArrayList<String>();
 	public final List<Block> mEffectiveBlocksList = new ArrayList<Block>();
 	public final List<String> mEffectiveOreDictList = new ArrayList<String>();
@@ -40,7 +49,7 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	protected final float mToolStrength;
 	
 	private short mDamagePerContainerCraft = 10, mDamagePerWeaponUse = 3, mDamagePerBlockBreak = 1;
-	private int mTier = 1, mEUperBrokenBlock = -1, mEUperHitEntity = -1, mSilklevel = 0, mFortunelevel = 0, mLootinglevel = 0;
+	protected int mTier = 1, mEUperBrokenBlock = -1, mEUperHitEntity = -1, mSilklevel = 0, mFortunelevel = 0, mLootinglevel = 0;
 	private String mToolClasses[], mCraftingSound, mBreakingSound, mBlockBreakSound, mEntityHitSound;
 	private float mCraftingSoundStrength = 1, mBreakingSoundStrength = 1, mBlockBreakSoundStrength = 1, mEntityHitSoundStrength = 1;
 	private final boolean mSwingIfUsed;
@@ -192,13 +201,26 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	
 	public void checkEnchantmentEffects(ItemStack aStack) {
 		if (aStack != null) {
-			if (aStack.isItemEnchanted()) aStack.stackTagCompound.removeTag("ench");
+			if (aStack.isItemEnchanted()) {
+				@SuppressWarnings("unchecked")
+				Map<Integer, Integer> enchs = EnchantmentHelper.getEnchantments(aStack);
+				enchs = Maps.filterEntries(enchs, e -> allowedEnchantIDs.contains(e.getKey()));
+				EnchantmentHelper.setEnchantments(enchs, aStack);
+			}
 			if (!GT_ModHandler.isElectricItem(aStack) || GT_ModHandler.canUseElectricItem(aStack, mEUperBrokenBlock < 0 ? getDamagePerBlockBreak() * 1000 : mEUperBrokenBlock)) {
 				if (mSilklevel		> 0) aStack.addEnchantment(Enchantment.silkTouch	, mSilklevel);
 				if (mFortunelevel	> 0) aStack.addEnchantment(Enchantment.fortune		, mFortunelevel);
 				if (mLootinglevel	> 0) aStack.addEnchantment(Enchantment.looting		, mLootinglevel);
 			}
 		}
+	}
+	
+	/**
+	 * Will called through hook in ContainerRepair
+	 * TODO: add configurable mappings, remove class check
+	 */
+	public boolean checkEnchant(Enchantment ench, ItemStack stack) {
+		return allowedEnchantIDs.contains(ench.effectId) && stack.getItem() instanceof GT_Saw_Item;
 	}
 	
 	@Override
@@ -250,6 +272,16 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	
 	@Override
     public boolean isBookEnchantable(ItemStack aStack, ItemStack aBook) {
+		if (aBook.hasEffect(0)) {
+			@SuppressWarnings("unchecked")
+			Map<Integer, Integer> enchs = EnchantmentHelper.getEnchantments(aBook);
+			Entry<Integer, Integer> enchant = enchs.entrySet().parallelStream().findAny().get();
+			if (enchant != null) {
+				return allowedEnchantIDs.contains(enchant.getKey());
+			}
+		}
+		
+		
         return false;
     }
 	
@@ -281,8 +313,11 @@ public class GT_Tool_Item extends GT_Generic_Item {
 	
 	@Override
     public boolean hasEffect(ItemStack aStack) {
-		checkEnchantmentEffects(aStack);
-        return false;
+//		checkEnchantmentEffects(aStack); // Seriosly? pinging every render tick poor item?
+		@SuppressWarnings("unchecked")
+		Set<Integer> enchsIds = EnchantmentHelper.getEnchantments(aStack).keySet();
+		enchsIds.retainAll(allowedEnchantIDs);
+        return enchsIds.size() > 0;
     }
 	
 	@Override
