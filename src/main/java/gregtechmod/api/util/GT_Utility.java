@@ -411,11 +411,9 @@ public class GT_Utility {
 						if (isAllowedToTakeFromSlot(aTileEntity1, aGrabSlots[i], (byte)aGrabFrom, aTileEntity1.getStackInSlot(aGrabSlots[i]))) {
 							if (Math.max(aMinMoveAtOnce, aMinTargetStackSize) <= aTileEntity1.getStackInSlot(aGrabSlots[i]).stackSize) {
 								ItemStack tStack = copyAmount(Math.min(aTileEntity1.getStackInSlot(aGrabSlots[i]).stackSize, Math.min(aMaxMoveAtOnce, aMaxTargetStackSize)), aTileEntity1.getStackInSlot(aGrabSlots[i]));
-								ItemStack rStack = ((cofh.api.transport.IItemDuct)aTileEntity2).insertItem(ForgeDirection.getOrientation(aPutTo), copy(tStack));
-								byte tMovedItemCount = (byte)(tStack.stackSize - (rStack == null ? 0 : rStack.stackSize));
-								if (tMovedItemCount >= 1/*Math.max(aMinMoveAtOnce, aMinTargetStackSize)*/) {
-									ItemStack remains = ((cofh.api.transport.IItemDuct)aTileEntity2).insertItem(ForgeDirection.getOrientation(aPutTo), copyAmount(tMovedItemCount, tStack));
-									tMovedItemCount = (byte) (tStack.stackSize - remains.stackSize);
+								ItemStack remains = ((cofh.api.transport.IItemDuct)aTileEntity2).insertItem(ForgeDirection.getOrientation(aPutTo), copy(tStack));
+								byte tMovedItemCount = (byte)(tStack.stackSize - (remains == null ? 0 : remains.stackSize));
+								if (tMovedItemCount >= 0) {
 									aTileEntity1.decrStackSize(aGrabSlots[i], tMovedItemCount);
 									aTileEntity1.markDirty();
 									return tMovedItemCount;
@@ -424,6 +422,7 @@ public class GT_Utility {
 						}
 					}
 				}
+				
 				return 0;
 			}
 			if (BC_CHECK && aTileEntity2 instanceof buildcraft.api.transport.IPipeTile) {
@@ -582,8 +581,7 @@ public class GT_Utility {
 			}
 		}
 		
-		moveStackIntoPipe(aTileEntity1, aTileEntity2, tGrabSlots, aGrabFrom, aPutTo, aFilter, aInvertFilter, aMaxTargetStackSize, aMinTargetStackSize, aMaxMoveAtOnce, aMinMoveAtOnce);
-		return 0;
+		return moveStackIntoPipe(aTileEntity1, aTileEntity2, tGrabSlots, aGrabFrom, aPutTo, aFilter, aInvertFilter, aMaxTargetStackSize, aMinTargetStackSize, aMaxMoveAtOnce, aMinMoveAtOnce);
 	}
 	
 	/**
