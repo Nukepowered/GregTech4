@@ -205,7 +205,7 @@ public class GT_MetaGenerated_Item_Renderer implements IItemRenderer {
 	
 	protected void renderIcon(ItemRenderType type, IIcon icon) {
 		if (type == ItemRenderType.INVENTORY) {
-			renderIcon(icon, 16.0D, 0.0D, 0.0F, 0.0F, -1.0F);
+			renderIcon(icon, 16.0D, 3.0D, 0.0F, 0.0F, -1.0F);
 		} else {
 			ItemRenderer.renderItemIn2D(Tessellator.instance, icon.getMaxU(), icon.getMinV(), icon.getMinU(), icon.getMaxV(), icon.getIconWidth(), icon.getIconHeight(), 0.0625F);
 		}
