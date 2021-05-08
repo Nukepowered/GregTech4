@@ -20,7 +20,7 @@ import ic2.api.recipe.IRecipeInput;
 import ic2.api.recipe.RecipeOutput;
 
 import cpw.mods.fml.common.Loader;
-
+import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -273,18 +273,23 @@ public class RecipeHandler {
 	public static class OutputMatcher implements IRecipeMatcher {
 		
 		private final boolean reusable;
+		private final boolean wildcard;
 		private final ItemStack output;
+		
 		
 		public OutputMatcher(boolean reusable, ItemStack output) {
 			Objects.requireNonNull(output);
+			this.wildcard = Items.feather.getDamage(output) == GregTech_API.ITEM_WILDCARD_DAMAGE;
 			this.reusable = reusable;
 			this.output = output;
 		}
 
 		@Override
 		public boolean matches(IRecipe recipe) {
-			return recipe.getRecipeOutput().isItemEqual(output);
+			ItemStack recipeOut = recipe.getRecipeOutput();
+			return recipeOut != null && (wildcard ? recipeOut.getItem() == output.getItem() : recipeOut.isItemEqual(output));
 		}
+					
 		
 		@Override
 		public boolean isReusable() {

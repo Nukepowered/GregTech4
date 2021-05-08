@@ -106,7 +106,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.network.Packet;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -658,6 +657,53 @@ public class GT_Mod implements IGT_Mod {
 		new GT_RecyclingRecipeLoader().run();
 
         GT_RecipeRegistrator.registerUsagesForMaterials(new ItemStack(Blocks.planks, 1), GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Wood, 1L), null, false, true, false);
+        
+        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "ic2forgehammer", true)) 
+            RecipeHandler.scheduleCraftingToRemove(new RecipeHandler.OutputMatcher(false, GT_Items.Tool_Hammer_Forge.getWildcard(1)));
+        ItemStack tMat = new ItemStack(Items.iron_ingot);
+        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.PressurePlate", true))
+        	RecipeHandler.scheduleCraftingToRemove(new GT_RecipeRegistrator.DoubleMatcher(new ItemStack(Blocks.heavy_weighted_pressure_plate), false, tMat, tMat, null, null, null, null, null, null, null));
+        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.Bucket", true))
+        	RecipeHandler.scheduleCraftingToRemove(new GT_RecipeRegistrator.DoubleMatcher(new ItemStack(Items.bucket), false, tMat, null, tMat, null, tMat, null, null, null, null));
+        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.Minecart", true))
+        	RecipeHandler.scheduleCraftingToRemove(new GT_RecipeRegistrator.DoubleMatcher(new ItemStack(Items.minecart), false, tMat, null, tMat, tMat, tMat, tMat, null, null, null));
+        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.Door", true))
+        	RecipeHandler.scheduleCraftingToRemove(new GT_RecipeRegistrator.DoubleMatcher(new ItemStack(Items.iron_door), false, tMat, tMat, null, tMat, tMat, null, tMat, tMat, null));
+        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.Cauldron", true))
+        	RecipeHandler.scheduleCraftingToRemove(new GT_RecipeRegistrator.DoubleMatcher(new ItemStack(Items.cauldron), false, tMat, null, tMat, tMat, null, tMat, tMat, tMat, tMat));
+        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.Hopper", true))
+        	RecipeHandler.scheduleCraftingToRemove(new GT_RecipeRegistrator.DoubleMatcher(new ItemStack(Blocks.hopper), false, tMat, null, tMat, tMat, new ItemStack(Blocks.chest, 1, 0), tMat, null, tMat, null));
+        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.Bars", true))
+        	RecipeHandler.scheduleCraftingToRemove(new GT_RecipeRegistrator.DoubleMatcher(new ItemStack(Blocks.iron_bars), false, tMat, tMat, tMat, tMat, tMat, tMat, null, null, null));
+        tMat = new ItemStack(Items.gold_ingot);
+        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Gold.PressurePlate", true))
+        	RecipeHandler.scheduleCraftingToRemove(new GT_RecipeRegistrator.DoubleMatcher(new ItemStack(Blocks.light_weighted_pressure_plate), false, tMat, tMat, null, null, null, null, null, null, null));
+
+        tMat = GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Rubber, 1L);
+        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Rubber.Sheet", true))
+        	RecipeHandler.scheduleCraftingToRemove(new GT_RecipeRegistrator.DoubleMatcher(GT_ModHandler.getIC2Item("rubberTrampoline", 1), false, tMat, tMat, tMat, tMat, tMat, tMat, null, null, null));
+        
+        RecipeHandler.executeOnFinish(() -> {
+        	 if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.PressurePlate", true))
+             	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.heavy_weighted_pressure_plate), "XXT", 'X', "plateIron", 'T', GT_ToolDictNames.craftingToolHardHammer.toString()));
+             if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.Bucket", true))
+             	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.bucket), "XTX", " X ", 'X', "plateIron", 'T', GT_ToolDictNames.craftingToolHardHammer.toString()));
+             if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.Minecart", true))
+             	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.minecart), "XTX", "XXX", 'X', "plateIron", 'T', GT_ToolDictNames.craftingToolHardHammer.toString()));
+             if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.Door", true))
+             	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.iron_door), "XX ", "XXT", "XX ", 'X', "plateIron", 'T', GT_ToolDictNames.craftingToolHardHammer.toString()));
+             if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.Cauldron", true))
+             	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.cauldron), "X X", "XTX", "XXX", 'X', "plateIron", 'T', GT_ToolDictNames.craftingToolHardHammer.toString()));
+             if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.Hopper", true))
+                 GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.hopper), "XWX", "XCX", " X ", 'X', "plateIron", 'W', GT_ToolDictNames.craftingToolWrench.toString(), 'C', "craftingChest"));
+             if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.Bars", true))
+                 GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.iron_bars, 8), " W ", "XXX", "XXX", 'X', "stickIron", 'W', GT_ToolDictNames.craftingToolWrench.toString()));
+             if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Gold.PressurePlate", true))
+             	GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.light_weighted_pressure_plate), "XXT", 'X', "plateGold", 'T', GT_ToolDictNames.craftingToolHardHammer.toString()));
+             if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Rubber.Sheet", true))
+                 GameRegistry.addRecipe(new ShapedOreRecipe(GT_ModHandler.getIC2Item("rubberTrampoline", 3), "XXX", "XXX", 'X', "plateRubber"));
+        });
+        
         GT_Log.log.info("Activating OreDictionary Handler, this can take some time, as it scans the whole OreDictionary");
         
         GT_Log.log.info("If your Log stops here, you were too impatient. Wait a bit more next time, before killing Minecraft with the Task Manager.");
@@ -720,63 +766,17 @@ public class GT_Mod implements IGT_Mod {
         GT_ModHandler.addShapelessCraftingRecipe(new ItemStack(Items.stick				, 2	, 0)	, false				, new Object[] { new ItemStack(Blocks.deadbush, 1, 32767) });
         GT_ModHandler.addShapelessCraftingRecipe(new ItemStack(Items.stick				, 2	, 0)	, false				, new Object[] { new ItemStack(Blocks.tallgrass, 1, 0) });
         
-        GT_ModHandler.addCraftingRecipe(new ItemStack(Items.comparator, 1, 0), false, false, new Object[] { " T ", "TQT", "SSS", 'Q', "craftingQuartz", 'S', "stoneSmooth", 'T', "craftingRedstoneTorch" });
-        
-        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "ic2forgehammer", true)) {
-            GT_ModHandler.removeRecipeByOutput(GT_Items.Tool_Hammer_Forge.getWildcard(1L, new Object[0]));
-        }
-        
-        ItemStack tMat = new ItemStack(Items.iron_ingot);
-        ItemStack tStack;
-        
-        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.PressurePlate", true) && null != (tStack = GT_ModHandler.removeRecipe(tMat, tMat, null, null, null, null, null, null, null))) {
-            GT_ModHandler.addCraftingRecipe(tStack, new Object[] { "XXT", 'X', "plateIron", 'T', GT_ToolDictNames.craftingToolHardHammer, 'S', "stickWood", 'I', "ingotIron", 'F', GT_ToolDictNames.craftingToolFile, 'W', GT_ToolDictNames.craftingToolWrench });
-        }
-        
-        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.Bucket", true) && null != (tStack = GT_ModHandler.removeRecipe(tMat, null, tMat, null, tMat, null, null, null, null))) {
-            GT_ModHandler.addCraftingRecipe(tStack, new Object[] { "XTX", " X ", 'X', "plateIron", 'T', GT_ToolDictNames.craftingToolHardHammer, 'S', "stickWood", 'I', "ingotIron", 'F', GT_ToolDictNames.craftingToolFile, 'W', GT_ToolDictNames.craftingToolWrench });
-        }
-        
-        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.Minecart", true) && null != (tStack = GT_ModHandler.removeRecipe(tMat, null, tMat, tMat, tMat, tMat, null, null, null))) {
-            GT_ModHandler.addCraftingRecipe(tStack, new Object[] { "XTX", "XXX", 'X', "plateIron", 'T', GT_ToolDictNames.craftingToolHardHammer, 'S', "stickWood", 'I', "ingotIron", 'F', GT_ToolDictNames.craftingToolFile, 'W', GT_ToolDictNames.craftingToolWrench });
-        }
-        
-        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.Door", true) && null != (tStack = GT_ModHandler.removeRecipe(tMat, tMat, null, tMat, tMat, null, tMat, tMat, null))) {
-            GT_ModHandler.addCraftingRecipe(tStack, new Object[] { "XX ", "XXT", "XX ", 'X', "plateIron", 'T', GT_ToolDictNames.craftingToolHardHammer, 'S', "stickWood", 'I', "ingotIron", 'F', GT_ToolDictNames.craftingToolFile, 'W', GT_ToolDictNames.craftingToolWrench });
-        }
-        
-        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.Cauldron", true) && null != (tStack = GT_ModHandler.removeRecipe(tMat, null, tMat, tMat, null, tMat, tMat, tMat, tMat))) {
-            GT_ModHandler.addCraftingRecipe(tStack, new Object[] { "X X", "XTX", "XXX", 'X', "plateIron", 'T', GT_ToolDictNames.craftingToolHardHammer, 'S', "stickWood", 'I', "ingotIron", 'F', GT_ToolDictNames.craftingToolFile, 'W', GT_ToolDictNames.craftingToolWrench });
-        }
-        
-        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.Hopper", true) && null != (tStack = GT_ModHandler.removeRecipe(tMat, null, tMat, tMat, new ItemStack(Blocks.chest, 1, 0), tMat, null, tMat, null))) {
-            GT_ModHandler.addCraftingRecipe(tStack, new Object[] { "XWX", "XCX", " X ", 'X', "plateIron", 'T', GT_ToolDictNames.craftingToolHardHammer, 'S', "stickWood", 'I', "ingotIron", 'F', GT_ToolDictNames.craftingToolFile, 'W', GT_ToolDictNames.craftingToolWrench, 'C', "craftingChest" });
-        }
-        
-        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Iron.Bars", true) && null != (tStack = GT_ModHandler.removeRecipe(tMat, tMat, tMat, tMat, tMat, tMat, null, null, null))) {
-            final ItemStack itemStack = tStack;
-            itemStack.stackSize /= 2;
-            GT_ModHandler.addCraftingRecipe(tStack, new Object[] { " W ", "XXX", "XXX", 'X', "stickIron", 'T', GT_ToolDictNames.craftingToolHardHammer, 'S', "stickWood", 'I', "ingotIron", 'F', GT_ToolDictNames.craftingToolFile, 'W', GT_ToolDictNames.craftingToolWrench });
-        }
-        
-        GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("ironFence", 6L), new Object[] { "XXX", "XXX", " W ", 'X', "stickIron", 'T', GT_ToolDictNames.craftingToolHardHammer, 'S', "stickWood", 'I', "ingotIron", 'F', GT_ToolDictNames.craftingToolFile, 'W', GT_ToolDictNames.craftingToolWrench });
-        tMat = new ItemStack(Items.gold_ingot);
-        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Gold.PressurePlate", true) && null != (tStack = GT_ModHandler.removeRecipe(tMat, tMat, null, null, null, null, null, null, null))) {
-            GT_ModHandler.addCraftingRecipe(tStack, new Object[] { "XXT", 'X', "plateGold", 'T', GT_ToolDictNames.craftingToolHardHammer, 'S', "stickWood", 'I', "ingotGold", 'F', GT_ToolDictNames.craftingToolFile, 'W', GT_ToolDictNames.craftingToolWrench });
-        }
-        
-        tMat = GT_OreDictUnificator.get(OrePrefixes.ingot, Materials.Rubber, 1L);
-        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.recipereplacements, "Rubber.Sheet", true) && null != (tStack = GT_ModHandler.removeRecipe(tMat, tMat, tMat, tMat, tMat, tMat, null, null, null))) {
-            GT_ModHandler.addCraftingRecipe(tStack, new Object[] { "XXX", "XXX", 'X', "plateRubber" });
-        }
-        
-        tStack = GT_ModHandler.removeRecipe(new ItemStack(Blocks.planks, 1, 0), null, null, new ItemStack(Blocks.planks, 1, 0));
+        ItemStack tStack = GT_ModHandler.removeRecipe(new ItemStack(Blocks.planks, 1, 0), null, null, new ItemStack(Blocks.planks, 1, 0));
         if (tStack != null) {
-            GT_ModHandler.addCraftingRecipe(GT_Utility.copyAmount(GT_Mod.sNerfedWoodPlank ? (tStack.stackSize) : ((tStack.stackSize * 5 / 4)), tStack), new Object[] { "S", "P", "P", 'P', "plankWood", 'S', GT_ToolDictNames.craftingToolSaw });
-            GT_ModHandler.addCraftingRecipe(GT_Utility.copyAmount(GT_Mod.sNerfedWoodPlank ? ((tStack.stackSize / 2)) : (tStack.stackSize), tStack), new Object[] { "P", "P", 'P', "plankWood" });
+        	tStack = GT_Utility.copyAmount(GT_Mod.sNerfedWoodPlank ? (tStack.stackSize) : ((tStack.stackSize * 5 / 4)), tStack);
+        	GameRegistry.addRecipe(new ShapedOreRecipe(tStack, "S", "P", "P", 'P', "plankWood", 'S', GT_ToolDictNames.craftingToolSaw.toString()));
+        	tStack = GT_Utility.copyAmount(GT_Mod.sNerfedWoodPlank ? ((tStack.stackSize / 2)) : (tStack.stackSize), tStack);
+        	GameRegistry.addRecipe(new ShapedOreRecipe(tStack, "P", "P", 'P', "plankWood"));
         }
         
-        GameRegistry.addRecipe((IRecipe)new ShapedOreRecipe(new ItemStack(Blocks.wooden_pressure_plate, 1, 0), new Object[] { "PP", 'P', "plankWood" }));
+        GT_ModHandler.addCraftingRecipe(new ItemStack(Items.comparator, 1, 0), false, false, new Object[] { " T ", "TQT", "SSS", 'Q', "craftingQuartz", 'S', "stoneSmooth", 'T', "craftingRedstoneTorch" });
+        GameRegistry.addRecipe(new ShapedOreRecipe(GT_ModHandler.getIC2Item("ironFence", 6L), "XXX", "XXX", " W ", 'X', "stickIron", 'W', GT_ToolDictNames.craftingToolWrench.toString()));
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Blocks.wooden_pressure_plate, 1, 0), new Object[] { "PP", 'P', "plankWood" }));
 		/*
 		GT_Log.log.info("Adding Default Description Set of the Computer Cube");
 		GT_ComputercubeDescription.addStandardDescriptions();
