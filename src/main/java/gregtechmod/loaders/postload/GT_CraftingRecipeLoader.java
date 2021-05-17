@@ -325,8 +325,8 @@ public class GT_CraftingRecipeLoader implements Runnable {
         if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.gregtechrecipes, "SolarPanelLV", false)) GT_ModHandler.addCraftingRecipe(GregTech_API.getGregTechComponent(65, 1), new Object[] {"SSS", "STS", "SSS", 'S', GT_OreDictNames.craftingSolarPanel  , 'T', OrePrefixes.circuit.get(Materials.Basic)});
         if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.gregtechrecipes, "SolarPanelMV", false)) GT_ModHandler.addCraftingRecipe(GregTech_API.getGregTechComponent(66, 1), new Object[] {"SSS", "STS", "SSS", 'S', GT_OreDictNames.craftingSolarPanelLV, 'T', GT_OreDictNames.craftingMVTUpgrade});
         if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.gregtechrecipes, "SolarPanelHV", false)) GT_ModHandler.addCraftingRecipe(GregTech_API.getGregTechComponent(67, 1), new Object[] {"SSS", "STS", "SSS", 'S', GT_OreDictNames.craftingSolarPanelMV, 'T', GT_OreDictNames.craftingHVTUpgrade});
-
-        GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("reactorVent", 1), new Object[] {"AIA", "I I", "AIA", 'I', new ItemStack(Items.iron_ingot, 1), 'A', OrePrefixes.plate.get(Materials.Aluminium)});
+        
+        GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("reactorVent", 1, 1), "BAB", "AMA", "BAB", 'B', new ItemStack(Blocks.iron_bars, 1), 'A', OrePrefixes.plate.get(Materials.Aluminium), 'M', GT_ModHandler.getIC2Item("elemotor", 1));
         GT_ModHandler.addShapelessCraftingRecipe(GT_ModHandler.getIC2Item("reactorPlatingExplosive", 1), new Object[] {GT_ModHandler.getIC2Item("reactorPlating", 1), OrePrefixes.plate.get(Materials.Lead)});
         
         if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.gregtechrecipes, "wirelessRedstone", true)) {

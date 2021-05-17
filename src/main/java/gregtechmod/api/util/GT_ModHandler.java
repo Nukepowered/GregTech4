@@ -780,35 +780,35 @@ public class GT_ModHandler {
 	/**
 	 * Regular Crafting Recipes. Deletes conflicting Recipes too.
 	 */
-	public static boolean addCraftingRecipe(ItemStack aResult, Object[] aRecipe) {
+	public static boolean addCraftingRecipe(ItemStack aResult, Object... aRecipe) {
 		return addCraftingRecipe(aResult, isElectricItem(aResult), aRecipe);
 	}
 	
 	/**
 	 * Regular Crafting Recipes. Deletes conflicting Recipes too.
 	 */
-	public static boolean addCraftingRecipe(ItemStack aResult, boolean aUseIC2Handler, Object[] aRecipe) {
+	public static boolean addCraftingRecipe(ItemStack aResult, boolean aUseIC2Handler, Object... aRecipe) {
 		return addCraftingRecipe(aResult, aUseIC2Handler, false, aRecipe);
 	}
 	
 	/**
 	 * Regular Crafting Recipes. Deletes conflicting Recipes too.
 	 */
-	public static boolean addCraftingRecipe(ItemStack aResult, boolean aUseIC2Handler, boolean aMirrored, Object[] aRecipe) {
+	public static boolean addCraftingRecipe(ItemStack aResult, boolean aUseIC2Handler, boolean aMirrored, Object... aRecipe) {
 		return addCraftingRecipe(aResult, aUseIC2Handler, aMirrored, true, aRecipe);
 	}
 	
 	/**
 	 * Regular Crafting Recipes. Deletes conflicting Recipes too.
 	 */
-	public static boolean addCraftingRecipe(ItemStack aResult, boolean aUseIC2Handler, boolean aMirrored, boolean aBuffered, Object[] aRecipe) {
+	public static boolean addCraftingRecipe(ItemStack aResult, boolean aUseIC2Handler, boolean aMirrored, boolean aBuffered, Object... aRecipe) {
 		return addCraftingRecipe(aResult, aUseIC2Handler, aMirrored, aBuffered, false, aRecipe);
 	}
 	
 	/**
 	 * Regular Crafting Recipes. Deletes conflicting Recipes too.
 	 */
-	public static boolean addCraftingRecipe(ItemStack aResult, boolean aUseIC2Handler, boolean aMirrored, boolean aBuffered, boolean aKeepNBT, Object[] aRecipe) {
+	public static boolean addCraftingRecipe(ItemStack aResult, boolean aUseIC2Handler, boolean aMirrored, boolean aBuffered, boolean aKeepNBT, Object... aRecipe) {
 		aResult = GT_OreDictUnificator.get(true, aResult);
 		if (aResult != null && aResult.getItemDamage() == GregTech_API.ITEM_WILDCARD_DAMAGE) Items.feather.setDamage(aResult, 0);
 		if (aRecipe == null || aRecipe.length <= 0) return false;
