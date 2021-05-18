@@ -1007,6 +1007,7 @@ item.GT_SensorCard_Item.tooltip=Insert into Display Panel
 item.GT_SensorCard_Item.tooltip.info.1=Device at:
 item.GT_SensorCard_Item.tooltip.info.2=x: %d y: %d z: %d
 item.GT_SensorCard_Item.tooltip.info.missing=Missing Coordinates!
+item.destructpack.fluid_info=Also working with fluid containers!
 
 gt_crops.indigo=Indigo
 gt_crops.flax=Flax

@@ -1415,6 +1415,7 @@ item.GT_SensorCard_Item.tooltip=Ввести в панель дисплея
 item.GT_SensorCard_Item.tooltip.info.1=Устройство на:
 item.GT_SensorCard_Item.tooltip.info.2=x: %d y: %d z: %d
 item.GT_SensorCard_Item.tooltip.info.missing=Координаты утеряны!
+item.destructpack.fluid_info=Так же работает с жидкостными контейнерами!
 
 gt_crops.indigo=Индиго
 gt_crops.flax=Лён
