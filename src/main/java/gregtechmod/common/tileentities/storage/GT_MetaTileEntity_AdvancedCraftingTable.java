@@ -256,6 +256,11 @@ public class GT_MetaTileEntity_AdvancedCraftingTable extends GT_MetaTileEntity_B
     }
 	
 	@Override
+	public int getOutputTier() {
+		return GT_Utility.getTier(getBaseMetaTileEntity().getInputVoltage());
+	}
+	
+	@Override
 	public int getTextureIndex(byte aSide, byte aFacing, boolean aActive, boolean aRedstone) {
 		if (aSide==0) return  32;
 		if (aSide==1) return 290;
