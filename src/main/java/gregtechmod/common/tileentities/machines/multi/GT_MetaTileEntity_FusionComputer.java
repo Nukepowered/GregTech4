@@ -492,7 +492,7 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity implements 
 					break;
 				} else if (GT_Utility.areStacksEqual(slot, current)) {
 					int newSize = Math.min(slot.getMaxStackSize(), amount + slot.stackSize);
-					amount -= newSize;
+					amount -= newSize - slot.stackSize;
 				}
 			}
 			
