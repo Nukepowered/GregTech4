@@ -141,7 +141,7 @@ import cpw.mods.fml.relauncher.Side;
 /**
  * @author Gregorius Techneticies
  */
-@Mod(modid = "gregtech_addon", name="GregTech-Addon", version="4.14.25", useMetadata=false, dependencies="required-after:IC2; after:Railcraft; after:ThermalExpansion; after:ThermalExpansion|Transport; after:ThermalExpansion|Energy; after:ThermalExpansion|Factory; before:RedPowerCore; before:RedPowerBase; before:RedPowerMachine; before:RedPowerCompat; before:RedPowerWiring; before:RedPowerLogic; before:RedPowerLighting; before:RedPowerWorld; before:RedPowerControl;")
+@Mod(modid = "gregtech_addon", name="GregTech-Addon", version="4.15.32", useMetadata=false, dependencies="required-after:IC2; after:Railcraft; after:ThermalExpansion; after:ThermalExpansion|Transport; after:ThermalExpansion|Energy; after:ThermalExpansion|Factory; before:RedPowerCore; before:RedPowerBase; before:RedPowerMachine; before:RedPowerCompat; before:RedPowerWiring; before:RedPowerLogic; before:RedPowerLighting; before:RedPowerWorld; before:RedPowerControl;")
 public class GT_Mod implements IGT_Mod {
     @Instance
     public static GT_Mod instance;
@@ -149,8 +149,8 @@ public class GT_Mod implements IGT_Mod {
     @SidedProxy(clientSide = "gregtechmod.common.GT_Client", serverSide = "gregtechmod.common.GT_Server")
     public static GT_Proxy gregtechproxy;
     
-	public static volatile int VERSION = 414;
-	public static volatile int REQUIRED_IC2 = 397;
+	public static volatile int VERSION = 415;
+	public static volatile int REQUIRED_IC2 = 823;
     public static boolean 
     		sThaumiumObtainable = false,
     		sNerfDustCrafting = true,
