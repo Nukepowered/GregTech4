@@ -66,10 +66,6 @@ public class ProcessingIngot1 implements IOreRecipeRegistrator {
 					RecipeMaps.BENDING.factory().EUt(24).duration(Math.max(aMaterial.getMass() *  2, 1)).setShaped(true).input(RecipeEntry.fromStacks(1, entry.ores, Match.STRICT)).nonConsumable(GT_Items.Circuit_Integrated.getWithDamage(0, 1)).output(GT_OreDictUnificator.get(OrePrefixes.plate, aMaterial, 1)).buildAndRegister();
 					if (GT_OreDictUnificator.get(OrePrefixes.plateDense, aMaterial) != null) 
 						RecipeMaps.BENDING.factory().EUt(24).duration(Math.max(aMaterial.getMass() * 18, 1)).setShaped(true).input(RecipeEntry.fromStacks(9, entry.ores, Match.STRICT)).nonConsumable(GT_Items.Circuit_Integrated.getWithDamage(0, 9)).output(GT_OreDictUnificator.get(OrePrefixes.plateDense, aMaterial, 1)).buildAndRegister();
-//					RecipeMaps.BENDING.factory().EUt(24).duration(Math.max(aMaterial.getMass() *  4, 1)).setShaped(true).input(RecipeEntry.fromStacks(2, entry.ores, Match.STRICT)).nonConsumable(GT_Items.Circuit_Integrated.getWithDamage(0, 2)).output(GT_OreDictUnificator.get(OrePrefixes.plateDouble, aMaterial, 1)).buildAndRegister();
-//					RecipeMaps.BENDING.factory().EUt(24).duration(Math.max(aMaterial.getMass() *  6, 1)).setShaped(true).input(RecipeEntry.fromStacks(3, entry.ores, Match.STRICT)).nonConsumable(GT_Items.Circuit_Integrated.getWithDamage(0, 3)).output(GT_OreDictUnificator.get(OrePrefixes.plateTriple, aMaterial, 1)).buildAndRegister();
-//					RecipeMaps.BENDING.factory().EUt(24).duration(Math.max(aMaterial.getMass() *  8, 1)).setShaped(true).input(RecipeEntry.fromStacks(4, entry.ores, Match.STRICT)).nonConsumable(GT_Items.Circuit_Integrated.getWithDamage(0, 4)).output(GT_OreDictUnificator.get(OrePrefixes.plateQuadruple, aMaterial, 1)).buildAndRegister();
-//					RecipeMaps.BENDING.factory().EUt(24).duration(Math.max(aMaterial.getMass() * 10, 1)).setShaped(true).input(RecipeEntry.fromStacks(5, entry.ores, Match.STRICT)).nonConsumable(GT_Items.Circuit_Integrated.getWithDamage(0, 5)).output(GT_OreDictUnificator.get(OrePrefixes.plateQuintuple, aMaterial, 1)).buildAndRegister();
 				}
 
 				if (!OrePrefixes.block.isIgnored(aMaterial)) {

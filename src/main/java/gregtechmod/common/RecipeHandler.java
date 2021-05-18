@@ -91,9 +91,13 @@ public class RecipeHandler {
 		
 		while (iter.hasNext() && !smeltingRemove.isEmpty()) {
 			Entry<ItemStack, ItemStack> entr = iter.next();
-			for (IFurnanceMatcher matcher : smeltingRemove) {
+			Iterator<IFurnanceMatcher> iter2 = smeltingRemove.iterator();
+			while (iter2.hasNext()) {
+				IFurnanceMatcher matcher = iter2.next();
 				if (matcher.matches(entr.getKey(), entr.getValue())) {
 					iter.remove();
+					iter2.remove();
+					break;
 				}
 			}
 		}
@@ -138,6 +142,7 @@ public class RecipeHandler {
 					if (matcher.matches(entry.getKey(), entry.getValue())) {
 						iter.remove();
 						iter2.remove();
+						break;
 					}
 				}
 			}

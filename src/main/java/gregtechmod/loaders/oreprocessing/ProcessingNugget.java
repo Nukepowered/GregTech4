@@ -14,6 +14,7 @@ import gregtechmod.api.util.OreDictEntry;
 import gregtechmod.common.RecipeHandler;
 import gregtechmod.common.recipe.RecipeEntry;
 import gregtechmod.common.recipe.RecipeMaps;
+import net.minecraft.item.ItemStack;
 import gregtechmod.common.recipe.RecipeEntry.Match;
 
 public class ProcessingNugget implements IOreRecipeRegistrator {
@@ -26,10 +27,12 @@ public class ProcessingNugget implements IOreRecipeRegistrator {
 		for (OreDictEntry entry : entries) {
 			Materials aMaterial = this.getMaterial(aPrefix, entry);
 			if (this.isExecutable(aPrefix, aMaterial) && (aMaterial.mTypes & 2) != 0) {
-				RecipeMaps.LATHE.factory().EUt(8)
+				ItemStack round = GT_OreDictUnificator.get(OrePrefixes.round, aMaterial, 1L);
+				
+				if (round != null) RecipeMaps.LATHE.factory().EUt(8)
 					.duration(Math.max(aMaterial.getMass() / 4, 1))
 					.input(RecipeEntry.fromStacks(entry.ores, Match.STRICT))
-					.output(GT_OreDictUnificator.get(OrePrefixes.round, aMaterial, 1L))
+					.output(round)
 					.buildAndRegister();
 				RecipeMaps.ALLOY_SMELTING.factory().EUt(2).duration(200)
 					.input(RecipeEntry.fromStacks(9, entry.ores, Match.STRICT))
@@ -38,7 +41,8 @@ public class ProcessingNugget implements IOreRecipeRegistrator {
 				
 				RecipeHandler.executeOnFinish(() -> {
 					GameRegistry.addRecipe(new GT_Shapeless_Recipe(GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial, 1L), new Object[] { entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName }));
-					GameRegistry.addRecipe(new GT_Shapeless_Recipe(GT_OreDictUnificator.get(OrePrefixes.round, aMaterial, 1L), new Object[] { GT_ToolDictNames.craftingToolFile.toString(), entry.oreDictName, entry.oreDictName }));
+					if (round != null)
+						GameRegistry.addRecipe(new GT_Shapeless_Recipe(GT_OreDictUnificator.get(OrePrefixes.round, aMaterial, 1L), new Object[] { GT_ToolDictNames.craftingToolFile.toString(), entry.oreDictName, entry.oreDictName }));
 				});
 			}
 		}

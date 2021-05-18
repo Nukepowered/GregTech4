@@ -885,28 +885,28 @@ public class GT_ModHandler {
 	/**
 	 * Shapeless Crafting Recipes. Deletes conflicting Recipes too.
 	 */
-	public static boolean addShapelessCraftingRecipe(ItemStack aResult, Object[] aRecipe) {
+	public static boolean addShapelessCraftingRecipe(ItemStack aResult, Object... aRecipe) {
 		return addShapelessCraftingRecipe(aResult, isElectricItem(aResult), aRecipe);
 	}
 
 	/**
 	 * Shapeless Crafting Recipes. Deletes conflicting Recipes too.
 	 */
-	public static boolean addShapelessCraftingRecipe(ItemStack aResult, boolean aUseIC2Handler, Object[] aRecipe) {
+	public static boolean addShapelessCraftingRecipe(ItemStack aResult, boolean aUseIC2Handler, Object... aRecipe) {
 		return addShapelessCraftingRecipe(aResult, aUseIC2Handler, true, aRecipe);
 	}
 	
 	/**
 	 * Shapeless Crafting Recipes. Deletes conflicting Recipes too.
 	 */
-	public static boolean addShapelessCraftingRecipe(ItemStack aResult, boolean aUseIC2Handler, boolean aBuffered, Object[] aRecipe) {
+	public static boolean addShapelessCraftingRecipe(ItemStack aResult, boolean aUseIC2Handler, boolean aBuffered, Object... aRecipe) {
 		return addShapelessCraftingRecipe(aResult, aUseIC2Handler, aBuffered, false, aRecipe);
 	}
 	
 	/**
 	 * Shapeless Crafting Recipes. Deletes conflicting Recipes too.
 	 */
-	public static boolean addShapelessCraftingRecipe(ItemStack aResult, boolean aUseIC2Handler, boolean aBuffered, boolean aKeepNBT, Object[] aRecipe) {
+	public static boolean addShapelessCraftingRecipe(ItemStack aResult, boolean aUseIC2Handler, boolean aBuffered, boolean aKeepNBT, Object... aRecipe) {
 		aResult = GT_OreDictUnificator.get(true, aResult);
 		if (aRecipe == null || aRecipe.length <= 0) return false;
 		for (byte i = 0; i < aRecipe.length; i++) {

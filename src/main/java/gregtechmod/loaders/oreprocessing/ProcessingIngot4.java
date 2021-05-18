@@ -17,8 +17,8 @@ import gregtechmod.api.util.OreDictEntry;
 import gregtechmod.common.RecipeHandler;
 import gregtechmod.common.recipe.RecipeEntry;
 import gregtechmod.common.recipe.RecipeMaps;
-import net.minecraft.item.ItemStack;
 import gregtechmod.common.recipe.RecipeEntry.Match;
+import net.minecraft.item.ItemStack;
 
 public class ProcessingIngot4 implements IOreRecipeRegistrator {
 
@@ -30,25 +30,36 @@ public class ProcessingIngot4 implements IOreRecipeRegistrator {
 		for (OreDictEntry entry : entries) {
 			Materials aMaterial = this.getMaterial(aPrefix, entry);
 			if (this.isExecutable(aPrefix, aMaterial)) {
-				if (!aMaterial.contains(SubTag.NO_SMASHING)) {
+				ItemStack aStack = GT_OreDictUnificator.get(aPrefix, aMaterial);
+				
+				if (aStack != null && !aMaterial.contains(SubTag.NO_SMASHING)) {
 					RecipeMaps.BENDING.factory().EUt(24).setShaped(true)
 						.duration(Math.max(aMaterial.getMass() * 2, 1))
-						.input(RecipeEntry.fromStacks(entry.ores, Match.STRICT))
-						.nonConsumable(GT_Items.Circuit_Integrated.getWithDamage(0, 1))
-						.output(GT_OreDictUnificator.get(OrePrefixes.plateQuadruple, aMaterial, 1L))
+						.input(OrePrefixes.ingot, aMaterial, 4)
+						.nonConsumable(GT_Items.Circuit_Integrated.getWithDamage(0, 4))
+						.output(aStack)
 						.buildAndRegister();
-				}
-				
-				ItemStack aStack = GT_OreDictUnificator.get(OrePrefixes.plateQuadruple, aMaterial);
-				if (aStack != null && !aMaterial.contains(SubTag.NO_SMASHING) && GregTech_API.sRecipeFile.get(GT_ConfigCategories.Tools.hammerquadrupleingot, OrePrefixes.ingot.get(aMaterial), true)) {
-					RecipeHandler.executeOnFinish(() -> {
-						GT_ModHandler.addCraftingRecipe(GT_Utility.copyAmount(1, aStack),
-								new Object[] { "I", "B", "H", 'H', GT_ToolDictNames.craftingToolHardHammer, 'I', OrePrefixes.ingotTriple.get(aMaterial), 'B', OrePrefixes.ingot.get(aMaterial) });
-						GT_ModHandler.addShapelessCraftingRecipe(GT_Utility.copyAmount(1, aStack),
-								new Object[] { GT_ToolDictNames.craftingToolForgeHammer, OrePrefixes.ingot.get(aMaterial), OrePrefixes.ingot.get(aMaterial), OrePrefixes.ingot.get(aMaterial), OrePrefixes.ingot.get(aMaterial) });
-					});
-				} else {
-					RecipeHandler.executeOnFinish(() -> GT_ModHandler.addShapelessCraftingRecipe(GT_Utility.copyAmount(1, aStack), new Object[] { OrePrefixes.ingot.get(aMaterial), OrePrefixes.ingot.get(aMaterial), OrePrefixes.ingot.get(aMaterial), OrePrefixes.ingot.get(aMaterial) }));
+					
+					if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Tools.hammerquadrupleingot, OrePrefixes.ingot.get(aMaterial), true)) {
+						RecipeHandler.executeOnFinish(() -> {
+							GT_ModHandler.addCraftingRecipe(GT_Utility.copyAmount(1, aStack),
+									new Object[] { "I", "B", "H", 'H', GT_ToolDictNames.craftingToolHardHammer, 'I', OrePrefixes.ingotTriple.get(aMaterial), 'B', OrePrefixes.ingot.get(aMaterial) });
+							GT_ModHandler.addShapelessCraftingRecipe(GT_Utility.copyAmount(1, aStack),
+									new Object[] { GT_ToolDictNames.craftingToolForgeHammer, OrePrefixes.ingot.get(aMaterial), OrePrefixes.ingot.get(aMaterial), OrePrefixes.ingot.get(aMaterial), OrePrefixes.ingot.get(aMaterial) });
+						});
+					} else {
+						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addShapelessCraftingRecipe(GT_Utility.copyAmount(1, aStack), OrePrefixes.ingot.get(aMaterial), OrePrefixes.ingot.get(aMaterial), OrePrefixes.ingot.get(aMaterial), OrePrefixes.ingot.get(aMaterial)));
+					}
+					
+					ItemStack plate = GT_OreDictUnificator.get(OrePrefixes.plateQuadruple, aMaterial);
+					if (plate != null) {
+						RecipeMaps.BENDING.factory().EUt(24).setShaped(true)
+							.duration(Math.max(aMaterial.getMass() * 4, 1))
+							.input(RecipeEntry.fromStacks(entry.ores, Match.STRICT))
+							.nonConsumable(GT_Items.Circuit_Integrated.getWithDamage(0, 1))
+							.output(plate)
+							.buildAndRegister();
+					}
 				}
 			}
 		}
