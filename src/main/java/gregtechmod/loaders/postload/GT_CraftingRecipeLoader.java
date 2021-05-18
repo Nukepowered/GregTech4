@@ -998,5 +998,10 @@ public class GT_CraftingRecipeLoader implements Runnable {
 	        ItemStack redstone = new ItemStack(Items.redstone), iron = new ItemStack(Items.iron_ingot);
 	        RecipeHandler.scheduleCraftingToRemove(new RecipeHandler.InventoryRecipeMatcher(false, redstone, redstone, redstone, redstone, iron, redstone, redstone, redstone, redstone));
         }
+        
+        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "ProjectRed_ElectrotineCompound", true)) {
+	        ItemStack electrotine = GT_OreDictUnificator.get(OrePrefixes.dust, Materials.Electrotine), iron = new ItemStack(Items.iron_ingot);
+	        RecipeHandler.scheduleCraftingToRemove(new RecipeHandler.InventoryRecipeMatcher(false, electrotine, electrotine, electrotine, electrotine, iron, electrotine, electrotine, electrotine, electrotine));
+        }
 	}
 }
