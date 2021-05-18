@@ -74,7 +74,7 @@ public class ProcessingIngot1 implements IOreRecipeRegistrator {
 					ItemStack a = entry.ores.get(0);
 					if (GT_ModHandler.getRecipeOutput(a, a, a, a, a, a, a, a, a) != null)
 						if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.storageblockcrafting, OrePrefixes.block.get(aMaterial), false))
-							RecipeHandler.scheduleCraftingToRemove(new RecipeHandler.InventoryRecipeMatcher(false, a, a, a, a, a, a, a, a, a));
+							RecipeHandler.scheduleCraftingToRemove(new RecipeHandler.InventoryRecipeMatcher(true, a, a, a, a, a, a, a, a, a));
 				}
 
 				if (GT_OreDictUnificator.get(OrePrefixes.stick, aMaterial) != null) {

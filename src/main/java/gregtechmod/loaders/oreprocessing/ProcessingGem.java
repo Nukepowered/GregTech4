@@ -83,14 +83,26 @@ public class ProcessingGem implements IOreRecipeRegistrator {
 						.buildAndRegister();
 				}
 				
+				if (aMaterial == Materials.NetherQuartz) {
+					System.err.print("");
+				}
+				
 				if (!OrePrefixes.block.isIgnored(aMaterial)) {
 					ItemStack a = entry.ores.get(0);
 					
-					if (GT_ModHandler.getRecipeOutput(a, a, a, a, a, a, a, a, a) != null)
-						if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.storageblockcrafting, OrePrefixes.block.get(aMaterial), false))
-							RecipeHandler.scheduleCraftingToRemove(new RecipeHandler.InventoryRecipeMatcher(false, a, a, a, a, a, a, a, a, a));
 					RecipeHandler.scheduleIC2RecipeToRemove(GT_ModHandler.getCompressorRecipeList(), (in, out) -> in.matches(entry.ores.get(0)));
-					RecipeHandler.executeOnFinish(() -> GT_ModHandler.addCompressionRecipe(entry, 9, GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L)));
+					
+					if (GT_ModHandler.getRecipeOutput(a, a, a, a, a, a, a, a, a) != null) {
+						if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.storageblockcrafting, OrePrefixes.block.get(aMaterial), false)) {
+							RecipeHandler.scheduleCraftingToRemove(new RecipeHandler.InventoryRecipeMatcher(true, a, a, a, a, a, a, a, a, a));
+						}
+						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addCompressionRecipe(entry, 9, GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L)));
+						
+					} else if (GT_ModHandler.getRecipeOutput(a, a, null, a, a, null) != null) {
+						if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.storageblockcrafting, OrePrefixes.block.get(aMaterial), false))
+							RecipeHandler.scheduleCraftingToRemove(new RecipeHandler.InventoryRecipeMatcher(true, a, a, null, a, a, null));
+						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addCompressionRecipe(entry, 4, GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L)));
+					}
 				}
 				
 				for (ItemStack stack : entry.ores) {

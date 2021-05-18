@@ -29,6 +29,8 @@ public class ProcessingBlock implements IOreRecipeRegistrator {
 		for (OreDictEntry entry : entries) {
 			Materials aMaterial = this.getMaterial(aPrefix, entry);
 			if (this.isExecutable(aPrefix, aMaterial) ) {
+				int outFromBlock = aMaterial == Materials.NetherQuartz || aMaterial == Materials.CertusQuartz ? 4 : 9;
+				
 				if (GT_OreDictUnificator.get(OrePrefixes.plate, aMaterial) != null) 
 					RecipeMaps.CUTTING.factory().EUt(30).duration(Math.max(aMaterial.getMass() * 10, 1))
 						.input(RecipeEntry.fromStacks(entry.ores, Match.DAMAGE))
@@ -56,15 +58,15 @@ public class ProcessingBlock implements IOreRecipeRegistrator {
 				}
 
 				if (tStack1 != null) {
-					tStack1.stackSize = 9;
+					tStack1.stackSize = outFromBlock;
 				}
 
 				if (tStack2 != null) {
-					tStack2.stackSize = 9;
+					tStack2.stackSize = outFromBlock;
 				}
 
 				if (tStack3 != null) {
-					tStack3.stackSize = 9;
+					tStack3.stackSize = outFromBlock;
 				}
 
 				if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.storageblockdecrafting, OrePrefixes.block.get(aMaterial), tStack2 != null)) {

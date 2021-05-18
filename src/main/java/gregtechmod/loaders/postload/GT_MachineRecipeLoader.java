@@ -500,6 +500,9 @@ public class GT_MachineRecipeLoader implements Runnable
 //        RecipeMaps.ASSEMBLING.factory().EUt(16).duration(100).inputs(GT_OreDictUnificator.get(OrePrefixes.toolHeadScrewdriver, Materials.Iron, 1L), GT_OreDictUnificator.get(OrePrefixes.stick, Materials.Wood, 1L)).output(GT_Items.Tool_Screwdriver_Iron.getUndamaged(1L)).buildAndRegister();
 //        RecipeMaps.ASSEMBLING.factory().EUt(16).duration(100).inputs(GT_OreDictUnificator.get(OrePrefixes.toolHeadScrewdriver, Materials.TungstenSteel, 1L), GT_OreDictUnificator.get(OrePrefixes.stick, Materials.Steel, 1L)).output(GT_Items.Tool_Screwdriver_TungstenSteel.getUndamaged(1L)).buildAndRegister();
         
+        RecipeMaps.ASSEMBLING.factory().EUt(4).duration(300).input(OrePrefixes.stick, Materials.Iron, 3).nonConsumable(GT_Items.Circuit_Integrated.getWithDamage(0, 3)).output(new ItemStack(Blocks.iron_bars, 4)).buildAndRegister();
+        RecipeMaps.ASSEMBLING.factory().EUt(6).duration(260).input(OrePrefixes.plate, Materials.Iron, 7).nonConsumable(GT_Items.Circuit_Integrated.getWithDamage(0, 7)).output(new ItemStack(Items.cauldron, 1)).buildAndRegister();
+        
         GT_ModHandler.removeRecipe(new ItemStack(Items.lava_bucket), GT_Items.Cell_Empty.get(1L));
         GT_ModHandler.removeRecipe(new ItemStack(Items.water_bucket), GT_Items.Cell_Empty.get(1L));
         GT_ModHandler.removeFurnaceSmelting(GT_Items.IC2_Resin.get(1L));
@@ -560,6 +563,18 @@ public class GT_MachineRecipeLoader implements Runnable
         if (Loader.isModLoaded("arsmagica2")) {
         	RecipeMaps.PRINTER.factory().EUt(2).duration(400).setShaped(true).input("paperEmpty", 8).input(OrePrefixes.stick, Materials.Wood, 2).output(GT_OreDictUnificator.getFirstOre("paperArsSpellParchment", 1)).buildAndRegister();
         }
+        
+        RecipeMaps.LATHE.factory().EUt(8).duration(300)
+        	.input(OrePrefixes.block, Materials.Iron)
+        	.output(GT_ModHandler.getIC2Item("ironshaft", 1))
+        	.output(GT_OreDictUnificator.get(OrePrefixes.dustSmall, Materials.Iron, 6))
+        	.buildAndRegister();
+        RecipeMaps.LATHE.factory().EUt(8).duration(300)
+	    	.input(OrePrefixes.block, Materials.Steel)
+	    	.output(GT_ModHandler.getIC2Item("steelshaft", 1))
+	    	.output(GT_OreDictUnificator.get(OrePrefixes.dustSmall, Materials.Steel, 6))
+	    	.buildAndRegister();
+        
         
         for (final MaterialStack[] tMats : this.mAlloySmelterList) {
             final ItemStack tOutputIngot = GT_OreDictUnificator.get(OrePrefixes.ingot, tMats[2].mMaterial, tMats[2].mAmount);

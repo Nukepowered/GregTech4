@@ -206,7 +206,7 @@ public class ProcessingDust implements IOreRecipeRegistrator {
 				
 				ItemStack tStack = GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial, 1L);
 				
-				if (!aMaterial.contains(SubTag.NO_SMELTING)) {
+				if (!aMaterial.contains(SubTag.NO_SMELTING) && tStack != null) {
 					if (aMaterial.mBlastFurnaceRequired && null != tStack) {
 						factory = RecipeMaps.BLAST_FURNANCE.factory()
 							.minTemperature(aMaterial.mBlastFurnaceTemp).EUt(120)
@@ -220,8 +220,10 @@ public class ProcessingDust implements IOreRecipeRegistrator {
 					}
 				} else {
 					if (!OrePrefixes.block.isIgnored(aMaterial) && null == GT_OreDictUnificator.get(OrePrefixes.gem, aMaterial, 1L)) {
+						ItemStack dust = GT_OreDictUnificator.get(OrePrefixes.dust, aMaterial);
+						RecipeHandler.scheduleCraftingToRemove(new RecipeHandler.InventoryRecipeMatcher(false, dust, dust, dust, dust, dust, dust, dust, dust, dust));
 						RecipeHandler.scheduleIC2RecipeToRemove(GT_ModHandler.getCompressorRecipeList(), (in, out) -> in.matches(entry.ores.get(0)));
-						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addCompressionRecipe(entry, 1, GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L)));
+						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addCompressionRecipe(entry, 9, GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L)));
 					}
 					
 					if ((OrePrefixes.block.isIgnored(aMaterial)

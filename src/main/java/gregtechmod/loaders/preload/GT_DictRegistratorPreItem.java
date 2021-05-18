@@ -191,6 +191,8 @@ public class GT_DictRegistratorPreItem implements Runnable {
         GT_OreDictUnificator.add(OrePrefixes.block	, Materials.Iridium			, new ItemStack(GregTech_API.sBlockList[4], 1,12));
         GT_OreDictUnificator.add(OrePrefixes.block	, Materials.GarnetYellow	, new ItemStack(GregTech_API.sBlockList[4], 1,14));
         GT_OreDictUnificator.add(OrePrefixes.block	, Materials.GarnetRed		, new ItemStack(GregTech_API.sBlockList[4], 1,15));
+        GT_OreDictUnificator.add(OrePrefixes.block	, Materials.NetherQuartz	, new ItemStack(Blocks.quartz_block, 1,0));
+       
         
         GT_Log.log.info("Register other Mods Unification Targets.");
 //        if (GT_Mod.sUnificatorFR) {

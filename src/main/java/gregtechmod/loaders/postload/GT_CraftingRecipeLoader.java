@@ -12,7 +12,9 @@ import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.common.RecipeHandler;
 import gregtechmod.common.items.GT_MetaItem_Material;
+
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -985,5 +987,16 @@ public class GT_CraftingRecipeLoader implements Runnable {
         if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "QPlate"		, false)) GT_ModHandler.removeRecipe(GT_ModHandler.getIC2Item("quantumBodyarmor", 1));
         if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "QLegs"		, false)) GT_ModHandler.removeRecipe(GT_ModHandler.getIC2Item("quantumLeggings", 1));
         if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "QBoots"		, false)) GT_ModHandler.removeRecipe(GT_ModHandler.getIC2Item("quantumBoots", 1));
+        
+        ItemStack plastic = GT_OreDictUnificator.get(OrePrefixes.plate, Materials.Plastic);
+        if (GT_ModHandler.getRecipeOutput(plastic, plastic, null, plastic, plastic, null) != null) {
+        	RecipeHandler.scheduleCraftingToRemove(new RecipeHandler.InventoryRecipeMatcher(false, plastic, plastic, null, plastic, plastic, null));
+        	RecipeHandler.scheduleSmeltingToRemove((in, out) -> GT_OreDictUnificator.isItemStackInstanceOf(in, OrePrefixes.block, Materials.Plastic) && out.stackSize == 4);
+        }
+        
+        if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.disabledrecipes, "ProjectRed_RedAlloyCompound", true)) {
+	        ItemStack redstone = new ItemStack(Items.redstone), iron = new ItemStack(Items.iron_ingot);
+	        RecipeHandler.scheduleCraftingToRemove(new RecipeHandler.InventoryRecipeMatcher(false, redstone, redstone, redstone, redstone, iron, redstone, redstone, redstone, redstone));
+        }
 	}
 }

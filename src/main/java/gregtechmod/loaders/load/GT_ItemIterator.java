@@ -2,6 +2,9 @@ package gregtechmod.loaders.load;
 
 import java.util.Iterator;
 
+import com.google.common.base.Optional;
+
+import cpw.mods.fml.common.Loader;
 import gregtechmod.GT_Mod;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_ConfigCategories;
@@ -113,6 +116,12 @@ public class GT_ItemIterator implements Runnable {
 		RecipeMaps.CANINNING.factory().EUt(1).duration(100).inputs(new ItemStack(Items.poisonous_potato, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(1L)).output(GT_Items.IC2_Food_Can_Spoiled.get(1)).buildAndRegister();
 		RecipeMaps.CANINNING.factory().EUt(1).duration(600).inputs(new ItemStack(Items.cake, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(6L)).output(GT_Items.IC2_Food_Can_Filled.get(6)).buildAndRegister();
 		RecipeMaps.CANINNING.factory().EUt(1).duration(300).inputs(new ItemStack(Items.mushroom_stew, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(3L)).output(GT_Items.IC2_Food_Can_Filled.get(3)).output(new ItemStack(Items.bowl, 1)).buildAndRegister();
+		
+        if (Loader.isModLoaded("appliedenergistics2")) {
+        	Optional<ItemStack> opt = appeng.api.AEApi.instance().definitions().blocks().quartz().maybeStack(1);
+        	if (opt.isPresent()) 
+        		GT_OreDictUnificator.add(OrePrefixes.block, Materials.CertusQuartz, opt.get());
+        }
 		
 		GT_Log.log.info("Scanning ItemList.");
 		Iterator<Item> iterator = Item.itemRegistry.iterator();
