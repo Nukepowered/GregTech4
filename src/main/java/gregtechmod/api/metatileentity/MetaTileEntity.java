@@ -651,7 +651,11 @@ public abstract class MetaTileEntity implements IMetaTileEntity {
 	}
 	
 	@Override
-	public void markDirty() {}
+	public void markDirty() {
+		if (getBaseMetaTileEntity() != null) {
+			getBaseMetaTileEntity().markDirty();
+		}
+	}
 	
 	@Override
 	public boolean isUseableByPlayer(EntityPlayer entityplayer) {

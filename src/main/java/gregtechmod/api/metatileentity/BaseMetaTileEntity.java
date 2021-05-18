@@ -1360,6 +1360,12 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	}
 	
 	@Override
+	public void markDirty() {
+		super.markDirty();
+		mInventoryChanged = true;
+	}
+	
+	@Override
 	public boolean dropCover(byte aSide, byte aDroppedSide, boolean aForced) {
 		if (getCoverBehaviorAtSide(aSide).onCoverRemoval(aSide, getCoverIDAtSide(aSide), mCoverData[aSide], this, aForced) || aForced) {
 			ItemStack tStack = GT_OreDictUnificator.get(true, getCoverItemAtSide(aSide));

@@ -122,7 +122,7 @@ public class GT_Container extends Container {
     		
     		if (aSlot == null || aSlot instanceof GT_Slot_Holo) return null;
     		if (aSlot instanceof GT_FluidSlot) if(((GT_FluidSlot)aSlot).onClick(aMouseclick, aShifthold, aPlayer)) {
-    			mTileEntity.decrStackSize(-1, 0); // Some shitcode here, this IS a problem from anywhre already p.s marking inventory dirty to recipe check
+    			mTileEntity.markDirty();
     			return null; 
     		}
     		if (!(aSlot instanceof GT_Slot_Armor)) if (aSlotIndex < getAllSlotCount()) if (aSlotIndex < getSlotStartIndex() || aSlotIndex >= getSlotStartIndex() + getSlotCount()) return null;
