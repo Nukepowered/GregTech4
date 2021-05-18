@@ -49,9 +49,7 @@ public class ProcessingDustSmall implements IOreRecipeRegistrator {
 							.output(ingot)
 							.buildAndRegister();
 						
-						
-						for (ItemStack stack : entry.ores)
-							GT_ModHandler.addInductionSmelterRecipe(GT_Utility.copyAmount(4L, stack), null, ingot, null, 130 * 2, 0);
+						GT_ModHandler.addInductionSmelterRecipe(GT_Utility.copyAmount(4L, entry.ores.get(0)), null, ingot, null, 130 * 3 * 2, 0);
 					}
 				}
 			}

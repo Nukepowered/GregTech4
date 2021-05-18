@@ -50,12 +50,12 @@ public class ProcessingDustTiny implements IOreRecipeRegistrator {
 							.output(ingot)
 							.buildAndRegister();
 						
+						GT_ModHandler.addInductionSmelterRecipe(GT_Utility.copyAmount(9L, entry.ores.get(0)), null, ingot, null, 130 * 3 * 2, 0);
+						
 						for (ItemStack stack : entry.ores) {
 							RecipeHandler.executeOnFinish(() -> {
 								GT_ModHandler.addSmeltingRecipe(GT_Utility.copyAmount(1, stack), GT_OreDictUnificator.get(OrePrefixes.nugget, aMaterial, 1L));
 							});
-							
-							GT_ModHandler.addInductionSmelterRecipe(GT_Utility.copyAmount(9L, stack), null, ingot, null, 130 * 2, 0);
 						}
 					}
 				}

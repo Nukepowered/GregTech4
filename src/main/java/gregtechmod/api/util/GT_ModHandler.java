@@ -330,7 +330,7 @@ public class GT_ModHandler {
 		boolean temp = false;
 		if (aInput.stackSize == 1 && addSmeltingRecipe(aInput, aOutput)) temp = true;
 		if (RecipeMaps.ALLOY_SMELTING.factory().EUt(3).duration(160).input(aInput).output(aOutput).buildAndRegister()) temp = true;
-		if (addInductionSmelterRecipe(aInput, null, aOutput, null, aOutput.stackSize*100, 0)) temp = true;
+		if (addInductionSmelterRecipe(aInput, null, aOutput, null, aOutput.stackSize * 800, 0)) temp = true;
 		return temp;
 	}
 	
@@ -468,9 +468,9 @@ public class GT_ModHandler {
 				if (Materials.Wood.contains(aOutput1)) {
 					if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.pulverization, aInput, true)) {
 						if (aOutput2 == null)
-							addSawmillRecipe(GT_Utility.copy(aInput), 80, GT_Utility.copy(aOutput1));
+							addSawmillRecipe(GT_Utility.copy(aInput), 1200, GT_Utility.copy(aOutput1));
 						else
-							addSawmillRecipe(GT_Utility.copy(aInput), 80, aChance<=0?10:aChance, GT_Utility.copy(aOutput1), GT_Utility.copy(aOutput2));
+							addSawmillRecipe(GT_Utility.copy(aInput), 1200, aChance<=0?10:aChance, GT_Utility.copy(aOutput1), GT_Utility.copy(aOutput2));
 						
 					}
 				} else {
@@ -484,7 +484,7 @@ public class GT_ModHandler {
 						} catch(Throwable e) {/*Do nothing*/}
 					}
 					if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.pulverization, aInput, true)) {
-						addTEPulveriserRecipe(GT_Utility.copy(aInput), GT_Utility.copy(aOutput1), GT_Utility.copy(aOutput2), aChance<=0?10:aChance, 80);
+						addTEPulveriserRecipe(GT_Utility.copy(aInput), GT_Utility.copy(aOutput1), GT_Utility.copy(aOutput2), aChance<=0?10:aChance, 2400);
 					}
 				}
 			}
@@ -521,7 +521,7 @@ public class GT_ModHandler {
 				}
 				
 				if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Machines.pulverization, aInput.oreDictName, true)) {
-					addTEPulveriserRecipe(GT_Utility.copy(aInput.ores.get(0)), GT_Utility.copy(aOutput1), GT_Utility.copy(aOutput2), aChance<=0?10:aChance, 80);
+					addTEPulveriserRecipe(GT_Utility.copy(aInput.ores.get(0)), GT_Utility.copy(aOutput1), GT_Utility.copy(aOutput2), aChance<=0?10:aChance, 2400);
 				}
 			}
 		}
@@ -533,7 +533,7 @@ public class GT_ModHandler {
 	 * Adds a Recipe to the Sawmills of GregTech and ThermalCraft
 	 */
 	public static boolean addSawmillRecipe(ItemStack aInput1, ItemStack...outputs) {
-		return addSawmillRecipe(aInput1, 160, outputs);
+		return addSawmillRecipe(aInput1, 2400, outputs);
 	}
 	
 	public static boolean addSawmillRecipe(ItemStack aInput1, int aRF, ItemStack...outputs) {
@@ -553,7 +553,7 @@ public class GT_ModHandler {
 	 * Adds a Recipe to the Sawmills of GregTech and ThermalCraft, but oredict
 	 */
 	public static boolean addSawmillRecipe(OreDictEntry entry, int inAmount, int aChance, ItemStack...outputs) {
-		return addSawmillRecipe(entry, inAmount, 160, aChance, outputs);
+		return addSawmillRecipe(entry, inAmount, 2400, aChance, outputs);
 	}
 	
 	public static boolean addSawmillRecipe(OreDictEntry entry, int inAmount, int aRF, int aChance, ItemStack...outputs) {
@@ -561,7 +561,7 @@ public class GT_ModHandler {
 		boolean result = false;
 		try {
 			// Accroding on TE code, it saves all recipe OreDict format, so i can just create one recipe
-			result = cofh.thermalexpansion.util.crafting.SawmillManager.addRecipe(160, entry.ores.get(0), outputs[0], outputs.length > 1 ? outputs[1] : null, aChance, true);
+			result = cofh.thermalexpansion.util.crafting.SawmillManager.addRecipe(aRF, entry.ores.get(0), outputs[0], outputs.length > 1 ? outputs[1] : null, aChance, true);
 		} catch(Throwable e) {/*Do nothing*/}
 		return result;
 	}
@@ -601,7 +601,7 @@ public class GT_ModHandler {
 		aOutput1 = GT_OreDictUnificator.get(true, aOutput1);
 		boolean temp = false;
 		if (RecipeMaps.ALLOY_SMELTING.factory().EUt(aEUt).duration(aDuration).inputs(aInput1, aInput2).output(aOutput1).buildAndRegister()) temp = true;
-		if (addInductionSmelterRecipe(aInput1, aInput2, aOutput1, null, aDuration * 2, 0)) temp = true;
+		if (addInductionSmelterRecipe(aInput1, aInput2, aOutput1, null, aDuration * aEUt * 2, 0)) temp = true;
 		return temp;
 	}
 	

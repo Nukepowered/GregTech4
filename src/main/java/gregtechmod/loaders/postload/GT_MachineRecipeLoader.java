@@ -585,7 +585,7 @@ public class GT_MachineRecipeLoader implements Runnable
             
             if (tOutputIngot != null) {
             	int dur = (int)tMats[2].mAmount * 50;
-            	GT_ModHandler.addInductionSmelterRecipe(tDust1, tDust2, tOutputIngot, null, dur * 2, 0);
+            	GT_ModHandler.addInductionSmelterRecipe(tDust1, tDust2, tOutputIngot, null, dur * 32, 0);
             	RecipeMaps.ALLOY_SMELTING.factory().EUt(16).duration(dur)
             		.input(OrePrefixes.dust, tMats[0].mMaterial, (int)tMats[0].mAmount)
             		.input(OrePrefixes.dust, tMats[1].mMaterial, (int)tMats[1].mAmount)
@@ -593,7 +593,7 @@ public class GT_MachineRecipeLoader implements Runnable
             	
             	
             	if (tIngot1 != null && tIngot2 != null) {
-            		GT_ModHandler.addInductionSmelterRecipe(tIngot1, tIngot2, tOutputIngot, null, dur * 2, 0);
+            		GT_ModHandler.addInductionSmelterRecipe(tIngot1, tIngot2, tOutputIngot, null, dur * 32, 0);
 	            	RecipeMaps.ALLOY_SMELTING.factory().EUt(16).duration(dur)
 		        		.input(OrePrefixes.ingot, tMats[0].mMaterial, (int)tMats[0].mAmount)
 		        		.input(OrePrefixes.ingot, tMats[1].mMaterial, (int)tMats[1].mAmount)
@@ -601,7 +601,7 @@ public class GT_MachineRecipeLoader implements Runnable
             	}
             	
             	if (tIngot2 != null) {
-            		GT_ModHandler.addInductionSmelterRecipe(tDust1, tIngot2, tOutputIngot, null, dur * 2, 0);
+            		GT_ModHandler.addInductionSmelterRecipe(tDust1, tIngot2, tOutputIngot, null, dur * 32, 0);
 	            	RecipeMaps.ALLOY_SMELTING.factory().EUt(16).duration(dur)
 		        		.input(OrePrefixes.dust, tMats[0].mMaterial, (int)tMats[0].mAmount)
 		        		.input(OrePrefixes.ingot, tMats[1].mMaterial, (int)tMats[1].mAmount)
@@ -609,7 +609,7 @@ public class GT_MachineRecipeLoader implements Runnable
             	}
             	
             	if (tIngot1 != null) {
-            		GT_ModHandler.addInductionSmelterRecipe(tIngot1, tDust2, tOutputIngot, null, dur * 2, 0);
+            		GT_ModHandler.addInductionSmelterRecipe(tIngot1, tDust2, tOutputIngot, null, dur * 32, 0);
 	            	RecipeMaps.ALLOY_SMELTING.factory().EUt(16).duration(dur)
 		        		.input(OrePrefixes.ingot, tMats[0].mMaterial, (int)tMats[0].mAmount)
 		        		.input(OrePrefixes.dust, tMats[1].mMaterial, (int)tMats[1].mAmount)
