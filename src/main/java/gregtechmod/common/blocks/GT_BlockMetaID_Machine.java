@@ -723,7 +723,7 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 	        for (int i = 0; i < tGregTechTileEntity.getSizeInventory(); i++) {
 	            ItemStack item = tGregTechTileEntity.getStackInSlot(i);
 	
-	            if (item != null && item.stackSize > 0 && tGregTechTileEntity.isValidSlot(i)) {
+	            if (item != null && item.stackSize > 0) {
 	                float rx = rand.nextFloat() * 0.8F + 0.1F;
 		            float ry = rand.nextFloat() * 0.8F + 0.1F;
 		            float rz = rand.nextFloat() * 0.8F + 0.1F;
