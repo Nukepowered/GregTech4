@@ -4,7 +4,9 @@ public enum GT_ConfigCategories {
 	news,
 	general,
 	machineconfig,
-	specialunificationtargets;
+	specialunificationtargets,
+	enchants,
+	forceoredict;
 	
 	public enum Materials {
 		blastfurnacerequirements, 

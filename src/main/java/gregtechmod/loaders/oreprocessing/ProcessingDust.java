@@ -11,6 +11,7 @@ import gregtechmod.api.recipe.RecipeFactory;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
+import gregtechmod.api.util.GT_RecipeRegistrator;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.OreDictEntry;
 
@@ -220,10 +221,11 @@ public class ProcessingDust implements IOreRecipeRegistrator {
 					}
 				} else {
 					if (!OrePrefixes.block.isIgnored(aMaterial) && null == GT_OreDictUnificator.get(OrePrefixes.gem, aMaterial, 1L)) {
-						ItemStack dust = GT_OreDictUnificator.get(OrePrefixes.dust, aMaterial);
-						RecipeHandler.scheduleCraftingToRemove(new RecipeHandler.InventoryRecipeMatcher(false, dust, dust, dust, dust, dust, dust, dust, dust, dust));
+						GT_RecipeRegistrator.registerBlockForcibly(aPrefix, aMaterial, entry.ores);
 						RecipeHandler.scheduleIC2RecipeToRemove(GT_ModHandler.getCompressorRecipeList(), (in, out) -> in.matches(entry.ores.get(0)));
 						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addCompressionRecipe(entry, 9, GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L)));
+						for (ItemStack a : entry.ores)
+							RecipeHandler.scheduleCraftingToRemove(new RecipeHandler.InventoryRecipeMatcher(false, a, a, a, a, a, a, a, a, a));
 					}
 					
 					if ((OrePrefixes.block.isIgnored(aMaterial)

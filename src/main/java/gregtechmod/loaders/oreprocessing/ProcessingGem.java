@@ -12,6 +12,7 @@ import gregtechmod.api.interfaces.IOreRecipeRegistrator;
 import gregtechmod.api.recipe.RecipeFactory;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
+import gregtechmod.api.util.GT_RecipeRegistrator;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.OreDictEntry;
 
@@ -88,20 +89,26 @@ public class ProcessingGem implements IOreRecipeRegistrator {
 				}
 				
 				if (!OrePrefixes.block.isIgnored(aMaterial)) {
-					ItemStack a = entry.ores.get(0);
-					
+					GT_RecipeRegistrator.registerBlockForcibly(aPrefix, aMaterial, entry.ores);
 					RecipeHandler.scheduleIC2RecipeToRemove(GT_ModHandler.getCompressorRecipeList(), (in, out) -> in.matches(entry.ores.get(0)));
+					ItemStack block = GT_OreDictUnificator.get(OrePrefixes.block, aMaterial);
 					
-					if (GT_ModHandler.getRecipeOutput(a, a, a, a, a, a, a, a, a) != null) {
-						if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.storageblockcrafting, OrePrefixes.block.get(aMaterial), false)) {
-							RecipeHandler.scheduleCraftingToRemove(new RecipeHandler.InventoryRecipeMatcher(true, a, a, a, a, a, a, a, a, a));
+					if (block != null) {
+						if (aMaterial.mSmallBlock) {
+							RecipeHandler.executeOnFinish(() -> GT_ModHandler.addCompressionRecipe(entry, 4, block));
+						} else {
+							RecipeHandler.executeOnFinish(() -> GT_ModHandler.addCompressionRecipe(entry, 9, block));
 						}
-						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addCompressionRecipe(entry, 9, GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L)));
 						
-					} else if (GT_ModHandler.getRecipeOutput(a, a, null, a, a, null) != null) {
-						if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.storageblockcrafting, OrePrefixes.block.get(aMaterial), false))
-							RecipeHandler.scheduleCraftingToRemove(new RecipeHandler.InventoryRecipeMatcher(true, a, a, null, a, a, null));
-						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addCompressionRecipe(entry, 4, GT_OreDictUnificator.get(OrePrefixes.block, aMaterial, 1L)));
+						if (!GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.storageblockcrafting, OrePrefixes.block.get(aMaterial), false)) {
+							for (ItemStack b : entry.ores) {
+								if (aMaterial.mSmallBlock) {
+									RecipeHandler.scheduleCraftingToRemove(new RecipeHandler.InventoryRecipeMatcher(false, b, b, null, b, b, null));
+								} else {
+									RecipeHandler.scheduleCraftingToRemove(new RecipeHandler.InventoryRecipeMatcher(false, b, b, b, b, b, b, b, b, b));
+								}
+							}
+						}
 					}
 				}
 				

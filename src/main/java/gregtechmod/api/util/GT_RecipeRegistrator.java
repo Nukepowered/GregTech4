@@ -10,13 +10,16 @@ import gregtechmod.common.RecipeHandler.IRecipeMatcher;
 import gregtechmod.common.RecipeHandler.InventoryRecipeMatcher;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.oredict.OreDictionary;
 
 /**
  * Class for Automatic Recipe registering.
@@ -188,6 +191,22 @@ public class GT_RecipeRegistrator {
 							}
 						}
 			    	}
+				}
+			}
+		}
+	}
+	
+	public static void registerBlockForcibly(OrePrefixes aPrefix, Materials aMaterial, List<ItemStack> unifiedStacks) {
+		String dictName = OrePrefixes.block.get(aMaterial);
+		for (ItemStack a : unifiedStacks) {
+			ItemStack block = aMaterial.mSmallBlock ? GT_ModHandler.getRecipeOutput(a, a, null, a, a, null) : GT_ModHandler.getRecipeOutput(a, a, a, a, a, a, a, a, a);
+			if (block != null) {
+				Optional<String> optional = Arrays.stream(OreDictionary.getOreIDs(block))
+					.mapToObj(i -> OreDictionary.getOreName(i))
+					.filter(name -> name.startsWith(OrePrefixes.block.toString()))
+					.findAny();
+				if (!optional.isPresent() && !GregTech_API.sUnification.get(GT_ConfigCategories.forceoredict, block, dictName).equals("false")) {
+					GT_OreDictUnificator.set(dictName, block);
 				}
 			}
 		}

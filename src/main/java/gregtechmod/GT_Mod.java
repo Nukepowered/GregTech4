@@ -141,7 +141,7 @@ import cpw.mods.fml.relauncher.Side;
 /**
  * @author Gregorius Techneticies
  */
-@Mod(modid = "gregtech_addon", name="GregTech-Addon", version="4.15.32", useMetadata=false, dependencies="required-after:IC2; after:Railcraft; after:ThermalExpansion; after:ThermalExpansion|Transport; after:ThermalExpansion|Energy; after:ThermalExpansion|Factory; before:RedPowerCore; before:RedPowerBase; before:RedPowerMachine; before:RedPowerCompat; before:RedPowerWiring; before:RedPowerLogic; before:RedPowerLighting; before:RedPowerWorld; before:RedPowerControl;")
+@Mod(modid = "gregtech_addon", name="GregTech-Addon", version="4.15.35", useMetadata=false, dependencies="required-after:IC2; after:Railcraft; after:ThermalExpansion; after:ThermalExpansion|Transport; after:ThermalExpansion|Energy; after:ThermalExpansion|Factory; before:RedPowerCore; before:RedPowerBase; before:RedPowerMachine; before:RedPowerCompat; before:RedPowerWiring; before:RedPowerLogic; before:RedPowerLighting; before:RedPowerWorld; before:RedPowerControl;")
 public class GT_Mod implements IGT_Mod {
     @Instance
     public static GT_Mod instance;
@@ -268,7 +268,8 @@ public class GT_Mod implements IGT_Mod {
 		GregTech_API.sSpecialFile			= new GT_Config(new Configuration(new File(gtDir, "Other.cfg")));
 		GregTech_API.sIDFile				= new GT_Config(GT_Config.sConfigFileIDs = new Configuration(new File(gtDir, "IDs.cfg")));
 		
-		GregTech_API.sSpecialFile.mConfig.getCategory("enchants").setComment("There you can set allowed enchant IDs to specific GT tools\nIt will let you apply choosen enchant in anvil to GT tool");
+		GregTech_API.sSpecialFile.mConfig.getCategory(GT_ConfigCategories.enchants.toString()).setComment("There you can set allowed enchant IDs to specific GT tools\nIt will let you apply choosen enchant in anvil to GT tool");
+		GregTech_API.sUnification.mConfig.getCategory(GT_ConfigCategories.forceoredict.toString()).setComment("Forced OreDict registration\nAs examples, not any mod devs registering their blocks of ingots to OreDict\nTo disable force name type \"false\" insteadof name");
 		
     	mDoNotInit = (!tFile.getAbsolutePath().toLowerCase().contains("voltz")) && (tFile.getAbsolutePath().toLowerCase().contains(".technic") || tFile.getAbsolutePath().toLowerCase().contains("tekkit"));
     	if (mDoNotInit) {

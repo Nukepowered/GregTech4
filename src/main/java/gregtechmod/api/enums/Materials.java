@@ -834,6 +834,9 @@ public enum Materials {
 		RockSalt		.addOreByProduct(Salt			);
 		
 		Naquadah.mChemicalFormula = "Nq";
+		NetherQuartz.mSmallBlock = true;
+		CertusQuartz.mSmallBlock = true;
+		Amber.mSmallBlock = true;
 		
 		ImmutableMap.Builder<String, Materials> builder = new ImmutableMap.Builder<>();
 		
@@ -1076,7 +1079,7 @@ public enum Materials {
 	public final short[] mRGBa = new short[] {255, 255, 255, 0};
 	
 	public final IIconContainer[] mIconSet;
-	public boolean mBlastFurnaceRequired = false, mTransparent = false;
+	public boolean mBlastFurnaceRequired = false, mTransparent = false, mSmallBlock = false;
 	public GT_SpecialToolEffect mSpecialEffect = null;
 	public byte mEffectLevel = 0;
 	public String mChemicalFormula = "?";

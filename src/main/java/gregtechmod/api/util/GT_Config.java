@@ -70,4 +70,18 @@ public class GT_Config {
 		if (!tProperty.wasRead()) mConfig.save();
 		return rResult;
 	}
+	
+	public String get(Object aCategory, ItemStack aStack, String aDefault) {
+		return get(aCategory, getStackConfigName(aStack), aDefault);
+	}
+	
+	public String get(Object aCategory, String aName, String aDefault) {
+		if (GT_Utility.isStringInvalid(aName)) return aDefault;
+		Property tProperty = mConfig.get(aCategory.toString().replaceAll("\\|", "_"), aName.replaceAll("\\|", "_"), aDefault);
+		String rResult = tProperty.getString();
+		if (GT_Utility.isStringInvalid(rResult))
+			tProperty.set(aDefault);
+		if (!tProperty.wasRead()) mConfig.save();
+		return rResult;
+	}
 }

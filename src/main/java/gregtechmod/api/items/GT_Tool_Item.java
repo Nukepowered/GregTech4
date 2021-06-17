@@ -1,6 +1,7 @@
 package gregtechmod.api.items;
 
 import gregtechmod.api.GregTech_API;
+import gregtechmod.api.enums.GT_ConfigCategories;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_OreDictUnificator;
 import gregtechmod.api.util.GT_Utility;
@@ -84,7 +85,7 @@ public class GT_Tool_Item extends GT_Generic_Item {
 		if (item.delegate == null || GT_Utility.isStringInvalid(item.delegate.name()))
 			throw new IllegalArgumentException("Wrong item was supplied! May be it still not registered in GameRegistry");
 		String regName = item.delegate.name();
-		int[] enchantIDs = GregTech_API.sSpecialFile.mConfig.get("enchants", regName, new int[0]).getIntList();
+		int[] enchantIDs = GregTech_API.sSpecialFile.mConfig.get(GT_ConfigCategories.enchants.toString(), regName, new int[0]).getIntList();
 		for (int i : enchantIDs) {
 			toolEnchants.put(regName, Integer.valueOf(i));
 		}
