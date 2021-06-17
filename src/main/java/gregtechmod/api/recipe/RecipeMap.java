@@ -180,8 +180,10 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 				int wild = GT_Utility.stackToInt(var, true);
 				List<Recipe> var1 = MAPPINGS.get(value);
 				List<Recipe> var2 = MAPPINGS.get(wild);
-				var1.remove(recipe);
-				var2.remove(recipe);
+				if (var1 != null)
+					var1.remove(recipe);
+				if (var2 != null)
+					var2.remove(recipe);
 				MAPPINGS.replace(value, var1);
 				MAPPINGS.replace(wild, var2);
 			}
@@ -190,7 +192,8 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 		for (FluidStack fluid : recipe.getFluidInputs()) {
 			int value = GT_Utility.fluidStackToInt(fluid);
 			List<Recipe> var1 = MAPPINGS.get(value);
-			var1.remove(recipe);
+			if (var1 != null)
+				var1.remove(recipe);
 			MAPPINGS.replace(value, var1);
 		}
 		
