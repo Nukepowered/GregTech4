@@ -16,15 +16,17 @@ public class GT_Mortar_Item extends GT_Generic_Item {
 		mBrokenItem = aBrokenItem;
 	}
 	
-    public ItemStack getContainerItemStack(ItemStack aStack) {
-        if (aStack.getItemDamage() >= getMaxDamage()) return GT_Utility.copy(mBrokenItem);
-        return new ItemStack(this, 1, aStack.getItemDamage()+1);
+	@Override
+    public ItemStack getContainerItem(ItemStack aStack) {
+        return aStack.getItemDamage() >= getMaxDamage() ? GT_Utility.copy(mBrokenItem) : new ItemStack(this, 1, aStack.getItemDamage() + 1);
     }
     
+	@Override
     public boolean hasContainerItem() {
         return true;
     }
     
+    @Override
     public boolean doesContainerItemLeaveCraftingGrid(ItemStack par1ItemStack) {
         return false;
     }
