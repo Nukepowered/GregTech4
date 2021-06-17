@@ -775,7 +775,10 @@ public class GT_Utility {
 	}
 	
 	public static boolean addSimpleIC2MachineRecipe(IRecipeInput input, Map<IRecipeInput, RecipeOutput> aRecipeList, NBTTagCompound meta, ItemStack...outputs) {
- 		if (input == null || outputs.length == 0 || aRecipeList == null) return false;
+		outputs = Arrays.stream(outputs)
+				.filter(val -> val != null)
+				.toArray(i -> new ItemStack[i]);
+		if (input == null || outputs.length == 0 || aRecipeList == null) return false; 		
 		return aRecipeList.put(input, new RecipeOutput(meta, outputs)) != null;
 	}
 	
