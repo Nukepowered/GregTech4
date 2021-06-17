@@ -27,7 +27,7 @@ compileJava {
     sourceCompatibility = targetCompatibility = '1.8'
 }
 
-version = "v415.32"
+version = "v415.35"
 group = "gregtechmod"
 archivesBaseName = "gregtechmod"
 
