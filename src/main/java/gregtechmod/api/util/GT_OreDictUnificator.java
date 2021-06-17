@@ -36,6 +36,7 @@ public class GT_OreDictUnificator {
 	private static int isRegisteringOre = 0, isAddingOre = 0;
 	
 	public static void activateUnificator() {
+		isRegisteringOre++;
 		GT_Log.log.info("Registering oredictionary tags...");
 		for (Entry<ItemStack, String> entry : sToRegister.entrySet()) {
 			OreDictionary.registerOre(entry.getValue(), entry.getKey());
@@ -44,6 +45,7 @@ public class GT_OreDictUnificator {
 			}
 		}
 		
+		isRegisteringOre--;
 		sToRegister.clear();
 	}
 	
@@ -101,13 +103,11 @@ public class GT_OreDictUnificator {
 	
 	public static void setLater(Object aName, ItemStack aStack, boolean aOverwrite, boolean aAlreadyRegistered) {
 		if (GT_Utility.isStringInvalid(aName) || GT_Utility.isStackInvalid(aStack) || Items.feather.getDamage(aStack) == GregTech_API.ITEM_WILDCARD_DAMAGE) return;
-		isAddingOre++;
 		aStack = GT_Utility.copyAmount(1, aStack);
 		if (!aAlreadyRegistered) sToRegister.put(aStack, aName.toString());
 		if (aOverwrite || GT_Utility.isStackInvalid(sName2OreMap.get(aName.toString()))) {
 			sName2OreMap.put(aName.toString(), aStack);
 		}
-		isAddingOre--;
 	}
 	
 	public static ItemStack getFirstOre(Object aName, long aAmount) {
@@ -250,9 +250,7 @@ public class GT_OreDictUnificator {
     	if (tName.equals("")) return false;
     	List<ItemStack> tList = getOres(tName);
     	for (int i = 0; i < tList.size(); i++) if (GT_Utility.areStacksEqual(tList.get(i), aStack, true)) return false;
-    	isRegisteringOre++;
     	sToRegister.put(GT_Utility.copyAmount(1, aStack), tName);
-    	isRegisteringOre--;
     	return true;
     }
     

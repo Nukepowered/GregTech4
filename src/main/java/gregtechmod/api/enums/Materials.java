@@ -531,7 +531,6 @@ public enum Materials {
 	@Deprecated Eyeofender			(EnderEye, false),
 	@Deprecated Flour				(Wheat, false),
 	@Deprecated Garnet				(GarnetRed, true),
-	@Deprecated Granite				(GraniteBlack, false),
 	@Deprecated Kalium				(Potassium, false),
 	@Deprecated Lapislazuli			(Lapis, false),
 	@Deprecated LapisLazuli			(Lapis, false),
