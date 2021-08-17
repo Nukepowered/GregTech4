@@ -14,6 +14,7 @@ import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.recipe.ChancedStack;
 import gregtechmod.common.recipe.RecipeEntry;
+import gregtechmod.common.recipe.RecipeEntry.Match;
 import gregtechmod.common.recipe.factory.SimpleRecipeFactory;
 
 import cpw.mods.fml.common.Loader;
@@ -69,7 +70,7 @@ public class PulverizerRecipeMap extends RecipeMap<SimpleRecipeFactory> {
 							}
 
 							return new Recipe(0, 32, 500, false, 							// 25 seconds per 32 EU/t will be total 16,000EU
-									Collections.singleton(RecipeEntry.singleton(input)),	// In RC Recipe running 5 seconds and with consumption 160RF total 16,000RF = 64,000EU
+									Collections.singleton(RecipeEntry.singleton(input, Match.STRICT)),	// In RC Recipe running 5 seconds and with consumption 160RF total 16,000RF = 64,000EU
 									outputs,
 									chanced);
 						}
@@ -82,7 +83,7 @@ public class PulverizerRecipeMap extends RecipeMap<SimpleRecipeFactory> {
 					if (recipe != null) {
 						input.stackSize = input.stackSize - copy2.stackSize;
 						return new Recipe(0, 2, 400, false,
-								Collections.singleton(RecipeEntry.singleton(input)),
+								Collections.singleton(RecipeEntry.singleton(input, Match.STRICT)),
 								GT_Utility.copy(recipe.items),
 								Collections.emptyList());
 					}
@@ -94,7 +95,7 @@ public class PulverizerRecipeMap extends RecipeMap<SimpleRecipeFactory> {
 		    			ItemStack secondary = recipe.getSecondaryOutput();
 		    			input.stackSize = recipe.getInput().stackSize;
 		    			return new Recipe(0, 16, recipe.getEnergy() / 16, false,
-		    					Collections.singleton(RecipeEntry.singleton(input)),
+		    					Collections.singleton(RecipeEntry.singleton(input, Match.STRICT)),
 		    					Collections.singleton(recipe.getPrimaryOutput()),
 		    					secondary == null ? Collections.emptyList() : Collections.singleton(new ChancedStack(secondary, recipe.getSecondaryOutputChance() * 100)));
 		    		}

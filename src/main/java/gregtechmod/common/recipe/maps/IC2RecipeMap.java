@@ -8,7 +8,7 @@ import java.util.function.Predicate;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.recipe.RecipeEntry;
-
+import gregtechmod.common.recipe.RecipeEntry.Match;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -33,7 +33,7 @@ public class IC2RecipeMap extends DummyRecipeMap {
 				if (results != null && !results.isEmpty()) {
 					inValid.stackSize = in.stackSize - inValid.stackSize;
 					return new Recipe(0, 2, 200, false,
-							Collections.singleton(RecipeEntry.singleton(inValid)),
+							Collections.singleton(RecipeEntry.singleton(inValid, Match.STRICT)),
 							results,
 							Collections.emptyList());
 				}

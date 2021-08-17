@@ -8,6 +8,7 @@ import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.recipe.RecipeEntry;
+import gregtechmod.common.recipe.RecipeEntry.Match;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
@@ -42,7 +43,7 @@ public class ScannerRecipeMap extends DummyRecipeMap {
 				   ItemStack output = input.copy();
 				   output.setTagCompound(data);
 				   return new Recipe(0, eut, dur, false,
-						   Collections.singleton(RecipeEntry.singleton(input)),
+						   Collections.singleton(RecipeEntry.singleton(input, Match.STRICT)),
 						   Collections.singleton(output),
 						   Collections.emptyList());
 			}

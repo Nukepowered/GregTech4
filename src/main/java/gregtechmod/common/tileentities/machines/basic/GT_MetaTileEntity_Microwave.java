@@ -18,7 +18,7 @@ import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.recipe.RecipeEntry;
-
+import gregtechmod.common.recipe.RecipeEntry.Match;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -66,7 +66,7 @@ public class GT_MetaTileEntity_Microwave extends GT_MetaTileEntity_BasicMachine 
 							ItemStack input1 = input.copy();
 							input1.stackSize = 1;
 							return new Recipe(0, 4, 25, false,
-									Collections.singleton(RecipeEntry.singleton(input1)),
+									Collections.singleton(RecipeEntry.singleton(input1, Match.STRICT)),
 									Collections.singleton(output.copy()),
 									Collections.emptyList());
 						}

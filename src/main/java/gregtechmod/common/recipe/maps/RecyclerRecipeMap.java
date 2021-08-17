@@ -10,7 +10,7 @@ import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.recipe.ChancedStack;
 import gregtechmod.common.recipe.RecipeEntry;
-
+import gregtechmod.common.recipe.RecipeEntry.Match;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -32,7 +32,7 @@ public class RecyclerRecipeMap extends DummyRecipeMap {
 	    		
 	    		ChancedStack st = new ChancedStack(GT_Items.IC2_Scrap.get(1), (GT_ModHandler.getRecyclerOutput(instance, 0) != null) ? 12_50 : 0);
 	    		return new Recipe(0, 1, 45, false,
-	    				Collections.singleton(RecipeEntry.singleton(instance)),
+	    				Collections.singleton(RecipeEntry.singleton(instance, Match.STRICT)),
 	    				Collections.emptyList(),
 	    				Collections.singleton(st));
 	    	}

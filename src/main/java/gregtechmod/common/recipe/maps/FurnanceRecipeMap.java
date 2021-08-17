@@ -7,7 +7,7 @@ import java.util.function.Predicate;
 import gregtechmod.api.recipe.Recipe;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.common.recipe.RecipeEntry;
-
+import gregtechmod.common.recipe.RecipeEntry.Match;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
 
@@ -38,7 +38,7 @@ public class FurnanceRecipeMap extends DummyRecipeMap {
 				in.stackSize = 1;
 				// It shall cook at 3 EU/t, if this Machine is overclocked then it will consume more
 				// The time it usually needs, the Heating Coils re decreasing this Time, and if the Machine is overclocked, then it gets processed faster
-				return new Recipe(0, 3, 130, false, Collections.singletonList(RecipeEntry.singleton(in)), Collections.singletonList(output), Collections.emptyList());
+				return new Recipe(0, 3, 130, false, Collections.singletonList(RecipeEntry.singleton(in, Match.STRICT)), Collections.singletonList(output), Collections.emptyList());
 			}
 		}
 		
