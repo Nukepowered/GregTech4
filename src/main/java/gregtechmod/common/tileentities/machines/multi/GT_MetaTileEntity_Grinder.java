@@ -15,6 +15,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.fluids.FluidStack;
 
 public class GT_MetaTileEntity_Grinder extends BaseMultiFluidWorkable {
 	
@@ -82,5 +83,13 @@ public class GT_MetaTileEntity_Grinder extends BaseMultiFluidWorkable {
 	
 	@Override public int getTankPressure() {return -100;}
 	@Override public int getCapacity() {return 10000;}
-	@Override public int getFluidAmount() {return fluidInputs.get(0).amount;}
+	
+	@Override public int getFluidAmount() {
+		FluidStack stack = null;
+		if (fluidInputs.size() > 0 && (stack = fluidInputs.get(0)) != null) {
+			return stack.amount;
+		}
+		
+		return 0;
+	}
 }
