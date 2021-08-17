@@ -7,9 +7,12 @@ import gregtechmod.api.recipe.RecipeLogic;
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.api.util.InfoBuilder;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.FluidStack;
@@ -38,6 +41,28 @@ public abstract class MTEWorkableMultiblock extends MetaTileEntityMultiblock imp
 	@Override public RecipeLogic getRecipeLogic() 					{return recipeLogic;}
     @Override public int increaseProgress(int aProgress)			{recipeLogic.increaseProgressTime(aProgress);return recipeLogic.getMaxProgressTime()-recipeLogic.getProgressTime();}
 	
+	@Override
+	public ArrayList<String> getSpecialDebugInfo(EntityPlayer aPlayer, int aLogLevel, ArrayList<String> aList) {
+		super.getSpecialDebugInfo(aPlayer, aLogLevel, aList);
+		if (aLogLevel >= 2) {
+			boolean active = recipeLogic.isActive();
+			aList.add("§4§l-- Recipe Logic --");
+			aList.add(" §cActive: §r" + active);
+			if (active) {
+				Recipe recipe = recipeLogic.getCurrentRecipe();
+				aList.add(" §cProgress: §r" + recipeLogic.getProgressTime() + " / " + recipeLogic.getMaxProgressTime());
+				aList.add(" §cRequired EUt: §r" + recipeLogic.getEUt());
+				aList.add("  §cItem inputs: §r" + recipe.getInputs());
+				aList.add("  §cFluid inputs: §r" + recipe.getFluidInputs());
+				aList.add("  §cItem outputs: §r" + recipe.getOutputs());
+				aList.add("  §cItem chanced outputs: §r" + recipe.getChancedOutputs());
+				aList.add("  §cFluid outputs: §r" + recipe.getFluidOutputs());
+			}
+		}
+
+		return aList;
+	}
+    
     @Override
     public ItemStack getStackIn(int idx) {
     	return this.getStackInSlot(idx);

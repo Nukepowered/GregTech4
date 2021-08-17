@@ -1,5 +1,6 @@
 package gregtechmod.api.metatileentity.implementations;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -65,6 +66,28 @@ public abstract class BasicFluidWorkable extends GT_MetaTileEntity_BasicTank imp
 	protected void initRecipeLogic(RecipeMap<?> recipeMap) {
 		recipeLogic = new RecipeLogic(recipeMap, this);
 	}
+	
+	 @Override
+	public ArrayList<String> getSpecialDebugInfo(EntityPlayer aPlayer, int aLogLevel, ArrayList<String> aList) {
+    	super.getSpecialDebugInfo(aPlayer, aLogLevel, aList);
+    	if (aLogLevel >= 2) {
+    		boolean active = recipeLogic.isActive();
+    		aList.add("§4§l-- Recipe Logic --");
+    		aList.add(" §cActive: §r" + active);
+    		if (active) {
+    			Recipe recipe = recipeLogic.getCurrentRecipe();
+    			aList.add(" §cProgress: §r" + recipeLogic.getProgressTime() + " / " + recipeLogic.getMaxProgressTime());
+    			aList.add(" §cRequired EUt: §r" + recipeLogic.getEUt());
+    			aList.add("  §cItem inputs: §r" + recipe.getInputs());
+    			aList.add("  §cFluid inputs: §r" + recipe.getFluidInputs());
+    			aList.add("  §cItem outputs: §r" + recipe.getOutputs());
+    			aList.add("  §cItem chanced outputs: §r" + recipe.getChancedOutputs());
+    			aList.add("  §cFluid outputs: §r" + recipe.getFluidOutputs());
+    		}
+    	}
+    	
+    	return aList;
+    }
 	
 	@Override
 	public ItemStack getStackIn(int idx) {

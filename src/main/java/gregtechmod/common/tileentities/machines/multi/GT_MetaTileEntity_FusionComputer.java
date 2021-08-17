@@ -17,6 +17,7 @@ import gregtechmod.api.util.ListAdapter;
 import gregtechmod.api.util.WeakList;
 import gregtechmod.common.recipe.RecipeMaps;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -66,6 +67,28 @@ public class GT_MetaTileEntity_FusionComputer extends MetaTileEntity implements 
 	@Override public boolean isAccessAllowed(EntityPlayer aPlayer)	{return true;}
 	@Override public int increaseProgress(int aProgress)			{return aProgress;}
     
+	@Override
+	public ArrayList<String> getSpecialDebugInfo(EntityPlayer aPlayer, int aLogLevel, ArrayList<String> aList) {
+    	super.getSpecialDebugInfo(aPlayer, aLogLevel, aList);
+    	if (aLogLevel >= 2) {
+    		boolean active = recipeLogic.isActive();
+    		aList.add("§4§l-- Recipe Logic --");
+    		aList.add(" §cActive: §r" + active);
+    		if (active) {
+    			Recipe recipe = recipeLogic.getCurrentRecipe();
+    			aList.add(" §cProgress: §r" + recipeLogic.getProgressTime() + " / " + recipeLogic.getMaxProgressTime());
+    			aList.add(" §cRequired EUt: §r" + recipeLogic.getEUt());
+    			aList.add("  §cItem inputs: §r" + recipe.getInputs());
+    			aList.add("  §cFluid inputs: §r" + recipe.getFluidInputs());
+    			aList.add("  §cItem outputs: §r" + recipe.getOutputs());
+    			aList.add("  §cItem chanced outputs: §r" + recipe.getChancedOutputs());
+    			aList.add("  §cFluid outputs: §r" + recipe.getFluidOutputs());
+    		}
+    	}
+    	
+    	return aList;
+    }
+	
 	@Override
 	public MetaTileEntity newMetaEntity(IGregTechTileEntity aTileEntity) {
 		return new GT_MetaTileEntity_FusionComputer();

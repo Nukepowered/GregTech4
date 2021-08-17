@@ -98,7 +98,7 @@ public class GT_Debug_Item extends GT_Generic_Item implements IElectricItem {
 		ArrayList<String> tList = new ArrayList<String>();
 		tList.add("=====================");
 		tList.add(String.format("%s-sided info", side.isClient() ? "§aCLIENT" : "§cSERVER"));
-		GT_ModHandler.useElectricItem(aStack, GT_Utility.getCoordinateScan(tList, aPlayer, aPlayer.worldObj, 1, aX, aY, aZ, aSide, aClickX, aClickY, aClickZ), aPlayer);
+		GT_ModHandler.useElectricItem(aStack, GT_Utility.getCoordinateScan(tList, aPlayer, aPlayer.worldObj, 3, aX, aY, aZ, aSide, aClickX, aClickY, aClickZ), aPlayer);
 		for (int i = 0; i < tList.size(); i++) GT_Utility.sendChatToPlayer(aPlayer, tList.get(i));
 	}
 	

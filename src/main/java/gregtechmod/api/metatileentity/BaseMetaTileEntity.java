@@ -665,10 +665,12 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 			if (getRFCapacity() > 0 && hasRFConverterUpgrade()) tList.add("RF energy strored: " + getStoredRF() + " of " + getRFCapacity() + " RF");
 			if (getSteamCapacity() > 0 && hasSteamEngineUpgrade()) tList.add("Steam stored: " + getStoredSteam() + " of " + getSteamCapacity() + " Steam");
 			tList.add("Machine is " + (mActive?"active":"inactive"));
+			tList.add("Working is " + (mWorks?"enabled":"disabled"));
 			if (mNeedsBatteryUpgrade && isBatteryUpgradable(10000, (byte)1)) tList.add("WARNING: Requires more Energy Capacity to work! Add Battery Upgrades!");
 			if (!mHasEnoughEnergy) tList.add("ATTENTION: This Device consumes Energy at a higher Rate than you input. You could insert more to speed up the process.");
 		}
-		return mMetaTileEntity.getSpecialDebugInfo(aPlayer, aLogLevel, tList);
+		
+		return aLogLevel > 2 ? mMetaTileEntity.getSpecialDebugInfo(aPlayer, aLogLevel, tList) : tList;
 	}
 	
 	@Override public void issueTextureUpdate() {mNeedsUpdate = true;}

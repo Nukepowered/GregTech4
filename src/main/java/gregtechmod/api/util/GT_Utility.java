@@ -1325,9 +1325,10 @@ public class GT_Utility {
 			try {if (tTileEntity instanceof IUpgradableMachine) {
 				rEUAmount+=500;
 		    	int tValue = 0;
-		    	if (0 < (tValue = ((IUpgradableMachine)tTileEntity).getOverclockerUpgradeCount())) tList.add(tValue	+ " Overclocker Upgrades");
-		    	if (0 < (tValue = ((IUpgradableMachine)tTileEntity).getTransformerUpgradeCount())) tList.add(tValue	+ " Transformer Upgrades");
-		    	if (0 < (tValue = ((IUpgradableMachine)tTileEntity).getUpgradeStorageVolume()   )) tList.add(tValue	+ " Upgraded EU Capacity");
+		    	tList.add("** Machine upgrades **");
+		    	if (0 < (tValue = ((IUpgradableMachine)tTileEntity).getOverclockerUpgradeCount())) tList.add(" - " + tValue	+ " Overclocker Upgrades");
+		    	if (0 < (tValue = ((IUpgradableMachine)tTileEntity).getTransformerUpgradeCount())) tList.add(" - " + tValue	+ " Transformer Upgrades");
+		    	if (0 < (tValue = ((IUpgradableMachine)tTileEntity).getUpgradeStorageVolume()   )) tList.add(" - " + tValue	+ " Upgraded EU Capacity");
 		    }} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 			try {if (tTileEntity instanceof IMachineProgress) {
 				rEUAmount+=400;
@@ -1378,7 +1379,7 @@ public class GT_Utility {
     	}
 	    try {if (tBlock instanceof IDebugableBlock) {
 	    	rEUAmount+=500;
-	        ArrayList<String> temp = ((IDebugableBlock)tBlock).getDebugInfo(aPlayer, aX, aY, aZ, 3);
+	        ArrayList<String> temp = ((IDebugableBlock)tBlock).getDebugInfo(aPlayer, aX, aY, aZ, aScanLevel);
 	        if (temp != null) tList.addAll(temp);
 	    }} catch(Throwable e) {if (GregTech_API.DEBUG_MODE) GT_Log.log.catching(e);}
 	    

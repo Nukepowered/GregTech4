@@ -79,7 +79,11 @@ public class UnifierRecipeEntry implements Ingredient, IRecipeInput  {
 	@Override
 	public String toString() {
 		ToStringBuilder.setDefaultStyle(ToStringStyle.SHORT_PREFIX_STYLE);
-		return new ToStringBuilder(this).build();
+		return new ToStringBuilder(this)
+				.append("prefix", prefix)
+				.append("material", material)
+				.append("count", count)
+				.build();
 	}
 
 	////////////////
