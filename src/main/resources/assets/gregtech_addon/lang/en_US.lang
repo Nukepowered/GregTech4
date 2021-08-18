@@ -342,7 +342,7 @@ metatileentity.GT_Pipe_Platinum_Large.name=Large Platinum Item Pipe
 metatileentity.GT_Frame_Iron.name=Iron Frame
 metatileentity.GT_Frame_Aluminium.name=Aluminium Frame
 metatileentity.GT_Frame_Steel.name=Steel Frame
-metatileentity.GT_Frame_StainlessSteel.name=Stainless steel Frame
+metatileentity.GT_Frame_StainlessSteel.name=Stainless Steel Frame
 metatileentity.GT_Frame_TungstenSteel.name=Tungstensteel Frame
 metatileentity.GT_Frame.tooltip=Just something you can put a Cover or CFoam on.
 
