@@ -85,7 +85,7 @@ tile.BlockMetaID_Machine.Playerdetector.message.3=Detects all Players except %s
 tile.BlockMetaID_Machine.Matterfabricator.name=Matter Fabricator
 tile.BlockMetaID_Machine.Supercondensator.name=Supercondensator
 
-metatileentity.GT_E_Craftingtable.name=Electric Crafting table
+metatileentity.GT_E_Craftingtable.name=Electric Crafting Table
 metatileentity.GT_E_Craftingtable.tooltip=Automatic Crafting Table Mk III
 metatileentity.GT_Translocator.name=Electric Translocator
 metatileentity.GT_Translocator.tooltip=Moves Items from A to B
