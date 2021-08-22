@@ -31,7 +31,7 @@ public class GT_MetaPipeEntity_Electrum_Large extends GT_MetaPipeEntity_Item {
 	
 	@Override
 	public int getPipeCapacity() {
-		return 8;
+		return 4;
 	}
 	
 	@Override
