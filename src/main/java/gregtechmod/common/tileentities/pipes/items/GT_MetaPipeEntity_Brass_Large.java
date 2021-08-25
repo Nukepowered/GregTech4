@@ -31,7 +31,7 @@ public class GT_MetaPipeEntity_Brass_Large extends GT_MetaPipeEntity_Item {
 	
 	@Override
 	public int getPipeCapacity() {
-		return 4;
+		return 2;
 	}
 	
 	@Override
