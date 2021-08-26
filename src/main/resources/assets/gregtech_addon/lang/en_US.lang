@@ -1062,7 +1062,7 @@ gregtech.tool.hammer.ore.2=No Ores found.
 gregtech.tool.hammer.lava=There is Lava behind this Rock.
 gregtech.tool.hammer.liquid=There is a Liquid behind this Rock.
 gregtech.tool.hammer.air=There is an Air Pocket behind this Rock.
-gregtech.tool.hammer.diff=Material is hiding behind this Rock.
+gregtech.tool.hammer.diff=Material is changing behind this Rock.
 
 itemGroup.gregtech=GregTech Intergalactical
 itemGroup.gregtech_materials=GregTech Materials
