@@ -19,6 +19,8 @@ public class GT_DictRegistratorPostItem implements Runnable {
 		GT_Log.log.info("Registering other Stuff to the OreDict.");
 		GT_OreDictUnificator.set(OrePrefixes.plate, Materials.Iron					, GT_ModHandler.getRCItem("part.plate.iron", 1L));
 		GT_OreDictUnificator.set(OrePrefixes.plate, Materials.Steel					, GT_ModHandler.getRCItem("part.plate.steel", 1L));
+		GT_OreDictUnificator.set(OrePrefixes.plate, Materials.Copper				, GT_ModHandler.getRCItem("part.plate.copper", 1L));
+		GT_OreDictUnificator.set(OrePrefixes.plate, Materials.Lead					, GT_ModHandler.getRCItem("part.plate.lead", 1L));
 		
 	    GT_OreDictUnificator.set(OrePrefixes.circuit, Materials.Basic				, GT_ModHandler.getIC2Item("electronicCircuit", 1L));
 	    GT_OreDictUnificator.set(OrePrefixes.circuit, Materials.Advanced			, GT_ModHandler.getIC2Item("advancedCircuit", 1L));
