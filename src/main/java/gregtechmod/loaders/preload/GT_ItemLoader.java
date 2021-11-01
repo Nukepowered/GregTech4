@@ -226,7 +226,7 @@ public class GT_ItemLoader implements Runnable {
 		tMetaGenerated.setElectricStats(32000 + tLastID1, 32000, 32, 1, -2);
 		tLastID1 = 618;
 		GT_Items.Battery_RE_LV_Lithium.set(tMetaGenerated.addItem(618, "battery_lv_lithium", "item.reusable.tooltip", null, new Object[] { OrePrefixes.battery.get(Materials.Lithium) }));
-		tMetaGenerated.setElectricStats(32000 + tLastID1, 1500000, 32, 1, -3);
+		tMetaGenerated.setElectricStats(32000 + tLastID1, 1500000, 128, 1, -3);
 		tLastID1 = 619;
 		GT_Items.Battery_RE_LV_Sodium.set(tMetaGenerated.addItem(619, "battery_lv_sodium", "item.reusable.tooltip", null, new Object[] { OrePrefixes.battery.get(Materials.Sodium) }));
 		tMetaGenerated.setElectricStats(32000 + tLastID1, '100000', 32, 1, -3);
@@ -238,7 +238,7 @@ public class GT_ItemLoader implements Runnable {
 		tMetaGenerated.setElectricStats(32000 + tLastID1, 128000, 128, 2, -2);
 		tLastID1 = 628;
 		GT_Items.Battery_RE_MV_Lithium.set(tMetaGenerated.addItem(628, "battery_mv_lithium", "item.reusable.tooltip", null));
-		tMetaGenerated.setElectricStats(32000 + tLastID1, 6000000, 128, 2, -3);
+		tMetaGenerated.setElectricStats(32000 + tLastID1, 6000000, 2048, 2, -3);
 		tLastID1 = 629;
 		GT_Items.Battery_RE_MV_Sodium.set(tMetaGenerated.addItem(629, "battery_mv_sodium", "item.reusable.tooltip", null));
 		tMetaGenerated.setElectricStats(32000 + tLastID1, 400000, 128, 2, -3);
