@@ -48,7 +48,7 @@ public class GT_Scanner_Item extends GT_Generic_Item implements IElectricItem {
 
 	@Override
 	public double getMaxCharge(ItemStack aStack) {
-		return 100000;
+		return 300000;
 	}
 	
 	@Override
