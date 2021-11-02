@@ -296,7 +296,7 @@ public class GT_ItemLoader implements Runnable {
 		}
 	    
 		GT_Items.Tool_Jackhammer_Steel.set((GregTech_API.sItemList[41] = GregTech_API.constructElectricDrillItem("Steel_Jack_Hammer", 10, 0, 2, 16.0F, 100, -1).setElectricTier(1).setBlockBreakSound(GregTech_API.sSoundList.get(107)).setEntityHitSound(GregTech_API.sSoundList.get(107))));
-		GT_Items.Tool_Jackhammer_Diamond.set((GregTech_API.sItemList[42] = GregTech_API.constructElectricDrillItem("Diamond_Jack_Hammer", 100, 0, 3, 45.0F, 250, -1).setElectricTier(2).setBlockBreakSound(GregTech_API.sSoundList.get(107)).setEntityHitSound(GregTech_API.sSoundList.get(107))));
+		GT_Items.Tool_Jackhammer_Diamond.set((GregTech_API.sItemList[42] = GregTech_API.constructElectricDrillItem("Diamond_Jack_Hammer", 300, 0, 3, 45.0F, 250, -1).setElectricTier(2).setBlockBreakSound(GregTech_API.sSoundList.get(107)).setEntityHitSound(GregTech_API.sSoundList.get(107))));
 		GT_Items.Tool_DataOrb.set((GregTech_API.sItemList[43] = new GT_Dataorb_Item("Dataorb")));
 		GT_Items.Circuit_Ultimate.set(GT_Items.Tool_DataOrb.getItem());
 		GT_Items.Armor_Lamp.set(GregTech_API.sItemList[44] = GregTech_API.constructElectricArmorItem("Lighthelmet", 10000, 32, 1, 0, 48, 0.0D, false, 0, tArmorID1));
@@ -341,7 +341,7 @@ public class GT_ItemLoader implements Runnable {
 	    GT_Items.Tool_Wrench_TungstenSteel.set((GregTech_API.sItemList[68] = GregTech_API.constructWrenchItem("GT_Wrench_TungstenSteel", 5120, 10, -1)));
 	    GT_Items.Tool_Wrench_Bronze.set((GregTech_API.sItemList[69] = GregTech_API.constructWrenchItem("GT_Wrench_Bronze", 256, 6, -1)));
 	    GT_Items.Tool_Wrench_Electric.set((GregTech_API.sItemList[70] = GregTech_API.constructElectricWrenchItem("GT_Wrench_Electric", 16, 0, 112)));
-	    GT_Items.Tool_Wrench_Advanced.set((GregTech_API.sItemList[71] = GregTech_API.constructElectricWrenchItem("GT_Wrench_Advanced", 128, 0, 113)));
+	    GT_Items.Tool_Wrench_Advanced.set((GregTech_API.sItemList[71] = GregTech_API.constructElectricWrenchItem("GT_Wrench_Advanced", 300, 0, 113)));
 	    GT_Items.Tool_Hammer_Rubber.set((GregTech_API.sItemList[72] = new GT_SoftHammer_Item("GT_Hammer_Rubber", 128, 4)));
 	    GT_Items.Tool_Hammer_Iron.set((GregTech_API.sItemList[73] = GregTech_API.constructHardHammerItem("GT_Hammer_Iron", 128, 4)));
 	    GT_Items.Tool_Hammer_Bronze.set((GregTech_API.sItemList[74] = GregTech_API.constructHardHammerItem("GT_Hammer_Bronze", 256, 6)));
@@ -390,10 +390,10 @@ public class GT_ItemLoader implements Runnable {
 	    GT_Items.Tool_Saw_Steel.set((GregTech_API.sItemList[117] = new GT_Saw_Item("GT_Saw_Steel", 1280, 4, 3, 6.0F, 0, -1)));
 	    GT_Items.Tool_Saw_TungstenSteel.set((GregTech_API.sItemList[118] = new GT_Saw_Item("GT_Saw_Tungstensteel", 5120, 5, 4, 8.0F, 0, -1)));
 	    GT_Items.Tool_Saw_Electric.set((GregTech_API.sItemList[119] = GregTech_API.constructElectricSawItem("GT_Saw_Electric", 16, 9, 3, 10.0F, 100, 121).setCraftingSound((String)GregTech_API.sSoundList.get(Integer.valueOf(104))).setBreakingSound((String)GregTech_API.sSoundList.get(Integer.valueOf(104))).setBlockBreakSound((String)GregTech_API.sSoundList.get(Integer.valueOf(104))).setEntityHitSound((String)GregTech_API.sSoundList.get(Integer.valueOf(105)))));
-	    GT_Items.Tool_Saw_Advanced.set((GregTech_API.sItemList[120] = GregTech_API.constructElectricSawItem("GT_Saw_Advanced", 128, 12, 4, 12.0F, 200, 122).setCraftingSound((String)GregTech_API.sSoundList.get(Integer.valueOf(104))).setBreakingSound((String)GregTech_API.sSoundList.get(Integer.valueOf(104))).setBlockBreakSound((String)GregTech_API.sSoundList.get(Integer.valueOf(104))).setEntityHitSound((String)GregTech_API.sSoundList.get(Integer.valueOf(105)))));
+	    GT_Items.Tool_Saw_Advanced.set((GregTech_API.sItemList[120] = GregTech_API.constructElectricSawItem("GT_Saw_Advanced", 300, 12, 4, 12.0F, 200, 122).setCraftingSound((String)GregTech_API.sSoundList.get(Integer.valueOf(104))).setBrneakingSound((String)GregTech_API.sSoundList.get(Integer.valueOf(104))).setBlockBreakSound((String)GregTech_API.sSoundList.get(Integund((String)GregTech_API.sSoundList.er.valueOf(104))).setEntityHitSound((String)GregTech_API.sSoundList.get(Integer.valueOf(105)))));
 	    GregTech_API.sItemList[121] = GregTech_API.constructEmptyElectricToolItem("Empty_Electric_Saw", 10, 119);
 	    GregTech_API.sItemList[122] = GregTech_API.constructEmptyElectricToolItem("Empty_Advanced_Saw", 10, 120);
-	    GT_Items.Tool_Drill_Advanced.set((GregTech_API.sItemList[123] = GregTech_API.constructElectricDrillItem("GT_Drill_Advanced", 128, 8, 5, 35.0F, 250, -1).addToMaterialList(Material.anvil).addToMaterialList(Material.iron).addToMaterialList(Material.rock).setToolClasses(new String[]{"pickaxe", "shovel"}).setBlockBreakSound((String)GregTech_API.sSoundList.get(Integer.valueOf(106))).setEntityHitSound((String)GregTech_API.sSoundList.get(Integer.valueOf(106)))));
+	    GT_Items.Tool_Drill_Advanced.set((GregTech_API.sItemList[123] = GregTech_API.constructElectricDrillItem("GT_Drill_Advanced", 300, 8, 5, 35.0F, 250, -1).addToMaterialList(Material.anvil).addToMaterialList(Material.iron).addToMaterialList(Material.rock).setToolClasses(new String[]{"pickaxe", "shovel"}).setBlockBreakSound((String)GregTech_API.sSoundList.get(Integer.valueOf(106))).setEntityHitSound((String)GregTech_API.sSoundList.get(Integer.valueOf(106)))));
 	    GT_Items.Tool_Sword_Flint.set((GregTech_API.sItemList[124] = new GT_Vanilla_Sword("GT_Flint_Sword", "Flint", 1, 5, GT_Mod.sNerfedStoneTools?128:256, 4.0F, 1.0F)));
 	    GT_Items.Tool_Pickaxe_Flint.set((GregTech_API.sItemList[125] = new GT_Vanilla_Pickaxe("GT_Flint_Pickaxe", "Flint", 1, 5, GT_Mod.sNerfedStoneTools?128:256, 4.0F, 1.0F)));
 	    GT_Items.Tool_Shovel_Flint.set((GregTech_API.sItemList[126] = new GT_Vanilla_Shovel("GT_Flint_Shovel", "Flint", 1, 5, GT_Mod.sNerfedStoneTools?128:256, 4.0F, 1.0F)));
