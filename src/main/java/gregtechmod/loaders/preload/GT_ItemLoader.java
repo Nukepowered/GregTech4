@@ -321,8 +321,8 @@ public class GT_ItemLoader implements Runnable {
 			}
 		}
 		
-		GT_Items.Armor_LithiumPack.set(GregTech_API.sItemList[58] = GregTech_API.constructElectricArmorItem("Lithium_Batpack", 600000, 128, 1, 0, 0, 0.0D, true, 1, tArmorID2));
-		GT_Items.Reactor_Coolant_NaK_1.set(GregTech_API.sItemList[60] = GregTech_API.constructCoolantCellItem("60k_NaK_Coolantcell", '\uea60'));
+		GT_Items.Armor_LithiumPack.set(GregTech_API.sItemList[58] = GregTech_API.constructElectricArmorItem("Lithium_Batpack", 6000000, 2048, 1, 0, 0, 0.0D, true, 1, tArmorID2));
+		GT_Items.Reactor_Coolant_NaK_1.set(GregTech_API.sItemList[60] = GregTech_API.constructCoolantCellItem("60k_NaK_Coolantcell", '60000'));
 		GT_Items.Reactor_Coolant_NaK_3.set(GregTech_API.sItemList[61] = GregTech_API.constructCoolantCellItem("180k_NaK_Coolantcell", 180000));
 		GT_Items.Reactor_Coolant_NaK_6.set(GregTech_API.sItemList[62] = GregTech_API.constructCoolantCellItem("360k_NaK_Coolantcell", 360000));
 		
