@@ -220,34 +220,34 @@ public class GT_ItemLoader implements Runnable {
 		GT_Items.Battery_Hull_MV.set(tMetaGenerated.addItem(601, "hull_battery_mv", "item.GregTech_MetaGenerated_Item_01.hull_battery_mv.tooltip", null));
 		tLastID1 = 610;
 		GT_Items.Battery_SU_LV_SulfuricAcid.set(tMetaGenerated.addItem(610, "battery_lv_acid", "item.singleuse.tooltip", null, new Object[] { OrePrefixes.batterySingleuse.get(Materials.SulfuricAcid) }));
-		tMetaGenerated.setElectricStats(32000 + tLastID1, 12000, 32, 1, -2);
+		tMetaGenerated.setElectricStats(32000 + tLastID1, 16000, 32, 1, -2);
 		tLastID1 = 611;
 		GT_Items.Battery_SU_LV_Mercury.set(tMetaGenerated.addItem(611, "battery_lv_mercury", "item.singleuse.tooltip", null, new Object[] { OrePrefixes.batterySingleuse.get(Materials.Mercury) }));
 		tMetaGenerated.setElectricStats(32000 + tLastID1, 32000, 32, 1, -2);
 		tLastID1 = 618;
 		GT_Items.Battery_RE_LV_Lithium.set(tMetaGenerated.addItem(618, "battery_lv_lithium", "item.reusable.tooltip", null, new Object[] { OrePrefixes.battery.get(Materials.Lithium) }));
-		tMetaGenerated.setElectricStats(32000 + tLastID1, 100000, 32, 1, -3);
+		tMetaGenerated.setElectricStats(32000 + tLastID1, 1500000, 512, 1, -3);
 		tLastID1 = 619;
 		GT_Items.Battery_RE_LV_Sodium.set(tMetaGenerated.addItem(619, "battery_lv_sodium", "item.reusable.tooltip", null, new Object[] { OrePrefixes.battery.get(Materials.Sodium) }));
-		tMetaGenerated.setElectricStats(32000 + tLastID1, '\uc350', 32, 1, -3);
+		tMetaGenerated.setElectricStats(32000 + tLastID1, '100000', 32, 1, -3);
 		tLastID1 = 620;
 		GT_Items.Battery_SU_MV_SulfuricAcid.set(tMetaGenerated.addItem(620, "battery_mv_acid", "item.singleuse.tooltip", null));
-		tMetaGenerated.setElectricStats(32000 + tLastID1, '\ubb80', 128, 2, -2);
+		tMetaGenerated.setElectricStats(32000 + tLastID1, '400000', 128, 2, -2);
 		tLastID1 = 621;
 		GT_Items.Battery_SU_MV_Mercury.set(tMetaGenerated.addItem(621, "battery_mv_mercury", "item.singleuse.tooltip", null));
 		tMetaGenerated.setElectricStats(32000 + tLastID1, 128000, 128, 2, -2);
 		tLastID1 = 628;
 		GT_Items.Battery_RE_MV_Lithium.set(tMetaGenerated.addItem(628, "battery_mv_lithium", "item.reusable.tooltip", null));
-		tMetaGenerated.setElectricStats(32000 + tLastID1, 400000, 128, 2, -3);
+		tMetaGenerated.setElectricStats(32000 + tLastID1, 6000000, 2048, 2, -3);
 		tLastID1 = 629;
 		GT_Items.Battery_RE_MV_Sodium.set(tMetaGenerated.addItem(629, "battery_mv_sodium", "item.reusable.tooltip", null));
-		tMetaGenerated.setElectricStats(32000 + tLastID1, 200000, 128, 2, -3);
+		tMetaGenerated.setElectricStats(32000 + tLastID1, 400000, 128, 2, -3);
 		tLastID1 = 697;
 		GT_Items.Energy_LapotronicOrb.set(tMetaGenerated.addItem(697, "lapotronic_orb", "", null, new Object[] { OrePrefixes.battery.get(Materials.Ultimate) }));
 		tMetaGenerated.setElectricStats(32000 + tLastID1, 100000000, 8192, 5, -3);
 		tLastID1 = 698;
 		GT_Items.ZPM.set(tMetaGenerated.addItem(698, "zpm", "", null));
-		tMetaGenerated.setElectricStats(32000 + tLastID1, 2000000000, 131072, 7, -2);
+		tMetaGenerated.setElectricStats(32000 + tLastID1, 2000000000, 8192, 7, -2);
 		GT_Items.McGuffium_239.set(tMetaGenerated.addItem(765, "mc_guffim_239", "item.GregTech_MetaGenerated_Item_01.mc_guffim_239.tooltip", null));
 		if (GregTech_API.DEBUG_MODE) {
 			tMetaGenerated.addItem(700, "item.GT_Circuit.simple.tooltip", null, new Object[] { OrePrefixes.circuit.get(Materials.Primitive) });
@@ -296,7 +296,7 @@ public class GT_ItemLoader implements Runnable {
 		}
 	    
 		GT_Items.Tool_Jackhammer_Steel.set((GregTech_API.sItemList[41] = GregTech_API.constructElectricDrillItem("Steel_Jack_Hammer", 10, 0, 2, 16.0F, 100, -1).setElectricTier(1).setBlockBreakSound(GregTech_API.sSoundList.get(107)).setEntityHitSound(GregTech_API.sSoundList.get(107))));
-		GT_Items.Tool_Jackhammer_Diamond.set((GregTech_API.sItemList[42] = GregTech_API.constructElectricDrillItem("Diamond_Jack_Hammer", 100, 0, 3, 45.0F, 250, -1).setElectricTier(2).setBlockBreakSound(GregTech_API.sSoundList.get(107)).setEntityHitSound(GregTech_API.sSoundList.get(107))));
+		GT_Items.Tool_Jackhammer_Diamond.set((GregTech_API.sItemList[42] = GregTech_API.constructElectricDrillItem("Diamond_Jack_Hammer", 300, 0, 3, 45.0F, 250, -1).setElectricTier(2).setBlockBreakSound(GregTech_API.sSoundList.get(107)).setEntityHitSound(GregTech_API.sSoundList.get(107))));
 		GT_Items.Tool_DataOrb.set((GregTech_API.sItemList[43] = new GT_Dataorb_Item("Dataorb")));
 		GT_Items.Circuit_Ultimate.set(GT_Items.Tool_DataOrb.getItem());
 		GT_Items.Armor_Lamp.set(GregTech_API.sItemList[44] = GregTech_API.constructElectricArmorItem("Lighthelmet", 10000, 32, 1, 0, 48, 0.0D, false, 0, tArmorID1));
@@ -321,7 +321,7 @@ public class GT_ItemLoader implements Runnable {
 			}
 		}
 		
-		GT_Items.Armor_LithiumPack.set(GregTech_API.sItemList[58] = GregTech_API.constructElectricArmorItem("Lithium_Batpack", 600000, 128, 1, 0, 0, 0.0D, true, 1, tArmorID2));
+		GT_Items.Armor_LithiumPack.set(GregTech_API.sItemList[58] = GregTech_API.constructElectricArmorItem("Lithium_Batpack", 9000000, 2048, 1, 0, 0, 0.0D, true, 1, tArmorID2));
 		GT_Items.Reactor_Coolant_NaK_1.set(GregTech_API.sItemList[60] = GregTech_API.constructCoolantCellItem("60k_NaK_Coolantcell", '\uea60'));
 		GT_Items.Reactor_Coolant_NaK_3.set(GregTech_API.sItemList[61] = GregTech_API.constructCoolantCellItem("180k_NaK_Coolantcell", 180000));
 		GT_Items.Reactor_Coolant_NaK_6.set(GregTech_API.sItemList[62] = GregTech_API.constructCoolantCellItem("360k_NaK_Coolantcell", 360000));
@@ -341,7 +341,7 @@ public class GT_ItemLoader implements Runnable {
 	    GT_Items.Tool_Wrench_TungstenSteel.set((GregTech_API.sItemList[68] = GregTech_API.constructWrenchItem("GT_Wrench_TungstenSteel", 5120, 10, -1)));
 	    GT_Items.Tool_Wrench_Bronze.set((GregTech_API.sItemList[69] = GregTech_API.constructWrenchItem("GT_Wrench_Bronze", 256, 6, -1)));
 	    GT_Items.Tool_Wrench_Electric.set((GregTech_API.sItemList[70] = GregTech_API.constructElectricWrenchItem("GT_Wrench_Electric", 16, 0, 112)));
-	    GT_Items.Tool_Wrench_Advanced.set((GregTech_API.sItemList[71] = GregTech_API.constructElectricWrenchItem("GT_Wrench_Advanced", 128, 0, 113)));
+	    GT_Items.Tool_Wrench_Advanced.set((GregTech_API.sItemList[71] = GregTech_API.constructElectricWrenchItem("GT_Wrench_Advanced", 300, 0, 113)));
 	    GT_Items.Tool_Hammer_Rubber.set((GregTech_API.sItemList[72] = new GT_SoftHammer_Item("GT_Hammer_Rubber", 128, 4)));
 	    GT_Items.Tool_Hammer_Iron.set((GregTech_API.sItemList[73] = GregTech_API.constructHardHammerItem("GT_Hammer_Iron", 128, 4)));
 	    GT_Items.Tool_Hammer_Bronze.set((GregTech_API.sItemList[74] = GregTech_API.constructHardHammerItem("GT_Hammer_Bronze", 256, 6)));
@@ -390,10 +390,10 @@ public class GT_ItemLoader implements Runnable {
 	    GT_Items.Tool_Saw_Steel.set((GregTech_API.sItemList[117] = new GT_Saw_Item("GT_Saw_Steel", 1280, 4, 3, 6.0F, 0, -1)));
 	    GT_Items.Tool_Saw_TungstenSteel.set((GregTech_API.sItemList[118] = new GT_Saw_Item("GT_Saw_Tungstensteel", 5120, 5, 4, 8.0F, 0, -1)));
 	    GT_Items.Tool_Saw_Electric.set((GregTech_API.sItemList[119] = GregTech_API.constructElectricSawItem("GT_Saw_Electric", 16, 9, 3, 10.0F, 100, 121).setCraftingSound((String)GregTech_API.sSoundList.get(Integer.valueOf(104))).setBreakingSound((String)GregTech_API.sSoundList.get(Integer.valueOf(104))).setBlockBreakSound((String)GregTech_API.sSoundList.get(Integer.valueOf(104))).setEntityHitSound((String)GregTech_API.sSoundList.get(Integer.valueOf(105)))));
-	    GT_Items.Tool_Saw_Advanced.set((GregTech_API.sItemList[120] = GregTech_API.constructElectricSawItem("GT_Saw_Advanced", 128, 12, 4, 12.0F, 200, 122).setCraftingSound((String)GregTech_API.sSoundList.get(Integer.valueOf(104))).setBreakingSound((String)GregTech_API.sSoundList.get(Integer.valueOf(104))).setBlockBreakSound((String)GregTech_API.sSoundList.get(Integer.valueOf(104))).setEntityHitSound((String)GregTech_API.sSoundList.get(Integer.valueOf(105)))));
+	    GT_Items.Tool_Saw_Advanced.set((GregTech_API.sItemList[120] = GregTech_API.constructElectricSawItem("GT_Saw_Advanced", 300, 12, 4, 12.0F, 200, 122).setCraftingSound((String)GregTech_API.sSoundList.get(Integer.valueOf(104))).setBreakingSound((String)GregTech_API.sSoundList.get(Integer.valueOf(104))).setBlockBreakSound((String)GregTech_API.sSoundList.get(Integer.valueOf(104))).setEntityHitSound((String)GregTech_API.sSoundList.get(Integer.valueOf(105)))));
 	    GregTech_API.sItemList[121] = GregTech_API.constructEmptyElectricToolItem("Empty_Electric_Saw", 10, 119);
 	    GregTech_API.sItemList[122] = GregTech_API.constructEmptyElectricToolItem("Empty_Advanced_Saw", 10, 120);
-	    GT_Items.Tool_Drill_Advanced.set((GregTech_API.sItemList[123] = GregTech_API.constructElectricDrillItem("GT_Drill_Advanced", 128, 8, 5, 35.0F, 250, -1).addToMaterialList(Material.anvil).addToMaterialList(Material.iron).addToMaterialList(Material.rock).setToolClasses(new String[]{"pickaxe", "shovel"}).setBlockBreakSound((String)GregTech_API.sSoundList.get(Integer.valueOf(106))).setEntityHitSound((String)GregTech_API.sSoundList.get(Integer.valueOf(106)))));
+	    GT_Items.Tool_Drill_Advanced.set((GregTech_API.sItemList[123] = GregTech_API.constructElectricDrillItem("GT_Drill_Advanced", 300, 8, 5, 35.0F, 250, -1).addToMaterialList(Material.anvil).addToMaterialList(Material.iron).addToMaterialList(Material.rock).setToolClasses(new String[]{"pickaxe", "shovel"}).setBlockBreakSound((String)GregTech_API.sSoundList.get(Integer.valueOf(106))).setEntityHitSound((String)GregTech_API.sSoundList.get(Integer.valueOf(106)))));
 	    GT_Items.Tool_Sword_Flint.set((GregTech_API.sItemList[124] = new GT_Vanilla_Sword("GT_Flint_Sword", "Flint", 1, 5, GT_Mod.sNerfedStoneTools?128:256, 4.0F, 1.0F)));
 	    GT_Items.Tool_Pickaxe_Flint.set((GregTech_API.sItemList[125] = new GT_Vanilla_Pickaxe("GT_Flint_Pickaxe", "Flint", 1, 5, GT_Mod.sNerfedStoneTools?128:256, 4.0F, 1.0F)));
 	    GT_Items.Tool_Shovel_Flint.set((GregTech_API.sItemList[126] = new GT_Vanilla_Shovel("GT_Flint_Shovel", "Flint", 1, 5, GT_Mod.sNerfedStoneTools?128:256, 4.0F, 1.0F)));
