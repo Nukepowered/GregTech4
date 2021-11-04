@@ -229,10 +229,10 @@ public class GT_ItemLoader implements Runnable {
 		tMetaGenerated.setElectricStats(32000 + tLastID1, 1500000, 512, 1, -3);
 		tLastID1 = 619;
 		GT_Items.Battery_RE_LV_Sodium.set(tMetaGenerated.addItem(619, "battery_lv_sodium", "item.reusable.tooltip", null, new Object[] { OrePrefixes.battery.get(Materials.Sodium) }));
-		tMetaGenerated.setElectricStats(32000 + tLastID1, '100000', 32, 1, -3);
+		tMetaGenerated.setElectricStats(32000 + tLastID1, 100000, 32, 1, -3);
 		tLastID1 = 620;
 		GT_Items.Battery_SU_MV_SulfuricAcid.set(tMetaGenerated.addItem(620, "battery_mv_acid", "item.singleuse.tooltip", null));
-		tMetaGenerated.setElectricStats(32000 + tLastID1, '400000', 128, 2, -2);
+		tMetaGenerated.setElectricStats(32000 + tLastID1, 400000, 128, 2, -2);
 		tLastID1 = 621;
 		GT_Items.Battery_SU_MV_Mercury.set(tMetaGenerated.addItem(621, "battery_mv_mercury", "item.singleuse.tooltip", null));
 		tMetaGenerated.setElectricStats(32000 + tLastID1, 128000, 128, 2, -2);
