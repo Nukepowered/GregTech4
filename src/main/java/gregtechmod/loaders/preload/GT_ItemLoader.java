@@ -451,6 +451,8 @@ public class GT_ItemLoader implements Runnable {
 		GameRegistry.registerItem(GregTech_API.sItemList[ 48], "aluminium_scoop");
 		
 		GameRegistry.registerItem(GregTech_API.sItemList[ 55], "debug_scanner");
+
+		GameRegistry.registerItem(GregTech_API.sItemList[58], "lithiumpack");
 		
 		GameRegistry.registerItem(GregTech_API.sItemList[ 60], "nak_coolantcell_60");
 		GameRegistry.registerItem(GregTech_API.sItemList[ 61], "nak_coolantcell_180");
