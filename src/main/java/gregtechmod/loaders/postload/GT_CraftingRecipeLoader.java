@@ -464,12 +464,12 @@ public class GT_CraftingRecipeLoader implements Runnable {
     	
     	GT_ModHandler.addCraftingRecipe(new ItemStack(GregTech_API.sBlockList[1], 1,113), new Object[] {"PCP", "GSG", "PMP", 'M', GT_OreDictNames.craftingRawMachineTier02, 'C', OrePrefixes.circuit.get(Materials.Advanced), 'G', OrePrefixes.gearGt.get(Materials.Steel), 'P', GT_OreDictNames.craftingPlateSteel, 'S', GT_OreDictNames.craftingDiamondBlade});
     	
-		GT_ModHandler.removeRecipe(GT_ModHandler.getIC2Item("canner", 1));
-		GT_ModHandler.removeRecipe(GT_ModHandler.getIC2Item("macerator", 1));
-		GT_ModHandler.removeRecipe(GT_ModHandler.getIC2Item("extractor", 1));
-		GT_ModHandler.removeRecipe(GT_ModHandler.getIC2Item("compressor", 1));
-		GT_ModHandler.removeRecipe(GT_ModHandler.getIC2Item("recycler", 1));
-		GT_ModHandler.removeRecipe(GT_ModHandler.getIC2Item("electroFurnace", 1));
+		GT_ModHandler.removeRecipeByOutput(GT_ModHandler.getIC2Item("canner", 1));
+		GT_ModHandler.removeRecipeByOutput(GT_ModHandler.getIC2Item("macerator", 1));
+		GT_ModHandler.removeRecipeByOutput(GT_ModHandler.getIC2Item("extractor", 1));
+		GT_ModHandler.removeRecipeByOutput(GT_ModHandler.getIC2Item("compressor", 1));
+		GT_ModHandler.removeRecipeByOutput(GT_ModHandler.getIC2Item("recycler", 1));
+		GT_ModHandler.removeRecipeByOutput(GT_ModHandler.getIC2Item("electroFurnace", 1));
 		
 		GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("canner", 1), new Object[] {"PCP", "PMP", "PPP", 'M', tNeedsSteel?GT_OreDictNames.craftingRawMachineTier02:GT_OreDictNames.craftingRawMachineTier01, 'C', OrePrefixes.circuit.get(Materials.Basic), 'P', OrePrefixes.plate.get(Materials.Tin)});
 		
