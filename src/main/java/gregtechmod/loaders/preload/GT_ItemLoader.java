@@ -2,7 +2,6 @@ package gregtechmod.loaders.preload;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 
-import forestry.api.core.IGameMode;
 import gregtechmod.GT_Mod;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.GT_Items;
