@@ -83,7 +83,7 @@ public class ProcessingDust implements IOreRecipeRegistrator {
 						.input(aMaterial == Materials.Milk ? GT_Items.Cell_Water.get(1) : GT_Items.Cell_Empty.get(1))
 						.output(GT_OreDictUnificator.get(OrePrefixes.cell, aMaterial, 1))
 						.buildAndRegister();
-					if (aMaterial != Materials.Milk) RecipeMaps.CANINNING.factory().EUt(1).duration(100)
+					if (aMaterial != Materials.Milk && aMaterial != Materials.ConstructionFoam) RecipeMaps.CANINNING.factory().EUt(1).duration(100)
 						.input(OrePrefixes.cell, aMaterial)
 						.output(GT_OreDictUnificator.get(OrePrefixes.dust, aMaterial, 1))
 						.output(GT_OreDictUnificator.get(GT_Items.Cell_Empty.get(1)))
