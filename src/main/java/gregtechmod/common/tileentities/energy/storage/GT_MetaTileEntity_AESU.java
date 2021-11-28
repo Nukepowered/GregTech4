@@ -2,6 +2,7 @@ package gregtechmod.common.tileentities.energy.storage;
 
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.metatileentity.MetaTileEntity;
+import gregtechmod.api.util.GT_Utility;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -56,7 +57,7 @@ public class GT_MetaTileEntity_AESU extends MetaTileEntity {
 	
 	@Override
     public int getOutputTier() {
-    	return 5;
+    	return GT_Utility.getTier(mOutput);
     }
     
 	@Override
