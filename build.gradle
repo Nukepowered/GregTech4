@@ -56,6 +56,10 @@ repositories {
 		name = "buildcraft"
 		url = "https://mod-buildcraft.com/maven/"
 	}
+	maven {
+		name = "blamejared maven"
+		url = "https://maven.blamejared.com/"
+	}
 }
 
 jar {
@@ -78,6 +82,7 @@ dependencies {
 	compile "codechicken:CodeChickenLib:${mc_ver}-${ccl_version}:dev"
 	compile "net.sengir.forestry:forestry_${mc_ver}:${forestry_ver}:dev"
 	compile "net.industrial-craft:industrialcraft-2:${ic2_ver}-experimental:dev"
+	compile "MineTweaker3:MineTweaker3-MC1710-Main:${mc_ver}-${ct_version}" // CraftTweaker (MineTweaker3)
 	compile files("libs/CoFHCore-[1.7.10]3.1.4-329-dev.jar")
 	compile files("libs/ThermalDynamics-[1.7.10]1.2.1-172-dev.jar")
 	compile files("libs/ThermalExpansion-[1.7.10]4.1.5-248-dev.jar")
