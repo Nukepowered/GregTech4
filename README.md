@@ -23,7 +23,7 @@ The mod is planned to keep original look of GregTech 4 with some technical impro
 
 ## Contributing & Build guide
 
-You are welcome to participate in development, but if you planning to **add something new** make sure you **disscussed it with @TheDarkDnKTv** before you started write actual code. Since policy is keeping original look, I can disagree with you about changes. 
+You are welcome to participate in development, but if you planning to **add something new** make sure you **disscussed it with @TheDarkDnKTv** before you started write actual code. Since policy is keeping original look, I can disagree with you about changes.
 
 #### Setting up enviroment
 ```
@@ -31,6 +31,9 @@ git clone https://github.com/Nukepowered/GregTech4.git
 gradlew setupDecompWorkspace
 gradlew eclipse/idea
 ```
+
+*Do not forget to put `-Dfml.coreMods.load=gregtechmod.common.asm.GT_CoreMod` VM argument for launch, otherwise coremod will not work*
+
 #### Building jar file
 
 ```

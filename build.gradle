@@ -38,7 +38,7 @@ minecraft {
 
 repositories {
 	maven {
-		url = "http://maven.ic2.player.to/"
+		url = "https://gregtech.overminddl1.com/"
 	}
 	maven {
 		name = "ChickenBones maven"
@@ -63,6 +63,12 @@ jar {
 		attributes 'FMLAT': 'gregtech_at.cfg'
 		attributes 'FMLCorePluginContainsFMLMod': 'true'
 		attributes 'FMLCorePlugin': 'gregtechmod.common.asm.GT_CoreMod'
+	}
+}
+
+sourceSets {
+	main {
+		output.resourcesDir = output.classesDir
 	}
 }
 
