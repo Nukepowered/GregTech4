@@ -21,11 +21,11 @@ public class GT_MetaTileEntity_BlastFurnace extends BaseMultiWorkable {
 	public int mHeatCapacity = 0, mHeatingCoilTier = 0;
 	
 	public GT_MetaTileEntity_BlastFurnace(int aID, String mName) {
-		super(aID, mName, RecipeMaps.BLAST_FURNANCE);
+		super(aID, mName, RecipeMaps.BLAST_FURNACE);
 	}
 
 	public GT_MetaTileEntity_BlastFurnace() {
-		super(RecipeMaps.BLAST_FURNANCE);
+		super(RecipeMaps.BLAST_FURNACE);
 	}
 	
 	@Override

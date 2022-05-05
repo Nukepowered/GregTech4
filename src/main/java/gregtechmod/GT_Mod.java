@@ -1,5 +1,6 @@
 package gregtechmod;
 
+import gregtechmod.api.GTConsts;
 import gregtechmod.api.GregTech_API;
 import gregtechmod.api.enums.Element;
 import gregtechmod.api.enums.GT_ConfigCategories;
@@ -61,6 +62,7 @@ import gregtechmod.common.tileentities.deprecated.GT_TileEntity_PlayerDetector;
 import gregtechmod.common.tileentities.deprecated.GT_TileEntity_Sonictron;
 import gregtechmod.common.tileentities.deprecated.GT_TileEntity_Superconductor;
 
+import gregtechmod.integration.crafttweaker.GregTechTweaker;
 import gregtechmod.loaders.load.GT_CoverBehaviorLoader;
 import gregtechmod.loaders.load.GT_ItemIterator;
 import gregtechmod.loaders.load.GT_LiquidAndFuelLoader;
@@ -541,7 +543,12 @@ public class GT_Mod implements IGT_Mod {
     	RecipeSorter.register("gregtech_addon:shaped_nbt_keeping"		, GT_Shapeless_NBT_Keeping_Recipe.class	, RecipeSorter.Category.SHAPED		, "after:gregtech_addon:shaped before:minecraft:shapeless");
     	RecipeSorter.register("gregtech_addon:shapeless"				, GT_Shapeless_Recipe.class				, RecipeSorter.Category.SHAPELESS	, "after:minecraft:shapeless");
     	RecipeSorter.register("gregtech_addon:shapeless_nbt_keeping"	, GT_Shapeless_NBT_Keeping_Recipe.class	, RecipeSorter.Category.SHAPELESS	, "after:gregtech_addon:shapeless");
-    	
+
+		// CraftTweaker (MineTweaker3) Integration
+		if (Loader.isModLoaded(GTConsts.CT_MODID)) {
+			GregTechTweaker.init();
+		}
+
         GregTech_API.sPreloadFinished = true;
         GT_Log.log.info("Preload-Phase finished!");
     	for (Runnable tRunnable : GregTech_API.sAfterGTPreload) {

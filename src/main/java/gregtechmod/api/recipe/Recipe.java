@@ -127,7 +127,6 @@ public class Recipe {
 	
 	/**
 	 * Will check if recipe matches for shaped recipe
-	 * @param actionPerfomer will calls every loop, will put in a ItemStack of slot and amount needed for recipe
 	 */
 	private boolean checkShaped(boolean decrease, List<ItemStack> inputs, List<FluidStack> fluidInputs) {
 		for (int i = 0; i < this.itemInputs.size(); i++) {
@@ -266,6 +265,10 @@ public class Recipe {
 	
 	public Object getMeta(String name) {
 		return metadata.get(name);
+	}
+
+	public List<String> getMetaKeys() {
+		return new ArrayList<>(metadata.keySet());
 	}
 	
 	/**

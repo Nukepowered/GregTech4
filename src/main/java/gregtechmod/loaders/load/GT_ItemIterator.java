@@ -111,11 +111,11 @@ public class GT_ItemIterator implements Runnable {
 		GregTech_API.registerScrewdriver(GT_ModHandler.getRecipeOutput(new ItemStack(Items.iron_ingot, 1), null, null, null, new ItemStack(Items.stick, 1)));
 
 		GT_Log.log.info("Adding Food Recipes to the Automatic Canning Machine. (also during the following Item Iteration)");
-		RecipeMaps.CANINNING.factory().EUt(1).duration(100).inputs(new ItemStack(Items.rotten_flesh, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(2L)).output(GT_Items.IC2_Food_Can_Spoiled.get(2)).buildAndRegister();
-		RecipeMaps.CANINNING.factory().EUt(1).duration(100).inputs(new ItemStack(Items.spider_eye, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(1L)).output(GT_Items.IC2_Food_Can_Spoiled.get(1)).buildAndRegister();
-		RecipeMaps.CANINNING.factory().EUt(1).duration(100).inputs(new ItemStack(Items.poisonous_potato, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(1L)).output(GT_Items.IC2_Food_Can_Spoiled.get(1)).buildAndRegister();
-		RecipeMaps.CANINNING.factory().EUt(1).duration(600).inputs(new ItemStack(Items.cake, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(6L)).output(GT_Items.IC2_Food_Can_Filled.get(6)).buildAndRegister();
-		RecipeMaps.CANINNING.factory().EUt(1).duration(300).inputs(new ItemStack(Items.mushroom_stew, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(3L)).output(GT_Items.IC2_Food_Can_Filled.get(3)).output(new ItemStack(Items.bowl, 1)).buildAndRegister();
+		RecipeMaps.CANNING.factory().EUt(1).duration(100).inputs(new ItemStack(Items.rotten_flesh, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(2L)).output(GT_Items.IC2_Food_Can_Spoiled.get(2)).buildAndRegister();
+		RecipeMaps.CANNING.factory().EUt(1).duration(100).inputs(new ItemStack(Items.spider_eye, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(1L)).output(GT_Items.IC2_Food_Can_Spoiled.get(1)).buildAndRegister();
+		RecipeMaps.CANNING.factory().EUt(1).duration(100).inputs(new ItemStack(Items.poisonous_potato, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(1L)).output(GT_Items.IC2_Food_Can_Spoiled.get(1)).buildAndRegister();
+		RecipeMaps.CANNING.factory().EUt(1).duration(600).inputs(new ItemStack(Items.cake, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(6L)).output(GT_Items.IC2_Food_Can_Filled.get(6)).buildAndRegister();
+		RecipeMaps.CANNING.factory().EUt(1).duration(300).inputs(new ItemStack(Items.mushroom_stew, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(3L)).output(GT_Items.IC2_Food_Can_Filled.get(3)).output(new ItemStack(Items.bowl, 1)).buildAndRegister();
 		
         if (Loader.isModLoaded("appliedenergistics2")) {
         	Optional<ItemStack> opt = appeng.api.AEApi.instance().definitions().blocks().quartz().maybeStack(1);
@@ -188,7 +188,7 @@ public class GT_ItemIterator implements Runnable {
 				if (tItem instanceof ItemFood && tItem != GT_Items.IC2_Food_Can_Filled.getItem() && tItem != GT_Items.IC2_Food_Can_Spoiled.getItem()) {
 					final int tFoodValue = (int) Math.ceil(((ItemFood) tItem).func_150905_g(new ItemStack(tItem)) / 2.0D);
 					if (tFoodValue > 0) {
-						RecipeFactory<?> fac = RecipeMaps.CANINNING.factory().EUt(1).duration(tFoodValue * 100).inputs(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(tFoodValue)).output(GT_Items.IC2_Food_Can_Filled.get(tFoodValue));
+						RecipeFactory<?> fac = RecipeMaps.CANNING.factory().EUt(1).duration(tFoodValue * 100).inputs(new ItemStack(tItem, 1, GregTech_API.ITEM_WILDCARD_DAMAGE), GT_Items.IC2_Food_Can_Empty.get(tFoodValue)).output(GT_Items.IC2_Food_Can_Filled.get(tFoodValue));
 						ItemStack container = GT_Utility.getContainerItem(new ItemStack(tItem, 1, 0));
 						if (container != null) fac.output(container);
 						fac.buildAndRegister();

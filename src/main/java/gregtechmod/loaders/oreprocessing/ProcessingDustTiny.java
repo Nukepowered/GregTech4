@@ -35,7 +35,7 @@ public class ProcessingDustTiny implements IOreRecipeRegistrator {
 						new Object[] { entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName, entry.oreDictName })));
 				if (!aMaterial.contains(SubTag.NO_SMELTING) && (ingot = GT_OreDictUnificator.get(OrePrefixes.ingot, aMaterial, 1L)) != null) {
 					if (aMaterial.mBlastFurnaceRequired) {
-						RecipeFactory<?> factory = RecipeMaps.BLAST_FURNANCE.factory()
+						RecipeFactory<?> factory = RecipeMaps.BLAST_FURNACE.factory()
 								.minTemperature(aMaterial.mBlastFurnaceTemp)
 								.EUt(120).duration(Math.max(aMaterial.getMass() / 40, 1) * aMaterial.mBlastFurnaceTemp)
 								.input(RecipeEntry.fromStacks(9, entry.ores, Match.STRICT));

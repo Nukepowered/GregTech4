@@ -32,7 +32,7 @@ public class ProcessingDye implements IOreRecipeRegistrator {
 					List<ItemStack> ores = entry.ores.stream()
 							.filter(s -> s.getMaxStackSize() >= 16 && GT_Utility.getContainerItem(s) == null)
 							.collect(Collectors.toList());
-			        RecipeMaps.CANINNING.factory()
+			        RecipeMaps.CANNING.factory()
 			        	.EUt(1).duration(800)
 			        	.input(RecipeEntry.fromStacks(16, ores, Match.STRICT))
 			        	.input(GT_Items.Spray_Empty.get(1))

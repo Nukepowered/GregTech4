@@ -1,10 +1,13 @@
 package gregtechmod.api.recipe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import gregtechmod.api.enums.Materials;
 import gregtechmod.api.enums.OrePrefixes;
+import gregtechmod.api.util.GT_ItsNotMyFaultException;
 import gregtechmod.api.util.GT_Utility;
 
 import net.minecraft.item.ItemStack;
@@ -19,6 +22,7 @@ public abstract class RecipeFactory<F extends RecipeFactory<F>> {
 	public static final int MAX_CHANCE = 100_00; // i.m 100.00%
 	
 	protected RecipeMap<F> map;
+	protected Map<String, Object> metadata;
 	protected List<ItemStack> outputItems;
 	protected List<ChancedOutput> chancedOutput;
 	protected List<Ingredient> inputItems;
@@ -37,6 +41,7 @@ public abstract class RecipeFactory<F extends RecipeFactory<F>> {
 		this.inputItems 	= new ArrayList<>();
 		this.inputFluids 	= new ArrayList<>();
 		this.outputFluids 	= new ArrayList<>();
+		this.metadata		= new HashMap<>();
 		this.reset();
 	}
 	
@@ -53,6 +58,7 @@ public abstract class RecipeFactory<F extends RecipeFactory<F>> {
 		inputItems.clear();
 		inputFluids.clear();
 		outputFluids.clear();
+		metadata.clear();
 		EUt = -1;
 		startEU = 0;
 		duration = -1;
@@ -200,7 +206,12 @@ public abstract class RecipeFactory<F extends RecipeFactory<F>> {
 		this.chancedOutput.add(output);
 		return this;
 	}
-	
+
+	public RecipeFactory<F> withMeta(String key, Object value) {
+		this.metadata.put(key, value);
+		return this;
+	}
+
 	/**
 	 * Chance is in format of int => 9575 == 95.75%, no more than 2 letters after comma
 	 */
