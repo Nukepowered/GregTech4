@@ -1,27 +1,32 @@
 package gregtechmod.api.recipe;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.function.IntConsumer;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
+import com.google.common.collect.Lists;
+import cpw.mods.fml.common.Optional.Method;
+import gregtechmod.api.GTConsts;
 import gregtechmod.api.util.GT_RecipeException;
 import gregtechmod.api.util.GT_Utility;
+import gregtechmod.integration.crafttweaker.recipe.CTRecipe;
+import gregtechmod.integration.crafttweaker.recipe.CTRecipeFactory;
+import minetweaker.api.item.IItemStack;
+import minetweaker.api.liquid.ILiquidStack;
+import minetweaker.api.minecraft.MineTweakerMC;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fluids.FluidStack;
+import stanhebben.zenscript.annotations.ZenClass;
+import stanhebben.zenscript.annotations.ZenGetter;
+import stanhebben.zenscript.annotations.ZenMethod;
 
 /**
  * Unificated map of recipes for GT machines
  * @author TheDarkDnKTv
  *
  */
+@ZenClass("mods.gregtechmod.recipe.RecipeMap")
 public class RecipeMap<F extends RecipeFactory<F>> {
 	
 	protected final transient Map<Integer, List<Recipe>> MAPPINGS = new HashMap<>(); 
@@ -153,7 +158,7 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 	public List<Recipe> getRecipes() {
 		return Collections.unmodifiableList(recipeList);
 	}
-	
+
 	/**
 	 * Registering a recipe in this recipe map
 	 */
@@ -199,7 +204,87 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 		
 		return this.recipeList.remove(recipe);
 	}
-	
+
+	/*** CRAFT TWEAKER START ***/
+
+	@ZenMethod("getRecipes")
+	@Method(modid = GTConsts.CT_MODID)
+	public List<CTRecipe> getRecipesCT() {
+		return this.recipeList.stream()
+			.map(CTRecipe::new)
+			.collect(Collectors.toList());
+	}
+
+	@ZenMethod("findRecipe")
+	@Method(modid = GTConsts.CT_MODID)
+	public CTRecipe findRecipeCT(IItemStack[] itemsIn, ILiquidStack[] liquidsIn) {
+		List<ItemStack> items = Lists.newArrayList(MineTweakerMC.getItemStacks(itemsIn));
+		List<FluidStack> fluids = Lists.newArrayList(MineTweakerMC.getLiquidStacks(liquidsIn));
+		Recipe recipe = this.findRecipe(items, fluids, meta -> true);
+		return recipe == null ? null : new CTRecipe(recipe);
+	}
+
+	@ZenMethod("register")
+	@Method(modid = GTConsts.CT_MODID)
+	public boolean registerCT(CTRecipe recipe) {
+		return this.register(recipe.backingRecipe);
+	}
+
+	@ZenMethod
+	@Method(modid = GTConsts.CT_MODID)
+	public boolean remove(CTRecipe recipe) {
+		return recipe == null ? true :
+			this.remove(recipe.backingRecipe);
+	}
+
+	@ZenMethod("factory")
+	@Method(modid = GTConsts.CT_MODID)
+	public CTRecipeFactory factoryCT() {
+		return new CTRecipeFactory(this.factory());
+	}
+
+	@ZenGetter("minInputs")
+	public int getMinInputs() {
+		return minInputs;
+	}
+
+	@ZenGetter("maxInputs")
+	public int getMaxInputs() {
+		return maxInputs;
+	}
+
+	@ZenGetter("minOutputs")
+	public int getMinOutputs() {
+		return minOutputs;
+	}
+
+	@ZenGetter("maxOutputs")
+	public int getMaxOutputs() {
+		return maxOutputs;
+	}
+
+	@ZenGetter("minFluidInputs")
+	public int getMinFluidInputs() {
+		return minFluidInputs;
+	}
+
+	@ZenGetter("maxFluidInputs")
+	public int getMaxFluidInputs() {
+		return maxFluidInputs;
+	}
+
+	@ZenGetter("minFluidOutputs")
+	public int getMinFluidOutputs() {
+		return minFluidOutputs;
+	}
+
+	@ZenGetter("maxFluidOutputs")
+	public int getMaxFluidOutputs() {
+		return maxFluidOutputs;
+	}
+
+	/*** CRAFT TWEAKER END ***/
+
 	@Override
 	public boolean equals(Object o) {
 		return o instanceof RecipeMap && o == this;

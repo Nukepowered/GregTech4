@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
  * For Covers with a special behavior.
  */
 public abstract class GT_CoverBehavior {
-	public static volatile int VERSION = 415;
+	public static volatile int VERSION = 416;
 	
 	/**
 	 * Gives all Covers which are out of these Stacks a special behavior.

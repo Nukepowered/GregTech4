@@ -26,7 +26,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * P.S. It is intended to be named "Unificator" and not "Unifier", because that sounds more awesome.
  */
 public class GT_OreDictUnificator {
-	public static volatile int VERSION = 415;
+	public static volatile int VERSION = 416;
 	
 	private static final HashMap<String, ItemStack> sName2OreMap = new HashMap<String, ItemStack>();
 	private static final HashMap<ItemStack, String> sToRegister = new HashMap<ItemStack, String>();

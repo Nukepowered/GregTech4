@@ -33,7 +33,7 @@ public class ProcessingRecycling implements IOreRecipeRegistrator {
 						if (aPrefix.mIsContainer) {
 							if (aMaterial != Materials.Empty && aPrefix != OrePrefixes.cell) {
 								if (aMaterial == Materials.Mercury) {
-									RecipeMaps.CANINNING.factory().EUt(2).duration(Math.max(aMaterial.getMass() / 2, 1))
+									RecipeMaps.CANNING.factory().EUt(2).duration(Math.max(aMaterial.getMass() / 2, 1))
 										.input(aStack)
 										.output(GT_Utility.getContainerItem(aStack))
 										.output(GT_OreDictUnificator.get(OrePrefixes.gem, aMaterial, aPrefix.mMaterialAmount / 3628800L))
@@ -45,7 +45,7 @@ public class ProcessingRecycling implements IOreRecipeRegistrator {
 												&& aMaterial != Materials.BioFuel && aMaterial != Materials.Water
 												&& aMaterial != Materials.Nitrogen && aMaterial != Materials.ConstructionFoam) {
 									
-									RecipeMaps.CANINNING.factory().EUt(2).duration(Math.max(aMaterial.getMass() / 2, 1))
+									RecipeMaps.CANNING.factory().EUt(2).duration(Math.max(aMaterial.getMass() / 2, 1))
 										.input(aStack)
 										.output(GT_Utility.getContainerItem(aStack))
 										.output(GT_OreDictUnificator.get(OrePrefixes.dust, aMaterial, aPrefix.mMaterialAmount / 3628800L))

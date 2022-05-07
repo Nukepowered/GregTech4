@@ -69,7 +69,7 @@ public class GT_MetaTileEntityLoader implements Runnable {
 		new GT_MetaTileEntity_E_Furnace					( 54, "GT_E_Furnace"			, RecipeMaps.MELTING);
 		new GT_MetaTileEntity_Wiremill					( 55, "GT_Wiremill"				, RecipeMaps.WIREMILL);
 		new GT_MetaTileEntity_AlloySmelter				( 56, "GT_AlloySmelter"			, RecipeMaps.ALLOY_SMELTING);
-		new GT_MetaTileEntity_Canner					( 57, "GT_Canner"				, RecipeMaps.CANINNING);
+		new GT_MetaTileEntity_Canner					( 57, "GT_Canner"				, RecipeMaps.CANNING);
 		new GT_MetaTileEntity_ElectricTypeSorter		( 58, "GT_E_T_Sorter");
 		new GT_MetaTileEntity_Bender					( 59, "GT_Bender"				, RecipeMaps.BENDING);
 		new GT_MetaTileEntity_Assembler					( 60, "GT_Assembler"			, RecipeMaps.ASSEMBLING);

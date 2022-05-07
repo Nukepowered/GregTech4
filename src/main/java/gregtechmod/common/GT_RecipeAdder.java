@@ -37,12 +37,12 @@ public class GT_RecipeAdder implements IGT_RecipeAdder {
 
 	@Override
 	public RecipeMap<? extends RecipeFactory<?>> blastRecipes() {
-		return RecipeMaps.BLAST_FURNANCE;
+		return RecipeMaps.BLAST_FURNACE;
 	}
 
 	@Override
 	public RecipeMap<? extends RecipeFactory<?>> canningRecipes() {
-		return RecipeMaps.CANINNING;
+		return RecipeMaps.CANNING;
 	}
 
 	@Override

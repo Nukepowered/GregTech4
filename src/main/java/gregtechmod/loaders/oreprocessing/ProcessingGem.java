@@ -77,7 +77,7 @@ public class ProcessingGem implements IOreRecipeRegistrator {
 				}
 				
 				if (aMaterial == Materials.Mercury) {
-					RecipeMaps.CANINNING.factory().EUt(1).duration(100)
+					RecipeMaps.CANNING.factory().EUt(1).duration(100)
 						.input(RecipeEntry.fromStacks(entry.ores, Match.STRICT))
 						.input(GT_Items.Cell_Empty.get(1))
 						.output(GT_OreDictUnificator.get(OrePrefixes.cell, aMaterial, 1L))

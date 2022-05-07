@@ -63,7 +63,7 @@ public class ProcessingOreSmelting implements IOreRecipeRegistrator {
 						System.err.println(aMaterial);
 					}
 					
-					RecipeMaps.BLAST_FURNANCE.factory()
+					RecipeMaps.BLAST_FURNACE.factory()
 						.minTemperature(aMaterial.mBlastFurnaceTemp)
 						.EUt(120).duration(Math.max(aMaterial.getMass() / 4, 1) * aMaterial.mBlastFurnaceTemp)
 						.input(RecipeEntry.fromStacks(entry.ores, Match.STRICT))

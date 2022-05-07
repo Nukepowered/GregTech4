@@ -107,7 +107,7 @@ public class PulverizerRecipeMap extends RecipeMap<SimpleRecipeFactory> {
 	}
 	
 	/**
-	 * Instead of ChancedStack will check chacne for every single item in stack
+	 * Instead of ChancedStack will check chance for every single item in stack
 	 * @author TheDarkDnKTv
 	 *
 	 */

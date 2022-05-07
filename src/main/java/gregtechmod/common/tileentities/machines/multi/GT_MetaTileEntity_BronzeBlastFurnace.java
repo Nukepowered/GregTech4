@@ -18,11 +18,11 @@ import net.minecraftforge.common.util.ForgeDirection;
 public class GT_MetaTileEntity_BronzeBlastFurnace extends BaseMultiWorkable {
 	
 	public GT_MetaTileEntity_BronzeBlastFurnace(int aID, String mName) {
-		super(aID, mName, RecipeMaps.BRONZE_BLAST_FURNANCE);
+		super(aID, mName, RecipeMaps.BRONZE_BLAST_FURNACE);
 	}
 	
 	public GT_MetaTileEntity_BronzeBlastFurnace() {
-		super(RecipeMaps.BRONZE_BLAST_FURNANCE);
+		super(RecipeMaps.BRONZE_BLAST_FURNACE);
 	}
 	
 	@Override public boolean isSteampowered()						{return false;}

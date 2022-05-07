@@ -1,7 +1,7 @@
 package gregtechmod.api.util;
 
 public class GT_LanguageManager {
-	public static volatile int VERSION = 415;
+	public static volatile int VERSION = 416;
 	
 	public static String[] mNameList0		= {"Adv_Machine", "Fusioncoil", "Iridium_reinforced_Stone", "Block_of_Silver", "Block_of_Ruby", "Block_of_Sapphire", "LESU_Block", "Block_of_Aluminium", "Block_of_Titanium", "Block_of_Chrome", "Highly_Advanced_Machineblock", "Block_of_Steel", "Block_of_Brass", "Standard_Machine_Casing", "Reinforced_Machine_Casing", "Advanced_Machine_Casing"};
     public static String[] mNameList1		= {"GT_BUG", "Fusionreactor", "Lightningrod", "Quantumchest", "GregTech_Computercube", "UUM_Assembler", "Sonictron", "Lapotronic_Energystorageunit", "Interdimensional_Energystorageunit", "Adjustable_Energystorageunit", "Charge_O_Mat", "Industrial_Centrifuge", "Superconductorwire", "Playerdetector", "Matterfabricator", "Supercondensator"};

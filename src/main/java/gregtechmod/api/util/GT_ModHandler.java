@@ -51,7 +51,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
  * Due to the many imports, this File can cause compile Problems if not all the APIs are installed
  */
 public class GT_ModHandler {
-	public static volatile int VERSION = 415;
+	public static volatile int VERSION = 416;
 	
 	/**
 	 * Returns if that Liquid is Water
@@ -741,7 +741,7 @@ public class GT_ModHandler {
 	
 	/**
 	 * @param aValue Scrap = 5000, Scrapbox = 45000
-	 * @param aAmplifiers stacks apply to
+	 * @param oreDict
 	 */
 	public static boolean addIC2MatterAmplifier(int aValue, String oreDict) {
 		if (GT_Utility.isStackInvalid(oreDict) || aValue <= 0) return false;

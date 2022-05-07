@@ -36,7 +36,7 @@ import net.minecraftforge.fluids.FluidTankInfo;
  * This is the main TileEntity for EVERYTHING.
  */
 public class BaseMetaPipeEntity extends BaseTileEntity implements IGregTechTileEntity {
-	public static volatile int VERSION = 415;
+	public static volatile int VERSION = 416;
 	
 	public byte mConnections = 0;
 	

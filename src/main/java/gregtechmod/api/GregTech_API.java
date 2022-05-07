@@ -42,7 +42,7 @@ import net.minecraftforge.oredict.OreDictionary;
  */
 public class GregTech_API {
 	/** For the API Version check */
-	public static volatile int VERSION = 415;
+	public static volatile int VERSION = 416;
 	
 	/** The Mod Object itself. That is the GT_Mod-Object. It's needed to open GUI's and similar. */
 	public static IGT_Mod gregtechmod;
@@ -331,7 +331,7 @@ public class GregTech_API {
 	 * Adds a Multi-Machine Block, like my Machine Casings for example.
 	 * You should call @causeMachineUpdate in @Block.breakBlock and in @Block.onBlockAdded of your registered Block.
 	 * You don't need to register TileEntities which implement @IMachineBlockUpdateable
-	 * @param aID the ID of your Block
+	 * @param aBlock
 	 * @param aMeta the Metadata of the Blocks as Bitmask! -1 for all Metavalues
 	 */
 	public static boolean registerMachineBlock(Block aBlock, int aMeta) {

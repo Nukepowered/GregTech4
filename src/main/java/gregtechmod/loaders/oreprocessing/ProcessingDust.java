@@ -78,12 +78,12 @@ public class ProcessingDust implements IOreRecipeRegistrator {
 				});
 								
 				if (GT_OreDictUnificator.get(OrePrefixes.cell, aMaterial, 1) != null) {
-					RecipeMaps.CANINNING.factory().EUt(1).duration(100)
+					RecipeMaps.CANNING.factory().EUt(1).duration(100)
 						.input(RecipeEntry.fromStacks(entry.ores, Match.STRICT))
 						.input(aMaterial == Materials.Milk ? GT_Items.Cell_Water.get(1) : GT_Items.Cell_Empty.get(1))
 						.output(GT_OreDictUnificator.get(OrePrefixes.cell, aMaterial, 1))
 						.buildAndRegister();
-					if (aMaterial != Materials.Milk) RecipeMaps.CANINNING.factory().EUt(1).duration(100)
+					if (aMaterial != Materials.Milk) RecipeMaps.CANNING.factory().EUt(1).duration(100)
 						.input(OrePrefixes.cell, aMaterial)
 						.output(GT_OreDictUnificator.get(OrePrefixes.dust, aMaterial, 1))
 						.output(GT_OreDictUnificator.get(GT_Items.Cell_Empty.get(1)))
@@ -156,7 +156,7 @@ public class ProcessingDust implements IOreRecipeRegistrator {
 				default:
 					break;
 				case Milk:
-					RecipeMaps.CANINNING.factory().EUt(1).duration(100)
+					RecipeMaps.CANNING.factory().EUt(1).duration(100)
 						.input(RecipeEntry.fromStacks(entry.ores, Match.STRICT))
 						.input(new ItemStack(Items.water_bucket, 1))
 						.output(new ItemStack(Items.milk_bucket, 1))
@@ -209,7 +209,7 @@ public class ProcessingDust implements IOreRecipeRegistrator {
 				
 				if (!aMaterial.contains(SubTag.NO_SMELTING) && tStack != null) {
 					if (aMaterial.mBlastFurnaceRequired && null != tStack) {
-						factory = RecipeMaps.BLAST_FURNANCE.factory()
+						factory = RecipeMaps.BLAST_FURNACE.factory()
 							.minTemperature(aMaterial.mBlastFurnaceTemp).EUt(120)
 							.duration(Math.max(aMaterial.getMass() / 40, 1) * aMaterial.mBlastFurnaceTemp)
 							.input(RecipeEntry.fromStacks(entry.ores, Match.STRICT));

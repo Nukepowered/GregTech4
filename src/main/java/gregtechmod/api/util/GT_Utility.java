@@ -68,7 +68,7 @@ import cpw.mods.fml.common.ObfuscationReflectionHelper;
  * Just a few Utility Functions I use.
  */
 public class GT_Utility {
-	public static volatile int VERSION = 415;
+	public static volatile int VERSION = 416;
 	
 	public static final List<Character> sNumberedCharacters   = Arrays.asList('0', '1', '2', '3', '4', '5', '6', '7', '8', '9');
 	public static final List<Character> sUpperCasedCharacters = Arrays.asList('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');

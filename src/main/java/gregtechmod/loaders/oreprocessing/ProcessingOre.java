@@ -178,7 +178,7 @@ public class ProcessingOre implements IOreRecipeRegistrator {
 				}
 				
 				if (aMaterial.contains(SubTag.BLASTFURNACE_CALCITE_TRIPLE)) {
-					RecipeMaps.BLAST_FURNANCE.factory()
+					RecipeMaps.BLAST_FURNACE.factory()
 						.minTemperature(1500)
 						.EUt(120).duration(tSmeltInto.stackSize * 500)
 						.input(ingr)
@@ -187,7 +187,7 @@ public class ProcessingOre implements IOreRecipeRegistrator {
 						.output(GT_Items.TE_Slag.get(1L, GT_OreDictUnificator.get(OrePrefixes.dust, Materials.DarkAsh, 1L)))
 						.buildAndRegister();
 				} else if (aMaterial.contains(SubTag.BLASTFURNACE_CALCITE_DOUBLE)) {
-					RecipeMaps.BLAST_FURNANCE.factory()
+					RecipeMaps.BLAST_FURNACE.factory()
 						.minTemperature(1500)
 						.EUt(120).duration(tSmeltInto.stackSize * 500)
 						.input(ingr)
