@@ -12,7 +12,7 @@ import net.minecraftforge.fluids.IFluidHandler;
  * 
  * It can cause Problems to include this Interface!
  */
-public interface IGregTechTileEntity extends IGearEnergyTileEntity, ICoverable, IFluidHandler, ITurnable, IGregTechDeviceInformation, IUpgradableMachine, IDigitalChest, IDescribable, IMachineBlockUpdateable {
+public interface IGregTechTileEntity extends IGearEnergyTileEntity, ICoverable, IFluidHandler, ITurnable, IGregTechDeviceInformation, IUpgradableMachine, IDigitalChest, IDescribable, IMachineBlockUpdateable, ITexturesTileEntity {
 	/**
 	 * gets the Error displayed on the GUI
 	 */
@@ -80,7 +80,7 @@ public interface IGregTechTileEntity extends IGearEnergyTileEntity, ICoverable, 
     
 	/**
 	 * Sets initial Values from NBT
-	 * @param tNBT is the NBTTag of readFromNBT
+	 * @param aNBT is the NBTTag of readFromNBT
 	 * @param aID is the MetaTileEntityID
 	 */
 	public void setInitialValuesAsNBT(NBTTagCompound aNBT, short aID);
@@ -108,6 +108,4 @@ public interface IGregTechTileEntity extends IGearEnergyTileEntity, ICoverable, 
 	public boolean onRightclick(EntityPlayer aPlayer, byte aSide, float par1, float par2, float par3);
 	
 	public float getBlastResistance(byte aSide);
-	public int getTextureIndex(byte aSide, byte aMeta);
-	public IIcon getTextureIcon(byte aSide, byte aMeta);
 }

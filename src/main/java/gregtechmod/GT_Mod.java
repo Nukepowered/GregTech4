@@ -56,11 +56,7 @@ import gregtechmod.common.network.GT_ConnectionHandler;
 import gregtechmod.common.network.GT_NetworkHandler;
 import gregtechmod.common.recipe.RecipeMaps;
 import gregtechmod.common.render.GT_Block_Renderer;
-import gregtechmod.common.tileentities.deprecated.GT_TileEntity_ComputerCube;
-import gregtechmod.common.tileentities.deprecated.GT_TileEntity_LightSource;
-import gregtechmod.common.tileentities.deprecated.GT_TileEntity_PlayerDetector;
-import gregtechmod.common.tileentities.deprecated.GT_TileEntity_Sonictron;
-import gregtechmod.common.tileentities.deprecated.GT_TileEntity_Superconductor;
+import gregtechmod.common.tileentities.deprecated.*;
 
 import gregtechmod.integration.crafttweaker.GregTechTweaker;
 import gregtechmod.loaders.load.GT_CoverBehaviorLoader;
@@ -462,7 +458,7 @@ public class GT_Mod implements IGT_Mod {
 		GT_Log.log.info("Register the few old TileEntities.");
 		GameRegistry.registerTileEntity(GT_TileEntity_ComputerCube.class	, "GregTech_Computercube");
 		GameRegistry.registerTileEntity(GT_TileEntity_Sonictron.class		, "Sonictron");
-		GameRegistry.registerTileEntity(GT_TileEntity_Superconductor.class	, "Superconductorwire");
+		GameRegistry.registerTileEntity(TileEntitySuperconductor.class		, "Superconductorwire");
 		GameRegistry.registerTileEntity(GT_TileEntity_PlayerDetector.class	, "Playerdetector");
 		GameRegistry.registerTileEntity(GT_TileEntity_LightSource.class		, "GT_LightSource");
 		

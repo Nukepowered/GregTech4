@@ -47,6 +47,9 @@ public abstract class BaseTileEntity extends TileEntity implements IHasWorldObje
     		}
     	}
     }
+
+	public void onPlaced() {}
+	public void onRemoved() {}
     
 	@Override public final World getWorld () {return      worldObj;}
 	@Override public final int   getXCoord() {return        xCoord;}

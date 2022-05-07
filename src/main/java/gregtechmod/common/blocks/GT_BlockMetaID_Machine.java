@@ -1,23 +1,17 @@
 package gregtechmod.common.blocks;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.interfaces.ICoverable;
-import gregtechmod.api.interfaces.IDebugableBlock;
-import gregtechmod.api.interfaces.IGregTechTileEntity;
-import gregtechmod.api.interfaces.IMetaTileEntity;
+import gregtechmod.api.interfaces.*;
 import gregtechmod.api.metatileentity.BaseMetaPipeEntity;
 import gregtechmod.api.metatileentity.BaseMetaTileEntity;
+import gregtechmod.api.metatileentity.BaseTileEntity;
 import gregtechmod.api.util.GT_Config;
 import gregtechmod.api.util.GT_Log;
 import gregtechmod.api.util.GT_Utility;
 import gregtechmod.common.GT_FluidRegistry;
 import gregtechmod.common.items.GT_MetaItem_Component;
 import gregtechmod.common.render.GT_Block_Renderer;
-import gregtechmod.common.tileentities.deprecated.GT_TileEntityMetaID_Machine;
-import gregtechmod.common.tileentities.deprecated.GT_TileEntity_ComputerCube;
-import gregtechmod.common.tileentities.deprecated.GT_TileEntity_PlayerDetector;
-import gregtechmod.common.tileentities.deprecated.GT_TileEntity_Sonictron;
-import gregtechmod.common.tileentities.deprecated.GT_TileEntity_Superconductor;
+import gregtechmod.common.tileentities.deprecated.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -579,9 +573,18 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 		} else {
 			if (tTileEntity instanceof GT_TileEntityMetaID_Machine) {
 				tIndex = ((GT_TileEntityMetaID_Machine)tTileEntity).getTexture(aSide, tMeta);
-			} else if (tTileEntity instanceof IGregTechTileEntity && ((IGregTechTileEntity)tTileEntity).getMetaTileEntity() != null) {
-				rIcon = ((IGregTechTileEntity)tTileEntity).getTextureIcon((byte)aSide, tMeta);
-				if (rIcon == null) tIndex = ((IGregTechTileEntity)tTileEntity).getTextureIndex((byte)aSide, tMeta);
+			} else if (tTileEntity instanceof IGregTechTileEntity) {
+				IGregTechTileEntity gregTechTileEntity = (IGregTechTileEntity) tTileEntity;
+				if (gregTechTileEntity.getMetaTileEntity() != null) {
+					rIcon = gregTechTileEntity.getTextureIcon((byte)aSide, tMeta);
+					if (rIcon == null) tIndex = gregTechTileEntity.getTextureIndex((byte)aSide, tMeta);
+				} else {
+					tIndex = -2;
+				}
+			} else if (tTileEntity instanceof ITexturesTileEntity) {
+				ITexturesTileEntity textureTe = (ITexturesTileEntity) tTileEntity;
+				rIcon = textureTe.getTextureIcon((byte)aSide, tMeta);
+				if (rIcon == null) tIndex = textureTe.getTextureIndex((byte)aSide, tMeta);
 			} else {
 				tIndex = -2;
 			}
@@ -609,7 +612,9 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 		int tIndex = -1;
 		
 		try {
-			if (aMeta > 0 && aMeta < 16) {
+			if (aMeta == 12) {
+				tIndex = 103;
+			} else if (aMeta > 0 && aMeta < 16) {
 				tIndex = ((GT_TileEntityMetaID_Machine)createTileEntity(null, aMeta)).getTexture(aSide, aMeta);
 			} else if (GregTech_API.mMetaTileList[aMeta] != null) {
 				rIcon = GregTech_API.mMetaTileList[aMeta].getTextureIcon((byte)aSide, (byte)4, true, false);
@@ -663,8 +668,6 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 					return machine.isUseableByPlayer(aPlayer) ? machine.onRightclick(aPlayer, (byte)aSide, par1, par2, par3) : false;
 				}
 			}
-			
-			return true;
 		}
 		
 		return false;
@@ -782,13 +785,18 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 	@Override
     public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z) {
         TileEntity tTileEntity = world.getTileEntity(x, y, z);
-        
-        if (GregTech_API.sMachineNonWrenchExplosions && tTileEntity != null && (player == null || !player.capabilities.isCreativeMode))
-            if (tTileEntity instanceof GT_TileEntityMetaID_Machine)
-            	((GT_TileEntityMetaID_Machine)tTileEntity).doEnergyExplosion();
-            else
-            	if (tTileEntity instanceof BaseMetaTileEntity)
-            		((BaseMetaTileEntity)tTileEntity).doEnergyExplosion();
+		if (tTileEntity != null) {
+			if (tTileEntity instanceof BaseTileEntity) {
+				((BaseTileEntity) tTileEntity).onRemoved();
+			}
+
+			if (GregTech_API.sMachineNonWrenchExplosions && (player == null || !player.capabilities.isCreativeMode)) {
+				if (tTileEntity instanceof GT_TileEntityMetaID_Machine)
+					((GT_TileEntityMetaID_Machine) tTileEntity).doEnergyExplosion();
+				else if (tTileEntity instanceof BaseMetaTileEntity)
+					((BaseMetaTileEntity) tTileEntity).doEnergyExplosion();
+			}
+		}
         
         return world.setBlock(x, y, z, Blocks.air, 0, 3);
     }
@@ -884,12 +892,12 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 	public TileEntity createTileEntity(World aWorld, int aMeta) {
 		switch(aMeta) {
 		case  0: return GregTech_API.constructBaseMetaTileEntity();
-		case  1: return new BaseMetaPipeEntity();
-		case  2: return new BaseMetaPipeEntity();
+		case  1:
+		case  2:
 		case  3: return new BaseMetaPipeEntity();
 		case  4: return new GT_TileEntity_ComputerCube();
 		case  6: return new GT_TileEntity_Sonictron();
-		case 12: return new GT_TileEntity_Superconductor();
+		case 12: return new TileEntitySuperconductor();
 		case 13: return new GT_TileEntity_PlayerDetector();
 		default: return null;
 		}
@@ -948,6 +956,11 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
 	
 	@Override
     public void onBlockAdded(World aWorld, int aX, int aY, int aZ) {
+		TileEntity te = aWorld.getTileEntity(aX, aY, aZ);
+		if (te != null && te instanceof BaseTileEntity) {
+			((BaseTileEntity) te).onPlaced();
+		}
+
 		if (GregTech_API.isMachineBlock(this, aWorld.getBlockMetadata(aX, aY, aZ))) {
 			GregTech_API.causeMachineUpdate(aWorld, aX, aY, aZ);
 		}
@@ -1013,4 +1026,13 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
     public boolean isFireSource(World aWorld, int aX, int aY, int aZ, ForgeDirection side) {
         return GregTech_API.sMachineFlammable && aWorld.getBlockMetadata(aX, aY, aZ) == 0;
     }
+
+	@Override
+	public void onNeighborChange(IBlockAccess world, int x, int y, int z, int tileX, int tileY, int tileZ) {
+		super.onNeighborChange(world, x, y, z, tileX, tileY, tileZ);
+		TileEntity entity = world.getTileEntity(x, y, z);
+		if (entity != null && entity instanceof BaseTileEntity) {
+			((BaseTileEntity) entity).onAdjacentBlockChange(tileX, tileY, tileZ);
+		}
+	}
 }
