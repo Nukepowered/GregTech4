@@ -21,7 +21,7 @@ import cpw.mods.fml.relauncher.SideOnly;
  * All Functions run usually in a seperate try/catch Block, so that failed Logic won't crash the TileEntity.
  */
 public abstract class GT_CircuitryBehavior {
-	public static volatile int VERSION = 415;
+	public static volatile int VERSION = 416;
 	
 	/**
 	 * @param aIndex 0 - 1023 are my own Indices, so use other Numbers!

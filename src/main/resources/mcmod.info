@@ -3,7 +3,7 @@
   "name": "GregTech-Addon",
   "description": "This Addon adds the awesome Technology of GregTech-Intergalactical to your World! Fusionreactors, Lightningrods and many other Technologies and convenient Recipes are added by this Addon, if you let them enabled in the allmighty Config, of course",
   "mcversion": "1.7.10",
-  "version": "4.15.35",
+  "version": "4.16.40",
   "logoFile": "/assets/gregtech_addon/textures/LogoGTI_Long.png",
   "url": "https://github.com/Nukepowered/GregTech4",
   "updateUrl": "",

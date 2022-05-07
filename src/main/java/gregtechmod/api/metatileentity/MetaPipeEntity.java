@@ -34,7 +34,7 @@ import cpw.mods.fml.relauncher.SideOnly;
  * "new GT_MetaTileEntity_E_Furnace(54, "GT_E_Furnace", "Automatic E-Furnace");"
  */
 public abstract class MetaPipeEntity implements IMetaTileEntity {
-	public static volatile int VERSION = 415;
+	public static volatile int VERSION = 416;
 	
 	/**
 	 * This variable tells, which directions the Block is connected to. It is a Bitmask.

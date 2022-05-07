@@ -118,8 +118,8 @@ public class CTRecipeFactory {
     }
 
     @ZenMethod
-    public CTRecipeFactory withMeta(String key, Object value) {
-        backingFactory.withMeta(key, value);
+    public CTRecipeFactory withMeta(String key, int value) {
+        backingFactory.withMeta(key, Integer.valueOf(value));
         return this;
     }
 

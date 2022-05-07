@@ -233,7 +233,8 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 	@ZenMethod
 	@Method(modid = GTConsts.CT_MODID)
 	public boolean remove(CTRecipe recipe) {
-		return this.remove(recipe.backingRecipe);
+		return recipe == null ? true :
+			this.remove(recipe.backingRecipe);
 	}
 
 	@ZenMethod("factory")
