@@ -80,11 +80,18 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 	
 	protected Recipe findRecipe(Collection<Recipe> recipes, List<ItemStack> input, List<FluidStack> fluidInputs, Predicate<Recipe> metaChecker) {
 		if (recipes != null) {
-			for (Recipe recipe : recipes) {
-				if (metaChecker.test(recipe) && recipe.matches(false, input, fluidInputs)) {
-					return recipe;
-				}
-			}
+			// Recipes with more inputs are first
+			final Comparator<Recipe> comparator = Comparator.comparing(Recipe::isShaped)
+				.thenComparing(recipe -> recipe.getInputs().size())
+				.thenComparing(recipe -> recipe.getFluidInputs().size())
+				.reversed();
+
+			return recipes.stream()
+				.filter(metaChecker::test)
+				.filter(recipe -> recipe.matches(false, input, fluidInputs))
+				.sorted(comparator)
+				.findFirst()
+				.orElse(null);
 		}
 		
 		return null;
