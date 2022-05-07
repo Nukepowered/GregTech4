@@ -80,7 +80,5 @@ public class BenderRecipeHandler extends GT_RecipeHandler {
 		drawText(30, 80, I18n.format("nei.extras.eu_total", GT_Utility.parseNumberToString(rec.mDuration * rec.mEUt)), 0xFF000000, false);
 		drawText(30, 90, I18n.format("nei.extras.time", GT_Utility.parseNumberToString(rec.mDuration * 1.0D / 20.0D)), 0xFF000000, false);
 		drawText(30, 100, I18n.format("nei.extras.eut", GT_Utility.parseNumberToString(rec.mEUt)), 0xFF000000, false);
-	    drawText(30, 110, I18n.format("nei.bender.info.1"), -16777216, false);
-	    drawText(30, 120, I18n.format("nei.bender.info.2"), -16777216, false);
 	}
 }
