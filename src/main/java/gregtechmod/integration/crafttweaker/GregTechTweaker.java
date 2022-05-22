@@ -13,6 +13,7 @@ public class GregTechTweaker {
         MineTweakerAPI.registerClass(CTIngredient.class);
         MineTweakerAPI.registerClass(CTChancedOutput.class);
         MineTweakerAPI.registerClass(CTRecipe.class);
+        MineTweakerAPI.registerClass(IC2Util.class);
 
         MineTweakerAPI.logInfo("GregTech 4 Mod support loaded");
     }
