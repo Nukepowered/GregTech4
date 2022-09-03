@@ -772,10 +772,8 @@ public class GT_Mod implements IGT_Mod {
         
         ItemStack tStack = GT_ModHandler.removeRecipe(new ItemStack(Blocks.planks, 1, 0), null, null, new ItemStack(Blocks.planks, 1, 0));
         if (tStack != null) {
-        	tStack = GT_Utility.copyAmount(GT_Mod.sNerfedWoodPlank ? (tStack.stackSize) : ((tStack.stackSize * 5 / 4)), tStack);
-        	GameRegistry.addRecipe(new ShapedOreRecipe(tStack, "S", "P", "P", 'P', "plankWood", 'S', GT_ToolDictNames.craftingToolSaw.toString()));
-        	tStack = GT_Utility.copyAmount(GT_Mod.sNerfedWoodPlank ? ((tStack.stackSize / 2)) : (tStack.stackSize), tStack);
-        	GameRegistry.addRecipe(new ShapedOreRecipe(tStack, "P", "P", 'P', "plankWood"));
+        	GameRegistry.addRecipe(new ShapedOreRecipe(GT_Utility.copyAmount(GT_Mod.sNerfedWoodPlank ? (tStack.stackSize) : ((tStack.stackSize * 5 / 4)), tStack), "S", "P", "P", 'P', "plankWood", 'S', GT_ToolDictNames.craftingToolSaw.toString()));
+        	GameRegistry.addRecipe(new ShapedOreRecipe(GT_Utility.copyAmount(GT_Mod.sNerfedWoodPlank ? ((tStack.stackSize / 2)) : (tStack.stackSize), tStack), "P", "P", 'P', "plankWood"));
         }
         
         GT_ModHandler.addCraftingRecipe(new ItemStack(Items.comparator, 1, 0), false, false, new Object[] { " T ", "TQT", "SSS", 'Q', "craftingQuartz", 'S', "stoneSmooth", 'T', "craftingRedstoneTorch" });
