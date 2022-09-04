@@ -12,7 +12,8 @@ public class GT_Vanilla_Axe extends GT_Vanilla_Tool {
 		setHarvestLevel("axe", mHarvestLevel);
 	}
 	
-    public float getStrVsBlock(ItemStack aStack, Block aBlock) {
+    @Override
+    public float func_150893_a(ItemStack aStack, Block aBlock) {
         return aBlock != null && (aBlock.getMaterial() == Material.wood || aBlock.getMaterial() == Material.plants || aBlock.getMaterial() == Material.vine) ? this.efficiencyOnProperMaterial : super.func_150893_a(aStack, aBlock);
     }
 }
