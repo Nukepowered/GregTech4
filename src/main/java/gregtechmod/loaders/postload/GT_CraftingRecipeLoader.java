@@ -747,7 +747,7 @@ public class GT_CraftingRecipeLoader implements Runnable {
     	}
     	
     	if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.gregtechrecipes, "iridiumreflector", true)) {
-    		GT_ModHandler.addCraftingRecipe(GT_Items.Reactor_NeutronReflector.getUndamaged(1), new Object[] {"NNN", "NIN", "NNN", 'I', OrePrefixes.plateAlloy.get("Iridium"), 'N', GT_ModHandler.getIC2Item("reactorReflectorThick", 1)});
+    		GT_ModHandler.addCraftingRecipe(GT_Items.Reactor_NeutronReflector.getUndamaged(1), new Object[] {"NNN", "NIN", "NNN", 'I', OrePrefixes.plateAlloy.get("Iridium"), 'N', GT_ModHandler.getIC2Item("reactorReflectorThick", 1, 1)});
     	}
     	
     	if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.gregtechrecipes, "lapotronpack", true)) {
@@ -852,7 +852,7 @@ public class GT_CraftingRecipeLoader implements Runnable {
         } else {
            GT_ModHandler.addCraftingRecipe(GT_Items.IC2_Energium_Dust.get(9), false, false, new Object[] {"RDR", "DRD", "RDR", 'R', OrePrefixes.dust.get(Materials.Redstone), 'D', OrePrefixes.dust.get(Materials.Diamond)});
         }
-        
+
         GT_ModHandler.removeRecipeByOutput(GT_ModHandler.getIC2Item("lapotronCrystal", 1));
         GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("lapotronCrystal", 1), false, false, new Object[] {"LCL", "LSL", "LCL", 'C', OrePrefixes.circuit.get(Materials.Advanced), 'S', GT_ModHandler.getIC2Item("energyCrystal", 1, GregTech_API.ITEM_WILDCARD_DAMAGE), 'L', OrePrefixes.dust.get(Materials.Lazurite)});
         GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("lapotronCrystal", 1), false, false, new Object[] {"LCL", "LSL", "LCL", 'C', OrePrefixes.circuit.get(Materials.Advanced), 'S', GT_ModHandler.getIC2Item("energyCrystal", 1, GregTech_API.ITEM_WILDCARD_DAMAGE), 'L', OrePrefixes.dust.get(Materials.Lapis)});
