@@ -159,8 +159,8 @@ public class GT_MachineRecipeLoader implements Runnable
         RecipeMaps.CANNING.factory().EUt(1).duration(100).inputs(new ItemStack(Items.lava_bucket), GT_Items.Cell_Empty.get(1L)).outputs(GT_Items.Cell_Lava.get(1L), new ItemStack(Items.bucket, 1)).buildAndRegister();
         RecipeMaps.CANNING.factory().EUt(1).duration(100).inputs(new ItemStack(Items.water_bucket), GT_Items.Cell_Empty.get(1L)).outputs(GT_Items.Cell_Water.get(1L), new ItemStack(Items.bucket, 1)).buildAndRegister();
         
-        RecipeMaps.CANNING.factory().EUt(8).duration(100).inputs(GT_Items.IC2_Fuel_Rod_Empty.get(1), GT_ModHandler.getIC2Item("UranFuel", 1)).output(GT_ModHandler.getIC2Item("reactorUraniumSimple", 1)).buildAndRegister();
-        RecipeMaps.CANNING.factory().EUt(8).duration(100).inputs(GT_Items.IC2_Fuel_Rod_Empty.get(1), GT_ModHandler.getIC2Item("MOXFuel", 1)).output(GT_ModHandler.getIC2Item("reactorMOXSimple", 1)).buildAndRegister();
+        RecipeMaps.CANNING.factory().EUt(8).duration(100).inputs(GT_Items.IC2_Fuel_Rod_Empty.get(1), GT_ModHandler.getIC2Item("UranFuel", 1)).output(GT_ModHandler.getIC2Item("reactorUraniumSimple", 1, 1)).buildAndRegister();
+        RecipeMaps.CANNING.factory().EUt(8).duration(100).inputs(GT_Items.IC2_Fuel_Rod_Empty.get(1), GT_ModHandler.getIC2Item("MOXFuel", 1)).output(GT_ModHandler.getIC2Item("reactorMOXSimple", 1, 1)).buildAndRegister();
         
         ItemStack constCell = GT_Utility.fillFluidContainer(GT_Utility.copy(Materials.ConstructionFoam.mFluid, 1000), GT_Items.Cell_Empty.get(1));
         RecipeEntry entry = RecipeEntry.fromStacks(10, Lists.newArrayList(
