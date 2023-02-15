@@ -101,9 +101,13 @@ public class Recipe {
 		Pair<Boolean, Integer[]> fluids = this.matchFluids(fluidInputs);
 		if (items.getKey() && fluids.getKey()) {
 			for (int i = 0; decrease && i < inputs.size() && !inputs.isEmpty(); i++) {
+				int delta = items.getValue()[i];
+				if (delta == 0) continue;
+				
 				ItemStack current = inputs.get(i);
-				int newSize = current.stackSize + items.getValue()[i];
-				if (current == null || newSize == current.stackSize) continue;
+				if (current == null) continue;
+				
+				int newSize = current.stackSize + delta;
 				if (newSize > 0)
 					current.stackSize = newSize;
 				else
@@ -111,9 +115,13 @@ public class Recipe {
 			}
 			
 			for (int i = 0; decrease && i < fluidInputs.size() && !fluidInputs.isEmpty(); i++) {
+				int delta = fluids.getValue()[i];
+				if (delta == 0) continue;
+				
 				FluidStack current = fluidInputs.get(i);
-				int newSize = current.amount + fluids.getValue()[i];
-				if (current == null || newSize == current.amount) continue;
+				if (current == null) continue;
+				
+				int newSize = current.amount + delta;
 				if (newSize > 0)
 					current.amount = newSize;
 				else
