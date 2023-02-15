@@ -102,7 +102,7 @@ public class Recipe {
 		if (items.getKey() && fluids.getKey()) {
 			for (int i = 0; decrease && i < inputs.size() && !inputs.isEmpty(); i++) {
 				ItemStack current = inputs.get(i);
-				int newSize = items.getValue()[i];
+				int newSize = current.stackSize + items.getValue()[i];
 				if (current == null || newSize == current.stackSize) continue;
 				if (newSize > 0)
 					current.stackSize = newSize;
@@ -112,7 +112,7 @@ public class Recipe {
 			
 			for (int i = 0; decrease && i < fluidInputs.size() && !fluidInputs.isEmpty(); i++) {
 				FluidStack current = fluidInputs.get(i);
-				int newSize = fluids.getValue()[i];
+				int newSize = current.amount + fluids.getValue()[i];
 				if (current == null || newSize == current.amount) continue;
 				if (newSize > 0)
 					current.amount = newSize;
