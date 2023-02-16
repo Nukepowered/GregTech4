@@ -52,9 +52,7 @@ public class GT_MetaMachine_Item extends ItemBlock {
 				mString4[tDamage] = "";
 				mString5[tDamage] = "";
 				mString6[tDamage] = "";
-				if (tDamage == 0) {
-					
-				} else {
+				if (tDamage != 0) {
 					TileEntity temp = GregTech_API.sBlockList[1].createTileEntity(aPlayer.worldObj, tDamage > 15 ? GregTech_API.mMetaTileList[tDamage] == null ? 0 : GregTech_API.mMetaTileList[tDamage].getTileEntityBaseType() : tDamage);
 					if (temp != null) {
 						temp.setWorldObj(aPlayer.worldObj); temp.xCoord = 0; temp.yCoord = 0; temp.zCoord = 0;
@@ -72,7 +70,7 @@ public class GT_MetaMachine_Item extends ItemBlock {
 							if (tTileEntity.getEUCapacity()		> 10000) mString4[tDamage] = I18n.format("metatileentity.TileEntity_EUp_STORE.tooltip",tTileEntity.getEUCapacity()); else mString4[tDamage] = "";
 							mString5[tDamage] = (tTileEntity.isOverclockerUpgradable()?"O ":"") + (tTileEntity.isTransformerUpgradable()?"T ":"") + (tTileEntity.isBatteryUpgradable(0, (byte)0)?"B ":"") + (tTileEntity.isRFConverterUpgradable()?"M ":"") + (tTileEntity.isSteamEngineUpgradable()?"S ":"");
 							if (!mString5[tDamage].equals(""))
-							mString5[tDamage] = I18n.format("metatileentity.TileEntity_UPGRADES.tooltip") + " " + (tTileEntity.isOverclockerUpgradable()?"O ":"") + (tTileEntity.isTransformerUpgradable()?"T ":"") + (tTileEntity.isBatteryUpgradable(0, (byte)0)?"B ":"") + (tTileEntity.isRFConverterUpgradable()?"M ":"") + (tTileEntity.isSteamEngineUpgradable()?"S ":"");
+								mString5[tDamage] = I18n.format("metatileentity.TileEntity_UPGRADES.tooltip") + " " + (tTileEntity.isOverclockerUpgradable()?"O ":"") + (tTileEntity.isTransformerUpgradable()?"T ":"") + (tTileEntity.isBatteryUpgradable(0, (byte)0)?"B ":"") + (tTileEntity.isRFConverterUpgradable()?"M ":"") + (tTileEntity.isSteamEngineUpgradable()?"S ":"");
 							mString6[tDamage] = "";
 						}
 					}

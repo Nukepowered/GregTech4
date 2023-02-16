@@ -687,11 +687,12 @@ public class GT_BlockMetaID_Machine extends BlockContainer implements IDebugable
     public int getDamageValue(World aWorld, int aX, int aY, int aZ) {
 	    TileEntity tTileEntity = aWorld.getTileEntity(aX, aY, aZ);
 	    
-	    if (tTileEntity != null && tTileEntity instanceof IGregTechTileEntity) {
-        	return ((IGregTechTileEntity)tTileEntity).getMetaTileID();
+	    if (tTileEntity instanceof IGregTechTileEntity) {
+        	return ((IGregTechTileEntity) tTileEntity).getMetaTileID();
 	    }
-	    
-	    return 0;
+
+		final int meta = aWorld.getBlockMetadata(aX, aY, aZ);
+	    return meta > 0 && meta < 16 ? meta : 0;
     }
 
 	@Override
