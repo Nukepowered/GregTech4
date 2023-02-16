@@ -745,7 +745,11 @@ public class GT_CraftingRecipeLoader implements Runnable {
     		GT_ModHandler.addCraftingRecipe(GT_Items.Reactor_Coolant_NaK_6.getUndamaged(1), new Object[] {"THT", "TCT", "THT", 'H', GT_Items.Reactor_Coolant_NaK_3.getWildcard(1), 'T', OrePrefixes.plate.get(Materials.Tin), 'C', OrePrefixes.plateDense.get(Materials.Copper)});
     		GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("overclockerUpgrade", 2), new Object[] {" H ", "WCW", "   ", 'H', GT_Items.Reactor_Coolant_NaK_1.getWildcard(1), 'W', GT_OreDictNames.craftingWireCopper, 'C', OrePrefixes.circuit.get(Materials.Basic)});
     	}
-    	
+
+		if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.gregtechrecipes, "thickreflector_beryllium", true)) {
+			GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("reactorReflectorThick", 1, 1), " N ", "NBN", " N ", 'B', GT_OreDictUnificator.get(OrePrefixes.cell, Materials.Beryllium), 'N', GT_ModHandler.getIC2Item("reactorReflector", 1, 1));
+		}
+
     	if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.gregtechrecipes, "iridiumreflector", true)) {
     		GT_ModHandler.addCraftingRecipe(GT_Items.Reactor_NeutronReflector.getUndamaged(1), new Object[] {"NNN", "NIN", "NNN", 'I', OrePrefixes.plateAlloy.get("Iridium"), 'N', GT_ModHandler.getIC2Item("reactorReflectorThick", 1, 1)});
     	}
