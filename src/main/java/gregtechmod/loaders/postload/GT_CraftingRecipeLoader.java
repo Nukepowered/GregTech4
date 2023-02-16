@@ -350,7 +350,7 @@ public class GT_CraftingRecipeLoader implements Runnable {
     	
     	boolean tNeedsSteel = GregTech_API.sRecipeFile.get(GT_ConfigCategories.Recipes.harderrecipes, "steelForIC2Machines", true);
     	
-    	GT_ModHandler.removeRecipe(GT_ModHandler.getIC2Item("generator", 1));
+    	GT_ModHandler.removeRecipeByOutput(GT_ModHandler.getIC2Item("generator", 1));
     	GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("generator", 1), new Object[] {"B"  , "M"  , "F"  , 'B', OrePrefixes.battery.get(Materials.Basic), 'M', tNeedsSteel?GT_OreDictNames.craftingRawMachineTier02:GT_OreDictNames.craftingRawMachineTier00, 'F', new ItemStack(Blocks.furnace, 1, GregTech_API.ITEM_WILDCARD_DAMAGE)});
     	if (!tNeedsSteel) {
 	    	GT_ModHandler.addCraftingRecipe(GT_ModHandler.getIC2Item("generator", 1), new Object[] {" B ", "RRR", " F ", 'B', OrePrefixes.battery.get(Materials.Basic), 'R', OrePrefixes.plate.get(Materials.Iron)			, 'F', GT_OreDictNames.craftingIronFurnace});
