@@ -1229,28 +1229,17 @@ public class GT_ModHandler {
      * Used in Ore processors.
      */
     public static ItemStack getSmeltingOutput(ItemStack aInput, boolean aRemoveInput, ItemStack aOutputSlot) {
-    	if (aInput == null) return null;
+    	if (GT_Utility.isStackInvalid(aInput)) {
+			return null;
+		}
+
     	ItemStack rStack = GT_OreDictUnificator.get(FurnaceRecipes.smelting().getSmeltingResult(aInput));
     	if (rStack != null && (aOutputSlot == null || (GT_Utility.areStacksEqual(rStack, aOutputSlot) && rStack.stackSize + aOutputSlot.stackSize <= aOutputSlot.getMaxStackSize()))) {
 			if (aRemoveInput) aInput.stackSize--;
 			return rStack;
 		}
+
     	return null;
-    }
-    
-    /**
-     * Used in my furnances to create a Recipe
-     */
-    public static ItemStack getSmeltingOutput(List<ItemStack> inputs) {
-    	ItemStack output = null;
-    	for (int idx = 0; idx < inputs.size(); idx++) {
-    		ItemStack slot = inputs.get(idx);
-    		if (GT_Utility.isStackValid(slot) && (output = FurnaceRecipes.smelting().getSmeltingResult(slot)) != null) {
-    			break;
-    		}
-    	}
-    	
-    	return output;
     }
     
     /**

@@ -80,11 +80,7 @@ public class RecipeLogic {
 		
 		if (base.isAllowedToWork()) {
 			if (progressTime > 0) {
-				int tmp = progressTime;
 				success = updateRecipeProgress();
-				if (tmp == 0 && !success) {
-					throw new IllegalStateException();
-				}
 			}
 			
 			if (progressTime == 0) {
@@ -120,7 +116,7 @@ public class RecipeLogic {
 				progressTime = 0;
 				maxProgressTime = 0;
 				EUt = 0;
-				
+
 				endRecipe(previousRecipe);
 				getMachine().endProcess();
 				return true;

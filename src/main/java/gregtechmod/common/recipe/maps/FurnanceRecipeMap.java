@@ -33,12 +33,16 @@ public class FurnanceRecipeMap extends DummyRecipeMap {
 
 		for (int i = 0; i < inputs.size(); i++) {
 			ItemStack in = inputs.get(i);
-			if (in != null && null != (output = GT_ModHandler.getSmeltingOutput(inputs))) {
+			if (in != null && null != (output = GT_ModHandler.getSmeltingOutput(in, false, null))) {
 				in = in.copy();
 				in.stackSize = 1;
 				// It shall cook at 3 EU/t, if this Machine is overclocked then it will consume more
 				// The time it usually needs, the Heating Coils re decreasing this Time, and if the Machine is overclocked, then it gets processed faster
-				return new Recipe(0, 3, 130, false, Collections.singletonList(RecipeEntry.singleton(in, Match.STRICT)), Collections.singletonList(output), Collections.emptyList());
+				return new Recipe(0, 3, 130, false,
+					Collections.singletonList(RecipeEntry.singleton(in, Match.STRICT)),
+					Collections.singletonList(output),
+					Collections.emptyList()
+				);
 			}
 		}
 		
