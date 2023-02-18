@@ -73,7 +73,8 @@ public abstract class GT_MetaTileEntity_BasicTank extends MetaTileEntity {
 			if (isFluidChangingAllowed() && mFluid[0] != null && mFluid[0].amount <= 0) mFluid[0] = null;
 			
 			if (doesEmptyContainers()) {
-				FluidStack tFluid = GT_Utility.getFluidForFilledItem(mInventory[getInputSlot()]);
+				ItemStack container = GT_Utility.copyAmount(1, mInventory[getInputSlot()]);
+				FluidStack tFluid = GT_Utility.getFluidForFilledItem(container);
 				if (tFluid != null && isFluidInputAllowed(tFluid)) {
 					if (getFillableStack() == null) {
 						if (isFluidInputAllowed(tFluid) && tFluid.amount <= getCapacity()) {
