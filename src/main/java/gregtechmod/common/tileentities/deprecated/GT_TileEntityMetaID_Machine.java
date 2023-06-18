@@ -1032,8 +1032,12 @@ public class GT_TileEntityMetaID_Machine extends BaseTileEntity implements IGreg
 	}
 	
 	@Override
-	public boolean onRightclick(EntityPlayer aPlayer, byte aSide, float par1, float par2, float par3) {
-		return true;
+	public boolean onRightclick(EntityPlayer aPlayer, byte aSide, float aX, float aY, float aZ) {
+		if (isClientSide()) {
+			return getCoverBehaviorAtSide(aSide).onCoverRightclickClient(aSide, this, aPlayer, aX, aY, aZ);
+		}
+
+		return this.openGUI(aPlayer, getWorld().getBlockMetadata(xCoord, yCoord, zCoord));
 	}
 
 	@Override
