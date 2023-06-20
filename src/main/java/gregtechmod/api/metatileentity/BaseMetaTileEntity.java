@@ -899,9 +899,13 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 				
 				if (getCoverIDAtSide(aSide) == 0) {
 					if (GT_Utility.isItemStackInIntList(aPlayer.inventory.getCurrentItem(), GregTech_API.sCovers.keySet())) {
-						if (GregTech_API.getCoverBehavior(aPlayer.inventory.getCurrentItem()).isCoverPlaceable(aSide, GT_Utility.stackToInt(aPlayer.inventory.getCurrentItem()), this) && mMetaTileEntity.allowCoverOnSide(aSide, GT_Utility.stackToInt(aPlayer.inventory.getCurrentItem()))) {
+						int cover = GT_Utility.stackUniversalId(aPlayer.inventory.getCurrentItem());
+						if (GregTech_API.getCoverBehavior(aPlayer.inventory.getCurrentItem()).isCoverPlaceable(aSide, cover, this) && mMetaTileEntity.allowCoverOnSide(aSide, cover)) {
 							setCoverItemAtSide(aSide, aPlayer.inventory.getCurrentItem());
-							if (!aPlayer.capabilities.isCreativeMode) aPlayer.inventory.getCurrentItem().stackSize--;
+							if (!aPlayer.capabilities.isCreativeMode) {
+								aPlayer.inventory.getCurrentItem().stackSize--;
+							}
+
 							GT_Utility.sendSoundToPlayers(worldObj, GregTech_API.sSoundList.get(100), 1.0F, -1, xCoord, yCoord, zCoord);
 						}
 						return true;
@@ -1299,7 +1303,7 @@ public class BaseMetaTileEntity extends BaseTileEntity implements IGregTechTileE
 	
 	@Override
 	public void setCoverItemAtSide(byte aSide, ItemStack aCover) {
-		setCoverIDAtSide(aSide, GT_Utility.stackToInt(aCover));
+		setCoverIDAtSide(aSide, GT_Utility.stackUniversalId(aCover));
 	}
 	
 	@Override

@@ -129,7 +129,7 @@ public class GT_MetaTileEntity_RedstoneCircuitBlock extends MetaTileEntity imple
 	}
 	
 	public void stackGateData(int aIndex, ItemStack aStack) {
-		mGateData[aIndex] = GT_Utility.stackToInt(aStack);
+		mGateData[aIndex] = GT_Utility.stackUniversalId(aStack);
 		validateGateData();
 	}
 	

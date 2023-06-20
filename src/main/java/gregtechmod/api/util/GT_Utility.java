@@ -876,6 +876,19 @@ public class GT_Utility {
 		int meta = aForceWildcard ? GregTech_API.ITEM_WILDCARD_DAMAGE : Items.feather.getDamage(aStack);
 		return System.identityHashCode(aStack.getItem()) * 11 + meta;
 	}
+
+	public static int stackUniversalId(ItemStack stack) {
+		if (isStackInvalid(stack)) {
+			return -1;
+		}
+
+		String name = stack.getUnlocalizedName();
+		if (isStringInvalid(name)) {
+			return -1;
+		}
+
+		return Objects.hash(name, Items.feather.getDamage(stack));
+	}
 	
 	public static int fluidStackToInt(FluidStack fluid) {
     	int code = 1;
@@ -910,7 +923,7 @@ public class GT_Utility {
 	}
 	
 	public static boolean isStackInvalid(Object aStack) {
-		return aStack == null || !(aStack instanceof ItemStack) || ((ItemStack)aStack).getItem() == null || ((ItemStack)aStack).stackSize <  0;
+		return !(aStack instanceof ItemStack) || ((ItemStack)aStack).getItem() == null || ((ItemStack)aStack).stackSize <  0;
 	}
 	
 	public static boolean isFluidStackValid(FluidStack fluid) {
@@ -922,8 +935,13 @@ public class GT_Utility {
 	}
 	
 	public static boolean isItemStackInIntList(ItemStack aStack, Collection<Integer> aList) {
-		if (isStackInvalid(aStack) || aList == null) return false;
-		return aList.contains(stackToInt(aStack, false)) || aList.contains(stackToInt(aStack, true));
+		if (isStackInvalid(aStack) || aList == null) {
+			return false;
+		}
+
+		ItemStack wildcard = aStack.copy();
+		wildcard.setItemDamage(GregTech_API.ITEM_WILDCARD_DAMAGE);
+		return aList.contains(stackUniversalId(aStack)) || aList.contains(stackUniversalId(wildcard));
 	}
 	
 	public static boolean isItemStackInList(ItemStack aStack, Collection<ItemStackKey> aList) {

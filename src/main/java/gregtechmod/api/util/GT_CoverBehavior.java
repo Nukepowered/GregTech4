@@ -14,22 +14,10 @@ public abstract class GT_CoverBehavior {
 	/**
 	 * Gives all Covers which are out of these Stacks a special behavior.
 	 */
-	public GT_CoverBehavior(ItemStack[] aCovers) {
-		for (ItemStack tCover : aCovers) GregTech_API.sCoverBehaviors.put(GT_Utility.stackToInt(tCover), this);
-	}
-	
-	/**
-	 * Gives all Covers which are this ID a special behavior.
-	 */
-	public GT_CoverBehavior(int[] aCovers) {
-		for (int tCover : aCovers) GregTech_API.sCoverBehaviors.put(tCover, this);
-	}
-	
-	/**
-	 * Gives Cover which is out of this Stack a special behavior.
-	 */
-	public GT_CoverBehavior(ItemStack aCover) {
-		GregTech_API.sCoverBehaviors.put(GT_Utility.stackToInt(aCover), this);
+	public GT_CoverBehavior(ItemStack... aCovers) {
+		for (ItemStack tCover : aCovers) {
+			GregTech_API.sCoverBehaviors.put(GT_Utility.stackUniversalId(tCover), this);
+		}
 	}
 	
 	/**
@@ -85,6 +73,10 @@ public abstract class GT_CoverBehavior {
 	 */
 	public boolean isCoverPlaceable(byte aSide, int aCoverID, ICoverable aTileEntity) {
 		return true;
+	}
+
+	public boolean isCoverPlaceable(byte side, ItemStack cover, ICoverable tile) {
+		return this.isCoverPlaceable(side, GT_Utility.stackUniversalId(cover), tile);
 	}
 	
 	/**
