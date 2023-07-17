@@ -939,9 +939,7 @@ public class GT_Utility {
 			return false;
 		}
 
-		ItemStack wildcard = aStack.copy();
-		wildcard.setItemDamage(GregTech_API.ITEM_WILDCARD_DAMAGE);
-		return aList.contains(stackUniversalId(aStack)) || aList.contains(stackUniversalId(wildcard));
+		return aList.contains(stackUniversalId(aStack));
 	}
 	
 	public static boolean isItemStackInList(ItemStack aStack, Collection<ItemStackKey> aList) {
