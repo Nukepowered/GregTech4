@@ -66,7 +66,7 @@ public class IC2ReactorSlotTransformer implements IClassTransformer {
 								}
 								
 								method.instructions.insertBefore(next, list);
-								ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
+								ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
 								clz.accept(writer);
 								return writer.toByteArray();
 							}
