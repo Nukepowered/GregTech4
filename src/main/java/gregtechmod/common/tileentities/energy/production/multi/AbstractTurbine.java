@@ -1,14 +1,17 @@
 package gregtechmod.common.tileentities.energy.production.multi;
 
 import java.lang.ref.WeakReference;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.IntSupplier;
 
+import gregtechmod.api.enums.GT_Items;
+import gregtechmod.api.util.ItemStackKey;
 import org.apache.commons.lang3.tuple.Pair;
 
 import gregtechmod.api.GregTech_API;
-import gregtechmod.api.enums.GT_Items;
 import gregtechmod.api.interfaces.IGregTechTileEntity;
 import gregtechmod.api.interfaces.IMetaTileEntity;
 import gregtechmod.api.interfaces.IRecipeWorkable;
@@ -19,7 +22,6 @@ import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Mu
 import gregtechmod.api.metatileentity.implementations.GT_MetaTileEntity_Hatch_Output;
 import gregtechmod.api.metatileentity.implementations.MTEWorkableMultiblock;
 import gregtechmod.api.recipe.Recipe;
-import gregtechmod.api.recipe.RecipeLogic;
 import gregtechmod.api.recipe.RecipeMap;
 import gregtechmod.api.util.GT_ModHandler;
 import gregtechmod.api.util.GT_Utility;
@@ -33,28 +35,23 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fluids.FluidStack;
 
-/** An class of common multitubine logic, usually an shape of multiblock and simple logic
+/** A class of common multitubine logic, usually an shape of multiblock and simple logic
  * @author TheDarkDnKTv
  *
  */
 public abstract class AbstractTurbine extends MTEWorkableMultiblock {
-	
-	private static ItemStack RC_TURBINE;
-	
-	
-	protected int mEfficiencyIncrease = 0;
+
+	protected static final Map<ItemStackKey, ITurbineMeta> TURBINES = new HashMap<>();
+
+	protected ITurbineMeta turbine;
 	protected int MAX_EFFICIENCY = 10_000;
 	protected int TURBINE_OUTPUT_EU = 800;
 	protected boolean NEED_AN_MUFFLER = false;
 	
 	@Override public void updateEfficiency() 						{}
 	@Override public void endProcess() 								{}
-	@Override public boolean allowToCheckRecipe() 					{return true;}
-	@Override public boolean isGivingInformation() 					{return true;}
 	@Override public boolean isFacingValid(byte aFacing)			{return aFacing > 1;}
 	@Override public int maxEUOutput() 								{return TURBINE_OUTPUT_EU;}
-	@Override public RecipeLogic getRecipeLogic() 					{return recipeLogic;}
-    @Override public int increaseProgress(int aProgress)			{recipeLogic.increaseProgressTime(aProgress);return recipeLogic.getMaxProgressTime()-recipeLogic.getProgressTime();}
 	@Override public void onRightclick(EntityPlayer aPlayer)		{getBaseMetaTileEntity().openGUI(aPlayer, 156, GregTech_API.gregtechmod);}
     
 	public AbstractTurbine(int aID, String aName, RecipeMap<?> map) {
@@ -64,6 +61,11 @@ public abstract class AbstractTurbine extends MTEWorkableMultiblock {
 	public AbstractTurbine(RecipeMap<?> map) {
 		super(map);
 	}
+
+	public static void registerTurbine(ItemStack stack, ITurbineMeta meta) {
+		ItemStackKey key = ItemStackKey.from(stack, 1, stack.getItemDamage() == GregTech_API.ITEM_WILDCARD_DAMAGE);
+		TURBINES.putIfAbsent(key, meta);
+	}
 	
 	protected abstract Pair<Block, Integer> getHull();
 	
@@ -71,23 +73,29 @@ public abstract class AbstractTurbine extends MTEWorkableMultiblock {
 	 * Called right after resources was consumed
 	 */
 	protected void onRecipeUpdateTick() {
-		mEfficiency = Math.max(0, Math.min(mEfficiency + mEfficiencyIncrease, getMaxEfficiency(mInventory[1]) - ((getIdealStatus() - getRepairStatus()) * 1000)));
+		int newEfficiency = Math.min(mEfficiency + turbine.getEfficiencyGrowRate(),
+				turbine.getMaxEfficiency() - ((getIdealStatus() - getRepairStatus()) * 1000));
+		mEfficiency = Math.max(0, newEfficiency);
 	}
 	
-	protected int getCurrentEfficiency() {
-		return getMaxEfficiency(mInventory[1]);
-	}
-	
-	private final boolean checkAir() {
+	private boolean checkAir() {
 		int tAirCount = 0;
 		for (byte i = -1; i < 2; i++) for (byte j = -1; j < 2; j++) for (byte k = -1; k < 2; k++) {
 			if (getBaseMetaTileEntity().getAirOffset(i, j, k)) tAirCount++;
 		}
-		if (tAirCount != 10) return false;		
-		
-		return true;
+
+		return tAirCount == 10;
 	}
-	
+
+	protected ITurbineMeta getTurbine(ItemStack stack) {
+		if (GT_Utility.isStackInvalid(stack)) {
+			return null;
+		}
+
+		return Optional.ofNullable(TURBINES.get(ItemStackKey.from(mInventory[1], 1)))
+				.orElseGet(() -> TURBINES.get(ItemStackKey.from(mInventory[1], 1, true)));
+	}
+
 	@Override
 	protected final boolean checkMachine(ItemStack aStack) {
 		byte tSide = getBaseMetaTileEntity().getBackFacing();
@@ -152,43 +160,42 @@ public abstract class AbstractTurbine extends MTEWorkableMultiblock {
 	@Override
 	public void stopMachine() {
 		recipeLogic.stop();
-		mEfficiencyIncrease = 0;
+		turbine = null;
 		mEfficiency = 0;
     	getBaseMetaTileEntity().setActive(false);
 	}
 	
 	@Override
 	public void startProcess() {
-		if (GT_Items.Component_Turbine_Bronze.isStackEqual(mInventory[1], true, true)) {
-			mEfficiencyIncrease = 10;
-		} else if (GT_Items.Component_Turbine_Steel.isStackEqual(mInventory[1], true, true)) {
-			mEfficiencyIncrease = 20;
-		} else if (GT_Items.Component_Turbine_Magnalium.isStackEqual(mInventory[1], true, true)) {
-			mEfficiencyIncrease = 50;
-		} else if (GT_Items.Component_Turbine_TungstenSteel.isStackEqual(mInventory[1], true, true)) {
-			mEfficiencyIncrease = 15;
-		} else if (GT_Items.Component_Turbine_Carbon.isStackEqual(mInventory[1], true, true)) {
-			mEfficiencyIncrease = 100;
-		} else {
-			mEfficiencyIncrease = 20;
+		this.turbine = this.getTurbine(mInventory[1]);
+		if (this.turbine == null) {
+			this.stopMachine();
 		}
-	}
-	
-	@Override
-	public void saveNBTData(NBTTagCompound aNBT) {
-		super.saveNBTData(aNBT);
-		aNBT.setInteger("mEfficiencyIncrease", mEfficiencyIncrease);
 	}
 	
 	@Override
 	public void loadNBTData(NBTTagCompound aNBT) {
 		super.loadNBTData(aNBT);
-		mEfficiencyIncrease = aNBT.getInteger("mEfficiencyIncrease");
+		if (this.recipeLogic.isActive()) {
+			this.turbine = this.getTurbine(mInventory[1]);
+			if (this.turbine == null) {
+				this.stopMachine();
+			}
+		}
 	}
 	
 	@Override
 	public void onServerStart() {
-		RC_TURBINE = GT_ModHandler.getRCItem("part.turbine.rotor", 1, GregTech_API.ITEM_WILDCARD_DAMAGE);
+		ItemStack rcTurbine = GT_ModHandler.getRCItem("part.turbine.rotor", 1, GregTech_API.ITEM_WILDCARD_DAMAGE);
+		if (rcTurbine != null) {
+			registerTurbine(rcTurbine, Turbines.RC);
+		}
+
+		registerTurbine(GT_Items.Component_Turbine_Bronze.getWildcard(1), Turbines.BRONZE);
+		registerTurbine(GT_Items.Component_Turbine_Steel.getWildcard(1), Turbines.STEEL);
+		registerTurbine(GT_Items.Component_Turbine_Magnalium.getWildcard(1), Turbines.MAGNALIUM);
+		registerTurbine(GT_Items.Component_Turbine_TungstenSteel.getWildcard(1), Turbines.TUNGSTENSTEEL);
+		registerTurbine(GT_Items.Component_Turbine_Carbon.getWildcard(1), Turbines.CARBON);
 	}
 	
 	@Override
@@ -199,7 +206,7 @@ public abstract class AbstractTurbine extends MTEWorkableMultiblock {
 				.newKey("metatileentity.multiblock.malfunction_amount", getIdealStatus() - getRepairStatus());
 		if (isCorrectMachinePart(mInventory[1])) {
 			int damage = mInventory[1].getMaxDamage() - mInventory[1].getItemDamage();
-			if (RC_TURBINE != null && mInventory[1].getItem() == RC_TURBINE.getItem()) 
+			if (this.turbine == Turbines.RC)
 				damage /= 2;
 			b.newKey("metatileentity.turbine.durability", GT_Utility.parseNumberToString(damage));
 		} else {
@@ -215,26 +222,28 @@ public abstract class AbstractTurbine extends MTEWorkableMultiblock {
 
 	@Override
 	public final int getMaxEfficiency(ItemStack aStack) {
-		if (GT_Items.Component_Turbine_Bronze.isStackEqual(aStack, true, true)) 		return  60_00;
-		if (GT_Items.Component_Turbine_Steel.isStackEqual(aStack, true, true)) 			return  80_00;
-		if (GT_Items.Component_Turbine_Magnalium.isStackEqual(aStack, true, true)) 		return 100_00;
-		if (GT_Items.Component_Turbine_TungstenSteel.isStackEqual(aStack, true, true)) 	return  90_00;
-		if (GT_Items.Component_Turbine_Carbon.isStackEqual(aStack, true, true)) 		return 125_00;
-		if (GT_Utility.areStacksEqual(aStack, RC_TURBINE)) 								return  80_00;
-		
-		return 0;
+		return Optional.ofNullable(this.getTurbine(aStack))
+				.map(ITurbineMeta::getMaxEfficiency)
+				.orElse(0);
 	}
 	
 	@Override
 	public final int getDamageToComponent(ItemStack aStack) {
-		return GT_Utility.areStacksEqual(aStack, RC_TURBINE) ? 2 : 1;
+		return this.getTurbine(aStack) == Turbines.RC ? 2 : 1;
 	}
 
 	@Override
 	public final boolean explodesOnComponentBreak(ItemStack aStack) {
 		return true;
 	}
-	
+
+	public interface ITurbineMeta {
+
+		int getMaxEfficiency();
+
+		int getEfficiencyGrowRate();
+	}
+
 	public static class MultiTurbineLogic extends GeneratorRecipeLogic {
 		
 		protected MultiTurbineLogic(IntSupplier efficiency, RecipeMap<?> recipeMap, IRecipeWorkable machine) {
@@ -265,15 +274,10 @@ public abstract class AbstractTurbine extends MTEWorkableMultiblock {
 			
 			if (base.isAllowedToWork()) {
 				if (leftEU > 0) {
-					long tmp = leftEU;
 					success = updateRecipeProgress();
-					if (tmp == 0 && !success) {
-						throw new IllegalStateException();
-					}
 				}
-			
-			
-				if (leftEU == 0) {
+
+				if (leftEU <= 0) {
 					if (getMachine().hasInventoryBeenModified() || base.hasWorkJustBeenEnabled() || success || base.getTimer() % 600 == 0) {
 						trySerachRecipe(); 
 					}
@@ -304,7 +308,7 @@ public abstract class AbstractTurbine extends MTEWorkableMultiblock {
 		
 		@Override
 		protected boolean updateRecipeProgress() {
-			if ((getMachine().getBaseMetaTileEntity().getTimer() % 10 == 0 ? getMachine().checkAir() : true) && depleteInputs()) {
+			if ((getMachine().getBaseMetaTileEntity().getTimer() % 10 != 0 || getMachine().checkAir()) && depleteInputs()) {
 				getMachine().onRecipeUpdateTick();
 				int EU = (int) (getMachine().maxEUOutput() * (efficiency.getAsInt() / 100.0D));
 				getMachine().addEnergyOutput(EU);
@@ -318,7 +322,7 @@ public abstract class AbstractTurbine extends MTEWorkableMultiblock {
 			if (getMachine().spaceForOutput(recipe)) {
 				previousRecipe = recipe;
 				progressTime = 1;
-				leftEU = recipe.getDuration() * recipe.getEUt();
+				leftEU = (long) recipe.getDuration() * recipe.getEUt();
 				maxProgressTime = (int) Math.ceil(leftEU * 1.0D / getMachine().maxEUOutput());
 				triggerMachine(true);
 				getMachine().startProcess();
@@ -330,6 +334,33 @@ public abstract class AbstractTurbine extends MTEWorkableMultiblock {
 		@Override
 		protected AbstractTurbine getMachine() {
 			return (AbstractTurbine) metaTileEntity.get();
+		}
+	}
+
+	public enum Turbines implements ITurbineMeta {
+		BRONZE			(60_00		,10),
+		STEEL			(80_00		,20),
+		MAGNALIUM		(100_00	,50),
+		TUNGSTENSTEEL	(90_00		,15),
+		CARBON			(125_00	,100),
+		RC				(80_00		,20);
+
+		Turbines(int max, int grow) {
+			this.maxEfficiency = max;
+			this.efficiencyGrow = grow;
+		}
+
+		private final int maxEfficiency;
+		private final int efficiencyGrow;
+
+		@Override
+		public int getMaxEfficiency() {
+			return this.maxEfficiency;
+		}
+
+		@Override
+		public int getEfficiencyGrowRate() {
+			return this.efficiencyGrow;
 		}
 	}
 }

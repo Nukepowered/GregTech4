@@ -57,8 +57,7 @@ public abstract class MetaTileEntityMultiblock extends MetaTileEntity {
 	protected List<ItemStack> itemOutputs	= null;
 	protected List<FluidStack> fluidInputs	= null;
 	protected List<FluidStack> fluidOutputs	= null;
-	
-	@Override public boolean isSimpleMachine()						{return false;}
+
 	@Override public boolean isFacingValid(byte aFacing)			{return true;}
 	@Override public boolean isAccessAllowed(EntityPlayer aPlayer)	{return true;}
 	@Override public boolean isValidSlot(int aIndex)				{return aIndex > 0;}
