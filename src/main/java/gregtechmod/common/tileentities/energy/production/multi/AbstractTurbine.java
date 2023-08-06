@@ -245,22 +245,20 @@ public abstract class AbstractTurbine extends MTEWorkableMultiblock {
 	}
 
 	public static class MultiTurbineLogic extends GeneratorRecipeLogic {
-		
+
+		protected int consumptionModifier;
+
 		protected MultiTurbineLogic(IntSupplier efficiency, RecipeMap<?> recipeMap, IRecipeWorkable machine) {
 			super(efficiency, recipeMap, machine);
 			metadataVerifier = rec -> rec.getInputs().isEmpty() && rec.getAllOutputs().isEmpty(); // only fluid recipes allow
 		}
-		
+
 		protected boolean depleteInputs() {
-			int fluidMult = (int) (getMachine().maxEUOutput() / leftEU);
-			
-			if (previousRecipe != null) {
-				for (FluidStack fluid : previousRecipe.getFluidInputs()) {
-					FluidStack dummy = fluid.copy();
-					dummy.amount *= fluidMult;
-					if (!getMachine().depleteInput(dummy))
-						return false;
-				}
+			for (FluidStack fluid : previousRecipe.getFluidInputs()) {
+				FluidStack dummy = fluid.copy();
+				dummy.amount *= consumptionModifier;
+				if (!getMachine().depleteInput(dummy))
+					return false;
 			}
 			
 			return true;
@@ -308,27 +306,36 @@ public abstract class AbstractTurbine extends MTEWorkableMultiblock {
 		
 		@Override
 		protected boolean updateRecipeProgress() {
-			if ((getMachine().getBaseMetaTileEntity().getTimer() % 10 != 0 || getMachine().checkAir()) && depleteInputs()) {
+			if ((getMachine().getBaseMetaTileEntity().getTimer() % 10 != 0 || getMachine().checkAir())) {
 				getMachine().onRecipeUpdateTick();
-				int EU = (int) (getMachine().maxEUOutput() * (efficiency.getAsInt() / 100.0D));
-				getMachine().addEnergyOutput(EU);
-			} else getMachine().stopMachine();
-				
+				long EU = Math.min((long) (getMachine().maxEUOutput() * (efficiency.getAsInt() / 100.0D)), leftEU);
+				leftEU -= EU;
+				getMachine().addEnergyOutput((int) EU);
+				return true;
+			}
+
+			getMachine().stopMachine();
 			return false;
 		}
-		
+
 		@Override
 		protected void startRecipe(Recipe recipe) {
 			if (getMachine().spaceForOutput(recipe)) {
 				previousRecipe = recipe;
 				progressTime = 1;
-				leftEU = (long) recipe.getDuration() * recipe.getEUt();
+
+				int recipeBaseEu = recipe.getDuration() * recipe.getEUt();
+				consumptionModifier = Math.max(1, getMachine().maxEUOutput() / recipeBaseEu);
+				leftEU = (long) recipeBaseEu *  consumptionModifier;
 				maxProgressTime = (int) Math.ceil(leftEU * 1.0D / getMachine().maxEUOutput());
 				triggerMachine(true);
 				getMachine().startProcess();
-			} else {
-				getMachine().stopMachine();
+				if (this.isActive() && this.depleteInputs()) {
+					return;
+				}
 			}
+
+			getMachine().stopMachine();
 		}
 		
 		@Override
