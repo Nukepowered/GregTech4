@@ -83,10 +83,13 @@ public class GeneratorRecipeFactory extends RecipeFactory<GeneratorRecipeFactory
 		if (duration <= 0) 					errors.append(" - Duration was not set!\n");
 		if (inputItems.isEmpty() &&
 				inputFluids.isEmpty()) 		errors.append(" - Input of recipe shall not be empty!\n");
+
+		Recipe recipe = new Recipe(startEU, EUt, duration, shaped, inputItems, outputItems, chancedOutput, inputFluids, outputFluids, Collections.emptyMap());
 		if (errors.length() == 0) {
-			Recipe recipe = new Recipe(startEU, EUt, duration, shaped, inputItems, outputItems, chancedOutput, inputFluids, outputFluids, Collections.emptyMap());
 			reset();
 			return recipe;
-		} throw new GT_RecipeException(errors.toString());
+		} else {
+			throw new GT_RecipeException(recipe, errors.toString());
+		}
 	}
 }

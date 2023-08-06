@@ -1,5 +1,9 @@
 package gregtechmod.api.util;
 
+import gregtechmod.api.recipe.Recipe;
+
+import java.util.Objects;
+
 /**
  * @author TheDarkDnKTv
  *
@@ -7,13 +11,21 @@ package gregtechmod.api.util;
 public class GT_RecipeException extends RuntimeException {
 
 	private static final long serialVersionUID = -7856745962508588421L;
+
+	private final Recipe recipe;
 	
-	public GT_RecipeException(String reason) {
+	public GT_RecipeException(Recipe recipe, String reason) {
 		super(reason);
+		this.recipe = Objects.requireNonNull(recipe);
 	}
 	
 	@Override
 	public String toString() {
-		return "Something gone wrong trying do stuff around recipes:\n" + this.getMessage();
+		StringBuilder builder = new StringBuilder();
+		builder.append("Recipe validation error:\n");
+		builder.append(this.getMessage());
+		builder.append('\n');
+		builder.append(this.recipe.toString());
+		return builder.toString();
 	}
 }

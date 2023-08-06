@@ -92,11 +92,14 @@ public class BlastFurnaceRecipeFactory extends RecipeFactory<BlastFurnaceRecipeF
 		if (outputItems.isEmpty() &&
 				chancedOutput.isEmpty() &&
 				outputFluids.isEmpty()) 	errors.append(" - Output of recipe shall not be empty!");
+
+		Recipe recipe = new Recipe(startEU, EUt, duration, shaped, inputItems, outputItems, chancedOutput, inputFluids, outputFluids, Collections.unmodifiableMap(metadata));
 		if (errors.length() == 0) {
-			Recipe recipe = new Recipe(startEU, EUt, duration, shaped, inputItems, outputItems, chancedOutput, inputFluids, outputFluids, Collections.unmodifiableMap(metadata));
 			reset();
 			return recipe;
-		} throw new GT_RecipeException(errors.toString());
+		} else {
+			throw new GT_RecipeException(recipe, errors.toString());
+		}
 	}
 
 }

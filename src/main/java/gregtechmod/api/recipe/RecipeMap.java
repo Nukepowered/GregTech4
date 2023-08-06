@@ -140,7 +140,9 @@ public class RecipeMap<F extends RecipeFactory<F>> {
 		if (recipe.getFluidOutputs().size() > maxFluidOutputs)	error += " - Fluid outputs outputs bigger than maximum allowed("	+ maxFluidOutputs + "), current: " + recipe.getFluidOutputs().size();
 		
 		
-		if (!error.isEmpty()) throw new GT_RecipeException(recipe.toString() + " thrown exception on registeration for RecipeMap:\n" + error);
+		if (!error.isEmpty()) {
+			throw new GT_RecipeException(recipe, "Recipe has not passed final validation:\n" + error);
+		}
 	}
 	
 	protected void createMappings(Recipe toMap) {
