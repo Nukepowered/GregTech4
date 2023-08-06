@@ -22,7 +22,7 @@ import net.minecraftforge.oredict.OreDictionary;
  * Class for Automatic Recipe registering.
  */
 public class GT_RecipeRegistrator {
-	public static volatile int VERSION = 416;
+	public static volatile int VERSION = 417;
 	/**
 	 * List of Materials, which are used in the Creation of Sticks. All Rod Materials are automatically added to this List.
 	 */

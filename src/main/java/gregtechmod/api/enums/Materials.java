@@ -1188,5 +1188,5 @@ public enum Materials {
 		mChemicalFormula = mChemicalFormula.replaceAll("_", "-");
 	}
 	
-	public static volatile int VERSION = 416;
+	public static volatile int VERSION = 417;
 }
