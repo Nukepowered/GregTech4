@@ -30,17 +30,13 @@ public class ProcessingPlate4 implements IOreRecipeRegistrator {
 				if (!aMaterial.contains(SubTag.NO_SMASHING) && GregTech_API.sRecipeFile.get(GT_ConfigCategories.Tools.hammerquadrupleplate, OrePrefixes.plate.get(aMaterial), true)) {
 					RecipeHandler.executeOnFinish(() -> {
 						GT_ModHandler.addCraftingRecipe(GT_Utility.copyAmount(1, aStack),
-								new Object[] { "I", "B", "H", 'H', GT_ToolDictNames.craftingToolHardHammer, 'I', OrePrefixes.plateTriple.get(aMaterial), 'B', OrePrefixes.plate.get(aMaterial) });
+								"I", "B", "H", 'H', GT_ToolDictNames.craftingToolHardHammer, 'I', OrePrefixes.plateTriple.get(aMaterial), 'B', OrePrefixes.plate.get(aMaterial));
 						GT_ModHandler.addShapelessCraftingRecipe(GT_Utility.copyAmount(1, aStack),
-								new Object[] { GT_ToolDictNames.craftingToolForgeHammer, OrePrefixes.plate.get(aMaterial), OrePrefixes.plate.get(aMaterial), OrePrefixes.plate.get(aMaterial), OrePrefixes.plate.get(aMaterial) });
+								GT_ToolDictNames.craftingToolForgeHammer, OrePrefixes.plate.get(aMaterial), OrePrefixes.plate.get(aMaterial), OrePrefixes.plate.get(aMaterial), OrePrefixes.plate.get(aMaterial));
 					});
 				} else {
 					RecipeHandler.executeOnFinish(() -> GT_ModHandler.addShapelessCraftingRecipe(GT_Utility.copyAmount(1, aStack),
 							new Object[] { OrePrefixes.plate.get(aMaterial), OrePrefixes.plate.get(aMaterial), OrePrefixes.plate.get(aMaterial), OrePrefixes.plate.get(aMaterial) }));
-				}
-				
-				for (final ItemStack tStack : entry.ores) {
-					RecipeHandler.scheduleCraftingToRemove(rec -> rec != null && rec.getRecipeOutput() != null && rec.getRecipeOutput().isItemEqual(tStack));
 				}
 			}
 		}

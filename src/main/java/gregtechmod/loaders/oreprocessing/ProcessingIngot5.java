@@ -41,9 +41,9 @@ public class ProcessingIngot5 implements IOreRecipeRegistrator {
 					if (GregTech_API.sRecipeFile.get(GT_ConfigCategories.Tools.hammerquintupleingot, OrePrefixes.ingot.get(aMaterial), true)) {
 						RecipeHandler.executeOnFinish(() -> {
 							GT_ModHandler.addCraftingRecipe(GT_Utility.copyAmount(1, aStack),
-									new Object[] { "I", "B", "H", 'H', GT_ToolDictNames.craftingToolHardHammer, 'I', OrePrefixes.ingotQuadruple.get(aMaterial), 'B', OrePrefixes.ingot.get(aMaterial) });
+									"I", "B", "H", 'H', GT_ToolDictNames.craftingToolHardHammer, 'I', OrePrefixes.ingotQuadruple.get(aMaterial), 'B', OrePrefixes.ingot.get(aMaterial));
 							GT_ModHandler.addShapelessCraftingRecipe(GT_Utility.copyAmount(1, aStack),
-									new Object[] { GT_ToolDictNames.craftingToolForgeHammer, OrePrefixes.ingot.get(aMaterial), OrePrefixes.ingot.get(aMaterial), OrePrefixes.ingot.get(aMaterial), OrePrefixes.ingot.get(aMaterial), OrePrefixes.ingot.get(aMaterial) });
+									GT_ToolDictNames.craftingToolForgeHammer, OrePrefixes.ingot.get(aMaterial), OrePrefixes.ingot.get(aMaterial), OrePrefixes.ingot.get(aMaterial), OrePrefixes.ingot.get(aMaterial), OrePrefixes.ingot.get(aMaterial));
 						});
 					} else {
 						RecipeHandler.executeOnFinish(() -> GT_ModHandler.addShapelessCraftingRecipe(GT_Utility.copyAmount(1, aStack),
