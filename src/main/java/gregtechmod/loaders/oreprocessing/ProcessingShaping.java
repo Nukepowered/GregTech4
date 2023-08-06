@@ -21,22 +21,22 @@ import gregtechmod.common.recipe.RecipeEntry.Match;
 
 public class ProcessingShaping implements IOreRecipeRegistrator {
 	
-	public final static List<Materials> PIPES_MED_LARGE = Arrays.asList(new Materials[]{
-		Materials.Bronze,
-		Materials.Steel,
-		Materials.StainlessSteel,
-		Materials.TungstenSteel,
-		Materials.Brass,
-		Materials.Electrum,
-		Materials.Platinum
-	});
+	public final static List<Materials> PIPES_MED_LARGE = Arrays.asList(
+			Materials.Bronze,
+			Materials.Steel,
+			Materials.StainlessSteel,
+			Materials.TungstenSteel,
+			Materials.Brass,
+			Materials.Electrum,
+			Materials.Platinum
+	);
 	
-	public final static List<Materials> PIPES_SMALL = Arrays.asList(new Materials[]{
+	public final static List<Materials> PIPES_SMALL = Arrays.asList(
 			Materials.Bronze,
 			Materials.Steel,
 			Materials.StainlessSteel,
 			Materials.TungstenSteel
-	});
+	);
 	
 	public ProcessingShaping() {
 		OrePrefixes.ingot.add(this);
@@ -67,10 +67,24 @@ public class ProcessingShaping implements IOreRecipeRegistrator {
 						RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(Math.max(aMaterial.getMass() * 2 * tAmount, tAmount)).input(RecipeEntry.fromStacks(2, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_File	.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.toolHeadFile	, aMaterial, tAmount)).buildAndRegister();
 						RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(Math.max(aMaterial.getMass() * 2 * tAmount, tAmount)).input(RecipeEntry.fromStacks(2, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Saw		.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.toolHeadSaw	, aMaterial, tAmount)).buildAndRegister();
 					}
-					
-					if ((aMaterial.mTypes & 128) != 0) {
-						RecipeMaps.EXTRUDING.factory().EUt(128).setShaped(true).duration(Math.max(aMaterial.getMass() * 5 * tAmount, tAmount)).input(RecipeEntry.fromStacks(4, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Extruder_Gear.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.gearGt, aMaterial, tAmount)).buildAndRegister();
-						RecipeMaps.ALLOY_SMELTING.factory().EUt(32).duration(Math.max(aMaterial.getMass() * 10 * tAmount, tAmount)).input(RecipeEntry.fromStacks(8, e.ores, Match.STRICT)).nonConsumable(GT_Items.Shape_Mold_Gear.get(1)).output(GT_OreDictUnificator.get(OrePrefixes.gearGt, aMaterial, tAmount)).buildAndRegister();
+
+					ItemStack gear = GT_OreDictUnificator.get(OrePrefixes.gearGt, aMaterial, tAmount);
+					if ((aMaterial.mTypes & 128) != 0 && gear != null) {
+						RecipeMaps.EXTRUDING.factory()
+								.EUt(128)
+								.setShaped(true)
+								.duration(Math.max(aMaterial.getMass() * 5 * tAmount, tAmount))
+								.input(RecipeEntry.fromStacks(4, e.ores, Match.STRICT))
+								.nonConsumable(GT_Items.Shape_Extruder_Gear.get(1))
+								.output(gear)
+								.buildAndRegister();
+						RecipeMaps.ALLOY_SMELTING.factory()
+								.EUt(32)
+								.duration(Math.max(aMaterial.getMass() * 10 * tAmount, tAmount))
+								.input(RecipeEntry.fromStacks(8, e.ores, Match.STRICT))
+								.nonConsumable(GT_Items.Shape_Mold_Gear.get(1))
+								.output(gear)
+								.buildAndRegister();
 					}
 					
 					// wtf is this
