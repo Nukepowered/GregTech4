@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -532,8 +533,18 @@ public abstract class MetaTileEntity implements IMetaTileEntity {
 	@Override
 	public int getInventoryStackLimit() {return 64;}
 	@Override
-	public boolean isItemValidForSlot(int aIndex, ItemStack aStack) {return getBaseMetaTileEntity().isValidSlot(aIndex);}
-	
+	public boolean isItemValidForSlot(int aIndex, ItemStack aStack) {return getBaseMetaTileEntity().isValidSlot(aIndex) && !this.isDechargingSlot(aIndex);}
+
+	public final boolean isDechargingSlot(int index) {
+		final int count = this.dechargerSlotCount();
+		if (count <= 0) {
+			return false;
+		}
+
+		final int slotStart = this.dechargerSlotStartIndex();
+		return index >= slotStart && index < (slotStart + count);
+	}
+
 	@Override
 	public ItemStack decrStackSize(int aIndex, int aAmount) {
 		ItemStack rStack = getStackInSlot(aIndex);
@@ -559,20 +570,27 @@ public abstract class MetaTileEntity implements IMetaTileEntity {
 	
 	@Override
 	public int[] getAccessibleSlotsFromSide(int aSide) {
-		ArrayList<Integer> tList = new ArrayList<Integer>();
-		for (int i = 0; i < getSizeInventory(); i++) if (isValidSlot(i)) tList.add(i);
-		int[] rArray = new int[tList.size()];
-		for (int i = 0; i < rArray.length; i++) rArray[i] = tList.get(i);
-		return rArray;
+		return IntStream.range(0, this.getSizeInventory())
+				.filter(this::isValidSlot)
+				.filter(v -> !this.isDechargingSlot(v))
+				.toArray();
 	}
 	
 	@Override
 	public boolean canInsertItem(int aIndex, ItemStack aStack, int aSide) {
+		if (this.isDechargingSlot(aIndex)) {
+			return false;
+		}
+
 		return isValidSlot(aIndex) && aStack != null && (mInventory[aIndex] == null || GT_Utility.areStacksEqual(aStack, mInventory[aIndex])) && allowPutStack(aIndex, (byte)aSide, aStack);
 	}
 	
 	@Override
 	public boolean canExtractItem(int aIndex, ItemStack aStack, int aSide) {
+		if (this.isDechargingSlot(aIndex)) {
+			return false;
+		}
+
 		return isValidSlot(aIndex) && aStack != null && allowPullStack(aIndex, (byte)aSide, aStack);
 	}
 	

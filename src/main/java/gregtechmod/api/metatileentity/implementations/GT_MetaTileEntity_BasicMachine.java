@@ -52,7 +52,7 @@ public abstract class GT_MetaTileEntity_BasicMachine extends MetaTileEntity impl
 	@Override public boolean isTransformerUpgradable()				{return getElectricTier()>0;}
 	@Override public boolean isBatteryUpgradable()					{return getElectricTier()>0;}
 	@Override public boolean isElectric()							{return getElectricTier()>0;}
-	@Override public boolean isValidSlot(int aIndex)				{return aIndex >= 0 && aIndex < dechargerSlotStartIndex();}
+	@Override public boolean isValidSlot(int aIndex)				{return aIndex >= 0;}
 	@Override public boolean isFacingValid(byte aFacing)			{return (mMainFacing > 1 || aFacing > 1);}
 	@Override public boolean isEnetInput() 							{return getElectricTier()>0;}
 	@Override public boolean isEnetOutput() 						{return getElectricTier()>0;}
