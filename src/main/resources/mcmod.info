@@ -3,7 +3,7 @@
   "name": "GregTech-Addon",
   "description": "This Addon adds the awesome Technology of GregTech-Intergalactical to your World! Fusionreactors, Lightningrods and many other Technologies and convenient Recipes are added by this Addon, if you let them enabled in the allmighty Config, of course",
   "mcversion": "${mcversion}",
-  "version": "4.17.56",
+  "version": "${version}",
   "logoFile": "/assets/gregtech_addon/textures/LogoGTI_Long.png",
   "url": "https://github.com/Nukepowered/GregTech4",
   "updateUrl": "",
@@ -11,5 +11,5 @@
   "credits": "Alblaka and his Team for Industrialcraft, mistaqur for the original NEI-Plugin, Mr. Brain, TheSirusKing and matix for Textures, TheDarkDnKTv and sferatime for porting",
   "parent": "",
   "screenshots": [],
-  "dependencies": ["Industrialcraft"]
+  "dependencies": ["IC2"]
 }]

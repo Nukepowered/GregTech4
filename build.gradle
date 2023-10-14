@@ -29,13 +29,37 @@ compileJava {
     sourceCompatibility = targetCompatibility = '1.8'
 }
 
-version = "v417.56"
+version = "v417.57"
 group = "gregtechmod"
 archivesBaseName = "gregtechmod"
 
 minecraft {
     version = "${mc_ver}-${forge_ver}-${mc_ver}"
     runDir = "eclipse"
+	replace("@VERSION@", getValidVersion())
+	replace("public static volatile int VERSION = 417",
+			"public static volatile int VERSION = " + getValidVersion().replace('.', ''))
+
+	includes.addAll([
+		"GT_Mod.java",
+		"GregTech_API.java",
+		"BaseMetaTileEntity.java",
+		"BaseMetaPipeEntity.java",
+		"MetaTileEntity.java",
+		"MetaPipeEntity.java",
+		"GT_CircuitryBehavior.java",
+		"GT_CoverBehavior.java",
+		"GT_Config.java",
+		"GT_LanguageManager.java",
+		"GT_ModHandler.java",
+		"GT_OreDictUnificator.java",
+		"Recipe.java",
+		"GT_Utility.java",
+		"GT_RecipeRegistrator.java",
+		"Element.java",
+		"Materials.java",
+		"OrePrefixes.java"
+	])
 }
 
 repositories {
@@ -94,7 +118,7 @@ dependencies {
 }
 
 processResources {
-    // this will ensure that this task is redone when the versions change.
+	// this will ensure that this task is redone when the versions change.
     inputs.property "version", project.version
     inputs.property "mcversion", project.minecraft.version
 
@@ -103,11 +127,18 @@ processResources {
         include 'mcmod.info'
                 
         // replace version and mcversion
-        expand 'version':project.version, 'mcversion':project.minecraft.version
+        expand 'version': getValidVersion(), 'mcversion':project.minecraft.version
     }
-        
+
     // copy everything else, thats not the mcmod.info
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+}
+
+def getValidVersion() {
+	def version = new StringBuilder(project.version.toString())
+	version.deleteCharAt(0)
+	version.insert(1, '.')
+	return version.toString()
 }
